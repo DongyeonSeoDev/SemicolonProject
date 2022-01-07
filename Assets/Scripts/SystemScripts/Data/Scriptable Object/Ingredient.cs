@@ -5,5 +5,5 @@ public class Ingredient : ScriptableObject
 {
     public int id;
     public string ingredientName;
-    public string spritePath;
+    public string spritePath;  //스프라이트 경로
 }
