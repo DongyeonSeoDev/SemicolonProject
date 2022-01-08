@@ -57,26 +57,22 @@ public static class ScriptHelper
     // value = 5, min = 1, max = 3일 땐 2를 리턴한다.
     // value = 8, min = 1, max = 3일 땐 2를 리턴한다.
     // value값이 min값과 max값 사이를 왕복한다고 생각하면 된다.
-    // value값이 min값보다 적어지면 (min - value) 만큼을 max값에서 빼서 나온 값을 value값에 대입한다. 이 과정을 value값이 min값 이상이 될 때 까지 반복히면, Limit함수의 리턴값과 같은 값이 나온다.
-    // value값이 max값보다 많아지면 (value - max) 만큼을 min값에서 더해서 나온 값을 value값에 대입한다. 이 과정을 value값이 max값 이하가 될 때 까지 반복하면, Limit함수의 리턴값과 같은 값이 나온다.
+    // value값이 min값보다 적어지면 (min - value) 만큼을 max값에서 빼서 나온 값을 value값에 대입한다. 이 과정을 value값이 min값 이상이 될 때 까지 반복한다.
+    // value값이 max값보다 많아지면 (value - max) 만큼을 min값에서 더해서 나온 값을 value값에 대입한다. 이 과정을 value값이 max값 이하가 될 때 까지 반복한다.
     public static int Limit(this int value, int min, int max)
     {
-        int plusNumOffset = max - min;
-        int minusNumOffset = Mathf.Abs(value) / max;
-        int result = value;
-
-        value = value >= 0 ? value % plusNumOffset + plusNumOffset : (value + max * minusNumOffset);
-
-        if (value < min)
+        if(value < min)
         {
-            result = max - (Mathf.Abs(min - value) - 1);
+            return Limit(max - (min - value - 1), min, max);
         }
-        else if (value > max)
+        else if(value > max)
         {
-            result = min + (Mathf.Abs(value - max) - 1);
+            return Limit(min + (value - max - 1), min, max);
         }
-
-        return result;
+        else
+        {
+            return value;
+        }
     }
 }
 public class SlimeGameManager : MonoBehaviour

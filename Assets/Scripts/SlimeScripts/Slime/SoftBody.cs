@@ -22,6 +22,9 @@ public class SoftBody : MonoBehaviour
     }
     private void Start()
     {
+        Debug.Log((0).Limit(11, 14));
+        Debug.Log((15).Limit(11, 14));
+        
         points.Clear();
         transform.Find("BodyPoints").GetComponentsInChildren<BodyPoint>().ForEach(x => points.Add(x.transform));
 
@@ -35,10 +38,20 @@ public class SoftBody : MonoBehaviour
             points[0].gameObject.AddComponent<SpringJoint2D>().connectedBody = item.GetComponent<Rigidbody2D>(); // points[0]은 항상 MiddlePoint
         }
 
+        List<Transform> notMiddlePoints = new List<Transform>();
+
         for (int i = 1; i < points.Count; i++)
         {
-
+            notMiddlePoints.Add(points[i]);
         }
+
+        for (int i = 0; i < notMiddlePoints.Count; i++)
+        {
+            notMiddlePoints[i].gameObject.AddComponent<SpringJoint2D>().connectedBody = points[0].GetComponent<Rigidbody2D>();
+            notMiddlePoints[i].gameObject.AddComponent<SpringJoint2D>().connectedBody = notMiddlePoints[(i - 1).Limit(0, notMiddlePoints.Count - 1)].GetComponent<Rigidbody2D>();
+            notMiddlePoints[i].gameObject.AddComponent<SpringJoint2D>().connectedBody = notMiddlePoints[(i + 1).Limit(0, notMiddlePoints.Count - 1)].GetComponent<Rigidbody2D>();
+        }
+
     }
     private void Update()
     {
