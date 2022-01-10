@@ -28,7 +28,7 @@ public class SoftBody : MonoBehaviour
         Debug.Log((15).Limit(11, 14));
         
         points.Clear();
-        transform.Find("BodyPoints").GetComponentsInChildren<BodyPoint>().ForEach(x => points.Add(x.transform));
+        transform.GetComponentsInChildren<BodyPoint>().ForEach(x => points.Add(x.transform));
 
         foreach (Transform item in points)
         {
@@ -45,14 +45,14 @@ public class SoftBody : MonoBehaviour
             
             DistanceJoint2D distanceJoint2D = points[0].gameObject.AddComponent<DistanceJoint2D>();
             distanceJoint2D.connectedBody = itemRigid;
-            // distanceJoint2D.maxDistanceOnly = true;
+            distanceJoint2D.maxDistanceOnly = true;
         }
 
         for (int i = 0; i < notMiddlePoints.Count; i++)
         {
             SpringJoint2D notMiddleSpringJoint2D = notMiddlePoints[i].gameObject.AddComponent<SpringJoint2D>();
             notMiddleSpringJoint2D.connectedBody = points[0].GetComponent<Rigidbody2D>();
-            notMiddleSpringJoint2D.frequency = 10f;
+            notMiddleSpringJoint2D.frequency = 5f;
 
             // DistanceJoint2D notMiddleDistanceJoint2D = null;
             // // notMiddlePoints[i].gameObject.AddComponent<DistanceJoint2D>();
@@ -71,11 +71,11 @@ public class SoftBody : MonoBehaviour
 
             SpringJoint2D upNotMiddleSpringJoint2D = notMiddlePoints[i].gameObject.AddComponent<SpringJoint2D>();
             upNotMiddleSpringJoint2D.connectedBody = notMiddlePoints[(i - 1).Limit(0, notMiddlePoints.Count - 1)].GetComponent<Rigidbody2D>();
-            upNotMiddleSpringJoint2D.frequency = 5f;
+            upNotMiddleSpringJoint2D.frequency = 1f;
 
             SpringJoint2D downNotMiddleSpringJoint2D = notMiddlePoints[i].gameObject.AddComponent<SpringJoint2D>();
             downNotMiddleSpringJoint2D.connectedBody = notMiddlePoints[(i + 1).Limit(0, notMiddlePoints.Count - 1)].GetComponent<Rigidbody2D>();
-            downNotMiddleSpringJoint2D.frequency = 5f;
+            downNotMiddleSpringJoint2D.frequency = 1f;
         }
 
     }

@@ -22,6 +22,7 @@ public class PlayerMove : MonoBehaviour
     private void FixedUpdate()
     {
         Vector2 MoveVec = playerInput.MoveVector * speed;
+
         rigid.velocity = MoveVec;
 
         childRigids.ForEach(x => x.velocity = MoveVec);
