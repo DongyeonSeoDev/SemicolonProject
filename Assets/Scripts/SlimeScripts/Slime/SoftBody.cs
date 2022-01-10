@@ -10,9 +10,11 @@ public class SoftBody : MonoBehaviour
     #endregion
     #region Fields
     [SerializeField]
-    public SpriteShapeController spriteShapeController = null;
+    private SpriteShapeController spriteShapeController = null;
     [SerializeField]
-    public List<Transform> points;
+    private List<Transform> points;
+    [SerializeField]
+    private List<Transform> notMiddlePoints = new List<Transform>();
     #endregion
 
     #region MonoBehaviour Callbacks
@@ -30,19 +32,12 @@ public class SoftBody : MonoBehaviour
 
         foreach (Transform item in points)
         {
-            if (item.GetComponent<MiddlePoint>() != null)
+            if (item.GetComponent<MiddlePoint>() == null)
             {
-                continue;
+                notMiddlePoints.Add(item);
             }
 
             points[0].gameObject.AddComponent<SpringJoint2D>().connectedBody = item.GetComponent<Rigidbody2D>(); // points[0]은 항상 MiddlePoint
-        }
-
-        List<Transform> notMiddlePoints = new List<Transform>();
-
-        for (int i = 1; i < points.Count; i++)
-        {
-            notMiddlePoints.Add(points[i]);
         }
 
         for (int i = 0; i < notMiddlePoints.Count; i++)
@@ -62,13 +57,13 @@ public class SoftBody : MonoBehaviour
     #region Private Methods
     private void UpdateVerticies()
     {
-        for (int i = 0; i < points.Count - 1; i++)
+        for (int i = 0; i < notMiddlePoints.Count; i++)
         {
-            Vector2 _vertex = points[i].localPosition;
+            Vector2 _vertex = notMiddlePoints[i].localPosition;
 
             Vector2 _towardsCenter = (-_vertex).normalized;
 
-            float _colliderRadius = points[i].gameObject.GetComponent<CircleCollider2D>().radius;
+            float _colliderRadius = notMiddlePoints[i].gameObject.GetComponent<CircleCollider2D>().radius;
 
             try
             {
