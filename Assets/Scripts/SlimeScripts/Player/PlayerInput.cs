@@ -11,11 +11,19 @@ public class PlayerInput : MonoBehaviour
     {
         get { return moveVector; }
     }
+
     private bool isBodySlap = false;
     public bool IsBodySlap
     {
         get { return isBodySlap; }
         set { isBodySlap = value; }
+    }
+
+    private bool isShoot = false;
+    public bool IsShoot
+    {
+        get { return isShoot; }
+        set { isShoot = value; }
     }
 
     private void Start()
@@ -28,14 +36,19 @@ public class PlayerInput : MonoBehaviour
         moveVector.x = Input.GetAxisRaw("Horizontal");
         moveVector.y = Input.GetAxisRaw("Vertical");
 
-        if (Input.GetButtonDown("BodySlap"))
+        if (Input.GetButtonDown("BodySlap")) // left shift
         {
             isBodySlap = true;
+        }
+
+        if(Input.GetButtonDown("Shoot")) // left ctrl
+        {
+            isShoot = true;
         }
     }
     private void FixedUpdate()
     {
-        if(isBodySlap)
+        if (isBodySlap)
         {
             playerStatus.BodySlapping = true;
             isBodySlap = false;
