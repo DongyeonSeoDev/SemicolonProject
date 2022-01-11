@@ -22,13 +22,16 @@ public class CookingManager : MonoSingleton<CookingManager>
 
     #endregion
 
-    //private List<Food> allFoodList;  
+    //private List<Food> allFoods;
+    //private List<Ingredient> allIngredients;
+
     private Dictionary<int, Food> foodDic = new Dictionary<int, Food>();  
     private Dictionary<Food, FoodButton> foodBtnDic = new Dictionary<Food, FoodButton>();  
     private Dictionary<int, Ingredient> ingredientDic = new Dictionary<int, Ingredient>(); 
 
     private FoodButton selectedFoodBtn;  //음식 만들기 창에서 자신이 선택한 음식 버튼
     private List<IngredientImage> selectedFoodIngrImgs = new List<IngredientImage>(); //만들 음식 선택하고 보여지는 필요 재료 UI들
+
     [SerializeField] private List<FoodButton> foodBtnList = new List<FoodButton>(); // (음식 제작 창에서) 음식 버튼 리스트
     [SerializeField] private List<IngredientImage> ingredientImages = new List<IngredientImage>(); //(음식 제작 창에서) 재료 정보 UI들
 
@@ -54,14 +57,14 @@ public class CookingManager : MonoSingleton<CookingManager>
 
     private void SetData()
     {
-        List<Food> allFoodList = new List<Food>(Resources.LoadAll<Food>(foodDataPath));
+        List<Food> allFoods = new List<Food>(Resources.LoadAll<Food>(foodDataPath));
         
-        for(int i=0; i< allFoodList.Count; ++i)
+        for(int i=0; i< allFoods.Count; ++i)
         {
-            foodDic.Add(allFoodList[i].id, allFoodList[i]);
+            foodDic.Add(allFoods[i].id, allFoods[i]);
 
             FoodButton fb = Instantiate(foodBtnPrefab, foodBtnParent).GetComponent<FoodButton>();
-            fb.FoodData = allFoodList[i];
+            fb.FoodData = allFoods[i];
             foodBtnList.Add(fb);
         }
 
@@ -220,10 +223,18 @@ public class CookingManager : MonoSingleton<CookingManager>
         }
         else if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            AddItem(new ItemInfo(10, 10, ItemType.CONSUME));
-            AddItem(new ItemInfo(15, 10, ItemType.CONSUME));
-            AddItem(new ItemInfo(20, 10, ItemType.CONSUME));
-            AddItem(new ItemInfo(25, 10, ItemType.CONSUME));
+            AddItem(new ItemInfo(10, 10, ItemType.ETC));
+            AddItem(new ItemInfo(15, 10, ItemType.ETC));
+            AddItem(new ItemInfo(20, 10, ItemType.ETC));
+            AddItem(new ItemInfo(25, 10, ItemType.ETC));
+        }
+        else if(Input.GetKeyDown(KeyCode.A))
+        {
+            foreach (ItemInfo item in saveData.userItems.keyValueDic.Values)
+            {
+                if(item.itemType == ItemType.CONSUME)
+                   Debug.Log($"{GetFood(item.id).foodName} : {item.count}개");
+            }
         }
     }
 }
