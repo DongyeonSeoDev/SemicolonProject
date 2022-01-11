@@ -9,9 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9792863a37a36ab4db05ff1e87fa08d6, type: 3}
-  m_Name: EnemyMoveList
+  m_Script: {fileID: 11500000, guid: c157dbfe41e5752408aeadc9cf2f3ff2, type: 3}
+  m_Name: EnemyMove
   m_EditorClassIdentifier: 
-  enemyMoveList:
-  - {fileID: 11400000, guid: fa97327ceeb5da04baa1c0bb3c435071, type: 2}
-  - {fileID: 11400000, guid: d19f89840b1466445ae80dd06f288f4f, type: 2}
+  targetPositions:
+  - {x: 6, y: 3, z: 0}
+  - {x: -6, y: -3, z: 0}
+  currentPositionNumber: 1
+  targetPositionChangeDistance: 1
+  moveSpeed: 3
+  moveDelay: 1

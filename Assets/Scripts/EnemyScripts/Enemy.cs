@@ -5,34 +5,45 @@ namespace Enemy
 {
     public class Enemy : MonoBehaviour // 적 관리 클래스
     {
-        public EnemyMoveListSO enemyMoveListSO; // 적 움직임 관리 리스트
+        public EnemyMoveSO enemyMoveSO; // 적 움직임 관리
 
-        public bool isMove = true; // 움직임 가능
+        public Transform followObject;
 
-        private Command enemyMoveCommand; // 적 명령어
+        public float followSpeed = 5f;
 
-        private int currrentPositionNumber = 0; // 현재 위치 숫자
+        private Command enemyMoveCommand; // 적 움직임 명령어
+        private Command enemyFollowPlayerCommand; // 적이 플레이어 따라가는 명령어
+
+        private Vector3 targetPosition;
+
+        private bool isFollow = false;
 
         private void Start()
         {
-            enemyMoveCommand = new EnemyMove(); // 적 움직임으로 초기화
-
-            StartCoroutine(EnmeyMove());
+            enemyMoveCommand = new EnemyMove(enemyMoveSO, transform);
+            enemyFollowPlayerCommand = new EnemyFollowPlayer(transform, followObject, followSpeed);
         }
 
-        private IEnumerator EnmeyMove() // 적 움직임
+        private void Update()
         {
-            var enemyMoveList = enemyMoveListSO.enemyMoveList;
-
-            while (isMove) // 움직일 수 있다면
+            if (isFollow)
             {
-                enemyMoveCommand.Execute(transform, enemyMoveList[currrentPositionNumber]); // 적 움직임 커멘드 실행
-
-                // 움직이는 시간 + 기다리는 시간 대기
-                yield return new WaitForSeconds(enemyMoveList[currrentPositionNumber].moveTime + enemyMoveList[currrentPositionNumber].moveDelay);
-
-                currrentPositionNumber = (currrentPositionNumber + 1) % enemyMoveList.Count; // 위치 숫자 변경
+                enemyFollowPlayerCommand.Execute();
             }
+            else
+            {
+                enemyMoveCommand.Execute();
+            }
+        }
+
+        public void StartFollow()
+        {
+            isFollow = true;
+        }
+
+        public void EndFollow()
+        {
+            isFollow = false;
         }
     }
 }
