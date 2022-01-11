@@ -8,6 +8,10 @@ public class PlayerBodySlap : PlayerAction
     private LayerMask canCrashLayer;
     [SerializeField]
     private Vector2 bodySlapMoveVec = Vector2.zero;
+
+    [Header("돌진하기 전 살짝 뒤로 뺄 때의 속도")]
+    [SerializeField]
+    private float moveBackSpeed = 8f;
     [SerializeField]
     private float bodySlapPower = 2f;
 
@@ -29,8 +33,12 @@ public class PlayerBodySlap : PlayerAction
         if (playerStatus.BodySlapping && !bodySlapStart)
         {
             bodySlapStart = true;
-            
+
             bodySlapMoveVec = playerInput.MoveVector;
+
+            rigid.velocity = -bodySlapMoveVec * moveBackSpeed;
+            childRigids.ForEach(x => x.velocity = -bodySlapMoveVec * moveBackSpeed);
+
             bodySlapTimer = bodySlapTime;
         }
 
