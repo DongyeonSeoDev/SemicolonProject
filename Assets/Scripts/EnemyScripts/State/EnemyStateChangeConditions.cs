@@ -50,7 +50,7 @@ namespace Enemy
         }
     }
 
-    public partial class GetDamaged : State // 공격 상태
+    public partial class GetDamaged : State // 데미지를 받았을때
     {
         protected override void StateChangeCondition()
         {
@@ -70,6 +70,14 @@ namespace Enemy
         }
     }
 
+    public partial class Dead : State // 죽었을때
+    {
+        protected override void StateChangeCondition() 
+        {
+            ChangeState(null);
+        }
+    }
+
     public partial class State
     {
         public bool AnyStateChangeState()
@@ -77,10 +85,17 @@ namespace Enemy
             if (enemyData.isDamaged)
             {
                 ChangeState(new GetDamaged(enemyData));
-                return true;
+            }
+            else if (enemyData.hp <= 0)
+            {
+                ChangeState(new Dead(enemyData));
+            }
+            else
+            {
+                return false;
             }
 
-            return false;
+            return true;
         }
     }
 }

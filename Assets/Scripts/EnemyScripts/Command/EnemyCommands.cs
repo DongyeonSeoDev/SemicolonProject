@@ -60,29 +60,51 @@ namespace Enemy
         }
     }
 
-    public class EnemyGetDamaged : Command // 적이 데미지를 받음 TODO: 데미지 받는것 만들어야 함
+    public class EnemyGetDamaged : Command // 적이 데미지를 받음
     {
-        public EnemyGetDamaged()
-        {
+        private EnemyData enemyData;
 
+        private bool isWorking = false;
+
+        public EnemyGetDamaged(EnemyData enemyData)
+        {
+            this.enemyData = enemyData;
+            isWorking = false;
+
+            Debug.Log("생성");
         }
 
         public override void Execute()
         {
+            Debug.Log("실행");
 
+            if (!isWorking) // 데미지를 주고 색깔 변경
+            {
+                enemyData.enemySpriteRenderer.color = Color.green;
+                enemyData.hp -= enemyData.damagedValue;
+            }
+            else // 색깔 변경 후 데미지 상태 해제
+            {
+                enemyData.enemySpriteRenderer.color = Color.magenta;
+                enemyData.isDamaged = false;
+            }
+
+            isWorking = !isWorking;
         }
     }
 
-    public class EnemyDead : Command // 적이 죽음 TODO: 적이 죽는것 만들어야 함
+    public class EnemyDead : Command // 적이 죽음
     {
-        public EnemyDead()
-        {
+        private GameObject enemyObject; 
 
+        public EnemyDead(GameObject enemyObj)
+        {
+            enemyObject = enemyObj;
         }
 
         public override void Execute()
         {
-
+            GameObject.Destroy(enemyObject);
         }
     }
 }

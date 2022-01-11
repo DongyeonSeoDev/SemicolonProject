@@ -10,16 +10,25 @@ namespace Enemy
         private State currentState;
         private EnemyData enemyData;
 
+        private SpriteRenderer sr;
+
+        private float lastPositionX;
+
         private void Awake()
         {
+            sr = GetComponent<SpriteRenderer>();
+
             enemyData = new EnemyData()
             {
                 enemyObject = gameObject,
                 enemyMoveSO = enemyMoveSO,
-                enemyAnimator = GetComponent<Animator>()
+                enemyAnimator = GetComponent<Animator>(),
+                enemySpriteRenderer = sr
             };
 
             currentState = new Move(enemyData);
+
+            lastPositionX = transform.position.x;
         }
 
         private void Start()
@@ -35,13 +44,30 @@ namespace Enemy
 
         private void Update()
         {
-            currentState = currentState.Process();
+            if (currentState != null)
+            {
+                currentState = currentState.Process();
+            }
+
+            if (lastPositionX > transform.position.x)
+            {
+                sr.flipX = true;
+            }
+            else if (lastPositionX < transform.position.x)
+            {
+                sr.flipX = false;
+            }
+
+            lastPositionX = transform.position.x;
         }
 
         public void GetDamage(int damage)
         {
-            enemyData.isDamaged = true;
-            enemyData.damagedValue = damage;
+            if (!enemyData.isDamaged)
+            {
+                enemyData.isDamaged = true;
+                enemyData.damagedValue = damage;
+            }
         }
     }
 }

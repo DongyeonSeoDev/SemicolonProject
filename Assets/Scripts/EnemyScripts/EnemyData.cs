@@ -7,6 +7,7 @@ namespace Enemy
         public GameObject enemyObject;
         public EnemyMoveSO enemyMoveSO;
         public Animator enemyAnimator;
+        public SpriteRenderer enemySpriteRenderer;
 
         private GameObject playerObject;
         public GameObject PlayerObject
@@ -30,10 +31,12 @@ namespace Enemy
         public float chaseSpeed = 5f;
         public float isSeePlayerDistance = 5f;
         public float isAttackPlayerDistance = 2f;
+        public float damageDelay = 0.2f;
 
         public bool isDamaged = false;
         public int attackDamage = 10;
         public int damagedValue;
+        public int hp = 30;
 
         public readonly int hashIsDie = Animator.StringToHash("isDie");
         public readonly int hashIsDead = Animator.StringToHash("isDead");

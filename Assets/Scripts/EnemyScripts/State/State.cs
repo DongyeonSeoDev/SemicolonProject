@@ -4,7 +4,7 @@ namespace Enemy
     {
         public enum eState
         {
-            MOVE, CHASE, ATTACK, GETDAMAGED
+            MOVE, CHASE, ATTACK, GETDAMAGED, DEAD
         }
 
         public enum eEvent
@@ -25,16 +25,8 @@ namespace Enemy
             this.enemyData = enemyData;
         }
 
-        protected virtual void Start()
-        {
-            currentEvent = eEvent.UPDATE;
-        }
-
-        protected virtual void Update()
-        {
-            StateChangeCondition();
-        }
-
+        protected virtual void Start() => currentEvent = eEvent.UPDATE;
+        protected virtual void Update() => StateChangeCondition();
         protected virtual void End() { }
 
         public State Process()

@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyAttackTest : MonoBehaviour
+public class EnemyAttackTest : MonoBehaviour // 적 공격 테스트
 {
     public void EnemyAttack(int damage)
     {
