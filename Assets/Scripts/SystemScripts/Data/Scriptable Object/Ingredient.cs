@@ -1,4 +1,5 @@
 using UnityEngine;
+using Water;
 
 [CreateAssetMenu(fileName = "Ingredient Data", menuName = "Scriptable Object/Ingredient Data", order = int.MaxValue)]
 public class Ingredient : ScriptableObject
@@ -7,7 +8,7 @@ public class Ingredient : ScriptableObject
 
     public int id;
     public string ingredientName;
-    public string spritePath;  //스프라이트 경로
+    //public string spritePath;  //스프라이트 경로
 
     public Sprite IngredientSprite
     {
@@ -15,7 +16,7 @@ public class Ingredient : ScriptableObject
         {
             if (!ingredientSprite)
             {
-                ingredientSprite = Resources.Load<Sprite>(spritePath);
+                ingredientSprite = Resources.Load<Sprite>(Global.ingredientSpritePath+name);
             }
             return ingredientSprite;
         }

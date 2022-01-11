@@ -14,6 +14,8 @@ public class CookingManager : MonoSingleton<CookingManager>
 
     public ItemInfo testItemInfo;
 
+    public Chef testChef;
+
     //Resources 폴더 속 경로
     [SerializeField] string foodDataPath = "System/FoodData/";
     [SerializeField] string ingredientDataPath = "System/IngredientData/";
@@ -74,6 +76,9 @@ public class CookingManager : MonoSingleton<CookingManager>
 
             ingredientImages.Add(Instantiate(ingredientImgPrefab, ingredientImgParent).GetComponent<IngredientImage>());
         }
+
+        countPlusBtn.onClick.AddListener(() => ChangeMakeFoodCount(true));
+        countMinusBtn.onClick.AddListener(() => ChangeMakeFoodCount(false));
     }
 
     public Food GetFood(int id) => foodDic[id];
@@ -93,6 +98,18 @@ public class CookingManager : MonoSingleton<CookingManager>
             saveData.userItems[itemInfo.id] = itemInfo;
     }
 
+    public void RemoveItem(int id, int count)
+    {
+        if(saveData.userItems.keyValueDic.ContainsKey(id) && saveData.userItems[id].count >= count)
+        {
+            saveData.userItems[id].count -= count;
+            if(saveData.userItems[id].count <= 0)
+            {
+                saveData.userItems.keyValueDic.Remove(id);
+            }
+        }
+    }
+
     public void ShowFoodList(Chef currentChef) //대화한 요리사가 만들 수 있는 음식 리스트 표시
     {
         foodBtnList.ForEach(x => x.gameObject.SetActive(false));
@@ -101,8 +118,8 @@ public class CookingManager : MonoSingleton<CookingManager>
             foodBtnDic[x].gameObject.SetActive(true);
         });
 
-        CheckCannotMakeFoods();
         foodsPanel.gameObject.SetActive(true);
+        CheckCannotMakeFoods();
     }
 
     public void CheckCannotMakeFoods()  //재료 부족으로 못만드는 음식은 인터렉티브 false로
@@ -120,7 +137,7 @@ public class CookingManager : MonoSingleton<CookingManager>
         makeFoodCount = 1;
         foodImg.sprite = selectedFood.GetSprite();
         makeFoodCountText.text = "1";
-
+        foodNameText.text = selectedFood.foodName;
 
         ingredientImages.ForEach(x => x.gameObject.SetActive(false));
         selectedFoodIngrImgs.Clear();
@@ -163,13 +180,16 @@ public class CookingManager : MonoSingleton<CookingManager>
     {
         makeFoodCountText.text = makeFoodCount.ToString();
         selectedFoodIngrImgs.ForEach(x => x.UpdateInfo());
+        CheckAmount();
     }
 
     public void MakeFood()  //음식 제작
     {
         Food food = selectedFoodBtn.FoodData;
         AddItem(new ItemInfo(food.id, makeFoodCount, ItemType.CONSUME));
+        selectedFoodIngrImgs.ForEach(x => RemoveItem(x.IngredientInfo.ingredient.id, x.IngredientInfo.needCount * makeFoodCount));
         MakeFoodInfoUIReset();
+        CheckCannotMakeFoods();
     }
 
     public void MakeFoodInfoUIReset()
@@ -187,7 +207,23 @@ public class CookingManager : MonoSingleton<CookingManager>
     {
         if(Input.GetKeyDown(KeyCode.LeftAlt))
         {
-            saveData.userItems[testItemInfo.id] = testItemInfo;
+            AddItem(testItemInfo);
+        }
+        else if(Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            ShowFoodList(testChef);
+        }
+        else if(Input.GetKeyDown(KeyCode.Z))
+        {
+            MakeFoodInfoUIReset();
+            foodsPanel.gameObject.SetActive(false);
+        }
+        else if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            AddItem(new ItemInfo(10, 10, ItemType.CONSUME));
+            AddItem(new ItemInfo(15, 10, ItemType.CONSUME));
+            AddItem(new ItemInfo(20, 10, ItemType.CONSUME));
+            AddItem(new ItemInfo(25, 10, ItemType.CONSUME));
         }
     }
 }
