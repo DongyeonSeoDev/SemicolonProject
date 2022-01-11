@@ -60,19 +60,6 @@ namespace Enemy
         }
     }
 
-    public class EnemyAttack : Command // 적 공격 TODO: 공격 만들어야 함
-    {
-        public EnemyAttack()
-        {
-            
-        }
-
-        public override void Execute()
-        {
-            
-        }
-    }
-
     public class EnemyGetDamaged : Command // 적이 데미지를 받음 TODO: 데미지 받는것 만들어야 함
     {
         public EnemyGetDamaged()

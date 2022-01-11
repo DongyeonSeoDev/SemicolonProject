@@ -62,11 +62,9 @@ namespace Enemy
 
     public partial class Attack : State // 공격 상태
     {
-        private Command enemyAttackCommand;
-
         public Attack(EnemyData enemyData) : base(eState.ATTACK, enemyData)
         {
-            enemyAttackCommand = new EnemyAttack();
+
         }
 
         protected override void Start()
@@ -78,14 +76,39 @@ namespace Enemy
 
         protected override void Update()
         {
-            enemyAttackCommand.Execute();
-
             base.Update();
         }
 
         protected override void End()
         {
             enemyData.enemyAnimator.ResetTrigger(enemyData.hashAttack);
+        }
+    }
+
+    public partial class GetDamaged : State // 공격을 받은 상태
+    {
+        public GetDamaged(EnemyData enemyData) : base(eState.GETDAMAGED, enemyData)
+        {
+
+        }
+
+        protected override void Start()
+        {
+            Debug.Log("(데미지를 받음) 데미지 : " + enemyData.damagedValue);
+
+            enemyData.isDamaged = false;
+
+            base.Start();
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+        }
+
+        protected override void End()
+        {
+
         }
     }
 }

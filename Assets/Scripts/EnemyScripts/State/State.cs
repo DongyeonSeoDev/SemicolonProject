@@ -1,10 +1,10 @@
 namespace Enemy
 {
-    public class State // 利 惑怕 包府 何葛 内靛
+    public partial class State // 利 惑怕 包府 何葛 内靛
     {
         public enum eState
         {
-            MOVE, CHASE, ATTACK
+            MOVE, CHASE, ATTACK, GETDAMAGED
         }
 
         public enum eEvent

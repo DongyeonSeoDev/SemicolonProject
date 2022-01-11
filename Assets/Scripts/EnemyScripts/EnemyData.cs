@@ -31,6 +31,10 @@ namespace Enemy
         public float isSeePlayerDistance = 5f;
         public float isAttackPlayerDistance = 2f;
 
+        public bool isDamaged = false;
+        public int attackDamage = 10;
+        public int damagedValue;
+
         public readonly int hashIsDie = Animator.StringToHash("isDie");
         public readonly int hashIsDead = Animator.StringToHash("isDead");
         public readonly int hashMove = Animator.StringToHash("Move");
