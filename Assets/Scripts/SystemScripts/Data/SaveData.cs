@@ -2,66 +2,79 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-[Serializable]
-public class SaveData 
+namespace Water
 {
-    public SaveDic<int, ItemInfo> userItems = new SaveDic<int, ItemInfo>();
-
-    public void Save()
+    //임시 코드
+    [Serializable]
+    public class SaveData
     {
-        userItems.Save();
-    }
-    public void Load()
-    {
-        userItems.Load();
-    }
-}
+        public SaveDic<int, ItemInfo> userItems = new SaveDic<int, ItemInfo>();
 
-[Serializable]
-public class ItemInfo
-{
-    public int id;
-    public int count;
-    public ItemType itemType;
-}
-
-[Serializable]
-public class SaveDic<K,V>
-{
-    public List<K> keyList = new List<K>();
-    public List<V> valueList = new List<V>();
-
-    public Dictionary<K, V> keyValueDic = new Dictionary<K, V>();
-
-    public V this[K key]
-    {
-        get
+        public void Save()
         {
-            return keyValueDic[key];
+            userItems.Save();
         }
-        set
+        public void Load()
         {
-            keyValueDic[key] = value;
+            userItems.Load();
         }
     }
 
-    public void Load()
+    [Serializable]
+    public class ItemInfo
     {
-        keyValueDic.Clear();
-        for(int i=0; i<keyList.Count; i++)
+        public int id;
+        public int count;
+        public ItemType itemType;
+
+        public ItemInfo() { }
+        public ItemInfo(int id, int count, ItemType type)
         {
-            keyValueDic.Add(keyList[i], valueList[i]);
+            this.id = id;
+            this.count = count;
+            this.itemType = type;
         }
     }
 
-    public void Save()
+    [Serializable]
+    public class SaveDic<K, V>
     {
-        keyList.Clear();
-        valueList.Clear();
-        foreach(K k in keyValueDic.Keys)
+        public List<K> keyList = new List<K>();
+        public List<V> valueList = new List<V>();
+
+        public Dictionary<K, V> keyValueDic = new Dictionary<K, V>();
+
+        public V this[K key]
         {
-            keyList.Add(k);
-            valueList.Add(keyValueDic[k]);
+            get
+            {
+                return keyValueDic[key];
+            }
+            set
+            {
+                keyValueDic[key] = value;
+            }
+        }
+
+        public void Load()
+        {
+            keyValueDic.Clear();
+            for (int i = 0; i < keyList.Count; i++)
+            {
+                keyValueDic.Add(keyList[i], valueList[i]);
+            }
+        }
+
+        public void Save()
+        {
+            keyList.Clear();
+            valueList.Clear();
+            foreach (K k in keyValueDic.Keys)
+            {
+                keyList.Add(k);
+                valueList.Add(keyValueDic[k]);
+            }
         }
     }
+
 }

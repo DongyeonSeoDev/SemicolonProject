@@ -20,7 +20,7 @@ namespace Water
             });
         }
 
-        public static TwoList<T,T> GetLists<T>(List<T> list, Func<T,bool> condition)
+        public static TwoList<T,T> GetLists<T>(List<T> list, Func<T,bool> condition)  //리스트를 돌아서 해당 조건에 맞는 것들을 뽑아서 아닌 것들과 나눠서 리턴함
         {
             TwoList<T, T> result = new TwoList<T, T>();
 
