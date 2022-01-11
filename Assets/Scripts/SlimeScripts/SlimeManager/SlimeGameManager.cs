@@ -49,6 +49,12 @@ public static class ScriptHelper
 
         return newColor;
     }
+    public static bool CheckGameObjectLayer(this LayerMask layerMask, GameObject targetObj) // targetObj의 layer가 layerMask안에 있는지 체크
+    {
+        int layer = 2 << targetObj.layer - 1;
+
+        return layerMask == (layerMask | layer);
+    }
     // ---Limit매소드에 대한 설명---
     // value = 0, min = 1, max = 3일 땐 3을 리턴한다.
     // value = -2, min = 1, max = 3일 땐 1을 리턴한다.

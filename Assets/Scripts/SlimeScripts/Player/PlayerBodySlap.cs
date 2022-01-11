@@ -1,0 +1,76 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class PlayerBodySlap : PlayerAction
+{
+    [SerializeField]
+    private LayerMask canCrashLayer;
+    [SerializeField]
+    private Vector2 bodySlapMoveVec = Vector2.zero;
+    [SerializeField]
+    private float bodySlapPower = 2f;
+
+    [SerializeField]
+    private float bodySlapTime = 3f;
+    private float bodySlapTimer = 0f;
+
+    private bool bodySlapStart = false;
+
+    public override void Start()
+    {
+        base.Start();
+
+        SlimeEventManager.StartListening("BodyPointCrash", BodyPointCrash);
+    }
+
+    void Update()
+    {
+        if (playerStatus.BodySlapping && !bodySlapStart)
+        {
+            bodySlapStart = true;
+            
+            bodySlapMoveVec = playerInput.MoveVector;
+            bodySlapTimer = bodySlapTime;
+        }
+
+        CheckBodySlapTime();
+    }
+    private void FixedUpdate()
+    {
+        if (playerStatus.BodySlapping && bodySlapStart)
+        {
+            rigid.AddForce(bodySlapMoveVec * bodySlapPower);
+
+            childRigids.ForEach(x => x.AddForce(bodySlapMoveVec * bodySlapPower));
+        }
+    }
+    private void OnDisable() 
+    {
+        SlimeEventManager.StopListening("BodyPointCrash", BodyPointCrash);
+    }
+    private void BodyPointCrash(GameObject targetObject)
+    {
+        if (canCrashLayer.CheckGameObjectLayer(targetObject) && playerStatus.BodySlapping)
+        {
+            StopBodySlap();
+        }
+    }
+    private void StopBodySlap()
+    {
+        bodySlapStart = false;
+        playerStatus.BodySlapping = false;
+    }
+    private void CheckBodySlapTime()
+    {
+        if(bodySlapTimer > 0f)
+        {
+            bodySlapTimer -= Time.deltaTime;
+
+            if(bodySlapTimer <= 0f)
+            {
+                StopBodySlap();
+            }
+        }
+    }
+}

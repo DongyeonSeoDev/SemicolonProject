@@ -18,6 +18,10 @@ public class BodyPoint : MonoBehaviour
         get { return isWall; }
     }
 
+    private void Awake() 
+    {
+        SlimeEventManager.StartListening("BodyPointCrash", BodyPointCrash);
+    }
     private void Start()
     {
         originLocalPosition = transform.localPosition;
@@ -29,6 +33,10 @@ public class BodyPoint : MonoBehaviour
             transform.localPosition = Vector2.Lerp(transform.localPosition, originLocalPosition, Time.deltaTime * returnToOriginSpeed);
         }
     }
+    private void OnDisable() 
+    {
+        SlimeEventManager.StopListening("BodyPointCrash", BodyPointCrash);
+    }
 
     private void OnCollisionEnter2D(Collision2D other)
     {
@@ -36,6 +44,8 @@ public class BodyPoint : MonoBehaviour
         {
             isWall = true;
         }
+
+        SlimeEventManager.TriggerEvent("BodyPointCrash", other.gameObject);
     }
     private void OnCollisionExit2D(Collision2D other)
     {
@@ -43,5 +53,9 @@ public class BodyPoint : MonoBehaviour
         {
             isWall = false;
         }
+    }
+    private void BodyPointCrash(GameObject targetObject)
+    {
+
     }
 }
