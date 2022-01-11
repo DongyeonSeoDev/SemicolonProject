@@ -5,45 +5,26 @@ namespace Enemy
 {
     public class Enemy : MonoBehaviour // 적 관리 클래스
     {
-        public EnemyMoveSO enemyMoveSO; // 적 움직임 관리
+        public EnemyMoveSO enemyMoveSO;
 
-        public Transform followObject;
+        private State currentState;
+        private EnemyData enemyData;
 
-        public float followSpeed = 5f;
-
-        private Command enemyMoveCommand; // 적 움직임 명령어
-        private Command enemyFollowPlayerCommand; // 적이 플레이어 따라가는 명령어
-
-        private Vector3 targetPosition;
-
-        private bool isFollow = false;
-
-        private void Start()
+        private void Awake()
         {
-            enemyMoveCommand = new EnemyMove(enemyMoveSO, transform);
-            enemyFollowPlayerCommand = new EnemyFollowPlayer(transform, followObject, followSpeed);
+            enemyData = new EnemyData()
+            {
+                enemyObject = gameObject,
+                enemyMoveSO = enemyMoveSO,
+                enemyAnimator = GetComponent<Animator>()
+            };
+
+            currentState = new Move(enemyData);
         }
 
         private void Update()
         {
-            if (isFollow)
-            {
-                enemyFollowPlayerCommand.Execute();
-            }
-            else
-            {
-                enemyMoveCommand.Execute();
-            }
-        }
-
-        public void StartFollow()
-        {
-            isFollow = true;
-        }
-
-        public void EndFollow()
-        {
-            isFollow = false;
+            currentState = currentState.Process();
         }
     }
 }
