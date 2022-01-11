@@ -2,24 +2,22 @@ using UnityEngine;
 using Water;
 
 [CreateAssetMenu(fileName = "Ingredient Data", menuName = "Scriptable Object/Ingredient Data", order = int.MaxValue)]
-public class Ingredient : ScriptableObject
+public class Ingredient : ItemSO
 {
-    private Sprite ingredientSprite;
 
-    public int id;
-    public string ingredientName;
     //public string spritePath;  //스프라이트 경로
 
-    public Sprite IngredientSprite
+    public override Sprite GetSprite()
     {
-        get
+        if (!itemSprite)
         {
-            if (!ingredientSprite)
-            {
-                ingredientSprite = Resources.Load<Sprite>(Global.ingredientSpritePath+name);
-            }
-            return ingredientSprite;
+            itemSprite = Resources.Load<Sprite>(Global.ingredientSpritePath + name);
         }
+        return itemSprite;
     }
 
+    public override void Use()
+    {
+        
+    }
 }

@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 862bc139a7af9f944b9aadc88317b8e2, type: 3}
   m_Name: SnakeTrunk
   m_EditorClassIdentifier: 
+  itemSprite: {fileID: 21300000, guid: d44f6865f42ca39448500daef88c4c16, type: 3}
   id: 20
-  ingredientName: "\uBC40 \uBAB8\uD1B5"
+  itemName: "\uBC40 \uBAB8\uD1B5"

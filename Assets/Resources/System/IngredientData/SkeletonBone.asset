@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 862bc139a7af9f944b9aadc88317b8e2, type: 3}
   m_Name: SkeletonBone
   m_EditorClassIdentifier: 
+  itemSprite: {fileID: 21300000, guid: 844a1050d03ba5046bfb86af34a81e47, type: 3}
   id: 15
-  ingredientName: "\uC2A4\uCF08\uB808\uD1A4 \uBF08"
+  itemName: "\uC2A4\uCF08\uB808\uD1A4 \uBF08"

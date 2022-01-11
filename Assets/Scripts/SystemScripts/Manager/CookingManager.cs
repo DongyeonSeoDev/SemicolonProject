@@ -4,7 +4,6 @@ using UnityEngine;
 using Water;
 using UnityEngine.UI;
 using DG.Tweening;
-using Water;
 
 public class CookingManager : MonoSingleton<CookingManager>
 {
@@ -123,11 +122,25 @@ public class CookingManager : MonoSingleton<CookingManager>
 
         foodsPanel.gameObject.SetActive(true);
         CheckCannotMakeFoods();
+        SortMakeFoods();
     }
 
     public void CheckCannotMakeFoods()  //재료 부족으로 못만드는 음식은 인터렉티브 false로
     {
         foodBtnList.FindAll(x=>x.gameObject.activeSelf).ForEach(x => x.button.interactable = x.CanMake());
+    }
+
+    private void SortMakeFoods()
+    {
+        int index = 0;
+        for(int i=0; i<foodBtnList.Count; i++)
+        {
+            if(foodBtnList[i].gameObject.activeSelf && foodBtnList[i].button.interactable)
+            {
+                foodBtnList[i].transform.SetSiblingIndex(index);
+                index++;
+            }
+        }
     }
 
     public void SelectFoodBtn(FoodButton foodBtn)  //음식 제작 창에서 만들 음식 선택
@@ -140,7 +153,7 @@ public class CookingManager : MonoSingleton<CookingManager>
         makeFoodCount = 1;
         foodImg.sprite = selectedFood.GetSprite();
         makeFoodCountText.text = "1";
-        foodNameText.text = selectedFood.foodName;
+        foodNameText.text = selectedFood.itemName;
 
         ingredientImages.ForEach(x => x.gameObject.SetActive(false));
         selectedFoodIngrImgs.Clear();
@@ -193,6 +206,7 @@ public class CookingManager : MonoSingleton<CookingManager>
         selectedFoodIngrImgs.ForEach(x => RemoveItem(x.IngredientInfo.ingredient.id, x.IngredientInfo.needCount * makeFoodCount));
         MakeFoodInfoUIReset();
         CheckCannotMakeFoods();
+        SortMakeFoods();
     }
 
     public void MakeFoodInfoUIReset()
@@ -233,7 +247,7 @@ public class CookingManager : MonoSingleton<CookingManager>
             foreach (ItemInfo item in saveData.userItems.keyValueDic.Values)
             {
                 if(item.itemType == ItemType.CONSUME)
-                   Debug.Log($"{GetFood(item.id).foodName} : {item.count}개");
+                   Debug.Log($"{GetFood(item.id).itemName} : {item.count}개");
             }
         }
     }

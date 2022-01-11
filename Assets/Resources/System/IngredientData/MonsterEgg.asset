@@ -12,5 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 862bc139a7af9f944b9aadc88317b8e2, type: 3}
   m_Name: MonsterEgg
   m_EditorClassIdentifier: 
+  itemSprite: {fileID: 0}
   id: 5
-  ingredientName: "\uBAAC\uC2A4\uD130\uC758 \uC54C"
+  itemName: "\uBAAC\uC2A4\uD130\uC758 \uC54C"

@@ -16,7 +16,7 @@ public class FoodButton : MonoBehaviour
         {
             foodData = value;
             foodImg.sprite = foodData.GetSprite();
-            foodNameText.text = foodData.foodName;
+            foodNameText.text = foodData.itemName;
         }
     }
 

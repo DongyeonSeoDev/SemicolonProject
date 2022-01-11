@@ -13,9 +13,9 @@ public class IngredientImage : MonoBehaviour
     public void SetInfo(IngredientCount ingr)  //만들 음식을 처음 눌렀을 때
     {
         ingredientInfo = ingr;
-        image.sprite = ingr.ingredient.IngredientSprite;
+        image.sprite = ingr.ingredient.GetSprite();
         cntText.text = string.Concat(CookingManager.Instance.GetItemCount(ingr.ingredient.id),"/",ingr.needCount);
-        nameText.text = ingr.ingredient.ingredientName;
+        nameText.text = ingr.ingredient.itemName;
     }
 
     public void UpdateInfo()  //만들 개수 +하거나 -할 때
