@@ -1,0 +1,44 @@
+using System;
+using System.Collections.Generic;
+
+[Serializable]
+public class Stat
+{
+    public EternalStat eternalStat = new EternalStat();
+    public ChoiceStat choiceStat = new ChoiceStat();
+}
+
+[Serializable]
+public class EternalStat
+{
+    public uint hp;
+    //public uint mp;
+
+    public uint damage;
+    public uint defense;
+
+    public uint intellect;
+
+    public float speed;
+    public float criticalRate;
+    public float criticalDamage;
+}
+
+[Serializable]
+public class ChoiceStat
+{
+    public int overweight;
+    public int patience;
+    public int luck;
+
+    public float viscosity;
+    public float humidity;
+
+    public float affinity;
+    public float dominion;
+
+    public float marineLifeFitness;
+    public float landCreatureFitness;
+
+    public float cookingAbility;
+}

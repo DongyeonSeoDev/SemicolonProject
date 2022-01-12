@@ -11,8 +11,15 @@ public class IngredientCount
 }
 
 [Serializable]
-public class TwoList<T,U>
+public class Pair<T,U>
 {
-    public List<T> firstList = new List<T>();
-    public List<U> secondList = new List<U>();
+    public T first;
+    public U second;
+
+    public Pair() { }
+    public Pair(T t, U u)
+    {
+        first = t;
+        second = u;
+    }
 }

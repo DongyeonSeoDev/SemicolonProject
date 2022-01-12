@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6ae80f34d028b34ea450ad167b600e5, type: 3}
   m_Name: GreenTea
   m_EditorClassIdentifier: 
-  itemSprite: {fileID: 21300000, guid: f65023889763c7644b5579f0b019da6b, type: 3}
-  id: 25
+  itemSprite: {fileID: 21300000, guid: e31151344d4c9984d8bfd49611414ebe, type: 3}
+  id: 0
   itemName: "\uB179\uCC28"
   needIngredients:
   - ingredient: {fileID: 11400000, guid: 4b9d20b0d5c08934fbc25d5ee078ce6b, type: 2}
