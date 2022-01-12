@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerBodySlap : PlayerAction
 {
+    private Player player = null;
     [SerializeField]
     private LayerMask canCrashLayer;
     [SerializeField]
@@ -13,7 +14,7 @@ public class PlayerBodySlap : PlayerAction
     [SerializeField]
     private float moveBackSpeed = 8f;
     [SerializeField]
-    private float bodySlapPower = 2f;
+    private float bodySlapMovePower = 2f;
 
     [SerializeField]
     private float bodySlapTime = 3f;
@@ -24,6 +25,7 @@ public class PlayerBodySlap : PlayerAction
     public override void Start()
     {
         base.Start();
+        player = GetComponent<Player>();
 
         SlimeEventManager.StartListening("BodyPointCrash", BodyPointCrash);
     }
@@ -48,19 +50,26 @@ public class PlayerBodySlap : PlayerAction
     {
         if (playerStatus.BodySlapping && bodySlapStart)
         {
-            rigid.AddForce(bodySlapMoveVec * bodySlapPower);
+            rigid.AddForce(bodySlapMoveVec * bodySlapMovePower);
 
-            childRigids.ForEach(x => x.AddForce(bodySlapMoveVec * bodySlapPower));
+            childRigids.ForEach(x => x.AddForce(bodySlapMoveVec * bodySlapMovePower));
         }
     }
     private void OnDisable() 
     {
         SlimeEventManager.StopListening("BodyPointCrash", BodyPointCrash);
     }
-    private void BodyPointCrash(GameObject targetObject)
+    private void BodyPointCrash(GameObject targetObject) // BodyPoint가 특정 오브젝트와 충돌했을 때 호출
     {
         if (canCrashLayer.CheckGameObjectLayer(targetObject) && playerStatus.BodySlapping)
         {
+            Enemy.Enemy enemy = targetObject.GetComponent<Enemy.Enemy>();
+
+            if(enemy != null)
+            {
+                enemy.GetDamage(player.BodySlapDamage);
+            }
+
             StopBodySlap();
         }
     }

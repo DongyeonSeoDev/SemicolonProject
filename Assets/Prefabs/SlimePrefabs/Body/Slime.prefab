@@ -20,7 +20,7 @@ GameObject:
   - component: {fileID: 1014413152}
   m_Layer: 3
   m_Name: Slime
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -208,7 +208,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   bodySlapMoveVec: {x: 0, y: 0}
+  moveBackSpeed: 8
   bodySlapPower: 2
+  bodySlapTime: 3
 --- !u!114 &1014413152
 MonoBehaviour:
   m_ObjectHideFlags: 0
