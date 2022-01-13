@@ -37,7 +37,7 @@ public class SoftBody : MonoBehaviour
 
                 SpringJoint2D springJoint2D = points[0].gameObject.AddComponent<SpringJoint2D>(); // points[0]은 항상 MiddlePoint
                 springJoint2D.connectedBody = itemRigid;
-                springJoint2D.frequency = 20f;
+                springJoint2D.frequency = 10f;
 
                 DistanceJoint2D distanceJoint2D = points[0].gameObject.AddComponent<DistanceJoint2D>();
                 distanceJoint2D.connectedBody = itemRigid;
@@ -51,22 +51,22 @@ public class SoftBody : MonoBehaviour
             notMiddleSpringJoint2D.connectedBody = points[0].GetComponent<Rigidbody2D>();
             notMiddleSpringJoint2D.frequency = 5f;
 
-            // DistanceJoint2D notMiddleDistanceJoint2D = null;
-            // // notMiddlePoints[i].gameObject.AddComponent<DistanceJoint2D>();
-            // // notMiddleDistanceJoint2D.connectedBody = points[0].GetComponent<Rigidbody2D>();
-            // // notMiddleDistanceJoint2D.maxDistanceOnly = true;
+            DistanceJoint2D notMiddleDistanceJoint2D = null;
+            // notMiddlePoints[i].gameObject.AddComponent<DistanceJoint2D>();
+            // notMiddleDistanceJoint2D.connectedBody = points[0].GetComponent<Rigidbody2D>();
+            // notMiddleDistanceJoint2D.maxDistanceOnly = true;
 
-            // // notMiddlePoints[i].gameObject.AddComponent<DistanceJoint2D>().connectedBody = points[0].GetComponent<Rigidbody2D>();
+            // notMiddlePoints[i].gameObject.AddComponent<DistanceJoint2D>().connectedBody = points[0].GetComponent<Rigidbody2D>();
 
             // notMiddleDistanceJoint2D = notMiddlePoints[i].gameObject.AddComponent<DistanceJoint2D>();
             // notMiddleDistanceJoint2D.connectedBody = notMiddlePoints[(i - 1).Limit(0, notMiddlePoints.Count - 1)].GetComponent<Rigidbody2D>();
-            // notMiddleDistanceJoint2D.distance /= 2f;
-            // // notMiddleDistanceJoint2D.maxDistanceOnly = true;
+            // notMiddleDistanceJoint2D.distance *= 2f;
+            // notMiddleDistanceJoint2D.maxDistanceOnly = true;
 
-            // notMiddleDistanceJoint2D = notMiddlePoints[i].gameObject.AddComponent<DistanceJoint2D>();
-            // notMiddleDistanceJoint2D.connectedBody = notMiddlePoints[(i + 1).Limit(0, notMiddlePoints.Count - 1)].GetComponent<Rigidbody2D>();
-            // notMiddleDistanceJoint2D.distance /= 2f;
-            // // notMiddleDistanceJoint2D.maxDistanceOnly = true;
+            notMiddleDistanceJoint2D = notMiddlePoints[i].gameObject.AddComponent<DistanceJoint2D>();
+            notMiddleDistanceJoint2D.connectedBody = notMiddlePoints[(i + 1).Limit(0, notMiddlePoints.Count - 1)].GetComponent<Rigidbody2D>();
+            notMiddleDistanceJoint2D.distance *= 2f;
+            // notMiddleDistanceJoint2D.maxDistanceOnly = true;
 
             SpringJoint2D upNotMiddleSpringJoint2D = notMiddlePoints[i].gameObject.AddComponent<SpringJoint2D>();
             upNotMiddleSpringJoint2D.connectedBody = notMiddlePoints[(i - 1).Limit(0, notMiddlePoints.Count - 1)].GetComponent<Rigidbody2D>();

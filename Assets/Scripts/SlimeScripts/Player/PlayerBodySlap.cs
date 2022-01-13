@@ -52,7 +52,7 @@ public class PlayerBodySlap : PlayerAction
         {
             rigid.AddForce(bodySlapMoveVec * bodySlapMovePower);
 
-            childRigids.ForEach(x => x.AddForce(bodySlapMoveVec * bodySlapMovePower));
+            childRigids.ForEach(x => x.AddForce(Vector2.Lerp(bodySlapMoveVec, bodySlapMoveVec * 0.8f * bodySlapMovePower, Time.fixedDeltaTime)));
         }
     }
     private void OnDisable() 
@@ -61,7 +61,7 @@ public class PlayerBodySlap : PlayerAction
     }
     private void BodyPointCrash(GameObject targetObject) // BodyPoint가 특정 오브젝트와 충돌했을 때 호출
     {
-        if (canCrashLayer.CheckGameObjectLayer(targetObject) && playerStatus.BodySlapping)
+        if (canCrashLayer.CompareGameObjectLayer(targetObject) && playerStatus.BodySlapping)
         {
             Enemy.Enemy enemy = targetObject.GetComponent<Enemy.Enemy>();
 

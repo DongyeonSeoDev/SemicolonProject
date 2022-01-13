@@ -572,13 +572,85 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1014413144, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: speed
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 1014413151, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: bodySlapTime
-      value: 1
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1014413151, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: bodySlapPower
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1014413151, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: moveBackSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1014413151, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: bodySlapMovePower
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 223890499515993509, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: whatIsWall.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 223890499515993509, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: returnToOriginSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 223890499825103935, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: whatIsWall.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 223890499825103935, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: returnToOriginSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 223890500064702189, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: whatIsWall.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 223890500064702189, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: returnToOriginSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 223890500238006653, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: whatIsWall.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 223890500238006653, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: returnToOriginSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 223890500379881161, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: whatIsWall.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 223890500379881161, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: returnToOriginSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2199360685128655093, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 2eaba9daff57f7e479cf64e2895db35e, type: 2}
+    - target: {fileID: 2199360685128655093, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: f062f83712b291443bf9d63a20a7b4ad, type: 2}
+    - target: {fileID: 4871888667747838912, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: whatIsWall.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 4871888667747838912, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: returnToOriginSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5860127214316570770, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: whatIsWall.m_Bits
+      value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 6840160282341942530, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: m_Name
@@ -628,9 +700,45 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6840160282341942541, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_Constraints
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840160282341942542, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_Radius
+      value: 0.75
+      objectReference: {fileID: 0}
     - target: {fileID: 6840160282341942542, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: m_IsTrigger
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6840160282341942543, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_SortingOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8410950880430846925, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: whatIsWall.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 8410950880430846925, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: returnToOriginSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8460718182997540914, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: whatIsWall.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 8460718182997540914, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: returnToOriginSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 9062700903641459272, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: whatIsWall.m_Bits
+      value: 64
+      objectReference: {fileID: 0}
+    - target: {fileID: 9062700903641459272, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: returnToOriginSpeed
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}

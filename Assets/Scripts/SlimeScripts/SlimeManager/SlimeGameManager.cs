@@ -49,7 +49,7 @@ public static class ScriptHelper
 
         return newColor;
     }
-    public static bool CheckGameObjectLayer(this LayerMask layerMask, GameObject targetObj) // targetObj의 layer가 layerMask안에 있는지 체크
+    public static bool CompareGameObjectLayer(this LayerMask layerMask, GameObject targetObj) // targetObj의 layer가 layerMask안에 있는지 체크
     {
         int layer = 2 << targetObj.layer - 1;
 
@@ -83,15 +83,5 @@ public static class ScriptHelper
 }
 public class SlimeGameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
 
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }
