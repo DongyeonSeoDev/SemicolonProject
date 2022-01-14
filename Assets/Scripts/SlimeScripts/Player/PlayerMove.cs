@@ -26,7 +26,7 @@ public class PlayerMove : PlayerAction
 
             rigid.velocity = MoveVec;
 
-            childRigids.ForEach(x => x.velocity = Vector2.Lerp(x.velocity, -MoveVec * 2f, Time.deltaTime));
+            childRigids.ForEach(x => x.velocity = Vector2.Lerp(x.velocity, MoveVec * 0.8f, Time.deltaTime));
         }
     }
 }
