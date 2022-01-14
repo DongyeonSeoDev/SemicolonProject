@@ -1,23 +1,29 @@
 using System.Collections.Generic;
-using UnityEngine;
 using System;
 
 namespace Water
 {
-    //임시 코드
     [Serializable]
     public class SaveData
     {
-        public SaveDic<int, ItemInfo> userItems = new SaveDic<int, ItemInfo>();
+        public Option option = new Option();
+        public Stat playerStat = new Stat();
+        public UserInfo userInfo = new UserInfo();
 
         public void Save()
         {
-            userItems.Save();
+            userInfo.userItems.Save();
         }
         public void Load()
         {
-            userItems.Load();
+            userInfo.userItems.Load();
         }
+    }
+
+    [Serializable]
+    public class UserInfo
+    {
+        public SaveDic<int, ItemInfo> userItems = new SaveDic<int, ItemInfo>();
     }
 
     [Serializable]
@@ -34,6 +40,12 @@ namespace Water
             this.count = count;
             this.itemType = type;
         }
+    }
+
+    [Serializable]
+    public class Option
+    {
+
     }
 
     [Serializable]

@@ -2,26 +2,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-public class UtilMenu 
+namespace Water
 {
-    [MenuItem("Resource Manage/Data/Set Item ID")]
-    static void SetResourceID()
+    public class UtilMenu
     {
-        int index = 0;
-        int offset = 5;
-
-        foreach (Food food in Resources.LoadAll<Food>("System/FoodData/"))
+        [MenuItem("Resource Manage/Data/Set Item ID")]
+        static void SetResourceID()
         {
-            food.id = index;
-            index += offset;
+            int index = 0;
+            int offset = 5;
+
+            foreach (Food food in Resources.LoadAll<Food>(Global.foodDataPath))
+            {
+                food.id = index;
+                index += offset;
+            }
+
+            foreach (Ingredient ingredient in Resources.LoadAll<Ingredient>(Global.ingredientDataPath))
+            {
+                ingredient.id = index;
+                index += offset;
+            }
         }
 
-        foreach (Ingredient ingredient in Resources.LoadAll<Ingredient>("System/IngredientData/"))
-        {
-            ingredient.id = index;
-            index += offset;
-        }
+
     }
-
-    
 }

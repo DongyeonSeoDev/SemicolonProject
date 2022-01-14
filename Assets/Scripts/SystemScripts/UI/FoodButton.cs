@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Water;
 
 public class FoodButton : MonoBehaviour
 {
@@ -34,7 +35,7 @@ public class FoodButton : MonoBehaviour
     {
         for(int i=0; i<foodData.needIngredients.Count; i++)
         {
-            if(CookingManager.Instance.GetItemCount(foodData.needIngredients[i].ingredient.id)< foodData.needIngredients[i].needCount)
+            if(GameManager.Instance.GetItemCount(foodData.needIngredients[i].ingredient.id)< foodData.needIngredients[i].needCount)
             {
                 return false;
             }

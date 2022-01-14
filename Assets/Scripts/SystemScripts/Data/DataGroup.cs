@@ -23,3 +23,36 @@ public class Pair<T,U>
         second = u;
     }
 }
+
+public class ActionGroup
+{
+    public Action voidAction;
+    public Action<MonoBehaviour> monoAction;
+    public Action<object> objAction;
+
+    public ActionGroup(Action voidAction)
+    {
+        this.voidAction = voidAction;
+    }
+    public ActionGroup(Action<MonoBehaviour> monoAction)
+    {
+        this.monoAction = monoAction;
+    }
+    public ActionGroup(Action<object> objAction)
+    {
+        this.objAction = objAction;
+    }
+
+    public void ActionTrigger()
+    {
+        voidAction?.Invoke();
+    }
+    public void ActionTrigger(MonoBehaviour mono)
+    {
+        monoAction?.Invoke(mono);
+    }
+    public void ActionTrigger(object obj)
+    {
+        objAction?.Invoke(obj);
+    }
+}
