@@ -8,6 +8,9 @@ public abstract class ItemSO : ScriptableObject
     public int id;
     public string itemName;
 
+    [TextArea]
+    public string explanation;
+
     public virtual Sprite GetSprite()
     {
         return itemSprite;

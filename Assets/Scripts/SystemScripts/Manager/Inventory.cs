@@ -29,9 +29,14 @@ public class Inventory : MonoSingleton<Inventory>
     {
         gm = GameManager.Instance;
 
+        int i = 0;
         foreach(ItemInfo item in gm.savedData.userInfo.userItems.keyValueDic.Values)
         {
-
+            if(i<maxItemSlotCount)
+            {
+                itemSlots[i].SetData(item);
+                i++;
+            }
         }
     }
 }

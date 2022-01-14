@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using Water;
 
+[DisallowMultipleComponent]
 public class IngredientImage : MonoBehaviour
 {
     [SerializeField] private Image image;

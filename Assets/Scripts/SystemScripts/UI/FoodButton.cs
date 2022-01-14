@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Water;
 
+[DisallowMultipleComponent]
 public class FoodButton : MonoBehaviour
 {
     [HideInInspector] public Button button;

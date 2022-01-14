@@ -49,6 +49,8 @@ namespace Water
     {
         //Resources 폴더 속 경로
 
+        public const string itemTypeSpritePath = "System/Sprites/ItemType/";
+
         public const string foodSpritePath = "System/Sprites/Food/";
         public const string ingredientSpritePath = "System/Sprites/Ingredient/";
 
@@ -59,8 +61,20 @@ namespace Water
         public const string MakeFood = "MakeFood"; //음식을 만들었을 때의 이벤트 키
 
         private static Dictionary<string, ActionGroup> stringToActionDict = new Dictionary<string, ActionGroup>();
+
+        private static Sprite[] itemTypeSprites = new Sprite[Enum.GetValues(typeof(ItemType)).Length];
     }
 
+    public partial class Global
+    {
+        public static Sprite GetItemTypeSpr(ItemType type)
+        {
+            int index = (int)type;
+            if (!itemTypeSprites[index])
+                itemTypeSprites[index] = Resources.Load<Sprite>(itemTypeSpritePath + type.ToString());
+            return itemTypeSprites[index];
+        }
+    }
 
     public partial class Global
     {
