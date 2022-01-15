@@ -39,4 +39,15 @@ public class Inventory : MonoSingleton<Inventory>
             }
         }
     }
+
+    public ItemSlot FindSlot(int id)
+    {
+        for(int i=0; i<itemSlots.Count; ++i)
+        {
+            if (itemSlots[i].itemInfo.id == id) return itemSlots[i];
+        }
+
+        Debug.Log($"인벤토리에서 id가 {id}인 아이템을 찾지 못함.");
+        return null;
+    }
 }

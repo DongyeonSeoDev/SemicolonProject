@@ -20,6 +20,13 @@ namespace Water
         public GameObject foodBtnPrefab, ingredientImgPrefab;
         public Transform foodBtnParent, ingredientImgParent;
         
+        [Serializable]
+        class Test
+        {
+            public int a;
+            public int b;
+        }
+
         private void Awake()
         {
             filePath = Util.GetFilePath(saveFileName_1);
@@ -132,7 +139,7 @@ namespace Water
         #region OnApplication
         private void OnApplicationQuit()
         {
-            //Save();
+            Save();
         }
         private void OnApplicationFocus(bool focus)
         {
