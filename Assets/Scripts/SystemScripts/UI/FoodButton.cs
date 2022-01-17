@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Water;
+using TMPro;
 
 [DisallowMultipleComponent]
 public class FoodButton : MonoBehaviour
@@ -38,9 +39,11 @@ public class FoodButton : MonoBehaviour
         {
             if(GameManager.Instance.GetItemCount(foodData.needIngredients[i].ingredient.id)< foodData.needIngredients[i].needCount)
             {
+                GetComponent<UIScale>().transitionEnable = false;
                 return false;
             }
         }
+        GetComponent<UIScale>().transitionEnable = true;
         return true;
     }
 }

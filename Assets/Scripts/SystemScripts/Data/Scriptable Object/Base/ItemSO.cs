@@ -5,6 +5,8 @@ public abstract class ItemSO : ScriptableObject
 {
     [SerializeField] protected Sprite itemSprite;
 
+    public ItemType itemType;
+
     public int id;
     public string itemName;
 

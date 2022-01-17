@@ -8,7 +8,18 @@ namespace Water
 {
     public class GameUI : MonoBehaviour
     {
+        private RectTransform rectTrm;
+        private Vector3 originPos;
+
+        [SerializeField] private CanvasGroup cvsg;
+
         public UIType _UItype;
+
+        private void Awake()
+        {
+            rectTrm = GetComponent<RectTransform>();
+            originPos = rectTrm.anchoredPosition;
+        }
 
         protected virtual void OnEnable()
         {
@@ -20,10 +31,22 @@ namespace Water
             switch (type)
             {
                 case UIType.CHEF_FOODS_PANEL:
-                    UIManager.Instance.UpdateUIStack(this); //Test Code
+                    cvsg.alpha = 0f;
+                    transform.localScale = Global.zeroPointSeven;
+
+                    transform.DOScale(Vector3.one, Global.fullScaleTransitionTime03).SetEase(Ease.OutBack).SetUpdate(true);
+                    cvsg.DOFade(1, Global.fullAlphaTransitionTime04)
+                    .SetUpdate(true).OnComplete(() => UIManager.Instance.UpdateUIStack(this));
+
                     break;
 
                 case UIType.PRODUCTION_PANEL:
+                    cvsg.alpha = 0f;
+                    rectTrm.anchoredPosition = new Vector2(originPos.x - 150f, originPos.y);
+
+                    rectTrm.DOAnchorPos(originPos, Global.slideTransitionTime03).SetUpdate(true);
+                    cvsg.DOFade(1, Global.fullAlphaTransitionTime04)
+                    .SetUpdate(true).OnComplete(() => UIManager.Instance.UpdateUIStack(this));
                     break;
 
                 case UIType.INVENTORY:
@@ -39,10 +62,16 @@ namespace Water
             switch (_UItype)
             {
                 case UIType.CHEF_FOODS_PANEL:
-                    UIManager.Instance.UpdateUIStack(this,false); //Test Code
+
+                    float time = Global.fullAlphaTransitionTime04;
+                    transform.DOScale(Global.zeroPointSeven, time).SetEase(Ease.InBack).SetUpdate(true);
+                    cvsg.DOFade(0, time).SetUpdate(true).OnComplete(() => UIManager.Instance.UpdateUIStack(this, false));
+                     
                     break;
 
                 case UIType.PRODUCTION_PANEL:
+                    rectTrm.DOAnchorPos(new Vector2(originPos.x - 150f, originPos.y), Global.slideTransitionTime03).SetUpdate(true);
+                    cvsg.DOFade(0, Global.fullAlphaTransitionTime04).SetUpdate(true).OnComplete(() => UIManager.Instance.UpdateUIStack(this,false));
                     break;
 
                 case UIType.INVENTORY:

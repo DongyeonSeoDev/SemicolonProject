@@ -20,12 +20,8 @@ namespace Water
         public GameObject foodBtnPrefab, ingredientImgPrefab;
         public Transform foodBtnParent, ingredientImgParent;
         
-        [Serializable]
-        class Test
-        {
-            public int a;
-            public int b;
-        }
+        public int InventoryItemCount 
+        { get { return savedData.userInfo.userItems.keyValueDic.Keys.Count; } }
 
         private void Awake()
         {
@@ -89,19 +85,20 @@ namespace Water
                 fb.FoodData = allFoods[i];
                 fbList.Add(fb);
             }
-            Global.AddAction("SetFoodBtnList", x => x.GetComponent<CookingManager>().FoodBtnList = fbList );
+            Global.AddMonoAction("SetFoodBtnList", x => x.GetComponent<CookingManager>().FoodBtnList = fbList);
             
             foreach (Ingredient ing in Resources.LoadAll<Ingredient>(Global.ingredientDataPath))
             {
                 itemDataDic.Add(ing.id, ing);
                 igdImgList.Add(Instantiate(ingredientImgPrefab, ingredientImgParent).GetComponent<IngredientImage>());
             }
-            Global.AddAction("SetIngredientImgList", x => x.GetComponent<CookingManager>().IngredientImages = igdImgList);
+            Global.AddMonoAction("SetIngredientImgList", x => x.GetComponent<CookingManager>().IngredientImages = igdImgList);
         }
 
         #region Item
 
         public ItemSO GetItemData(int id) => itemDataDic[id];
+        public bool ExistItem(int id) => itemDataDic.ContainsKey(id);
 
         public int GetItemCount(int id) //보유중인 해당 id의 아이템 개수 가져옴 
         {

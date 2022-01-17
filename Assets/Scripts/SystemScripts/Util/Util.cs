@@ -59,13 +59,14 @@ namespace Water
 
         public const string TalkWithChef = "TalkWithChef"; //요리사 NPC와 대화했을 때의 이벤트 키
         public const string MakeFood = "MakeFood"; //음식을 만들었을 때의 이벤트 키
+        public const string AcquisitionItem = "AcquisitionItem"; //아이템 획득 시 이벤트 키
 
         private static Dictionary<string, ActionGroup> stringToActionDict = new Dictionary<string, ActionGroup>();
 
         private static Sprite[] itemTypeSprites = new Sprite[Enum.GetValues(typeof(ItemType)).Length];
     }
 
-    public partial class Global
+    public static partial class Global
     {
         public static Sprite GetItemTypeSpr(ItemType type)
         {
@@ -76,7 +77,7 @@ namespace Water
         }
     }
 
-    public partial class Global
+    public static partial class Global
     {
         public static void AddAction(string key, Action action)
         {
@@ -86,7 +87,7 @@ namespace Water
                 stringToActionDict.Add(key, new ActionGroup(action));
         }
 
-        public static void AddAction(string key, Action<MonoBehaviour> action)
+        public static void AddMonoAction(string key, Action<MonoBehaviour> action) 
         {
             if (stringToActionDict.ContainsKey(key))
                 stringToActionDict[key].monoAction += action;
@@ -106,7 +107,7 @@ namespace Water
             if (stringToActionDict.ContainsKey(key))
                 stringToActionDict[key].voidAction -= action;
         }
-        public static void RemoveAction(string key, Action<MonoBehaviour> action)
+        public static void RemoveMonoAction(string key, Action<MonoBehaviour> action)
         {
             if (stringToActionDict.ContainsKey(key))
                 stringToActionDict[key].monoAction -= action;
@@ -121,7 +122,7 @@ namespace Water
         {
             stringToActionDict[key].ActionTrigger();
         }
-        public static void ActionTrigger(string key, MonoBehaviour mono)
+        public static void MonoActionTrigger(string key, MonoBehaviour mono)
         {
             stringToActionDict[key].ActionTrigger(mono);
         }
@@ -135,5 +136,7 @@ namespace Water
             if (stringToActionDict.ContainsKey(key))
                 stringToActionDict.Remove(key);
         }
+
+        public static void RemoveAllKeys() => stringToActionDict.Clear();
     }
 }

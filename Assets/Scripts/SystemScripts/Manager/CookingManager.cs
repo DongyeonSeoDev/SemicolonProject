@@ -27,12 +27,13 @@ public class CookingManager : MonoSingleton<CookingManager>
 
     private Dictionary<int, FoodButton> foodBtnDic = new Dictionary<int, FoodButton>();  
 
-    private FoodButton selectedFoodBtn;  //음식 만들기 창에서 자신이 선택한 음식 버튼
+    private FoodButton selectedFoodBtn = null;  //음식 만들기 창에서 자신이 선택한 음식 버튼
     private List<IngredientImage> selectedFoodIngrImgs = new List<IngredientImage>(); //만들 음식 선택하고 보여지는 필요 재료 UI들
 
     [Space(15)]
     [SerializeField] private List<FoodButton> foodBtnList = new List<FoodButton>(); // (음식 제작 창에서) 음식 버튼 리스트
     [SerializeField] private List<IngredientImage> ingredientImages = new List<IngredientImage>(); //(음식 제작 창에서) 재료 정보 UI들
+
     public List<FoodButton> FoodBtnList { get { return foodBtnList; } set { foodBtnList = value; } }
     public List<IngredientImage> IngredientImages { get { return ingredientImages; } set { ingredientImages = value; } }
 
@@ -44,8 +45,8 @@ public class CookingManager : MonoSingleton<CookingManager>
     public Text makeFoodCountText; //만드려는(선택한) 음식 개수 텍스트
     public Text foodNameText; //음식이름
 
-    public CanvasGroup foodsPanel;
-    public CanvasGroup makeFoodPanel; //선택한 음식 정보 패널
+    //public CanvasGroup foodsPanel;
+    //public CanvasGroup makeFoodPanel; //선택한 음식 정보 패널
 
     public Button countPlusBtn, countMinusBtn; //음식 제작 개수 늘리기(줄이기) 버튼
 
@@ -57,8 +58,8 @@ public class CookingManager : MonoSingleton<CookingManager>
 
     private void SetData()
     {
-        Global.ActionTrigger("SetFoodBtnList", this);
-        Global.ActionTrigger("SetIngredientImgList", this);
+        Global.MonoActionTrigger("SetFoodBtnList", this);
+        Global.MonoActionTrigger("SetIngredientImgList", this);
         Global.RemoveKey("SetFoodBtnList");
         Global.RemoveKey("SetIngredientImgList");
 
@@ -69,7 +70,7 @@ public class CookingManager : MonoSingleton<CookingManager>
 
         countPlusBtn.onClick.AddListener(() => ChangeMakeFoodCount(true));
         countMinusBtn.onClick.AddListener(() => ChangeMakeFoodCount(false));
-        Global.AddAction(Global.TalkWithChef, x => ShowFoodList(x.GetComponent<Chef>()) );
+        Global.AddMonoAction(Global.TalkWithChef, x => ShowFoodList((Chef)x));
         Global.AddAction(Global.MakeFood, item =>
         {
             gm.AddItem(item as ItemInfo);
@@ -77,6 +78,7 @@ public class CookingManager : MonoSingleton<CookingManager>
             MakeFoodInfoUIReset();
             CheckCannotMakeFoods();
             SortMakeFoods();
+            UIManager.Instance.OnUIInteract(UIType.PRODUCTION_PANEL);
         });
     }
 
@@ -88,7 +90,7 @@ public class CookingManager : MonoSingleton<CookingManager>
             foodBtnDic[x.id].gameObject.SetActive(true);
         });
 
-        foodsPanel.gameObject.SetActive(true);
+        UIManager.Instance.OnUIInteract(UIType.CHEF_FOODS_PANEL);
         CheckCannotMakeFoods();
         SortMakeFoods();
     }
@@ -115,6 +117,7 @@ public class CookingManager : MonoSingleton<CookingManager>
     {
         if (selectedFoodBtn == foodBtn) return;
 
+        bool first = !selectedFoodBtn;
         selectedFoodBtn = foodBtn;
         Food selectedFood = selectedFoodBtn.FoodData;
 
@@ -134,7 +137,9 @@ public class CookingManager : MonoSingleton<CookingManager>
         }
 
         CheckAmount();
-        makeFoodPanel.gameObject.SetActive(true);
+
+        if(first)
+           UIManager.Instance.OnUIInteract(UIType.PRODUCTION_PANEL);
     }
 
     public void CheckAmount() //만들 음식의 개수를 늘리거나 줄일 수 있는지 확인해서 + - 버튼의 상호작용을 설정함
@@ -169,12 +174,12 @@ public class CookingManager : MonoSingleton<CookingManager>
 
     public void MakeFood()  //음식 제작
     {
-        Global.ActionTrigger(Global.MakeFood, new ItemInfo(selectedFoodBtn.FoodData.id, makeFoodCount, ItemType.CONSUME));
+        Global.ActionTrigger(Global.MakeFood, new ItemInfo(selectedFoodBtn.FoodData.id, makeFoodCount));
     }
 
     public void MakeFoodInfoUIReset()
     {
-        makeFoodPanel.gameObject.SetActive(false);
+        
         selectedFoodBtn = null;
     }
 
@@ -191,26 +196,20 @@ public class CookingManager : MonoSingleton<CookingManager>
         }
         else if(Input.GetKeyDown(KeyCode.LeftControl))
         {
-            Global.ActionTrigger(Global.TalkWithChef, testChef);
-        }
-        else if(Input.GetKeyDown(KeyCode.Z))
-        {
-            MakeFoodInfoUIReset();
-            foodsPanel.gameObject.SetActive(false);
+            Global.MonoActionTrigger(Global.TalkWithChef, testChef);
         }
         else if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            gm.AddItem(new ItemInfo(10, 10, ItemType.ETC));
-            gm.AddItem(new ItemInfo(15, 10, ItemType.ETC));
-            gm.AddItem(new ItemInfo(20, 10, ItemType.ETC));
-            gm.AddItem(new ItemInfo(25, 10, ItemType.ETC));
+            gm.AddItem(new ItemInfo(10, 10));
+            gm.AddItem(new ItemInfo(15, 10));
+            gm.AddItem(new ItemInfo(20, 10));
+            gm.AddItem(new ItemInfo(25, 10));
         }
         else if(Input.GetKeyDown(KeyCode.A))
         {
             foreach (ItemInfo item in gm.savedData.userInfo.userItems.keyValueDic.Values)
             {
-                if(item.itemType == ItemType.CONSUME)
-                   Debug.Log($"{gm.GetItemData(item.id).itemName} : {item.count}개");
+                Debug.Log($"{gm.GetItemData(item.id).itemName} : {item.count}개");
             }
         }
     }

@@ -29,9 +29,9 @@ namespace Water
             }
         }
 
-        public void OnUIInteract(UIType type)
+        public void OnUIInteract(UIType type, bool ignoreQueue = false)
         {
-            if (activeUIQueue.Count > 0) return;
+            if (activeUIQueue.Count > 0 && !ignoreQueue) return;
 
             activeUIQueue.Enqueue(false);
             GameUI ui = gameUIList[(int)type];
@@ -51,14 +51,33 @@ namespace Water
             if(add)
             {
                 activeUIList.Add(ui);
+                ActiveSpecialProcess(ui._UItype);
             }
             else
             {
                 activeUIList.Remove(ui);
+                ui.gameObject.SetActive(false);
+                InActiveSpecialProcess(ui._UItype);
             }
             activeUIQueue.Dequeue();
         }
 
-   
+        private void ActiveSpecialProcess(UIType type)
+        {
+            switch(type)
+            {
+
+            }
+        }
+
+        private void InActiveSpecialProcess(UIType type)
+        {
+            switch (type)
+            {
+                case UIType.PRODUCTION_PANEL:
+                    CookingManager.Instance.MakeFoodInfoUIReset();
+                    break;
+            }
+        }
     }
 }

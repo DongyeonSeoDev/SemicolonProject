@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: MonsterEgg
   m_EditorClassIdentifier: 
   itemSprite: {fileID: 0}
+  itemType: 2
   id: 5
   itemName: "\uBAAC\uC2A4\uD130\uC758 \uC54C"
+  explanation: 

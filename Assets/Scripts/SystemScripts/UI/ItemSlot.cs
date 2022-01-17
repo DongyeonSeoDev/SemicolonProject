@@ -20,7 +20,7 @@ public class ItemSlot : MonoBehaviour
 
         ItemSO data = GameManager.Instance.GetItemData(item.id);
         itemImg.sprite = data.GetSprite();
-        itemTypeImg.sprite = Global.GetItemTypeSpr(item.itemType);
+        itemTypeImg.sprite = Global.GetItemTypeSpr(data.itemType);
         itemNameTxt.text = data.itemName;
         itemCountTxt.text = item.count.ToString();
         root.SetActive(true);
@@ -32,8 +32,7 @@ public class ItemSlot : MonoBehaviour
         this.itemInfo = null;
     }
 
-    public void OnPointer(bool on)
-    {
-        transform.DOScale(on? Global.pointerEnterUIScale : Vector3.one, Global.fullScaleTransitionTime).SetUpdate(true);
-    }
+    public void UpdateCount(int count) => itemCountTxt.text = count.ToString();
+
+    
 }

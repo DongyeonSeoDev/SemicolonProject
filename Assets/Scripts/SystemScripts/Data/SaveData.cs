@@ -31,14 +31,12 @@ namespace Water
     {
         public int id;
         public int count;
-        public ItemType itemType;
 
         public ItemInfo() { }
-        public ItemInfo(int id, int count, ItemType type)
+        public ItemInfo(int id, int count)
         {
             this.id = id;
             this.count = count;
-            this.itemType = type;
         }
     }
 

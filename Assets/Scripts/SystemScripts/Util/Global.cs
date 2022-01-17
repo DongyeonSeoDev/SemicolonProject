@@ -4,12 +4,14 @@ using UnityEngine;
 
 namespace Water
 {
-    public partial class Global
+    public static partial class Global
     {
-        public static float slideTransitionTime = 0.3f;
-        public static float fullAlphaTransitionTime = 0.4f;
-        public static float fullScaleTransitionTime = 0.5f;
+        public static float slideTransitionTime03 = 0.3f;
+        public static float fullAlphaTransitionTime04 = 0.4f;
+        public static float fullScaleTransitionTime05 = 0.5f;
+        public static float fullScaleTransitionTime03 = 0.3f;
 
-        public static Vector3 pointerEnterUIScale = new Vector3(1.3f, 1.3f, 1.3f);
+        public static Vector3 onePointThree = new Vector3(1.3f, 1.3f, 1.3f);
+        public static Vector3 zeroPointSeven = new Vector3(0.7f, 0.7f, 0.7f);
     }
 }
