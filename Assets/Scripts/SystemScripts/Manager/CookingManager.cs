@@ -144,8 +144,12 @@ public class CookingManager : MonoSingleton<CookingManager>
 
     public void CheckAmount() //만들 음식의 개수를 늘리거나 줄일 수 있는지 확인해서 + - 버튼의 상호작용을 설정함
     {
-        countMinusBtn.interactable = !(makeFoodCount == 1);
-        countPlusBtn.interactable = CanCountPlus();
+        bool bMinus = !(makeFoodCount == 1);
+        bool bPlus = CanCountPlus();
+        countMinusBtn.interactable = bMinus;
+        countPlusBtn.interactable = bPlus;
+        countMinusBtn.GetComponent<UIScale>().transitionEnable = bMinus;
+        countPlusBtn.GetComponent<UIScale>().transitionEnable = bPlus;
     }
 
     private bool CanCountPlus()  //만들 음식 개수 +1 가능?

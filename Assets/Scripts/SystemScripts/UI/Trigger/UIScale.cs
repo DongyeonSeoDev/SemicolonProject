@@ -31,6 +31,6 @@ public class UIScale : MonoBehaviour
 
     public void OnPointer(bool on)
     {
-        transform.DOScale(on && transitionEnable ? Global.onePointThree : Vector3.one, Global.fullScaleTransitionTime05).SetUpdate(true);
+        transform.DOScale(on && transitionEnable ? Global.onePointTwo : Vector3.one, Global.fullScaleTransitionTime05).SetUpdate(true);
     }
 }
