@@ -2,75 +2,75 @@ using UnityEngine;
 
 namespace Enemy
 {
-    public partial class Move : State // 움직임 상태
+    public partial class EnemyMoveState : EnemyState // 움직임 상태
     {
         protected override void StateChangeCondition()
         {
             if (AnyStateChangeState()) { }
             else if (enemyData.IsSeePlayer())
             {
-                ChangeState(new Chase(enemyData));
+                ChangeState(new EnemyChaseState(enemyData));
             }
             else if (enemyData.IsAttackPlayer())
             {
-                ChangeState(new Attack(enemyData));
+                ChangeState(new EnemyAttackState(enemyData));
             }
         }
     }
 
-    public partial class Chase : State // 추격 상태
+    public partial class EnemyChaseState : EnemyState // 추격 상태
     {
         protected override void StateChangeCondition()
         {
             if (AnyStateChangeState()) { }
             else if (!enemyData.IsSeePlayer())
             {
-                ChangeState(new Move(enemyData));
+                ChangeState(new EnemyMoveState(enemyData));
             }
             else if (enemyData.IsAttackPlayer())
             {
-                ChangeState(new Attack(enemyData));
+                ChangeState(new EnemyAttackState(enemyData));
             }
         }
     }
 
-    public partial class Attack : State // 공격 상태
+    public partial class EnemyAttackState : EnemyState // 공격 상태
     {
         protected override void StateChangeCondition()
         {
             if (AnyStateChangeState()) { }
             else if (!enemyData.IsSeePlayer())
             {
-                ChangeState(new Move(enemyData));
+                ChangeState(new EnemyMoveState(enemyData));
             }
             else if (!enemyData.IsAttackPlayer())
             {
-                ChangeState(new Chase(enemyData));
+                ChangeState(new EnemyChaseState(enemyData));
             }
         }
     }
 
-    public partial class GetDamaged : State // 데미지를 받았을때
+    public partial class EnemyGetDamagedState : EnemyState // 데미지를 받았을때
     {
         protected override void StateChangeCondition()
         {
             if (AnyStateChangeState()) { }
             else if (enemyData.IsSeePlayer())
             {
-                ChangeState(new Chase(enemyData));
+                ChangeState(new EnemyChaseState(enemyData));
             }
             else if (enemyData.IsAttackPlayer())
             {
-                ChangeState(new Attack(enemyData));
+                ChangeState(new EnemyAttackState(enemyData));
             }
             else
             {
-                ChangeState(new Move(enemyData));
+                ChangeState(new EnemyMoveState(enemyData));
             }
         }
     }
 
-    public partial class Dead : State // 죽었을때
+    public partial class EnemyDeadState : EnemyState // 죽었을때
     {
         protected override void StateChangeCondition() 
         {
@@ -78,17 +78,17 @@ namespace Enemy
         }
     }
 
-    public partial class State
+    public partial class EnemyState
     {
         public bool AnyStateChangeState()
         {
             if (enemyData.isDamaged)
             {
-                ChangeState(new GetDamaged(enemyData));
+                ChangeState(new EnemyGetDamagedState(enemyData));
             }
             else if (enemyData.hp <= 0)
             {
-                ChangeState(new Dead(enemyData));
+                ChangeState(new EnemyDeadState(enemyData));
             }
             else
             {

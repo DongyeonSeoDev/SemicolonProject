@@ -2,14 +2,14 @@ using UnityEngine;
 
 namespace Enemy
 {
-    public class EnemyMove : Command // 적 움직임
+    public class EnemyMoveAIControllerCommand : EnemyCommand // 적 움직임
     {
         private EnemyMoveSO enemyMoveSO;
         private Transform enemyPosition;
 
         private Vector3 targetPosition;
 
-        public EnemyMove(EnemyMoveSO enemyMoveSO, Transform enemyPosition)
+        public EnemyMoveAIControllerCommand(EnemyMoveSO enemyMoveSO, Transform enemyPosition)
         {
             this.enemyMoveSO = enemyMoveSO;
             this.enemyPosition = enemyPosition;
@@ -31,7 +31,15 @@ namespace Enemy
         }
     }
 
-    public class EnemyFollowPlayer : Command // 적 움직임
+    public class EnemyMovePlayerControllerCommand : EnemyCommand // 적 움직임
+    {
+        public override void Execute()
+        {
+            Debug.Log("플레이어 움직임 코드 작성");
+        }
+    }
+
+    public class EnemyFollowPlayerCommand : EnemyCommand // 적 움직임
     {
         private Transform enemyObject;
         private Transform followObject;
@@ -40,7 +48,7 @@ namespace Enemy
 
         private float followSpeed;
 
-        public EnemyFollowPlayer(Transform enemyObject, Transform followObject, float followSpeed)
+        public EnemyFollowPlayerCommand(Transform enemyObject, Transform followObject, float followSpeed)
         {
             this.enemyObject = enemyObject;
             this.followObject = followObject;
@@ -60,13 +68,13 @@ namespace Enemy
         }
     }
 
-    public class EnemyGetDamaged : Command // 적이 데미지를 받음
+    public class EnemyGetDamagedAIControllerCommand : EnemyCommand // 적이 데미지를 받음
     {
         private EnemyData enemyData;
 
         private bool isWorking = false;
 
-        public EnemyGetDamaged(EnemyData enemyData)
+        public EnemyGetDamagedAIControllerCommand(EnemyData enemyData)
         {
             this.enemyData = enemyData;
             isWorking = false;
@@ -93,11 +101,19 @@ namespace Enemy
         }
     }
 
-    public class EnemyDead : Command // 적이 죽음
+    public class EnemyGetDamagedPlayerControllerCommand : EnemyCommand
+    {
+        public override void Execute()
+        {
+            Debug.Log("플레이어가 데미지를 입는 코드 작성");   
+        }
+    }
+
+    public class EnemyDeadAIControllerCommand : EnemyCommand // 적이 죽음
     {
         private GameObject enemyObject; 
 
-        public EnemyDead(GameObject enemyObj)
+        public EnemyDeadAIControllerCommand(GameObject enemyObj)
         {
             enemyObject = enemyObj;
         }
@@ -105,6 +121,14 @@ namespace Enemy
         public override void Execute()
         {
             GameObject.Destroy(enemyObject);
+        }
+    }
+
+    public class EnemyDeadPlayerControllerCommand : EnemyCommand // 적이 죽음
+    {
+        public override void Execute()
+        {
+            Debug.Log("플레이어가 죽는 코드 작성");
         }
     }
 }

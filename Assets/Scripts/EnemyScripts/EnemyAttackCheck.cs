@@ -17,7 +17,16 @@ namespace Enemy
         {
             if (collision.CompareTag("Player"))
             {
-                collision.GetComponent<EnemyAttackTest>().EnemyAttack(attackDamage);
+                Player player = collision.GetComponent<Player>();
+                
+                if (player != null)
+                {
+                    collision.GetComponent<Player>().GetDamage(attackDamage);
+                }
+                else
+                {
+                    collision.GetComponent<EnemyAttackTest>().EnemyAttack(attackDamage);
+                }
             }
         }
     }

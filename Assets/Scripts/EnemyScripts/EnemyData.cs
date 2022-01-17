@@ -2,8 +2,16 @@ using UnityEngine;
 
 namespace Enemy
 {
+    public enum EnemyController
+    { 
+        AI,
+        PLAYER
+    }
+
     public class EnemyData
     {
+        public EnemyController eEnemyController;
+
         public GameObject enemyObject;
         public EnemyMoveSO enemyMoveSO;
         public Animator enemyAnimator;

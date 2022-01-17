@@ -7,7 +7,7 @@ namespace Enemy
     {
         public EnemyMoveSO enemyMoveSO;
 
-        private State currentState;
+        private EnemyState currentState;
         private EnemyData enemyData;
 
         private SpriteRenderer sr;
@@ -20,13 +20,14 @@ namespace Enemy
 
             enemyData = new EnemyData()
             {
+                eEnemyController = EnemyController.AI,
                 enemyObject = gameObject,
                 enemyMoveSO = enemyMoveSO,
                 enemyAnimator = GetComponent<Animator>(),
                 enemySpriteRenderer = sr
             };
 
-            currentState = new Move(enemyData);
+            currentState = new EnemyMoveState(enemyData);
 
             lastPositionX = transform.position.x;
         }
