@@ -26,6 +26,13 @@ public class PlayerInput : MonoBehaviour
         set { isShoot = value; }
     }
 
+    private bool isDrain = false;
+    public bool IsDrain
+    {
+        get { return isDrain; }
+        set { isDrain = value; }
+    }
+
     private void Start()
     {
         playerStatus = GetComponent<PlayerStatus>();
@@ -41,9 +48,14 @@ public class PlayerInput : MonoBehaviour
             isBodySlap = true;
         }
 
-        if(Input.GetButtonDown("Shoot")) // left ctrl
+        if (Input.GetButtonDown("Shoot")) // left ctrl
         {
             isShoot = true;
+        }
+
+        if (Input.GetButtonDown("Drain"))
+        {
+            isDrain = true;
         }
     }
     private void FixedUpdate()

@@ -51,9 +51,9 @@ public static class ScriptHelper
     }
     public static bool CompareGameObjectLayer(this LayerMask layerMask, GameObject targetObj) // targetObj의 layer가 layerMask안에 있는지 체크
     {
-        int layer = 2 << targetObj.layer - 1;
+        int layer = 1 << targetObj.layer;
 
-        return layerMask == (layerMask | layer);
+        return layerMask == layer;
     }
     // ---Limit매소드에 대한 설명---
     // value = 0, min = 1, max = 3일 땐 3을 리턴한다.
