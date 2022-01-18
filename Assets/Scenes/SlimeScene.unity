@@ -716,6 +716,14 @@ PrefabInstance:
       propertyPath: m_IsTrigger
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2199360685128655093, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: c4fcb2abbe198ad4fa6a753242c0587b, type: 2}
+    - target: {fileID: 2199360685128655093, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: a0f631408cd8dc04c926f4f7d32f27d4, type: 2}
     - target: {fileID: 6840160282341942530, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: m_Name
       value: Slime
