@@ -25,6 +25,32 @@ namespace Water
             }
         }
 
+        [MenuItem("Resource Manage/Data/Set Max Count of Item Possession")]
+        static void SetItemPossessionMaxCount()
+        {
+            List<ItemSO> list = new List<ItemSO>();
 
+            foreach (Food food in Resources.LoadAll<Food>(Global.foodDataPath)) 
+                list.Add(food);
+            
+            foreach (Ingredient ingredient in Resources.LoadAll<Ingredient>(Global.ingredientDataPath))
+                list.Add(ingredient);
+
+            list.ForEach(item =>
+            {
+                switch(item.itemType)
+                {
+                    case ItemType.EQUIP:
+                        item.maxCount = 1;
+                        break;
+                    case ItemType.CONSUME:
+                        item.maxCount = 5;
+                        break;
+                    case ItemType.ETC:
+                        item.maxCount = 20;
+                        break;
+                }
+            });
+        }
     }
 }

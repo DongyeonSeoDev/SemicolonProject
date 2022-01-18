@@ -178,7 +178,8 @@ public class CookingManager : MonoSingleton<CookingManager>
 
     public void MakeFood()  //음식 제작
     {
-        Global.ActionTrigger(Global.MakeFood, new ItemInfo(selectedFoodBtn.FoodData.id, makeFoodCount));
+        if(Inventory.Instance.CanCombine(selectedFoodBtn.FoodData.id))
+           Global.ActionTrigger(Global.MakeFood, new ItemInfo(selectedFoodBtn.FoodData.id, makeFoodCount));
     }
 
     public void MakeFoodInfoUIReset()

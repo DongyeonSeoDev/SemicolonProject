@@ -3,9 +3,9 @@ using UnityEngine.EventSystems;
 using DG.Tweening;
 using Water;
 
-[AddComponentMenu("Custom/UIPointerScale")]
+[AddComponentMenu("Custom/UIPointerScaleRepeat")]
 [RequireComponent(typeof(EventTrigger))]
-public class UIScale : UITransition
+public class UIScaleRepeat : UITransition
 {
     private EventTrigger eventTrigger;
 
@@ -27,6 +27,14 @@ public class UIScale : UITransition
 
     public override void Transition(bool on)
     {
-        transform.DOScale(on && transitionEnable ? Global.onePointTwo : Vector3.one, Global.fullScaleTransitionTime05).SetUpdate(true);
+        if (on)
+        {
+            transform.DOScale(Global.onePointTwo, Global.fullScaleTransitionTime05).SetLoops(-1,LoopType.Yoyo).SetUpdate(true);
+        }
+        else
+        {
+            transform.DOKill();
+            transform.DOScale(Vector3.one, Global.fullScaleTransitionTime05).SetUpdate(true);
+        }
     }
 }

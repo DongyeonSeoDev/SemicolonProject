@@ -8,6 +8,8 @@ public abstract class ItemSO : ScriptableObject
     public ItemType itemType;
 
     public int id;
+    public int maxCount; //해당 아이템을 최대 몇 개까지 인벤토리에 겹치게 해서 가질 수 있는지
+
     public string itemName;
 
     [TextArea]

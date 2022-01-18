@@ -7,7 +7,7 @@ namespace Water
         [SerializeField] protected ItemSO _itemData;
         public ItemSO itemData { get { return _itemData; } }
 
-        protected int droppedCount;
+        protected int droppedCount = 1;
         public int DroppedCnt { get { return droppedCount; } }
 
         protected SpriteRenderer spriteRenderer;
