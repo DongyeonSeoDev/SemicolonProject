@@ -104,7 +104,7 @@ GameObject:
   - component: {fileID: 1748969661245656923}
   - component: {fileID: 1748969661245656916}
   - component: {fileID: 1748969661245656919}
-  - component: {fileID: 1748969661245656917}
+  - component: {fileID: 3750393452434606831}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Untagged
@@ -172,7 +172,7 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 6, y: 7}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -215,7 +215,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 6, y: 7}
-    newSize: {x: 1, y: 1}
+    newSize: {x: 6, y: 7}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -223,7 +223,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1.7482061, y: 1.370265}
   m_EdgeRadius: 0
---- !u!114 &1748969661245656917
+--- !u!114 &3750393452434606831
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -232,7 +232,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 1748969661245656920}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34261543aae664b49812e1524151207e, type: 3}
+  m_Script: {fileID: 11500000, guid: 77b3797ea0751164d8b4bb0da8c1cf14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyMoveSO: {fileID: 11400000, guid: 74bb51f6bbe87ab4d8856950e44f45a9, type: 2}

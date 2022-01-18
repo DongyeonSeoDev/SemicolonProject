@@ -42,6 +42,7 @@ namespace Enemy
         public float damageDelay = 0.2f;
 
         public bool isDamaged = false;
+        public bool isHitAnimation = false;
         public int attackDamage = 10;
         public int damagedValue;
         public int hp = 30;
@@ -50,6 +51,7 @@ namespace Enemy
         public readonly int hashIsDead = Animator.StringToHash("isDead");
         public readonly int hashMove = Animator.StringToHash("Move");
         public readonly int hashAttack = Animator.StringToHash("Attack");
+        public readonly int hashHit = Animator.StringToHash("Hit");
 
         public bool IsSeePlayer() => Vector3.Distance(enemyObject.transform.position, PlayerObject.transform.position) <= isSeePlayerDistance;
         public bool IsAttackPlayer() => Vector3.Distance(enemyObject.transform.position, PlayerObject.transform.position) <= isAttackPlayerDistance;

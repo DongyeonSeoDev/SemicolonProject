@@ -82,20 +82,33 @@ namespace Enemy
 
         public EnemyGetDamagedState(EnemyData enemyData) : base(eState.GETDAMAGED, enemyData)
         {
-            if (enemyData.eEnemyController == EnemyController.AI)
+            if (!enemyData.isHitAnimation)
             {
-                enemyGetDamaged = new EnemyGetDamagedAIControllerCommand(enemyData);
-            }
-            else if (enemyData.eEnemyController == EnemyController.PLAYER)
-            {
-                enemyGetDamaged = new EnemyGetDamagedPlayerControllerCommand();
-            }
+                if (enemyData.eEnemyController == EnemyController.AI)
+                {
+                    enemyGetDamaged = new EnemyGetDamagedAIControllerCommand(enemyData);
+                }
+                else if (enemyData.eEnemyController == EnemyController.PLAYER)
+                {
+                    enemyGetDamaged = new EnemyGetDamagedPlayerControllerCommand();
+                }
+            } 
         }
 
         protected override void Start()
         {
-            enemyGetDamaged.Execute();
-            currentTime = 0f;
+            enemyData.hp -= enemyData.damagedValue;
+
+            if (!enemyData.isHitAnimation)
+            {
+                enemyGetDamaged.Execute();
+
+                currentTime = 0f;
+            }
+            else
+            {
+                enemyData.enemyAnimator.SetTrigger(enemyData.hashHit);
+            }
 
             base.Start();
         }
@@ -106,7 +119,16 @@ namespace Enemy
 
             if (currentTime > enemyData.damageDelay)
             {
-                enemyGetDamaged.Execute();
+                if (!enemyData.isHitAnimation)
+                {
+                    enemyGetDamaged.Execute();
+                }
+                else
+                {
+                    enemyData.enemyAnimator.ResetTrigger(enemyData.hashHit);
+                }
+
+                enemyData.isDamaged = false;
 
                 base.Update();
             }

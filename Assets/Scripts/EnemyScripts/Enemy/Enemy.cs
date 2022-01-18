@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 
 namespace Enemy
@@ -7,40 +6,18 @@ namespace Enemy
     {
         public EnemyMoveSO enemyMoveSO;
 
-        private EnemyState currentState;
-        private EnemyData enemyData;
+        protected EnemyData enemyData;
+        protected SpriteRenderer sr;
 
-        private SpriteRenderer sr;
+        private EnemyState currentState;
 
         private float lastPositionX;
 
-        private void Awake()
+        protected virtual void Awake()
         {
-            sr = GetComponent<SpriteRenderer>();
-
-            enemyData = new EnemyData()
-            {
-                eEnemyController = EnemyController.AI,
-                enemyObject = gameObject,
-                enemyMoveSO = enemyMoveSO,
-                enemyAnimator = GetComponent<Animator>(),
-                enemySpriteRenderer = sr
-            };
-
+            sr = enemyData.enemySpriteRenderer;
             currentState = new EnemyMoveState(enemyData);
-
             lastPositionX = transform.position.x;
-        }
-
-        private void Start()
-        {
-            EnemyAttackCheck enemyAttackCheck = transform.GetComponentInChildren<EnemyAttackCheck>();
-
-            if (enemyAttackCheck != null)
-            {
-                enemyAttackCheck.SetAttackDamage(enemyData.attackDamage);
-                enemyAttackCheck.gameObject.SetActive(false);
-            }
         }
 
         private void Update()

@@ -78,23 +78,17 @@ namespace Enemy
         {
             this.enemyData = enemyData;
             isWorking = false;
-
-            Debug.Log("생성");
         }
 
         public override void Execute()
         {
-            Debug.Log("실행");
-
-            if (!isWorking) // 데미지를 주고 색깔 변경
+            if (!isWorking) // 색깔 변경
             {
                 enemyData.enemySpriteRenderer.color = Color.green;
-                enemyData.hp -= enemyData.damagedValue;
             }
-            else // 색깔 변경 후 데미지 상태 해제
+            else // 색깔 변경 해제
             {
                 enemyData.enemySpriteRenderer.color = Color.magenta;
-                enemyData.isDamaged = false;
             }
 
             isWorking = !isWorking;
