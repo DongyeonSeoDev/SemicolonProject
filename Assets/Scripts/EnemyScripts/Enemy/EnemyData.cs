@@ -43,6 +43,7 @@ namespace Enemy
 
         public bool isDamaged = false;
         public bool isHitAnimation = false;
+        public bool isAttackCommand = false;
         public int attackDamage = 10;
         public int damagedValue;
         public int hp = 30;

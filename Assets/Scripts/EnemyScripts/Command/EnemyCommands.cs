@@ -125,4 +125,31 @@ namespace Enemy
             Debug.Log("플레이어가 죽는 코드 작성");
         }
     }
+
+    public class EnemyAttackAIControllerCommand : EnemyCommand // 적 공격
+    {
+        public Vector3 spawnPosition;
+        public EnemyController eEnemyController;
+        public int attackDamage;
+
+        public EnemyAttackAIControllerCommand(Vector3 position, EnemyController controller, int damage)
+        {
+            spawnPosition = position;
+            eEnemyController = controller;
+            attackDamage = damage;
+        }
+
+        public override void Execute()
+        {
+            EnemyPoolManager.Instance.GetEnemyBullet(spawnPosition, eEnemyController, attackDamage);
+        }
+    }
+
+    public class EnemyAttackPlayerControllerCommand : EnemyCommand // 플레이어가 변신했을때 공격
+    {
+        public override void Execute()
+        {
+            Debug.Log("플레이어 공격 코드 작성");
+        }
+    }
 }

@@ -47,5 +47,10 @@ namespace Enemy
                 enemyData.damagedValue = damage;
             }
         }
+
+        public void EnemyDestroy()
+        {
+            Destroy(gameObject);
+        }
     }
 }

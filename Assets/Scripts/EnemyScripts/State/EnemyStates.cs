@@ -61,16 +61,51 @@ namespace Enemy
 
     public partial class EnemyAttackState : EnemyState // 공격 상태
     {
-        public EnemyAttackState(EnemyData enemyData) : base(eState.ATTACK, enemyData) { }
+        private EnemyCommand enemyAttackCommand;
+
+        private float currentTime;
+
+        public EnemyAttackState(EnemyData enemyData) : base(eState.ATTACK, enemyData)
+        {
+            if (enemyData.isAttackCommand)
+            {
+                if (enemyData.eEnemyController == EnemyController.AI)
+                {
+                    enemyAttackCommand = new EnemyAttackAIControllerCommand(enemyData.enemyObject.transform.position, enemyData.eEnemyController, enemyData.attackDamage);
+                }
+                else if (enemyData.eEnemyController == EnemyController.PLAYER)
+                {
+                    enemyAttackCommand = new EnemyAttackPlayerControllerCommand();
+                }
+            }
+        }
 
         protected override void Start()
         {
             enemyData.enemyAnimator.SetTrigger(enemyData.hashAttack);
 
+            currentTime = 0f;
+
             base.Start();
         }
 
-        protected override void Update() => base.Update();
+        protected override void Update()
+        {
+            currentTime += Time.deltaTime;
+
+            if (currentTime >= 1f)
+            {
+                if (enemyAttackCommand != null)
+                {
+                    enemyAttackCommand.Execute(); // 이게 여기서 실행되면 안되고, 애니메이션 이벤트에서 실행되어야 함
+                }
+
+                currentTime = 0f;
+
+                base.Update();
+            }
+        }
+
         protected override void End() => enemyData.enemyAnimator.ResetTrigger(enemyData.hashAttack);
     }
 
@@ -99,11 +134,11 @@ namespace Enemy
         {
             enemyData.hp -= enemyData.damagedValue;
 
-            if (!enemyData.isHitAnimation)
+            currentTime = 0f;
+
+            if (enemyGetDamaged != null)
             {
                 enemyGetDamaged.Execute();
-
-                currentTime = 0f;
             }
             else
             {
@@ -119,7 +154,7 @@ namespace Enemy
 
             if (currentTime > enemyData.damageDelay)
             {
-                if (!enemyData.isHitAnimation)
+                if (enemyGetDamaged != null)
                 {
                     enemyGetDamaged.Execute();
                 }
@@ -157,6 +192,8 @@ namespace Enemy
         protected override void Start()
         {
             enemyData.enemyAnimator.SetTrigger(enemyData.hashIsDie);
+
+            currentTime = 0f;
 
             base.Start();
         }
