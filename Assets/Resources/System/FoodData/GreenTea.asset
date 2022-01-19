@@ -15,8 +15,9 @@ MonoBehaviour:
   itemSprite: {fileID: 21300000, guid: e31151344d4c9984d8bfd49611414ebe, type: 3}
   itemType: 1
   id: 0
+  maxCount: 5
   itemName: "\uB179\uCC28"
-  explanation: 
+  explanation: "\uB179\uCC28\uB2E4"
   needIngredients:
   - ingredient: {fileID: 11400000, guid: 4b9d20b0d5c08934fbc25d5ee078ce6b, type: 2}
     needCount: 1

@@ -191,6 +191,12 @@ public class CookingManager : MonoSingleton<CookingManager>
         selectedFoodBtn = null;
     }
 
+    public void OnPointerFoodImage(bool on)
+    {
+        if (on) UIManager.Instance.SetCursorInfoUI(selectedFoodBtn.FoodData.itemName);
+        else UIManager.Instance.OffCursorInfoUI();
+    }
+
     private void Update()
     {
         Test(); //Test Code

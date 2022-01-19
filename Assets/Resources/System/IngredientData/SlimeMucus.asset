@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 862bc139a7af9f944b9aadc88317b8e2, type: 3}
   m_Name: SlimeMucus
   m_EditorClassIdentifier: 
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 21300000, guid: d1f94eb541d98c94c9e0a776707e9c7c, type: 3}
   itemType: 2
-  id: 10
+  id: 20
+  maxCount: 20
   itemName: "\uC2AC\uB77C\uC784 \uC810\uC561"
-  explanation: 
+  explanation: "\uC2AC\uB77C\uC784 \uC810\uC561\uC774\uB2E4"

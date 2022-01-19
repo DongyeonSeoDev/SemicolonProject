@@ -13,9 +13,22 @@ namespace Water
 
         public Queue<bool> activeUIQueue = new Queue<bool>();
 
+        public Image cursorInfoImg;
+        public Text cursorInfoText;
+        private RectTransform cursorImgRectTrm;
+        private Vector3 cursorInfoImgOffset;
+
+        private bool isOnCursorInfo = false;
+
+        private void Awake()
+        {
+            cursorImgRectTrm = cursorInfoImg.GetComponent<RectTransform>();
+        }
+
         private void Update()
         {
             UserInput();
+            CursorInfo();
         }
 
         private void UserInput()
@@ -84,6 +97,34 @@ namespace Water
                     CookingManager.Instance.MakeFoodInfoUIReset();
                     break;
             }
+        }
+
+        private void CursorInfo()
+        {
+            if(isOnCursorInfo)
+            {
+                cursorImgRectTrm.position = Input.mousePosition + cursorInfoImgOffset;
+            }
+        }
+
+        public void SetCursorInfoUI(string msg, int fontSize = 39)
+        {
+            isOnCursorInfo = true;
+
+            cursorInfoText.text = msg;
+            cursorInfoText.fontSize = fontSize;
+
+            RectTransform rectTr_txt = cursorInfoText.GetComponent<RectTransform>();
+            cursorImgRectTrm.rect.Set(1,1, rectTr_txt.rect.width, rectTr_txt.rect.height);
+            cursorInfoImgOffset = new Vector3(cursorImgRectTrm.rect.width, -cursorImgRectTrm.rect.height) * 0.5f;
+
+            cursorInfoImg.gameObject.SetActive(true);
+        }
+
+        public void OffCursorInfoUI()
+        {
+            cursorInfoImg.gameObject.SetActive(false);
+            isOnCursorInfo = false;
         }
     }
 }

@@ -15,5 +15,6 @@ MonoBehaviour:
   itemSprite: {fileID: 21300000, guid: 844a1050d03ba5046bfb86af34a81e47, type: 3}
   itemType: 2
   id: 15
+  maxCount: 20
   itemName: "\uC2A4\uCF08\uB808\uD1A4 \uBF08"
-  explanation: 
+  explanation: "\uC2A4\uCF08\uB808\uD1A4 \uBF08\uC774\uB2E4"
