@@ -7,6 +7,16 @@ using UnityEditor;
 
 namespace Water
 {
+    public static class KeySetting
+    {
+        public static Dictionary<KeyAction, KeyCode> keyDict = new Dictionary<KeyAction, KeyCode>();
+
+        public static void SetDefaultKeySetting()
+        {
+            keyDict.Add(KeyAction.INVENTORY, KeyCode.I);
+        }
+    }
+
     public static class Util
     {
 

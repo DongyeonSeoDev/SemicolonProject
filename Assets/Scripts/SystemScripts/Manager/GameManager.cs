@@ -93,6 +93,8 @@ namespace Water
                 igdImgList.Add(Instantiate(ingredientImgPrefab, ingredientImgParent).GetComponent<IngredientImage>());
             }
             Global.AddMonoAction("SetIngredientImgList", x => x.GetComponent<CookingManager>().IngredientImages = igdImgList);
+
+            KeySetting.SetDefaultKeySetting();
         }
 
         #region Item

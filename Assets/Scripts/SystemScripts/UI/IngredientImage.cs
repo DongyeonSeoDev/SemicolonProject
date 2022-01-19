@@ -7,7 +7,7 @@ using Water;
 public class IngredientImage : MonoBehaviour
 {
     [SerializeField] private Image image;
-    [SerializeField] private Text cntText, nameText;
+    [SerializeField] private Text cntText;
 
     private IngredientCount ingredientInfo;
     public IngredientCount IngredientInfo { get { return ingredientInfo; } }
@@ -17,7 +17,7 @@ public class IngredientImage : MonoBehaviour
         ingredientInfo = ingr;
         image.sprite = ingr.ingredient.GetSprite();
         cntText.text = string.Concat(GameManager.Instance.GetItemCount(ingr.ingredient.id),"/",ingr.needCount);
-        nameText.text = ingr.ingredient.itemName;
+        //nameText.text = ingr.ingredient.itemName;
     }
 
     public void UpdateInfo()  //만들 개수 +하거나 -할 때

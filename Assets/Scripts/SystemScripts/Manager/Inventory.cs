@@ -35,6 +35,7 @@ public class Inventory : MonoSingleton<Inventory>
             int rest = item.count, max = gm.GetItemData(item.id).maxCount;
             while(rest>0)
             {
+                Debug.Log(i);
                 itemSlots[i].SetData(item, Mathf.Clamp(rest,1,max));
                 rest -= max;
                 i++;
@@ -97,8 +98,23 @@ public class Inventory : MonoSingleton<Inventory>
         return null;
     }
 
-    public bool CanCombine(int id) => FindInsertableSlot(id) || EmptySlot();
+    public bool CanCombine(int id, int count) //조합으로 얻는 음식을 넣을 칸이 있는지
+    {
+        ItemSlot slot = FindInsertableSlot(id);
+        if ( slot || EmptySlot())
+        {
+            if(slot)
+            {
+                if (count <= slot.RestCount) return true;
+                count -= slot.RestCount;
+            }
 
+            if(itemSlots.FindAll(x => !x.existItem).Count * gm.GetItemData(id).maxCount <= count)
+               return true;
+        }
+
+        return false;
+    }
     public void GetItem(Item item) //아이템 주웠을 때
     {
         ItemInfo data = new ItemInfo(item.itemData.id, item.DroppedCnt);
@@ -119,7 +135,7 @@ public class Inventory : MonoSingleton<Inventory>
 
                 list.ForEach(x =>
                 {
-                    if (x.itemInfo != null)
+                    if (x.existItem)
                     {
                         count -= x.MaxCount >= x.Count + count ? count : (x.MaxCount - x.Count);
                         x.UpdateCount(Mathf.Clamp(count+x.Count,1,x.MaxCount));
@@ -149,6 +165,8 @@ public class Inventory : MonoSingleton<Inventory>
         item.gameObject.SetActive(false);
     }
 
+
+
     public void RemoveItem(int id, bool empty)
     {
         if(empty)
@@ -176,6 +194,8 @@ public class Inventory : MonoSingleton<Inventory>
         while(count > 0)
         {
             ItemSlot ist = EmptySlot();
+            ist.SetTempData();
+
             if(ist)
             {
                 list.Add(ist);

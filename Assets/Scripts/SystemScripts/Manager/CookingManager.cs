@@ -178,7 +178,7 @@ public class CookingManager : MonoSingleton<CookingManager>
 
     public void MakeFood()  //음식 제작
     {
-        if(Inventory.Instance.CanCombine(selectedFoodBtn.FoodData.id))
+        if(Inventory.Instance.CanCombine(selectedFoodBtn.FoodData.id, makeFoodCount))
            Global.ActionTrigger(Global.MakeFood, new ItemInfo(selectedFoodBtn.FoodData.id, makeFoodCount));
     }
 
@@ -205,10 +205,17 @@ public class CookingManager : MonoSingleton<CookingManager>
         }
         else if (Input.GetKeyDown(KeyCode.LeftShift))
         {
+            gm.AddItem(new ItemInfo(5, 10));
             gm.AddItem(new ItemInfo(10, 10));
             gm.AddItem(new ItemInfo(15, 10));
             gm.AddItem(new ItemInfo(20, 10));
             gm.AddItem(new ItemInfo(25, 10));
+            gm.AddItem(new ItemInfo(0, 10));
+        }
+        else if(Input.GetKeyDown(KeyCode.Z))
+        {
+            foreach (ItemInfo item in gm.savedData.userInfo.userItems.keyValueDic.Values)
+                Debug.Log($"{gm.GetItemData(item.id).itemName} x {item.count}");
         }
     }
 }

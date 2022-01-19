@@ -9,6 +9,9 @@ public class UIScaleRepeat : UITransition
 {
     private EventTrigger eventTrigger;
 
+    public float transitionTime = 0.2f;
+    public Vector3 targetScale = new Vector3(1.1f, 1.1f, 1.1f);
+
     private void Awake()
     {
         eventTrigger = GetComponent<EventTrigger>();
@@ -27,14 +30,14 @@ public class UIScaleRepeat : UITransition
 
     public override void Transition(bool on)
     {
-        if (on)
+        if (on && transitionEnable)
         {
-            transform.DOScale(Global.onePointTwo, Global.fullScaleTransitionTime05).SetLoops(-1,LoopType.Yoyo).SetUpdate(true);
+            transform.DOScale(targetScale, transitionTime).SetLoops(-1,LoopType.Yoyo).SetUpdate(true);
         }
         else
         {
             transform.DOKill();
-            transform.DOScale(Vector3.one, Global.fullScaleTransitionTime05).SetUpdate(true);
+            transform.DOScale(Vector3.one, transitionTime).SetUpdate(true);
         }
     }
 }

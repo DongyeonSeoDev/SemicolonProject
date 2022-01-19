@@ -11,3 +11,8 @@ public enum UIType
     PRODUCTION_PANEL,
     INVENTORY
 }
+
+public enum KeyAction
+{
+    INVENTORY
+}

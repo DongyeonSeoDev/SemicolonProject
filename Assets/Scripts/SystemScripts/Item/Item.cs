@@ -15,7 +15,14 @@ namespace Water
         protected virtual void Awake()
         {
             spriteRenderer = GetComponent<SpriteRenderer>();
+            
+        }
+
+        public virtual void SetData(int id, int droppedCount = 1)
+        {
+            _itemData = GameManager.Instance.GetItemData(id);
             spriteRenderer.sprite = _itemData.GetSprite();
+            this.droppedCount = droppedCount;
         }
     }
 }

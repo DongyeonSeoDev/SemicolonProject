@@ -9,6 +9,9 @@ public class UIScale : UITransition
 {
     private EventTrigger eventTrigger;
 
+    public float transitionTime = 0.5f;
+    public Vector3 targetScale = new Vector3(1.2f, 1.2f, 1.2f);
+
     private void Awake()
     {
         eventTrigger = GetComponent<EventTrigger>();
@@ -27,6 +30,6 @@ public class UIScale : UITransition
 
     public override void Transition(bool on)
     {
-        transform.DOScale(on && transitionEnable ? Global.onePointTwo : Vector3.one, Global.fullScaleTransitionTime05).SetUpdate(true);
+        transform.DOScale(on && transitionEnable ? targetScale : Vector3.one, transitionTime).SetUpdate(true);
     }
 }

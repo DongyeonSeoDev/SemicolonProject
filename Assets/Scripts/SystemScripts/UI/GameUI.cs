@@ -15,13 +15,15 @@ namespace Water
 
         public UIType _UItype;
 
+        public GameUI childGameUI;
+
         private void Awake()
         {
             rectTrm = GetComponent<RectTransform>();
             originPos = rectTrm.anchoredPosition;
         }
 
-        protected virtual void OnEnable()
+        private void OnEnable()
         {
             ActiveTransition(_UItype);
         }
@@ -36,7 +38,7 @@ namespace Water
 
                     transform.DOScale(Vector3.one, Global.fullScaleTransitionTime03).SetEase(Ease.OutBack).SetUpdate(true);
                     cvsg.DOFade(1, Global.fullAlphaTransitionTime04)
-                    .SetUpdate(true).OnComplete(() => UIManager.Instance.UpdateUIStack(this));
+                    .SetUpdate(true).OnComplete(() => UpdateUIStack());
 
                     break;
 
@@ -46,10 +48,13 @@ namespace Water
 
                     rectTrm.DOAnchorPos(originPos, Global.slideTransitionTime03).SetUpdate(true);
                     cvsg.DOFade(1, Global.fullAlphaTransitionTime04)
-                    .SetUpdate(true).OnComplete(() => UIManager.Instance.UpdateUIStack(this));
+                    .SetUpdate(true).OnComplete(() => UpdateUIStack());
                     break;
 
                 case UIType.INVENTORY:
+                    cvsg.alpha = 0f;
+                    cvsg.DOFade(1, Global.fullAlphaTransitionTime04).SetUpdate(true).OnComplete(()=> UpdateUIStack());
+                    childGameUI.ActiveTransition(_UItype);
                     break;
 
                 default:
@@ -65,21 +70,28 @@ namespace Water
 
                     float time = Global.fullAlphaTransitionTime04;
                     transform.DOScale(Global.zeroPointSeven, time).SetEase(Ease.InBack).SetUpdate(true);
-                    cvsg.DOFade(0, time).SetUpdate(true).OnComplete(() => UIManager.Instance.UpdateUIStack(this, false));
+                    cvsg.DOFade(0, time).SetUpdate(true).OnComplete(() => UpdateUIStack(false));
                      
                     break;
 
                 case UIType.PRODUCTION_PANEL:
                     rectTrm.DOAnchorPos(new Vector2(originPos.x - 150f, originPos.y), Global.slideTransitionTime03).SetUpdate(true);
-                    cvsg.DOFade(0, Global.fullAlphaTransitionTime04).SetUpdate(true).OnComplete(() => UIManager.Instance.UpdateUIStack(this,false));
+                    cvsg.DOFade(0, Global.fullAlphaTransitionTime04).SetUpdate(true).OnComplete(() => UpdateUIStack(false));
                     break;
 
                 case UIType.INVENTORY:
+                    childGameUI.InActiveTransition();
+                    cvsg.DOFade(0, Global.fullAlphaTransitionTime04).SetUpdate(true).OnComplete(() => UpdateUIStack(false));
                     break;
 
                 default:
                     break;
             }
+        }
+
+        public void UpdateUIStack(bool add = true)
+        {
+            UIManager.Instance.UpdateUIStack(this, add);
         }
     }
 }

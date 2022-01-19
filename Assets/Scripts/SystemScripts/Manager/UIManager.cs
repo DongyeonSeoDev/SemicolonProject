@@ -27,7 +27,13 @@ namespace Water
                     OnUIInteract(activeUIList[activeUIList.Count - 1]._UItype);
                 }
             }
+            else if(Input.GetKeyDown(KeySetting.keyDict[KeyAction.INVENTORY]))
+            {
+                OnUIInteract(UIType.INVENTORY);
+            }
         }
+
+        public void OnUIInteractBtnClick(int type) { OnUIInteract((UIType)type); }
 
         public void OnUIInteract(UIType type, bool ignoreQueue = false)
         {
