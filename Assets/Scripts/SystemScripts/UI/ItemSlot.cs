@@ -9,7 +9,7 @@ public class ItemSlot : MonoBehaviour
     public ItemInfo itemInfo { get; private set; }
     public int Count { get; set; }
     public int MaxCount { get; set; }
-    public bool existItem { get; private set; }
+    public bool ExistItem { get; private set; }
 
     public int RestCount { get { return MaxCount - Count; } }
 
@@ -23,7 +23,7 @@ public class ItemSlot : MonoBehaviour
     {
         this.itemInfo = item;
         this.Count = count;
-        this.existItem = true;
+        this.ExistItem = true;
 
         ItemSO data = GameManager.Instance.GetItemData(item.id);
         itemImg.sprite = data.GetSprite();
@@ -45,7 +45,7 @@ public class ItemSlot : MonoBehaviour
         root.SetActive(false);
         this.itemInfo = null;
         this.Count = 0;
-        this.existItem = false;
+        this.ExistItem = false;
     }
 
     public void UpdateCount(int count)

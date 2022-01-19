@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Water;
 using UnityEngine.UI;
-using DG.Tweening;
+using TMPro;
 
 public class CookingManager : MonoSingleton<CookingManager>
 {
@@ -41,6 +41,7 @@ public class CookingManager : MonoSingleton<CookingManager>
     private int makeFoodCount; //만드려는(선택한) 음식 개수
     public int MakeFoodCount { get { return makeFoodCount; } }
 
+    public TextMeshProUGUI NpcNameTxt;
     public Image foodImg;  //만드려는(선택한) 음식 이미지
     public Text makeFoodCountText; //만드려는(선택한) 음식 개수 텍스트
     public Text foodNameText; //음식이름
@@ -84,6 +85,7 @@ public class CookingManager : MonoSingleton<CookingManager>
 
     public void ShowFoodList(Chef currentChef) //대화한 요리사가 만들 수 있는 음식 리스트 표시
     {
+        NpcNameTxt.SetText(currentChef.NPCName);
         foodBtnList.ForEach(x => x.gameObject.SetActive(false));
         currentChef.CanFoodList.ForEach(x =>
         {
@@ -178,8 +180,9 @@ public class CookingManager : MonoSingleton<CookingManager>
 
     public void MakeFood()  //음식 제작
     {
-        if(Inventory.Instance.CanCombine(selectedFoodBtn.FoodData.id, makeFoodCount))
-           Global.ActionTrigger(Global.MakeFood, new ItemInfo(selectedFoodBtn.FoodData.id, makeFoodCount));
+        if (Inventory.Instance.CanCombine(selectedFoodBtn.FoodData.id, makeFoodCount))
+            Global.ActionTrigger(Global.MakeFood, new ItemInfo(selectedFoodBtn.FoodData.id, makeFoodCount));
+        
     }
 
     public void MakeFoodInfoUIReset()

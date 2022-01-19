@@ -35,7 +35,6 @@ public class Inventory : MonoSingleton<Inventory>
             int rest = item.count, max = gm.GetItemData(item.id).maxCount;
             while(rest>0)
             {
-                Debug.Log(i);
                 itemSlots[i].SetData(item, Mathf.Clamp(rest,1,max));
                 rest -= max;
                 i++;
@@ -101,7 +100,7 @@ public class Inventory : MonoSingleton<Inventory>
     public bool CanCombine(int id, int count) //조합으로 얻는 음식을 넣을 칸이 있는지
     {
         ItemSlot slot = FindInsertableSlot(id);
-        if ( slot || EmptySlot())
+        if (slot || EmptySlot())
         {
             if(slot)
             {
@@ -109,7 +108,7 @@ public class Inventory : MonoSingleton<Inventory>
                 count -= slot.RestCount;
             }
 
-            if(itemSlots.FindAll(x => !x.existItem).Count * gm.GetItemData(id).maxCount <= count)
+            if(itemSlots.FindAll(x => !x.ExistItem).Count * gm.GetItemData(id).maxCount >= count)
                return true;
         }
 
@@ -135,7 +134,7 @@ public class Inventory : MonoSingleton<Inventory>
 
                 list.ForEach(x =>
                 {
-                    if (x.existItem)
+                    if (x.ExistItem)
                     {
                         count -= x.MaxCount >= x.Count + count ? count : (x.MaxCount - x.Count);
                         x.UpdateCount(Mathf.Clamp(count+x.Count,1,x.MaxCount));

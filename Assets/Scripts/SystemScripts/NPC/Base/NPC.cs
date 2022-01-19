@@ -4,5 +4,6 @@ using UnityEngine;
 
 public abstract class NPC : MonoBehaviour
 {
-    [SerializeField] protected string NPCName;
+    [SerializeField] protected string npcName;
+    public string NPCName { get { return npcName; } }
 }
