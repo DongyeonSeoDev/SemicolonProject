@@ -2,14 +2,14 @@ using UnityEngine;
 
 namespace Enemy
 {
-    public class EnemyMove : Command // 적 움직임
+    public class EnemyMoveAIControllerCommand : EnemyCommand // 적 움직임
     {
         private EnemyMoveSO enemyMoveSO;
         private Transform enemyPosition;
 
         private Vector3 targetPosition;
 
-        public EnemyMove(EnemyMoveSO enemyMoveSO, Transform enemyPosition)
+        public EnemyMoveAIControllerCommand(EnemyMoveSO enemyMoveSO, Transform enemyPosition)
         {
             this.enemyMoveSO = enemyMoveSO;
             this.enemyPosition = enemyPosition;
@@ -31,7 +31,15 @@ namespace Enemy
         }
     }
 
-    public class EnemyFollowPlayer : Command // 적 움직임
+    public class EnemyMovePlayerControllerCommand : EnemyCommand // 적 움직임
+    {
+        public override void Execute()
+        {
+            Debug.Log("플레이어 움직임 코드 작성");
+        }
+    }
+
+    public class EnemyFollowPlayerCommand : EnemyCommand // 적 움직임
     {
         private Transform enemyObject;
         private Transform followObject;
@@ -40,7 +48,7 @@ namespace Enemy
 
         private float followSpeed;
 
-        public EnemyFollowPlayer(Transform enemyObject, Transform followObject, float followSpeed)
+        public EnemyFollowPlayerCommand(Transform enemyObject, Transform followObject, float followSpeed)
         {
             this.enemyObject = enemyObject;
             this.followObject = followObject;
@@ -60,42 +68,88 @@ namespace Enemy
         }
     }
 
-    public class EnemyAttack : Command // 적 공격 TODO: 공격 만들어야 함
+    public class EnemyGetDamagedAIControllerCommand : EnemyCommand // 적이 데미지를 받음
     {
-        public EnemyAttack()
+        private EnemyData enemyData;
+
+        private bool isWorking = false;
+
+        public EnemyGetDamagedAIControllerCommand(EnemyData enemyData)
         {
-            
+            this.enemyData = enemyData;
+            isWorking = false;
         }
 
         public override void Execute()
         {
-            
+            if (!isWorking) // 색깔 변경
+            {
+                enemyData.enemySpriteRenderer.color = Color.green;
+            }
+            else // 색깔 변경 해제
+            {
+                enemyData.enemySpriteRenderer.color = Color.magenta;
+            }
+
+            isWorking = !isWorking;
         }
     }
 
-    public class EnemyGetDamaged : Command // 적이 데미지를 받음 TODO: 데미지 받는것 만들어야 함
+    public class EnemyGetDamagedPlayerControllerCommand : EnemyCommand
     {
-        public EnemyGetDamaged()
-        {
-
-        }
-
         public override void Execute()
         {
-
+            Debug.Log("플레이어가 데미지를 입는 코드 작성");   
         }
     }
 
-    public class EnemyDead : Command // 적이 죽음 TODO: 적이 죽는것 만들어야 함
+    public class EnemyDeadAIControllerCommand : EnemyCommand // 적이 죽음
     {
-        public EnemyDead()
-        {
+        private GameObject enemyObject; 
 
+        public EnemyDeadAIControllerCommand(GameObject enemyObj)
+        {
+            enemyObject = enemyObj;
         }
 
         public override void Execute()
         {
+            GameObject.Destroy(enemyObject);
+        }
+    }
 
+    public class EnemyDeadPlayerControllerCommand : EnemyCommand // 적이 죽음
+    {
+        public override void Execute()
+        {
+            Debug.Log("플레이어가 죽는 코드 작성");
+        }
+    }
+
+    public class EnemyAttackAIControllerCommand : EnemyCommand // 적 공격
+    {
+        public Vector3 spawnPosition;
+        public EnemyController eEnemyController;
+        public int attackDamage;
+
+        public EnemyAttackAIControllerCommand(Vector3 position, EnemyController controller, int damage)
+        {
+            spawnPosition = position;
+            eEnemyController = controller;
+            attackDamage = damage;
+        }
+
+        public override void Execute()
+        {
+            EnemyPoolManager.Instance.GetEnemyBullet(spawnPosition, eEnemyController, attackDamage);
+        }
+    }
+
+    public class EnemyAttackPlayerControllerCommand : EnemyCommand // 플레이어가 변신했을때 공격
+    {
+        public override void Execute()
+        {
+            Debug.Log("플레이어 공격 코드 작성");
         }
     }
 }

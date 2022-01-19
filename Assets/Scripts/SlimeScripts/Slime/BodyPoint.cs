@@ -5,9 +5,12 @@ using UnityEngine;
 public class BodyPoint : MonoBehaviour
 {
     [SerializeField]
+    private LayerMask whatIsWall;
+    [SerializeField]
     private float returnToOriginSpeed = 2f;
 
     private Vector2 originLocalPosition = Vector2.zero;
+
 
     [SerializeField]
     private bool isMiddlePoint = false;
@@ -40,7 +43,7 @@ public class BodyPoint : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Wall"))
+        if (whatIsWall.CompareGameObjectLayer(other.gameObject))
         {
             isWall = true;
         }
@@ -49,7 +52,7 @@ public class BodyPoint : MonoBehaviour
     }
     private void OnCollisionExit2D(Collision2D other)
     {
-        if (other.gameObject.CompareTag("Wall"))
+        if (whatIsWall.CompareGameObjectLayer(other.gameObject))
         {
             isWall = false;
         }
