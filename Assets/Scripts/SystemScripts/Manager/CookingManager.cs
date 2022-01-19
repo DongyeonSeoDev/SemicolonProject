@@ -123,7 +123,7 @@ public class CookingManager : MonoSingleton<CookingManager>
 
         makeFoodCount = 1;
         foodImg.sprite = selectedFood.GetSprite();
-        makeFoodCountText.text = "1";
+        makeFoodCountText.text = "수량: 1개";
         foodNameText.text = selectedFood.itemName;
 
         ingredientImages.ForEach(x => x.gameObject.SetActive(false));
@@ -171,7 +171,7 @@ public class CookingManager : MonoSingleton<CookingManager>
 
     public void UpdateMakeFoodCount()  //만들 음식 개수 변경 했으니 그에따른 UI 변경
     {
-        makeFoodCountText.text = makeFoodCount.ToString();
+        makeFoodCountText.text = string.Format("수량: {0}개",makeFoodCount);
         selectedFoodIngrImgs.ForEach(x => x.UpdateInfo());
         CheckAmount();
     }
@@ -209,13 +209,6 @@ public class CookingManager : MonoSingleton<CookingManager>
             gm.AddItem(new ItemInfo(15, 10));
             gm.AddItem(new ItemInfo(20, 10));
             gm.AddItem(new ItemInfo(25, 10));
-        }
-        else if(Input.GetKeyDown(KeyCode.A))
-        {
-            foreach (ItemInfo item in gm.savedData.userInfo.userItems.keyValueDic.Values)
-            {
-                Debug.Log($"{gm.GetItemData(item.id).itemName} : {item.count}개");
-            }
         }
     }
 }
