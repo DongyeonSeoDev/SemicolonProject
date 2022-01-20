@@ -716,6 +716,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1014413151, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: bodySlapTime
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1014413151, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: bodySlapMovePower
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 315540450896467828, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: m_IsTrigger
       value: 1

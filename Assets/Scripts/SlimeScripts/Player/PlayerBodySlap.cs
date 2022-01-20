@@ -50,10 +50,9 @@ public class PlayerBodySlap : PlayerAction
     {
         if (playerStatus.BodySlapping && bodySlapStart) // 움직임
         {
-            
             rigid.AddForce(bodySlapMoveVec * bodySlapMovePower);
 
-            childRigids.ForEach(x => x.AddForce(Vector2.Lerp(bodySlapMoveVec, bodySlapMoveVec * 0.8f * bodySlapMovePower, Time.fixedDeltaTime)));
+            childRigids.ForEach(x => x.AddForce(Vector2.Lerp(bodySlapMoveVec, bodySlapMoveVec * bodySlapMovePower, Time.fixedDeltaTime)));
         }
     }
     private void OnDisable() 
