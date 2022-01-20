@@ -183,7 +183,7 @@ public class CookingManager : MonoSingleton<CookingManager>
     {
         if (Inventory.Instance.CanCombine(selectedFoodBtn.FoodData.id, makeFoodCount))
             Global.ActionTrigger(Global.MakeFood, new ItemInfo(selectedFoodBtn.FoodData.id, makeFoodCount));
-        
+        else UIManager.Instance.RequestSystemMsg("인벤토리에 전부 담을 수 없습니다.");
     }
 
     public void MakeFoodInfoUIReset()

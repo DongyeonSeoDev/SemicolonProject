@@ -11,7 +11,8 @@ public enum UIType
     PRODUCTION_PANEL,
     INVENTORY,
     FOOD_DETAIL,
-    ITEM_DETAIL
+    ITEM_DETAIL,
+    COMBINATION
 }
 
 public enum KeyAction

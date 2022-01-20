@@ -16,6 +16,7 @@ namespace Water
         #endregion
 
         #region 마우스 따라다니는 정보 UI관련 변수들
+        [Space(20)]
         public Image cursorInfoImg;  //마우스 따라다니는 정보 텍스트가 있는 이미지
         public Text cursorInfoText; // 마우스 따라다니는 정보 텍스트
         private RectTransform cursorImgRectTrm;
@@ -29,11 +30,16 @@ namespace Water
         #region Inventory Item Detail View
         private int selectedItemId = -1;
 
+        [Space(20)]
         public Image itemImg, itemTypeImg;
         public Text itemNameTxt, itemExplanation;
         public Text itemCntTxt, itemTypeTxt;
         public Button itemUseBtn, itemJunkBtn;
         #endregion
+
+        [Space(20)]
+        public GameObject systemMsgPrefab;
+        public Transform systemMsgParent;
 
         private GameManager gm;
 
@@ -46,6 +52,7 @@ namespace Water
         private void Start()
         {
             gm = GameManager.Instance;
+            PoolManager.CreatePool(systemMsgPrefab, systemMsgParent, 5, "SystemMsg");
         }
 
         private void Update()
@@ -165,9 +172,10 @@ namespace Water
             isOnCursorInfo = false;
         }
 
-        public void DetailItemSlot(int itemID)
+        public void DetailItemSlot(int itemID)  //인벤토리에서 아이템 슬롯 클릭
         {
             if (selectedItemId == itemID) return;
+            else if(selectedItemId == -1) OnUIInteract(UIType.ITEM_DETAIL);
             selectedItemId = itemID;
 
             ItemSO data = gm.GetItemData(itemID);
@@ -181,8 +189,14 @@ namespace Water
 
             itemUseBtn.gameObject.SetActive(data.itemType!=ItemType.ETC);
             itemUseBtn.onClick.AddListener(() => data.Use());
-
-            OnUIInteract(UIType.ITEM_DETAIL);
         }
+
+        public void RequestSystemMsg(string msg, int fontSize = 35, float existTime = 1.5f)
+        {
+            PoolManager.GetItem("SystemMsg").GetComponent<SystemMsg>().Set(msg, fontSize, existTime);
+        }
+        
+
+        
     }
 }
