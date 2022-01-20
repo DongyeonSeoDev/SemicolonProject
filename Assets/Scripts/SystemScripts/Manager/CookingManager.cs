@@ -17,12 +17,6 @@ public class CookingManager : MonoSingleton<CookingManager>
 
     #endregion
 
-    //private List<Food> allFoods;
-    //private List<Ingredient> allIngredients;
-
-    //private Dictionary<int, Food> foodDic = new Dictionary<int, Food>(); 
-    //private Dictionary<int, Ingredient> ingredientDic = new Dictionary<int, Ingredient>(); 
-
     private GameManager gm;
 
     private Dictionary<int, FoodButton> foodBtnDic = new Dictionary<int, FoodButton>();  
@@ -46,10 +40,12 @@ public class CookingManager : MonoSingleton<CookingManager>
     public Text makeFoodCountText; //만드려는(선택한) 음식 개수 텍스트
     public Text foodNameText; //음식이름
 
-    //public CanvasGroup foodsPanel;
-    //public CanvasGroup makeFoodPanel; //선택한 음식 정보 패널
-
     public Button countPlusBtn, countMinusBtn; //음식 제작 개수 늘리기(줄이기) 버튼
+
+    #region 음식이나 재료 자세히 보기창
+    public Image detailFoodImg;
+    public Text detailNameTxt, explanationTxt;
+    #endregion
 
     private void Start()
     {
@@ -195,6 +191,27 @@ public class CookingManager : MonoSingleton<CookingManager>
     {
         if (on) UIManager.Instance.SetCursorInfoUI(selectedFoodBtn.FoodData.itemName);
         else UIManager.Instance.OffCursorInfoUI();
+    }
+
+    public void OnClickFoodImg()
+    {
+        UIManager.Instance.OnUIInteract(UIType.FOOD_DETAIL);
+
+        Detail(selectedFoodBtn.FoodData);
+    }
+
+    public void OnClickIngrImg(Ingredient data)
+    {
+        UIManager.Instance.OnUIInteract(UIType.FOOD_DETAIL);
+
+        Detail(data);
+    }
+
+    void Detail(ItemSO data)
+    {
+        detailFoodImg.sprite = data.GetSprite();
+        detailNameTxt.text = data.itemName;
+        explanationTxt.text = data.explanation;
     }
 
     private void Update()

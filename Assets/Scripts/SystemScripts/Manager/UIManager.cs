@@ -114,8 +114,8 @@ namespace Water
             cursorInfoText.text = msg;
             cursorInfoText.fontSize = fontSize;
 
-            RectTransform rectTr_txt = cursorInfoText.GetComponent<RectTransform>();
-            cursorImgRectTrm.rect.Set(1,1, rectTr_txt.rect.width, rectTr_txt.rect.height);
+            //RectTransform rectTr_txt = cursorInfoText.GetComponent<RectTransform>();
+            //cursorImgRectTrm.sizeDelta = new Vector2(rectTr_txt.rect.width + 100, rectTr_txt.rect.height + 100);
             cursorInfoImgOffset = new Vector3(cursorImgRectTrm.rect.width, -cursorImgRectTrm.rect.height) * 0.5f;
 
             cursorInfoImg.gameObject.SetActive(true);

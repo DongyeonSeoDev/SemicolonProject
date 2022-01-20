@@ -9,7 +9,8 @@ public enum UIType
 {
     CHEF_FOODS_PANEL,
     PRODUCTION_PANEL,
-    INVENTORY
+    INVENTORY,
+    FOOD_DETAIL
 }
 
 public enum KeyAction

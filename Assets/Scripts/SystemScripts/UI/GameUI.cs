@@ -33,13 +33,8 @@ namespace Water
             switch (type)
             {
                 case UIType.CHEF_FOODS_PANEL:
-                    cvsg.alpha = 0f;
-                    transform.localScale = Global.zeroPointSeven;
-
-                    transform.DOScale(Vector3.one, Global.fullScaleTransitionTime03).SetEase(Ease.OutBack).SetUpdate(true);
-                    cvsg.DOFade(1, Global.fullAlphaTransitionTime04)
-                    .SetUpdate(true).OnComplete(() => UpdateUIStack());
-
+                    DOScale(true);
+                    
                     break;
 
                 case UIType.PRODUCTION_PANEL:
@@ -57,6 +52,10 @@ namespace Water
                     childGameUI.ActiveTransition(_UItype);
                     break;
 
+                case UIType.FOOD_DETAIL:
+                    DOScale(true);
+                    break;
+
                 default:
                     break;
             }
@@ -68,9 +67,7 @@ namespace Water
             {
                 case UIType.CHEF_FOODS_PANEL:
 
-                    float time = Global.fullAlphaTransitionTime04;
-                    transform.DOScale(Global.zeroPointSeven, time).SetEase(Ease.InBack).SetUpdate(true);
-                    cvsg.DOFade(0, time).SetUpdate(true).OnComplete(() => UpdateUIStack(false));
+                    DOScale(false);
                      
                     break;
 
@@ -84,6 +81,10 @@ namespace Water
                     cvsg.DOFade(0, Global.fullAlphaTransitionTime04).SetUpdate(true).OnComplete(() => UpdateUIStack(false));
                     break;
 
+                case UIType.FOOD_DETAIL:
+                    DOScale(false);
+                    break;
+
                 default:
                     break;
             }
@@ -92,6 +93,25 @@ namespace Water
         public void UpdateUIStack(bool add = true)
         {
             UIManager.Instance.UpdateUIStack(this, add);
+        }
+
+        protected void DOScale(bool active)
+        {
+            if(active)
+            {
+                cvsg.alpha = 0f;
+                transform.localScale = Global.zeroPointSeven;
+
+                transform.DOScale(Vector3.one, Global.fullScaleTransitionTime03).SetEase(Ease.OutBack).SetUpdate(true);
+                cvsg.DOFade(1, Global.fullAlphaTransitionTime04)
+                .SetUpdate(true).OnComplete(() => UpdateUIStack());
+            }
+            else
+            {
+                float time = Global.fullAlphaTransitionTime04;
+                transform.DOScale(Global.zeroPointSeven, time).SetEase(Ease.InBack).SetUpdate(true);
+                cvsg.DOFade(0, time).SetUpdate(true).OnComplete(() => UpdateUIStack(false));
+            }
         }
     }
 }

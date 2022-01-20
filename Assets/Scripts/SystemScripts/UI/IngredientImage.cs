@@ -12,6 +12,11 @@ public class IngredientImage : MonoBehaviour
     private IngredientCount ingredientInfo;
     public IngredientCount IngredientInfo { get { return ingredientInfo; } }
 
+    private void Awake()
+    {
+        GetComponent<Button>().onClick.AddListener(() => CookingManager.Instance.OnClickIngrImg(ingredientInfo.ingredient));
+    }
+
     public void SetInfo(IngredientCount ingr)  //만들 음식을 처음 눌렀을 때
     {
         ingredientInfo = ingr;
