@@ -7,12 +7,18 @@ public class PlayerShoot : MonoBehaviour
     private SlimePoolManager slimePoolManager = null;
 
     private PlayerInput playerInput = null;
+    private PlayerState playerState = null;
 
 
     [SerializeField]
     private GameObject projectile = null;
-    [SerializeField]
-    private Transform shootPosition = null;
+
+    private Dictionary<State.MovingState, Transform> shootPositions = new Dictionary<State.MovingState, Transform>();
+    public Dictionary<State.MovingState, Transform> ShootPositions
+    {
+        get { return shootPositions; }
+        set {shootPositions = value;}
+    }
 
     [SerializeField]
     private float projectileSpeed = 1f;
@@ -22,11 +28,12 @@ public class PlayerShoot : MonoBehaviour
         slimePoolManager = SlimePoolManager.Instance;
 
         playerInput = GetComponent<PlayerInput>();
+        playerState = GetComponent<PlayerState>();
     }
 
     void FixedUpdate()
     {
-        if(playerInput.IsShoot && playerInput.MoveVector != Vector2.zero)
+        if (playerInput.IsShoot && playerInput.MoveVector != Vector2.zero)
         {
             Shoot();
 
@@ -50,7 +57,7 @@ public class PlayerShoot : MonoBehaviour
             temp = Instantiate(projectile, transform);
         }
 
-        temp.transform.position = shootPosition.position;
+        temp.transform.position = shootPositions[playerState.LastPlayerMovingPoint].position;
         temp.GetComponent<PlayerProjectile>().OnSpawn(playerInput.MoveVector, projectileSpeed);
     }
 }

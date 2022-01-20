@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    private PlayerStatus playerStatus = null;
+    private PlayerState playerState = null;
 
     private Vector2 moveVector = Vector2.zero;
     public Vector2 MoveVector
@@ -35,7 +35,7 @@ public class PlayerInput : MonoBehaviour
 
     private void Start()
     {
-        playerStatus = GetComponent<PlayerStatus>();
+        playerState = GetComponent<PlayerState>();
     }
 
     void Update()
@@ -62,7 +62,7 @@ public class PlayerInput : MonoBehaviour
     {
         if (isBodySlap)
         {
-            playerStatus.BodySlapping = true;
+            playerState.BodySlapping = true;
             isBodySlap = false;
         }
     }

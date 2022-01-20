@@ -48,8 +48,9 @@ public class PlayerBodySlap : PlayerAction
     }
     private void FixedUpdate()
     {
-        if (playerStatus.BodySlapping && bodySlapStart)
+        if (playerStatus.BodySlapping && bodySlapStart) // 움직임
         {
+            
             rigid.AddForce(bodySlapMoveVec * bodySlapMovePower);
 
             childRigids.ForEach(x => x.AddForce(Vector2.Lerp(bodySlapMoveVec, bodySlapMoveVec * 0.8f * bodySlapMovePower, Time.fixedDeltaTime)));
