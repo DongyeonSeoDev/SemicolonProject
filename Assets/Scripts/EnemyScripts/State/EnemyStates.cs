@@ -71,7 +71,7 @@ namespace Enemy
             {
                 if (enemyData.eEnemyController == EnemyController.AI)
                 {
-                    enemyAttackCommand = new EnemyAttackAIControllerCommand(enemyData.enemyObject.transform.position, enemyData.eEnemyController, enemyData.attackDamage);
+                    enemyAttackCommand = new EnemyAttackAIControllerCommand(enemyData.enemyObject.transform.position, enemyData.PlayerObject.transform.position, enemyData.eEnemyController, enemyData.attackDamage);
                 }
                 else if (enemyData.eEnemyController == EnemyController.PLAYER)
                 {

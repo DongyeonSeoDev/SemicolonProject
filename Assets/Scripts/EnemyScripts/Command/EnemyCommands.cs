@@ -129,19 +129,21 @@ namespace Enemy
     public class EnemyAttackAIControllerCommand : EnemyCommand // Àû °ø°Ý
     {
         public Vector3 spawnPosition;
+        public Vector3 targetPosition;
         public EnemyController eEnemyController;
         public int attackDamage;
 
-        public EnemyAttackAIControllerCommand(Vector3 position, EnemyController controller, int damage)
+        public EnemyAttackAIControllerCommand(Vector3 position, Vector3 target, EnemyController controller, int damage)
         {
             spawnPosition = position;
+            targetPosition = target;
             eEnemyController = controller;
             attackDamage = damage;
         }
 
         public override void Execute()
         {
-            EnemyPoolManager.Instance.GetEnemyBullet(spawnPosition, eEnemyController, attackDamage);
+            EnemyPoolManager.Instance.GetEnemyBullet(spawnPosition, eEnemyController, attackDamage, (targetPosition - spawnPosition).normalized);
         }
     }
 

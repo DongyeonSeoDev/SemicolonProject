@@ -46,7 +46,7 @@ namespace Enemy
             }
         }
 
-        public EnemyBullet GetEnemyBullet(Vector2 position, EnemyController controller, int damage)
+        public EnemyBullet GetEnemyBullet(Vector2 position, EnemyController controller, int damage, Vector3 direction)
         {
             EnemyBullet bullet;
 
@@ -61,7 +61,7 @@ namespace Enemy
 
             bullet.gameObject.SetActive(true);
             bullet.transform.position = position;
-            bullet.Init(controller, damage);
+            bullet.Init(controller, damage, direction);
 
             enemyBulletQueue.Enqueue(bullet);
 

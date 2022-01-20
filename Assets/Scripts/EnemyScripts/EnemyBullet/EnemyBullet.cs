@@ -8,13 +8,13 @@ namespace Enemy
 
         private EnemyController eEnemyController;
 
-        private Vector3 distance = Vector3.zero;
+        private Vector3 targetDirection;
 
         private int attackDamage;
 
         private void Update()
         {
-            transform.position += distance * speed * Time.deltaTime;
+            transform.position += targetDirection * speed * Time.deltaTime;
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
@@ -43,10 +43,11 @@ namespace Enemy
             }
         }
 
-        public void Init(EnemyController controller, int damage)
+        public void Init(EnemyController controller, int damage, Vector3 direction)
         {
             eEnemyController = controller;
             attackDamage = damage;
+            targetDirection = direction;
         }
     }
 }
