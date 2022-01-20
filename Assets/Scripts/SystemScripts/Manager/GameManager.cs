@@ -25,6 +25,7 @@ namespace Water
 
         private void Awake()
         {
+            Cursor.lockState = CursorLockMode.Confined;
             filePath = Util.GetFilePath(saveFileName_1);
             saveData = new SaveData();
             Load();

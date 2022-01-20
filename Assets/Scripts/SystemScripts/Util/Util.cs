@@ -73,6 +73,20 @@ namespace Water
                 itemTypeSprites[index] = Resources.Load<Sprite>(itemTypeSpritePath + type.ToString());
             return itemTypeSprites[index];
         }
+
+        public static string GetItemTypeName(ItemType type)
+        {
+            switch(type)
+            {
+                case ItemType.CONSUME:
+                    return "음식";
+                case ItemType.EQUIP:
+                    return "마석";
+                case ItemType.ETC:
+                    return "전리품";
+            }
+            return "";
+        }
     }
 
     public static partial class Global

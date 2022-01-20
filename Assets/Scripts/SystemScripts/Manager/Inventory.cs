@@ -166,15 +166,26 @@ public class Inventory : MonoSingleton<Inventory>
 
 
 
-    public void RemoveItem(int id, bool empty)
+    public void RemoveItem(int id, int count)
     {
-        if(empty)
+        if(gm.ExistItem(id))
         {
-            FindSlot(id).ResetData();
-        }
-        else
-        {
-            FindSlot(id).UpdateCount(gm.GetItemCount(id));
+            ItemSlot slot = FindInsertableSlot(id);
+            if (!slot) slot = FindSlot(id);
+
+            int temp;
+
+            while(count>0)
+            {
+                if (slot.itemInfo == null) slot = FindSlot(id);
+
+                temp = slot.Count;
+                slot.UpdateCount(Mathf.Clamp(slot.Count - count, 0, slot.MaxCount-1));
+                count -= Mathf.Clamp(temp, 1, count);
+
+                if(slot.Count == 0)
+                    slot.ResetData();
+            }
         }
     }
 

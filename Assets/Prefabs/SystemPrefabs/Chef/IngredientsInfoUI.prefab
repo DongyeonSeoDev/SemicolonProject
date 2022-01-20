@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 1337827161481287397}
   - component: {fileID: 3772120152534404491}
   - component: {fileID: 4855124017677614742}
+  - component: {fileID: -813603682530526283}
   m_Layer: 5
   m_Name: IngredientsInfoUI
   m_TagString: Untagged
@@ -139,7 +140,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   image: {fileID: 1337827162217346305}
   cntText: {fileID: 1337827161512013158}
-  nameText: {fileID: 0}
 --- !u!114 &3772120152534404491
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -168,6 +168,20 @@ MonoBehaviour:
   transitionEnable: 1
   transitionTime: 0.2
   targetScale: {x: 1.1, y: 1.1, z: 1.1}
+--- !u!114 &-813603682530526283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1337827161481287395}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e667567d014ea8844a7a61bc1ea7229c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionEnable: 1
+  data: {fileID: 0}
 --- !u!1 &1337827161512013156
 GameObject:
   m_ObjectHideFlags: 0

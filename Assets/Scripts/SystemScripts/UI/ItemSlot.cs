@@ -19,6 +19,13 @@ public class ItemSlot : MonoBehaviour
     public Button button;
     public CanvasGroup cvsg;
 
+    public NameInfoFollowingCursor nifc;
+
+    private void Awake()
+    {
+        button.onClick.AddListener(() => UIManager.Instance.DetailItemSlot(itemInfo.id)); 
+    }
+
     public void SetData(ItemInfo item, int count)
     {
         this.itemInfo = item;
@@ -34,6 +41,9 @@ public class ItemSlot : MonoBehaviour
         GetComponent<UITransition>().transitionEnable = true;
         root.SetActive(true);
         button.interactable = true;
+
+        nifc.data = data;
+        nifc.transitionEnable = true;
     }
 
     public void SetTempData() => itemInfo = new ItemInfo();  //쓸 아이템 슬롯을 미리 찜해두고 일괄처리 할 때를 위해서 씀
@@ -41,6 +51,7 @@ public class ItemSlot : MonoBehaviour
     public void ResetData()
     {
         GetComponent<UITransition>().transitionEnable = false;
+        nifc.transitionEnable = false;
         button.interactable = false;
         root.SetActive(false);
         this.itemInfo = null;

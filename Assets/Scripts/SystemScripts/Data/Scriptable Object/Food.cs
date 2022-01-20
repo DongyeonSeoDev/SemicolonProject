@@ -14,7 +14,7 @@ public class Food : ItemSO
     {
         if(!itemSprite)
         {
-            itemSprite = Resources.Load<Sprite>(Global.foodSpritePath+name);
+            itemSprite = Resources.Load<Sprite>(Global.foodSpritePath+name+"Spr");
         }
         return itemSprite;
     }

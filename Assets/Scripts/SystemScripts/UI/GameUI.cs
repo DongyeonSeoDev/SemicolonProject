@@ -17,6 +17,8 @@ namespace Water
 
         public GameUI childGameUI;
 
+        public void ResetPos() => rectTrm.anchoredPosition = originPos;
+
         private void Awake()
         {
             rectTrm = GetComponent<RectTransform>();
@@ -38,12 +40,7 @@ namespace Water
                     break;
 
                 case UIType.PRODUCTION_PANEL:
-                    cvsg.alpha = 0f;
-                    rectTrm.anchoredPosition = new Vector2(originPos.x - 150f, originPos.y);
-
-                    rectTrm.DOAnchorPos(originPos, Global.slideTransitionTime03).SetUpdate(true);
-                    cvsg.DOFade(1, Global.fullAlphaTransitionTime04)
-                    .SetUpdate(true).OnComplete(() => UpdateUIStack());
+                    DOMove(true);
                     break;
 
                 case UIType.INVENTORY:
@@ -54,6 +51,10 @@ namespace Water
 
                 case UIType.FOOD_DETAIL:
                     DOScale(true);
+                    break;
+
+                case UIType.ITEM_DETAIL:
+                    DOMove(true);
                     break;
 
                 default:
@@ -72,8 +73,7 @@ namespace Water
                     break;
 
                 case UIType.PRODUCTION_PANEL:
-                    rectTrm.DOAnchorPos(new Vector2(originPos.x - 150f, originPos.y), Global.slideTransitionTime03).SetUpdate(true);
-                    cvsg.DOFade(0, Global.fullAlphaTransitionTime04).SetUpdate(true).OnComplete(() => UpdateUIStack(false));
+                    DOMove(false);
                     break;
 
                 case UIType.INVENTORY:
@@ -83,6 +83,10 @@ namespace Water
 
                 case UIType.FOOD_DETAIL:
                     DOScale(false);
+                    break;
+
+                case UIType.ITEM_DETAIL:
+                    DOMove(false);
                     break;
 
                 default:
@@ -95,6 +99,7 @@ namespace Water
             UIManager.Instance.UpdateUIStack(this, add);
         }
 
+        #region Æ®À§´× ÇÔ¼ö
         protected void DOScale(bool active)
         {
             if(active)
@@ -113,5 +118,25 @@ namespace Water
                 cvsg.DOFade(0, time).SetUpdate(true).OnComplete(() => UpdateUIStack(false));
             }
         }
+
+        protected void DOMove(bool active)
+        {
+            if (active)
+            {
+                cvsg.alpha = 0f;
+                rectTrm.anchoredPosition = new Vector2(originPos.x - 150f, originPos.y);
+
+                rectTrm.DOAnchorPos(originPos, Global.slideTransitionTime03).SetUpdate(true);
+                cvsg.DOFade(1, Global.fullAlphaTransitionTime04)
+                .SetUpdate(true).OnComplete(() => UpdateUIStack());
+            }
+            else
+            {
+                rectTrm.DOAnchorPos(new Vector2(originPos.x - 150f, originPos.y), Global.slideTransitionTime03).SetUpdate(true);
+                cvsg.DOFade(0, Global.fullAlphaTransitionTime04).SetUpdate(true).OnComplete(() => UpdateUIStack(false));
+            }
+        }
+
+        #endregion
     }
 }

@@ -7,25 +7,12 @@ using Water;
 [RequireComponent(typeof(EventTrigger))]
 public class UIScaleRepeat : UITransition
 {
-    private EventTrigger eventTrigger;
-
     public float transitionTime = 0.2f;
     public Vector3 targetScale = new Vector3(1.1f, 1.1f, 1.1f);
 
-    private void Awake()
+    protected override void Awake()
     {
-        eventTrigger = GetComponent<EventTrigger>();
-
-        EventTrigger.Entry entry1 = new EventTrigger.Entry();
-        entry1.eventID = EventTriggerType.PointerEnter;
-        entry1.callback.AddListener(eventData => Transition(true));
-
-        EventTrigger.Entry entry2 = new EventTrigger.Entry();
-        entry2.eventID = EventTriggerType.PointerExit;
-        entry2.callback.AddListener(eventData => Transition(false));
-
-        eventTrigger.triggers.Add(entry1);
-        eventTrigger.triggers.Add(entry2);
+        base.Awake();
     }
 
     public override void Transition(bool on)

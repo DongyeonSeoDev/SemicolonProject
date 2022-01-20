@@ -8,21 +8,44 @@ namespace Water
 {
     public class UIManager : MonoSingleton<UIManager>
     {
+        #region 게임 UI 관리 변수들
         public List<GameUI> gameUIList = new List<GameUI>();
         private List<GameUI> activeUIList = new List<GameUI>();
 
-        public Queue<bool> activeUIQueue = new Queue<bool>();
+        public Queue<bool> activeUIQueue = new Queue<bool>(); //어떤 UI가 켜지거나 꺼지는 애니메이션(트위닝) 진행 중에 다른 UI (비)활성화 막기 위한 변수
+        #endregion
 
-        public Image cursorInfoImg;
-        public Text cursorInfoText;
+        #region 마우스 따라다니는 정보 UI관련 변수들
+        public Image cursorInfoImg;  //마우스 따라다니는 정보 텍스트가 있는 이미지
+        public Text cursorInfoText; // 마우스 따라다니는 정보 텍스트
         private RectTransform cursorImgRectTrm;
         private Vector3 cursorInfoImgOffset;
 
-        private bool isOnCursorInfo = false;
+        private bool isOnCursorInfo = false;  //마우스 따라다니는 정보 텍스트 활성화 상태인가
+        private float sw; //cursorImgRectTrm의 처음 너비(최소 너비)
+        public float widthOffset = 39;  //마우스 따라다니는 정보 텍스트에서 이미지 너비 키울때 글자당 키울 길이
+        #endregion
+
+        #region Inventory Item Detail View
+        private int selectedItemId = -1;
+
+        public Image itemImg, itemTypeImg;
+        public Text itemNameTxt, itemExplanation;
+        public Text itemCntTxt, itemTypeTxt;
+        public Button itemUseBtn, itemJunkBtn;
+        #endregion
+
+        private GameManager gm;
 
         private void Awake()
         {
             cursorImgRectTrm = cursorInfoImg.GetComponent<RectTransform>();
+            sw = cursorImgRectTrm.rect.width;
+        }
+
+        private void Start()
+        {
+            gm = GameManager.Instance;
         }
 
         private void Update()
@@ -96,7 +119,23 @@ namespace Water
                 case UIType.PRODUCTION_PANEL:
                     CookingManager.Instance.MakeFoodInfoUIReset();
                     break;
+                case UIType.FOOD_DETAIL:
+                    CookingManager.Instance.detailID = -1;
+                    break;
+                case UIType.ITEM_DETAIL:
+                    selectedItemId = -1;
+                    break;
             }
+        }
+
+        public void UIPositionReset(UIType type)
+        {
+            gameUIList[(int)type].ResetPos();
+        }
+
+        public void AllUIPositionReset()
+        {
+            gameUIList.ForEach(ui => ui.ResetPos());
         }
 
         private void CursorInfo()
@@ -114,8 +153,7 @@ namespace Water
             cursorInfoText.text = msg;
             cursorInfoText.fontSize = fontSize;
 
-            //RectTransform rectTr_txt = cursorInfoText.GetComponent<RectTransform>();
-            //cursorImgRectTrm.sizeDelta = new Vector2(rectTr_txt.rect.width + 100, rectTr_txt.rect.height + 100);
+            cursorImgRectTrm.sizeDelta = new Vector2(Mathf.Clamp(msg.Length*widthOffset,sw,1000f), cursorImgRectTrm.rect.height);
             cursorInfoImgOffset = new Vector3(cursorImgRectTrm.rect.width, -cursorImgRectTrm.rect.height) * 0.5f;
 
             cursorInfoImg.gameObject.SetActive(true);
@@ -125,6 +163,26 @@ namespace Water
         {
             cursorInfoImg.gameObject.SetActive(false);
             isOnCursorInfo = false;
+        }
+
+        public void DetailItemSlot(int itemID)
+        {
+            if (selectedItemId == itemID) return;
+            selectedItemId = itemID;
+
+            ItemSO data = gm.GetItemData(itemID);
+
+            itemImg.sprite = data.GetSprite();
+            itemTypeImg.sprite = Global.GetItemTypeSpr(data.itemType);
+            itemNameTxt.text = data.itemName;
+            itemExplanation.text = data.explanation;
+            itemCntTxt.text = string.Format("수량: {0}개", gm.GetItemCount(itemID));
+            itemTypeTxt.text = Global.GetItemTypeName(data.itemType);
+
+            itemUseBtn.gameObject.SetActive(data.itemType!=ItemType.ETC);
+            itemUseBtn.onClick.AddListener(() => data.Use());
+
+            OnUIInteract(UIType.ITEM_DETAIL);
         }
     }
 }
