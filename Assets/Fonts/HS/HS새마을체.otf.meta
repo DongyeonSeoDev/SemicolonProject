@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: aea974e71f31cbf4a8d422c0c5f6a5b1
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - HSSaemaul
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 9d92704b00bb1f54a82d22ba54e94821, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
