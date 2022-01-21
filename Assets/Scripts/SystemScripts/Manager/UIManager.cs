@@ -37,6 +37,10 @@ namespace Water
         public Button itemUseBtn, itemJunkBtn;
         #endregion
 
+        #region CombinationFood
+        public Pair<Image, Text> combInfoUI;
+        #endregion
+
         [Space(20)]
         public GameObject systemMsgPrefab;
         public Transform systemMsgParent;
@@ -53,6 +57,20 @@ namespace Water
         {
             gm = GameManager.Instance;
             PoolManager.CreatePool(systemMsgPrefab, systemMsgParent, 5, "SystemMsg");
+            DefineAction();
+            
+        }
+
+        private void DefineAction()
+        {
+            Global.AddAction(Global.MakeFood, item =>
+            {
+                OnUIInteract(UIType.COMBINATION, true);
+                ItemInfo info = ((ItemInfo)item);
+                ItemSO data = gm.GetItemData(info.id);
+                combInfoUI.first.sprite = data.GetSprite();
+                combInfoUI.second.text = string.Format("{0} {1}°³", data.itemName, info.count);
+            });
         }
 
         private void Update()

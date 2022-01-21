@@ -57,6 +57,13 @@ namespace Water
                     DOMove(true);
                     break;
 
+                case UIType.COMBINATION:
+                    cvsg.alpha = 0f;
+                    transform.localScale = Global.onePointSix;
+                    transform.DOScale(Vector3.one, Global.fullScaleTransitionTime03).SetEase(Ease.InExpo);
+                    cvsg.DOFade(1, Global.fullAlphaTransitionTime04).SetUpdate(true).OnComplete(() => UpdateUIStack());
+                    break;
+
                 default:
                     break;
             }
@@ -87,6 +94,11 @@ namespace Water
 
                 case UIType.ITEM_DETAIL:
                     DOMove(false);
+                    break;
+
+                case UIType.COMBINATION:
+                    transform.DOScale(Global.onePointSix, Global.fullScaleTransitionTime03).SetEase(Ease.OutQuad);
+                    cvsg.DOFade(0, Global.fullAlphaTransitionTime04).SetUpdate(true).OnComplete(() => UpdateUIStack(false));
                     break;
 
                 default:
