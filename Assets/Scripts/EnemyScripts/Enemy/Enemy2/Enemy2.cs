@@ -15,6 +15,7 @@ namespace Enemy
                 enemySpriteRenderer = GetComponent<SpriteRenderer>(),
                 isHitAnimation = true,
                 isAttackCommand = true,
+                isLongDistanceAttack = true,
                 damageDelay = 0.4f
             };
 

@@ -45,19 +45,41 @@ namespace Enemy
         private Transform followObject;
 
         private Vector3 targetPosition;
+        private float angle;
 
         private float followSpeed;
+        private bool isLongDistanceAttack;
 
-        public EnemyFollowPlayerCommand(Transform enemyObject, Transform followObject, float followSpeed)
+        public EnemyFollowPlayerCommand(Transform enemyObject, Transform followObject, float followSpeed, bool isLongDistanceAttack)
         {
             this.enemyObject = enemyObject;
             this.followObject = followObject;
             this.followSpeed = followSpeed;
+            this.isLongDistanceAttack = isLongDistanceAttack;
         }
 
         public override void Execute()
         {
-            if (Vector3.Distance(enemyObject.position, followObject.position) >= 1f) // 거리 확인
+            if (isLongDistanceAttack)
+            {
+                // 이동
+
+                targetPosition = enemyObject.transform.position - followObject.transform.position;
+
+                angle = Mathf.Atan2(targetPosition.x, targetPosition.y) * Mathf.Rad2Deg;
+
+                targetPosition.x = followObject.transform.position.x + (3 * Mathf.Cos(angle * Mathf.Deg2Rad));
+                targetPosition.y = followObject.transform.position.y + (3 * Mathf.Sin(angle * Mathf.Deg2Rad));
+                targetPosition.z = followObject.transform.position.z;
+
+                GameObject.FindGameObjectWithTag("DEBUG").transform.position = targetPosition;
+
+                targetPosition = (targetPosition - enemyObject.position).normalized;
+                targetPosition *= followSpeed * Time.deltaTime;
+
+                enemyObject.position += targetPosition;
+            }
+            else
             {
                 // 이동
                 targetPosition = (followObject.position - enemyObject.position).normalized;

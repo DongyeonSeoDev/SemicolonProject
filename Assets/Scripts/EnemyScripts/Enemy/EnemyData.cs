@@ -44,6 +44,7 @@ namespace Enemy
         public bool isDamaged = false;
         public bool isHitAnimation = false;
         public bool isAttackCommand = false;
+        public bool isLongDistanceAttack = false;
         public int attackDamage = 10;
         public int damagedValue;
         public int hp = 30;
@@ -55,6 +56,19 @@ namespace Enemy
         public readonly int hashHit = Animator.StringToHash("Hit");
 
         public bool IsSeePlayer() => Vector3.Distance(enemyObject.transform.position, PlayerObject.transform.position) <= isSeePlayerDistance;
-        public bool IsAttackPlayer() => Vector3.Distance(enemyObject.transform.position, PlayerObject.transform.position) <= isAttackPlayerDistance;
+
+        public bool IsAttackPlayer()
+        {
+            if (isLongDistanceAttack)
+            {
+                float distance = Vector3.Distance(enemyObject.transform.position, PlayerObject.transform.position);
+
+                return 3f <= distance && distance <= 4f;
+            }
+            else
+            {
+                return Vector3.Distance(enemyObject.transform.position, PlayerObject.transform.position) <= isAttackPlayerDistance;
+            }
+        }
     }
 }
