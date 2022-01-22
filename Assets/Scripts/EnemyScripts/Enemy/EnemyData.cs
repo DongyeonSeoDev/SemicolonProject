@@ -39,8 +39,9 @@ namespace Enemy
         public float chaseSpeed = 5f;
         public float isSeePlayerDistance = 5f;
         public float isAttackPlayerDistance = 2f;
+        public float isMinAttackPlayerDistance = 5f;
+        public float isMaxAttackPlayerDistance = 8f;
         public float damageDelay = 0.2f;
-
         public bool isDamaged = false;
         public bool isHitAnimation = false;
         public bool isAttackCommand = false;
@@ -63,7 +64,7 @@ namespace Enemy
             {
                 float distance = Vector3.Distance(enemyObject.transform.position, PlayerObject.transform.position);
 
-                return 3f <= distance && distance <= 4f;
+                return isMinAttackPlayerDistance <= distance && distance <= isMaxAttackPlayerDistance;
             }
             else
             {

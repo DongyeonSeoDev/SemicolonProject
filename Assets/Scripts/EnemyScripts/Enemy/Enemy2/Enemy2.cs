@@ -16,7 +16,9 @@ namespace Enemy
                 isHitAnimation = true,
                 isAttackCommand = true,
                 isLongDistanceAttack = true,
-                damageDelay = 0.4f
+                damageDelay = 0.4f,
+                chaseSpeed = 3f,
+                isSeePlayerDistance = 10f
             };
 
             base.Awake();

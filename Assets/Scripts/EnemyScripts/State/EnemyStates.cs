@@ -40,7 +40,7 @@ namespace Enemy
         private EnemyCommand enemyFollowPlayerCommand;
 
         public EnemyChaseState(EnemyData enemyData) : base(eState.CHASE, enemyData) =>
-            enemyFollowPlayerCommand = new EnemyFollowPlayerCommand(enemyData.enemyObject.transform, enemyData.PlayerObject.transform, enemyData.chaseSpeed, enemyData.isLongDistanceAttack);
+            enemyFollowPlayerCommand = new EnemyFollowPlayerCommand(enemyData.enemyObject.transform, enemyData.PlayerObject.transform, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, enemyData.isLongDistanceAttack);
 
         protected override void Start()
         {

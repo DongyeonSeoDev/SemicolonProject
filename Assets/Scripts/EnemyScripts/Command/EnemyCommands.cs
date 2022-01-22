@@ -43,18 +43,19 @@ namespace Enemy
     {
         private Transform enemyObject;
         private Transform followObject;
+        private float followSpeed;
+        private float followDistance;
+        private bool isLongDistanceAttack;
 
         private Vector3 targetPosition;
         private float angle;
 
-        private float followSpeed;
-        private bool isLongDistanceAttack;
-
-        public EnemyFollowPlayerCommand(Transform enemyObject, Transform followObject, float followSpeed, bool isLongDistanceAttack)
+        public EnemyFollowPlayerCommand(Transform enemyObject, Transform followObject, float followSpeed, float followDistance, bool isLongDistanceAttack)
         {
             this.enemyObject = enemyObject;
             this.followObject = followObject;
             this.followSpeed = followSpeed;
+            this.followDistance = followDistance;
             this.isLongDistanceAttack = isLongDistanceAttack;
         }
 
@@ -63,16 +64,13 @@ namespace Enemy
             if (isLongDistanceAttack)
             {
                 // ¿Ãµø
-
                 targetPosition = enemyObject.transform.position - followObject.transform.position;
 
-                angle = Mathf.Atan2(targetPosition.x, targetPosition.y) * Mathf.Rad2Deg;
+                angle = Mathf.Atan2(targetPosition.x, targetPosition.y) * Mathf.Rad2Deg + 90f;
 
-                targetPosition.x = followObject.transform.position.x + (3 * Mathf.Cos(angle * Mathf.Deg2Rad));
-                targetPosition.y = followObject.transform.position.y + (3 * Mathf.Sin(angle * Mathf.Deg2Rad));
+                targetPosition.x = followObject.transform.position.x + (followDistance * Mathf.Cos(angle * Mathf.Deg2Rad) * -1f);
+                targetPosition.y = followObject.transform.position.y + (followDistance * Mathf.Sin(angle * Mathf.Deg2Rad));
                 targetPosition.z = followObject.transform.position.z;
-
-                GameObject.FindGameObjectWithTag("DEBUG").transform.position = targetPosition;
 
                 targetPosition = (targetPosition - enemyObject.position).normalized;
                 targetPosition *= followSpeed * Time.deltaTime;

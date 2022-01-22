@@ -17,4 +17,4 @@ MonoBehaviour:
   - {x: 6, y: -3, z: 0}
   currentPositionNumber: 0
   targetPositionChangeDistance: 1
-  moveSpeed: 3.5
+  moveSpeed: 2
