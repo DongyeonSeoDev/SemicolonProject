@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
         get { return dp; }
         set { dp = value; }
     }
+
     void Start()
     {
 

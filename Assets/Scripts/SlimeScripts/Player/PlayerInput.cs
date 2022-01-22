@@ -19,6 +19,13 @@ public class PlayerInput : MonoBehaviour
         set { isBodySlap = value; }
     }
 
+    private bool isInteraction = false;
+    public bool IsInterraction
+    {
+        get { return isInteraction; }
+        set { isInteraction = value; }
+    }
+
     private bool isShoot = false;
     public bool IsShoot
     {
@@ -56,6 +63,11 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetButtonDown("Drain"))
         {
             isDrain = true;
+        }
+
+        if(Input.GetButtonDown("Interaction"))
+        {
+            isInteraction = true;
         }
     }
     private void FixedUpdate()
