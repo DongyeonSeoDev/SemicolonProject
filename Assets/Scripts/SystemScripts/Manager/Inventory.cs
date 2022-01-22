@@ -136,7 +136,7 @@ public class Inventory : MonoSingleton<Inventory>
                 {
                     if (x.ExistItem)
                     {
-                        count -= x.MaxCount >= x.Count + count ? count : (x.MaxCount - x.Count);
+                        count -= x.MaxCount >= x.Count + count ? count : x.RestCount;
                         x.UpdateCount(Mathf.Clamp(count+x.Count,1,x.MaxCount));
                     }
                     else
@@ -198,7 +198,7 @@ public class Inventory : MonoSingleton<Inventory>
         if(slot)
         {
             list.Add(slot);
-            count -= slot.MaxCount >= slot.Count + count ? count : (slot.MaxCount - slot.Count);
+            count -= slot.MaxCount >= slot.Count + count ? count : slot.RestCount;
         }
         
         while(count > 0)

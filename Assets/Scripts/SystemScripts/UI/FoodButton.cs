@@ -10,7 +10,7 @@ public class FoodButton : MonoBehaviour
     [SerializeField] private Food foodData;
 
     public Image foodImg;
-    public Text foodNameText;
+    public TextMeshProUGUI foodNameTmp;
 
     public Food FoodData 
     { 
@@ -19,7 +19,7 @@ public class FoodButton : MonoBehaviour
         {
             foodData = value;
             foodImg.sprite = foodData.GetSprite();
-            foodNameText.text = foodData.itemName;
+            foodNameTmp.SetText(foodData.itemName);
         }
     }
 

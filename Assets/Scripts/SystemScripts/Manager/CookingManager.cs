@@ -35,10 +35,10 @@ public class CookingManager : MonoSingleton<CookingManager>
     private int makeFoodCount; //만드려는(선택한) 음식 개수
     public int MakeFoodCount { get { return makeFoodCount; } }
 
-    public TextMeshProUGUI NpcNameTxt;
+    public TextMeshProUGUI NpcNameTxt; 
     public Image foodImg;  //만드려는(선택한) 음식 이미지
     public Text makeFoodCountText; //만드려는(선택한) 음식 개수 텍스트
-    public Text foodNameText; //음식이름
+    public TextMeshProUGUI foodNameText; //음식이름
 
     public Button countPlusBtn, countMinusBtn; //음식 제작 개수 늘리기(줄이기) 버튼
 
@@ -192,7 +192,7 @@ public class CookingManager : MonoSingleton<CookingManager>
         selectedFoodBtn = null;
     }
 
-    public void OnPointerFoodImage(bool on)
+    public void OnPointerFoodImage(bool on)  //음식 제작 --> 만들 음식의 이미지에 마우스 대거나 뗼때
     {
         if (on) UIManager.Instance.SetCursorInfoUI(selectedFoodBtn.FoodData.itemName);
         else UIManager.Instance.OffCursorInfoUI();
