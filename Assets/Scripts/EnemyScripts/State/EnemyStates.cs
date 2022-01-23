@@ -71,7 +71,7 @@ namespace Enemy
             {
                 if (enemyData.eEnemyController == EnemyController.AI)
                 {
-                    enemyAttackCommand = new EnemyAttackAIControllerCommand(enemyData.enemyObject.transform.position, enemyData.PlayerObject.transform.position, enemyData.eEnemyController, enemyData.attackDamage);
+                    enemyAttackCommand = new EnemyAttackAIControllerCommand(enemyData.enemyObject.transform, enemyData.PlayerObject.transform, enemyData.eEnemyController, enemyData.attackDamage);
                 }
                 else if (enemyData.eEnemyController == EnemyController.PLAYER)
                 {
@@ -97,7 +97,7 @@ namespace Enemy
             {
                 if (enemyAttackCommand != null)
                 {
-                    enemyAttackCommand.Execute(); // 이게 여기서 실행되면 안되고, 애니메이션 이벤트에서 실행되어야 함
+                    enemyAttackCommand.Execute();
                 }
 
                 currentTime = 0f;

@@ -148,22 +148,22 @@ namespace Enemy
 
     public class EnemyAttackAIControllerCommand : EnemyCommand // Àû °ø°Ý
     {
-        public Vector3 spawnPosition;
-        public Vector3 targetPosition;
+        public Transform enemyTransform;
+        public Transform targetTransform;
         public EnemyController eEnemyController;
         public int attackDamage;
 
-        public EnemyAttackAIControllerCommand(Vector3 position, Vector3 target, EnemyController controller, int damage)
+        public EnemyAttackAIControllerCommand(Transform enemy, Transform target, EnemyController controller, int damage)
         {
-            spawnPosition = position;
-            targetPosition = target;
+            enemyTransform = enemy;
+            targetTransform = target;
             eEnemyController = controller;
             attackDamage = damage;
         }
 
         public override void Execute()
         {
-            EnemyPoolManager.Instance.GetEnemyBullet(spawnPosition, eEnemyController, attackDamage, (targetPosition - spawnPosition).normalized);
+            EnemyPoolManager.Instance.GetEnemyBullet(enemyTransform.position, eEnemyController, attackDamage, (targetTransform.position - enemyTransform.position).normalized);
         }
     }
 

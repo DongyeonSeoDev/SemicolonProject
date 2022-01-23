@@ -42,10 +42,13 @@ namespace Enemy
         public float isMinAttackPlayerDistance = 5f;
         public float isMaxAttackPlayerDistance = 8f;
         public float damageDelay = 0.2f;
+
         public bool isDamaged = false;
+        public bool isAttack = false;
         public bool isHitAnimation = false;
         public bool isAttackCommand = false;
         public bool isLongDistanceAttack = false;
+
         public int attackDamage = 10;
         public int damagedValue;
         public int hp = 30;
