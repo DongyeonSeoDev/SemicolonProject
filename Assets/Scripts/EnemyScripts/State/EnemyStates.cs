@@ -61,24 +61,9 @@ namespace Enemy
 
     public partial class EnemyAttackState : EnemyState // 공격 상태
     {
-        private EnemyCommand enemyAttackCommand;
-
         private float currentTime;
 
-        public EnemyAttackState(EnemyData enemyData) : base(eState.ATTACK, enemyData)
-        {
-            if (enemyData.isAttackCommand)
-            {
-                if (enemyData.eEnemyController == EnemyController.AI)
-                {
-                    enemyAttackCommand = new EnemyAttackAIControllerCommand(enemyData.enemyObject.transform, enemyData.PlayerObject.transform, enemyData.eEnemyController, enemyData.attackDamage);
-                }
-                else if (enemyData.eEnemyController == EnemyController.PLAYER)
-                {
-                    enemyAttackCommand = new EnemyAttackPlayerControllerCommand();
-                }
-            }
-        }
+        public EnemyAttackState(EnemyData enemyData) : base(eState.ATTACK, enemyData) { }
 
         protected override void Start()
         {
@@ -95,11 +80,6 @@ namespace Enemy
 
             if (currentTime >= 1f)
             {
-                if (enemyAttackCommand != null)
-                {
-                    enemyAttackCommand.Execute();
-                }
-
                 currentTime = 0f;
 
                 base.Update();
@@ -133,6 +113,7 @@ namespace Enemy
         protected override void Start()
         {
             enemyData.hp -= enemyData.damagedValue;
+            enemyData.hpBarFillImage.fillAmount = (float)enemyData.hp / enemyData.maxHP;
 
             currentTime = 0f;
 

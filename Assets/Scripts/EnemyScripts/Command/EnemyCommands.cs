@@ -146,14 +146,14 @@ namespace Enemy
         }
     }
 
-    public class EnemyAttackAIControllerCommand : EnemyCommand // 적 공격
+    public class EnemyAttackCommand : EnemyCommand // 적 공격
     {
         public Transform enemyTransform;
         public Transform targetTransform;
         public EnemyController eEnemyController;
         public int attackDamage;
 
-        public EnemyAttackAIControllerCommand(Transform enemy, Transform target, EnemyController controller, int damage)
+        public EnemyAttackCommand(Transform enemy, Transform target, EnemyController controller, int damage)
         {
             enemyTransform = enemy;
             targetTransform = target;
@@ -164,14 +164,6 @@ namespace Enemy
         public override void Execute()
         {
             EnemyPoolManager.Instance.GetEnemyBullet(enemyTransform.position, eEnemyController, attackDamage, (targetTransform.position - enemyTransform.position).normalized);
-        }
-    }
-
-    public class EnemyAttackPlayerControllerCommand : EnemyCommand // 플레이어가 변신했을때 공격
-    {
-        public override void Execute()
-        {
-            Debug.Log("플레이어 공격 코드 작성");
         }
     }
 }

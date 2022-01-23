@@ -1,10 +1,12 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Enemy
 {
     public class Enemy : MonoBehaviour // 적 관리 클래스
     {
         public EnemyMoveSO enemyMoveSO;
+        public Image hpBarFillImage;
 
         protected EnemyData enemyData;
         protected SpriteRenderer sr;

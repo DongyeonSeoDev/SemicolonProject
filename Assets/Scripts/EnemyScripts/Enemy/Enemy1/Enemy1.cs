@@ -12,7 +12,8 @@ namespace Enemy
                 enemyObject = gameObject,
                 enemyMoveSO = enemyMoveSO,
                 enemyAnimator = GetComponent<Animator>(),
-                enemySpriteRenderer = GetComponent<SpriteRenderer>()
+                enemySpriteRenderer = GetComponent<SpriteRenderer>(),
+                hpBarFillImage = hpBarFillImage
             };
 
             base.Awake();

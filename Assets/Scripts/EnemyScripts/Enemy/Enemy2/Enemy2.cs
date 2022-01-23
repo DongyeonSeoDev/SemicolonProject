@@ -4,6 +4,8 @@ namespace Enemy
 {
     public class Enemy2 : Enemy // 두번째 적
     {
+        private EnemyCommand enemyAttackCommand;
+
         protected override void Awake()
         {
             enemyData = new EnemyData()
@@ -13,6 +15,7 @@ namespace Enemy
                 enemyMoveSO = enemyMoveSO,
                 enemyAnimator = GetComponent<Animator>(),
                 enemySpriteRenderer = GetComponent<SpriteRenderer>(),
+                hpBarFillImage = hpBarFillImage,
                 isHitAnimation = true,
                 isAttackCommand = true,
                 isLongDistanceAttack = true,
@@ -21,7 +24,14 @@ namespace Enemy
                 isSeePlayerDistance = 10f
             };
 
+            enemyAttackCommand = new EnemyAttackCommand(enemyData.enemyObject.transform, enemyData.PlayerObject.transform, enemyData.eEnemyController, enemyData.attackDamage);
+
             base.Awake();
+        }
+
+        public void EnemyAttack()
+        {
+            enemyAttackCommand.Execute();
         }
     }
 }

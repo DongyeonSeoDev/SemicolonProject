@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Enemy
 {
@@ -16,6 +17,7 @@ namespace Enemy
         public EnemyMoveSO enemyMoveSO;
         public Animator enemyAnimator;
         public SpriteRenderer enemySpriteRenderer;
+        public Image hpBarFillImage;
 
         private GameObject playerObject;
         public GameObject PlayerObject
@@ -51,6 +53,7 @@ namespace Enemy
 
         public int attackDamage = 10;
         public int damagedValue;
+        public int maxHP = 30;
         public int hp = 30;
 
         public readonly int hashIsDie = Animator.StringToHash("isDie");
