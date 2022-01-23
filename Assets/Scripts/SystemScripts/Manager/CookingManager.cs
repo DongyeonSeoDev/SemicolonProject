@@ -121,6 +121,8 @@ public class CookingManager : MonoSingleton<CookingManager>
         if (selectedFoodBtn == foodBtn) return;
 
         bool first = !selectedFoodBtn;
+        if (!first) selectedFoodBtn.selecteLine.enabled = false;
+        
         selectedFoodBtn = foodBtn;
         Food selectedFood = selectedFoodBtn.FoodData;
 
@@ -188,8 +190,11 @@ public class CookingManager : MonoSingleton<CookingManager>
 
     public void MakeFoodInfoUIReset()
     {
-        
-        selectedFoodBtn = null;
+        if (selectedFoodBtn)
+        {
+            selectedFoodBtn.selecteLine.enabled = false;
+            selectedFoodBtn = null;
+        }
     }
 
     public void OnPointerFoodImage(bool on)  //음식 제작 --> 만들 음식의 이미지에 마우스 대거나 뗼때

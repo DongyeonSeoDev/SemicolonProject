@@ -90,6 +90,7 @@ GameObject:
   - component: {fileID: 1672161281525966303}
   - component: {fileID: 3342091421117382969}
   - component: {fileID: 2430612709564297508}
+  - component: {fileID: -3893827060743151495}
   m_Layer: 5
   m_Name: FoodButton(Test)
   m_TagString: Untagged
@@ -214,6 +215,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   button: {fileID: 0}
   foodData: {fileID: 0}
+  selecteLine: {fileID: -3893827060743151495}
   foodImg: {fileID: 1672161281205047011}
   foodNameTmp: {fileID: 2065362314639031276}
 --- !u!114 &3342091421117382969
@@ -244,6 +246,21 @@ MonoBehaviour:
   transitionEnable: 1
   transitionTime: 0.3
   targetScale: {x: 1.1, y: 1.1, z: 1.1}
+--- !u!114 &-3893827060743151495
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1672161281525966289}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EffectColor: {r: 1, g: 0.34170598, b: 0, a: 0.7529412}
+  m_EffectDistance: {x: -5, y: -5}
+  m_UseGraphicAlpha: 1
 --- !u!1 &4549100629283697778
 GameObject:
   m_ObjectHideFlags: 0

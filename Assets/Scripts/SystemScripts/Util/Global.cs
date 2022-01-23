@@ -16,6 +16,14 @@ namespace Water
         public static Vector3 onePointSix = new Vector3(1.6f, 1.6f, 1.6f);
         public static Vector3 zeroPointSeven = new Vector3(0.7f, 0.7f, 0.7f);
 
-      
+        private static Color itemSlotOutlineColor;
+        public static Color ItemSlotOutlineColor
+        {
+            set
+            {
+                if (itemSlotOutlineColor == null) itemSlotOutlineColor = value;
+            }
+            get { return itemSlotOutlineColor; }
+        }
     }
 }

@@ -9,6 +9,7 @@ public class FoodButton : MonoBehaviour
     [HideInInspector] public Button button;
     [SerializeField] private Food foodData;
 
+    public Outline selecteLine;
     public Image foodImg;
     public TextMeshProUGUI foodNameTmp;
 
@@ -29,6 +30,7 @@ public class FoodButton : MonoBehaviour
         button.onClick.AddListener(() =>
         {
             CookingManager.Instance.SelectFoodBtn(this);
+            selecteLine.enabled = true;
         });
     }
 

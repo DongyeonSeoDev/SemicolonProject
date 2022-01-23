@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using TMPro;
 
 namespace Water
 {
@@ -29,11 +30,13 @@ namespace Water
 
         #region Inventory Item Detail View
         private int selectedItemId = -1;
+        private ItemSlot selectedItemSlot;
 
         [Space(20)]
         public Image itemImg, itemTypeImg;
-        public Text itemNameTxt, itemExplanation;
+        public Text itemExplanation;
         public Text itemCntTxt, itemTypeTxt;
+        public TextMeshProUGUI itemNameTmp;
         public Button itemUseBtn, itemJunkBtn;
         #endregion
 
@@ -65,11 +68,11 @@ namespace Water
         {
             Global.AddAction(Global.MakeFood, item =>
             {
-                OnUIInteract(UIType.COMBINATION, true);
+                OnUIInteract(UIType.COMBINATION, true); //음식 제작 성공 완료 패널 띄움
                 ItemInfo info = ((ItemInfo)item);
                 ItemSO data = gm.GetItemData(info.id);
                 combInfoUI.first.sprite = data.GetSprite();
-                combInfoUI.second.text = string.Format("{0} {1}개", data.itemName, info.count);
+                combInfoUI.second.text = string.Format("{0} <color=blue>{1}</color>개", data.itemName, info.count);
             });
         }
 
@@ -149,6 +152,12 @@ namespace Water
                     break;
                 case UIType.ITEM_DETAIL:
                     selectedItemId = -1;
+                    if (selectedItemSlot)
+                    {
+                        selectedItemSlot.outline.DOKill();
+                        selectedItemSlot.outline.enabled = false;
+                        selectedItemSlot = null;
+                    }
                     break;
             }
         }
@@ -190,17 +199,26 @@ namespace Water
             isOnCursorInfo = false;
         }
 
-        public void DetailItemSlot(int itemID)  //인벤토리에서 아이템 슬롯 클릭
+        public void DetailItemSlot(ItemSlot slot)  //인벤토리에서 아이템 슬롯 클릭
         {
+            int itemID = slot.itemInfo.id;
+
+            if (selectedItemSlot)
+            {
+                selectedItemSlot.outline.DOKill();
+                selectedItemSlot.outline.enabled = false;
+            }
+            selectedItemSlot = slot;
+
             if (selectedItemId == itemID) return;
             else if(selectedItemId == -1) OnUIInteract(UIType.ITEM_DETAIL);
             selectedItemId = itemID;
-
+            
             ItemSO data = gm.GetItemData(itemID);
 
             itemImg.sprite = data.GetSprite();
             itemTypeImg.sprite = Global.GetItemTypeSpr(data.itemType);
-            itemNameTxt.text = data.itemName;
+            itemNameTmp.text = data.itemName;
             itemExplanation.text = data.explanation;
             itemCntTxt.text = string.Format("수량: {0}개", gm.GetItemCount(itemID));
             itemTypeTxt.text = Global.GetItemTypeName(data.itemType);
