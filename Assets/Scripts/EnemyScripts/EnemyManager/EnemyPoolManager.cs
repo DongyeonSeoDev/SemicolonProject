@@ -1,8 +1,18 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Enemy
 {
+    public enum Type
+    {
+        Slime_01,
+        Rat_02,
+        Bullet,
+        EnemyLoot
+    }
+
     public class EnemyPoolManager : MonoBehaviour
     {
         private static EnemyPoolManager instance;
@@ -22,11 +32,10 @@ namespace Enemy
             }
         }
 
+        public List<PoolManager> poolList = new List<PoolManager>();
 
-        public EnemyBullet enemyBullet;
-        public int count;
-
-        private Queue<EnemyBullet> enemyBulletQueue = new Queue<EnemyBullet>();
+        private Dictionary<Type, PoolManager> poolDictionary = new Dictionary<Type, PoolManager>();
+        private Dictionary<Type, Queue<PoolManager>> poolQueueDictionary = new Dictionary<Type,Queue<PoolManager>>();
 
         private void Awake()
         {
@@ -40,40 +49,49 @@ namespace Enemy
 
         private void Start()
         {
-            for (int i = 0; i < count; i++)
+            poolDictionary = poolList.ToDictionary(x => x.poolType, x => x);
+
+            foreach (Type type in Enum.GetValues(typeof(Type)))
             {
-                enemyBulletQueue.Enqueue(MakeEnemyBullet());
+                poolQueueDictionary[type] = new Queue<PoolManager>();
+
+                if (poolDictionary.ContainsKey(type))
+                {
+                    for (int j = 0; j < poolDictionary[type].count; j++)
+                    {
+                        poolQueueDictionary[type].Enqueue(MakePoolObject(type));
+                    }
+                }
             }
         }
 
-        public EnemyBullet GetEnemyBullet(Vector2 position, EnemyController controller, int damage, Vector3 direction)
+        public PoolManager GetPoolObject(Type poolType, Vector2 position)
         {
-            EnemyBullet bullet;
+            PoolManager pool;
 
-            if (enemyBulletQueue.Peek().gameObject.activeSelf)
+            if (poolQueueDictionary[poolType].Peek().gameObject.activeSelf)
             {
-                bullet = MakeEnemyBullet();
+                pool = MakePoolObject(poolType);   
             }
             else
             {
-                bullet = enemyBulletQueue.Dequeue();
+                pool = poolQueueDictionary[poolType].Dequeue();
             }
 
-            bullet.gameObject.SetActive(true);
-            bullet.transform.position = position;
-            bullet.Init(controller, damage, direction);
+            pool.gameObject.SetActive(true);
+            pool.transform.position = position;
 
-            enemyBulletQueue.Enqueue(bullet);
+            poolQueueDictionary[poolType].Enqueue(pool);
 
-            return bullet;
+            return pool;
         }
 
-        private EnemyBullet MakeEnemyBullet()
+        private PoolManager MakePoolObject(Type poolType)
         {
-            EnemyBullet bullet = Instantiate(enemyBullet, transform);
-            bullet.gameObject.SetActive(false);
+            PoolManager pool = Instantiate(poolDictionary[poolType], transform);
+            pool.gameObject.SetActive(false);
 
-            return bullet;
+            return pool;
         }
     }
 }

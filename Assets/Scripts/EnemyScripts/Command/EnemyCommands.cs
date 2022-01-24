@@ -125,15 +125,27 @@ namespace Enemy
 
     public class EnemyDeadAIControllerCommand : EnemyCommand // ÀûÀÌ Á×À½
     {
-        private GameObject enemyObject; 
+        private GameObject enemyObject;
+        private EnemyLootListSO enemyLootListSO;
 
-        public EnemyDeadAIControllerCommand(GameObject enemyObj)
+        public EnemyDeadAIControllerCommand(GameObject enemyObj, EnemyLootListSO lootListSO)
         {
             enemyObject = enemyObj;
+            enemyLootListSO = lootListSO;
         }
 
         public override void Execute()
         {
+            for (int i = 0; i < enemyLootListSO.enemyLootList.Count; i++)
+            {
+                for (int j = 0; j < enemyLootListSO.enemyLootList[i].lootCount; j++)
+                {
+                    PoolManager loot = EnemyPoolManager.Instance.GetPoolObject(Type.EnemyLoot, enemyObject.transform.position);
+
+                    loot.GetComponent<EnemyLoot>().Init(enemyLootListSO.enemyLootList[i].enemyLoot.GetSprite());
+                }
+            }
+
             GameObject.Destroy(enemyObject);
         }
     }
@@ -163,7 +175,9 @@ namespace Enemy
 
         public override void Execute()
         {
-            EnemyPoolManager.Instance.GetEnemyBullet(enemyTransform.position, eEnemyController, attackDamage, (targetTransform.position - enemyTransform.position).normalized);
+            PoolManager bullet = EnemyPoolManager.Instance.GetPoolObject(Type.Bullet, enemyTransform.position);
+
+            bullet.GetComponent<EnemyBullet>().Init(eEnemyController, attackDamage, (targetTransform.position - enemyTransform.position).normalized);
         }
     }
 }

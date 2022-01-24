@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Enemy
 {
-    public class EnemyBullet : MonoBehaviour
+    public class EnemyBullet : PoolManager
     {
         public float speed;
 

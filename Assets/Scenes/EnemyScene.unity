@@ -368,8 +368,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6790ec24b2f720d4caa66e372314ce5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyBullet: {fileID: 6204418954052947280, guid: 61bda1345f54d3e4caea7a0fae532ffa, type: 3}
-  count: 10
+  poolList:
+  - {fileID: 6204418954052947280, guid: 61bda1345f54d3e4caea7a0fae532ffa, type: 3}
+  - {fileID: 3125673745071039423, guid: 40d4cc2072f77dd4796ef1df25797616, type: 3}
 --- !u!4 &283423761
 Transform:
   m_ObjectHideFlags: 0
@@ -718,6 +719,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3351713311786356777, guid: bd1420554775ff64abf2f4527d18fcce, type: 3}
+      propertyPath: enemyLootListSO
+      value: 
+      objectReference: {fileID: 11400000, guid: f08037efe7334bc46a049b6a12fe431a, type: 2}
     - target: {fileID: 3351713311786356781, guid: bd1420554775ff64abf2f4527d18fcce, type: 3}
       propertyPath: m_Name
       value: Enemy2
@@ -823,5 +828,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3750393452434606831, guid: 99878bdc48206b64d92b0711ec15cf97, type: 3}
+      propertyPath: enemyLootListSO
+      value: 
+      objectReference: {fileID: 11400000, guid: f08037efe7334bc46a049b6a12fe431a, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 99878bdc48206b64d92b0711ec15cf97, type: 3}

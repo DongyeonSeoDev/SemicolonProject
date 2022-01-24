@@ -15,6 +15,7 @@ namespace Enemy
 
         public GameObject enemyObject;
         public EnemyMoveSO enemyMoveSO;
+        public EnemyLootListSO enemyLootList;
         public Animator enemyAnimator;
         public SpriteRenderer enemySpriteRenderer;
         public Image hpBarFillImage;
@@ -37,6 +38,8 @@ namespace Enemy
                 return playerObject;
             }
         }
+
+        public string enemyId;
 
         public float chaseSpeed = 5f;
         public float isSeePlayerDistance = 5f;

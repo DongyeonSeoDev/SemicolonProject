@@ -71,6 +71,8 @@ namespace Enemy
 
             currentTime = 0f;
 
+            SpriteFlipCheck();
+
             base.Start();
         }
 
@@ -82,11 +84,25 @@ namespace Enemy
             {
                 currentTime = 0f;
 
+                SpriteFlipCheck();
+
                 base.Update();
             }
         }
 
         protected override void End() => enemyData.enemyAnimator.ResetTrigger(enemyData.hashAttack);
+
+        private void SpriteFlipCheck()
+        {
+            if (enemyData.enemyObject.transform.position.x > enemyData.PlayerObject.transform.position.x)
+            {
+                enemyData.enemySpriteRenderer.flipX = true;
+            }
+            else if (enemyData.enemyObject.transform.position.x < enemyData.PlayerObject.transform.position.x)
+            {
+                enemyData.enemySpriteRenderer.flipX = false;
+            }
+        }
     }
 
     public partial class EnemyGetDamagedState : EnemyState // 공격을 받은 상태
@@ -162,7 +178,7 @@ namespace Enemy
         {
             if (enemyData.eEnemyController == EnemyController.AI)
             {
-                deadCommand = new EnemyDeadAIControllerCommand(enemyData.enemyObject);
+                deadCommand = new EnemyDeadAIControllerCommand(enemyData.enemyObject, enemyData.enemyLootList);
             }
             else if (enemyData.eEnemyController == EnemyController.PLAYER)
             {
