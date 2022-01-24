@@ -3,8 +3,7 @@ using UnityEngine;
 
 namespace Enemy
 {
-    [CreateAssetMenu(fileName = "EnemyMove", menuName = "EnemyMove")]
-    public class EnemyMoveSO : ScriptableObject
+    public partial class EnemyMoveSO : ScriptableObject
     {
         public List<Vector3> targetPositions = new List<Vector3>(); // 이동할 위치들
 

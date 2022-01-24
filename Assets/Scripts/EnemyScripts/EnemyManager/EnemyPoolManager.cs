@@ -45,10 +45,7 @@ namespace Enemy
             }
 
             instance = this;
-        }
 
-        private void Start()
-        {
             poolDictionary = poolList.ToDictionary(x => x.poolType, x => x);
 
             foreach (Type type in Enum.GetValues(typeof(Type)))

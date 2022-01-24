@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace Enemy
 {
-    public class Enemy : MonoBehaviour // 利 包府 努贰胶
+    public class Enemy : PoolManager // 利 包府 努贰胶
     {
         public EnemyMoveSO enemyMoveSO;
         public EnemyLootListSO enemyLootListSO;
@@ -53,7 +53,7 @@ namespace Enemy
 
         public void EnemyDestroy()
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
 
         public string GetEnemyId()

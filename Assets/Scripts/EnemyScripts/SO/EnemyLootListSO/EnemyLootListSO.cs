@@ -10,8 +10,7 @@ namespace Enemy
         public int lootCount;
     }
 
-    [CreateAssetMenu(fileName = "EnemyLootList", menuName = "EnemyLootList")]
-    public class EnemyLootListSO : ScriptableObject
+    public partial class EnemyLootListSO : ScriptableObject
     {
         public List<EnemyLootList> enemyLootList = new List<EnemyLootList>();
     }

@@ -146,7 +146,7 @@ namespace Enemy
                 }
             }
 
-            GameObject.Destroy(enemyObject);
+            enemyObject.GetComponent<Enemy>().EnemyDestroy();
         }
     }
 

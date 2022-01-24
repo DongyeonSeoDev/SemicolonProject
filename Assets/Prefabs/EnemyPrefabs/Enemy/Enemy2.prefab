@@ -226,7 +226,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30ecdb34052b80a47ab6080c208a791b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  poolType: 1
+  count: 1
   enemyMoveSO: {fileID: 11400000, guid: cd9686d184f14d546ab683e2357e52ad, type: 2}
+  enemyLootListSO: {fileID: 11400000, guid: f08037efe7334bc46a049b6a12fe431a, type: 2}
   hpBarFillImage: {fileID: 2029326397634872474}
 --- !u!1001 &688433718241700482
 PrefabInstance:
