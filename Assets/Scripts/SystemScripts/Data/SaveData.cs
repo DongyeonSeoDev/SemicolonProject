@@ -8,22 +8,24 @@ namespace Water
     public class SaveData
     {
         public Option option = new Option();
-        public Stat playerStat = new Stat();
         public UserInfo userInfo = new UserInfo();
 
         public void Save()
         {
             userInfo.userItems.Save();
+            option.keyInputDict.Save();
         }
         public void Load()
         {
             userInfo.userItems.Load();
+            option.keyInputDict.Load();
         }
     }
 
     [Serializable]
     public class UserInfo
     {
+        public Stat playerStat = new Stat();
         public SaveDic<int, ItemInfo> userItems = new SaveDic<int, ItemInfo>();
     }
 
@@ -44,7 +46,7 @@ namespace Water
     [Serializable]
     public class Option
     {
-        public SaveDic<KeyAction, KeyCode> keyDict = new SaveDic<KeyAction, KeyCode>(); 
+        public SaveDic<KeyAction, KeyCode> keyInputDict = new SaveDic<KeyAction, KeyCode>(); 
     }
 
     [Serializable]

@@ -2785,7 +2785,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 382c6a5a4f8e3f24c8811c28baa00dbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcName: "\uC950 \uC694\uB9AC\uC0AC"
+  npcName: "\uC694\uB9AC\uC0AC \uC950"
   npcUI: {fileID: 0}
   canFoodList:
   - {fileID: 11400000, guid: eb21ae1c9f71a82478ec6267c6f9bee1, type: 2}
