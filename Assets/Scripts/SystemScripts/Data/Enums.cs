@@ -12,7 +12,8 @@ public enum UIType
     INVENTORY,
     FOOD_DETAIL,
     ITEM_DETAIL,
-    COMBINATION
+    COMBINATION,
+    REMOVE_ITEM
 }
 
 public enum KeyAction

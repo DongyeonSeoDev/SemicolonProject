@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6ae80f34d028b34ea450ad167b600e5, type: 3}
+  m_Name: MouseTailJelly
+  m_EditorClassIdentifier: 
+  itemSprite: {fileID: 0}
+  itemType: 1
+  id: 0
+  maxCount: 0
+  itemName: "\uC950 \uAF2C\uB9AC \uC824\uB9AC"
+  explanation: "\uCAC0\uB4DD\uCAC0\uB4DD\uD55C \uB9DB\uACFC \uAF2C\uB4E4\uAF2C\uB4E4\uD55C
+    \uB9DB\uC758 \uC870\uD654\uAC00 \uC798 \uC774\uB8E8\uC5B4\uC838 \uC788\uC73C\uBA70
+    \uB9CE\uC740\n\uC2AC\uB77C\uC784\uB4E4\uC774 \uC990\uACA8\uBA39\uB294 \uAC04\uC2DD\uC774\uB2E4.\n\n<b>\uCCB4\uB825
+    +5</b>"
+  needIngredients:
+  - ingredient: {fileID: 11400000, guid: 06dd51cfab1cb904b9bbbedef6545d02, type: 2}
+    needCount: 1
+  - ingredient: {fileID: 11400000, guid: ac78587e7a385054a9d1150a539d138b, type: 2}
+    needCount: 1
