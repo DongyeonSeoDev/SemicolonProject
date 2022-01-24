@@ -385,23 +385,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!1 &1014413142 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6840160282341942530, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
-  m_PrefabInstance: {fileID: 6840160281470734932}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1014413143
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1014413142}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22947679729ad2a47846e2579dbd227f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1213140007
 GameObject:
   m_ObjectHideFlags: 0
@@ -703,6 +686,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3750393452434606831, guid: 99878bdc48206b64d92b0711ec15cf97, type: 3}
+      propertyPath: enemyMoveSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 74bb51f6bbe87ab4d8856950e44f45a9, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 99878bdc48206b64d92b0711ec15cf97, type: 3}
 --- !u!1001 &6840160281470734932
@@ -712,18 +699,34 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 315540450896467828, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
-      propertyPath: m_IsTrigger
-      value: 1
+    - target: {fileID: 2199360685128655093, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_ShapeTexture
+      value: 
+      objectReference: {fileID: 2800000, guid: b281b91a70a624a0da1c43adc1c30c7b, type: 3}
+    - target: {fileID: 2199360685128655093, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_MaskInteraction
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2199360685128655093, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: c4fcb2abbe198ad4fa6a753242c0587b, type: 2}
+      propertyPath: m_LocalAABB.m_Center.x
+      value: -0.52319765
+      objectReference: {fileID: 0}
     - target: {fileID: 2199360685128655093, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
-      propertyPath: m_Materials.Array.data[1]
+      propertyPath: m_LocalAABB.m_Center.y
+      value: -0.32415318
+      objectReference: {fileID: 0}
+    - target: {fileID: 2199360685128655093, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_LocalAABB.m_Extent.x
+      value: 3.3112392
+      objectReference: {fileID: 0}
+    - target: {fileID: 2199360685128655093, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_LocalAABB.m_Extent.y
+      value: 2.6958203
+      objectReference: {fileID: 0}
+    - target: {fileID: 2199360685128655093, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_Sprites.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: a0f631408cd8dc04c926f4f7d32f27d4, type: 2}
+      objectReference: {fileID: 21300000, guid: 0ae2b74b1edd14bb18dd7b65ae916a54, type: 3}
     - target: {fileID: 6840160282341942530, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: m_Name
       value: Slime
@@ -771,6 +774,62 @@ PrefabInstance:
     - target: {fileID: 6840160282341942531, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7767920394982435845, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_UTess2D
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7767920394982435845, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_StretchUV
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7767920394982435845, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_SpriteShape
+      value: 
+      objectReference: {fileID: 11400000, guid: acd59b85bbf4cd9438bb6ace80dbafed, type: 2}
+    - target: {fileID: 7767920394982435845, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_Spline.m_IsOpenEnded
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7767920394982435845, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_Spline.m_ControlPoints.Array.data[0].mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7767920394982435845, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_Spline.m_ControlPoints.Array.data[0].position.x
+      value: 1.439474
+      objectReference: {fileID: 0}
+    - target: {fileID: 7767920394982435845, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_Spline.m_ControlPoints.Array.data[0].position.y
+      value: -2.452922
+      objectReference: {fileID: 0}
+    - target: {fileID: 7767920394982435845, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_Spline.m_ControlPoints.Array.data[8].position.x
+      value: 2.467247
+      objectReference: {fileID: 0}
+    - target: {fileID: 7767920394982435845, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_Spline.m_ControlPoints.Array.data[8].position.y
+      value: -0.7368994
+      objectReference: {fileID: 0}
+    - target: {fileID: 7767920394982435845, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_Spline.m_ControlPoints.Array.data[0].leftTangent.x
+      value: 0.24564743
+      objectReference: {fileID: 0}
+    - target: {fileID: 7767920394982435845, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_Spline.m_ControlPoints.Array.data[0].leftTangent.y
+      value: -0.27310276
+      objectReference: {fileID: 0}
+    - target: {fileID: 7767920394982435845, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_Spline.m_ControlPoints.Array.data[0].rightTangent.x
+      value: -0.20215416
+      objectReference: {fileID: 0}
+    - target: {fileID: 7767920394982435845, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_Spline.m_ControlPoints.Array.data[0].rightTangent.y
+      value: 0.21877575
+      objectReference: {fileID: 0}
+    - target: {fileID: 7767920394982435845, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_Spline.m_ControlPoints.Array.data[8].rightTangent.y
+      value: -0.249071
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}

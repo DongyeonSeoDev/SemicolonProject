@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1531553962166875676}
   - component: {fileID: 1531553962166875679}
   - component: {fileID: 6770681210972784266}
+  - component: {fileID: 5248659302136541078}
   m_Layer: 0
   m_Name: BodyPoint
   m_TagString: Untagged
@@ -134,5 +135,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 621b44342913a474a90080a69eaec07b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  whatIsWall:
+    serializedVersion: 2
+    m_Bits: 0
   returnToOriginSpeed: 2
   isMiddlePoint: 0
+--- !u!114 &5248659302136541078
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1531553962166875664}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c888f53cb858d14390e95b4e98d7541, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 0.042452812, g: 0.11018329, b: 1, a: 1}
+  radious: 0.15
