@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: EnemyLootList
   m_EditorClassIdentifier: 
   enemyLootList:
-  - enemyLoot: {fileID: 11400000, guid: 54a5212523ae4274abb61e4a3701e688, type: 2}
+  - enemyLoot: {fileID: 11400000, guid: 06dd51cfab1cb904b9bbbedef6545d02, type: 2}
     lootCount: 1
