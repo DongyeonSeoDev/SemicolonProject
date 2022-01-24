@@ -24,6 +24,11 @@ namespace Water
 
         public static string GetFilePath(string fileName) => string.Concat(Application.persistentDataPath, "/", fileName);
 
+        public static void DelayFunc(Action a, float delay, MonoBehaviour mono)
+        {
+            mono.StartCoroutine(DelayFuncCo(a, delay));
+        }
+
         public static Vector3 WorldToScreenPoint(Vector3 worldPos)
         {
             if(mainCam == null)
@@ -50,6 +55,12 @@ namespace Water
             }
 
             return result;
+        }
+
+        private static IEnumerator DelayFuncCo(Action func, float delay)
+        {
+            yield return new WaitForSeconds(delay);
+            func?.Invoke();
         }
     }
 

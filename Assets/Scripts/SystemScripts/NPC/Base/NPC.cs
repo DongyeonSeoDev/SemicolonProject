@@ -6,7 +6,9 @@ public abstract class NPC : MonoBehaviour
     [SerializeField] protected string npcName;
     public string NPCName { get { return npcName; } }
 
-    public NPCUI npcUI;
+    [HideInInspector] public NPCUI npcUI;
+
+    public abstract void Interaction();
 
     public virtual void SetUI(bool on)
     {

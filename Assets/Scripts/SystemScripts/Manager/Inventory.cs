@@ -43,23 +43,16 @@ public class Inventory : MonoSingleton<Inventory>
             }*/
         }
 
-        Global.AddMonoAction(Global.TryAcquisitionItem, x=> GetItem((Item)x));
-        Global.AddAction(Global.MakeFood, item =>
-        {
-            ItemInfo info = (ItemInfo)item;
-            ItemSlot slot = FindInsertableSlot(info.id);
-            if (slot)
-            {
-                slot.UpdateCount(slot.Count + info.count);
-            }
-            else
-            {
-                EmptySlot().SetData(info, info.count);
-            }
-        });
+        DefineAction();
     }
 
-    public ItemSlot FindSlot(int id)
+    void DefineAction()
+    {
+        Global.AddMonoAction(Global.TryAcquisitionItem, x => GetItem((Item)x));
+        Global.AddAction(Global.MakeFood, item => GetItem(item as ItemInfo));  //음식 조합
+    }
+
+    public ItemSlot FindSlot(int id)  // 함수명이 곧 기능 설명
     {
         for(int i=0; i<itemSlots.Count; ++i)
         {
@@ -70,7 +63,7 @@ public class Inventory : MonoSingleton<Inventory>
         return null;
     }
 
-    public ItemSlot FindInsertableSlot(int id)
+    public ItemSlot FindInsertableSlot(int id)  //해당 id의 템이 존재하는 슬롯 가져옴 (더 집어넣을 수 있는 칸이면)
     {
         for (int i = 0; i < itemSlots.Count; ++i)
         {
@@ -82,7 +75,7 @@ public class Inventory : MonoSingleton<Inventory>
         return null;
     }
 
-    public ItemSlot EmptySlot()
+    public ItemSlot EmptySlot()  //빈 슬롯 찾음
     {
         for (int i = 0; i < itemSlots.Count; ++i)
         {
@@ -127,20 +120,24 @@ public class Inventory : MonoSingleton<Inventory>
             {
                 gm.AddItem(data);
                 int count = item.DroppedCnt;
+                int tmp;
 
                 list.ForEach(x =>
                 {
+                    tmp = count;
                     if (x.ExistItem)
                     {
                         count -= x.MaxCount >= x.Count + count ? count : x.RestCount;
-                        x.UpdateCount(Mathf.Clamp(count+x.Count,1,x.MaxCount));
+                        x.UpdateCount(Mathf.Clamp(tmp+x.Count,1,x.MaxCount));
                     }
                     else
                     {
                         count -= item.itemData.maxCount >= count ? count : item.itemData.maxCount;
-                        x.SetData(data, Mathf.Clamp(count,1,item.itemData.maxCount));
+                        x.SetData(data, Mathf.Clamp(tmp,1,item.itemData.maxCount));
                     }
                 });
+
+                Global.MonoActionTrigger(Global.AcquisitionItem, item);
             }
         }
         else
@@ -150,9 +147,10 @@ public class Inventory : MonoSingleton<Inventory>
             {
                 gm.AddItem(data);
                 slot.SetData(data, data.count); //몹 드랍템의 개수가 max보다 적으면 이렇게 가능
+                Global.MonoActionTrigger(Global.AcquisitionItem, item);
             }
             else
-            {
+            { 
                 UIManager.Instance.RequestSystemMsg("인벤토리 칸 수가 부족합니다.");
                 return;
             }
@@ -160,12 +158,45 @@ public class Inventory : MonoSingleton<Inventory>
         item.gameObject.SetActive(false);
     }
 
+    public void GetItem(ItemInfo item) //아이템 획득했을 때
+    {
+        gm.AddItem(item);
 
+        int count = item.count;
+        int id = item.id;
+        int tmp;
 
-    public void RemoveItem(int id, int count)
+        ItemSlot slot = FindInsertableSlot(id);
+        if(slot)
+        {
+            tmp = slot.RestCount;
+            slot.UpdateCount(Mathf.Clamp(count + slot.Count, 1, slot.MaxCount));
+            count -= tmp;
+        }
+
+        int max = gm.GetItemData(id).maxCount;
+        while(count> 0)
+        {
+            slot = EmptySlot();
+            if (slot)
+            {
+                slot.SetData(item, Mathf.Clamp(count, 1, max));
+                count -= max;
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+
+    public void RemoveItem(int id, int count)  //아이템 조짐
     {
         if(gm.ExistItem(id))
         {
+            gm.RemoveItem(id, count);
+            UIManager.Instance.RequestLeftBottomMsg(string.Format("아이템을 잃었습니다. ({0} -{1})", gm.GetItemData(id).itemName, count));
+
             ItemSlot slot = FindInsertableSlot(id);
             if (!slot) slot = FindSlot(id);
 
@@ -185,7 +216,7 @@ public class Inventory : MonoSingleton<Inventory>
         }
     }
 
-    public List<ItemSlot> GetInsertableSlots(int id, int count)
+    public List<ItemSlot> GetInsertableSlots(int id, int count) //해당 아이디의 템을 count개 만큼 인벤토리에 집어넣을 때 사용한 아이템 슬롯들을 반환
     {
         List<ItemSlot> list = new List<ItemSlot>();
 

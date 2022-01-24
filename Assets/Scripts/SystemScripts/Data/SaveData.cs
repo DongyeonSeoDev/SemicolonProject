@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System;
+using UnityEngine;
 
 namespace Water
 {
@@ -43,7 +44,7 @@ namespace Water
     [Serializable]
     public class Option
     {
-
+        public SaveDic<KeyAction, KeyCode> keyDict = new SaveDic<KeyAction, KeyCode>(); 
     }
 
     [Serializable]

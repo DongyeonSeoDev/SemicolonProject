@@ -65,6 +65,7 @@ namespace Water
                     break;
 
                 default:
+                    DOScale(true);
                     break;
             }
         }
@@ -102,6 +103,7 @@ namespace Water
                     break;
 
                 default:
+                    DOScale(false);
                     break;
             }
         }
