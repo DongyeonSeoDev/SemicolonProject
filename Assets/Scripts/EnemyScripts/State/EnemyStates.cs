@@ -40,7 +40,7 @@ namespace Enemy
         private EnemyCommand enemyFollowPlayerCommand;
 
         public EnemyChaseState(EnemyData enemyData) : base(eState.CHASE, enemyData) =>
-            enemyFollowPlayerCommand = new EnemyFollowPlayerCommand(enemyData.enemyObject.transform, enemyData.PlayerObject.transform, enemyData.chaseSpeed);
+            enemyFollowPlayerCommand = new EnemyFollowPlayerCommand(enemyData.enemyObject.transform, enemyData.PlayerObject.transform, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, enemyData.isLongDistanceAttack);
 
         protected override void Start()
         {
@@ -61,30 +61,17 @@ namespace Enemy
 
     public partial class EnemyAttackState : EnemyState // 공격 상태
     {
-        private EnemyCommand enemyAttackCommand;
-
         private float currentTime;
 
-        public EnemyAttackState(EnemyData enemyData) : base(eState.ATTACK, enemyData)
-        {
-            if (enemyData.isAttackCommand)
-            {
-                if (enemyData.eEnemyController == EnemyController.AI)
-                {
-                    enemyAttackCommand = new EnemyAttackAIControllerCommand(enemyData.enemyObject.transform.position, enemyData.eEnemyController, enemyData.attackDamage);
-                }
-                else if (enemyData.eEnemyController == EnemyController.PLAYER)
-                {
-                    enemyAttackCommand = new EnemyAttackPlayerControllerCommand();
-                }
-            }
-        }
+        public EnemyAttackState(EnemyData enemyData) : base(eState.ATTACK, enemyData) { }
 
         protected override void Start()
         {
             enemyData.enemyAnimator.SetTrigger(enemyData.hashAttack);
 
             currentTime = 0f;
+
+            SpriteFlipCheck();
 
             base.Start();
         }
@@ -95,18 +82,27 @@ namespace Enemy
 
             if (currentTime >= 1f)
             {
-                if (enemyAttackCommand != null)
-                {
-                    enemyAttackCommand.Execute(); // 이게 여기서 실행되면 안되고, 애니메이션 이벤트에서 실행되어야 함
-                }
-
                 currentTime = 0f;
+
+                SpriteFlipCheck();
 
                 base.Update();
             }
         }
 
         protected override void End() => enemyData.enemyAnimator.ResetTrigger(enemyData.hashAttack);
+
+        private void SpriteFlipCheck()
+        {
+            if (enemyData.enemyObject.transform.position.x > enemyData.PlayerObject.transform.position.x)
+            {
+                enemyData.enemySpriteRenderer.flipX = true;
+            }
+            else if (enemyData.enemyObject.transform.position.x < enemyData.PlayerObject.transform.position.x)
+            {
+                enemyData.enemySpriteRenderer.flipX = false;
+            }
+        }
     }
 
     public partial class EnemyGetDamagedState : EnemyState // 공격을 받은 상태
@@ -133,6 +129,7 @@ namespace Enemy
         protected override void Start()
         {
             enemyData.hp -= enemyData.damagedValue;
+            enemyData.hpBarFillImage.fillAmount = (float)enemyData.hp / enemyData.maxHP;
 
             currentTime = 0f;
 
@@ -181,7 +178,7 @@ namespace Enemy
         {
             if (enemyData.eEnemyController == EnemyController.AI)
             {
-                deadCommand = new EnemyDeadAIControllerCommand(enemyData.enemyObject);
+                deadCommand = new EnemyDeadAIControllerCommand(enemyData.enemyObject, enemyData.enemyLootList);
             }
             else if (enemyData.eEnemyController == EnemyController.PLAYER)
             {

@@ -1,10 +1,13 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Enemy
 {
     public class Enemy : MonoBehaviour // 적 관리 클래스
     {
         public EnemyMoveSO enemyMoveSO;
+        public EnemyLootListSO enemyLootListSO;
+        public Image hpBarFillImage;
 
         protected EnemyData enemyData;
         protected SpriteRenderer sr;
@@ -51,6 +54,11 @@ namespace Enemy
         public void EnemyDestroy()
         {
             Destroy(gameObject);
+        }
+
+        public string GetEnemyId()
+        {
+            return enemyData.enemyId;
         }
     }
 }

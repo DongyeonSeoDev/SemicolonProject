@@ -33,12 +33,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - REFRACTION: 1
-    - _RefractionStrength: 0.014
+    - _RefractionStrength: 0.05
     m_Colors:
-    - _NormalsMovement: {r: 0.035, g: 0.22, b: 0, a: 0}
+    - _NormalsMovement: {r: 0.035, g: 0, b: 0, a: 0}
     - _WaterColorUnderwater: {r: 0.10796637, g: 0.5, b: 0.058962256, a: 0.5019608}
-    - _WaveDirections: {r: 0, g: 0.64, b: 1, a: 0.33}
-    - _WaveVisuals: {r: 0.132, g: 7.9, b: 1.38, a: 0}
+    - _WaveDirections: {r: 0.001, g: 0.5, b: 0.01, a: 0}
+    - _WaveVisuals: {r: 0.05, g: 2.5, b: 3, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &9190417809085234721
 MonoBehaviour:

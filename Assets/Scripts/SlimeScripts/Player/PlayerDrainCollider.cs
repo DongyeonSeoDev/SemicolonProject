@@ -34,6 +34,9 @@ public class PlayerDrainCollider : MonoBehaviour
         {
             // Debug.Log(other.gameObject.layer);
             // Drain되는 오브젝트는 삭제처리
+            
+            other.GetComponent<Enemy.Enemy>().EnemyDestroy();
+
             SlimeEventManager.TriggerEvent("OnDrain", other.gameObject.name, 1); // 여기의 param은 임시 값
             Debug.Log("Do Drain");
         }    

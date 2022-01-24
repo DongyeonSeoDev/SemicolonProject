@@ -43,21 +43,41 @@ namespace Enemy
     {
         private Transform enemyObject;
         private Transform followObject;
+        private float followSpeed;
+        private float followDistance;
+        private bool isLongDistanceAttack;
 
         private Vector3 targetPosition;
+        private float angle;
 
-        private float followSpeed;
-
-        public EnemyFollowPlayerCommand(Transform enemyObject, Transform followObject, float followSpeed)
+        public EnemyFollowPlayerCommand(Transform enemyObject, Transform followObject, float followSpeed, float followDistance, bool isLongDistanceAttack)
         {
             this.enemyObject = enemyObject;
             this.followObject = followObject;
             this.followSpeed = followSpeed;
+            this.followDistance = followDistance;
+            this.isLongDistanceAttack = isLongDistanceAttack;
         }
 
         public override void Execute()
         {
-            if (Vector3.Distance(enemyObject.position, followObject.position) >= 1f) // 거리 확인
+            if (isLongDistanceAttack)
+            {
+                // 이동
+                targetPosition = enemyObject.transform.position - followObject.transform.position;
+
+                angle = Mathf.Atan2(targetPosition.x, targetPosition.y) * Mathf.Rad2Deg + 90f;
+
+                targetPosition.x = followObject.transform.position.x + (followDistance * Mathf.Cos(angle * Mathf.Deg2Rad) * -1f);
+                targetPosition.y = followObject.transform.position.y + (followDistance * Mathf.Sin(angle * Mathf.Deg2Rad));
+                targetPosition.z = followObject.transform.position.z;
+
+                targetPosition = (targetPosition - enemyObject.position).normalized;
+                targetPosition *= followSpeed * Time.deltaTime;
+
+                enemyObject.position += targetPosition;
+            }
+            else
             {
                 // 이동
                 targetPosition = (followObject.position - enemyObject.position).normalized;
@@ -105,15 +125,27 @@ namespace Enemy
 
     public class EnemyDeadAIControllerCommand : EnemyCommand // 적이 죽음
     {
-        private GameObject enemyObject; 
+        private GameObject enemyObject;
+        private EnemyLootListSO enemyLootListSO;
 
-        public EnemyDeadAIControllerCommand(GameObject enemyObj)
+        public EnemyDeadAIControllerCommand(GameObject enemyObj, EnemyLootListSO lootListSO)
         {
             enemyObject = enemyObj;
+            enemyLootListSO = lootListSO;
         }
 
         public override void Execute()
         {
+            for (int i = 0; i < enemyLootListSO.enemyLootList.Count; i++)
+            {
+                for (int j = 0; j < enemyLootListSO.enemyLootList[i].lootCount; j++)
+                {
+                    PoolManager loot = EnemyPoolManager.Instance.GetPoolObject(Type.EnemyLoot, enemyObject.transform.position);
+
+                    loot.GetComponent<EnemyLoot>().Init(enemyLootListSO.enemyLootList[i].enemyLoot.GetSprite());
+                }
+            }
+
             GameObject.Destroy(enemyObject);
         }
     }
@@ -126,30 +158,26 @@ namespace Enemy
         }
     }
 
-    public class EnemyAttackAIControllerCommand : EnemyCommand // 적 공격
+    public class EnemyAttackCommand : EnemyCommand // 적 공격
     {
-        public Vector3 spawnPosition;
+        public Transform enemyTransform;
+        public Transform targetTransform;
         public EnemyController eEnemyController;
         public int attackDamage;
 
-        public EnemyAttackAIControllerCommand(Vector3 position, EnemyController controller, int damage)
+        public EnemyAttackCommand(Transform enemy, Transform target, EnemyController controller, int damage)
         {
-            spawnPosition = position;
+            enemyTransform = enemy;
+            targetTransform = target;
             eEnemyController = controller;
             attackDamage = damage;
         }
 
         public override void Execute()
         {
-            EnemyPoolManager.Instance.GetEnemyBullet(spawnPosition, eEnemyController, attackDamage);
-        }
-    }
+            PoolManager bullet = EnemyPoolManager.Instance.GetPoolObject(Type.Bullet, enemyTransform.position);
 
-    public class EnemyAttackPlayerControllerCommand : EnemyCommand // 플레이어가 변신했을때 공격
-    {
-        public override void Execute()
-        {
-            Debug.Log("플레이어 공격 코드 작성");
+            bullet.GetComponent<EnemyBullet>().Init(eEnemyController, attackDamage, (targetTransform.position - enemyTransform.position).normalized);
         }
     }
 }

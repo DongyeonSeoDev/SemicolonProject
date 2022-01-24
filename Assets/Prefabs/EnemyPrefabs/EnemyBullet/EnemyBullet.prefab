@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6204418954052947283}
   - component: {fileID: 6204418954052947282}
-  - component: {fileID: 6204418954052947280}
   - component: {fileID: 4658511660814353669}
+  - component: {fileID: 6204418954052947280}
   m_Layer: 0
   m_Name: EnemyBullet
   m_TagString: Untagged
@@ -84,19 +84,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &6204418954052947280
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6204418954052947285}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30a021077db1c4e419d8e75c07691aac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 5
 --- !u!58 &4658511660814353669
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -113,3 +100,20 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &6204418954052947280
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6204418954052947285}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30a021077db1c4e419d8e75c07691aac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolType: 2
+  count: 10
+  speed: 5
+  limitMaxPosition: {x: 20, y: 20}
+  limitMinPosition: {x: -20, y: -20}

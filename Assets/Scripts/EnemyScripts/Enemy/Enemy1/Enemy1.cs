@@ -11,8 +11,11 @@ namespace Enemy
                 eEnemyController = EnemyController.AI,
                 enemyObject = gameObject,
                 enemyMoveSO = enemyMoveSO,
+                enemyLootList = enemyLootListSO,
                 enemyAnimator = GetComponent<Animator>(),
-                enemySpriteRenderer = GetComponent<SpriteRenderer>()
+                enemySpriteRenderer = GetComponent<SpriteRenderer>(),
+                hpBarFillImage = hpBarFillImage,
+                enemyId = "Slime_01"
             };
 
             base.Awake();

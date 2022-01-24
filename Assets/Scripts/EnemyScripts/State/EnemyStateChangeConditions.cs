@@ -7,11 +7,11 @@ namespace Enemy
         protected override void StateChangeCondition()
         {
             if (AnyStateChangeState()) { }
-            else if (enemyData.IsSeePlayer())
+            else if (enemyData.eEnemyController == EnemyController.AI && enemyData.IsSeePlayer())
             {
                 ChangeState(new EnemyChaseState(enemyData));
             }
-            else if (enemyData.IsAttackPlayer())
+            else if (enemyData.eEnemyController == EnemyController.AI && enemyData.IsAttackPlayer())
             {
                 ChangeState(new EnemyAttackState(enemyData));
             }
@@ -39,13 +39,20 @@ namespace Enemy
         protected override void StateChangeCondition()
         {
             if (AnyStateChangeState()) { }
-            else if (!enemyData.IsSeePlayer())
+            else if (enemyData.eEnemyController == EnemyController.PLAYER)
             {
                 ChangeState(new EnemyMoveState(enemyData));
             }
-            else if (!enemyData.IsAttackPlayer())
+            else if (enemyData.eEnemyController == EnemyController.AI)
             {
-                ChangeState(new EnemyChaseState(enemyData));
+                if (!enemyData.IsSeePlayer())
+                {
+                    ChangeState(new EnemyMoveState(enemyData));
+                }
+                else if (!enemyData.IsAttackPlayer())
+                {
+                    ChangeState(new EnemyChaseState(enemyData));
+                }  
             }
         }
     }
@@ -55,17 +62,24 @@ namespace Enemy
         protected override void StateChangeCondition()
         {
             if (AnyStateChangeState()) { }
-            else if (enemyData.IsSeePlayer())
-            {
-                ChangeState(new EnemyChaseState(enemyData));
-            }
-            else if (enemyData.IsAttackPlayer())
-            {
-                ChangeState(new EnemyAttackState(enemyData));
-            }
-            else
+            else if (enemyData.eEnemyController == EnemyController.PLAYER)
             {
                 ChangeState(new EnemyMoveState(enemyData));
+            }
+            else if (enemyData.eEnemyController == EnemyController.AI)
+            {
+                if (enemyData.IsAttackPlayer())
+                {
+                    ChangeState(new EnemyAttackState(enemyData));
+                }
+                else if(enemyData.IsSeePlayer())
+                {
+                    ChangeState(new EnemyChaseState(enemyData));
+                }
+                else
+                {
+                    ChangeState(new EnemyMoveState(enemyData));
+                }
             }
         }
     }
@@ -82,13 +96,20 @@ namespace Enemy
     {
         public bool AnyStateChangeState()
         {
-            if (enemyData.isDamaged)
+            if (enemyData.hp <= 0)
+            {
+                ChangeState(new EnemyDeadState(enemyData));
+            }
+            else if (enemyData.isDamaged)
             {
                 ChangeState(new EnemyGetDamagedState(enemyData));
             }
-            else if (enemyData.hp <= 0)
+            else if (enemyData.eEnemyController == EnemyController.PLAYER && enemyData.isAttack)
             {
-                ChangeState(new EnemyDeadState(enemyData));
+                if (stateName != eState.ATTACK)
+                {
+                    ChangeState(new EnemyAttackState(enemyData));
+                }
             }
             else
             {

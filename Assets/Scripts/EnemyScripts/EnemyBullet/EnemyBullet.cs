@@ -2,19 +2,28 @@ using UnityEngine;
 
 namespace Enemy
 {
-    public class EnemyBullet : MonoBehaviour
+    public class EnemyBullet : PoolManager
     {
         public float speed;
 
+        public Vector2 limitMaxPosition;
+        public Vector2 limitMinPosition;
+
         private EnemyController eEnemyController;
 
-        private Vector3 distance = Vector3.zero;
+        private Vector3 targetDirection;
 
         private int attackDamage;
 
         private void Update()
         {
-            transform.position += distance * speed * Time.deltaTime;
+            transform.position += targetDirection * speed * Time.deltaTime;
+
+            if (transform.position.x < limitMinPosition.x || transform.position.x > limitMaxPosition.x 
+                || transform.position.y < limitMinPosition.y || transform.position.y > limitMaxPosition.y)
+            {
+                gameObject.SetActive(false);
+            }
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
@@ -31,6 +40,8 @@ namespace Enemy
                 {
                     collision.GetComponent<EnemyAttackTest>().EnemyAttack(attackDamage);
                 }
+
+                gameObject.SetActive(false);
             }
             else if (eEnemyController == EnemyController.PLAYER)
             {
@@ -39,14 +50,16 @@ namespace Enemy
                 if (enemy != null)
                 {
                     enemy.GetDamage(attackDamage);
+                    gameObject.SetActive(false);
                 }
             }
         }
 
-        public void Init(EnemyController controller, int damage)
+        public void Init(EnemyController controller, int damage, Vector3 direction)
         {
             eEnemyController = controller;
             attackDamage = damage;
+            targetDirection = direction;
         }
     }
 }
