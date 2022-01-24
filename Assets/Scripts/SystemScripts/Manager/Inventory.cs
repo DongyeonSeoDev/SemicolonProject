@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,12 +15,9 @@ public class Inventory : MonoSingleton<Inventory>
 
     private void Awake()
     {
-        if (itemSlots.Count == 0)
+        for (int i = 0; i < maxItemSlotCount; i++)
         {
-            for (int i = 0; i < maxItemSlotCount; i++)
-            {
-                itemSlots.Add(Instantiate(itemSlotPrefab, itemSlotParent).GetComponent<ItemSlot>());
-            }
+            itemSlots.Add(Instantiate(itemSlotPrefab, itemSlotParent).GetComponent<ItemSlot>());
         }
     }
 
@@ -47,7 +43,7 @@ public class Inventory : MonoSingleton<Inventory>
             }*/
         }
 
-        Global.AddMonoAction(Global.AcquisitionItem, x=> GetItem((Item)x));
+        Global.AddMonoAction(Global.TryAcquisitionItem, x=> GetItem((Item)x));
         Global.AddAction(Global.MakeFood, item =>
         {
             ItemInfo info = (ItemInfo)item;
@@ -124,7 +120,7 @@ public class Inventory : MonoSingleton<Inventory>
 
             if(list.Count == 0)
             {
-                Debug.Log("인벤토리 칸 부족");
+                UIManager.Instance.RequestSystemMsg("인벤토리 칸 수가 부족합니다.");
                 return;
             }
             else
@@ -157,7 +153,7 @@ public class Inventory : MonoSingleton<Inventory>
             }
             else
             {
-                Debug.Log("인벤토리 칸 부족");
+                UIManager.Instance.RequestSystemMsg("인벤토리 칸 수가 부족합니다.");
                 return;
             }
         }

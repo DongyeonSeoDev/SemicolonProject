@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 using DG.Tweening;
 using Water;
 
-[AddComponentMenu("Custom/UIPointerScale")]
+//[AddComponentMenu("Custom/UIPointerScale")]
 [RequireComponent(typeof(EventTrigger))]
 public class UIScale : UITransition
 {

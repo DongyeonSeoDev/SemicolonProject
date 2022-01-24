@@ -20,8 +20,18 @@ namespace Water
 
     public static class Util
     {
+        public static Camera mainCam;
 
         public static string GetFilePath(string fileName) => string.Concat(Application.persistentDataPath, "/", fileName);
+
+        public static Vector3 WorldToScreenPoint(Vector3 worldPos)
+        {
+            if(mainCam == null)
+            {
+                mainCam = Camera.main;
+            }
+            return mainCam.WorldToScreenPoint(worldPos);
+        }
 
         public static Pair<List<T>,List<T>> GetLists<T>(List<T> list, Func<T,bool> condition)  //리스트를 돌아서 해당 조건에 맞는 것들을 뽑아서 아닌 것들과 나눠서 리턴함
         {
@@ -58,6 +68,7 @@ namespace Water
 
         public const string TalkWithChef = "TalkWithChef"; //요리사 NPC와 대화했을 때의 이벤트 키
         public const string MakeFood = "MakeFood"; //음식을 만들었을 때의 이벤트 키
+        public const string TryAcquisitionItem = "TryAcquisitionItem"; //아이템 획득 시도 시 이벤트 키
         public const string AcquisitionItem = "AcquisitionItem"; //아이템 획득 시 이벤트 키
 
         private static Dictionary<string, ActionGroup> stringToActionDict = new Dictionary<string, ActionGroup>();

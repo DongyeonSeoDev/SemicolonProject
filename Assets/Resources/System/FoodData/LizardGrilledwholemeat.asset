@@ -19,7 +19,7 @@ MonoBehaviour:
   itemName: "\uB3C4\uB9C8\uBC40 \uD1B5\uAD6C\uC774"
   explanation: "\uC2A4\uCF08\uB808\uD1A4\uACFC \uB3C4\uB9C8\uBC40\uC758 \uBAB8\uD1B5\uC740
     \uD1B5\uAD6C\uC774\uB97C \uD1B5\uD574 \uC5C4\uCCAD\uB09C \uC2DC\uB108\uC9C0\uB97C
-    \uB9CC\uB4E4\uC5B4 \uB0C8\uB2E4.\n<b>(\uCCB4\uB825 +10)</b>"
+    \uB9CC\uB4E4\uC5B4 \uB0C8\uB2E4.\n\n<b>\uCCB4\uB825 +10</b>"
   needIngredients:
   - ingredient: {fileID: 11400000, guid: 92145a6f8f38cbd41813207a78cad82a, type: 2}
     needCount: 3

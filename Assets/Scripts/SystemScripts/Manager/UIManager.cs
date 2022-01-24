@@ -45,8 +45,11 @@ namespace Water
         #endregion
 
         [Space(20)]
-        public GameObject systemMsgPrefab;
-        public Transform systemMsgParent;
+        public GameObject systemMsgPrefab, acquisitionTxtPrefab;
+        public Transform systemMsgParent, acquisitionTxtParent;
+
+        public GameObject npcNameUIPrefab;
+        public Transform npcUICvsTrm;
 
         private GameManager gm;
 
@@ -54,12 +57,16 @@ namespace Water
         {
             cursorImgRectTrm = cursorInfoImg.GetComponent<RectTransform>();
             sw = cursorImgRectTrm.rect.width;
+
+            PoolManager.CreatePool(systemMsgPrefab, systemMsgParent, 5, "SystemMsg");
+            PoolManager.CreatePool(npcNameUIPrefab, npcUICvsTrm, 2, "NPCNameUI");
+            PoolManager.CreatePool(acquisitionTxtPrefab, acquisitionTxtParent, 5, "AcquisitionMsg");
         }
 
         private void Start()
         {
             gm = GameManager.Instance;
-            PoolManager.CreatePool(systemMsgPrefab, systemMsgParent, 5, "SystemMsg");
+            
             DefineAction();
             
         }

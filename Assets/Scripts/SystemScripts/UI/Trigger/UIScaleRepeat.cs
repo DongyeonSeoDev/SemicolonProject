@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 using DG.Tweening;
 using Water;
 
-[AddComponentMenu("Custom/UIPointerScaleRepeat")]
+//[AddComponentMenu("Custom/UIPointerScaleRepeat")]
 [RequireComponent(typeof(EventTrigger))]
 public class UIScaleRepeat : UITransition
 {
