@@ -68,13 +68,11 @@ public class CookingManager : MonoSingleton<CookingManager>
 
         countPlusBtn.onClick.AddListener(() => ChangeMakeFoodCount(true));
         countMinusBtn.onClick.AddListener(() => ChangeMakeFoodCount(false));
-        Global.AddMonoAction(Global.TalkWithChef, x => ShowFoodList((Chef)x));
+        Global.AddMonoAction(Global.TalkWithChef, x => ((NPC)x).Interaction());
         Global.AddAction(Global.MakeFood, item =>
         {
-            gm.AddItem(item as ItemInfo);
             selectedFoodIngrImgs.ForEach(x => 
             {
-                gm.RemoveItem(x.IngredientInfo.ingredient.id, x.IngredientInfo.needCount * makeFoodCount);
                 Inventory.Instance.RemoveItem(x.IngredientInfo.ingredient.id, x.IngredientInfo.needCount * makeFoodCount);
             });
             MakeFoodInfoUIReset();
@@ -249,13 +247,10 @@ public class CookingManager : MonoSingleton<CookingManager>
         }
         else if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            gm.AddItem(new ItemInfo(5, 10));
-            gm.AddItem(new ItemInfo(10, 10));
-            gm.AddItem(new ItemInfo(15, 10));
-            gm.AddItem(new ItemInfo(20, 10));
-            gm.AddItem(new ItemInfo(25, 10));
-            gm.AddItem(new ItemInfo(0, 10));
-            gm.AddItem(new ItemInfo(30, 10));
+            for(int i=0; i<=40; i+=5)
+            {
+                gm.AddItem(new ItemInfo(i, 6));
+            }
         }
         else if (Input.GetKeyDown(KeyCode.R))
         {

@@ -44,6 +44,11 @@ namespace Water
         public Pair<Image, Text> combInfoUI;
         #endregion
 
+        #region Item Remove
+        public Pair<Image, Text> removeItemInfo;
+        public InputField itemRemoveCntInput;
+        #endregion
+
         [Space(20)]
         public GameObject systemMsgPrefab, acquisitionTxtPrefab;
         public Transform systemMsgParent, acquisitionTxtParent;
@@ -80,7 +85,17 @@ namespace Water
                 ItemSO data = gm.GetItemData(info.id);
                 combInfoUI.first.sprite = data.GetSprite();
                 combInfoUI.second.text = string.Format("{0} <color=blue>{1}</color>개", data.itemName, info.count);
+
+                RequestLeftBottomMsg(string.Format("아이템을 획득하였습니다. ({0} +{1})", data.itemName, info.count));
             });
+
+            Global.AddMonoAction(Global.AcquisitionItem, i =>
+            {
+                Item item = i as Item;
+                RequestLeftBottomMsg(string.Format("아이템을 획득하였습니다. ({0} +{1})", item.itemData.itemName, item.DroppedCnt));
+                
+            });
+            
         }
 
         private void Update()
@@ -143,7 +158,7 @@ namespace Water
         {
             switch(type)
             {
-
+                
             }
         }
 
@@ -231,7 +246,7 @@ namespace Water
             itemTypeTxt.text = Global.GetItemTypeName(data.itemType);
 
             itemUseBtn.gameObject.SetActive(data.itemType!=ItemType.ETC);
-            itemUseBtn.onClick.AddListener(() => data.Use());
+            
         }
 
         public void RequestSystemMsg(string msg, int fontSize = 35, float existTime = 1.5f)
@@ -239,7 +254,51 @@ namespace Water
             PoolManager.GetItem("SystemMsg").GetComponent<SystemMsg>().Set(msg, fontSize, existTime);
         }
         
+        public void RequestLeftBottomMsg(string msg)
+        {
+            Text t = PoolManager.GetItem("AcquisitionMsg").GetComponent<Text>();
+            t.text = msg;
+            Util.DelayFunc(() => t.gameObject.SetActive(false), 2f, this);
+        }
 
+        public void OnClickRemoveItemBtn()
+        {
+            removeItemInfo.first.sprite = selectedItemSlot.itemImg.sprite;
+            removeItemInfo.second.text = itemNameTmp.text;
+            itemRemoveCntInput.text = "1";
+            OnUIInteract(UIType.REMOVE_ITEM);
+        }
         
+        public void OnClickItemJunkBtn()
+        {
+            int rmCount = int.Parse(itemRemoveCntInput.text);
+
+            if (rmCount <= 0)
+            {
+                RequestSystemMsg("1개 이상부터 버릴 수 있습니다.");
+                return;
+            }
+            else if(rmCount > gm.GetItemCount(selectedItemId))
+            {
+                RequestSystemMsg("보유 개수보다 많이 버릴 수 없습니다.");
+                return;
+            }
+
+            Inventory.Instance.RemoveItem(selectedItemId, rmCount);
+
+            OnUIInteract(UIType.REMOVE_ITEM);
+
+            if (selectedItemSlot.itemInfo == null)
+                OnUIInteract(UIType.ITEM_DETAIL, true);
+        }
+
+        public void OnClickItemUseBtn()
+        {
+            gm.GetItemData(selectedItemId).Use();
+            Inventory.Instance.RemoveItem(selectedItemId, 1);
+            
+            if (selectedItemSlot.itemInfo == null)
+                OnUIInteract(UIType.ITEM_DETAIL, true);
+        }
     }
 }
