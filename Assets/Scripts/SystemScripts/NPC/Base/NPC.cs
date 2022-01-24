@@ -8,6 +8,8 @@ public abstract class NPC : MonoBehaviour
 
     public NPCUI npcUI;
 
+    public abstract void Interaction();
+
     public virtual void SetUI(bool on)
     {
         if (on)

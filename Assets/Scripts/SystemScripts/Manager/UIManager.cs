@@ -81,6 +81,14 @@ namespace Water
                 combInfoUI.first.sprite = data.GetSprite();
                 combInfoUI.second.text = string.Format("{0} <color=blue>{1}</color>°³", data.itemName, info.count);
             });
+
+            Global.AddMonoAction(Global.AcquisitionItem, i =>
+            {
+                Item item = i as Item;
+                Text t = PoolManager.GetItem("AcquisitionMsg").GetComponent<Text>();
+                t.text = string.Format("{0} {1}°³ È¹µæÇÏ¿´½À´Ï´Ù.", item.itemData.itemName, item.DroppedCnt);
+                Util.DelayFunc(()=>t.gameObject.SetActive(false), 2f, this);
+            });
         }
 
         private void Update()

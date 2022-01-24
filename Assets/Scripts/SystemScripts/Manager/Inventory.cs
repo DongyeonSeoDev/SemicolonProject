@@ -141,6 +141,8 @@ public class Inventory : MonoSingleton<Inventory>
                         x.SetData(data, Mathf.Clamp(count,1,item.itemData.maxCount));
                     }
                 });
+
+                Global.MonoActionTrigger(Global.AcquisitionItem, item);
             }
         }
         else
@@ -150,6 +152,7 @@ public class Inventory : MonoSingleton<Inventory>
             {
                 gm.AddItem(data);
                 slot.SetData(data, data.count); //몹 드랍템의 개수가 max보다 적으면 이렇게 가능
+                Global.MonoActionTrigger(Global.AcquisitionItem, item);
             }
             else
             {

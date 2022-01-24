@@ -68,7 +68,7 @@ public class CookingManager : MonoSingleton<CookingManager>
 
         countPlusBtn.onClick.AddListener(() => ChangeMakeFoodCount(true));
         countMinusBtn.onClick.AddListener(() => ChangeMakeFoodCount(false));
-        Global.AddMonoAction(Global.TalkWithChef, x => ShowFoodList((Chef)x));
+        Global.AddMonoAction(Global.TalkWithChef, x => ((NPC)x).Interaction());
         Global.AddAction(Global.MakeFood, item =>
         {
             gm.AddItem(item as ItemInfo);

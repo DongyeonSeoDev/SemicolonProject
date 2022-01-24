@@ -18,5 +18,5 @@ public enum UIType
 public enum KeyAction
 {
     INVENTORY,
-    INTERACTION
+    INTERACTION,
 }

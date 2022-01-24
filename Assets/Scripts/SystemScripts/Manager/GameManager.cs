@@ -19,6 +19,8 @@ namespace Water
 
         public GameObject foodBtnPrefab, ingredientImgPrefab;
         public Transform foodBtnParent, ingredientImgParent;
+
+        public GameObject itemPrefab;
         
         public int InventoryItemCount 
         { get { return savedData.userInfo.userItems.keyValueDic.Keys.Count; } }
@@ -96,6 +98,8 @@ namespace Water
             Global.AddMonoAction("SetIngredientImgList", x => x.GetComponent<CookingManager>().IngredientImages = igdImgList);
 
             KeySetting.SetDefaultKeySetting();
+
+            PoolManager.CreatePool(itemPrefab, null, 6, "Item");
         }
 
         #region Item
