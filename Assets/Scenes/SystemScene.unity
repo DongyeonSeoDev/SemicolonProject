@@ -304,7 +304,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9609555
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2175,6 +2175,14 @@ MonoBehaviour:
           speed: 0
           criticalRate: 0
           criticalDamage: 0
+        additionalEternalStat:
+          hp: 0
+          damage: 0
+          defense: 0
+          intellect: 0
+          speed: 0
+          criticalRate: 0
+          criticalDamage: 0
         choiceStat:
           overweight: 0
           patience: 0
@@ -2906,10 +2914,10 @@ MonoBehaviour:
   npcName: "\uC694\uB9AC\uC0AC \uC950"
   npcUI: {fileID: 0}
   canFoodList:
-  - {fileID: 11400000, guid: eb21ae1c9f71a82478ec6267c6f9bee1, type: 2}
-  - {fileID: 11400000, guid: f685145ec282bc94c9fac008120834d2, type: 2}
   - {fileID: 11400000, guid: bf8f07be0c84cb9408b0c2716ce9438e, type: 2}
   - {fileID: 11400000, guid: b2bcf1ea41585824da420596e547b510, type: 2}
+  - {fileID: 11400000, guid: eb21ae1c9f71a82478ec6267c6f9bee1, type: 2}
+  - {fileID: 11400000, guid: f685145ec282bc94c9fac008120834d2, type: 2}
 --- !u!4 &365104575
 Transform:
   m_ObjectHideFlags: 0
@@ -4337,7 +4345,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 359, y: 0}
+  m_AnchoredPosition: {x: 341.23, y: 0}
   m_SizeDelta: {x: 20, y: 748}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &565957490
@@ -5178,7 +5186,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &808443755
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5476,7 +5484,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &907771732
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6763,7 +6771,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1248154654
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7428,7 +7436,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1346560843
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7532,6 +7540,7 @@ MonoBehaviour:
     id: 30
     count: 10
   testChef: {fileID: 365104574}
+  isTestMode: 1
   foodBtnList: []
   ingredientImages: []
   NpcNameTxt: {fileID: 1755734015}
@@ -9324,7 +9333,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 48.090027, y: 449.1}
+  m_AnchoredPosition: {x: 48.090088, y: 449.1}
   m_SizeDelta: {x: 523.9, y: 73.5}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1749142133
@@ -10078,7 +10087,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1934503559
 RectTransform:
   m_ObjectHideFlags: 0

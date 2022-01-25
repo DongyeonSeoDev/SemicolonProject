@@ -231,10 +231,10 @@ public class CookingManager : MonoSingleton<CookingManager>
         explanationTxt.text = data.explanation;
     }
 
-    private void Update()
+   /*private void Update()
     {
         Test(); //Test Code
-    }
+    }*/
 
     void Test()  //Test Code
     {
