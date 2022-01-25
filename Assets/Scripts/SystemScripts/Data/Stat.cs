@@ -7,6 +7,7 @@ public class Stat
     public EternalStat additionalEternalStat = new EternalStat();
     public ChoiceStat choiceStat = new ChoiceStat();
 
+    #region default stat + additional stat  property
     public int Hp
     {
         get { return eternalStat.hp + additionalEternalStat.hp; }
@@ -20,19 +21,33 @@ public class Stat
         get { return eternalStat.defense + additionalEternalStat.defense; }
     }
 
-
+    public int Intellect
+    {
+        get { return eternalStat.intellect + additionalEternalStat.intellect; }
+    }
 
     public float Speed
     {
         get { return eternalStat.speed + additionalEternalStat.speed; }
     }
+
+    public float CriticalRate
+    {
+        get { return eternalStat.criticalRate + additionalEternalStat.criticalRate; }
+    }
+
+    public float CriticalDamage
+    {
+        get { return eternalStat.criticalDamage + additionalEternalStat.criticalDamage; }
+    }
+    #endregion
 }
 
 [Serializable]
 public class EternalStat
 {
     public int hp;
-    //public uint mp;
+    //public int mp;
 
     public int damage;
 
