@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Water;
 
 public static class ScriptHelper
 {
@@ -81,29 +82,8 @@ public static class ScriptHelper
         }
     }
 }
-public class SlimeGameManager : MonoBehaviour
+public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 {
-    private static SlimeGameManager instance = null;
-    public static SlimeGameManager Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = FindObjectOfType<SlimeGameManager>();
-
-                if (instance == null)
-                {
-                    GameObject temp = new GameObject("SlimeGameManager");
-
-                    instance = temp.AddComponent<SlimeGameManager>();
-                }
-            }
-
-            return instance;
-        }
-    }
-
     private Player player = null;
     public Player Player
     {
@@ -118,7 +98,7 @@ public class SlimeGameManager : MonoBehaviour
                     Debug.LogError("There is no player!");
                 }
             }
-            
+
             return player;
         }
     }

@@ -1,30 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Water;
 
-public class SlimePoolManager : MonoBehaviour
+public class SlimePoolManager : MonoSingleton<SlimePoolManager>
 {
-    private static SlimePoolManager instance = null;
-    public static SlimePoolManager Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                FindObjectOfType<SlimePoolManager>();
-
-                if (instance == null)
-                {
-                    GameObject temp = new GameObject("SlimePoolManager");
-
-                    instance = temp.AddComponent<SlimePoolManager>();
-                }
-            }
-
-            return instance;
-        }
-    }
-
     private Dictionary<string, Queue<GameObject>> dictionary = new Dictionary<string, Queue<GameObject>>();
 
     public void AddObject(GameObject targetObject)
