@@ -77,7 +77,7 @@ public class PlayerBodySlap : PlayerAction
 
             if (enemy != null)
             {
-                enemy.GetDamage(playerStat.eternalStat.damage + playerStat.additionalEternalStat.damage);
+                enemy.GetDamage(playerStat.Damage);
             }
 
             stopBodySlapTimer = stopBodySlapTime;
