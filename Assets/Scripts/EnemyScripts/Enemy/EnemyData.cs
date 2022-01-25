@@ -49,12 +49,15 @@ namespace Enemy
         public float isAttackPlayerDistance = 2f;
         public float isMinAttackPlayerDistance = 5f;
         public float isMaxAttackPlayerDistance = 8f;
+        public float attackDelay = 1f;
         public float damageDelay = 0.2f;
+        public float rushForce = 100f;
 
         public bool isDamaged = false;
         public bool isAttack = false;
         public bool isAnimation = true;
         public bool isHitAnimation = false;
+        public bool isEndAttackAnimation = false;
         public bool isAttackCommand = false;
         public bool isLongDistanceAttack = false;
 
@@ -67,6 +70,7 @@ namespace Enemy
         public readonly int hashIsDead = Animator.StringToHash("isDead");
         public readonly int hashMove = Animator.StringToHash("Move");
         public readonly int hashAttack = Animator.StringToHash("Attack");
+        public readonly int hashEndAttack = Animator.StringToHash("EndAttack");
         public readonly int hashHit = Animator.StringToHash("Hit");
 
         public bool IsSeePlayer() => Vector3.Distance(enemyObject.transform.position, PlayerObject.transform.position) <= isSeePlayerDistance;
