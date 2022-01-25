@@ -204,10 +204,6 @@ namespace Enemy
             targetPosition = (playerTransform.position - enemyTransform.position).normalized;
 
             rigidboyd2D.AddForce(targetPosition * rushForce, ForceMode2D.Impulse);
-
-            // 데미지 주기
-            // 색깔 변경
-            // 딜레이
         }
     }
 }

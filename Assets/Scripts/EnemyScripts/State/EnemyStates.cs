@@ -98,7 +98,7 @@ namespace Enemy
         {
             currentTime += Time.deltaTime;
 
-            if (currentTime >= 1f)
+            if (currentTime >= enemyData.attackDelay)
             {
                 currentTime = 0f;
 
@@ -108,7 +108,15 @@ namespace Enemy
             }
         }
 
-        protected override void End() => enemyData.enemyAnimator.ResetTrigger(enemyData.hashAttack);
+        protected override void End()
+        {
+            if (enemyData.isEndAttackAnimation)
+            {
+                enemyData.enemyAnimator.SetTrigger(enemyData.hashEndAttack);
+            }
+
+            enemyData.enemyAnimator.ResetTrigger(enemyData.hashAttack);
+        }
 
         private void SpriteFlipCheck()
         {

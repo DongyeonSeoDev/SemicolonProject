@@ -168,7 +168,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 1631f01f64834e84d9e0f5f659e776b6, type: 2}
     - target: {fileID: 6423039109952031427, guid: 0ae03078902df274991969f96e8c3e57, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7495011699029652106, guid: 0ae03078902df274991969f96e8c3e57, type: 3}
       propertyPath: m_Name
@@ -426,11 +426,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3360976113316267405, guid: a8f54e83a639a5b42a963a1dd9e9cbec, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 11.964869
+      value: 7.59
       objectReference: {fileID: 0}
     - target: {fileID: 3360976113316267405, guid: a8f54e83a639a5b42a963a1dd9e9cbec, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.7476716
+      value: 0.22
       objectReference: {fileID: 0}
     - target: {fileID: 3360976113316267405, guid: a8f54e83a639a5b42a963a1dd9e9cbec, type: 3}
       propertyPath: m_LocalPosition.z
@@ -477,17 +477,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyDamagedTest
       objectReference: {fileID: 0}
+    - target: {fileID: 3774351312666864403, guid: b9a641bcec841ef4ab29cfb4b9e9373b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3774351312666864414, guid: b9a641bcec841ef4ab29cfb4b9e9373b, type: 3}
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3774351312666864414, guid: b9a641bcec841ef4ab29cfb4b9e9373b, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 16.273008
+      value: 17.48
       objectReference: {fileID: 0}
     - target: {fileID: 3774351312666864414, guid: b9a641bcec841ef4ab29cfb4b9e9373b, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.4625127
+      value: -3.64
       objectReference: {fileID: 0}
     - target: {fileID: 3774351312666864414, guid: b9a641bcec841ef4ab29cfb4b9e9373b, type: 3}
       propertyPath: m_LocalPosition.z
