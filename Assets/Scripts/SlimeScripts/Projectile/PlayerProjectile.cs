@@ -4,7 +4,11 @@ using UnityEngine;
 
 public class PlayerProjectile : MonoBehaviour
 {
+    private Player player = null;
     private SlimePoolManager slimePoolManager = null;
+
+    [SerializeField]
+    private LayerMask whatIsEnemy;
 
     private Rigidbody2D rigid = null;
 
@@ -22,6 +26,10 @@ public class PlayerProjectile : MonoBehaviour
 
         rigid = GetComponent<Rigidbody2D>();
     }
+    private void Start() 
+    {
+        player = SlimeGameManager.Instance.Player;
+    }
 
     void Update()
     {
@@ -30,6 +38,13 @@ public class PlayerProjectile : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other) 
     {
+        if(whatIsEnemy.CompareGameObjectLayer(other.gameObject))
+        {
+            Enemy.Enemy enemy = other.GetComponent<Enemy.Enemy>();
+
+            enemy.GetDamage(player.PlayerProjectileDamage + player.AdditionalPlayerProjectileDamage);
+        }
+        
         Despawn();
     }
     public void OnSpawn(Vector2 direction, float speed)
