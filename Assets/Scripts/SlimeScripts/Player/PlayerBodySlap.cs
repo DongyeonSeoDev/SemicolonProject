@@ -34,7 +34,7 @@ public class PlayerBodySlap : PlayerAction
     public override void Start()
     {
         base.Start();
-        playerStat = SlimeGameManager.Instance.PlayerStat;
+        playerStat = SlimeGameManager.Instance.Player.PlayerStat;
 
         SlimeEventManager.StartListening("BodyPointCrash", BodyPointCrash);
     }

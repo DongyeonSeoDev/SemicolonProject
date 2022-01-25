@@ -7,7 +7,7 @@ public class PlayerMove : PlayerAction
     private Stat playerStat = null;
     public override void Start()
     {
-        playerStat = SlimeGameManager.Instance.PlayerStat;
+        playerStat = SlimeGameManager.Instance.Player.PlayerStat;
 
         base.Start();
     }

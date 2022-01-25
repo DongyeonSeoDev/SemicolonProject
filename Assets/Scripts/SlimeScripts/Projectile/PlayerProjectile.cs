@@ -28,7 +28,7 @@ public class PlayerProjectile : MonoBehaviour
     }
     private void Start() 
     {
-        playerStat = SlimeGameManager.Instance.PlayerStat;
+        playerStat = SlimeGameManager.Instance.Player.PlayerStat;
     }
 
     void Update()
