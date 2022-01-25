@@ -62,17 +62,27 @@ public class Player : MonoBehaviour
         set { additionalDp = value; }
     }
 
-    void Start()
+    private void Start()
     {
-
+        SlimeEventManager.StartListening("PlayerDead", PlayerDead);
     }
-
-    void Update()
+    private void Update()
     {
-
+        if(hp + additionalHp <= 0)
+        {
+            SlimeEventManager.TriggerEvent("PlayerDead");
+        }
+    }
+    private void OnDisable()
+    {
+        SlimeEventManager.StopListening("PlayerDead", PlayerDead);
     }
     public void GetDamage(int damage)
     {
-        hp -= damage;
+        hp -= (damage - (dp + additionalDp));
+    }
+    private void PlayerDead()
+    {
+
     }
 }
