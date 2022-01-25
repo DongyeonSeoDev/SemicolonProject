@@ -47,27 +47,39 @@ public class PlayerInput : MonoBehaviour
 
     void Update()
     {
-        moveVector.x = Input.GetAxisRaw("Horizontal");
-        moveVector.y = Input.GetAxisRaw("Vertical");
-
-        if (Input.GetButtonDown("BodySlap")) // left shift
+        if (!playerState.IsDead)
         {
-            isBodySlap = true;
+            moveVector.x = Input.GetAxisRaw("Horizontal");
+            moveVector.y = Input.GetAxisRaw("Vertical");
+
+            if (Input.GetButtonDown("BodySlap")) // left shift
+            {
+                isBodySlap = true;
+            }
+
+            if (Input.GetButtonDown("Shoot")) // left ctrl
+            {
+                isShoot = true;
+            }
+
+            if (Input.GetButtonDown("Drain"))
+            {
+                isDrain = true;
+            }
+
+            if (Input.GetButtonDown("Interaction"))
+            {
+                isInteraction = true;
+            }
         }
-
-        if (Input.GetButtonDown("Shoot")) // left ctrl
+        else
         {
-            isShoot = true;
-        }
+            moveVector = Vector2.zero;
 
-        if (Input.GetButtonDown("Drain"))
-        {
-            isDrain = true;
-        }
-
-        if(Input.GetButtonDown("Interaction"))
-        {
-            isInteraction = true;
+            isBodySlap = false;
+            isShoot = false;
+            isDrain = false;
+            isInteraction = false;
         }
     }
     private void FixedUpdate()

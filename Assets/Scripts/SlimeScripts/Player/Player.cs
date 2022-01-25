@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private PlayerState playerState = null;
+
     [SerializeField]
     private Stat playerStat = new Stat();
     public Stat PlayerStat
@@ -18,16 +20,11 @@ public class Player : MonoBehaviour
         set { currentHp = value; }
     }
 
-    private bool isDead = false;
-    public bool IsDead
-    {
-        get { return isDead; }
-        set { isDead = value; }
-    }
-
     private void Start()
     {
         SlimeEventManager.StartListening("PlayerDead", PlayerDead);
+
+        playerState = GetComponent<PlayerState>();
     }
     private void OnEnable()
     {
@@ -46,7 +43,7 @@ public class Player : MonoBehaviour
     }
     public void GetDamage(int damage)
     {
-        if (!isDead)
+        if (!playerState.IsDead)
         {
             int dm = damage - playerStat.Defense;
 
@@ -59,7 +56,7 @@ public class Player : MonoBehaviour
 
             if (currentHp <= 0)
             {
-                isDead = true;
+                playerState.IsDead = true;
             }
 
             Water.UIManager.Instance.UpdatePlayerHPUI();

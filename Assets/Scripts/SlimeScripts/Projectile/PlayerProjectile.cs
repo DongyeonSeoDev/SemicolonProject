@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class PlayerProjectile : MonoBehaviour
 {
-    private Stat playerStat = null;
     private SlimePoolManager slimePoolManager = null;
 
     [SerializeField]
@@ -20,15 +19,11 @@ public class PlayerProjectile : MonoBehaviour
     private float moveTime = 3f;
     private float moveTimer = 0f;
 
-    private void Awake() 
+    private void Awake()
     {
         slimePoolManager = SlimePoolManager.Instance;
 
         rigid = GetComponent<Rigidbody2D>();
-    }
-    private void Start() 
-    {
-        playerStat = SlimeGameManager.Instance.Player.PlayerStat;
     }
 
     void Update()
@@ -36,14 +31,16 @@ public class PlayerProjectile : MonoBehaviour
         Move();
         CheckMoveTime();
     }
-    private void OnTriggerEnter2D(Collider2D other) 
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if(whatIsEnemy.CompareGameObjectLayer(other.gameObject))
+        if (whatIsEnemy.CompareGameObjectLayer(other.gameObject))
         {
             Enemy.Enemy enemy = other.GetComponent<Enemy.Enemy>();
 
-            //enemy.GetDamage(playerStat.eternalStat.damage + playerStat.additionalEternalStat.damage);
-            enemy.GetDamage(playerStat.Damage);
+            if (enemy != null)
+            {
+                enemy.GetDamage(SlimeGameManager.Instance.Player.PlayerStat.Damage);
+            }
         }
 
         Despawn();
@@ -61,11 +58,11 @@ public class PlayerProjectile : MonoBehaviour
     }
     private void CheckMoveTime()
     {
-        if(moveTimer > 0f)
+        if (moveTimer > 0f)
         {
             moveTimer -= Time.deltaTime;
 
-            if(moveTimer <= 0f)
+            if (moveTimer <= 0f)
             {
                 moveTimer = 0f;
 

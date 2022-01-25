@@ -18,7 +18,7 @@ namespace State
 }
 public class PlayerState : MonoBehaviour
 {
-    
+
     private State.MovingState lastPlayerMovingPoint;
     public State.MovingState LastPlayerMovingPoint
     {
@@ -26,6 +26,13 @@ public class PlayerState : MonoBehaviour
     }
 
     private PlayerInput playerInput = null;
+
+    private bool isDead = false;
+    public bool IsDead
+    {
+        get { return isDead; }
+        set { isDead = value; }
+    }
 
     private bool bodySlapping = false;
     public bool BodySlapping
