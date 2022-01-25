@@ -24,6 +24,20 @@ public class Pair<T,U>
     }
 }
 
+[Serializable]
+public class ItemInfo
+{
+    public int id;
+    public int count;
+
+    public ItemInfo() { }
+    public ItemInfo(int id, int count)
+    {
+        this.id = id;
+        this.count = count;
+    }
+}
+
 public class ActionGroup
 {
     public Action voidAction;

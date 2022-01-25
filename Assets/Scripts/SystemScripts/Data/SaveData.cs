@@ -25,29 +25,24 @@ namespace Water
     [Serializable]
     public class UserInfo
     {
-        public Stat playerStat = new Stat();
-        public SaveDic<int, ItemInfo> userItems = new SaveDic<int, ItemInfo>();
-    }
-
-    [Serializable]
-    public class ItemInfo
-    {
-        public int id;
-        public int count;
-
-        public ItemInfo() { }
-        public ItemInfo(int id, int count)
-        {
-            this.id = id;
-            this.count = count;
-        }
+        public uint currentHp;
+        public Stat playerStat = new Stat(); 
+        public SaveDic<int, ItemInfo> userItems = new SaveDic<int, ItemInfo>(); //인벤토리 목록 
+        public SaveDic<string, float> monstersAssimilationRate = new SaveDic<string, float>(); //몬스터 동화율
     }
 
     [Serializable]
     public class Option
     {
-        public SaveDic<KeyAction, KeyCode> keyInputDict = new SaveDic<KeyAction, KeyCode>(); 
+        public SaveDic<KeyAction, KeyCode> keyInputDict = new SaveDic<KeyAction, KeyCode>();
+
+        public float masterSound = 0.5f;
+        public float bgmSize = 0.6f;
+        public float soundEffectSize = 0.7f;
     }
+
+
+
 
     [Serializable]
     public class SaveDic<K, V>
