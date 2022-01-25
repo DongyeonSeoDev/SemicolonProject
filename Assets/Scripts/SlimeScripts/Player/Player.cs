@@ -17,12 +17,19 @@ public class Player : MonoBehaviour
         get { return currentHp; }
         set { currentHp = value; }
     }
-    
+
+    private bool isDead = false;
+    public bool IsDead
+    {
+        get { return isDead; }
+        set { isDead = value; }
+    }
+
     private void Start()
     {
         SlimeEventManager.StartListening("PlayerDead", PlayerDead);
     }
-    private void OnEnable() 
+    private void OnEnable()
     {
         currentHp = playerStat.eternalStat.hp;
     }
@@ -39,15 +46,26 @@ public class Player : MonoBehaviour
     }
     public void GetDamage(int damage)
     {
-        int dm = damage - playerStat.Damage;
-
-        if(dm <= 0)
+        if (!isDead)
         {
-            dm = 0;
-        }
+            int dm = damage - playerStat.Defense;
 
-        currentHp -= dm;
+            if (dm <= 0)
+            {
+                dm = 0;
+            }
+
+            currentHp -= dm;
+
+            if (currentHp <= 0)
+            {
+                isDead = true;
+            }
+
+            Water.UIManager.Instance.UpdatePlayerHPUI();
+        }
     }
+
     private void PlayerDead()
     {
 

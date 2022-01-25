@@ -21,7 +21,7 @@ public class PlayerMove : PlayerAction
     {
         if (!playerStatus.BodySlapping)
         {
-            Vector2 MoveVec = playerInput.MoveVector * (playerStat.eternalStat.speed + playerStat.additionalEternalStat.speed);
+            Vector2 MoveVec = playerInput.MoveVector * (playerStat.Speed);
 
             rigid.velocity = MoveVec;
 
