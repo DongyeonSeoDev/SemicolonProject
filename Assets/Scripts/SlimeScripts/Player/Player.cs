@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
     }
     public void GetDamage(int damage)
     {
-        int dm = damage - playerStat.Damage;
+        int dm = damage - playerStat.Defense;
 
         if(dm <= 0)
         {
@@ -47,7 +47,12 @@ public class Player : MonoBehaviour
         }
 
         currentHp -= dm;
+
+        Debug.Log(currentHp);
+
+        Water.UIManager.Instance.UpdatePlayerHPUI();
     }
+
     private void PlayerDead()
     {
 

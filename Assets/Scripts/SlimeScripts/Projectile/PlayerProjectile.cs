@@ -42,6 +42,8 @@ public class PlayerProjectile : MonoBehaviour
         {
             Enemy.Enemy enemy = other.GetComponent<Enemy.Enemy>();
 
+            Debug.Log(enemy);
+
             enemy.GetDamage(playerStat.eternalStat.damage + playerStat.additionalEternalStat.damage);
         }
 
