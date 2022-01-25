@@ -14,6 +14,7 @@ public class CookingManager : MonoSingleton<CookingManager>
 
     public Chef testChef;
 
+    [SerializeField] private bool isTestMode = true;
 
     #endregion
 
@@ -237,6 +238,8 @@ public class CookingManager : MonoSingleton<CookingManager>
 
     void Test()  //Test Code
     {
+        if (!isTestMode) return;
+
         if(Input.GetKeyDown(KeyCode.LeftAlt))
         {
             gm.AddItem(testItemInfo);

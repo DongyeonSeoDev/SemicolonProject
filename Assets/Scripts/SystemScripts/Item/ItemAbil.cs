@@ -4,10 +4,10 @@ using UnityEngine;
 
 public abstract class ItemAbil
 {
-    /*protected Stat SlimePlayer
+    protected Player SlimePlayer
     {
-        get => SlimeGameManager.Instance.PlayerStat;
-    }*/
+        get => SlimeGameManager.Instance.Player;
+    }
 
     public abstract void Use();
 }

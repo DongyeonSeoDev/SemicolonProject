@@ -39,7 +39,7 @@ public class Player : MonoBehaviour
     }
     public void GetDamage(int damage)
     {
-        int dm = damage - playerStat.eternalStat.defense;
+        int dm = damage - playerStat.Damage;
 
         if(dm <= 0)
         {

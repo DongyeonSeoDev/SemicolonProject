@@ -329,22 +329,22 @@ namespace Water
         #region Stat
         public void UpdateStatUI()
         {
-            EternalStat stat = new EternalStat(); //임시 변수 --> Player스크립트에서 스탯 가져옴
-            stat.SetDefaultStat();  //임시
-            int currentHP = 45; //임시
+            Stat stat = sgm.Player.PlayerStat;
 
-            //statTexts[0].text = string.Concat(currentHP, '/', sgm.PlayerStat.eternalStat.hp);
-            statTexts[1].text = stat.damage.ToString();
-            statTexts[2].text = stat.defense.ToString();
-            statTexts[3].text = stat.speed.ToString();
+            statTexts[0].text = string.Concat(sgm.Player.CurrentHp, '/', stat.Hp);
+            statTexts[1].text = stat.Damage.ToString();
+            statTexts[2].text = stat.Defense.ToString();
+            statTexts[3].text = Mathf.RoundToInt(stat.Speed).ToString();
+
+
             //statText.text = $"HP\t\t{currentHP}/{stat.hp}\n\n공격력\t\t{stat.damage}\n\n방어력\t\t{stat.defense}\n\n이동속도\t\t{stat.speed}";
         }
 
         public void UpdatePlayerHPUI()
         {
-            int curHp = 80;  //임시
-            //playerHPInfo.first.fillAmount = (float)curHp / sgm.Player.Hp;
-            //playerHPInfo.second.text = string.Concat(curHp, '/', sgm.Player.Hp);
+            Player p = sgm.Player;
+            playerHPInfo.first.fillAmount = (float)p.CurrentHp / p.PlayerStat.Hp;
+            playerHPInfo.second.text = string.Concat(p.CurrentHp, '/', p.PlayerStat.Hp);
         }
         #endregion
     }

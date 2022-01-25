@@ -6,6 +6,26 @@ public class Stat
     public EternalStat eternalStat = new EternalStat();
     public EternalStat additionalEternalStat = new EternalStat();
     public ChoiceStat choiceStat = new ChoiceStat();
+
+    public int Hp
+    {
+        get { return eternalStat.hp + additionalEternalStat.hp; }
+    }
+    public int Damage
+    {
+        get { return eternalStat.damage + additionalEternalStat.damage; }
+    }
+    public int Defense
+    {
+        get { return eternalStat.defense + additionalEternalStat.defense; }
+    }
+
+
+
+    public float Speed
+    {
+        get { return eternalStat.speed + additionalEternalStat.speed; }
+    }
 }
 
 [Serializable]
