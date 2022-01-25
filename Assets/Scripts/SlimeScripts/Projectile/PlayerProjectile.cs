@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerProjectile : MonoBehaviour
 {
-    private Player player = null;
+    private Stat playerStat = null;
     private SlimePoolManager slimePoolManager = null;
 
     [SerializeField]
@@ -28,7 +28,7 @@ public class PlayerProjectile : MonoBehaviour
     }
     private void Start() 
     {
-        player = SlimeGameManager.Instance.Player;
+        playerStat = SlimeGameManager.Instance.PlayerStat;
     }
 
     void Update()
@@ -42,9 +42,9 @@ public class PlayerProjectile : MonoBehaviour
         {
             Enemy.Enemy enemy = other.GetComponent<Enemy.Enemy>();
 
-            enemy.GetDamage(player.PlayerProjectileDamage + player.AdditionalPlayerProjectileDamage);
+            enemy.GetDamage(playerStat.eternalStat.damage);
         }
-        
+
         Despawn();
     }
     public void OnSpawn(Vector2 direction, float speed)

@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class PlayerMove : PlayerAction
 {
-
-    [SerializeField]
-    private float speed = 0f;
-
     public override void Start()
     {
         base.Start();
@@ -22,7 +18,7 @@ public class PlayerMove : PlayerAction
     {
         if (!playerStatus.BodySlapping)
         {
-            Vector2 MoveVec = playerInput.MoveVector * speed;
+            Vector2 MoveVec = playerInput.MoveVector * SlimeGameManager.Instance.PlayerStat.eternalStat.speed;
 
             rigid.velocity = MoveVec;
 

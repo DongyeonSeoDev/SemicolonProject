@@ -10,13 +10,13 @@ public class Stat
 [Serializable]
 public class EternalStat
 {
-    public uint hp;
+    public int hp;
     //public uint mp;
 
-    public uint damage;
-    public uint defense;
+    public int damage;
+    public int defense;
 
-    public uint intellect;
+    public int intellect;
 
     public float speed;
     public float criticalRate;

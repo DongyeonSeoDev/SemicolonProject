@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerBodySlap : PlayerAction
 {
-    private Player player = null;
+    private Stat playerStat = null;
     [SerializeField]
     private LayerMask canCrashLayer;
     [SerializeField]
@@ -34,7 +34,7 @@ public class PlayerBodySlap : PlayerAction
     public override void Start()
     {
         base.Start();
-        player = GetComponent<Player>();
+        playerStat = SlimeGameManager.Instance.PlayerStat;
 
         SlimeEventManager.StartListening("BodyPointCrash", BodyPointCrash);
     }
@@ -77,7 +77,7 @@ public class PlayerBodySlap : PlayerAction
 
             if (enemy != null)
             {
-                enemy.GetDamage(player.BodySlapDamage + player.AdditionalBodySlapDamage);
+                enemy.GetDamage(playerStat.eternalStat.damage);
             }
 
             stopBodySlapTimer = stopBodySlapTime;
