@@ -190,6 +190,7 @@ namespace Enemy
         private Vector2 targetPosition;
 
         private float rushForce;
+        private bool isReady;
 
         public EnemyRushAttackCommand(Rigidbody2D rigid, Transform enemy, Transform player, float force)
         {
@@ -197,13 +198,21 @@ namespace Enemy
             enemyTransform = enemy;
             playerTransform = player;
             rushForce = force;
+            isReady = false;
         }
 
         public override void Execute()
         {
-            targetPosition = (playerTransform.position - enemyTransform.position).normalized;
-
-            rigidboyd2D.AddForce(targetPosition * rushForce, ForceMode2D.Impulse);
+            if (!isReady)
+            {
+                isReady = true;
+                targetPosition = (playerTransform.position - enemyTransform.position).normalized;
+            }
+            else
+            {
+                isReady = false;
+                rigidboyd2D.AddForce(targetPosition * rushForce, ForceMode2D.Impulse);
+            }
         }
     }
 }

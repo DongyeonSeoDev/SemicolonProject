@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8380205020827399968}
   - component: {fileID: 8753102886070234625}
   - component: {fileID: 39800121126291201}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,7 +127,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!61 &8753102886070234625
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -138,7 +138,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: -0.03188187, y: 0.97}
@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 3446856833198420042}
   - component: {fileID: 2501700400896425834}
   - component: {fileID: 1379758292269083093}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: AttackCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -274,6 +274,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyHP
       objectReference: {fileID: 0}
+    - target: {fileID: 1559462951835451892, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1559462951835451896, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -358,9 +362,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1559462952085171734, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 1559462952085171735, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0.08199993
+      objectReference: {fileID: 0}
+    - target: {fileID: 1559462952483071909, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 1559462952483071910, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
       propertyPath: m_SizeDelta.x

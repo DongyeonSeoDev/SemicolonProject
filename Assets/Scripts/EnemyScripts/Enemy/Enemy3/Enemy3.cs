@@ -24,9 +24,9 @@ namespace Enemy
                 isAnimation = false,
                 isEndAttackAnimation = true,
                 isSeePlayerDistance = 20f,
-                isAttackPlayerDistance = 5f,
-                attackDelay = 2f,
-                chaseSpeed = 2.5f,
+                isAttackPlayerDistance = 7f,
+                attackDelay = 3f,
+                chaseSpeed = 2f,
                 attackDamage = 20,
                 maxHP = 50,
                 hp = 50
