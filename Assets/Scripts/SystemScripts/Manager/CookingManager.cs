@@ -249,7 +249,7 @@ public class CookingManager : MonoSingleton<CookingManager>
         {
             for(int i=0; i<=40; i+=5)
             {
-                gm.AddItem(new ItemInfo(i, 6));
+                Inventory.Instance.GetItem(new ItemInfo(i, 6));
             }
         }
         else if (Input.GetKeyDown(KeyCode.R))

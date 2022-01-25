@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemSprite: {fileID: 21300000, guid: 03fb4950b85e81e4fb61f5a8e1e9ac0e, type: 3}
   itemType: 1
-  id: 10
+  id: 15
   maxCount: 5
   itemName: "\uC2AC\uB77C\uC784 \uC824\uB9AC"
   explanation: "\uB9CE\uC740 \uC2AC\uB77C\uC784 \uC810\uC561\uC744 \uBB49\uCE58\uAE30\uB9CC

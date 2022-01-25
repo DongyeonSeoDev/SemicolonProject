@@ -7,7 +7,7 @@ using System.IO;
 
 namespace Water
 {
-    public class GameManager : MonoSingleton<GameManager>
+    public class GameManager : MonoSingleton<GameManager>  //저장/로드는 지금은 안함
     {
         private string savedJson, filePath;
         private readonly string saveFileName_1 = "SaveFile1";
@@ -30,7 +30,7 @@ namespace Water
             Cursor.lockState = CursorLockMode.Confined;
             filePath = Util.GetFilePath(saveFileName_1);
             saveData = new SaveData();
-            Load();
+            //Load();
             Init();
         }
 
@@ -143,7 +143,7 @@ namespace Water
         #region OnApplication
         private void OnApplicationQuit()
         {
-            Save();
+            //Save();
         }
         private void OnApplicationFocus(bool focus)
         {

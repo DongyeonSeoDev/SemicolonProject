@@ -208,7 +208,7 @@ public class Inventory : MonoSingleton<Inventory>
 
                 temp = slot.Count;
                 slot.UpdateCount(Mathf.Clamp(slot.Count - count, 0, slot.MaxCount-1));
-                count -= Mathf.Clamp(temp, 1, count);
+                count -= temp;
 
                 if(slot.Count == 0)
                     slot.ResetData();
