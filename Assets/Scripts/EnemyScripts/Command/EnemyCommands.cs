@@ -104,11 +104,11 @@ namespace Enemy
         {
             if (!isWorking) // 색깔 변경
             {
-                enemyData.enemySpriteRenderer.color = Color.green;
+                enemyData.enemySpriteRenderer.color = enemyData.damagedColor;
             }
             else // 색깔 변경 해제
             {
-                enemyData.enemySpriteRenderer.color = Color.magenta;
+                enemyData.enemySpriteRenderer.color = enemyData.normalColor;
             }
 
             isWorking = !isWorking;
@@ -178,6 +178,36 @@ namespace Enemy
             PoolManager bullet = EnemyPoolManager.Instance.GetPoolObject(Type.Bullet, enemyTransform.position);
 
             bullet.GetComponent<EnemyBullet>().Init(eEnemyController, attackDamage, (targetTransform.position - enemyTransform.position).normalized);
+        }
+    }
+
+    public class EnemyRushAttackCommand : EnemyCommand
+    {
+        private Rigidbody2D rigidboyd2D;
+        private Transform enemyTransform;
+        private Transform playerTransform;
+
+        private Vector2 targetPosition;
+
+        private float rushForce;
+
+        public EnemyRushAttackCommand(Rigidbody2D rigid, Transform enemy, Transform player, float force)
+        {
+            rigidboyd2D = rigid;
+            enemyTransform = enemy;
+            playerTransform = player;
+            rushForce = force;
+        }
+
+        public override void Execute()
+        {
+            targetPosition = (playerTransform.position - enemyTransform.position).normalized;
+
+            rigidboyd2D.AddForce(targetPosition * rushForce, ForceMode2D.Impulse);
+
+            // 데미지 주기
+            // 색깔 변경
+            // 딜레이
         }
     }
 }
