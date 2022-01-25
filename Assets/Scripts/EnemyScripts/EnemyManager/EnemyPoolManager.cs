@@ -9,6 +9,7 @@ namespace Enemy
     {
         Slime_01,
         Rat_02,
+        Slime_03,
         Bullet,
         EnemyLoot
     }

@@ -39,6 +39,9 @@ namespace Enemy
             }
         }
 
+        public Color normalColor;
+        public Color damagedColor;
+
         public string enemyId;
 
         public float chaseSpeed = 5f;
@@ -50,6 +53,7 @@ namespace Enemy
 
         public bool isDamaged = false;
         public bool isAttack = false;
+        public bool isAnimation = true;
         public bool isHitAnimation = false;
         public bool isAttackCommand = false;
         public bool isLongDistanceAttack = false;
