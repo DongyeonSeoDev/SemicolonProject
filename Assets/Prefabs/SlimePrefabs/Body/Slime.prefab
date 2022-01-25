@@ -266,6 +266,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5b6c8d5aa4d7fe4db60c29beada8386, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerStat:
+    eternalStat:
+      hp: 100
+      damage: 10
+      defense: 2
+      intellect: 0
+      speed: 8
+      criticalRate: 0
+      criticalDamage: 0
+    additionalEternalStat:
+      hp: 0
+      damage: 0
+      defense: 0
+      intellect: 0
+      speed: 0
+      criticalRate: 0
+      criticalDamage: 0
+    choiceStat:
+      overweight: 0
+      patience: 0
+      luck: 0
+      viscosity: 0
+      humidity: 0
+      affinity: 0
+      dominion: 0
+      marineLifeFitness: 0
+      landCreatureFitness: 0
+      cookingAbility: 0
 --- !u!114 &5860127214316570770
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -42,7 +42,7 @@ public class PlayerProjectile : MonoBehaviour
         {
             Enemy.Enemy enemy = other.GetComponent<Enemy.Enemy>();
 
-            enemy.GetDamage(playerStat.eternalStat.damage + playerStat.additionalEternalStat.damage);
+            enemy.GetDamage(playerStat.Damage);
         }
 
         Despawn();
