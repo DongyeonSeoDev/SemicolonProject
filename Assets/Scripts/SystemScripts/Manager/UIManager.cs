@@ -333,7 +333,7 @@ namespace Water
             stat.SetDefaultStat();  //임시
             int currentHP = 45; //임시
 
-            statTexts[0].text = string.Concat(currentHP, '/', sgm.Player.Hp);
+            //statTexts[0].text = string.Concat(currentHP, '/', sgm.PlayerStat.eternalStat.hp);
             statTexts[1].text = stat.damage.ToString();
             statTexts[2].text = stat.defense.ToString();
             statTexts[3].text = stat.speed.ToString();
@@ -343,8 +343,8 @@ namespace Water
         public void UpdatePlayerHPUI()
         {
             int curHp = 80;  //임시
-            playerHPInfo.first.fillAmount = (float)curHp / sgm.Player.Hp;
-            playerHPInfo.second.text = string.Concat(curHp, '/', sgm.Player.Hp);
+            //playerHPInfo.first.fillAmount = (float)curHp / sgm.Player.Hp;
+            //playerHPInfo.second.text = string.Concat(curHp, '/', sgm.Player.Hp);
         }
         #endregion
     }

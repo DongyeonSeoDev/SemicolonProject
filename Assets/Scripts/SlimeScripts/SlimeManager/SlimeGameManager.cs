@@ -84,22 +84,22 @@ public static class ScriptHelper
 }
 public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 {
-    private Stat playerStat = null;
-    public Stat PlayerStat
+    private Player player = null;
+    public Player Player
     {
         get
         {
-            if (playerStat == null)
+            if (player == null)
             {
-                playerStat = FindObjectOfType<Player>().PlayerStat;
+                player = FindObjectOfType<Player>();
 
-                if (playerStat == null)
+                if (player == null)
                 {
                     Debug.LogError("There is no playerStat!");
                 }
             }
 
-            return playerStat;
+            return player;
         }
     }
     

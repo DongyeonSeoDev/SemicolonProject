@@ -12,6 +12,11 @@ public class Player : MonoBehaviour
         set { playerStat = value; }
     }
     private int currentHp = 0;
+    public int CurrentHp
+    {
+        get { return currentHp; }
+        set { currentHp = value; }
+    }
     
     private void Start()
     {
