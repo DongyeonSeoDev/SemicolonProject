@@ -15,6 +15,8 @@ namespace Enemy
                 enemyAnimator = GetComponent<Animator>(),
                 enemySpriteRenderer = GetComponent<SpriteRenderer>(),
                 hpBarFillImage = hpBarFillImage,
+                normalColor = Color.magenta,
+                damagedColor = Color.green,
                 enemyId = "Slime_01"
             };
 

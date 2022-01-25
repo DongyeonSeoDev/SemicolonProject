@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30a021077db1c4e419d8e75c07691aac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolType: 2
+  poolType: 3
   count: 10
   speed: 5
   limitMaxPosition: {x: 20, y: 20}

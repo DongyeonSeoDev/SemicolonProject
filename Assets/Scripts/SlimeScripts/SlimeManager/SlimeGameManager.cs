@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Water;
 
 public static class ScriptHelper
 {
@@ -67,11 +68,11 @@ public static class ScriptHelper
     // value값이 max값보다 많아지면 (value - max) 만큼을 min값에서 더해서 나온 값을 value값에 대입한다. 이 과정을 value값이 max값 이하가 될 때 까지 반복한다.
     public static int Limit(this int value, int min, int max)
     {
-        if(value < min)
+        if (value < min)
         {
             return Limit(max - (min - value - 1), min, max);
         }
-        else if(value > max)
+        else if (value > max)
         {
             return Limit(min + (value - max - 1), min, max);
         }
@@ -81,7 +82,24 @@ public static class ScriptHelper
         }
     }
 }
-public class SlimeGameManager : MonoBehaviour
+public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 {
+    private Player player = null;
+    public Player Player
+    {
+        get
+        {
+            if (player == null)
+            {
+                player = FindObjectOfType<Player>();
 
+                if (player == null)
+                {
+                    Debug.LogError("There is no player!");
+                }
+            }
+
+            return player;
+        }
+    }
 }

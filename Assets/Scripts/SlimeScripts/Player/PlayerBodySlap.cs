@@ -20,6 +20,15 @@ public class PlayerBodySlap : PlayerAction
     private float bodySlapTime = 3f;
     private float bodySlapTimer = 0f;
 
+    [Header("BodySlap이 완전히 멈출 때 까지 걸리는 시간")]
+    [SerializeField]
+    private float stopBodySlapTime = 2f;
+    private float stopBodySlapTimer = 0f;
+
+    [Header("BodySlap이 멈출 때 적용되는 관성 관련 값 (값에 따라 서서히 멈추는 정도가 달라짐)")]
+    [SerializeField]
+    private float stopBodySlapOffset = 3f;
+
     private bool bodySlapStart = false;
 
     public override void Start()
@@ -45,6 +54,7 @@ public class PlayerBodySlap : PlayerAction
         }
 
         CheckBodySlapTime();
+        CheckStopBodySlapTime();
     }
     private void FixedUpdate()
     {
@@ -55,7 +65,7 @@ public class PlayerBodySlap : PlayerAction
             childRigids.ForEach(x => x.AddForce(Vector2.Lerp(bodySlapMoveVec, bodySlapMoveVec * bodySlapMovePower, Time.fixedDeltaTime)));
         }
     }
-    private void OnDisable() 
+    private void OnDisable()
     {
         SlimeEventManager.StopListening("BodyPointCrash", BodyPointCrash);
     }
@@ -65,26 +75,45 @@ public class PlayerBodySlap : PlayerAction
         {
             Enemy.Enemy enemy = targetObject.GetComponent<Enemy.Enemy>();
 
-            if(enemy != null)
+            if (enemy != null)
             {
-                enemy.GetDamage(player.BodySlapDamage);
+                enemy.GetDamage(player.BodySlapDamage + player.AdditionalBodySlapDamage);
             }
 
-            StopBodySlap();
+            stopBodySlapTimer = stopBodySlapTime;
         }
     }
     private void StopBodySlap()
     {
+        stopBodySlapTimer = 0f;
+
         bodySlapStart = false;
         playerStatus.BodySlapping = false;
     }
     private void CheckBodySlapTime()
     {
-        if(bodySlapTimer > 0f)
+        if (bodySlapTimer > 0f)
         {
             bodySlapTimer -= Time.deltaTime;
 
-            if(bodySlapTimer <= 0f)
+            if (bodySlapTimer <= 0f)
+            {
+                stopBodySlapTimer = stopBodySlapTime;
+            }
+        }
+    }
+    private void CheckStopBodySlapTime()
+    {
+        
+        if(stopBodySlapTimer > 0f)
+        {
+            stopBodySlapTimer -= Time.deltaTime;
+            
+            rigid.AddForce(Vector2.Lerp(Vector2.zero, -rigid.velocity / stopBodySlapOffset, stopBodySlapTimer / stopBodySlapTime));
+
+            childRigids.ForEach(x => x.AddForce(Vector2.Lerp(Vector2.zero, -x.velocity / stopBodySlapOffset, stopBodySlapTimer / stopBodySlapTime)));
+
+            if(stopBodySlapTimer <= 0f)
             {
                 StopBodySlap();
             }

@@ -1,29 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Water;
 
-public class PlayerEnemyUnderstandingRateManager : MonoBehaviour
+public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnderstandingRateManager>
 {
-    private static PlayerEnemyUnderstandingRateManager instance = null;
-    public static PlayerEnemyUnderstandingRateManager Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = FindObjectOfType<PlayerEnemyUnderstandingRateManager>();
-
-                if (instance == null)
-                {
-                    GameObject temp = new GameObject("PlayerEnemyUnderstandingRateManager");
-                    instance = temp.AddComponent<PlayerEnemyUnderstandingRateManager>();
-                }
-            }
-
-            return instance;
-        }
-    }
-
     public struct ChangeBody
     {
         public string bodyName;

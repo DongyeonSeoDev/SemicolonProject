@@ -20,7 +20,10 @@ namespace Enemy
 
         protected override void Start()
         {
-            enemyData.enemyAnimator.SetTrigger(enemyData.hashMove);
+            if (enemyData.isAnimation)
+            {
+                enemyData.enemyAnimator.SetTrigger(enemyData.hashMove);
+            }
 
             base.Start();
         }
@@ -32,7 +35,13 @@ namespace Enemy
             base.Update();
         }
 
-        protected override void End() => enemyData.enemyAnimator.ResetTrigger(enemyData.hashMove);
+        protected override void End()
+        {
+            if (enemyData.isAnimation)
+            {
+                enemyData.enemyAnimator.ResetTrigger(enemyData.hashMove);
+            }
+        }
     }
 
     public partial class EnemyChaseState : EnemyState // 추격 상태
@@ -44,7 +53,10 @@ namespace Enemy
 
         protected override void Start()
         {
-            enemyData.enemyAnimator.SetTrigger(enemyData.hashMove);
+            if (enemyData.isAnimation)
+            {
+                enemyData.enemyAnimator.SetTrigger(enemyData.hashMove);
+            }
 
             base.Start();
         }
@@ -56,7 +68,13 @@ namespace Enemy
             base.Update();
         }
 
-        protected override void End() => enemyData.enemyAnimator.ResetTrigger(enemyData.hashMove);
+        protected override void End()
+        {
+            if (enemyData.isAnimation)
+            {
+                enemyData.enemyAnimator.ResetTrigger(enemyData.hashMove);
+            }
+        }
     }
 
     public partial class EnemyAttackState : EnemyState // 공격 상태
