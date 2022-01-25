@@ -33,7 +33,14 @@ public class Player : MonoBehaviour
     }
     public void GetDamage(int damage)
     {
-        currentHp -= (damage - playerStat.eternalStat.defense);
+        int dm = damage - playerStat.eternalStat.defense;
+
+        if(dm <= 0)
+        {
+            dm = 0;
+        }
+
+        currentHp -= dm;
     }
     private void PlayerDead()
     {
