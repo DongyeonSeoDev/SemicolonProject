@@ -13,11 +13,13 @@ public enum UIType
     FOOD_DETAIL,
     ITEM_DETAIL,
     COMBINATION,
-    REMOVE_ITEM
+    REMOVE_ITEM,
+    STAT
 }
 
 public enum KeyAction
 {
     INVENTORY,
     INTERACTION,
+    STAT
 }

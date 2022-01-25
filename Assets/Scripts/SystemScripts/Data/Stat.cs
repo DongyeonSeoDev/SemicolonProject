@@ -21,6 +21,15 @@ public class EternalStat
     public float speed;
     public float criticalRate;
     public float criticalDamage;
+
+    public void SetDefaultStat()
+    {
+        hp = 100;
+        damage = 10;
+        defense = 2;
+
+        speed = 8f;
+    }
 }
 
 [Serializable]

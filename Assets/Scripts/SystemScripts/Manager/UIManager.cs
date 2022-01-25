@@ -49,12 +49,17 @@ namespace Water
         public InputField itemRemoveCntInput;
         #endregion
 
+        #region Prefab and Parent
         [Space(20)]
         public GameObject systemMsgPrefab, acquisitionTxtPrefab;
         public Transform systemMsgParent, acquisitionTxtParent;
 
         public GameObject npcNameUIPrefab;
         public Transform npcUICvsTrm;
+        #endregion
+
+        //public Text statText;
+        public Text[] statTexts;
 
         private GameManager gm;
 
@@ -117,8 +122,13 @@ namespace Water
             {
                 OnUIInteract(UIType.INVENTORY);
             }
+            else if(Input.GetKeyDown(KeySetting.keyDict[KeyAction.STAT]))
+            {
+                OnUIInteract(UIType.STAT);
+            }
         }
 
+        #region UI (비)활성화 관련
         public void OnUIInteractBtnClick(int type) { OnUIInteract((UIType)type); }
 
         public void OnUIInteract(UIType type, bool ignoreQueue = false)
@@ -158,7 +168,9 @@ namespace Water
         {
             switch(type)
             {
-                
+                case UIType.STAT:
+                    UpdateStatUI();
+                    break;
             }
         }
 
@@ -183,7 +195,9 @@ namespace Water
                     break;
             }
         }
+        #endregion
 
+        #region UI Position
         public void UIPositionReset(UIType type)
         {
             gameUIList[(int)type].ResetPos();
@@ -193,7 +207,9 @@ namespace Water
         {
             gameUIList.ForEach(ui => ui.ResetPos());
         }
+        #endregion
 
+        #region Cursor 따라다니는 정보텍스트
         private void CursorInfo()
         {
             if(isOnCursorInfo)
@@ -220,6 +236,8 @@ namespace Water
             cursorInfoImg.gameObject.SetActive(false);
             isOnCursorInfo = false;
         }
+        #endregion
+
 
         public void DetailItemSlot(ItemSlot slot)  //인벤토리에서 아이템 슬롯 클릭
         {
@@ -249,19 +267,20 @@ namespace Water
             
         }
 
-        public void RequestSystemMsg(string msg, int fontSize = 35, float existTime = 1.5f)
+        public void RequestSystemMsg(string msg, int fontSize = 35, float existTime = 1.5f) //화면 중앙 상단에 뜨는 시스템 메시지
         {
             PoolManager.GetItem("SystemMsg").GetComponent<SystemMsg>().Set(msg, fontSize, existTime);
         }
         
-        public void RequestLeftBottomMsg(string msg)
+        public void RequestLeftBottomMsg(string msg)  //화면 왼쪽 하단에 표시되는 로그 텍스트
         {
             Text t = PoolManager.GetItem("AcquisitionMsg").GetComponent<Text>();
             t.text = msg;
             Util.DelayFunc(() => t.gameObject.SetActive(false), 2f, this);
         }
 
-        public void OnClickRemoveItemBtn()
+        #region 인벤 버튼
+        public void OnClickRemoveItemBtn()  //아이템 버리기 버튼
         {
             removeItemInfo.first.sprite = selectedItemSlot.itemImg.sprite;
             removeItemInfo.second.text = itemNameTmp.text;
@@ -269,7 +288,7 @@ namespace Water
             OnUIInteract(UIType.REMOVE_ITEM);
         }
         
-        public void OnClickItemJunkBtn()
+        public void OnClickItemJunkBtn() //아이템 버리기 확인 버튼 클릭
         {
             int rmCount = int.Parse(itemRemoveCntInput.text);
 
@@ -300,5 +319,21 @@ namespace Water
             if (selectedItemSlot.itemInfo == null)
                 OnUIInteract(UIType.ITEM_DETAIL, true);
         }
+        #endregion
+
+        #region Stat
+        public void UpdateStatUI()
+        {
+            EternalStat stat = new EternalStat(); //임시 변수 --> Player스크립트에서 스탯 가져옴
+            stat.SetDefaultStat();
+            int currentHP = 45; //임시
+
+            statTexts[0].text = string.Concat(currentHP, '/', stat.hp);
+            statTexts[1].text = stat.damage.ToString();
+            statTexts[2].text = stat.defense.ToString();
+            statTexts[3].text = stat.speed.ToString();
+            //statText.text = $"HP\t\t{currentHP}/{stat.hp}\n\n공격력\t\t{stat.damage}\n\n방어력\t\t{stat.defense}\n\n이동속도\t\t{stat.speed}";
+        }
+        #endregion
     }
 }
