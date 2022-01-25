@@ -4,6 +4,7 @@ using System;
 public class Stat
 {
     public EternalStat eternalStat = new EternalStat();
+    public EternalStat additionalEternalStat = new EternalStat();
     public ChoiceStat choiceStat = new ChoiceStat();
 }
 
@@ -14,11 +15,13 @@ public class EternalStat
     //public uint mp;
 
     public int damage;
+
     public int defense;
 
     public int intellect;
 
     public float speed;
+
     public float criticalRate;
     public float criticalDamage;
 

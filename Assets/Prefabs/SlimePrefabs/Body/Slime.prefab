@@ -124,6 +124,7 @@ GameObject:
   - component: {fileID: 6840160282341942543}
   - component: {fileID: 6840160282341942542}
   - component: {fileID: 6840160282341942541}
+  - component: {fileID: 3810335434850179409}
   - component: {fileID: 5860127214316570770}
   - component: {fileID: 1014413143}
   - component: {fileID: 1014413144}
@@ -253,6 +254,18 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &3810335434850179409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6840160282341942530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5b6c8d5aa4d7fe4db60c29beada8386, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5860127214316570770
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -299,7 +312,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c872b1212dc70bb469dc62210b26664a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
 --- !u!114 &1014413145
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -331,6 +343,8 @@ MonoBehaviour:
   moveBackSpeed: 5
   bodySlapMovePower: 2
   bodySlapTime: 3
+  stopBodySlapTime: 2
+  stopBodySlapOffset: 3
 --- !u!114 &1014413152
 MonoBehaviour:
   m_ObjectHideFlags: 0

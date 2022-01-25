@@ -59,6 +59,6 @@ public class BodyPoint : MonoBehaviour
     }
     private void BodyPointCrash(GameObject targetObject)
     {
-
+        
     }
 }

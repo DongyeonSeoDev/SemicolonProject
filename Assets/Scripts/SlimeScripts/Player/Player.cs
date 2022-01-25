@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [SerializeField]
     private Stat playerStat = new Stat();
     public Stat PlayerStat
     {
