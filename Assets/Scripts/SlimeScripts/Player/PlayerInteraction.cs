@@ -7,11 +7,14 @@ public class PlayerInteraction : MonoBehaviour
 {
     private PlayerInput playerInput = null;
 
-    [SerializeField]
-    private LayerMask interactionableObjLayers;
+    private List<NPC> nearNPCList = new List<NPC>();
+    public List<NPC> NearNPCList
+    {
+        get { return nearNPCList; }
+        set { nearNPCList = value; }
+    }
 
-    [SerializeField]
-    private float interactionableDistance = 3f;
+    private bool isNearByNPC = false;
 
     void Start()
     {
@@ -19,7 +22,16 @@ public class PlayerInteraction : MonoBehaviour
     }
     void Update()
     {
-        if(playerInput.IsInterraction)
+        if(nearNPCList.Count > 0)
+        {
+            isNearByNPC = true;
+        }
+        else
+        {
+            isNearByNPC = false;
+        }
+
+        if (playerInput.IsInterraction && isNearByNPC)
         {
             Interaction();
         }
@@ -28,11 +40,8 @@ public class PlayerInteraction : MonoBehaviour
     {
         playerInput.IsInterraction = false;
 
-        RaycastHit2D hit = Physics2D.CircleCast(transform.position, interactionableDistance, Vector2.zero, 0f, interactionableObjLayers);
-
         // 상호작용을 실행하는 코드
-        NPC target = hit.transform.GetComponent<NPC>();
 
-        target.Interaction();
+        nearNPCList[0].Interaction(); // 일단은 맨 처음의 것만 실행, 내일 팀원과 상의해서 상호작용 NPC의 우선순위 기준을 정할 것
     }
 }
