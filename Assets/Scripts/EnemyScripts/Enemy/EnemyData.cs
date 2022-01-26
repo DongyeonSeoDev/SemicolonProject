@@ -18,6 +18,7 @@ namespace Enemy
         public EnemyLootListSO enemyLootList;
         public Animator enemyAnimator;
         public SpriteRenderer enemySpriteRenderer;
+        public Rigidbody2D enemyRigidbody2D;
         public Image hpBarFillImage;
 
         private GameObject playerObject;

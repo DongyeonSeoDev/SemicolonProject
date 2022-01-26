@@ -12,6 +12,17 @@ namespace Enemy
         {
             enemyList = EnemyManager.Instance.enemyList;
 
+            SpawnEnemy();
+
+            SlimeEventManager.StartListening("PlayerDead", () =>
+            {
+                EnemyManager.Instance.PlayerDeadEvent();
+                SpawnEnemy();
+            });
+        }
+
+        private void SpawnEnemy()
+        {
             for (int i = 0; i < enemySpawnList.Count; i++)
             {
                 PoolManager enemy = EnemyPoolManager.Instance.GetPoolObject(enemySpawnList[i].enemyType, enemySpawnList[i].spawnPosition);

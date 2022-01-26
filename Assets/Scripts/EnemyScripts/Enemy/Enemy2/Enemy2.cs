@@ -6,7 +6,7 @@ namespace Enemy
     {
         private EnemyCommand enemyAttackCommand;
 
-        protected override void Awake()
+        protected override void OnEnable()
         {
             enemyData = new EnemyData()
             {
@@ -16,6 +16,7 @@ namespace Enemy
                 enemyLootList = enemyLootListSO,
                 enemyAnimator = GetComponent<Animator>(),
                 enemySpriteRenderer = GetComponent<SpriteRenderer>(),
+                enemyRigidbody2D = GetComponent<Rigidbody2D>(),
                 hpBarFillImage = hpBarFillImage,
                 damagedColor = new Color(1f, 180f / 255f, 180f / 255f),
                 normalColor = Color.white,
@@ -31,7 +32,7 @@ namespace Enemy
 
             enemyAttackCommand = new EnemyAttackCommand(enemyData.enemyObject.transform, enemyData.PlayerObject.transform, enemyData.eEnemyController, enemyData.attackDamage);
 
-            base.Awake();
+            base.OnEnable();
         }
 
         public void EnemyAttack()

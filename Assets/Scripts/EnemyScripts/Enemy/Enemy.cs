@@ -16,7 +16,7 @@ namespace Enemy
 
         private float lastPositionX;
 
-        protected virtual void Awake()
+        protected virtual void OnEnable()
         {
             sr = enemyData.enemySpriteRenderer;
             currentState = new EnemyIdleState(enemyData);
