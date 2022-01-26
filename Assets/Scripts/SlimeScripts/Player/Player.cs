@@ -20,7 +20,7 @@ public class Player : MonoBehaviour
         get { return currentHp; }
         set { currentHp = value; }
     }
-    private void Awake() 
+    private void Awake()
     {
         playerState = GetComponent<PlayerState>();
 
@@ -32,16 +32,18 @@ public class Player : MonoBehaviour
         SlimeEventManager.StartListening("PlayerSetActiveFalse", SetActiveFalse);
         SlimeEventManager.StartListening("GameClear", WhenGameClear);
 
-    }
-    private void OnEnable()
-    {
-        // playerStat = originStat;
         playerStat.additionalEternalStat = new EternalStat();
 
         playerState.IsDead = false;
         currentHp = playerStat.Hp;
 
-        Water.UIManager.Instance.UpdatePlayerHPUI(); 
+        Water.UIManager.Instance.UpdatePlayerHPUI();
+
+    }
+    private void OnEnable()
+    {
+        // playerStat = originStat;
+
     }
     private void Update()
     {
@@ -88,5 +90,14 @@ public class Player : MonoBehaviour
     private void SetActiveFalse()
     {
         gameObject.SetActive(false);
+    }
+    public void WhenRespawn()
+    {
+        playerStat.additionalEternalStat = new EternalStat();
+
+        playerState.IsDead = false;
+        currentHp = playerStat.Hp;
+
+        Water.UIManager.Instance.UpdatePlayerHPUI();
     }
 }

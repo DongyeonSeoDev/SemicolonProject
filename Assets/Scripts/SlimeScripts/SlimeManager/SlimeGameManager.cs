@@ -117,6 +117,8 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
         player.transform.position = respawnPosition;
 
         player.gameObject.SetActive(true);
+
+        player.WhenRespawn();
     }
 
 }
