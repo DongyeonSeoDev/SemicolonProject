@@ -31,6 +31,13 @@ public class PlayerProjectile : MonoBehaviour
         Move();
         CheckMoveTime();
     }
+    private void OnEnable() 
+    {
+        SlimeEventManager.StartListening("PlayerDead", Despawn);    
+    }
+    private void OnDisable() {
+        SlimeEventManager.StopListening("PlayerDead", Despawn);    
+    }
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (whatIsEnemy.CompareGameObjectLayer(other.gameObject))

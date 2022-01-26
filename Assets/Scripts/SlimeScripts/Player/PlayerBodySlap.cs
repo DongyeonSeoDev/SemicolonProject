@@ -114,7 +114,6 @@ public class PlayerBodySlap : PlayerAction
     }
     private void CheckStopBodySlapTime()
     {
-
         if (stopBodySlapTimer > 0f)
         {
             stopBodySlapTimer -= Time.deltaTime;
