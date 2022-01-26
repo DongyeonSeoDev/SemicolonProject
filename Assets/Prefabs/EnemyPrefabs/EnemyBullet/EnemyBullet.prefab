@@ -115,5 +115,5 @@ MonoBehaviour:
   poolType: 3
   count: 10
   speed: 5
-  limitMaxPosition: {x: 50, y: 50}
-  limitMinPosition: {x: -50, y: -50}
+  limitMaxPosition: {x: 250, y: 40}
+  limitMinPosition: {x: -70, y: -30}
