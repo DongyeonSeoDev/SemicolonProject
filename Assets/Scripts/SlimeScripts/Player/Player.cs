@@ -23,6 +23,7 @@ public class Player : MonoBehaviour
     private void Start()
     {
         SlimeEventManager.StartListening("PlayerDead", PlayerDead);
+        SlimeEventManager.StartListening("PlayerSetActiveFalse", SetActiveFalse);
 
         playerState = GetComponent<PlayerState>();
     }
@@ -32,7 +33,7 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
-        if (playerStat.eternalStat.hp <= 0)
+        if (playerStat.Hp <= 0)
         {
             SlimeEventManager.TriggerEvent("PlayerDead");
         }
@@ -40,6 +41,7 @@ public class Player : MonoBehaviour
     private void OnDisable()
     {
         SlimeEventManager.StopListening("PlayerDead", PlayerDead);
+        SlimeEventManager.StopListening("PlayerSetActiveFalse", SetActiveFalse);
     }
     public void GetDamage(int damage)
     {
@@ -65,6 +67,12 @@ public class Player : MonoBehaviour
 
     private void PlayerDead()
     {
+        SlimeEventManager.TriggerEvent("PlayerSetActiveFalse");
+    }
+    private void SetActiveFalse()
+    {
+        playerState.IsDead = false;
 
+        gameObject.SetActive(false);
     }
 }

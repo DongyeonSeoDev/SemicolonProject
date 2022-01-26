@@ -54,7 +54,7 @@ public static class ScriptHelper
     {
         int layer = 1 << targetObj.layer;
 
-        return  layerMask == (layerMask | layer);
+        return layerMask == (layerMask | layer);
     }
     // ---Limit매소드에 대한 설명---
     // value = 0, min = 1, max = 3일 땐 3을 리턴한다.
@@ -102,5 +102,21 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             return player;
         }
     }
-    
+
+    private void Start()
+    {
+        SlimeEventManager.StartListening("PlayerRespawn", PlayerResapwn);
+    }
+    private void OnDisable()
+    {
+        SlimeEventManager.StopListening("PlayerRespawn", PlayerResapwn);
+    }
+
+    private void PlayerResapwn(Vector2 respawnPosition)
+    {
+        player.transform.position = respawnPosition;
+
+        player.gameObject.SetActive(true);
+    }
+
 }
