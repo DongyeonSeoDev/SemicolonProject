@@ -15,6 +15,14 @@ namespace Enemy
 
         private int attackDamage;
 
+        private void Start()
+        {
+            SlimeEventManager.StartListening("AfterPlayerRespawn", () =>
+            {
+                gameObject.SetActive(false);
+            });
+        }
+
         private void Update()
         {
             transform.position += targetDirection * speed * Time.deltaTime;

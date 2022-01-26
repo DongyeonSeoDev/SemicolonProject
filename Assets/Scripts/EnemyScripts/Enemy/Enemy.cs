@@ -21,6 +21,9 @@ namespace Enemy
             sr = enemyData.enemySpriteRenderer;
             currentState = new EnemyIdleState(enemyData);
             lastPositionX = transform.position.x + Mathf.Infinity;
+
+            enemyData.hpBarFillImage.fillAmount = (float)enemyData.hp / enemyData.maxHP;
+            enemyData.enemyAnimator.SetBool(enemyData.hashIsDead, false);
         }
 
         private void Update()
