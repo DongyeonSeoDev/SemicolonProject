@@ -124,8 +124,11 @@ namespace Water
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                UIType type = activeUIList[activeUIList.Count - 1]._UItype;
-                if (type == UIType.DEATH || type == UIType.CLEAR) return;
+                if (activeUIList.Count > 0)
+                {
+                    UIType type = activeUIList[activeUIList.Count - 1]._UItype;
+                    if (type == UIType.DEATH || type == UIType.CLEAR) return;
+                }
 
                 if(activeUIList.Count>0)
                 {
