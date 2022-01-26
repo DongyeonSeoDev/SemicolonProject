@@ -138,23 +138,20 @@ namespace Enemy
 
     public partial class EnemyGetDamagedState : EnemyState // 공격을 받은 상태
     {
-        private EnemyCommand enemyGetDamaged;
+        private EnemyCommand enemyGetDamagedCommand;
 
         private float currentTime;
 
         public EnemyGetDamagedState(EnemyData enemyData) : base(eState.GETDAMAGED, enemyData)
         {
-            if (!enemyData.isHitAnimation)
+            if (enemyData.eEnemyController == EnemyController.AI)
             {
-                if (enemyData.eEnemyController == EnemyController.AI)
-                {
-                    enemyGetDamaged = new EnemyGetDamagedAIControllerCommand(enemyData);
-                }
-                else if (enemyData.eEnemyController == EnemyController.PLAYER)
-                {
-                    enemyGetDamaged = new EnemyGetDamagedPlayerControllerCommand();
-                }
-            } 
+                enemyGetDamagedCommand = new EnemyGetDamagedAIControllerCommand(enemyData);
+            }
+            else if (enemyData.eEnemyController == EnemyController.PLAYER)
+            {
+                enemyGetDamagedCommand = new EnemyGetDamagedPlayerControllerCommand();
+            }
         }
 
         protected override void Start()
@@ -164,14 +161,12 @@ namespace Enemy
 
             currentTime = 0f;
 
-            if (enemyGetDamaged != null)
-            {
-                enemyGetDamaged.Execute();
-            }
-            else
+            if (enemyData.isHitAnimation)
             {
                 enemyData.enemyAnimator.SetTrigger(enemyData.hashHit);
             }
+
+            enemyGetDamagedCommand.Execute();
 
             base.Start();
         }
@@ -182,11 +177,9 @@ namespace Enemy
 
             if (currentTime > enemyData.damageDelay)
             {
-                if (enemyGetDamaged != null)
-                {
-                    enemyGetDamaged.Execute();
-                }
-                else
+                enemyGetDamagedCommand.Execute();
+
+                if (enemyData.isHitAnimation)
                 {
                     enemyData.enemyAnimator.ResetTrigger(enemyData.hashHit);
                 }
