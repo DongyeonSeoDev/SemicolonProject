@@ -41,6 +41,7 @@ public class PlayerBodySlap : PlayerAction
     private void OnEnable()
     {
         SlimeEventManager.StartListening("BodyPointCrash", BodyPointCrash);
+        SlimeEventManager.StartListening("PlayerDead", StopBodySlap);
     }
     void Update()
     {
@@ -71,9 +72,11 @@ public class PlayerBodySlap : PlayerAction
     private void OnDisable()
     {
         SlimeEventManager.StopListening("BodyPointCrash", BodyPointCrash);
+        SlimeEventManager.StopListening("PlayerDead", StopBodySlap);
     }
     private void BodyPointCrash(GameObject targetObject) // BodyPoint가 특정 오브젝트와 충돌했을 때 호출
     {
+        Debug.Log(canCrashLayer.CompareGameObjectLayer(targetObject));
         if (canCrashLayer.CompareGameObjectLayer(targetObject) && playerStatus.BodySlapping)
         {
             Debug.Log(targetObject.name);

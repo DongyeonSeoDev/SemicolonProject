@@ -514,7 +514,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   canCrashLayer:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 192
   bodySlapMoveVec: {x: 0, y: 0}
   moveBackSpeed: 5
   bodySlapMovePower: 2
