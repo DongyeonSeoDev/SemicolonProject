@@ -40,8 +40,6 @@ namespace Enemy
                 {
                     collision.GetComponent<EnemyAttackTest>().EnemyAttack(attackDamage);
                 }
-
-                gameObject.SetActive(false);
             }
             else if (eEnemyController == EnemyController.PLAYER)
             {
@@ -50,9 +48,10 @@ namespace Enemy
                 if (enemy != null)
                 {
                     enemy.GetDamage(attackDamage);
-                    gameObject.SetActive(false);
                 }
             }
+
+            gameObject.SetActive(false);
         }
 
         public void Init(EnemyController controller, int damage, Vector3 direction)

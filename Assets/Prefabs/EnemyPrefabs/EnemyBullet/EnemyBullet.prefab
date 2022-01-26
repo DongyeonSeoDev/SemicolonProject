@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6204418954052947282}
   - component: {fileID: 4658511660814353669}
   - component: {fileID: 6204418954052947280}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: EnemyBullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,7 +71,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1646225281
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -115,5 +115,5 @@ MonoBehaviour:
   poolType: 3
   count: 10
   speed: 5
-  limitMaxPosition: {x: 50, y: 50}
-  limitMinPosition: {x: -50, y: -50}
+  limitMaxPosition: {x: 250, y: 40}
+  limitMinPosition: {x: -70, y: -30}

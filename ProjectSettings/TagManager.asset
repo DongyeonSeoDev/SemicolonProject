@@ -18,8 +18,8 @@ TagManager:
   - ENEMY
   - NPC
   - ITEM
-  - 
-  - 
+  - PLAYERPROJECTILE
+  - ENEMYPROJECTILE
   - 
   - 
   - 
