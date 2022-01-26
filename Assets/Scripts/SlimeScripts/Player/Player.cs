@@ -99,5 +99,7 @@ public class Player : MonoBehaviour
         currentHp = playerStat.Hp;
 
         Water.UIManager.Instance.UpdatePlayerHPUI();
+
+        SlimeEventManager.TriggerEvent("AfterPlayerRespawn");
     }
 }
