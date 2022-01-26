@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private Stat playerStat = new Stat();
+    private Stat originStat = new Stat();
     public Stat PlayerStat
     {
         get { return playerStat; }
@@ -22,15 +23,21 @@ public class Player : MonoBehaviour
     private void Awake() 
     {
         playerState = GetComponent<PlayerState>();
+
+        // originStat = PlayerStat;
     }
     private void Start()
     {
         SlimeEventManager.StartListening("PlayerDead", PlayerDead);
         SlimeEventManager.StartListening("PlayerSetActiveFalse", SetActiveFalse);
         SlimeEventManager.StartListening("GameClear", WhenGameClear);
+
     }
     private void OnEnable()
     {
+        // playerStat = originStat;
+        playerStat.additionalEternalStat = new EternalStat();
+
         playerState.IsDead = false;
         currentHp = playerStat.Hp;
 
