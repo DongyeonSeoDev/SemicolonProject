@@ -3,17 +3,14 @@ using UnityEngine;
 
 public class InventoryUI : Water.GameUI
 {
-    private RectMask2D rectMask;
+    [SerializeField] private RectMask2D rectMask;
 
     private bool onTransition = false, offTransition = false;
 
     public float speed = 13f;
     public float padding = 650;
 
-    private void Awake()
-    {
-        rectMask = GetComponent<RectMask2D>();
-    }
+    
 
     private void Update()
     {
