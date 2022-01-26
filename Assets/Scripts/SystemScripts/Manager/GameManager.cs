@@ -105,7 +105,7 @@ namespace Water
             PoolManager.CreatePool(itemPrefab, transform, 6, "Item");
             PoolManager.CreatePool(itemCloneEffectPrefab, transform, 6, "ItemFollowEffect");
 
-            SlimeEventManager.StartListening("PlayerDead", ResetDroppedItems);
+            SlimeEventManager.StartListening("PlayerRespawn", ResetDroppedItems);
         }
 
         #region Item
@@ -144,7 +144,7 @@ namespace Water
             }
         }
 
-        void ResetDroppedItems()
+        void ResetDroppedItems(Vector2 unusedValue)
         {
             for(int i=0; i<droppedItemList.Count; i++)
             {

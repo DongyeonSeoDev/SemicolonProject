@@ -112,7 +112,7 @@ namespace Water
             
         }
 
-        private void Respawn(Vector2 v) => OnUIInteract(UIType.DEATH, true);
+        private void Respawn(Vector2 unusedValue) => OnUIInteract(UIType.DEATH, true);
 
         private void Update()
         {
