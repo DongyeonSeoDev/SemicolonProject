@@ -2,10 +2,17 @@ using UnityEngine;
 
 public class StageCheck : MonoBehaviour
 {
+    private Collider2D col;
+
     public Door[] doors;
 
     public int enemyCount;
     public int stageNumber;
+
+    private void Awake()
+    {
+        col = GetComponent<Collider2D>();
+    }
 
     public void StageClear()
     {
@@ -31,6 +38,8 @@ public class StageCheck : MonoBehaviour
             {
                 Enemy.EnemyManager.Instance.enemyList[stageNumber][i].MoveEnemy();
             }
+
+            col.enabled = false;
         }
     }
 }

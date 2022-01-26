@@ -75,7 +75,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1646225281
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 4534810592809177352, guid: 5c320c3a5af356648a35ce50d8277e78, type: 3}
   m_Color: {r: 0.9811321, g: 0.9811321, b: 0.9811321, a: 1}
@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 3446856833198420042}
   - component: {fileID: 2501700400896425834}
   - component: {fileID: 1379758292269083093}
-  m_Layer: 7
+  m_Layer: 11
   m_Name: AttackCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}

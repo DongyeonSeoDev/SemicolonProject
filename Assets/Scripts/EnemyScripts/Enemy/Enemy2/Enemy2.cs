@@ -17,6 +17,8 @@ namespace Enemy
                 enemyAnimator = GetComponent<Animator>(),
                 enemySpriteRenderer = GetComponent<SpriteRenderer>(),
                 hpBarFillImage = hpBarFillImage,
+                damagedColor = new Color(1f, 180f / 255f, 180f / 255f),
+                normalColor = Color.white,
                 enemyId = "Rat_02",
                 isHitAnimation = true,
                 isAttackCommand = true,
