@@ -335,10 +335,10 @@ namespace Water
         {
             Stat stat = sgm.Player.PlayerStat;
 
-            statTexts[0].text = string.Concat(sgm.Player.CurrentHp, '/', stat.Hp);
+            statTexts[0].text = string.Concat(Mathf.Clamp(sgm.Player.CurrentHp,0,stat.Hp), '/', stat.Hp);
             statTexts[1].text = stat.Damage.ToString();
             statTexts[2].text = stat.Defense.ToString();
-            statTexts[3].text = Mathf.RoundToInt(stat.Speed).ToString();
+            statTexts[3].text = Mathf.RoundToInt(Mathf.Abs(stat.Speed)).ToString();
 
 
             //statText.text = $"HP\t\t{currentHP}/{stat.hp}\n\n공격력\t\t{stat.damage}\n\n방어력\t\t{stat.defense}\n\n이동속도\t\t{stat.speed}";
@@ -347,8 +347,10 @@ namespace Water
         public void UpdatePlayerHPUI()
         {
             Player p = sgm.Player;
-            playerHPInfo.first.DOFillAmount((float)p.CurrentHp / p.PlayerStat.Hp, 0.3f);
-            playerHPInfo.second.text = string.Concat(p.CurrentHp, '/', p.PlayerStat.Hp);
+            int hp = Mathf.Clamp(sgm.Player.CurrentHp, 0, p.PlayerStat.Hp);
+
+            playerHPInfo.first.DOFillAmount((float)hp / p.PlayerStat.Hp, 0.3f);
+            playerHPInfo.second.text = string.Concat(hp, '/', p.PlayerStat.Hp);
         }
         #endregion
     }
