@@ -12349,7 +12349,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 1200683676910581180}
         m_TargetAssemblyTypeName: Water.GameManager, Assembly-CSharp
         m_MethodName: RespawnPlayer
         m_Mode: 1
