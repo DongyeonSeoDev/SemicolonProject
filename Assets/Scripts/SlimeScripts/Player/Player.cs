@@ -28,10 +28,6 @@ public class Player : MonoBehaviour
     }
     private void Start()
     {
-        SlimeEventManager.StartListening("PlayerDead", PlayerDead);
-        SlimeEventManager.StartListening("PlayerSetActiveFalse", SetActiveFalse);
-        SlimeEventManager.StartListening("GameClear", WhenGameClear);
-
         playerStat.additionalEternalStat = new EternalStat();
 
         playerState.IsDead = false;
@@ -42,8 +38,12 @@ public class Player : MonoBehaviour
     }
     private void OnEnable()
     {
-        // playerStat = originStat;
+        SlimeEventManager.StartListening("PlayerDead", PlayerDead);
+        SlimeEventManager.StartListening("PlayerSetActiveFalse", SetActiveFalse);
+        SlimeEventManager.StartListening("GameClear", WhenGameClear);
 
+        // playerStat = originStat;
+        playerState.IsDead = false;
     }
     private void Update()
     {
