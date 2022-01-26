@@ -139,6 +139,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 0
   returnToOriginSpeed: 2
+  moveToMiddleSpeed: 4
+  moveToMiddleTime: 0.1
   isMiddlePoint: 0
 --- !u!114 &5248659302136541078
 MonoBehaviour:

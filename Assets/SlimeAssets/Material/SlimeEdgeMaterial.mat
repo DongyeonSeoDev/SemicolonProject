@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Underwater
+  m_Name: SlimeEdgeMaterial
   m_Shader: {fileID: -6465566751694194690, guid: c364b2f6d92c3d94fb154cb63a77dd9c, type: 3}
   m_ShaderKeywords: INTERSECTION_EFFECTS_ON REFRACTION_ON WATER_LIGHTING_ON WORLD_SPACE_UV_ON
   m_LightmapFlags: 4

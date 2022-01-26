@@ -59,5 +59,7 @@ public class PlayerShoot : MonoBehaviour
 
         temp.transform.position = shootPositions[playerState.LastPlayerMovingPoint].position;
         temp.GetComponent<PlayerProjectile>().OnSpawn(playerInput.MoveVector, projectileSpeed);
+
+        SlimeEventManager.TriggerEvent("PlayerShoot");
     }
 }
