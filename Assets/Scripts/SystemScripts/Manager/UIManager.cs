@@ -107,8 +107,10 @@ namespace Water
             });
 
             SlimeEventManager.StartListening("PlayerDead", () => OnUIInteract(UIType.DEATH, true));
-            SlimeEventManager.StartListening("PlayerRespawn", () => OnUIInteract(UIType.DEATH, true));
+            SlimeEventManager.StartListening("PlayerRespawn", Respawn);
         }
+
+        private void Respawn(Vector2 v) => OnUIInteract(UIType.DEATH, true);
 
         private void Update()
         {
