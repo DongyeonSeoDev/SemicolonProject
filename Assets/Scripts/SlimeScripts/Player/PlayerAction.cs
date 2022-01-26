@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class PlayerAction : MonoBehaviour
 {
-    protected PlayerState playerStatus = null;
+    protected PlayerState playerState = null;
     protected PlayerInput playerInput = null;
 
     protected Rigidbody2D rigid = null;
@@ -12,7 +12,7 @@ public abstract class PlayerAction : MonoBehaviour
 
     public virtual void Start()
     {
-        playerStatus = GetComponent<PlayerState>();
+        playerState = GetComponent<PlayerState>();
         playerInput = GetComponent<PlayerInput>();
 
         rigid = GetComponent<Rigidbody2D>();

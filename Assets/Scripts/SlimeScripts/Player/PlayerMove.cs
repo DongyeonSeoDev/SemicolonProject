@@ -19,7 +19,7 @@ public class PlayerMove : PlayerAction
 
     private void Move()
     {
-        if (!playerStatus.BodySlapping)
+        if (!playerState.BodySlapping)
         {
             Vector2 MoveVec = playerInput.MoveVector * (playerStat.Speed);
 
