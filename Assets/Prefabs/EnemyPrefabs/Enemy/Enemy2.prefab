@@ -251,7 +251,7 @@ MonoBehaviour:
   poolType: 1
   count: 6
   enemyMoveSO: {fileID: 11400000, guid: cd9686d184f14d546ab683e2357e52ad, type: 2}
-  enemyLootListSO: {fileID: 11400000, guid: f08037efe7334bc46a049b6a12fe431a, type: 2}
+  enemyLootListSO: {fileID: 11400000, guid: 6f20300129ecc324b91a107166c8746f, type: 2}
   hpBarFillImage: {fileID: 2029326397634872474}
 --- !u!1001 &688433718241700482
 PrefabInstance:
