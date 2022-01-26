@@ -41,7 +41,9 @@ public class CookingManager : MonoSingleton<CookingManager>
     public Text makeFoodCountText; //만드려는(선택한) 음식 개수 텍스트
     public TextMeshProUGUI foodNameText; //음식이름
 
-    public Button countPlusBtn, countMinusBtn; //음식 제작 개수 늘리기(줄이기) 버튼
+    public Button countPlusBtn, countMinusBtn, makeBtn; //음식 제작 개수 늘리기(줄이기) 버튼, 제작 버튼
+
+    public Color disableBtnColor, disableTextColor; //못 만드는 음식 버튼 색/텍스트 색
 
     #region 음식이나 재료 자세히 보기창
     public Image detailFoodImg;
@@ -82,6 +84,18 @@ public class CookingManager : MonoSingleton<CookingManager>
             SortMakeFoods();
             UIManager.Instance.OnUIInteract(UIType.PRODUCTION_PANEL);
         });
+        Global.AddAction(Global.JunkItem, x =>
+        {
+            if (UIManager.Instance.gameUIList[(int)UIType.CHEF_FOODS_PANEL].gameObject.activeSelf)
+            {
+                Util.DelayFunc(() =>
+                {
+                    MakeFoodInfoUIReset();
+                    CheckCannotMakeFoods();
+                    SortMakeFoods();
+                }, 0.5f, this);
+            }
+        });
     }
 
     public void ShowFoodList(Chef currentChef) //대화한 요리사가 만들 수 있는 음식 리스트 표시
@@ -98,9 +112,15 @@ public class CookingManager : MonoSingleton<CookingManager>
         SortMakeFoods();
     }
 
-    public void CheckCannotMakeFoods()  //재료 부족으로 못만드는 음식은 인터렉티브 false로
+    public void CheckCannotMakeFoods()  
     {
-        foodBtnList.FindAll(x=>x.gameObject.activeSelf).ForEach(x => x.button.interactable = x.CanMake());
+        //foodBtnList.FindAll(x=>x.gameObject.activeSelf).ForEach(x => x.button.interactable = x.CanMake());  //재료 부족으로 못만드는 음식은 인터렉티브 false로
+        foodBtnList.FindAll(x => x.gameObject.activeSelf).ForEach(x => 
+        {
+            bool canMake = x.CanMake();
+            x.button.image.color = canMake ? Color.white : disableBtnColor;
+            x.foodNameTmp.color = canMake ? Color.white : disableTextColor;
+        });
     }
 
     private void SortMakeFoods()
@@ -108,7 +128,7 @@ public class CookingManager : MonoSingleton<CookingManager>
         int index = 0;
         for(int i=0; i<foodBtnList.Count; i++)
         {
-            if(foodBtnList[i].gameObject.activeSelf && foodBtnList[i].button.interactable)
+            if(foodBtnList[i].gameObject.activeSelf && foodBtnList[i].IsEnoughLoot)
             {
                 foodBtnList[i].transform.SetSiblingIndex(index);
                 index++;
@@ -142,6 +162,9 @@ public class CookingManager : MonoSingleton<CookingManager>
         }
 
         CheckAmount();
+
+        makeBtn.interactable = selectedFoodBtn.IsEnoughLoot;
+        makeBtn.GetComponent<UIScale>().transitionEnable = selectedFoodBtn.IsEnoughLoot;
 
         if(first)
            UIManager.Instance.OnUIInteract(UIType.PRODUCTION_PANEL);
@@ -232,10 +255,10 @@ public class CookingManager : MonoSingleton<CookingManager>
         explanationTxt.text = data.explanation;
     }
 
-   /*private void Update()
+    private void Update()
     {
         Test(); //Test Code
-    }*/
+    }
 
     void Test()  //Test Code
     {

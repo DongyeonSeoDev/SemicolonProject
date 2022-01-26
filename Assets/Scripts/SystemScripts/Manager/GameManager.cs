@@ -157,7 +157,7 @@ namespace Water
 
         public void RespawnPlayer()
         {
-            SlimeEventManager.TriggerEvent("PlayerRespawn", new Vector2(0.3f, 4.55f));
+            SlimeEventManager.TriggerEvent("PlayerRespawn", new Vector2(0.3f, 4.55f)); //일단 임시로 일케함
         }
 
         public void QuitGame()

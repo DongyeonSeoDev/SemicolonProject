@@ -1285,6 +1285,9 @@ MonoBehaviour:
   foodNameText: {fileID: 1200683677617634187}
   countPlusBtn: {fileID: 1200683676514445850}
   countMinusBtn: {fileID: 1200683677288987931}
+  makeBtn: {fileID: 1200683677118279285}
+  disableBtnColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+  disableTextColor: {r: 0.45490196, g: 0.45490196, b: 0.45490196, a: 1}
   detailFoodImg: {fileID: 1200683676148992044}
   detailNameTxt: {fileID: 1200683676776841539}
   explanationTxt: {fileID: 1200683677530013259}

@@ -82,6 +82,7 @@ namespace Water
         public const string MakeFood = "MakeFood"; //음식을 만들었을 때의 이벤트 키
         public const string TryAcquisitionItem = "TryAcquisitionItem"; //아이템 획득 시도 시 이벤트 키
         public const string AcquisitionItem = "AcquisitionItem"; //아이템 획득 시 이벤트 키
+        public const string JunkItem = "JunkItem"; //아이템 버릴 때 이벤트 키
 
         private static Dictionary<string, ActionGroup> stringToActionDict = new Dictionary<string, ActionGroup>();
 

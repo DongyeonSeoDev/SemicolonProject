@@ -24,9 +24,14 @@ public class IngredientImage : MonoBehaviour
     {
         ingredientInfo = ingr;
         image.sprite = ingr.ingredient.GetSprite();
-        cntText.text = string.Concat(GameManager.Instance.GetItemCount(ingr.ingredient.id),"/",ingr.needCount);
-        //nameText.text = ingr.ingredient.itemName;
 
+        int count = GameManager.Instance.GetItemCount(ingr.ingredient.id);
+        if (count >= ingr.needCount)
+            cntText.text = string.Concat(count, "/", ingr.needCount);
+        else
+            cntText.text = string.Concat("<color=red>", count, "</color>/", ingr.needCount);
+
+        //nameText.text = ingr.ingredient.itemName;
         if(!nifc) nifc = GetComponent<NameInfoFollowingCursor>();
         nifc.data = ingr.ingredient;
     }
