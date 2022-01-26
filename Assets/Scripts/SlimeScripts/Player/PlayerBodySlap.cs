@@ -76,10 +76,8 @@ public class PlayerBodySlap : PlayerAction
     }
     private void BodyPointCrash(GameObject targetObject) // BodyPoint가 특정 오브젝트와 충돌했을 때 호출
     {
-        Debug.Log(canCrashLayer.CompareGameObjectLayer(targetObject));
         if (canCrashLayer.CompareGameObjectLayer(targetObject) && playerStatus.BodySlapping)
         {
-            Debug.Log(targetObject.name);
             Enemy.Enemy enemy = targetObject.GetComponent<Enemy.Enemy>();
 
             if (enemy != null)
