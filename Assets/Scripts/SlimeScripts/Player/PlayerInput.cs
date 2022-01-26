@@ -48,6 +48,8 @@ public class PlayerInput : MonoBehaviour
     private void Start()
     {
         playerState = GetComponent<PlayerState>();
+
+        lastMoveVector = Vector2.left;
     }
 
     void Update()
