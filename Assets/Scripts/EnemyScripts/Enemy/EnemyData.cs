@@ -60,6 +60,7 @@ namespace Enemy
         public bool isEndAttackAnimation = false;
         public bool isAttackCommand = false;
         public bool isLongDistanceAttack = false;
+        public bool isEnemyMove = false;
 
         public int attackDamage = 10;
         public int damagedValue;
