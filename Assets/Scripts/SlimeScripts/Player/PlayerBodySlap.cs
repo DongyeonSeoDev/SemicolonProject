@@ -106,7 +106,7 @@ public class PlayerBodySlap : PlayerAction
 
             if (bodySlapTimer <= 0f)
             {
-                stopBodySlapTimer = 0f;
+                stopBodySlapTimer = stopBodySlapTime;
                 bodyStopBodySlapTimerStart = false;
             }
         }
