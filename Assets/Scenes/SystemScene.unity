@@ -2204,7 +2204,7 @@ MonoBehaviour:
   ingredientImgPrefab: {fileID: 1337827161481287395, guid: 3834c3dc18f89364281dd248b8ae58bc, type: 3}
   foodBtnParent: {fileID: 1681923751}
   ingredientImgParent: {fileID: 2131279207}
-  itemPrefab: {fileID: 7625063677144536448, guid: 107f39f0dc10f3448b385f13094c50a5, type: 3}
+  itemPrefab: {fileID: 4326160251562388895, guid: 107f39f0dc10f3448b385f13094c50a5, type: 3}
 --- !u!1 &297649833
 GameObject:
   m_ObjectHideFlags: 0

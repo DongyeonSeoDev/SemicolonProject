@@ -9,21 +9,24 @@ public class Item : MonoBehaviour
     protected int droppedCount = 1;
     public int DroppedCnt { get { return droppedCount; } }
 
+
     protected int rotateDir;
     protected float rotateSpeed;
     protected bool isDropping = false;
+    protected Vector2 spawnPos;
 
+
+    [SerializeField] protected Transform itemSprTrm;
     protected SpriteRenderer spriteRenderer;
     protected Rigidbody2D rigid;
     protected Animator anim;
-
-    protected Vector2 spawnPos;
+    
 
     protected virtual void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
+        spriteRenderer = itemSprTrm.GetComponent<SpriteRenderer>();
+        anim = itemSprTrm.GetComponent<Animator>();
         rigid = GetComponent<Rigidbody2D>();
-        anim = GetComponent<Animator>();
     }
 
     public virtual void SetData(int id, Vector3 enemyPos, int droppedCount = 1)
@@ -33,7 +36,7 @@ public class Item : MonoBehaviour
         this.droppedCount = droppedCount;
 
         transform.position = enemyPos;
-        transform.rotation = Quaternion.identity;
+        itemSprTrm.rotation = Quaternion.identity;
         spawnPos = transform.position;
 
         rigid.gravityScale = 1;
@@ -48,7 +51,7 @@ public class Item : MonoBehaviour
     {
         if(isDropping)
         {
-            transform.Rotate(Global.Z90 * rotateDir * rotateSpeed * Time.deltaTime);
+            itemSprTrm.Rotate(Global.Z90 * rotateDir * rotateSpeed * Time.deltaTime);
             if(transform.position.y <= spawnPos.y)
             {
                 rigid.gravityScale = 0;
