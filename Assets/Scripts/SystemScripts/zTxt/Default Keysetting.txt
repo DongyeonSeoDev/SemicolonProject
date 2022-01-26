@@ -1,0 +1,3 @@
+I: Inventory
+T: Stat
+ESC: back, quit panel
