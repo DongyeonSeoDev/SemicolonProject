@@ -19,6 +19,11 @@ public class StageCheck : MonoBehaviour
         SlimeEventManager.StartListening("PlayerDead", () =>
         {
             col.enabled = true;
+
+            for (int i = 0; i < doors.Length; i++)
+            {
+                doors[i].Open();
+            }
         });
     }
 
