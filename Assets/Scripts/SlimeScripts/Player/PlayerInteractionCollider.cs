@@ -22,8 +22,8 @@ public class PlayerInteractionCollider : MonoBehaviour
             if (target != null)
             {
                 playerInteraction.NearNPCList.Add(target);
-                Debug.Log("aaa");
-                SlimeEventManager.TriggerEvent("NearByNPC", target.gameObject); // NPC가 상호작용 범위 안에 들어갔을 때
+ 
+                target.SetUI(true); // NPC가 상호작용 범위 안에 들어갔을 때
             }
         }
     }
@@ -36,8 +36,8 @@ public class PlayerInteractionCollider : MonoBehaviour
             if (target != null)
             {
                 playerInteraction.NearNPCList.Remove(target);
-                Debug.Log("bbb");
-                SlimeEventManager.TriggerEvent("NotNearByNPC", target.gameObject); // NPC가 상호작용 범위에서 벗어났을 때
+
+                target.SetUI(false); // NPC가 상호작용 범위에서 벗어났을 때
             }
         }
     }

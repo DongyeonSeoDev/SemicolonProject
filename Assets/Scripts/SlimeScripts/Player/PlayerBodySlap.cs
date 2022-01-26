@@ -75,6 +75,7 @@ public class PlayerBodySlap : PlayerAction
     {
         if (canCrashLayer.CompareGameObjectLayer(targetObject) && playerStatus.BodySlapping)
         {
+            Debug.Log(targetObject.name);
             Enemy.Enemy enemy = targetObject.GetComponent<Enemy.Enemy>();
 
             if (enemy != null)
