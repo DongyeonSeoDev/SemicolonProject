@@ -6,7 +6,7 @@ namespace Enemy
     {
         private EnemyCommand enemyAttackCommand;
 
-        protected override void Awake()
+        protected override void OnEnable()
         {
             enemyData = new EnemyData()
             {
@@ -32,7 +32,7 @@ namespace Enemy
 
             enemyAttackCommand = new EnemyAttackCommand(enemyData.enemyObject.transform, enemyData.PlayerObject.transform, enemyData.eEnemyController, enemyData.attackDamage);
 
-            base.Awake();
+            base.OnEnable();
         }
 
         public void EnemyAttack()

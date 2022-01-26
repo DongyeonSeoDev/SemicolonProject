@@ -14,6 +14,14 @@ public class StageCheck : MonoBehaviour
         col = GetComponent<Collider2D>();
     }
 
+    private void Start()
+    {
+        SlimeEventManager.StartListening("PlayerDead", () =>
+        {
+            col.enabled = true;
+        });
+    }
+
     public void StageClear()
     {
         if (stageNumber == 2)

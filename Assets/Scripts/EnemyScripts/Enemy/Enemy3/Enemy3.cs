@@ -7,7 +7,7 @@ namespace Enemy
         private EnemyCommand enemyAttackCommand;
         private Rigidbody2D rb2d;
 
-        protected override void Awake()
+        protected override void OnEnable()
         {
             enemyData = new EnemyData()
             {
@@ -37,7 +37,7 @@ namespace Enemy
 
             enemyAttackCommand = new EnemyRushAttackCommand(rb2d, transform, enemyData.PlayerObject.transform, enemyData.rushForce);
 
-            base.Awake();
+            base.OnEnable();
         }
 
         public void InitData(out EnemyController controller, out int damage)

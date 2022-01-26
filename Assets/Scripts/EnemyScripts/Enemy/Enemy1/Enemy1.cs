@@ -4,7 +4,7 @@ namespace Enemy
 {
     public class Enemy1 : Enemy // 첫번째 적
     {
-        protected override void Awake()
+        protected override void OnEnable()
         {
             enemyData = new EnemyData()
             {
@@ -21,7 +21,7 @@ namespace Enemy
                 enemyId = "Slime_01"
             };
 
-            base.Awake();
+            base.OnEnable();
         }
 
         public void InitData(out EnemyController controller, out int damage)

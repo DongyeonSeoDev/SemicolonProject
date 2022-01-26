@@ -4,7 +4,6 @@ using UnityEngine;
 
 namespace Enemy
 {
-
     public class EnemyManager : MonoBehaviour
     {
         private static EnemyManager instance;
@@ -38,6 +37,22 @@ namespace Enemy
             }
 
             instance = this;
+        }
+
+        public void PlayerDeadEvent()
+        {
+            for (int i = 0; i < enemyList.Count; i++)
+            {
+                for (int j = 0; j < enemyList[i].Count; j++)
+                {
+                    if (enemyList[i][j].gameObject.activeSelf)
+                    {
+                        enemyList[i][j].gameObject.SetActive(false);
+                    }
+                }
+            }
+
+            enemyList.Clear();
         }
 
         public void EnemyDestroy()
