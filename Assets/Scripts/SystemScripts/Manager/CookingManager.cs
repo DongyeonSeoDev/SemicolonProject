@@ -69,6 +69,7 @@ public class CookingManager : MonoSingleton<CookingManager>
 
         countPlusBtn.onClick.AddListener(() => ChangeMakeFoodCount(true));
         countMinusBtn.onClick.AddListener(() => ChangeMakeFoodCount(false));
+
         Global.AddMonoAction(Global.TalkWithChef, x => ((NPC)x).Interaction());
         Global.AddAction(Global.MakeFood, item =>
         {
@@ -231,10 +232,10 @@ public class CookingManager : MonoSingleton<CookingManager>
         explanationTxt.text = data.explanation;
     }
 
-    private void Update()
+   /*private void Update()
     {
         Test(); //Test Code
-    }
+    }*/
 
     void Test()  //Test Code
     {

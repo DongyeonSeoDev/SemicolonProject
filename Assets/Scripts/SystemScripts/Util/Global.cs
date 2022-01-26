@@ -15,6 +15,7 @@ namespace Water
         public static Vector3 onePointThree = new Vector3(1.3f, 1.3f, 1.3f);
         public static Vector3 onePointSix = new Vector3(1.6f, 1.6f, 1.6f);
         public static Vector3 zeroPointSeven = new Vector3(0.7f, 0.7f, 0.7f);
+        public static Vector3 Z90 = new Vector3(0, 0, 90);
 
         private static Color itemSlotOutlineColor;
         public static Color ItemSlotOutlineColor

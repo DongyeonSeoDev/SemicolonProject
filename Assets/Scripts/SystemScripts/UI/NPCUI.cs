@@ -12,6 +12,6 @@ public class NPCUI : MonoBehaviour
     {
         this.npc = npc;
         nameText.text = npc.NPCName;
-        transform.position = Util.WorldToScreenPoint(npc.transform.position + Vector3.up);
+        transform.position = Util.WorldToScreenPoint(npc.transform.position + npc.uiOffset);
     }
 }

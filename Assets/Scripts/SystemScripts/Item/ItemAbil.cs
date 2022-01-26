@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class ItemAbil
@@ -16,7 +14,7 @@ public class JellyBomb : ItemAbil
 {
     public override void Use()
     {
-        //공+3
+        SlimePlayer.PlayerStat.additionalEternalStat.damage += 3;
     }
 }
 
@@ -24,7 +22,7 @@ public class LizardGrilledwholemeat : ItemAbil
 {
     public override void Use()
     {
-        //체 +10
+        SlimePlayer.PlayerStat.additionalEternalStat.hp += 10;
     }
 }
 
@@ -32,7 +30,7 @@ public class MouseTailJelly : ItemAbil
 {
     public override void Use()
     {
-       //체 +5
+        SlimePlayer.PlayerStat.additionalEternalStat.hp += 5;
     }
 }
 
@@ -40,6 +38,6 @@ public class SlimeJelly : ItemAbil
 {
     public override void Use()
     {
-        //공 +1
+        SlimePlayer.PlayerStat.additionalEternalStat.damage += 1;
     }
 }

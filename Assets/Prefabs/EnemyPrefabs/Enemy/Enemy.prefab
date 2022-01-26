@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1178821989
 Transform:
   m_ObjectHideFlags: 0
@@ -67,7 +67,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.09393144, y: 1.0467339}
+  m_Offset: {x: 0, y: 0.25373393}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -78,7 +78,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 3.2931523, y: 1.2103672}
+  m_Size: {x: 5, y: 4.4925323}
   m_EdgeRadius: 0
 --- !u!114 &1178821992
 MonoBehaviour:
@@ -170,7 +170,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: -3615960448972296495, guid: 407549c50f6a9884caf01e20bde4d767, type: 3}
   m_Color: {r: 1, g: 0, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 6, y: 7}
@@ -208,7 +208,7 @@ BoxCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.0005393028, y: 0.248981}
@@ -237,7 +237,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolType: 0
-  count: 1
+  count: 4
   enemyMoveSO: {fileID: 11400000, guid: 74bb51f6bbe87ab4d8856950e44f45a9, type: 2}
   enemyLootListSO: {fileID: 11400000, guid: f08037efe7334bc46a049b6a12fe431a, type: 2}
   hpBarFillImage: {fileID: 3039235269625805731}

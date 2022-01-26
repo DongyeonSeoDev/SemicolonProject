@@ -59,7 +59,7 @@ public class Inventory : MonoSingleton<Inventory>
             if (itemSlots[i].itemInfo != null && itemSlots[i].itemInfo.id == id) return itemSlots[i];
         }
 
-        Debug.Log($"인벤토리에서 id가 {id}인 아이템을 찾지 못함.");
+        //Debug.Log($"인벤토리에서 id가 {id}인 아이템을 찾지 못함.");
         return null;
     }
 
@@ -71,7 +71,7 @@ public class Inventory : MonoSingleton<Inventory>
                 return itemSlots[i];
         }
 
-        Debug.Log($"인벤토리에서 id가 {id}이면서 더 집어넣을 수 있는 칸을 찾지 못함.");
+        //Debug.Log($"인벤토리에서 id가 {id}이면서 더 집어넣을 수 있는 칸을 찾지 못함.");
         return null;
     }
 
@@ -82,7 +82,7 @@ public class Inventory : MonoSingleton<Inventory>
             if (itemSlots[i].itemInfo == null)
                 return itemSlots[i];
         }
-        Debug.Log("빈 슬롯을 못찾음");
+        //Debug.Log("빈 슬롯을 못찾음");
         return null;
     }
 

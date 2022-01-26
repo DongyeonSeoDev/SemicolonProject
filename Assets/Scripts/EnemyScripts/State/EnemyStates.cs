@@ -2,6 +2,11 @@ using UnityEngine;
 
 namespace Enemy
 {
+    public partial class EnemyIdleState : EnemyState
+    {
+        public EnemyIdleState(EnemyData enemyData) : base(eState.IDLE, enemyData) { }
+    }
+
     public partial class EnemyMoveState : EnemyState // 움직임 상태
     {
         private EnemyCommand enemyMoveCommand;

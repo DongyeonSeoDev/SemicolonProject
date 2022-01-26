@@ -1,0 +1,56 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace Enemy
+{
+
+    public class EnemyManager : MonoBehaviour
+    {
+        private static EnemyManager instance;
+        public static EnemyManager Instance
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    Debug.Log("EnemyManager의 instance가 null입니다.");
+
+                    return null;
+                }
+
+                return instance;
+            }
+        }
+
+        public StageCheck stageCheck;
+        public int enemyCount;
+
+        public List<List<Enemy>> enemyList = new List<List<Enemy>>();
+
+        private void Awake()
+        {
+            if (instance != null)
+            {
+                Debug.Log("EnemyManager의 instance가 중복입니다.");
+
+                Destroy(gameObject);
+            }
+
+            instance = this;
+        }
+
+        public void EnemyDestroy()
+        {
+            enemyCount--;
+
+            if (enemyCount == 0)
+            {
+                if (stageCheck != null)
+                {
+                    stageCheck.StageClear();
+                }
+            }
+        }
+    }
+}

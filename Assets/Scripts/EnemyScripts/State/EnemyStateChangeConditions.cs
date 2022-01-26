@@ -2,19 +2,26 @@ using UnityEngine;
 
 namespace Enemy
 {
+    public partial class EnemyIdleState : EnemyState
+    {
+        protected override void StateChangeCondition()
+        {
+            if (enemyData.eEnemyController == EnemyController.PLAYER)
+            {
+                ChangeState(new EnemyMoveState(enemyData));
+            }
+            else if (enemyData.isEnemyMove)
+            {
+                ChangeState(new EnemyChaseState(enemyData));
+            }
+        }
+    }
+
     public partial class EnemyMoveState : EnemyState // 움직임 상태
     {
         protected override void StateChangeCondition()
         {
-            if (AnyStateChangeState()) { }
-            else if (enemyData.eEnemyController == EnemyController.AI && enemyData.IsSeePlayer())
-            {
-                ChangeState(new EnemyChaseState(enemyData));
-            }
-            else if (enemyData.eEnemyController == EnemyController.AI && enemyData.IsAttackPlayer())
-            {
-                ChangeState(new EnemyAttackState(enemyData));
-            }
+            AnyStateChangeState();
         }
     }
 
@@ -23,10 +30,6 @@ namespace Enemy
         protected override void StateChangeCondition()
         {
             if (AnyStateChangeState()) { }
-            else if (!enemyData.IsSeePlayer())
-            {
-                ChangeState(new EnemyMoveState(enemyData));
-            }
             else if (enemyData.IsAttackPlayer())
             {
                 ChangeState(new EnemyAttackState(enemyData));
@@ -43,16 +46,9 @@ namespace Enemy
             {
                 ChangeState(new EnemyMoveState(enemyData));
             }
-            else if (enemyData.eEnemyController == EnemyController.AI)
+            else if (enemyData.eEnemyController == EnemyController.AI && !enemyData.IsAttackPlayer())
             {
-                if (!enemyData.IsSeePlayer())
-                {
-                    ChangeState(new EnemyMoveState(enemyData));
-                }
-                else if (!enemyData.IsAttackPlayer())
-                {
-                    ChangeState(new EnemyChaseState(enemyData));
-                }  
+                ChangeState(new EnemyChaseState(enemyData));
             }
         }
     }
@@ -72,13 +68,9 @@ namespace Enemy
                 {
                     ChangeState(new EnemyAttackState(enemyData));
                 }
-                else if(enemyData.IsSeePlayer())
-                {
-                    ChangeState(new EnemyChaseState(enemyData));
-                }
                 else
                 {
-                    ChangeState(new EnemyMoveState(enemyData));
+                    ChangeState(new EnemyChaseState(enemyData));
                 }
             }
         }

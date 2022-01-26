@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Wall
   - NPC
+  - Item
   layers:
   - Default
   - TransparentFX
@@ -16,7 +17,7 @@ TagManager:
   - WALL
   - ENEMY
   - NPC
-  - 
+  - ITEM
   - 
   - 
   - 
@@ -42,6 +43,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Item
+    uniqueID: 2876059691
     locked: 0
   - name: Player
     uniqueID: 2648742015

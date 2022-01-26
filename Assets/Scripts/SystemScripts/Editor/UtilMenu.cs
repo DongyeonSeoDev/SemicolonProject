@@ -52,5 +52,17 @@ namespace Water
                 }
             });
         }
+
+       /* [MenuItem("Hierarchy Manage/UI/ActiveUIMoveObj")]
+        static void ActiveUIMoveObj()
+        {
+            foreach (UIMove um in GameObject.FindObjectsOfType<UIMove>()) um.gameObject.SetActive(true);
+        }
+
+        [MenuItem("Hierarchy Manage/UI/InActiveUIMoveObj")]
+        static void InActiveUIMoveObj()
+        {
+            foreach (UIMove um in GameObject.FindObjectsOfType<UIMove>()) um.gameObject.SetActive(false);
+        }*/
     }
 }

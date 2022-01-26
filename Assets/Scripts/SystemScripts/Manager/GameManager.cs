@@ -99,7 +99,7 @@ namespace Water
 
             KeySetting.SetDefaultKeySetting();
 
-            PoolManager.CreatePool(itemPrefab, null, 6, "Item");
+            PoolManager.CreatePool(itemPrefab, transform, 6, "Item");
         }
 
         #region Item
@@ -139,6 +139,11 @@ namespace Water
         }
 
         #endregion
+
+        public void QuitGame()
+        {
+            Application.Quit();
+        }
 
         #region OnApplication
         private void OnApplicationQuit()

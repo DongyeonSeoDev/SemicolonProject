@@ -6,5 +6,6 @@ namespace Enemy
     {
         public Vector3 spawnPosition;
         public Type enemyType;
+        public int stageNumber;
     }
 }

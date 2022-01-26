@@ -122,6 +122,10 @@ namespace Water
                 {
                     OnUIInteract(activeUIList[activeUIList.Count - 1]._UItype);
                 }
+                else
+                {
+                    OnUIInteract(UIType.QUIT);
+                }
             }
             else if(Input.GetKeyDown(KeySetting.keyDict[KeyAction.INVENTORY]))
             {
@@ -343,7 +347,7 @@ namespace Water
         public void UpdatePlayerHPUI()
         {
             Player p = sgm.Player;
-            playerHPInfo.first.fillAmount = (float)p.CurrentHp / p.PlayerStat.Hp;
+            playerHPInfo.first.DOFillAmount((float)p.CurrentHp / p.PlayerStat.Hp, 0.3f);
             playerHPInfo.second.text = string.Concat(p.CurrentHp, '/', p.PlayerStat.Hp);
         }
         #endregion

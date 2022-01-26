@@ -19,7 +19,7 @@ namespace Enemy
         protected virtual void Awake()
         {
             sr = enemyData.enemySpriteRenderer;
-            currentState = new EnemyMoveState(enemyData);
+            currentState = new EnemyIdleState(enemyData);
             lastPositionX = transform.position.x;
         }
 
@@ -54,11 +54,18 @@ namespace Enemy
         public void EnemyDestroy()
         {
             gameObject.SetActive(false);
+
+            EnemyManager.Instance.EnemyDestroy();
         }
 
         public string GetEnemyId()
         {
             return enemyData.enemyId;
+        }
+
+        public void MoveEnemy()
+        {
+            enemyData.isEnemyMove = true;
         }
     }
 }

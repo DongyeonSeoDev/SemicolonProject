@@ -140,9 +140,7 @@ namespace Enemy
             {
                 for (int j = 0; j < enemyLootListSO.enemyLootList[i].lootCount; j++)
                 {
-                    PoolManager loot = EnemyPoolManager.Instance.GetPoolObject(Type.EnemyLoot, enemyObject.transform.position);
-
-                    loot.GetComponent<EnemyLoot>().Init(enemyLootListSO.enemyLootList[i].enemyLoot.GetSprite());
+                    Water.PoolManager.GetItem("Item").GetComponent<Item>().SetData(enemyLootListSO.enemyLootList[i].enemyLoot.id);
                 }
             }
 
