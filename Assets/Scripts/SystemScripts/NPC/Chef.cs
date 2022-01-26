@@ -16,4 +16,6 @@ public class Chef : NPC    //요리사 스크립트          //쥐 - OpenGameArt_AntumDe
     {
         SetUI(true);
     }*/
+
+    
 }

@@ -32,4 +32,14 @@ public abstract class NPC : MonoBehaviour
                npcUI.gameObject.SetActive(false);
         }
     }
+
+   /* protected virtual void OnBecameInvisible()
+    {
+        SetUI(false);
+    }
+
+    protected virtual void OnBecameVisible()
+    {
+        SetUI(true);
+    }*/
 }

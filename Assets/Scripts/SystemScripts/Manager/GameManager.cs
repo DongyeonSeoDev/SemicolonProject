@@ -20,7 +20,8 @@ namespace Water
         public GameObject foodBtnPrefab, ingredientImgPrefab;
         public Transform foodBtnParent, ingredientImgParent;
 
-        public GameObject itemPrefab;
+        public GameObject itemPrefab, itemCloneEffectPrefab;
+
         
         public int InventoryItemCount 
         { get { return savedData.userInfo.userItems.keyValueDic.Keys.Count; } }
@@ -100,6 +101,7 @@ namespace Water
             KeySetting.SetDefaultKeySetting();
 
             PoolManager.CreatePool(itemPrefab, transform, 6, "Item");
+            PoolManager.CreatePool(itemCloneEffectPrefab, transform, 6, "ItemFollowEffect");
         }
 
         #region Item

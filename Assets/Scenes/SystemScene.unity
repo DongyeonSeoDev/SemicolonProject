@@ -2205,6 +2205,7 @@ MonoBehaviour:
   foodBtnParent: {fileID: 1681923751}
   ingredientImgParent: {fileID: 2131279207}
   itemPrefab: {fileID: 4326160251562388895, guid: 107f39f0dc10f3448b385f13094c50a5, type: 3}
+  itemCloneEffectPrefab: {fileID: 4326160251562388895, guid: 3659a623beedfcd45814fe35ac5ebd52, type: 3}
 --- !u!1 &297649833
 GameObject:
   m_ObjectHideFlags: 0
@@ -8716,6 +8717,49 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!1 &1452959952
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1452959953}
+  - component: {fileID: 1452959954}
+  m_Layer: 0
+  m_Name: EffectManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1452959953
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1452959952}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1484742895}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1452959954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1452959952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b04667948d843ca4a998acaa19d1a748, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1472352195
 GameObject:
   m_ObjectHideFlags: 0
@@ -8826,6 +8870,7 @@ Transform:
   - {fileID: 1705502156}
   - {fileID: 1348604912}
   - {fileID: 2106826205}
+  - {fileID: 1452959953}
   m_Father: {fileID: 260265174}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
