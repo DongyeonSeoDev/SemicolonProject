@@ -16,9 +16,16 @@ public class StageCheck : MonoBehaviour
 
     public void StageClear()
     {
-        for (int i = 0; i < doors.Length; i++)
+        if (stageNumber == 2)
         {
-            doors[i].Open();
+            SlimeEventManager.TriggerEvent("GameClear");
+        }
+        else
+        {
+            for (int i = 0; i < doors.Length; i++)
+            {
+                doors[i].Open();
+            }
         }
     }
 
