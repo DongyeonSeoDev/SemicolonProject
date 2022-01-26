@@ -105,14 +105,14 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
     private void Start()
     {
-        SlimeEventManager.StartListening("PlayerRespawn", PlayerResapwn);
+        SlimeEventManager.StartListening("PlayerRespawn", PlayerRespawn);
     }
     private void OnDisable()
     {
-        SlimeEventManager.StopListening("PlayerRespawn", PlayerResapwn);
+        SlimeEventManager.StopListening("PlayerRespawn", PlayerRespawn);
     }
 
-    private void PlayerResapwn(Vector2 respawnPosition)
+    private void PlayerRespawn(Vector2 respawnPosition)
     {
         player.transform.position = respawnPosition;
 

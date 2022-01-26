@@ -29,7 +29,10 @@ public class Player : MonoBehaviour
     }
     private void OnEnable()
     {
+        playerState.IsDead = false;
         currentHp = playerStat.Hp;
+
+        Water.UIManager.Instance.UpdatePlayerHPUI(); 
     }
     private void Update()
     {
@@ -71,8 +74,6 @@ public class Player : MonoBehaviour
     }
     private void SetActiveFalse()
     {
-        playerState.IsDead = false;
-
         gameObject.SetActive(false);
     }
 }
