@@ -1,4 +1,5 @@
 using UnityEngine;
+using Water;
 
 public abstract class ItemAbil
 {
@@ -23,6 +24,7 @@ public class LizardGrilledwholemeat : ItemAbil
     public override void Use()
     {
         SlimePlayer.PlayerStat.additionalEternalStat.hp += 10;
+        UIManager.Instance.UpdatePlayerHPUI();
     }
 }
 
@@ -31,6 +33,7 @@ public class MouseTailJelly : ItemAbil
     public override void Use()
     {
         SlimePlayer.PlayerStat.additionalEternalStat.hp += 5;
+        UIManager.Instance.UpdatePlayerHPUI();
     }
 }
 
