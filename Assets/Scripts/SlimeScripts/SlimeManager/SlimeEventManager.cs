@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Water;
 
-public class SlimeEventManager : MonoSingleton<SlimeEventManager>
+public class SlimeEventManager
 {
     private static Dictionary<string, Action> eventDictionary = new Dictionary<string, Action>();
     private static Dictionary<string, Action<string, int>> str_int_eventDictionary = new Dictionary<string, Action<string, int>>();

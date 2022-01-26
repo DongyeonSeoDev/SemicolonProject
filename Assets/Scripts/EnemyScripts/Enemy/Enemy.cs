@@ -20,7 +20,7 @@ namespace Enemy
         {
             sr = enemyData.enemySpriteRenderer;
             currentState = new EnemyIdleState(enemyData);
-            lastPositionX = transform.position.x;
+            lastPositionX = transform.position.x + 10f;
         }
 
         private void Update()
@@ -30,13 +30,27 @@ namespace Enemy
                 currentState = currentState.Process();
             }
 
-            if (lastPositionX > transform.position.x)
+            if (enemyData.isRotate)
             {
-                sr.flipX = true;
+                if (lastPositionX > transform.position.x)
+                {
+                    transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                }
+                else if (lastPositionX < transform.position.x)
+                {
+                    transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                }
             }
-            else if (lastPositionX < transform.position.x)
+            else
             {
-                sr.flipX = false;
+                if (lastPositionX > transform.position.x)
+                {
+                    sr.flipX = true;
+                }
+                else if (lastPositionX < transform.position.x)
+                {
+                    sr.flipX = false;
+                }
             }
 
             lastPositionX = transform.position.x;

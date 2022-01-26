@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Enemy
@@ -8,16 +6,34 @@ namespace Enemy
     {
         private EnemyController eEnemyController = EnemyController.AI;
 
+        private bool isAttackInit = false;
         private int attackDamage = 0;
 
-        public void Init(EnemyController controller, int damage)
+        public void Init()
         {
-            eEnemyController = controller;
-            attackDamage = damage;
+            Enemy1 enemy1 = GetComponentInParent<Enemy1>();
+
+            if (enemy1 != null)
+            {
+                enemy1.InitData(out eEnemyController, out attackDamage);
+            }
+            else
+            {
+                Enemy3 enemy3 = GetComponentInParent<Enemy3>();
+
+                enemy3.InitData(out eEnemyController, out attackDamage);
+            }
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            if (!isAttackInit)
+            {
+                isAttackInit = true;
+
+                Init();
+            }
+
             if (eEnemyController == EnemyController.AI && collision.CompareTag("Player"))
             {
                 Player player = collision.GetComponent<Player>();

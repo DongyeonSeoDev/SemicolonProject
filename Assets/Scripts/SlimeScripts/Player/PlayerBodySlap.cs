@@ -30,6 +30,7 @@ public class PlayerBodySlap : PlayerAction
     private float stopBodySlapOffset = 3f;
 
     private bool bodySlapStart = false;
+    private bool bodyStopBodySlapTimerStart = false;
 
     public override void Start()
     {
@@ -47,7 +48,7 @@ public class PlayerBodySlap : PlayerAction
         {
             bodySlapStart = true;
 
-            bodySlapMoveVec = playerInput.MoveVector;
+            bodySlapMoveVec = playerInput.LastMoveVector;
 
             rigid.velocity = -bodySlapMoveVec * moveBackSpeed;
             childRigids.ForEach(x => x.velocity = -bodySlapMoveVec * moveBackSpeed);
@@ -75,6 +76,7 @@ public class PlayerBodySlap : PlayerAction
     {
         if (canCrashLayer.CompareGameObjectLayer(targetObject) && playerStatus.BodySlapping)
         {
+            Debug.Log(targetObject.name);
             Enemy.Enemy enemy = targetObject.GetComponent<Enemy.Enemy>();
 
             if (enemy != null)
@@ -82,7 +84,11 @@ public class PlayerBodySlap : PlayerAction
                 enemy.GetDamage(playerStat.Damage);
             }
 
-            stopBodySlapTimer = stopBodySlapTime;
+            if (!bodyStopBodySlapTimerStart)
+            {
+                bodyStopBodySlapTimerStart = true;
+                stopBodySlapTimer = stopBodySlapTime;
+            }
         }
     }
     private void StopBodySlap()
@@ -100,7 +106,8 @@ public class PlayerBodySlap : PlayerAction
 
             if (bodySlapTimer <= 0f)
             {
-                stopBodySlapTimer = stopBodySlapTime;
+                stopBodySlapTimer = 0f;
+                bodyStopBodySlapTimerStart = false;
             }
         }
     }

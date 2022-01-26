@@ -22,7 +22,7 @@ public class PlayerInteraction : MonoBehaviour
     }
     void Update()
     {
-        if(nearNPCList.Count > 0)
+        if (nearNPCList.Count > 0)
         {
             isNearByNPC = true;
         }
@@ -31,10 +31,18 @@ public class PlayerInteraction : MonoBehaviour
             isNearByNPC = false;
         }
 
-        if (playerInput.IsInterraction && isNearByNPC)
+        if (playerInput.IsInterraction)
         {
-            Interaction();
+            if (isNearByNPC)
+            {
+                Interaction();
+            }
+            else
+            {
+                playerInput.IsInterraction = false;
+            }
         }
+
     }
     private void Interaction() // 상호작용
     {

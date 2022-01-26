@@ -39,15 +39,10 @@ namespace Enemy
             base.Awake();
         }
 
-        private void Start()
+        public void InitData(out EnemyController controller, out int damage)
         {
-            EnemyAttackCheck enemyAttackCheck = transform.GetComponentInChildren<EnemyAttackCheck>();
-
-            if (enemyAttackCheck != null)
-            {
-                enemyAttackCheck.Init(enemyData.eEnemyController, enemyData.attackDamage);
-                enemyAttackCheck.gameObject.SetActive(false);
-            }
+            controller = enemyData.eEnemyController;
+            damage = enemyData.attackDamage;
         }
 
         public void EnemyAttack()
