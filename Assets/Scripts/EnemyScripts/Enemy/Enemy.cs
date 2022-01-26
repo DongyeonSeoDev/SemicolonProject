@@ -20,7 +20,7 @@ namespace Enemy
         {
             sr = enemyData.enemySpriteRenderer;
             currentState = new EnemyIdleState(enemyData);
-            lastPositionX = transform.position.x + 10f;
+            lastPositionX = transform.position.x + Mathf.Infinity;
         }
 
         private void Update()
