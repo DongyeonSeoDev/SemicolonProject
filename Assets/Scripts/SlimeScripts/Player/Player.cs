@@ -29,11 +29,11 @@ public class Player : MonoBehaviour
     }
     private void OnEnable()
     {
-        currentHp = playerStat.eternalStat.hp;
+        currentHp = playerStat.Hp;
     }
     private void Update()
     {
-        if (playerStat.Hp <= 0)
+        if (currentHp <= 0)
         {
             SlimeEventManager.TriggerEvent("PlayerDead");
         }
