@@ -14,7 +14,8 @@ public enum UIType
     ITEM_DETAIL,
     COMBINATION,
     REMOVE_ITEM,
-    STAT
+    STAT,
+    QUIT
 }
 
 public enum KeyAction

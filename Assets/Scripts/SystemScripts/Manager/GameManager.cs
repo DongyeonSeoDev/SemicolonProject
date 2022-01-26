@@ -140,6 +140,11 @@ namespace Water
 
         #endregion
 
+        public void QuitGame()
+        {
+            Application.Quit();
+        }
+
         #region OnApplication
         private void OnApplicationQuit()
         {

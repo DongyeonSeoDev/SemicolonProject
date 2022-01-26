@@ -11,4 +11,9 @@ public class Chef : NPC    //요리사 스크립트          //쥐 - OpenGameArt_AntumDe
     {
         CookingManager.Instance.ShowFoodList(this);
     }
+
+    /*private void Start()
+    {
+        SetUI(true);
+    }*/
 }

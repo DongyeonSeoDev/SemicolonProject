@@ -122,6 +122,10 @@ namespace Water
                 {
                     OnUIInteract(activeUIList[activeUIList.Count - 1]._UItype);
                 }
+                else
+                {
+                    OnUIInteract(UIType.QUIT);
+                }
             }
             else if(Input.GetKeyDown(KeySetting.keyDict[KeyAction.INVENTORY]))
             {

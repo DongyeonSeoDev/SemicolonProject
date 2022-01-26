@@ -6,6 +6,8 @@ public abstract class NPC : MonoBehaviour
     [SerializeField] protected string npcName;
     public string NPCName { get { return npcName; } }
 
+    public Vector3 uiOffset = Vector3.down;
+
     [HideInInspector] public NPCUI npcUI;
 
     public abstract void Interaction();
