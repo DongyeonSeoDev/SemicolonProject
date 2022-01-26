@@ -57,6 +57,8 @@ public class PlayerInput : MonoBehaviour
             moveVector.x = Input.GetAxisRaw("Horizontal");
             moveVector.y = Input.GetAxisRaw("Vertical");
 
+            moveVector = moveVector.normalized;
+
             if (moveVector != Vector2.zero)
             {
                 lastMoveVector = moveVector;
