@@ -33,7 +33,7 @@ public class PlayerShoot : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (playerInput.IsShoot && playerInput.MoveVector != Vector2.zero)
+        if (playerInput.IsShoot)
         {
             Shoot();
 
@@ -58,7 +58,7 @@ public class PlayerShoot : MonoBehaviour
         }
 
         temp.transform.position = shootPositions[playerState.LastPlayerMovingPoint].position;
-        temp.GetComponent<PlayerProjectile>().OnSpawn(playerInput.MoveVector, projectileSpeed);
+        temp.GetComponent<PlayerProjectile>().OnSpawn(playerInput.LastMoveVector, projectileSpeed);
 
         SlimeEventManager.TriggerEvent("PlayerShoot");
     }

@@ -11,6 +11,11 @@ public class PlayerInput : MonoBehaviour
     {
         get { return moveVector; }
     }
+    private Vector2 lastMoveVector = Vector2.zero;
+    public Vector2 LastMoveVector
+    {
+        get { return lastMoveVector; }
+    }
 
     private bool isBodySlap = false;
     public bool IsBodySlap
@@ -51,6 +56,11 @@ public class PlayerInput : MonoBehaviour
         {
             moveVector.x = Input.GetAxisRaw("Horizontal");
             moveVector.y = Input.GetAxisRaw("Vertical");
+
+            if (moveVector != Vector2.zero)
+            {
+                lastMoveVector = moveVector;
+            }
 
             if (Input.GetButtonDown("BodySlap")) // left shift
             {
