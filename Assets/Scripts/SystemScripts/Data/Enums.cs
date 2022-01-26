@@ -16,7 +16,8 @@ public enum UIType
     REMOVE_ITEM,
     STAT,
     QUIT,
-    DEATH
+    DEATH,
+    CLEAR
 }
 
 public enum KeyAction

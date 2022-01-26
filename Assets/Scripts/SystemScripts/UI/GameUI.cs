@@ -65,8 +65,11 @@ namespace Water
                     break;
 
                 case UIType.DEATH:
-                    cvsg.alpha = 0;
-                    cvsg.DOFade(1, 2.3f).SetEase(Ease.Linear).SetUpdate(true).OnComplete(() => UpdateUIStack());
+                    DOFade(true);
+                    break;
+
+                case UIType.CLEAR:
+                    DOFade(true);
                     break;
 
                 default:
@@ -108,7 +111,11 @@ namespace Water
                     break;
 
                 case UIType.DEATH:
-                    cvsg.DOFade(0, 1).SetEase(Ease.Linear).SetUpdate(true).OnComplete(() => UpdateUIStack(false));
+                    DOFade(false);
+                    break;
+
+                case UIType.CLEAR:
+                    DOFade(false);
                     break;
 
                 default:
@@ -157,6 +164,19 @@ namespace Water
             {
                 rectTrm.DOAnchorPos(new Vector2(originPos.x - 150f, originPos.y), Global.slideTransitionTime03).SetUpdate(true);
                 cvsg.DOFade(0, Global.fullAlphaTransitionTime04).SetUpdate(true).OnComplete(() => UpdateUIStack(false));
+            }
+        }
+
+        protected void DOFade(bool active)
+        {
+            if(active)
+            {
+                cvsg.alpha = 0;
+                cvsg.DOFade(1, 2.3f).SetEase(Ease.Linear).SetUpdate(true).OnComplete(() => UpdateUIStack());
+            }
+            else
+            {
+                cvsg.DOFade(0, 1).SetEase(Ease.Linear).SetUpdate(true).OnComplete(() => UpdateUIStack(false));
             }
         }
 
