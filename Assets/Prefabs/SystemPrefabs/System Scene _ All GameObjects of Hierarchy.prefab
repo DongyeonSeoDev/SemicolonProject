@@ -10750,6 +10750,7 @@ MonoBehaviour:
   cvsg: {fileID: 0}
   _UItype: 2
   childGameUI: {fileID: 0}
+  rectMask: {fileID: 1200683677417698366}
   speed: 10
   padding: 650
 --- !u!1 &1200683677421093899
