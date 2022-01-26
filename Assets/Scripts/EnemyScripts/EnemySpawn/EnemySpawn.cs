@@ -12,13 +12,15 @@ namespace Enemy
         {
             enemyList = EnemyManager.Instance.enemyList;
 
-            SpawnEnemy();
+            PlayerRespawnEvent();
 
-            SlimeEventManager.StartListening("PlayerDead", () =>
-            {
-                EnemyManager.Instance.PlayerDeadEvent();
-                SpawnEnemy();
-            });
+            SlimeEventManager.StartListening("AfterPlayerRespawn", PlayerRespawnEvent);
+        }
+
+        private void PlayerRespawnEvent()
+        {
+            EnemyManager.Instance.PlayerDeadEvent();
+            SpawnEnemy();
         }
 
         private void SpawnEnemy()
