@@ -7,9 +7,6 @@ public class BodyPoint : MonoBehaviour
     private MiddlePoint middlePoint = null;
 
     [SerializeField]
-    private LayerMask whatIsWall;
-
-    [SerializeField]
     private float returnToOriginSpeed = 2f;
     [SerializeField]
     private float moveToMiddleSpeed = 1f;
@@ -27,6 +24,7 @@ public class BodyPoint : MonoBehaviour
     public bool IsWall
     {
         get { return isWall; }
+        set { isWall = value; }
     }
 
     private bool isMoveToMiddle = false;
@@ -47,7 +45,6 @@ public class BodyPoint : MonoBehaviour
     }
     private void OnEnable()
     {
-        SlimeEventManager.StartListening("BodyPointCrash", BodyPointCrash);
         SlimeEventManager.StartListening("PlayerShoot", PlayerShoot);
     }
     private void Update()
@@ -70,29 +67,7 @@ public class BodyPoint : MonoBehaviour
 
     private void OnDisable()
     {
-        SlimeEventManager.StopListening("BodyPointCrash", BodyPointCrash);
         SlimeEventManager.StopListening("PlayerShoot", PlayerShoot);
-    }
-
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        if (whatIsWall.CompareGameObjectLayer(other.gameObject))
-        {
-            isWall = true;
-        }
-
-        SlimeEventManager.TriggerEvent("BodyPointCrash", other.gameObject);
-    }
-    private void OnCollisionExit2D(Collision2D other)
-    {
-        if (whatIsWall.CompareGameObjectLayer(other.gameObject))
-        {
-            isWall = false;
-        }
-    }
-    private void BodyPointCrash(GameObject targetObject)
-    {
-
     }
     private void PlayerShoot()
     {

@@ -36,9 +36,11 @@ public class PlayerBodySlap : PlayerAction
         base.Start();
         playerStat = SlimeGameManager.Instance.Player.PlayerStat;
 
+    }
+    private void OnEnable()
+    {
         SlimeEventManager.StartListening("BodyPointCrash", BodyPointCrash);
     }
-
     void Update()
     {
         if (playerStatus.BodySlapping && !bodySlapStart)
@@ -104,16 +106,16 @@ public class PlayerBodySlap : PlayerAction
     }
     private void CheckStopBodySlapTime()
     {
-        
-        if(stopBodySlapTimer > 0f)
+
+        if (stopBodySlapTimer > 0f)
         {
             stopBodySlapTimer -= Time.deltaTime;
-            
+
             rigid.AddForce(Vector2.Lerp(Vector2.zero, -rigid.velocity / stopBodySlapOffset, stopBodySlapTimer / stopBodySlapTime));
 
             childRigids.ForEach(x => x.AddForce(Vector2.Lerp(Vector2.zero, -x.velocity / stopBodySlapOffset, stopBodySlapTimer / stopBodySlapTime)));
 
-            if(stopBodySlapTimer <= 0f)
+            if (stopBodySlapTimer <= 0f)
             {
                 StopBodySlap();
             }

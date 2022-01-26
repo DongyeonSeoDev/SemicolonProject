@@ -54,7 +54,7 @@ public static class ScriptHelper
     {
         int layer = 1 << targetObj.layer;
 
-        return layerMask == layer;
+        return  layerMask == (layerMask | layer);
     }
     // ---Limit매소드에 대한 설명---
     // value = 0, min = 1, max = 3일 땐 3을 리턴한다.
