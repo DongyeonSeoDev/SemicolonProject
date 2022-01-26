@@ -22,6 +22,8 @@ namespace Water
 
         public GameObject itemPrefab, itemCloneEffectPrefab;
 
+        [HideInInspector] public List<Item> droppedItemList = new List<Item>();
+
         
         public int InventoryItemCount 
         { get { return savedData.userInfo.userItems.keyValueDic.Keys.Count; } }
@@ -102,6 +104,8 @@ namespace Water
 
             PoolManager.CreatePool(itemPrefab, transform, 6, "Item");
             PoolManager.CreatePool(itemCloneEffectPrefab, transform, 6, "ItemFollowEffect");
+
+            SlimeEventManager.StartListening("PlayerDead", ResetDroppedItems);
         }
 
         #region Item
@@ -138,6 +142,15 @@ namespace Water
             {
                 Debug.Log("버리려는 아이템 개수가 보유 중인 아이템 개수보다 많음");
             }
+        }
+
+        void ResetDroppedItems()
+        {
+            for(int i=0; i<droppedItemList.Count; i++)
+            {
+                droppedItemList[i].gameObject.SetActive(false);
+            }
+            droppedItemList.Clear();
         }
 
         #endregion

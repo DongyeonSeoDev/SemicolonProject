@@ -45,6 +45,8 @@ public class Item : MonoBehaviour
         rotateSpeed = Random.Range(3f, 9f);
 
         isDropping = true;
+
+        GameManager.Instance.droppedItemList.Add(this);
     }
 
     public void FollowEffect()

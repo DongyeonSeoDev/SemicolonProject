@@ -83,6 +83,11 @@ namespace Water
                 valueList.Add(keyValueDic[k]);
             }
         }
+
+        public void ClearDic()
+        {
+            keyValueDic.Clear();
+        }
     }
 
 }

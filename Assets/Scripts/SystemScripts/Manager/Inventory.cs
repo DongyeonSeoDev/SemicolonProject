@@ -50,6 +50,22 @@ public class Inventory : MonoSingleton<Inventory>
     {
         Global.AddMonoAction(Global.TryAcquisitionItem, x => GetItem((Item)x));
         Global.AddAction(Global.MakeFood, item => GetItem(item as ItemInfo));  //음식 조합
+
+        SlimeEventManager.StartListening("PlayerDead", ResetInventory);
+    }
+
+    void ResetInventory()
+    {
+        gm.savedData.userInfo.userItems.ClearDic();
+        itemSlots.ForEach(x =>
+        {
+            if (x.ExistItem)
+            {
+                x.ResetData();
+            }
+        });
+
+
     }
 
     public ItemSlot FindSlot(int id)  // 함수명이 곧 기능 설명
@@ -156,6 +172,7 @@ public class Inventory : MonoSingleton<Inventory>
             }
         }
         item.gameObject.SetActive(false);
+        GameManager.Instance.droppedItemList.Remove(item);
     }
 
     public void GetItem(ItemInfo item) //아이템 획득했을 때
