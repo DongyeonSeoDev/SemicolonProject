@@ -45,7 +45,7 @@ public class PlayerBodySlap : PlayerAction
     }
     void Update()
     {
-        if (playerStatus.BodySlapping && !bodySlapStart)
+        if (playerState.BodySlapping && !bodySlapStart)
         {
             bodySlapStart = true;
 
@@ -62,7 +62,7 @@ public class PlayerBodySlap : PlayerAction
     }
     private void FixedUpdate()
     {
-        if (playerStatus.BodySlapping && bodySlapStart) // 움직임
+        if (playerState.BodySlapping && bodySlapStart) // 움직임
         {
             rigid.AddForce(bodySlapMoveVec * bodySlapMovePower);
 
@@ -76,7 +76,7 @@ public class PlayerBodySlap : PlayerAction
     }
     private void BodyPointCrash(GameObject targetObject) // BodyPoint가 특정 오브젝트와 충돌했을 때 호출
     {
-        if (canCrashLayer.CompareGameObjectLayer(targetObject) && playerStatus.BodySlapping)
+        if (canCrashLayer.CompareGameObjectLayer(targetObject) && playerState.BodySlapping)
         {
             Enemy.Enemy enemy = targetObject.GetComponent<Enemy.Enemy>();
 
@@ -97,7 +97,7 @@ public class PlayerBodySlap : PlayerAction
         stopBodySlapTimer = 0f;
 
         bodySlapStart = false;
-        playerStatus.BodySlapping = false;
+        playerState.BodySlapping = false;
     }
     private void CheckBodySlapTime()
     {

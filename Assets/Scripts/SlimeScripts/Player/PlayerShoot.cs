@@ -33,10 +33,14 @@ public class PlayerShoot : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (playerInput.IsShoot)
+        if (playerInput.IsShoot && !playerState.BodySlapping)
         {
             Shoot();
 
+            playerInput.IsShoot = false;
+        }
+        else if(playerInput.IsShoot)
+        {
             playerInput.IsShoot = false;
         }
     }
