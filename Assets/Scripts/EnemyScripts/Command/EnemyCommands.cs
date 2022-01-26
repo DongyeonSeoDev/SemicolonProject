@@ -140,7 +140,7 @@ namespace Enemy
             {
                 for (int j = 0; j < enemyLootListSO.enemyLootList[i].lootCount; j++)
                 {
-                    Water.PoolManager.GetItem("Item").GetComponent<Item>().SetData(enemyLootListSO.enemyLootList[i].enemyLoot.id);
+                    Water.PoolManager.GetItem("Item").GetComponent<Item>().SetData(enemyLootListSO.enemyLootList[i].enemyLoot.id, enemyObject.transform.position);
                 }
             }
 
