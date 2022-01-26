@@ -26,12 +26,13 @@ public class Item : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    public virtual void SetData(int id, int droppedCount = 1)
+    public virtual void SetData(int id, Vector3 enemyPos, int droppedCount = 1)
     {
         _itemData = GameManager.Instance.GetItemData(id);
         spriteRenderer.sprite = _itemData.GetSprite();
         this.droppedCount = droppedCount;
 
+        transform.position = enemyPos;
         transform.rotation = Quaternion.identity;
         spawnPos = transform.position;
 
