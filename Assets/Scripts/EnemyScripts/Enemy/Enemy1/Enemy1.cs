@@ -30,7 +30,7 @@ namespace Enemy
             if (enemyAttackCheck != null)
             {
                 enemyAttackCheck.Init(enemyData.eEnemyController, enemyData.attackDamage);
-                enemyAttackCheck.gameObject.SetActive(false);
+                enemyAttackCheck.GetComponent<Collider2D>().enabled = false;
             }
         }
     }
