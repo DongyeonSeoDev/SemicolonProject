@@ -16,6 +16,7 @@ namespace Enemy
                 enemyLootList = enemyLootListSO,
                 enemyAnimator = GetComponent<Animator>(),
                 enemySpriteRenderer = GetComponent<SpriteRenderer>(),
+                enemyRigidbody2D = GetComponent<Rigidbody2D>(),
                 hpBarFillImage = hpBarFillImage,
                 damagedColor = new Color(1f, 180f / 255f, 180f / 255f),
                 normalColor = Color.white,
