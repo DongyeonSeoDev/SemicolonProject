@@ -142,6 +142,11 @@ namespace Water
 
         #endregion
 
+        public void RespawnPlayer()
+        {
+            SlimeEventManager.TriggerEvent("PlayerRespawn");
+        }
+
         public void QuitGame()
         {
             Application.Quit();

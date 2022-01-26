@@ -105,7 +105,9 @@ namespace Water
                 RequestLeftBottomMsg(string.Format("아이템을 획득하였습니다. ({0} +{1})", item.itemData.itemName, item.DroppedCnt));
                 
             });
-            
+
+            SlimeEventManager.StartListening("PlayerDead", () => OnUIInteract(UIType.DEATH, true));
+            SlimeEventManager.StartListening("PlayerRespawn", () => OnUIInteract(UIType.DEATH, true));
         }
 
         private void Update()

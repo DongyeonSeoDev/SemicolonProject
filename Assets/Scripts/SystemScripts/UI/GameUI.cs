@@ -64,6 +64,11 @@ namespace Water
                     cvsg.DOFade(1, Global.fullAlphaTransitionTime04).SetUpdate(true).OnComplete(() => UpdateUIStack());
                     break;
 
+                case UIType.DEATH:
+                    cvsg.alpha = 0;
+                    cvsg.DOFade(1, 2.3f).SetEase(Ease.Linear).SetUpdate(true).OnComplete(() => UpdateUIStack());
+                    break;
+
                 default:
                     DOScale(true);
                     break;
@@ -100,6 +105,10 @@ namespace Water
                 case UIType.COMBINATION:
                     transform.DOScale(Global.onePointSix, Global.fullScaleTransitionTime03).SetEase(Ease.OutQuad);
                     cvsg.DOFade(0, Global.fullAlphaTransitionTime04).SetUpdate(true).OnComplete(() => UpdateUIStack(false));
+                    break;
+
+                case UIType.DEATH:
+                    cvsg.DOFade(0, 1).SetEase(Ease.Linear).SetUpdate(true).OnComplete(() => UpdateUIStack(false));
                     break;
 
                 default:
