@@ -1203,6 +1203,10 @@ PrefabInstance:
       propertyPath: stopBodySlapOffset
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 1014413151, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: canCrashLayer.m_Bits
+      value: 192
+      objectReference: {fileID: 0}
     - target: {fileID: 2199360685128655093, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: m_ShapeTexture
       value: 

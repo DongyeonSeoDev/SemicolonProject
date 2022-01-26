@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private Stat playerStat = new Stat();
+    private Stat originStat = new Stat();
     public Stat PlayerStat
     {
         get { return playerStat; }
@@ -19,17 +20,28 @@ public class Player : MonoBehaviour
         get { return currentHp; }
         set { currentHp = value; }
     }
+    private void Awake() 
+    {
+        playerState = GetComponent<PlayerState>();
 
+        // originStat = PlayerStat;
+    }
     private void Start()
     {
         SlimeEventManager.StartListening("PlayerDead", PlayerDead);
         SlimeEventManager.StartListening("PlayerSetActiveFalse", SetActiveFalse);
+        SlimeEventManager.StartListening("GameClear", WhenGameClear);
 
-        playerState = GetComponent<PlayerState>();
     }
     private void OnEnable()
     {
+        // playerStat = originStat;
+        playerStat.additionalEternalStat = new EternalStat();
+
+        playerState.IsDead = false;
         currentHp = playerStat.Hp;
+
+        Water.UIManager.Instance.UpdatePlayerHPUI(); 
     }
     private void Update()
     {
@@ -42,6 +54,7 @@ public class Player : MonoBehaviour
     {
         SlimeEventManager.StopListening("PlayerDead", PlayerDead);
         SlimeEventManager.StopListening("PlayerSetActiveFalse", SetActiveFalse);
+        SlimeEventManager.StopListening("GameClear", WhenGameClear);
     }
     public void GetDamage(int damage)
     {
@@ -64,15 +77,16 @@ public class Player : MonoBehaviour
             Water.UIManager.Instance.UpdatePlayerHPUI();
         }
     }
+    private void WhenGameClear()
+    {
 
+    }
     private void PlayerDead()
     {
         SlimeEventManager.TriggerEvent("PlayerSetActiveFalse");
     }
     private void SetActiveFalse()
     {
-        playerState.IsDead = false;
-
         gameObject.SetActive(false);
     }
 }

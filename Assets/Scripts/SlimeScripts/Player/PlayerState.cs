@@ -27,6 +27,13 @@ public class PlayerState : MonoBehaviour
 
     private PlayerInput playerInput = null;
 
+    private bool isStop = false;
+    public bool IsStop
+    {
+        get { return isStop; }
+        set { isStop = value; }
+    }
+
     private bool isDead = false;
     public bool IsDead
     {
