@@ -226,8 +226,8 @@ namespace Enemy
 
         protected override void Start()
         {
+            enemyData.enemyAnimator.ResetTrigger(enemyData.hashReset);
             enemyData.enemyAnimator.SetTrigger(enemyData.hashIsDie);
-
             currentTime = 0f;
 
             base.Start();

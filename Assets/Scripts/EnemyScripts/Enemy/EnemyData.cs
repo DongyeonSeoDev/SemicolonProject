@@ -75,6 +75,7 @@ namespace Enemy
         public readonly int hashAttack = Animator.StringToHash("Attack");
         public readonly int hashEndAttack = Animator.StringToHash("EndAttack");
         public readonly int hashHit = Animator.StringToHash("Hit");
+        public readonly int hashReset = Animator.StringToHash("Reset");
 
         public bool IsSeePlayer() => Vector3.Distance(enemyObject.transform.position, PlayerObject.transform.position) <= isSeePlayerDistance;
 
