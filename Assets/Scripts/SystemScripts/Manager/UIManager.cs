@@ -106,6 +106,8 @@ namespace Water
                 
             });
 
+            Global.AddAction(Global.JunkItem, JunkItem);
+
             SlimeEventManager.StartListening("PlayerDead", () => OnUIInteract(UIType.DEATH, true));
             SlimeEventManager.StartListening("PlayerRespawn", Respawn);
             SlimeEventManager.StartListening("GameClear", () => OnUIInteract(UIType.CLEAR, true));
@@ -124,7 +126,7 @@ namespace Water
         {
             if (Input.GetKeyDown(KeyCode.Escape))
             {
-                if (activeUIList.Count > 0)
+                if (activeUIList.Count > 0)  //일단 임시로 일케 ㄱ
                 {
                     UIType type = activeUIList[activeUIList.Count - 1]._UItype;
                     if (type == UIType.DEATH || type == UIType.CLEAR) return;
@@ -324,12 +326,20 @@ namespace Water
                 return;
             }
 
-            Inventory.Instance.RemoveItem(selectedItemId, rmCount);
+            
+            Global.ActionTrigger(Global.JunkItem, rmCount);
+        }
+
+        void JunkItem(object rmCount)  //템 진짜 버림
+        {
+            Inventory.Instance.RemoveItem(selectedItemId, (int)rmCount);
 
             OnUIInteract(UIType.REMOVE_ITEM);
 
             if (selectedItemSlot.itemInfo == null)
                 OnUIInteract(UIType.ITEM_DETAIL, true);
+            if (gameUIList[(int)UIType.PRODUCTION_PANEL].gameObject.activeSelf)
+                OnUIInteract(UIType.PRODUCTION_PANEL, true);
         }
 
         public void OnClickItemUseBtn()

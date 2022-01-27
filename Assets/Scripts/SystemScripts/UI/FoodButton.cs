@@ -13,6 +13,9 @@ public class FoodButton : MonoBehaviour
     public Image foodImg;
     public TextMeshProUGUI foodNameTmp;
 
+    private bool isEnoughLoot;
+    public bool IsEnoughLoot { get { return isEnoughLoot; } }
+
     public Food FoodData 
     { 
         get { return foodData; } 
@@ -41,11 +44,13 @@ public class FoodButton : MonoBehaviour
         {
             if(GameManager.Instance.GetItemCount(foodData.needIngredients[i].ingredient.id)< foodData.needIngredients[i].needCount)
             {
-                GetComponent<UIScale>().transitionEnable = false;
+                //GetComponent<UIScale>().transitionEnable = false;
+                isEnoughLoot = false;
                 return false;
             }
         }
-        GetComponent<UIScale>().transitionEnable = true;
+        //GetComponent<UIScale>().transitionEnable = true;
+        isEnoughLoot = true;
         return true;
     }
 }
