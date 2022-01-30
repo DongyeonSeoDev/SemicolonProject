@@ -37,10 +37,10 @@ public class Item : MonoBehaviour
 
         transform.position = enemyPos;
         itemSprTrm.rotation = Quaternion.identity;
-        spawnPos = transform.position;
+        spawnPos = enemyPos;
 
         rigid.gravityScale = 1;
-        rigid.velocity = Vector2.up * Random.Range(3f, 6f);
+        rigid.velocity = Vector2.up * Random.Range(4f, 6f);
         rotateDir = Random.Range(-1, 2);
         rotateSpeed = Random.Range(3f, 9f);
 
@@ -59,10 +59,11 @@ public class Item : MonoBehaviour
         if(isDropping)
         {
             itemSprTrm.Rotate(Global.Z90 * rotateDir * rotateSpeed * Time.deltaTime);
-            if(transform.position.y <= spawnPos.y)
+            if(transform.position.y < spawnPos.y)
             {
                 rigid.gravityScale = 0;
                 rigid.velocity = Vector3.zero;
+                itemSprTrm.rotation = Quaternion.identity;
 
                 isDropping = false;
 
