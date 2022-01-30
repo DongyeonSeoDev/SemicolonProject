@@ -33,14 +33,14 @@ public class Player : MonoBehaviour
         playerState.IsDead = false;
         currentHp = playerStat.Hp;
 
-        Water.UIManager.Instance.UpdatePlayerHPUI();
+        UIManager.Instance.UpdatePlayerHPUI();
 
     }
     private void OnEnable()
     {
-        SlimeEventManager.StartListening("PlayerDead", PlayerDead);
-        SlimeEventManager.StartListening("PlayerSetActiveFalse", SetActiveFalse);
-        SlimeEventManager.StartListening("GameClear", WhenGameClear);
+        EventManager.StartListening("PlayerDead", PlayerDead);
+        EventManager.StartListening("PlayerSetActiveFalse", SetActiveFalse);
+        EventManager.StartListening("GameClear", WhenGameClear);
 
         // playerStat = originStat;
         playerState.IsDead = false;
@@ -49,14 +49,14 @@ public class Player : MonoBehaviour
     {
         if (currentHp <= 0)
         {
-            SlimeEventManager.TriggerEvent("PlayerDead");
+            EventManager.TriggerEvent("PlayerDead");
         }
     }
     private void OnDisable()
     {
-        SlimeEventManager.StopListening("PlayerDead", PlayerDead);
-        SlimeEventManager.StopListening("PlayerSetActiveFalse", SetActiveFalse);
-        SlimeEventManager.StopListening("GameClear", WhenGameClear);
+        EventManager.StopListening("PlayerDead", PlayerDead);
+        EventManager.StopListening("PlayerSetActiveFalse", SetActiveFalse);
+        EventManager.StopListening("GameClear", WhenGameClear);
     }
     public void GetDamage(int damage)
     {
@@ -76,7 +76,7 @@ public class Player : MonoBehaviour
                 playerState.IsDead = true;
             }
 
-            Water.UIManager.Instance.UpdatePlayerHPUI();
+            UIManager.Instance.UpdatePlayerHPUI();
         }
     }
     private void WhenGameClear()
@@ -85,7 +85,7 @@ public class Player : MonoBehaviour
     }
     private void PlayerDead()
     {
-        SlimeEventManager.TriggerEvent("PlayerSetActiveFalse");
+        EventManager.TriggerEvent("PlayerSetActiveFalse");
     }
     private void SetActiveFalse()
     {
@@ -98,8 +98,8 @@ public class Player : MonoBehaviour
         playerState.IsDead = false;
         currentHp = playerStat.Hp;
 
-        Water.UIManager.Instance.UpdatePlayerHPUI();
+        UIManager.Instance.UpdatePlayerHPUI();
 
-        SlimeEventManager.TriggerEvent("AfterPlayerRespawn");
+        EventManager.TriggerEvent("AfterPlayerRespawn");
     }
 }

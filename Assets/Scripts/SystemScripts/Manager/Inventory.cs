@@ -51,7 +51,7 @@ public class Inventory : MonoSingleton<Inventory>
         Global.AddMonoAction(Global.TryAcquisitionItem, x => GetItem((Item)x));
         Global.AddAction(Global.MakeFood, item => GetItem(item as ItemInfo));  //음식 조합
 
-        SlimeEventManager.StartListening("PlayerDead", ResetInventory);
+        EventManager.StartListening("PlayerDead", ResetInventory);
     }
 
     void ResetInventory()

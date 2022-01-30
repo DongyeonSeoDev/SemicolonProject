@@ -16,7 +16,7 @@ public class StageCheck : MonoBehaviour
 
     private void Start()
     {
-        SlimeEventManager.StartListening("PlayerDead", () =>
+        EventManager.StartListening("PlayerDead", () =>
         {
             col.enabled = true;
 
@@ -31,7 +31,7 @@ public class StageCheck : MonoBehaviour
     {
         if (stageNumber == 2)
         {
-            SlimeEventManager.TriggerEvent("GameClear");
+            EventManager.TriggerEvent("GameClear");
         }
         else
         {

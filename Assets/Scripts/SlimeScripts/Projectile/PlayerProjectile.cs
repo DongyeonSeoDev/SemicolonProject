@@ -33,10 +33,10 @@ public class PlayerProjectile : MonoBehaviour
     }
     private void OnEnable() 
     {
-        SlimeEventManager.StartListening("PlayerDead", Despawn);    
+        EventManager.StartListening("PlayerDead", Despawn);    
     }
     private void OnDisable() {
-        SlimeEventManager.StopListening("PlayerDead", Despawn);    
+        EventManager.StopListening("PlayerDead", Despawn);    
     }
     private void OnTriggerEnter2D(Collider2D other)
     {

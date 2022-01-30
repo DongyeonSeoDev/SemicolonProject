@@ -14,7 +14,7 @@ namespace Enemy
 
             PlayerRespawnEvent();
 
-            SlimeEventManager.StartListening("AfterPlayerRespawn", PlayerRespawnEvent);
+            EventManager.StartListening("AfterPlayerRespawn", PlayerRespawnEvent);
         }
 
         private void PlayerRespawnEvent()

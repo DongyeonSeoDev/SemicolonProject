@@ -1,10 +1,8 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Water;
 
-public class SlimeEventManager
+public partial class EventManager
 {
     private static Dictionary<string, Action> eventDictionary = new Dictionary<string, Action>();
     private static Dictionary<string, Action<string, int>> str_int_eventDictionary = new Dictionary<string, Action<string, int>>();
@@ -15,9 +13,9 @@ public class SlimeEventManager
     {
         Action thisEvent;
 
-        if (eventDictionary.TryGetValue(eventName, out thisEvent)) // ê°™ì€ ì´ë¦„ì˜ DIctionaryìˆëŠ”ì§€ ì²´í¬
+        if (eventDictionary.TryGetValue(eventName, out thisEvent)) // °°Àº ÀÌ¸§ÀÇ DIctionaryÀÖ´ÂÁö Ã¼Å©
         {
-            thisEvent += listener;                   // ê°™ì€ ì´ë¦„ìˆì„ ë•Œ êµ¬ë…
+            thisEvent += listener;                   // °°Àº ÀÌ¸§ÀÖÀ» ¶§ ±¸µ¶
             eventDictionary[eventName] = thisEvent;
         }
         else
@@ -29,9 +27,9 @@ public class SlimeEventManager
     {
         Action<string, int> thisEvent;
 
-        if (str_int_eventDictionary.TryGetValue(eventName, out thisEvent)) // ê°™ì€ ì´ë¦„ì˜ DIctionaryìˆëŠ”ì§€ ì²´í¬
+        if (str_int_eventDictionary.TryGetValue(eventName, out thisEvent)) // °°Àº ÀÌ¸§ÀÇ DIctionaryÀÖ´ÂÁö Ã¼Å©
         {
-            thisEvent += listener;                   // ê°™ì€ ì´ë¦„ìˆì„ ë•Œ êµ¬ë…
+            thisEvent += listener;                   // °°Àº ÀÌ¸§ÀÖÀ» ¶§ ±¸µ¶
             str_int_eventDictionary[eventName] = thisEvent;
         }
         else
@@ -43,9 +41,9 @@ public class SlimeEventManager
     {
         Action<Vector2> thisEvent;
 
-        if (vec2_EventDictionary.TryGetValue(eventName, out thisEvent)) // ê°™ì€ ì´ë¦„ì˜ DIctionaryìˆëŠ”ì§€ ì²´í¬
+        if (vec2_EventDictionary.TryGetValue(eventName, out thisEvent)) // °°Àº ÀÌ¸§ÀÇ DIctionaryÀÖ´ÂÁö Ã¼Å©
         {
-            thisEvent += listener;                   // ê°™ì€ ì´ë¦„ìˆì„ ë•Œ êµ¬ë…
+            thisEvent += listener;                   // °°Àº ÀÌ¸§ÀÖÀ» ¶§ ±¸µ¶
             vec2_EventDictionary[eventName] = thisEvent;
         }
         else
@@ -57,9 +55,9 @@ public class SlimeEventManager
     {
         Action<GameObject> thisEvent;
 
-        if (gmo_EventDictionary.TryGetValue(eventName, out thisEvent)) // ê°™ì€ ì´ë¦„ì˜ DIctionaryìˆëŠ”ì§€ ì²´í¬
+        if (gmo_EventDictionary.TryGetValue(eventName, out thisEvent)) // °°Àº ÀÌ¸§ÀÇ DIctionaryÀÖ´ÂÁö Ã¼Å©
         {
-            thisEvent += listener;                   // ê°™ì€ ì´ë¦„ìˆì„ ë•Œ êµ¬ë…
+            thisEvent += listener;                   // °°Àº ÀÌ¸§ÀÖÀ» ¶§ ±¸µ¶
             gmo_EventDictionary[eventName] = thisEvent;
         }
         else
@@ -146,7 +144,7 @@ public class SlimeEventManager
     {
         Action<Vector2> thisEvent;
 
-        if(vec2_EventDictionary.TryGetValue(eventName, out thisEvent))
+        if (vec2_EventDictionary.TryGetValue(eventName, out thisEvent))
         {
             thisEvent?.Invoke(param);
         }
@@ -155,7 +153,7 @@ public class SlimeEventManager
     {
         Action<GameObject> thisEvent;
 
-        if(gmo_EventDictionary.TryGetValue(eventName, out thisEvent))
+        if (gmo_EventDictionary.TryGetValue(eventName, out thisEvent))
         {
             thisEvent?.Invoke(param);
         }

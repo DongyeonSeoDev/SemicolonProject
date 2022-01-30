@@ -45,7 +45,7 @@ public class BodyPoint : MonoBehaviour
     }
     private void OnEnable()
     {
-        SlimeEventManager.StartListening("PlayerShoot", PlayerShoot);
+        EventManager.StartListening("PlayerShoot", PlayerShoot);
     }
     private void Update()
     {
@@ -67,7 +67,7 @@ public class BodyPoint : MonoBehaviour
 
     private void OnDisable()
     {
-        SlimeEventManager.StopListening("PlayerShoot", PlayerShoot);
+        EventManager.StopListening("PlayerShoot", PlayerShoot);
     }
     private void PlayerShoot()
     {

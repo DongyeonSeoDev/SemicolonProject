@@ -40,7 +40,7 @@ public class PlayerDrainCollider : MonoBehaviour
             {
                 enemy.EnemyDestroy();
 
-                SlimeEventManager.TriggerEvent("OnDrain", other.gameObject.name, 1); // 여기의 param은 임시 값
+                EventManager.TriggerEvent("OnDrain", other.gameObject.name, 1); // 여기의 param은 임시 값
                 Debug.Log("Do Drain");
             }
         }

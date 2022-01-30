@@ -16,7 +16,7 @@ public class PlayerDrain : MonoBehaviour
     {
         playerInput = GetComponent<PlayerInput>();
 
-        SlimeEventManager.StartListening("OnDrain", OnDrain);
+        EventManager.StartListening("OnDrain", OnDrain);
 
         drainCollider.SetActive(false);
     }
@@ -46,7 +46,7 @@ public class PlayerDrain : MonoBehaviour
     }
     private void OnDisable()
     {
-        SlimeEventManager.StopListening("OnDrain", OnDrain);
+        EventManager.StopListening("OnDrain", OnDrain);
     }
     private void OnDrain(string objName, int upValue) // upValue는 이해도(동화율)이 얼마나 오를 것인가.
     {

@@ -12,7 +12,7 @@ public class BodyPointCrashCheckCollider : MonoBehaviour
 
     private void OnEnable()
     {
-        SlimeEventManager.StartListening("BodyPointCrash", BodyPointCrash);
+        EventManager.StartListening("BodyPointCrash", BodyPointCrash);
     }
 
     void Update()
@@ -21,7 +21,7 @@ public class BodyPointCrashCheckCollider : MonoBehaviour
     }
     private void OnDisable()
     {
-        SlimeEventManager.StopListening("BodyPointCrash", BodyPointCrash);
+        EventManager.StopListening("BodyPointCrash", BodyPointCrash);
 
     }
     private void OnTriggerEnter2D(Collider2D other)
@@ -31,7 +31,7 @@ public class BodyPointCrashCheckCollider : MonoBehaviour
             bodyPoint.IsWall = true;
         }
 
-        SlimeEventManager.TriggerEvent("BodyPointCrash", other.gameObject);
+        EventManager.TriggerEvent("BodyPointCrash", other.gameObject);
     }
     private void OnTriggerExit2D(Collider2D other)
     {
