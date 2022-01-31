@@ -7,6 +7,8 @@ public class PlayerProjectile : MonoBehaviour
     private SlimePoolManager slimePoolManager = null;
 
     [SerializeField]
+    private LayerMask whatIsCrashable;
+    [SerializeField]
     private LayerMask whatIsEnemy;
 
     private Rigidbody2D rigid = null;
@@ -31,26 +33,30 @@ public class PlayerProjectile : MonoBehaviour
         Move();
         CheckMoveTime();
     }
-    private void OnEnable() 
+    private void OnEnable()
     {
-        EventManager.StartListening("PlayerDead", Despawn);    
+        EventManager.StartListening("PlayerDead", Despawn);
     }
-    private void OnDisable() {
-        EventManager.StopListening("PlayerDead", Despawn);    
+    private void OnDisable()
+    {
+        EventManager.StopListening("PlayerDead", Despawn);
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (whatIsEnemy.CompareGameObjectLayer(other.gameObject))
+        if (whatIsCrashable.CompareGameObjectLayer(other.gameObject))
         {
-            Enemy.Enemy enemy = other.GetComponent<Enemy.Enemy>();
-
-            if (enemy != null)
+            if (whatIsEnemy.CompareGameObjectLayer(other.gameObject))
             {
-                enemy.GetDamage(SlimeGameManager.Instance.Player.PlayerStat.Damage);
-            }
-        }
+                Enemy.Enemy enemy = other.GetComponent<Enemy.Enemy>();
 
-        Despawn();
+                if (enemy != null)
+                {
+                    enemy.GetDamage(SlimeGameManager.Instance.Player.PlayerStat.Damage);
+                }
+            }
+
+            Despawn();
+        }
     }
     public void OnSpawn(Vector2 direction, float speed)
     {
