@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlayerInput : MonoBehaviour
 {
@@ -15,6 +16,11 @@ public class PlayerInput : MonoBehaviour
     public Vector2 LastMoveVector
     {
         get { return lastMoveVector; }
+    }
+    private Vector2 mousePosition = Vector2.zero;
+    public Vector2 MousePosition
+    {
+        get { return mousePosition; }
     }
 
     private bool isBodySlap = false;
@@ -56,6 +62,8 @@ public class PlayerInput : MonoBehaviour
     {
         if (!playerState.IsDead)
         {
+            mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+
             moveVector.x = Input.GetAxisRaw("Horizontal");
             moveVector.y = Input.GetAxisRaw("Vertical");
 
@@ -71,17 +79,17 @@ public class PlayerInput : MonoBehaviour
                 isBodySlap = true;
             }
 
-            if (Input.GetButtonDown("Shoot")) // left ctrl
+            if (Input.GetButtonDown("Shoot") && !EventSystem.current.IsPointerOverGameObject()) // mouse 0
             {
                 isShoot = true;
             }
 
-            if (Input.GetButtonDown("Drain"))
+            if (Input.GetButtonDown("Drain")) // q
             {
                 isDrain = true;
             }
 
-            if (Input.GetButtonDown("Interaction"))
+            if (Input.GetButtonDown("Interaction")) // e
             {
                 isInteraction = true;
             }

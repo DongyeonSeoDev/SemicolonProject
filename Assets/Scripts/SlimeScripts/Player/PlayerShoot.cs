@@ -13,13 +13,6 @@ public class PlayerShoot : MonoBehaviour
     [SerializeField]
     private GameObject projectile = null;
 
-    private Dictionary<State.MovingState, Transform> shootPositions = new Dictionary<State.MovingState, Transform>();
-    public Dictionary<State.MovingState, Transform> ShootPositions
-    {
-        get { return shootPositions; }
-        set {shootPositions = value;}
-    }
-
     [SerializeField]
     private float projectileSpeed = 1f;
 
@@ -48,6 +41,8 @@ public class PlayerShoot : MonoBehaviour
     {
         GameObject temp = null;
 
+        Vector2 direction = (playerInput.MousePosition - (Vector2)transform.position).normalized;
+
         bool findInDic = false;
 
         (temp, findInDic) = slimePoolManager.Find(projectile);
@@ -61,8 +56,8 @@ public class PlayerShoot : MonoBehaviour
             temp = Instantiate(projectile, transform);
         }
 
-        temp.transform.position = shootPositions[playerState.LastPlayerMovingPoint].position;
-        temp.GetComponent<PlayerProjectile>().OnSpawn(playerInput.LastMoveVector, projectileSpeed);
+        temp.transform.position = transform.position;
+        temp.GetComponent<PlayerProjectile>().OnSpawn(direction, projectileSpeed);
 
         EventManager.TriggerEvent("PlayerShoot");
     }
