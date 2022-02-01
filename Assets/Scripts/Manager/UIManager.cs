@@ -173,6 +173,7 @@ public partial class UIManager : MonoSingleton<UIManager>
                 if (KeyActionManager.Instance.IsChangingKeySetting)
                     return true;
                 break;
+            
         }
         return false;
     }
@@ -190,6 +191,12 @@ public partial class UIManager : MonoSingleton<UIManager>
             InActiveSpecialProcess(ui._UItype);
         }
         activeUIQueue.Dequeue();
+    }
+
+    public void PreventItrUI(float time)
+    {
+        activeUIQueue.Enqueue(false);
+        Util.DelayFunc(() => activeUIQueue.Dequeue(), time, this);
     }
 
     void FilterStackUI(GameUI ui, bool add) //activeUIList에 넣거나 빼지 않는 UI들

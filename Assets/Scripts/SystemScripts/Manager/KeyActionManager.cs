@@ -32,6 +32,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
                 return;
             }
 
+            UIManager.Instance.PreventItrUI(0.5f);
             KeyAction sameKeyAction;
             int sameKey;
             (sameKeyAction, sameKey) = CheckExistSameKey(keyEvent.keyCode);
@@ -46,8 +47,8 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
                 KeySetting.keyDict[sameKeyAction] = temp;
             }
 
-            CancelKeySetting();
             Debug.Log(((KeyAction)changingKey).ToString() + " : " + keyEvent.keyCode.ToString());
+            CancelKeySetting();
         }
     }
 
@@ -100,6 +101,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
     {
         if (IsChangingKeySetting)
         {
+            UIManager.Instance.PreventItrUI(0.5f);
             changingKey = -1;
             clickPrevPanel.SetActive(false);
         }
