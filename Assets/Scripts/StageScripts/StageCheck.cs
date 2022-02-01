@@ -17,7 +17,7 @@ public class StageCheck : MonoBehaviour
 
     private void Start()
     {
-        EventManager.StartListening("PlayerDead", () =>
+        EventManager.StartListening("AfterPlayerRespawn", () =>
         {
             col.enabled = true;
 
