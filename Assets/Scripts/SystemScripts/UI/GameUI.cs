@@ -32,6 +32,7 @@ namespace Water
 
         public virtual void ActiveTransition(UIType type)
         {
+            Sequence seq = DOTween.Sequence();
             switch (type)
             {
                 case UIType.CHEF_FOODS_PANEL:
@@ -70,6 +71,21 @@ namespace Water
 
                 case UIType.CLEAR:
                     DOFade(true);
+                    break;
+
+                case UIType.KEYSETTING:
+                    cvsg.alpha = 0;
+                    transform.localScale = Global.half;
+                    rectTrm.anchoredPosition = new Vector2(originPos.x + 600f, originPos.y);
+
+                    seq.Append(childGameUI.cvsg.DOFade(0.4f, 0.5f))
+                    .Join(childGameUI.transform.DOScale(Global.half, 0.5f))
+                    .Join(childGameUI.rectTrm.DOAnchorPos(new Vector2(childGameUI.originPos.x - 600f, childGameUI.originPos.y), 0.5f));
+
+                    seq.AppendInterval(0.2f);
+                    seq.Append(childGameUI.cvsg.DOFade(0, 0.4f));
+                    seq.Join(cvsg.DOFade(1, 0.5f)).Join(transform.DOScale(Vector3.one, 0.5f)).Join(rectTrm.DOAnchorPos(originPos, 0.3f));
+                    seq.AppendCallback(() => { childGameUI.gameObject.SetActive(false); UpdateUIStack(); }).SetUpdate(true).Play();
                     break;
 
                 default:

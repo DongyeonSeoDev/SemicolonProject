@@ -11,7 +11,7 @@ public class NPCUI : MonoBehaviour
     public void Set(NPC npc)
     {
         this.npc = npc;
-        nameText.text = npc.NPCName;
+        nameText.text = npc.ObjName;
         transform.position = Util.WorldToScreenPoint(npc.transform.position + npc.uiOffset);
     }
 

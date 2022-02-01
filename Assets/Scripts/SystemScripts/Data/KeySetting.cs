@@ -9,6 +9,8 @@ public static class KeySetting
     {
         keyDict.Add(KeyAction.INVENTORY, KeyCode.I);
         keyDict.Add(KeyAction.STAT, KeyCode.T);
-        //keyDict.Add(KeyAction.INTERACTION, KeyCode.Space);
+        keyDict.Add(KeyAction.INTERACTION, KeyCode.F);
+        keyDict.Add(KeyAction.MANASTONE, KeyCode.E);
+        keyDict.Add(KeyAction.SPECIALATTACK, KeyCode.LeftShift);
     }
 }

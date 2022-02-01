@@ -17,12 +17,17 @@ public enum UIType
     STAT,
     QUIT,
     DEATH,
-    CLEAR
+    CLEAR,
+    SETTING,
+    KEYSETTING
 }
 
 public enum KeyAction
 {
     INVENTORY,
     INTERACTION,
-    STAT
+    STAT,
+    SPECIALATTACK,
+    MANASTONE,
+    NULL
 }

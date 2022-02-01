@@ -39,6 +39,7 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     public void SaveData()
     {
+        KeyActionManager.Instance.SaveKey();
         saveData.Save();
     }
 
@@ -98,7 +99,17 @@ public partial class GameManager : MonoSingleton<GameManager>
         }
         Global.AddMonoAction("SetIngredientImgList", x => x.GetComponent<CookingManager>().IngredientImages = igdImgList);
 
-        KeySetting.SetDefaultKeySetting();
+        { //나중에 이 부분 지우고 SetData함수로 ㄱ
+            if (saveData.option.keyInputDict.keyList.Count == 0)
+                KeySetting.SetDefaultKeySetting();
+            else
+            {
+                foreach(KeyAction key in saveData.option.keyInputDict.keyList)
+                {
+                    KeySetting.keyDict.Add(key, saveData.option.keyInputDict[key]);
+                }
+            }
+        }
 
         PoolManager.CreatePool(itemPrefab, transform, 6, "Item");
         PoolManager.CreatePool(itemCloneEffectPrefab, transform, 6, "ItemFollowEffect");

@@ -69,6 +69,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         cursorImgRectTrm = cursorInfoImg.GetComponent<RectTransform>();
         sw = cursorImgRectTrm.rect.width;
 
+        //UI관련 풀 생성
         PoolManager.CreatePool(systemMsgPrefab, systemMsgParent, 5, "SystemMsg");
         PoolManager.CreatePool(npcNameUIPrefab, npcUICvsTrm, 2, "NPCNameUI");
         PoolManager.CreatePool(acquisitionTxtPrefab, acquisitionTxtParent, 5, "AcquisitionMsg");
@@ -124,12 +125,6 @@ public partial class UIManager : MonoSingleton<UIManager>
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (activeUIList.Count > 0)  //일단 임시로 일케 ㄱ
-            {
-                UIType type = activeUIList[activeUIList.Count - 1]._UItype;
-                if (type == UIType.DEATH || type == UIType.CLEAR) return;
-            }
-
             if (activeUIList.Count > 0)
             {
                 OnUIInteract(activeUIList[activeUIList.Count - 1]._UItype);
@@ -152,9 +147,10 @@ public partial class UIManager : MonoSingleton<UIManager>
     #region UI (비)활성화 관련
     public void OnUIInteractBtnClick(int type) { OnUIInteract((UIType)type); }
 
-    public void OnUIInteract(UIType type, bool ignoreQueue = false)
+    public void OnUIInteract(UIType type, bool ignoreQueue = false) //UI열거나 닫음
     {
         if (activeUIQueue.Count > 0 && !ignoreQueue) return;
+        if (ExceptionHandler(type)) return;
 
         activeUIQueue.Enqueue(false);
         GameUI ui = gameUIList[(int)type];
@@ -169,23 +165,47 @@ public partial class UIManager : MonoSingleton<UIManager>
         }
     }
 
-    public void UpdateUIStack(GameUI ui, bool add = true)
+    private bool ExceptionHandler(UIType type) //상호작용에 대한 예외처리
     {
+        switch (type)
+        {
+            case UIType.KEYSETTING:
+                if (KeyActionManager.Instance.IsChangingKeySetting)
+                    return true;
+                break;
+        }
+        return false;
+    }
+
+    public void UpdateUIStack(GameUI ui, bool add = true) //열려있는 UI리스트 관리
+    {
+        FilterStackUI(ui, add);
         if (add)
         {
-            activeUIList.Add(ui);
             ActiveSpecialProcess(ui._UItype);
         }
         else
         {
-            activeUIList.Remove(ui);
             ui.gameObject.SetActive(false);
             InActiveSpecialProcess(ui._UItype);
         }
         activeUIQueue.Dequeue();
     }
 
-    private void ActiveSpecialProcess(UIType type)
+    void FilterStackUI(GameUI ui, bool add) //activeUIList에 넣거나 빼지 않는 UI들
+    {
+        switch (ui._UItype)
+        {
+            case UIType.CLEAR:
+                return;
+            case UIType.DEATH:
+                return;
+        }
+        if (add) activeUIList.Add(ui);
+        else activeUIList.Remove(ui);
+    }
+
+    private void ActiveSpecialProcess(UIType type) //UI 열릴 때의 특별한 처리
     {
         switch (type)
         {
@@ -195,7 +215,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         }
     }
 
-    private void InActiveSpecialProcess(UIType type)
+    private void InActiveSpecialProcess(UIType type)//UI 닫힐 때의 특별한 처리
     {
         switch (type)
         {

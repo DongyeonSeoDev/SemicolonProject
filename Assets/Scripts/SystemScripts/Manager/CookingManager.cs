@@ -100,7 +100,7 @@ public class CookingManager : MonoSingleton<CookingManager>
 
     public void ShowFoodList(Chef currentChef) //대화한 요리사가 만들 수 있는 음식 리스트 표시
     {
-        NpcNameTxt.SetText(currentChef.NPCName);
+        NpcNameTxt.SetText(currentChef.ObjName);
         foodBtnList.ForEach(x => x.gameObject.SetActive(false));
         currentChef.CanFoodList.ForEach(x =>
         {

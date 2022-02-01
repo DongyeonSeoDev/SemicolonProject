@@ -1,16 +1,11 @@
 using Water;
 using UnityEngine;
 
-public abstract class NPC : MonoBehaviour
+public abstract class NPC : InteractionObj
 {
-    [SerializeField] protected string npcName;
-    public string NPCName { get { return npcName; } }
-
     public Vector3 uiOffset = Vector3.down;
 
     [HideInInspector] public NPCUI npcUI;
-
-    public abstract void Interaction();
 
     public virtual void SetUI(bool on)
     {
