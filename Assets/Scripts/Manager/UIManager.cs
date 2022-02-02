@@ -157,7 +157,7 @@ public partial class UIManager : MonoSingleton<UIManager>
 
         if (!ui.gameObject.activeSelf)
         {
-            ui.gameObject.SetActive(true);
+            ui.ActiveTransition();
         }
         else
         {

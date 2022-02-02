@@ -35,7 +35,7 @@ public class InventoryUI : Water.GameUI
         }
     }
 
-    public override void ActiveTransition(UIType type)
+    public override void ActiveTransition()
     {
         offTransition = false;
         rectMask.padding = new Vector4(0, padding, padding, 0);
