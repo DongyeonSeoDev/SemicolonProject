@@ -1,15 +1,31 @@
 using UnityEngine;
+using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class KeyActionManager : MonoSingleton<KeyActionManager>
 {
+    private Dictionary<int, KeyInfoUI> keyInfoDic = new Dictionary<int, KeyInfoUI>();
+    private Pair<int, int> selectedAndAlreadyID = new Pair<int, int>();
+
     private int changingKey = -1;
     public bool IsChangingKeySetting
     {
         get { return changingKey != -1; }
     }
 
-    [SerializeField] private GameObject clickPrevPanel; 
+    [SerializeField] private GameObject clickPrevPanel;
 
+    public Pair<GameObject, Transform> keyInfoPair;
+
+    private void Start()
+    {
+        foreach(KeyAction action in KeySetting.keyDict.Keys)
+        {
+            KeyInfoUI keyUI = Instantiate(keyInfoPair.first, keyInfoPair.second).GetComponent<KeyInfoUI>();
+            keyUI.Set(action, KeySetting.keyDict[action], ()=>ChangeUserCustomKey((int)action, keyUI.ID));
+            keyInfoDic.Add(keyUI.ID, keyUI);
+        }
+    }
 
     private void Update()
     {
@@ -45,9 +61,10 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
                 KeyCode temp = KeySetting.keyDict[(KeyAction)changingKey];
                 KeySetting.keyDict[(KeyAction)changingKey] = keyEvent.keyCode;
                 KeySetting.keyDict[sameKeyAction] = temp;
+                keyInfoDic[selectedAndAlreadyID.second].Set(KeySetting.keyDict[sameKeyAction]);
             }
 
-            Debug.Log(((KeyAction)changingKey).ToString() + " : " + keyEvent.keyCode.ToString());
+            keyInfoDic[selectedAndAlreadyID.first].Set(keyEvent.keyCode);
             CancelKeySetting();
         }
     }
@@ -84,6 +101,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         {
             if (KeySetting.keyDict[key] == keyCode)
             {
+                selectedAndAlreadyID.second = (int)key;
                 return (key,(int)key);
             }
         }
@@ -91,10 +109,11 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         return (KeyAction.NULL,-1);
     }
 
-    public void ChangeUserCustomKey(int key) //키셋 변경 버튼 클릭
+    public void ChangeUserCustomKey(int key, int id) //키셋 변경 버튼 클릭
     {
         changingKey = key;
         clickPrevPanel.SetActive(true);
+        selectedAndAlreadyID.first = id;
     }
 
     public void CancelKeySetting()  //키셋 변경 취소
@@ -104,6 +123,8 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
             UIManager.Instance.PreventItrUI(0.5f);
             changingKey = -1;
             clickPrevPanel.SetActive(false);
+            selectedAndAlreadyID.first = -1;
+            selectedAndAlreadyID.second = -1;
         }
     }
 

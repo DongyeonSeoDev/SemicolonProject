@@ -264,24 +264,20 @@ public class CookingManager : MonoSingleton<CookingManager>
     {
         if (!isTestMode) return;
 
-        if(Input.GetKeyDown(KeyCode.LeftAlt))
+        if (Input.GetKeyDown(KeyCode.LeftAlt))
         {
             gm.AddItem(testItemInfo);
         }
-        else if(Input.GetKeyDown(KeyCode.LeftControl))
+        else if (Input.GetKeyDown(KeyCode.LeftControl))
         {
             Global.MonoActionTrigger(Global.TalkWithChef, testChef);
         }
         else if (Input.GetKeyDown(KeyCode.LeftShift))
         {
-            for(int i=0; i<=40; i+=5)
+            for (int i = 0; i <= 40; i += 5)
             {
                 Inventory.Instance.GetItem(new ItemInfo(i, 6));
             }
-        }
-        else if (Input.GetKeyDown(KeyCode.R))
-        {
-            UIManager.Instance.AllUIPositionReset();
         }
     }
 }
