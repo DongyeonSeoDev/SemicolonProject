@@ -8,14 +8,15 @@ public partial class EventManager
     private static Dictionary<string, Action<string, int>> str_int_eventDictionary = new Dictionary<string, Action<string, int>>();
     private static Dictionary<string, Action<Vector2>> vec2_EventDictionary = new Dictionary<string, Action<Vector2>>();
     private static Dictionary<string, Action<GameObject>> gmo_EventDictionary = new Dictionary<string, Action<GameObject>>();
+    private static Dictionary<string, Action<GameObject, int>> gmo_int_EventDictionary = new Dictionary<string, Action<GameObject, int>>();
 
     public static void StartListening(string eventName, Action listener)
     {
         Action thisEvent;
 
-        if (eventDictionary.TryGetValue(eventName, out thisEvent)) // °°Àº ÀÌ¸§ÀÇ DIctionaryÀÖ´ÂÁö Ã¼Å©
+        if (eventDictionary.TryGetValue(eventName, out thisEvent)) // ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ DIctionaryï¿½Ö´ï¿½ï¿½ï¿½ Ã¼Å©
         {
-            thisEvent += listener;                   // °°Àº ÀÌ¸§ÀÖÀ» ¶§ ±¸µ¶
+            thisEvent += listener;                   // ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             eventDictionary[eventName] = thisEvent;
         }
         else
@@ -27,9 +28,9 @@ public partial class EventManager
     {
         Action<string, int> thisEvent;
 
-        if (str_int_eventDictionary.TryGetValue(eventName, out thisEvent)) // °°Àº ÀÌ¸§ÀÇ DIctionaryÀÖ´ÂÁö Ã¼Å©
+        if (str_int_eventDictionary.TryGetValue(eventName, out thisEvent)) // ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ DIctionaryï¿½Ö´ï¿½ï¿½ï¿½ Ã¼Å©
         {
-            thisEvent += listener;                   // °°Àº ÀÌ¸§ÀÖÀ» ¶§ ±¸µ¶
+            thisEvent += listener;                   // ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             str_int_eventDictionary[eventName] = thisEvent;
         }
         else
@@ -41,9 +42,9 @@ public partial class EventManager
     {
         Action<Vector2> thisEvent;
 
-        if (vec2_EventDictionary.TryGetValue(eventName, out thisEvent)) // °°Àº ÀÌ¸§ÀÇ DIctionaryÀÖ´ÂÁö Ã¼Å©
+        if (vec2_EventDictionary.TryGetValue(eventName, out thisEvent)) // ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ DIctionaryï¿½Ö´ï¿½ï¿½ï¿½ Ã¼Å©
         {
-            thisEvent += listener;                   // °°Àº ÀÌ¸§ÀÖÀ» ¶§ ±¸µ¶
+            thisEvent += listener;                   // ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             vec2_EventDictionary[eventName] = thisEvent;
         }
         else
@@ -55,14 +56,28 @@ public partial class EventManager
     {
         Action<GameObject> thisEvent;
 
-        if (gmo_EventDictionary.TryGetValue(eventName, out thisEvent)) // °°Àº ÀÌ¸§ÀÇ DIctionaryÀÖ´ÂÁö Ã¼Å©
+        if (gmo_EventDictionary.TryGetValue(eventName, out thisEvent)) // ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ DIctionaryï¿½Ö´ï¿½ï¿½ï¿½ Ã¼Å©
         {
-            thisEvent += listener;                   // °°Àº ÀÌ¸§ÀÖÀ» ¶§ ±¸µ¶
+            thisEvent += listener;                   // ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             gmo_EventDictionary[eventName] = thisEvent;
         }
         else
         {
             gmo_EventDictionary.Add(eventName, listener);
+        }
+    }
+    public static void StartListening(string eventName, Action<GameObject, int> listener)
+    {
+        Action<GameObject, int> thisEvent;
+
+        if (gmo_int_EventDictionary.TryGetValue(eventName, out thisEvent)) // ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ DIctionaryï¿½Ö´ï¿½ï¿½ï¿½ Ã¼Å©
+        {
+            thisEvent += listener;                   // ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+            gmo_int_EventDictionary[eventName] = thisEvent;
+        }
+        else
+        {
+            gmo_int_EventDictionary.Add(eventName, listener);
         }
     }
 
@@ -122,6 +137,20 @@ public partial class EventManager
             gmo_EventDictionary.Remove(eventName);
         }
     }
+    public static void StopListening(string eventName, Action<GameObject, int> listener)
+    {
+        Action<GameObject, int> thisEvent;
+
+        if (gmo_int_EventDictionary.TryGetValue(eventName, out thisEvent))
+        {
+            thisEvent -= listener;
+            gmo_int_EventDictionary[eventName] = thisEvent;
+        }
+        else
+        {
+            gmo_int_EventDictionary.Remove(eventName);
+        }
+    }
     public static void TriggerEvent(string eventName)
     {
         Action thisEvent;
@@ -156,6 +185,15 @@ public partial class EventManager
         if (gmo_EventDictionary.TryGetValue(eventName, out thisEvent))
         {
             thisEvent?.Invoke(param);
+        }
+    }
+    public static void TriggerEvent(string eventName, GameObject gmo_param, int int_param)
+    {
+        Action<GameObject, int> thisEvent;
+
+        if (gmo_int_EventDictionary.TryGetValue(eventName, out thisEvent))
+        {
+            thisEvent?.Invoke(gmo_param, int_param);
         }
     }
 }
