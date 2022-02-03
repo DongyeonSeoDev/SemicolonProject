@@ -6,7 +6,7 @@ public class CinemachineCameraScript : MonoSingleton<CinemachineCameraScript>
     private CinemachineVirtualCamera cinemachine = null;
     private CinemachineConfiner cinemachineConfiner = null;
 
-    private Collider2D boundingCollider = null;
+    public Collider2D boundingCollider = null;
 
     void Start()
     {

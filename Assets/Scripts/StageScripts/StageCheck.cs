@@ -41,6 +41,8 @@ public class StageCheck : MonoBehaviour
                 doors[i].Open();
             }
         }
+
+        CinemachineCameraScript.Instance.SetCinemachineConfiner(CinemachineCameraScript.Instance.boundingCollider);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
