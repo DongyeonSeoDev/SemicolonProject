@@ -11,7 +11,7 @@ public class KeyInfoUI : MonoBehaviour
 
     public void Set(KeyAction keyAction, KeyCode keyCode, System.Action action)
     {
-        keyActionNameTxt.text = keyAction.ToString();
+        keyActionNameTxt.text = Global.ToKeyActionName(keyAction);
         keyCodeTxt.text = keyCode.ToString();
         btn.onClick.AddListener(()=>action());
         ID = (int)keyAction;

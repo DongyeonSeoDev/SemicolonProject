@@ -131,6 +131,8 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
     public void ResetKeySetting()  //키세팅 초기값으로 
     {
         KeySetting.SetDefaultKeySetting();
+        foreach (KeyAction action in KeySetting.keyDict.Keys)
+            keyInfoDic[(int)action].Set(KeySetting.keyDict[action]);
     }
 
     public void SaveKey()

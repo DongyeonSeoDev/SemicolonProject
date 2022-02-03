@@ -28,7 +28,7 @@ namespace Water
         public uint currentHp;
         public Stat playerStat = new Stat(); 
         public SaveDic<int, ItemInfo> userItems = new SaveDic<int, ItemInfo>(); //인벤토리 목록 
-        public SaveDic<string, float> monstersAssimilationRate = new SaveDic<string, float>(); //몬스터 동화율
+        public SaveDic<string, int> monstersAssimilationRate = new SaveDic<string, int>(); //몬스터 동화율
     }
 
     [Serializable]

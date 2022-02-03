@@ -49,7 +49,7 @@ public class ItemSlot : MonoBehaviour
         root.SetActive(true);
         button.interactable = true;
 
-        nifc.data = data;
+        nifc.explanation = data.itemName;
         nifc.transitionEnable = true;
     }
 

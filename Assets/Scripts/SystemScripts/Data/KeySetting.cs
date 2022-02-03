@@ -7,10 +7,10 @@ public static class KeySetting
 
     public static void SetDefaultKeySetting()
     {
-        keyDict.Add(KeyAction.INVENTORY, KeyCode.I);
-        keyDict.Add(KeyAction.STAT, KeyCode.T);
-        keyDict.Add(KeyAction.INTERACTION, KeyCode.F);
-        keyDict.Add(KeyAction.MANASTONE, KeyCode.E);
-        keyDict.Add(KeyAction.SPECIALATTACK, KeyCode.LeftShift);
+        keyDict[KeyAction.INVENTORY] = KeyCode.I;
+        keyDict[KeyAction.STAT] = KeyCode.T;
+        keyDict[KeyAction.INTERACTION] = KeyCode.F;
+        keyDict[KeyAction.MANASTONE] = KeyCode.E;
+        keyDict[KeyAction.SPECIALATTACK] = KeyCode.LeftShift;
     }
 }

@@ -1,10 +1,8 @@
-using UnityEngine;
-using Water;
 
+[UnityEngine.RequireComponent(typeof(UnityEngine.EventSystems.EventTrigger))]
 public class NameInfoFollowingCursor : UITransition
 {
-
-    [HideInInspector] public ItemSO data;
+    public string explanation;
 
     protected override void Awake()
     {
@@ -13,7 +11,7 @@ public class NameInfoFollowingCursor : UITransition
 
     public override void Transition(bool on)
     {
-        if (on && transitionEnable) UIManager.Instance.SetCursorInfoUI(data.itemName);
+        if (on && transitionEnable) UIManager.Instance.SetCursorInfoUI(explanation);
         else UIManager.Instance.OffCursorInfoUI();
     }
 }

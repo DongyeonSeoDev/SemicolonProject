@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7312177941013293947}
   - component: {fileID: 7312177941013293943}
   - component: {fileID: 7312177941013293944}
+  - component: {fileID: 5459103182628416211}
   m_Layer: 5
   m_Name: KeyButton
   m_TagString: Untagged
@@ -39,7 +40,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: -370.4, y: 0}
-  m_SizeDelta: {x: 472.77, y: 104.8}
+  m_SizeDelta: {x: 470, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7312177941013293945
 CanvasRenderer:
@@ -150,6 +151,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitionEnable: 1
   transitionColor: {r: 1, g: 0.16470589, b: 0.16470589, a: 0.27058825}
+--- !u!114 &5459103182628416211
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7312177941013293949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e667567d014ea8844a7a61bc1ea7229c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionEnable: 1
+  explanation: "\uD0A4 \uC9C0\uC815\uD558\uAE30"
 --- !u!1 &7312177941776442755
 GameObject:
   m_ObjectHideFlags: 0
@@ -217,7 +232,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: a8b7c2a7478093c4b839853acbc5396a, type: 3}
-    m_FontSize: 80
+    m_FontSize: 66
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
@@ -296,11 +311,11 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: a8b7c2a7478093c4b839853acbc5396a, type: 3}
-    m_FontSize: 62
+    m_FontSize: 56
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 10
-    m_MaxSize: 62
+    m_MaxSize: 66
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1

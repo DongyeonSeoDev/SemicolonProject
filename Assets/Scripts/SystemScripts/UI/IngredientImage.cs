@@ -33,7 +33,7 @@ public class IngredientImage : MonoBehaviour
 
         //nameText.text = ingr.ingredient.itemName;
         if(!nifc) nifc = GetComponent<NameInfoFollowingCursor>();
-        nifc.data = ingr.ingredient;
+        nifc.explanation = ingr.ingredient.itemName;
     }
 
     public void UpdateInfo()  //만들 개수 +하거나 -할 때
