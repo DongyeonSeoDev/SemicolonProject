@@ -76,6 +76,9 @@ namespace Water
                 case UIType.KEYSETTING:
                     DOMoveSequence(true);
                     break;
+                case UIType.RESOLUTION:
+                    DOMoveSequence(true);
+                    break;
 
                 case UIType.SETTING:
                     DOFadeAndDissolve(true);
@@ -132,6 +135,9 @@ namespace Water
                     break;
 
                 case UIType.KEYSETTING:
+                    DOMoveSequence(false);
+                    break;
+                case UIType.RESOLUTION:
                     DOMoveSequence(false);
                     break;
 

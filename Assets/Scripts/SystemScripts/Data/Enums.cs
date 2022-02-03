@@ -19,7 +19,8 @@ public enum UIType
     DEATH,
     CLEAR,
     SETTING,
-    KEYSETTING
+    KEYSETTING,
+    RESOLUTION
 }
 
 public enum KeyAction
