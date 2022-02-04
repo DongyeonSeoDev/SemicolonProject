@@ -8,7 +8,10 @@ public class PlayerDrain : MonoBehaviour
 
     [SerializeField]
     private GameObject drainCollider = null; // drain 체크에 사용될 Collider
+
     private List<(GameObject, int)> drainList = new List<(GameObject, int)>();
+
+    private Dictionary<GameObject, float> moveTimeDic = new Dictionary<GameObject, float>();
     private Dictionary<GameObject, float> moveTimerDic = new Dictionary<GameObject, float>();
 
     [Header("Drain되는 오브젝트가 빨려들어오는 속도")]
@@ -65,14 +68,19 @@ public class PlayerDrain : MonoBehaviour
 
             foreach (var item in drainList)
             {
-                Vector2 direction = transform.position - item.Item1.transform.position;
-                direction = direction.normalized;
+                // Vector2 direction = transform.position - item.Item1.transform.position;
+                // direction = direction.normalized;
 
                 // x.Item1.transform.Translate(direction * Time.deltaTime);
                 float distance = Vector2.Distance(transform.position, item.Item1.transform.position);
-                float moveTime = distance / drainSpeed;
 
-                item.Item1.transform.position = Vector2.Lerp(transform.position, direction, moveTimerDic[item.Item1] / moveTime);
+                if(!moveTimeDic.ContainsKey(item.Item1))
+                {
+                    moveTimeDic.Add(item.Item1, distance / drainSpeed);
+                }
+
+                item.Item1.transform.position = Vector2.Lerp(item.Item1.transform.position, transform.position, moveTimerDic[item.Item1] / moveTimeDic[item.Item1]);
+                Debug.Log(distance);
 
                 if (distance <= drainDoneDistance) // 흡수 판정 체크
                 {
@@ -87,6 +95,7 @@ public class PlayerDrain : MonoBehaviour
 
                     if (enemy != null)
                     {
+                        Debug.Log(distance);
                         enemy.EnemyDestroy();
 
                         continue;
@@ -100,6 +109,7 @@ public class PlayerDrain : MonoBehaviour
             }
 
             removeList.ForEach(x => {
+                moveTimeDic.Remove(x.Item1);
                 moveTimerDic.Remove(x.Item1);
                 drainList.Remove(x);
             });
