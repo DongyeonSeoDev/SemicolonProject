@@ -6,6 +6,8 @@ namespace Enemy
     {
         private EnemyCommand enemyAttackCommand;
 
+        private EnemyRushAttackCommand.RushAttackPosition rushAttackPosition = new EnemyRushAttackCommand.RushAttackPosition();
+
         protected override void OnEnable()
         {
             enemyData = new EnemyData()
@@ -32,7 +34,7 @@ namespace Enemy
                 hp = 50
             };
 
-            enemyAttackCommand = new EnemyRushAttackCommand(rb, transform, enemyData.PlayerObject.transform, enemyData.rushForce);
+            enemyAttackCommand = new EnemyRushAttackCommand(rb, rushAttackPosition, enemyData.rushForce);
 
             base.OnEnable();
         }
@@ -41,6 +43,11 @@ namespace Enemy
         {
             controller = enemyData.eEnemyController;
             damage = enemyData.attackDamage;
+        }
+
+        public void ReadyEnemyAttack()
+        {
+            rushAttackPosition.position = (enemyData.PlayerObject.transform.position - enemyData.enemyObject.transform.position).normalized;
         }
 
         public void EnemyAttack()

@@ -181,36 +181,26 @@ namespace Enemy
 
     public class EnemyRushAttackCommand : EnemyCommand
     {
-        private Rigidbody2D rigidboyd2D;
-        private Transform enemyTransform;
-        private Transform playerTransform;
+        public class RushAttackPosition
+        {
+            public Vector2 position;
+        }
 
-        private Vector2 targetPosition;
+        private Rigidbody2D rigidboyd2D;
+        private RushAttackPosition rushAttackPosition;
 
         private float rushForce;
-        private bool isReady;
 
-        public EnemyRushAttackCommand(Rigidbody2D rigid, Transform enemy, Transform player, float force)
+        public EnemyRushAttackCommand(Rigidbody2D rigid, RushAttackPosition attackPosition, float force)
         {
             rigidboyd2D = rigid;
-            enemyTransform = enemy;
-            playerTransform = player;
             rushForce = force;
-            isReady = false;
+            rushAttackPosition = attackPosition;
         }
 
         public override void Execute()
         {
-            if (!isReady)
-            {
-                isReady = true;
-                targetPosition = (playerTransform.position - enemyTransform.position).normalized;
-            }
-            else
-            {
-                isReady = false;
-                rigidboyd2D.AddForce(targetPosition * rushForce, ForceMode2D.Impulse);
-            }
+            rigidboyd2D.AddForce(rushAttackPosition.position * rushForce, ForceMode2D.Impulse);
         }
     }
 }
