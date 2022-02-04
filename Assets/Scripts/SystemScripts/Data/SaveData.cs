@@ -25,7 +25,7 @@ namespace Water
     [Serializable]
     public class UserInfo
     {
-        public uint currentHp;
+        public int currentHp;
         public Stat playerStat = new Stat(); 
         public SaveDic<int, ItemInfo> userItems = new SaveDic<int, ItemInfo>(); //인벤토리 목록 
         public SaveDic<string, int> monstersAssimilationRate = new SaveDic<string, int>(); //몬스터 동화율
@@ -36,8 +36,9 @@ namespace Water
     {
         public SaveDic<KeyAction, KeyCode> keyInputDict = new SaveDic<KeyAction, KeyCode>();
 
-        public Pair<float, float> screenWidthHeight = new Pair<float, float>();
-        public bool isFullScreen = true;
+        //해상도는 자동으로 저장됨
+        //public Pair<float, float> screenWidthHeight = new Pair<float, float>();
+        //public bool isFullScreen = true;
 
         public float masterSound = 0.5f;
         public float bgmSize = 0.6f;

@@ -178,7 +178,11 @@ public partial class UIManager : MonoSingleton<UIManager>
                     return true;
                 break;
             case UIType.SETTING:
-
+                for(int i=0; i<gameMenuList.Count; i++)
+                {
+                    if (gameMenuList[i].gameObject.activeSelf)
+                        return true;
+                }
                 break;
         }
         return false;

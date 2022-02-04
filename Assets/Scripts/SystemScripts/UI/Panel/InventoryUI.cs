@@ -1,7 +1,7 @@
 using UnityEngine.UI;
 using UnityEngine;
 
-public class InventoryUI : Water.GameUI
+public class InventoryUI : GameUI
 {
     [SerializeField] private RectMask2D rectMask;
 

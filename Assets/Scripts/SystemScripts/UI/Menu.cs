@@ -6,6 +6,11 @@ public class Menu : MonoBehaviour
 
     private void Awake()
     {
-        
+        menuType = GetComponent<GameUI>()._UItype;
+    }
+
+    private void Start()
+    {
+        UIManager.Instance.gameMenuList.Add(this);
     }
 }
