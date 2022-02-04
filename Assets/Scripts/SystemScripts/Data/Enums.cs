@@ -30,5 +30,6 @@ public enum KeyAction
     STAT,
     SPECIALATTACK,
     MANASTONE,
+    SETTING,
     NULL
 }

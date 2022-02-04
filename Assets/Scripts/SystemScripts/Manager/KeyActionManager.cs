@@ -45,6 +45,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
             if(!CanChangeKey(keyEvent.keyCode))
             {
                 UIManager.Instance.RequestSystemMsg("해당 키로는 변경할 수 없습니다.");
+                CancelKeySetting();
                 return;
             }
 

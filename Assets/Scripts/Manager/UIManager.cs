@@ -9,7 +9,7 @@ public partial class UIManager : MonoSingleton<UIManager>
 {
     #region 게임 UI 관리 변수들
     public List<GameUI> gameUIList = new List<GameUI>();
-    private List<GameUI> activeUIList = new List<GameUI>();
+    [SerializeField] private List<GameUI> activeUIList = new List<GameUI>();
 
     public Queue<bool> activeUIQueue = new Queue<bool>(); //어떤 UI가 켜지거나 꺼지는 애니메이션(트위닝) 진행 중에 다른 UI (비)활성화 막기 위한 변수
     #endregion
@@ -142,6 +142,10 @@ public partial class UIManager : MonoSingleton<UIManager>
         {
             OnUIInteract(UIType.STAT);
         }
+        else if(Input.GetKeyDown(KeySetting.keyDict[KeyAction.SETTING]))
+        {
+            OnUIInteract(UIType.SETTING);
+        }
     }
 
     #region UI (비)활성화 관련
@@ -173,7 +177,9 @@ public partial class UIManager : MonoSingleton<UIManager>
                 if (KeyActionManager.Instance.IsChangingKeySetting)
                     return true;
                 break;
-            
+            case UIType.SETTING:
+
+                break;
         }
         return false;
     }
