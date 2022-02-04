@@ -103,13 +103,18 @@ namespace Enemy
         {
             currentTime += Time.deltaTime;
 
-            base.Update();
+            if (enemyData.isDamaged)
+            {
+                ChangeState(new EnemyGetDamagedState(enemyData));
+            }
 
             if (currentTime >= enemyData.attackDelay)
             {
                 currentTime = 0f;
 
                 SpriteFlipCheck();
+
+                base.Update();
             }
         }
 
