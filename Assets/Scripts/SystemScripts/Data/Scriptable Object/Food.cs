@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Water;
+
 
 [CreateAssetMenu(fileName = "Food Data", menuName = "Scriptable Object/Food Data", order = int.MaxValue)]
 public class Food : ItemSO

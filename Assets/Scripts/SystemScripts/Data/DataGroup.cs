@@ -38,6 +38,23 @@ public class ItemInfo
     }
 }
 
+[Serializable]
+public class NoticeUISet
+{
+    public string msg;
+    public float fontSize;
+    public Color[] colors;
+    public Action endAction;
+
+    public NoticeUISet(string msg, float fontSize, Color[] colors, Action endAction)
+    {
+        this.msg = msg;
+        this.fontSize = fontSize;
+        this.colors = colors;
+        this.endAction = endAction;
+    }
+}
+
 public class ActionGroup
 {
     public Action voidAction;

@@ -1,3 +1,0 @@
-ESC: Back, Quit panel  --> fix key
-I: Inventory
-T: Stat

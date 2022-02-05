@@ -73,6 +73,8 @@ public partial class UIManager : MonoSingleton<UIManager>
         PoolManager.CreatePool(systemMsgPrefab, systemMsgParent, 5, "SystemMsg");
         PoolManager.CreatePool(npcNameUIPrefab, npcUICvsTrm, 2, "NPCNameUI");
         PoolManager.CreatePool(acquisitionTxtPrefab, acquisitionTxtParent, 5, "AcquisitionMsg");
+        PoolManager.CreatePool(noticeUIPair.first, noticeUIPair.second, 2, "NoticeMsg");
+        noticeMsgGrd = noticeUIPair.first.GetComponent<NoticeMsg>().msgTmp.colorGradient;
     }
 
     private void Start()
@@ -119,6 +121,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     {
         UserInput();
         CursorInfo();
+        Notice();
     }
 
     private void UserInput()

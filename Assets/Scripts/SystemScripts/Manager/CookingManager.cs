@@ -14,7 +14,7 @@ public class CookingManager : MonoSingleton<CookingManager>
 
     public Chef testChef;
 
-    [SerializeField] private bool isTestMode = true;
+    [SerializeField] private bool isTestMode = false;
 
     #endregion
 

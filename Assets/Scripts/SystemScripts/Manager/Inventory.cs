@@ -171,8 +171,7 @@ public class Inventory : MonoSingleton<Inventory>
                 return;
             }
         }
-        item.gameObject.SetActive(false);
-        GameManager.Instance.droppedItemList.Remove(item);
+        
     }
 
     public void GetItem(ItemInfo item) //æ∆¿Ã≈€ »πµÊ«ﬂ¿ª ∂ß

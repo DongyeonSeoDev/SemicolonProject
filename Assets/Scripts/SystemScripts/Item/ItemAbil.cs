@@ -1,5 +1,22 @@
 using UnityEngine;
-using Water;
+
+public static class ItemUseMng
+{
+    //private static Player player;
+
+    public static void IncreaseMaxHP(Player p, int value)
+    {
+        p.PlayerStat.additionalEternalStat.maxHp += value;
+        UIManager.Instance.UpdatePlayerHPUI();
+        UIManager.Instance.InsertNoticeQueue("ÃÖ´ë HP " + value + " »ó½Â");
+    }
+
+    public static void IncreaseStr(Player p, int value)
+    {
+        p.PlayerStat.additionalEternalStat.damage += value;
+        UIManager.Instance.InsertNoticeQueue("°ø°Ý·Â " + value + " »ó½Â");
+    }
+}
 
 public abstract class ItemAbil
 {
@@ -15,7 +32,7 @@ public class JellyBomb : ItemAbil
 {
     public override void Use()
     {
-        SlimePlayer.PlayerStat.additionalEternalStat.damage += 3;
+        ItemUseMng.IncreaseStr(SlimePlayer,3);
     }
 }
 
@@ -23,8 +40,7 @@ public class LizardGrilledwholemeat : ItemAbil
 {
     public override void Use()
     {
-        SlimePlayer.PlayerStat.additionalEternalStat.hp += 10;
-        UIManager.Instance.UpdatePlayerHPUI();
+        ItemUseMng.IncreaseMaxHP(SlimePlayer,10);
     }
 }
 
@@ -32,8 +48,7 @@ public class MouseTailJelly : ItemAbil
 {
     public override void Use()
     {
-        SlimePlayer.PlayerStat.additionalEternalStat.hp += 5;
-        UIManager.Instance.UpdatePlayerHPUI();
+        ItemUseMng.IncreaseMaxHP(SlimePlayer, 5);
     }
 }
 
@@ -41,6 +56,6 @@ public class SlimeJelly : ItemAbil
 {
     public override void Use()
     {
-        SlimePlayer.PlayerStat.additionalEternalStat.damage += 1;
+        ItemUseMng.IncreaseStr(SlimePlayer, 1);
     }
 }

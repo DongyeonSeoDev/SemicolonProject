@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using DG.Tweening;
-using Water;
 
 //[AddComponentMenu("Custom/UIPointerScaleRepeat")]
 [RequireComponent(typeof(EventTrigger))]

@@ -1,13 +1,12 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using DG.Tweening;
-using Water;
 
 //[AddComponentMenu("Custom/UIPointerScale")]
 [RequireComponent(typeof(EventTrigger))]
 public class UIScale : UITransition
 {
-    public float transitionTime = 0.5f;
+    public float transitionTime = 0.3f;
     public Vector3 targetScale = new Vector3(1.2f, 1.2f, 1.2f);
 
     protected override void Awake()

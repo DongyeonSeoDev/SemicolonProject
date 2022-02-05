@@ -111,6 +111,12 @@ public partial class GameManager : MonoSingleton<GameManager>
             }
         }
 
+        Global.AddMonoAction(Global.AcquisitionItem, item =>
+        {
+            item.gameObject.SetActive(false);
+            droppedItemList.Remove((Item)item);
+        });
+
         PoolManager.CreatePool(itemPrefab, transform, 6, "Item");
         PoolManager.CreatePool(itemCloneEffectPrefab, transform, 6, "ItemFollowEffect");
 

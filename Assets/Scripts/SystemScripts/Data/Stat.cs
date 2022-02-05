@@ -8,9 +8,9 @@ public class Stat
     public ChoiceStat choiceStat = new ChoiceStat();
 
     #region default stat + additional stat  property
-    public int Hp
+    public int Hp  //나중에 이름을 MaxHp로 바꿀 것
     {
-        get { return eternalStat.hp + additionalEternalStat.hp; }
+        get { return eternalStat.maxHp + additionalEternalStat.maxHp; }
     }
     public int Damage
     {
@@ -46,7 +46,7 @@ public class Stat
 [Serializable]
 public class EternalStat
 {
-    public int hp;
+    public int maxHp;
     //public int mp;
 
     public int damage;
@@ -62,7 +62,7 @@ public class EternalStat
 
     public void SetDefaultStat()
     {
-        hp = 100;
+        maxHp = 100;
         damage = 10;
         defense = 2;
 

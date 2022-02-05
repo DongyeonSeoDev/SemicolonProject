@@ -1,5 +1,4 @@
 using UnityEngine;
-using Water;
 
 [CreateAssetMenu(fileName = "Ingredient Data", menuName = "Scriptable Object/Ingredient Data", order = int.MaxValue)]
 public class Ingredient : ItemSO
