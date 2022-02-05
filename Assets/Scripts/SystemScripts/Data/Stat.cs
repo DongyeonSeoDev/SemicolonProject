@@ -46,6 +46,7 @@ public class Stat
 [Serializable]
 public class EternalStat
 {
+    //public int currentHp;
     public int maxHp;
     //public int mp;
 
@@ -60,13 +61,16 @@ public class EternalStat
     public float criticalRate;
     public float criticalDamage;
 
-    public void SetDefaultStat()
+    public void SetDefaultStat() //½ºÅÈ ±âº»°ª
     {
         maxHp = 100;
         damage = 10;
+        intellect = 1;
         defense = 2;
 
         speed = 8f;
+        criticalRate = 5;
+        criticalDamage = 1;
     }
 }
 
