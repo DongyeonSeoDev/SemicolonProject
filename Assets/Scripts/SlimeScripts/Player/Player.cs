@@ -31,7 +31,7 @@ public class Player : MonoBehaviour
         playerStat.additionalEternalStat = new EternalStat();
 
         playerState.IsDead = false;
-        currentHp = playerStat.Hp;
+        currentHp = playerStat.MaxHp;
 
         UIManager.Instance.UpdatePlayerHPUI();
 
@@ -96,7 +96,7 @@ public class Player : MonoBehaviour
         playerStat.additionalEternalStat = new EternalStat();
 
         playerState.IsDead = false;
-        currentHp = playerStat.Hp;
+        currentHp = playerStat.MaxHp;
 
         UIManager.Instance.UpdatePlayerHPUI();
 

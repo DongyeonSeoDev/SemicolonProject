@@ -8,7 +8,7 @@ public class Stat
     public ChoiceStat choiceStat = new ChoiceStat();
 
     #region default stat + additional stat  property
-    public int Hp  //나중에 이름을 MaxHp로 바꿀 것
+    public int MaxHp  
     {
         get { return eternalStat.maxHp + additionalEternalStat.maxHp; }
     }
