@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using Water;
 using System;
+using UnityEngine.Events;
 
 public partial class UIManager : MonoSingleton<UIManager>
 {
@@ -16,7 +17,6 @@ public partial class UIManager : MonoSingleton<UIManager>
     public Pair<GameObject, Transform> noticeUIPair;
 
     public VertexGradient noticeMsgGrd;
-
 
     private void Notice()
     {

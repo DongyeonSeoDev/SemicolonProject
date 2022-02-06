@@ -10009,6 +10009,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 382c6a5a4f8e3f24c8811c28baa00dbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isHidenName: 0
   objName: "\uC694\uB9AC\uC0AC \uC950"
   uiOffset: {x: 0, y: -1, z: 0}
   npcUI: {fileID: 0}

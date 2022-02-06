@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 [Serializable]
 public class IngredientCount
@@ -22,6 +23,34 @@ public class Pair<T,U>
         first = t;
         second = u;
     }
+}
+
+[Serializable]
+public class Triple<A,B,C>
+{
+    public A first;
+    public B second;
+    public C third;
+
+    public Triple() { }
+    public Triple(A a, B b, C c)
+    {
+        first = a;
+        second = b;
+        third = c;
+    }
+}
+
+[Serializable]
+public class GameUIFields
+{
+    public RectTransform rectTrm;
+    public Vector3 originPos;
+    public CanvasGroup cvsg;
+    public UIType _UItype;
+    public GameUI childGameUI;
+    public Transform transform;
+    public GameUI self;
 }
 
 [Serializable]
@@ -53,6 +82,25 @@ public class NoticeUISet
         this.colors = colors;
         this.endAction = endAction;
     }
+}
+
+[Serializable]
+public class NPCInfo
+{
+    public short id;
+    public short talkId;
+
+    public string npcName;
+    public List<Pair<List<string>, List<TalkEffect>>> talkContents; 
+}
+
+[Serializable]
+public class TalkEffect
+{
+    //example
+    public Sprite npcTalkSpr;
+    public AudioClip talkSound;
+    public UnityEvent talkEvent;
 }
 
 public class ActionGroup

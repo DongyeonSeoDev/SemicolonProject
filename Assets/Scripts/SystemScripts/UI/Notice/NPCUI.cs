@@ -3,11 +3,11 @@ using UnityEngine.UI;
 
 public class NPCUI : MonoBehaviour
 {
-    private NPC npc;
+    private InteractionObj npc;
 
     public Text nameText;
 
-    public void Set(NPC npc)
+    public void Set(InteractionObj npc)
     {
         this.npc = npc;
         nameText.text = npc.ObjName;
