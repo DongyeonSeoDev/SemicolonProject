@@ -395,7 +395,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     {
         Stat stat = sgm.Player.PlayerStat;
 
-        statTexts[0].text = string.Concat(Mathf.Clamp(sgm.Player.CurrentHp, 0, stat.Hp), '/', stat.Hp);
+        statTexts[0].text = string.Concat(Mathf.Clamp(sgm.Player.CurrentHp, 0, stat.MaxHp), '/', stat.MaxHp);
         statTexts[1].text = stat.Damage.ToString();
         statTexts[2].text = stat.Defense.ToString();
         statTexts[3].text = Mathf.RoundToInt(Mathf.Abs(stat.Speed)).ToString();
@@ -407,10 +407,10 @@ public partial class UIManager : MonoSingleton<UIManager>
     public void UpdatePlayerHPUI()
     {
         Player p = sgm.Player;
-        int hp = Mathf.Clamp(sgm.Player.CurrentHp, 0, p.PlayerStat.Hp);
+        int hp = Mathf.Clamp(sgm.Player.CurrentHp, 0, p.PlayerStat.MaxHp);
 
-        playerHPInfo.first.DOFillAmount((float)hp / p.PlayerStat.Hp, 0.3f);
-        playerHPInfo.second.text = string.Concat(hp, '/', p.PlayerStat.Hp);
+        playerHPInfo.first.DOFillAmount((float)hp / p.PlayerStat.MaxHp, 0.3f);
+        playerHPInfo.second.text = string.Concat(hp, '/', p.PlayerStat.MaxHp);
     }
     #endregion
 }
