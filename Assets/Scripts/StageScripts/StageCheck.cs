@@ -5,6 +5,7 @@ public class StageCheck : MonoBehaviour
     private Collider2D col;
 
     public Door[] doors;
+    public Collider2D camStageCollider;
 
     public int enemyCount;
     public int stageNumber;
@@ -16,7 +17,7 @@ public class StageCheck : MonoBehaviour
 
     private void Start()
     {
-        EventManager.StartListening("PlayerDead", () =>
+        EventManager.StartListening("AfterPlayerRespawn", () =>
         {
             col.enabled = true;
 
@@ -40,6 +41,8 @@ public class StageCheck : MonoBehaviour
                 doors[i].Open();
             }
         }
+
+        CinemachineCameraScript.Instance.SetCinemachineConfiner(CinemachineCameraScript.Instance.boundingCollider);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -60,6 +63,8 @@ public class StageCheck : MonoBehaviour
             }
 
             col.enabled = false;
+
+            CinemachineCameraScript.Instance.SetCinemachineConfiner(camStageCollider);
         }
     }
 }

@@ -5,6 +5,7 @@ namespace Enemy
     public class EnemyBullet : PoolManager
     {
         public float speed;
+        private float angle;
 
         public Vector2 limitMaxPosition;
         public Vector2 limitMinPosition;
@@ -73,6 +74,9 @@ namespace Enemy
             eEnemyController = controller;
             attackDamage = damage;
             targetDirection = direction;
+
+            angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
+            transform.rotation = Quaternion.Euler(0f, 0f, angle - 90f);
         }
     }
 }

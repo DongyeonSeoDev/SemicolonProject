@@ -11,21 +11,38 @@ namespace Enemy
 
         protected EnemyData enemyData;
         protected SpriteRenderer sr;
+        protected Animator anim;
+        protected Rigidbody2D rb;
 
         private EnemyState currentState;
 
         private float lastPositionX;
 
+        protected virtual void Awake()
+        {
+            anim = GetComponent<Animator>();
+            sr = GetComponent<SpriteRenderer>();
+            rb = GetComponent<Rigidbody2D>();
+        }
+
+        private void Start()
+        {
+            EventManager.StartListening("PlayerDead", () =>
+            {
+                currentState = null;
+                enemyData.enemyAnimator.enabled = false;
+            });
+        }
+
         protected virtual void OnEnable()
         {
-            sr = enemyData.enemySpriteRenderer;
+            enemyData.enemyAnimator.enabled = true;
             currentState = new EnemyIdleState(enemyData);
             lastPositionX = transform.position.x + Mathf.Infinity;
 
             enemyData.hpBarFillImage.fillAmount = (float)enemyData.hp / enemyData.maxHP;
             enemyData.enemyAnimator.SetTrigger(enemyData.hashReset);
             enemyData.enemyAnimator.SetBool(enemyData.hashIsDead, false);
-            enemyData.enemySpriteRenderer.enabled = true;
         }
 
         private void Update()

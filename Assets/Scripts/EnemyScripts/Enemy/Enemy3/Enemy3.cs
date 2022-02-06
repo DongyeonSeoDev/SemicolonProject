@@ -5,7 +5,8 @@ namespace Enemy
     public class Enemy3 : Enemy
     {
         private EnemyCommand enemyAttackCommand;
-        private Rigidbody2D rb2d;
+
+        private EnemyRushAttackCommand.RushAttackPosition rushAttackPosition = new EnemyRushAttackCommand.RushAttackPosition();
 
         protected override void OnEnable()
         {
@@ -15,9 +16,9 @@ namespace Enemy
                 enemyObject = gameObject,
                 enemyMoveSO = enemyMoveSO,
                 enemyLootList = enemyLootListSO,
-                enemyAnimator = GetComponent<Animator>(),
-                enemySpriteRenderer = GetComponent<SpriteRenderer>(),
-                enemyRigidbody2D = GetComponent<Rigidbody2D>(),
+                enemyAnimator = anim,
+                enemySpriteRenderer = sr,
+                enemyRigidbody2D = rb,
                 hpBarFillImage = hpBarFillImage,
                 normalColor = Color.white,
                 damagedColor = Color.red,
@@ -33,9 +34,7 @@ namespace Enemy
                 hp = 50
             };
 
-            rb2d = GetComponent<Rigidbody2D>();
-
-            enemyAttackCommand = new EnemyRushAttackCommand(rb2d, transform, enemyData.PlayerObject.transform, enemyData.rushForce);
+            enemyAttackCommand = new EnemyRushAttackCommand(rb, rushAttackPosition, enemyData.rushForce);
 
             base.OnEnable();
         }
@@ -44,6 +43,11 @@ namespace Enemy
         {
             controller = enemyData.eEnemyController;
             damage = enemyData.attackDamage;
+        }
+
+        public void ReadyEnemyAttack()
+        {
+            rushAttackPosition.position = (enemyData.PlayerObject.transform.position - enemyData.enemyObject.transform.position).normalized;
         }
 
         public void EnemyAttack()
