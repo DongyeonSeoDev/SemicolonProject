@@ -72,7 +72,7 @@ public class CookingManager : MonoSingleton<CookingManager>
         countPlusBtn.onClick.AddListener(() => ChangeMakeFoodCount(true));
         countMinusBtn.onClick.AddListener(() => ChangeMakeFoodCount(false));
 
-        Global.AddMonoAction(Global.TalkWithChef, x => ((NPC)x).Interaction());
+        Global.AddMonoAction(Global.TalkWithChef, x => ShowFoodList((Chef)x));
         Global.AddAction(Global.MakeFood, item =>
         {
             selectedFoodIngrImgs.ForEach(x => 
@@ -93,13 +93,14 @@ public class CookingManager : MonoSingleton<CookingManager>
                     MakeFoodInfoUIReset();
                     CheckCannotMakeFoods();
                     SortMakeFoods();
-                }, 0.5f, this);
+                }, 0.5f, this, true);
             }
         });
     }
 
     public void ShowFoodList(Chef currentChef) //대화한 요리사가 만들 수 있는 음식 리스트 표시
     {
+        Time.timeScale = 0;
         NpcNameTxt.SetText(currentChef.ObjName);
         foodBtnList.ForEach(x => x.gameObject.SetActive(false));
         currentChef.CanFoodList.ForEach(x =>

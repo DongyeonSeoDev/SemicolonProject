@@ -24,6 +24,8 @@ public partial class UIManager : MonoSingleton<UIManager>
     private bool isOnCursorInfo = false;  //마우스 따라다니는 정보 텍스트 활성화 상태인가
     private float sw; //cursorImgRectTrm의 처음 너비(최소 너비)
     public float widthOffset = 39;  //마우스 따라다니는 정보 텍스트에서 이미지 너비 키울때 글자당 키울 길이
+
+    private Pair<float, float> screenHalf = new Pair<float, float>();
     #endregion
 
     #region Inventory Item Detail View
@@ -84,7 +86,8 @@ public partial class UIManager : MonoSingleton<UIManager>
 
         DefineAction();
 
-
+        screenHalf.first = Screen.width * 0.5f;
+        screenHalf.second = Screen.height * 0.5f;
     }
 
     private void DefineAction()
@@ -209,7 +212,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     public void PreventItrUI(float time)
     {
         activeUIQueue.Enqueue(false);
-        Util.DelayFunc(() => activeUIQueue.Dequeue(), time, this);
+        Util.DelayFunc(() => activeUIQueue.Dequeue(), time, this, true);
     }
 
     void FilterStackUI(GameUI ui, bool add) //activeUIList에 넣거나 빼지 않는 UI들
@@ -231,6 +234,10 @@ public partial class UIManager : MonoSingleton<UIManager>
         {
             case UIType.STAT:
                 UpdateStatUI();
+                break;
+            case UIType.SETTING:
+                Time.timeScale = 0;
+                //플레이어 움직임 막아야 함
                 break;
         }
     }
@@ -254,6 +261,12 @@ public partial class UIManager : MonoSingleton<UIManager>
                     selectedItemSlot = null;
                 }
                 break;
+            case UIType.SETTING:
+                Time.timeScale = 1;
+                break;
+            case UIType.CHEF_FOODS_PANEL:
+                Time.timeScale = 1;
+                break;
         }
     }
     #endregion
@@ -275,7 +288,10 @@ public partial class UIManager : MonoSingleton<UIManager>
     {
         if (isOnCursorInfo)
         {
-            cursorImgRectTrm.position = Input.mousePosition + cursorInfoImgOffset;
+            Vector3 mPos = Input.mousePosition;
+            cursorInfoImgOffset.x = mPos.x < screenHalf.first ? Mathf.Abs(cursorInfoImgOffset.x) : -Mathf.Abs(cursorInfoImgOffset.x);
+            cursorInfoImgOffset.y = mPos.y < screenHalf.second ? Mathf.Abs(cursorInfoImgOffset.y) : -Mathf.Abs(cursorInfoImgOffset.y);
+            cursorImgRectTrm.position = mPos + cursorInfoImgOffset;
         }
     }
 
@@ -287,7 +303,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         cursorInfoText.fontSize = fontSize;
 
         cursorImgRectTrm.sizeDelta = new Vector2(Mathf.Clamp(msg.Length * widthOffset, sw, 1000f), cursorImgRectTrm.rect.height);
-        cursorInfoImgOffset = new Vector3(cursorImgRectTrm.rect.width, -cursorImgRectTrm.rect.height) * 0.5f;
+        cursorInfoImgOffset = new Vector3(cursorImgRectTrm.rect.width, cursorImgRectTrm.rect.height) * 0.5f;
 
         cursorInfoImg.gameObject.SetActive(true);
     }

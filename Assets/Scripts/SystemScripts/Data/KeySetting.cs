@@ -11,6 +11,7 @@ public static class KeySetting
         keyDict[KeyAction.STAT] = KeyCode.T;
         keyDict[KeyAction.INTERACTION] = KeyCode.F;
         keyDict[KeyAction.MANASTONE] = KeyCode.E;
+        keyDict[KeyAction.DRAIN] = KeyCode.Q;
         keyDict[KeyAction.SPECIALATTACK] = KeyCode.LeftShift;
         keyDict[KeyAction.SETTING] = KeyCode.Tab;
     }

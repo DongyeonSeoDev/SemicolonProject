@@ -8,7 +8,7 @@ public class Chef : NPC    //요리사 스크립트          //쥐 - OpenGameArt_AntumDe
 
     public override void Interaction()
     {
-        CookingManager.Instance.ShowFoodList(this);
+        Global.MonoActionTrigger(Global.TalkWithChef, this);
     }
 
     /*private void Start()

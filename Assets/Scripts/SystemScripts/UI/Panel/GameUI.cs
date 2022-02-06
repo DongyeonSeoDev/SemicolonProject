@@ -57,7 +57,7 @@ public class GameUI : MonoBehaviour
             case UIType.COMBINATION:
                 cvsg.alpha = 0f;
                 transform.localScale = Global.onePointSix;
-                transform.DOScale(Vector3.one, Global.fullScaleTransitionTime03).SetEase(Ease.InExpo);
+                transform.DOScale(Vector3.one, Global.fullScaleTransitionTime03).SetEase(Ease.InExpo).SetUpdate(true);
                 cvsg.DOFade(1, Global.fullAlphaTransitionTime04).SetUpdate(true).OnComplete(() => UpdateUIStack());
                 break;
 
@@ -114,7 +114,7 @@ public class GameUI : MonoBehaviour
                 break;
 
             case UIType.COMBINATION:
-                transform.DOScale(Global.onePointSix, Global.fullScaleTransitionTime03).SetEase(Ease.OutQuad);
+                transform.DOScale(Global.onePointSix, Global.fullScaleTransitionTime03).SetEase(Ease.OutQuad).SetUpdate(true);
                 cvsg.DOFade(0, Global.fullAlphaTransitionTime04).SetUpdate(true).OnComplete(() => UpdateUIStack(false));
                 break;
 
