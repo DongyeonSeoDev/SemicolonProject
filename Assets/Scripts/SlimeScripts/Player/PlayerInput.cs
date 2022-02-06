@@ -74,7 +74,7 @@ public class PlayerInput : MonoBehaviour
                 lastMoveVector = moveVector;
             }
 
-            if (Input.GetButtonDown("BodySlap")) // left shift
+            if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.SPECIALATTACK])) // left shift
             {
                 isBodySlap = true;
             }
@@ -89,7 +89,7 @@ public class PlayerInput : MonoBehaviour
                 isDrain = true;
             }
 
-            if (Input.GetButtonDown("Interaction")) // e
+            if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.INTERACTION])) // e
             {
                 isInteraction = true;
             }
