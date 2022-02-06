@@ -25,8 +25,18 @@ namespace Enemy
             rb = GetComponent<Rigidbody2D>();
         }
 
+        private void Start()
+        {
+            EventManager.StartListening("PlayerDead", () =>
+            {
+                currentState = null;
+                enemyData.enemyAnimator.enabled = false;
+            });
+        }
+
         protected virtual void OnEnable()
         {
+            enemyData.enemyAnimator.enabled = true;
             currentState = new EnemyIdleState(enemyData);
             lastPositionX = transform.position.x + Mathf.Infinity;
 
