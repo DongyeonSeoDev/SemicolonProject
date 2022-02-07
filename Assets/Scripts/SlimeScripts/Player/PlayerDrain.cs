@@ -84,12 +84,12 @@ public class PlayerDrain : MonoBehaviour
 
                 if (distance <= drainDoneDistance) // 흡수 판정 체크
                 {
-                    string objName = item.Item1.name;
-
-                    PlayerEnemyUnderstandingRateManager.Instance.SetUnderstandingRate(objName,
-                     PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(objName) + item.Item2);
-
                     Enemy.Enemy enemy = item.Item1.GetComponent<Enemy.Enemy>();
+                    string objId = enemy.GetEnemyId();
+
+                    PlayerEnemyUnderstandingRateManager.Instance.SetUnderstandingRate(objId,
+                     PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(objId) + item.Item2);
+
 
                     removeList.Add(item);
 

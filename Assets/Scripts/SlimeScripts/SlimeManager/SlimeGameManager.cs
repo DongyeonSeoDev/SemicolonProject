@@ -6,7 +6,7 @@ using Water;
 
 public static partial class ScriptHelper
 {
-    
+
 }
 
 public class SlimeGameManager : MonoSingleton<SlimeGameManager>
@@ -29,23 +29,28 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             return player;
         }
     }
+    private GameObject currentPlayerBody = null;
+    public GameObject CurrentPlayerBody
+    {
+        get { return currentPlayerBody; }
+        set { currentPlayerBody = value; }
+    }
 
     private void Start()
     {
-        EventManager.StartListening("PlayerRespawn", PlayerRespawn);
+        EventManager.StartListening("PlayerRespawn", PlayerSpawn);
     }
     private void OnDisable()
     {
-        EventManager.StopListening("PlayerRespawn", PlayerRespawn);
+        EventManager.StopListening("PlayerRespawn", PlayerSpawn);
     }
 
-    private void PlayerRespawn(Vector2 respawnPosition)
+    private void PlayerSpawn(Vector2 spawnPosition)
     {
-        player.transform.position = respawnPosition;
+        player.transform.position = spawnPosition;
 
         player.gameObject.SetActive(true);
 
         player.WhenRespawn();
     }
-
 }

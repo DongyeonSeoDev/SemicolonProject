@@ -10,18 +10,18 @@ public class PlayerBodyChange : MonoBehaviour
     {
         playerEnemyUnderstandingRateManager = PlayerEnemyUnderstandingRateManager.Instance;
     }
-    public void BodyChange(string bodyName)
+    public void BodyChange(string bodyId)
     {
-        if(playerEnemyUnderstandingRateManager.GetUnderstandingRate(bodyName) >= 100f)
+        if(playerEnemyUnderstandingRateManager.GetUnderstandingRate(bodyId) >= 100f)
         {
-            ChangeBody(bodyName);
+            ChangeBody(bodyId);
         }
     }
-    private void ChangeBody(string bodyName)
+    private void ChangeBody(string bodyId)
     {
-        foreach(PlayerEnemyUnderstandingRateManager.ChangeBody item in playerEnemyUnderstandingRateManager.ChangableBodyList)
+        foreach(PlayerEnemyUnderstandingRateManager.ChangeBodyData item in playerEnemyUnderstandingRateManager.ChangableBodyList)
         {
-            if(item.bodyName == bodyName)
+            if(item.bodyId == bodyId)
             {
                 // body 변경 함수
 
