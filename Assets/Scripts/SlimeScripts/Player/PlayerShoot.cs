@@ -2,13 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerShoot : MonoBehaviour
+public class PlayerShoot : PlayerAction
 {
     private SlimePoolManager slimePoolManager = null;
-
-    private PlayerInput playerInput = null;
-    private PlayerState playerState = null;
-
 
     [SerializeField]
     private GameObject projectile = null;
@@ -16,12 +12,11 @@ public class PlayerShoot : MonoBehaviour
     [SerializeField]
     private float projectileSpeed = 1f;
 
-    private void Awake()
+    public override void Awake()
     {
         slimePoolManager = SlimePoolManager.Instance;
 
-        playerInput = GetComponent<PlayerInput>();
-        playerState = GetComponent<PlayerState>();
+        base.Awake();
     }
 
     void FixedUpdate()

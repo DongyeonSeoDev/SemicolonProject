@@ -22,7 +22,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
                 if (player == null)
                 {
-                    Debug.LogError("There is no playerStat!");
+                    Debug.LogError("There is no player!");
                 }
             }
 
@@ -38,19 +38,25 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
     private void Start()
     {
-        EventManager.StartListening("PlayerRespawn", PlayerSpawn);
+        EventManager.StartListening("PlayerRespawn", PlayerBodySpawn);
     }
     private void OnDisable()
     {
-        EventManager.StopListening("PlayerRespawn", PlayerSpawn);
+        EventManager.StopListening("PlayerRespawn", PlayerBodySpawn);
     }
 
-    private void PlayerSpawn(Vector2 spawnPosition)
+    private void PlayerBodySpawn(Vector2 spawnPosition)
     {
-        player.transform.position = spawnPosition;
-
+        
         player.gameObject.SetActive(true);
+        currentPlayerBody.SetActive(true);
+        
+        currentPlayerBody.transform.position = spawnPosition;
 
         player.WhenRespawn();
+    }
+    public void PlayerBodyDespawn()
+    {
+        currentPlayerBody.SetActive(false);
     }
 }

@@ -5,11 +5,11 @@ using UnityEngine;
 public class PlayerMove : PlayerAction
 {
     private Stat playerStat = null;
-    public override void Start()
+    public override void Awake()
     {
         playerStat = SlimeGameManager.Instance.Player.PlayerStat;
 
-        base.Start();
+        base.Awake();
     }
     
     private void FixedUpdate()

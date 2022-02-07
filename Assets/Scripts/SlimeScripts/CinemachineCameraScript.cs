@@ -16,11 +16,11 @@ public class CinemachineCameraScript : MonoSingleton<CinemachineCameraScript>
 
         EventManager.StartListening("PlayerDead", () =>
         {
-            SetCinemachineFollow(SlimeGameManager.Instance.Player.transform);
+            SetCinemachineFollow(SlimeGameManager.Instance.CurrentPlayerBody.transform);
             SetCinemachineConfiner(boundingCollider);
         });
 
-        SetCinemachineFollow(SlimeGameManager.Instance.Player.transform);
+        SetCinemachineFollow(SlimeGameManager.Instance.CurrentPlayerBody.transform);
         SetCinemachineConfiner(boundingCollider);
     }
 

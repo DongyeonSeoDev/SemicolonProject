@@ -2,9 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerDrain : MonoBehaviour
+public class PlayerDrain : PlayerAction
 {
-    private PlayerInput playerInput = null;
 
     [SerializeField]
     private GameObject drainCollider = null; // drain 체크에 사용될 Collider
@@ -26,9 +25,9 @@ public class PlayerDrain : MonoBehaviour
     private float reDrainTime = 10f;
     private float reDrainTimer = 0f;
 
-    void Start()
+    public override void Awake()
     {
-        playerInput = GetComponent<PlayerInput>();
+        base.Awake();
 
         EventManager.StartListening("OnDrain", OnDrain);
 

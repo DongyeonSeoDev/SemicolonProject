@@ -32,9 +32,9 @@ public class PlayerBodySlap : PlayerAction
     private bool bodySlapStart = false;
     private bool bodyStopBodySlapTimerStart = false;
 
-    public override void Start()
+    public override void Awake()
     {
-        base.Start();
+        base.Awake();
         playerStat = SlimeGameManager.Instance.Player.PlayerStat;
 
     }

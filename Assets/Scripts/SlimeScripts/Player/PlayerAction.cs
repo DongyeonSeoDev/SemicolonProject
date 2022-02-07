@@ -10,10 +10,10 @@ public abstract class PlayerAction : MonoBehaviour
     protected Rigidbody2D rigid = null;
     protected List<Rigidbody2D> childRigids = new List<Rigidbody2D>();
 
-    public virtual void Start()
+    public virtual void Awake()
     {
-        playerState = GetComponent<PlayerState>();
-        playerInput = GetComponent<PlayerInput>();
+        playerState = SlimeGameManager.Instance.Player.GetComponent<PlayerState>();
+        playerInput = SlimeGameManager.Instance.Player.GetComponent<PlayerInput>();
 
         rigid = GetComponent<Rigidbody2D>();
 
