@@ -22,6 +22,7 @@ namespace Enemy
                 hpBarFillImage = hpBarFillImage,
                 normalColor = Color.white,
                 damagedColor = Color.red,
+                enemyDeadEffectColor = Util.Change255To1Color(99f, 187f, 57f),
                 enemyId = "Slime_03",
                 isAnimation = false,
                 isEndAttackAnimation = true,

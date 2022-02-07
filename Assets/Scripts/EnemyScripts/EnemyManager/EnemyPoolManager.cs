@@ -11,7 +11,8 @@ namespace Enemy
         Rat_02,
         Slime_03,
         Bullet,
-        EnemyLoot
+        EnemyLoot,
+        DeadEffect
     }
 
     public class EnemyPoolManager : MonoBehaviour
