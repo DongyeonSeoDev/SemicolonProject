@@ -31,7 +31,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         Cursor.lockState = CursorLockMode.Confined;
         filePath = Util.GetFilePath(saveFileName_1);
         saveData = new SaveData();
-        //Load();
+        Load();
         Init();
     }
 
@@ -69,6 +69,17 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     private void SetData()
     {
+        {   //키세팅 정보 불러옴
+            if (saveData.option.keyInputDict.keyList.Count == 0)
+                KeySetting.SetDefaultKeySetting();
+            else
+            {
+                foreach (KeyAction key in saveData.option.keyInputDict.keyList)
+                {
+                    KeySetting.keyDict[key] = saveData.option.keyInputDict[key];
+                }
+            }
+        }
         //슬라임에게 스탯 데이터 넣기
         //옵션 설정 내용 넣기
         //아이템 정보 불러오기
@@ -78,6 +89,8 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     private void Init()
     {
+        saveData.userInfo = new UserInfo();
+
         List<Food> allFoods = new List<Food>(Resources.LoadAll<Food>(Global.foodDataPath));
         List<FoodButton> fbList = new List<FoodButton>();
         List<IngredientImage> igdImgList = new List<IngredientImage>();
@@ -98,18 +111,6 @@ public partial class GameManager : MonoSingleton<GameManager>
             igdImgList.Add(Instantiate(ingredientImgPrefab, ingredientImgParent).GetComponent<IngredientImage>());
         }
         Global.AddMonoAction("SetIngredientImgList", x => x.GetComponent<CookingManager>().IngredientImages = igdImgList);
-
-        { //나중에 이 부분 지우고 SetData함수로 ㄱ
-            if (saveData.option.keyInputDict.keyList.Count == 0)
-                KeySetting.SetDefaultKeySetting();
-            else
-            {
-                foreach(KeyAction key in saveData.option.keyInputDict.keyList)
-                {
-                    KeySetting.keyDict.Add(key, saveData.option.keyInputDict[key]);
-                }
-            }
-        }
 
         Global.AddMonoAction(Global.AcquisitionItem, item =>
         {
@@ -185,20 +186,20 @@ public partial class GameManager : MonoSingleton<GameManager>
     #region OnApplication
     private void OnApplicationQuit()
     {
-        //Save();
+        Save();
     }
     private void OnApplicationFocus(bool focus)
     {
         if (!focus)
         {
-            //Save();
+            Save();
         }
     }
     private void OnApplicationPause(bool pause)
     {
         if (pause)
         {
-            //Save();
+            Save();
         }
     }
     #endregion
