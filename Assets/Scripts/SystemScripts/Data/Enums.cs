@@ -29,6 +29,7 @@ public enum KeyAction
     INTERACTION,
     STAT,
     SPECIALATTACK,
+    DRAIN,
     MANASTONE,
     SETTING,
     NULL

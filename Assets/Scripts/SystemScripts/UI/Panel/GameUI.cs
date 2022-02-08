@@ -13,12 +13,18 @@ public class GameUI : MonoBehaviour
 
     public GameUI childGameUI;
 
+    private GameUIFields gameUIFields;
+
+    public GameUIFields UIFields { get { return gameUIFields; } }
+
     public void ResetPos() => rectTrm.anchoredPosition = originPos;
 
     private void Awake()
     {
         rectTrm = GetComponent<RectTransform>();
         originPos = rectTrm.anchoredPosition;
+        gameUIFields = new GameUIFields() 
+        { childGameUI = childGameUI, cvsg = cvsg, originPos = originPos, rectTrm = rectTrm, _UItype = _UItype, transform = transform, self = this };
     }
 
     /* private void OnEnable()
@@ -32,12 +38,13 @@ public class GameUI : MonoBehaviour
         switch (_UItype)
         {
             case UIType.CHEF_FOODS_PANEL:
-                DOScale(true);
-
+                //DOScale(true);
+                TweeningData.DOScale(gameUIFields, true);
                 break;
 
             case UIType.PRODUCTION_PANEL:
-                DOMove(true);
+                //DOMove(true);
+                TweeningData.DOMove(gameUIFields, true);
                 break;
 
             case UIType.INVENTORY:
@@ -47,41 +54,49 @@ public class GameUI : MonoBehaviour
                 break;
 
             case UIType.FOOD_DETAIL:
-                DOScale(true);
+                //DOScale(true);
+                TweeningData.DOScale(gameUIFields, true);
                 break;
 
             case UIType.ITEM_DETAIL:
-                DOMove(true);
+                //DOMove(true);
+                TweeningData.DOMove(gameUIFields, true);
                 break;
 
             case UIType.COMBINATION:
                 cvsg.alpha = 0f;
                 transform.localScale = Global.onePointSix;
-                transform.DOScale(Vector3.one, Global.fullScaleTransitionTime03).SetEase(Ease.InExpo);
+                transform.DOScale(Vector3.one, Global.fullScaleTransitionTime03).SetEase(Ease.InExpo).SetUpdate(true);
                 cvsg.DOFade(1, Global.fullAlphaTransitionTime04).SetUpdate(true).OnComplete(() => UpdateUIStack());
                 break;
 
             case UIType.DEATH:
-                DOFade(true);
+                //DOFade(true);
+                TweeningData.DOFade(gameUIFields, true);
                 break;
 
             case UIType.CLEAR:
-                DOFade(true);
+                //DOFade(true);
+                TweeningData.DOFade(gameUIFields, true);
                 break;
 
             case UIType.KEYSETTING:
-                DOMoveSequence(true);
+                //DOMoveSequence(true);
+                TweeningData.DOMoveSequence(gameUIFields, true);
                 break;
             case UIType.RESOLUTION:
-                DOMoveSequence(true);
+                //DOMoveSequence(true);
+                TweeningData.DOMoveSequence(gameUIFields, true);
                 break;
 
             case UIType.SETTING:
-                DOFadeAndDissolve(true);
+                //DOFadeAndDissolve(true);
+                TweeningData.DOFadeAndDissolve(gameUIFields, true);
                 break;
 
             default:
-                DOScale(true);
+                //DOScale(true);
+                TweeningData.DOScale(gameUIFields, true);
                 break;
         }
     }
@@ -91,13 +106,13 @@ public class GameUI : MonoBehaviour
         switch (_UItype)
         {
             case UIType.CHEF_FOODS_PANEL:
-
-                DOScale(false);
-
+                //DOScale(false);
+                TweeningData.DOScale(gameUIFields, false);
                 break;
 
             case UIType.PRODUCTION_PANEL:
-                DOMove(false);
+                //DOMove(false);
+                TweeningData.DOMove(gameUIFields, false);
                 break;
 
             case UIType.INVENTORY:
@@ -106,39 +121,47 @@ public class GameUI : MonoBehaviour
                 break;
 
             case UIType.FOOD_DETAIL:
-                DOScale(false);
+                //DOScale(false);
+                TweeningData.DOScale(gameUIFields, false);
                 break;
 
             case UIType.ITEM_DETAIL:
-                DOMove(false);
+                //DOMove(false);
+                TweeningData.DOMove(gameUIFields, false);
                 break;
 
             case UIType.COMBINATION:
-                transform.DOScale(Global.onePointSix, Global.fullScaleTransitionTime03).SetEase(Ease.OutQuad);
+                transform.DOScale(Global.onePointSix, Global.fullScaleTransitionTime03).SetEase(Ease.OutQuad).SetUpdate(true);
                 cvsg.DOFade(0, Global.fullAlphaTransitionTime04).SetUpdate(true).OnComplete(() => UpdateUIStack(false));
                 break;
 
             case UIType.DEATH:
-                DOFade(false);
+                //DOFade(false);
+                TweeningData.DOFade(gameUIFields, false);
                 break;
 
             case UIType.CLEAR:
-                DOFade(false);
+                //DOFade(false);
+                TweeningData.DOFade(gameUIFields, false);
                 break;
 
             case UIType.SETTING:
-                DOFadeAndDissolve(false);
+                //DOFadeAndDissolve(false);
+                TweeningData.DOFadeAndDissolve(gameUIFields, false);
                 break;
 
             case UIType.KEYSETTING:
-                DOMoveSequence(false);
+                //DOMoveSequence(false);
+                TweeningData.DOMoveSequence(gameUIFields, false);
                 break;
             case UIType.RESOLUTION:
-                DOMoveSequence(false);
+                //DOMoveSequence(false);
+                TweeningData.DOMoveSequence(gameUIFields, false);
                 break;
 
             default:
-                DOScale(false);
+                //DOScale(false);
+                TweeningData.DOScale(gameUIFields, false);
                 break;
         }
     }
@@ -148,7 +171,7 @@ public class GameUI : MonoBehaviour
         UIManager.Instance.UpdateUIStack(this, add);
     }
 
-    #region Æ®À§´× ÇÔ¼ö
+   /* #region Æ®À§´× ÇÔ¼ö
     protected void DOScale(bool active)
     {
         if (active)
@@ -212,7 +235,7 @@ public class GameUI : MonoBehaviour
             {
                 t += calc;
                 mat.SetFloat("_Fade", t);
-            }, 0, 0.6f, this, null, () => mat.SetFloat("_Fade", 1));
+            }, 0, 0.6f, this, null, () => mat.SetFloat("_Fade", 1), true);
         }
         else
         {
@@ -225,7 +248,7 @@ public class GameUI : MonoBehaviour
             {
                 t -= calc;
                 mat.SetFloat("_Fade", t);
-            }, 0, 0.4f, this, null, () => mat.SetFloat("_Fade", 0));
+            }, 0, 0.4f, this, null, () => mat.SetFloat("_Fade", 0), true);
         }
     }
 
@@ -260,5 +283,5 @@ public class GameUI : MonoBehaviour
             seq.AppendCallback(() => UpdateUIStack(false)).SetUpdate(true).Play();
         }
     }
-    #endregion
+    #endregion*/
 }

@@ -145,9 +145,9 @@ public static partial class Util
 
     public static string GetFilePath(string fileName) => string.Concat(Application.persistentDataPath, "/", fileName);
 
-    public static void DelayFunc(Action a, float delay, MonoBehaviour mono)
+    public static void DelayFunc(Action a, float delay, MonoBehaviour mono, bool realTime=false)
     {
-        mono.StartCoroutine(DelayFuncCo(a, delay));
+        mono.StartCoroutine(DelayFuncCo(a, delay,realTime));
     }
 
     public static Vector3 WorldToScreenPoint(Vector3 worldPos)
@@ -178,9 +178,12 @@ public static partial class Util
         return result;
     }
 
-    private static IEnumerator DelayFuncCo(Action func, float delay)
+    private static IEnumerator DelayFuncCo(Action func, float delay, bool realTime)
     {
-        yield return new WaitForSeconds(delay);
+        if (!realTime)
+            yield return new WaitForSeconds(delay);
+        else
+            yield return new WaitForSecondsRealtime(delay);
         func?.Invoke();
     }
 }

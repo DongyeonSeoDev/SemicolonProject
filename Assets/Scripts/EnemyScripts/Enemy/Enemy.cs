@@ -103,5 +103,10 @@ namespace Enemy
         {
             enemyData.isEnemyMove = true;
         }
+
+        public float EnemyHpPercent()
+        {
+            return ((float)enemyData.hp / enemyData.maxHP) * 100f;
+        }
     }
 }
