@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,30 +6,40 @@ using Water;
 
 public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnderstandingRateManager>
 {
+    [Serializable]
     public struct ChangeBodyData
     {
-        public string bodyId;
         public GameObject body;
         public Enemy.Enemy bodyScript;
     }
 
     private Dictionary<string, int> playerEnemyUnderStandingRateDic = new Dictionary<string, int>();
 
-    [Header("body부분만 채워주면, 나머진 자동으로 들어감")]
     [SerializeField]
-    private List<ChangeBodyData> changableBodyList = new List<ChangeBodyData>();
-    public List<ChangeBodyData> ChangableBodyList
+    private List<GameObject> changableBodyList = new List<GameObject>();
+    private Dictionary<string, GameObject> changableBodyDict = new Dictionary<string, GameObject>();
+    public Dictionary<string, GameObject> ChangalbeBodyDict
     {
-        get { return changableBodyList; }
+        get { return changableBodyDict; }
     }
 
     void Start()
     {
         // SetUnderstandingRate("Enemy", 0); // For Test
 
-        changableBodyList.ForEach(x => {
-           x.bodyScript = x.body.GetComponent<Enemy.Enemy>();
-           x.bodyId = x.bodyScript.GetEnemyId();
+        changableBodyDict.Clear();
+
+        Debug.Log("bbb");
+
+        changableBodyList.ForEach(x =>
+        {
+            Debug.Log(x.GetComponent<Enemy.Enemy>());
+            string enemyId = x.GetComponent<Enemy.Enemy>().GetEnemyId();
+            // x.bodyScript = x.body.GetComponent<Enemy.Enemy>();
+            changableBodyDict.Add(enemyId, x);
+            playerEnemyUnderStandingRateDic.Add(enemyId, 0);
+
+            // Debug.Log(enemyId);
         });
     }
     public void SetUnderstandingRate(string key, int value)
