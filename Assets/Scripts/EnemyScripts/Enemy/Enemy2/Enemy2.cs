@@ -21,7 +21,7 @@ namespace Enemy
                 damagedColor = Util.Change255To1Color(255f, 180f, 180f),
                 enemyDeadEffectColor = Util.Change255To1Color(155f, 173f, 183f),
                 normalColor = Color.white,
-                enemyId = "Rat_02",
+                enemyType = EnemyType.Rat_02,
                 isHitAnimation = true,
                 isAttackCommand = true,
                 isLongDistanceAttack = true,

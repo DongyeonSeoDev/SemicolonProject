@@ -11,6 +11,7 @@ public static partial class ScriptHelper
 
 public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 {
+    private PlayerEnemyUnderstandingRateManager playerEnemyUnderstandingRateManager = null;
     private Player player = null;
     public Player Player
     {
@@ -35,7 +36,10 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
         get { return currentPlayerBody; }
         set { currentPlayerBody = value; }
     }
-
+    private void Awake() 
+    {
+        playerEnemyUnderstandingRateManager = PlayerEnemyUnderstandingRateManager.Instance;
+    }
     private void Start()
     {
         EventManager.StartListening("PlayerRespawn", PlayerBodySpawn);
@@ -47,10 +51,9 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
     private void PlayerBodySpawn(Vector2 spawnPosition)
     {
-        
         player.gameObject.SetActive(true);
         currentPlayerBody.SetActive(true);
-        
+
         currentPlayerBody.transform.position = spawnPosition;
 
         player.WhenRespawn();
@@ -58,5 +61,18 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
     public void PlayerBodyDespawn()
     {
         currentPlayerBody.SetActive(false);
+    }
+    public void PlayerBodyChange(string bodyId)
+    {
+        if(playerEnemyUnderstandingRateManager.GetUnderstandingRate(bodyId) >= 100f)
+        {
+            Destroy(currentPlayerBody);
+
+            Instantiate(playerEnemyUnderstandingRateManager.ChangalbeBodyDict[bodyId], player.transform);
+        }
+        else
+        {
+            Debug.Log("Body Id: '" + bodyId + "' 로의 Body Change에 실패했습니다.");
+        }
     }
 }

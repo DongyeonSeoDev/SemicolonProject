@@ -23,7 +23,7 @@ namespace Enemy
                 normalColor = Color.white,
                 damagedColor = Color.red,
                 enemyDeadEffectColor = Util.Change255To1Color(99f, 187f, 57f),
-                enemyId = "Slime_03",
+                enemyType = EnemyType.Slime_03,
                 isAnimation = false,
                 isEndAttackAnimation = true,
                 isSeePlayerDistance = 20f,

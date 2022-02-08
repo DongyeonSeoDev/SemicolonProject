@@ -9,9 +9,17 @@ namespace Enemy
         PLAYER
     }
 
+    public enum EnemyType
+    {
+        Slime_01,
+        Rat_02,
+        Slime_03
+    }
+
     public class EnemyData
     {
         public EnemyController eEnemyController;
+        public EnemyType enemyType;
 
         public GameObject enemyObject;
         public EnemyMoveSO enemyMoveSO;
@@ -43,8 +51,6 @@ namespace Enemy
         public Color normalColor;
         public Color damagedColor;
         public Color enemyDeadEffectColor;
-
-        public string enemyId;
 
         public float chaseSpeed = 5f;
         public float isSeePlayerDistance = 5f;
