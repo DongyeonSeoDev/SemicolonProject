@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+#region Global
 public static partial class Global
 {
     public static float slideTransitionTime03 = 0.3f;
@@ -138,7 +139,9 @@ public static partial class Global
 
     public static void RemoveAllKeys() => stringToActionDict.Clear();
 }
+#endregion
 
+#region Util
 public static partial class Util
 {
     public static Camera mainCam;
@@ -159,7 +162,7 @@ public static partial class Util
         return mainCam.WorldToScreenPoint(worldPos);
     }
 
-    public static Pair<List<T>, List<T>> GetLists<T>(List<T> list, Func<T, bool> condition)  //리스트를 돌아서 해당 조건에 맞는 것들을 뽑아서 아닌 것들과 나눠서 리턴함
+    public static Pair<List<T>, List<T>> GetConditionedList<T>(List<T> list, Func<T, bool> condition)  //리스트를 돌아서 해당 조건에 맞는 것들을 뽑아서 아닌 것들과 나눠서 리턴함
     {
         Pair<List<T>, List<T>> result = new Pair<List<T>, List<T>>();
 
@@ -187,6 +190,7 @@ public static partial class Util
         func?.Invoke();
     }
 }
+#endregion
 
 public static partial class ScriptHelper
 {

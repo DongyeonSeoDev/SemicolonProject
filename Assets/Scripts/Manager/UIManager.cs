@@ -71,12 +71,18 @@ public partial class UIManager : MonoSingleton<UIManager>
         cursorImgRectTrm = cursorInfoImg.GetComponent<RectTransform>();
         sw = cursorImgRectTrm.rect.width;
 
+        CreatePool();
+        noticeMsgGrd = noticeUIPair.first.GetComponent<NoticeMsg>().msgTmp.colorGradient;
+    }
+
+    private void CreatePool()
+    {
         //UI관련 풀 생성
         PoolManager.CreatePool(systemMsgPrefab, systemMsgParent, 5, "SystemMsg");
         PoolManager.CreatePool(npcNameUIPrefab, npcUICvsTrm, 2, "NPCNameUI");
         PoolManager.CreatePool(acquisitionTxtPrefab, acquisitionTxtParent, 5, "AcquisitionMsg");
         PoolManager.CreatePool(noticeUIPair.first, noticeUIPair.second, 2, "NoticeMsg");
-        noticeMsgGrd = noticeUIPair.first.GetComponent<NoticeMsg>().msgTmp.colorGradient;
+        PoolManager.CreatePool(interactionMarkPair.first, interactionMarkPair.second, 2, "InteractionMark");
     }
 
     private void Start()
@@ -115,7 +121,8 @@ public partial class UIManager : MonoSingleton<UIManager>
         EventManager.StartListening("PlayerDead", () => OnUIInteract(UIType.DEATH, true));
         EventManager.StartListening("PlayerRespawn", Respawn);
         EventManager.StartListening("GameClear", () => OnUIInteract(UIType.CLEAR, true));
-
+        EventManager.StartListening("TimePause", () => Time.timeScale = 0 );
+        EventManager.StartListening("TimeResume", () => Time.timeScale = 1);
     }
 
     private void Respawn(Vector2 unusedValue) => OnUIInteract(UIType.DEATH, true);
@@ -236,8 +243,7 @@ public partial class UIManager : MonoSingleton<UIManager>
                 UpdateStatUI();
                 break;
             case UIType.SETTING:
-                Time.timeScale = 0;
-                //플레이어 움직임 막아야 함
+                EventManager.TriggerEvent("TimePause");
                 break;
         }
     }
@@ -262,10 +268,11 @@ public partial class UIManager : MonoSingleton<UIManager>
                 }
                 break;
             case UIType.SETTING:
-                Time.timeScale = 1;
+                EventManager.TriggerEvent("TimeResume");
+                itrNoticeList.ForEach(x => x.Set());
                 break;
             case UIType.CHEF_FOODS_PANEL:
-                Time.timeScale = 1;
+                EventManager.TriggerEvent("TimeResume");
                 break;
         }
     }

@@ -171,117 +171,119 @@ public class GameUI : MonoBehaviour
         UIManager.Instance.UpdateUIStack(this, add);
     }
 
-   /* #region 트위닝 함수
-    protected void DOScale(bool active)
-    {
-        if (active)
-        {
-            cvsg.alpha = 0f;
-            transform.localScale = Global.zeroPointSeven;
+    #region 주석
+    /* #region 트위닝 함수
+     protected void DOScale(bool active)
+     {
+         if (active)
+         {
+             cvsg.alpha = 0f;
+             transform.localScale = Global.zeroPointSeven;
 
-            transform.DOScale(Vector3.one, Global.fullScaleTransitionTime03).SetEase(Ease.OutBack).SetUpdate(true);
-            cvsg.DOFade(1, Global.fullAlphaTransitionTime04)
-            .SetUpdate(true).OnComplete(() => UpdateUIStack());
-        }
-        else
-        {
-            float time = Global.fullAlphaTransitionTime04;
-            transform.DOScale(Global.zeroPointSeven, time).SetEase(Ease.InBack).SetUpdate(true);
-            cvsg.DOFade(0, time).SetUpdate(true).OnComplete(() => UpdateUIStack(false));
-        }
-    }
+             transform.DOScale(Vector3.one, Global.fullScaleTransitionTime03).SetEase(Ease.OutBack).SetUpdate(true);
+             cvsg.DOFade(1, Global.fullAlphaTransitionTime04)
+             .SetUpdate(true).OnComplete(() => UpdateUIStack());
+         }
+         else
+         {
+             float time = Global.fullAlphaTransitionTime04;
+             transform.DOScale(Global.zeroPointSeven, time).SetEase(Ease.InBack).SetUpdate(true);
+             cvsg.DOFade(0, time).SetUpdate(true).OnComplete(() => UpdateUIStack(false));
+         }
+     }
 
-    protected void DOMove(bool active)
-    {
-        if (active)
-        {
-            cvsg.alpha = 0f;
-            rectTrm.anchoredPosition = new Vector2(originPos.x - 150f, originPos.y);
+     protected void DOMove(bool active)
+     {
+         if (active)
+         {
+             cvsg.alpha = 0f;
+             rectTrm.anchoredPosition = new Vector2(originPos.x - 150f, originPos.y);
 
-            rectTrm.DOAnchorPos(originPos, Global.slideTransitionTime03).SetUpdate(true);
-            cvsg.DOFade(1, Global.fullAlphaTransitionTime04)
-            .SetUpdate(true).OnComplete(() => UpdateUIStack());
-        }
-        else
-        {
-            rectTrm.DOAnchorPos(new Vector2(originPos.x - 150f, originPos.y), Global.slideTransitionTime03).SetUpdate(true);
-            cvsg.DOFade(0, Global.fullAlphaTransitionTime04).SetUpdate(true).OnComplete(() => UpdateUIStack(false));
-        }
-    }
+             rectTrm.DOAnchorPos(originPos, Global.slideTransitionTime03).SetUpdate(true);
+             cvsg.DOFade(1, Global.fullAlphaTransitionTime04)
+             .SetUpdate(true).OnComplete(() => UpdateUIStack());
+         }
+         else
+         {
+             rectTrm.DOAnchorPos(new Vector2(originPos.x - 150f, originPos.y), Global.slideTransitionTime03).SetUpdate(true);
+             cvsg.DOFade(0, Global.fullAlphaTransitionTime04).SetUpdate(true).OnComplete(() => UpdateUIStack(false));
+         }
+     }
 
-    protected void DOFade(bool active)
-    {
-        if (active)
-        {
-            cvsg.alpha = 0;
-            cvsg.DOFade(1, 2.3f).SetEase(Ease.Linear).SetUpdate(true).OnComplete(() => UpdateUIStack());
-        }
-        else
-        {
-            cvsg.DOFade(0, 1).SetEase(Ease.Linear).SetUpdate(true).OnComplete(() => UpdateUIStack(false));
-        }
-    }
+     protected void DOFade(bool active)
+     {
+         if (active)
+         {
+             cvsg.alpha = 0;
+             cvsg.DOFade(1, 2.3f).SetEase(Ease.Linear).SetUpdate(true).OnComplete(() => UpdateUIStack());
+         }
+         else
+         {
+             cvsg.DOFade(0, 1).SetEase(Ease.Linear).SetUpdate(true).OnComplete(() => UpdateUIStack(false));
+         }
+     }
 
-    protected void DOFadeAndDissolve(bool active)
-    {
-        if (active)
-        {
-            DOScale(true);
-            Material mat = GetComponent<Image>().material;
-            float t = 0f;
-            float calc = Time.deltaTime / 0.6f;
+     protected void DOFadeAndDissolve(bool active)
+     {
+         if (active)
+         {
+             DOScale(true);
+             Material mat = GetComponent<Image>().material;
+             float t = 0f;
+             float calc = Time.deltaTime / 0.6f;
 
-            Util.ExecuteFunc(() =>
-            {
-                t += calc;
-                mat.SetFloat("_Fade", t);
-            }, 0, 0.6f, this, null, () => mat.SetFloat("_Fade", 1), true);
-        }
-        else
-        {
-            DOScale(false);
-            Material mat = GetComponent<Image>().material;
-            float t = 1f;
-            float calc = Time.deltaTime / 0.4f;
+             Util.ExecuteFunc(() =>
+             {
+                 t += calc;
+                 mat.SetFloat("_Fade", t);
+             }, 0, 0.6f, this, null, () => mat.SetFloat("_Fade", 1), true);
+         }
+         else
+         {
+             DOScale(false);
+             Material mat = GetComponent<Image>().material;
+             float t = 1f;
+             float calc = Time.deltaTime / 0.4f;
 
-            Util.ExecuteFunc(() =>
-            {
-                t -= calc;
-                mat.SetFloat("_Fade", t);
-            }, 0, 0.4f, this, null, () => mat.SetFloat("_Fade", 0), true);
-        }
-    }
+             Util.ExecuteFunc(() =>
+             {
+                 t -= calc;
+                 mat.SetFloat("_Fade", t);
+             }, 0, 0.4f, this, null, () => mat.SetFloat("_Fade", 0), true);
+         }
+     }
 
-    protected void DOMoveSequence(bool active)
-    {
-        Sequence seq = DOTween.Sequence();
-        if (active)
-        {
-            cvsg.alpha = 0;
-            transform.localScale = Global.half;
-            rectTrm.anchoredPosition = new Vector2(originPos.x + 600f, originPos.y);
+     protected void DOMoveSequence(bool active)
+     {
+         Sequence seq = DOTween.Sequence();
+         if (active)
+         {
+             cvsg.alpha = 0;
+             transform.localScale = Global.half;
+             rectTrm.anchoredPosition = new Vector2(originPos.x + 600f, originPos.y);
 
-            seq.Append(childGameUI.cvsg.DOFade(0.4f, 0.5f))
-            .Join(childGameUI.transform.DOScale(Global.half, 0.5f))
-            .Join(childGameUI.rectTrm.DOAnchorPos(new Vector2(childGameUI.originPos.x - 600f, childGameUI.originPos.y), 0.5f));
+             seq.Append(childGameUI.cvsg.DOFade(0.4f, 0.5f))
+             .Join(childGameUI.transform.DOScale(Global.half, 0.5f))
+             .Join(childGameUI.rectTrm.DOAnchorPos(new Vector2(childGameUI.originPos.x - 600f, childGameUI.originPos.y), 0.5f));
 
-            seq.AppendInterval(0.2f);
-            seq.Append(childGameUI.cvsg.DOFade(0, 0.4f));
-            seq.Join(cvsg.DOFade(1, 0.5f)).Join(transform.DOScale(Vector3.one, 0.5f)).Join(rectTrm.DOAnchorPos(originPos, 0.3f));
-            seq.AppendCallback(() => { childGameUI.gameObject.SetActive(false); UpdateUIStack(); }).SetUpdate(true).Play();
-        }
-        else
-        {
-            childGameUI.gameObject.SetActive(true);
-            seq.Append(cvsg.DOFade(0.4f, 0.5f))
-            .Join(transform.DOScale(Global.half, 0.5f))
-            .Join(rectTrm.DOAnchorPos(new Vector2(originPos.x + 600f, originPos.y), 0.5f));
+             seq.AppendInterval(0.2f);
+             seq.Append(childGameUI.cvsg.DOFade(0, 0.4f));
+             seq.Join(cvsg.DOFade(1, 0.5f)).Join(transform.DOScale(Vector3.one, 0.5f)).Join(rectTrm.DOAnchorPos(originPos, 0.3f));
+             seq.AppendCallback(() => { childGameUI.gameObject.SetActive(false); UpdateUIStack(); }).SetUpdate(true).Play();
+         }
+         else
+         {
+             childGameUI.gameObject.SetActive(true);
+             seq.Append(cvsg.DOFade(0.4f, 0.5f))
+             .Join(transform.DOScale(Global.half, 0.5f))
+             .Join(rectTrm.DOAnchorPos(new Vector2(originPos.x + 600f, originPos.y), 0.5f));
 
-            seq.AppendInterval(0.2f);
-            seq.Append(cvsg.DOFade(0, 0.4f));
-            seq.Join(childGameUI.cvsg.DOFade(1, 0.5f)).Join(childGameUI.transform.DOScale(Vector3.one, 0.5f)).Join(childGameUI.rectTrm.DOAnchorPos(childGameUI.originPos, 0.3f));
-            seq.AppendCallback(() => UpdateUIStack(false)).SetUpdate(true).Play();
-        }
-    }
-    #endregion*/
+             seq.AppendInterval(0.2f);
+             seq.Append(cvsg.DOFade(0, 0.4f));
+             seq.Join(childGameUI.cvsg.DOFade(1, 0.5f)).Join(childGameUI.transform.DOScale(Vector3.one, 0.5f)).Join(childGameUI.rectTrm.DOAnchorPos(childGameUI.originPos, 0.3f));
+             seq.AppendCallback(() => UpdateUIStack(false)).SetUpdate(true).Play();
+         }
+     }
+     #endregion*/
+    #endregion
 }
