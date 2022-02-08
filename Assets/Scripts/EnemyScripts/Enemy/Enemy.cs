@@ -96,7 +96,7 @@ namespace Enemy
 
         public string GetEnemyId()
         {
-            return enemyData.enemyId;
+            return enemyData.enemyType.ToString();
         }
 
         public void MoveEnemy()
