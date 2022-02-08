@@ -17,13 +17,13 @@ public class PlayerInteractionCollider : MonoBehaviour
     {
         if (interactionableNPCLayer.CompareGameObjectLayer(other.gameObject))
         {
-            NPC target = other.GetComponent<NPC>();
+            InteractionObj target = other.GetComponent<InteractionObj>();
 
             if (target != null)
             {
                 playerInteraction.NearNPCList.Add(target);
  
-                target.SetUI(true); // NPC가 상호작용 범위 안에 들어갔을 때
+                target.SetInteractionUI(true); // NPC가 상호작용 범위 안에 들어갔을 때
             }
         }
     }
@@ -37,7 +37,7 @@ public class PlayerInteractionCollider : MonoBehaviour
             {
                 playerInteraction.NearNPCList.Remove(target);
 
-                target.SetUI(false); // NPC가 상호작용 범위에서 벗어났을 때
+                target.SetInteractionUI(false); // NPC가 상호작용 범위에서 벗어났을 때
             }
         }
     }

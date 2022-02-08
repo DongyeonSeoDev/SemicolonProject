@@ -50,6 +50,7 @@ public class PlayerInput : MonoBehaviour
         get { return isDrain; }
         set { isDrain = value; }
     }
+    private bool isPause = false;
 
     private void Start()
     {
@@ -57,10 +58,20 @@ public class PlayerInput : MonoBehaviour
 
         lastMoveVector = Vector2.left;
     }
+    private void OnEnable()
+    {
+        EventManager.StartListening("TimePause", TimePause);
+        EventManager.StartListening("TimeResume", TimeResume);
+    }
+    private void OnDisable()
+    {
+        EventManager.StopListening("TimePause", TimePause);
+        EventManager.StopListening("TimeResume", TimeResume);
+    }
 
     void Update()
     {
-        if (!playerState.IsDead)
+        if (!playerState.IsDead && !isPause)
         {
             mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
@@ -111,5 +122,13 @@ public class PlayerInput : MonoBehaviour
             playerState.BodySlapping = true;
             isBodySlap = false;
         }
+    }
+    private void TimePause()
+    {
+        isPause = true;
+    }
+    private void TimeResume()
+    {
+        isPause = false;
     }
 }
