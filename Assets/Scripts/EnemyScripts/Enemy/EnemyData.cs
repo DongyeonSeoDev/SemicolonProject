@@ -42,6 +42,7 @@ namespace Enemy
 
         public Color normalColor;
         public Color damagedColor;
+        public Color enemyDeadEffectColor;
 
         public string enemyId;
 

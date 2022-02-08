@@ -221,7 +221,7 @@ namespace Enemy
         {
             if (enemyData.eEnemyController == EnemyController.AI)
             {
-                deadCommand = new EnemyDeadAIControllerCommand(enemyData.enemyObject, enemyData.enemyLootList);
+                deadCommand = new EnemyDeadAIControllerCommand(enemyData.enemyObject, enemyData.enemyLootList, enemyData.enemyDeadEffectColor);
             }
             else if (enemyData.eEnemyController == EnemyController.PLAYER)
             {

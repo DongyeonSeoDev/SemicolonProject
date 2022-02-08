@@ -128,10 +128,13 @@ namespace Enemy
         private GameObject enemyObject;
         private EnemyLootListSO enemyLootListSO;
 
-        public EnemyDeadAIControllerCommand(GameObject enemyObj, EnemyLootListSO lootListSO)
+        private Color enemyColor;
+
+        public EnemyDeadAIControllerCommand(GameObject enemyObj, EnemyLootListSO lootListSO, Color color)
         {
             enemyObject = enemyObj;
             enemyLootListSO = lootListSO;
+            enemyColor = color;
         }
 
         public override void Execute()
@@ -143,6 +146,8 @@ namespace Enemy
                     Water.PoolManager.GetItem("Item").GetComponent<Item>().SetData(enemyLootListSO.enemyLootList[i].enemyLoot.id, enemyObject.transform.position);
                 }
             }
+
+            EnemyPoolManager.Instance.GetPoolObject(Type.DeadEffect, enemyObject.transform.position).GetComponent<EnemyEffect>().Play(enemyColor);
 
             enemyObject.GetComponent<Enemy>().EnemyDestroy();
         }
