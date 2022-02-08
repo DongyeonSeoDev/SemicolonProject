@@ -9,14 +9,14 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
     [Serializable]
     public struct ChangeBodyData
     {
+        public Enemy.EnemyType bodyId;
         public GameObject body;
-        public Enemy.Enemy bodyScript;
     }
 
     private Dictionary<string, int> playerEnemyUnderStandingRateDic = new Dictionary<string, int>();
 
     [SerializeField]
-    private List<GameObject> changableBodyList = new List<GameObject>();
+    private List<ChangeBodyData> changableBodyList = new List<ChangeBodyData>();
     private Dictionary<string, GameObject> changableBodyDict = new Dictionary<string, GameObject>();
     public Dictionary<string, GameObject> ChangalbeBodyDict
     {
@@ -29,15 +29,11 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
 
         changableBodyDict.Clear();
 
-        Debug.Log("bbb");
-
         changableBodyList.ForEach(x =>
         {
-            Debug.Log(x.GetComponent<Enemy.Enemy>());
-            string enemyId = x.GetComponent<Enemy.Enemy>().GetEnemyId();
             // x.bodyScript = x.body.GetComponent<Enemy.Enemy>();
-            changableBodyDict.Add(enemyId, x);
-            playerEnemyUnderStandingRateDic.Add(enemyId, 0);
+            changableBodyDict.Add(x.bodyId.ToString(), x.body);
+            playerEnemyUnderStandingRateDic.Add(x.bodyId.ToString(), 100);
 
             // Debug.Log(enemyId);
         });
