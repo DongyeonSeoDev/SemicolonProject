@@ -33,11 +33,6 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         {
             CancelKeySetting();
         }
-
-        if(Input.GetKeyDown(KeyCode.H))
-        {
-            UIManager.Instance.InsertNoticeQueue(Random.Range(100000, 99999999).ToString(), Random.Range(50, 60));
-        }
     }
 
     private void OnGUI()

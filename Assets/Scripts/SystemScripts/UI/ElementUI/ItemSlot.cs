@@ -10,7 +10,28 @@ public class ItemSlot : MonoBehaviour
     public int MaxCount { get; set; }
     public bool ExistItem { get; private set; }
 
-    public int RestCount { get { return MaxCount - Count; } }
+    public int RestCount { get => MaxCount - Count; } 
+
+    public ItemType ItemTypePt  
+    {
+        get
+        {
+            if (itemInfo == null)
+            {
+                return ItemType.NONE;
+            }
+
+            return GameManager.Instance.GetItemData(itemInfo.id).itemType;
+        }
+    }
+    public string ItemName
+    {
+        get
+        {
+            if (itemInfo == null) return "";
+            return GameManager.Instance.GetItemData(itemInfo.id).itemName;
+        }
+    }
 
     public GameObject root;
     public Image itemImg;
