@@ -429,6 +429,7 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     public void UpdatePlayerHPUI()
     {
+        Debug.Log(sgm);
         Player p = sgm.Player;
         int hp = Mathf.Clamp(sgm.Player.CurrentHp, 0, p.PlayerStat.MaxHp);
 

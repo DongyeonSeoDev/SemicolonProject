@@ -39,16 +39,7 @@ namespace Enemy
         {
             if (eEnemyController == EnemyController.AI && collision.CompareTag("Player"))
             {
-                Player player = collision.GetComponent<Player>();
-
-                if (player != null)
-                {
-                    collision.GetComponent<Player>().GetDamage(attackDamage);
-                }
-                else
-                {
-                    collision.GetComponent<EnemyAttackTest>().EnemyAttack(attackDamage);
-                }
+                SlimeGameManager.Instance.Player.GetDamage(attackDamage);
 
                 gameObject.SetActive(false);
             }

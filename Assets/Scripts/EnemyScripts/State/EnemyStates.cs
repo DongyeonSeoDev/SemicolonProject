@@ -19,7 +19,7 @@ namespace Enemy
             }
             else if (enemyData.eEnemyController == EnemyController.PLAYER)
             {
-                enemyMoveCommand = new EnemyMovePlayerControllerCommand();
+                enemyMoveCommand = new EnemyMovePlayerControllerCommand(enemyData.enemyRigidbody2D);
             }
         }
 

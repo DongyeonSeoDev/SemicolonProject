@@ -33,9 +33,23 @@ namespace Enemy
 
     public class EnemyMovePlayerControllerCommand : EnemyCommand // 적 움직임
     {
+        private PlayerInput playerInput = null;
+        private Stat playerStat = null;
+
+        private Rigidbody2D rigid;
+
+        public EnemyMovePlayerControllerCommand(Rigidbody2D rb)
+        {
+            playerInput = SlimeGameManager.Instance.Player.GetComponent<PlayerInput>();
+            playerStat = SlimeGameManager.Instance.Player.PlayerStat;
+
+            rigid = rb;
+        }
+
         public override void Execute()
         {
-            Debug.Log("플레이어 움직임 코드 작성");
+            Vector2 MoveVec = playerInput.MoveVector * (playerStat.Speed);
+            rigid.velocity = MoveVec;
         }
     }
 
