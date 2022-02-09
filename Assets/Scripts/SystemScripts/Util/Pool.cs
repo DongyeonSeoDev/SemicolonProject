@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace Water
 {
-    public class PoolManager
+    public static class PoolManager
     {
         public static Dictionary<string, ObjPool> poolDic = new Dictionary<string, ObjPool>();
 

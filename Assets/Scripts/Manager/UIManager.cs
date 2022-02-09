@@ -214,6 +214,11 @@ public partial class UIManager : MonoSingleton<UIManager>
             InActiveSpecialProcess(ui._UItype);
         }
         activeUIQueue.Dequeue();
+
+        if(activeUIQueue.Count == 0 && isOnCursorInfo)
+        {
+            OffCursorInfoUI();
+        }
     }
 
     public void PreventItrUI(float time)

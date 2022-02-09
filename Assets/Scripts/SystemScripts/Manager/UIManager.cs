@@ -24,7 +24,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     {
         if(noticeCheckElapsed < Time.time)
         {
-            noticeCheckElapsed += 0.15f;
+            noticeCheckElapsed += 0.25f;
 
             if(noticeQueue.Count > 0 && !isNoticing)
             {

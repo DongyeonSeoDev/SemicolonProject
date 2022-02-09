@@ -4,8 +4,10 @@ using System;
 
 public static partial class Util
 {
-    public static void ExecuteFunc(Action func, float delay, float duration, MonoBehaviour mono, Action start=null, Action end = null, bool realTime = false)
+    public static void ExecuteFunc(Action func, float delay, float duration, MonoBehaviour mono = null, Action start=null, Action end = null, bool realTime = false)
     {
+        if (!mono) mono = GameManager.Instance;
+
         mono.StartCoroutine(ExecuteFuncCo(func, delay, duration, start, end, realTime));
     }
 

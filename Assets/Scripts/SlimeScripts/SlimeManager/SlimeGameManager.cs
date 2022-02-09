@@ -68,7 +68,13 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
         {
             Destroy(currentPlayerBody);
 
-            Instantiate(playerEnemyUnderstandingRateManager.ChangalbeBodyDict[bodyId], player.transform);
+            GameObject newBody = Instantiate(playerEnemyUnderstandingRateManager.ChangalbeBodyDict[bodyId], player.transform);
+
+            newBody.transform.position = currentPlayerBody.transform.position;
+
+            newBody.AddComponent<PlayerBodyScript>();
+
+            // TODO: PlayerBody로서의 처리
         }
         else
         {

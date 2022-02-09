@@ -7,8 +7,8 @@ public class PlayerInteraction : MonoBehaviour
 {
     private PlayerInput playerInput = null;
 
-    private List<NPC> nearNPCList = new List<NPC>();
-    public List<NPC> NearNPCList
+    private List<InteractionObj> nearNPCList = new List<InteractionObj>();
+    public List<InteractionObj> NearNPCList
     {
         get { return nearNPCList; }
         set { nearNPCList = value; }
