@@ -3,7 +3,7 @@ using Water;
 
 public abstract class InteractionObj : MonoBehaviour
 {
-    [SerializeField] protected bool isHidenName;  
+    [SerializeField] protected bool isHidenName, isHidenItrMark;  
     [SerializeField] protected string objName;
     public string ObjName { get { return objName; } }
 
@@ -23,8 +23,11 @@ public abstract class InteractionObj : MonoBehaviour
     {
         if (on)
         {
-            npcUI = PoolManager.GetItem("NPCNameUI").GetComponent<NPCUI>();
-            npcUI.Set(this);
+            if (!npcUI && !isHidenName)
+            {
+                npcUI = PoolManager.GetItem("NPCNameUI").GetComponent<NPCUI>();
+                npcUI.Set(this);
+            }
         }
         else
         {
@@ -38,7 +41,7 @@ public abstract class InteractionObj : MonoBehaviour
 
     public virtual void SetInteractionUI(bool on)
     {
-        if(on)
+        if(on && !isHidenItrMark)
         {
             itrUI = PoolManager.GetItem("InteractionMark").GetComponent<InteractionNoticeUI>();
             itrUI.Set(this);

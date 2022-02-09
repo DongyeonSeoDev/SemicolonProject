@@ -306,4 +306,16 @@ public class Inventory : MonoSingleton<Inventory>
         SortActiveItems();
     }
     #endregion
+
+    #region ÇÊÅÍ
+    public void FilterType(int itemType)
+    { 
+        itemSlots.ForEach(x => x.gameObject.SetActive(true));
+
+        if ((ItemType)itemType == ItemType.NONE)
+            return;
+
+        itemSlots.FindAll(x => x.ItemTypePt != (ItemType)itemType).ForEach(x => x.gameObject.SetActive(false));
+    }
+    #endregion
 }

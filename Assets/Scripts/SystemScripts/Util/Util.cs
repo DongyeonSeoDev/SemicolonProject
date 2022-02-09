@@ -28,29 +28,6 @@ public static partial class Util
             func();
         }
 
-        #region ÁÖ¼®
-        /*if (!realTime)
-        {
-            while (elapsed > 0)
-            {
-                elapsed -= Time.deltaTime;
-                yield return null;
-                func();
-            }
-        }
-        else
-        {
-            
-            WaitForSecondsRealtime wsr = new WaitForSecondsRealtime(Time.unscaledDeltaTime);
-            while(elapsed>0)
-            {
-                elapsed -= Time.unscaledDeltaTime;
-                yield return wsr;
-                func();
-            }
-        }*/
-        #endregion
-
         end?.Invoke();
     }
 }
