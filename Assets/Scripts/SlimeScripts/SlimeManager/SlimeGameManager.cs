@@ -11,6 +11,7 @@ public static partial class ScriptHelper
 
 public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 {
+    private CinemachineCameraScript cinemachineCameraScript = null;
     private PlayerEnemyUnderstandingRateManager playerEnemyUnderstandingRateManager = null;
     private Player player = null;
     public Player Player
@@ -30,19 +31,24 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             return player;
         }
     }
+    private GameObject originPlayerBody = null;
     private GameObject currentPlayerBody = null;
     public GameObject CurrentPlayerBody
     {
         get { return currentPlayerBody; }
         set { currentPlayerBody = value; }
     }
-    private void Awake() 
+    private void Awake()
     {
         playerEnemyUnderstandingRateManager = PlayerEnemyUnderstandingRateManager.Instance;
+
+        originPlayerBody = Resources.Load<GameObject>("Player/DefaultPlayer/Player").GetComponentInChildren<PlayerBodyScript>().gameObject;
     }
     private void Start()
     {
         EventManager.StartListening("PlayerRespawn", PlayerBodySpawn);
+
+        cinemachineCameraScript = FindObjectOfType<CinemachineCameraScript>();
     }
     private void OnDisable()
     {
@@ -64,15 +70,32 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
     }
     public void PlayerBodyChange(string bodyId)
     {
-        if(playerEnemyUnderstandingRateManager.GetUnderstandingRate(bodyId) >= 100f)
+        GameObject newBody = null;
+
+        Vector2 spawnPos = currentPlayerBody.transform.position;
+
+        Destroy(currentPlayerBody);
+
+        if (bodyId == "origin")
         {
-            Destroy(currentPlayerBody);
+            newBody = Instantiate(originPlayerBody, player.transform);
 
-            GameObject newBody = Instantiate(playerEnemyUnderstandingRateManager.ChangalbeBodyDict[bodyId], player.transform);
+            newBody.transform.position = spawnPos;
 
-            newBody.transform.position = currentPlayerBody.transform.position;
+            cinemachineCameraScript.SetCinemachineFollow(newBody.transform);
+
+            return;
+        }
+
+        if (playerEnemyUnderstandingRateManager.GetUnderstandingRate(bodyId) >= 100f)
+        {
+            newBody = Instantiate(playerEnemyUnderstandingRateManager.ChangalbeBodyDict[bodyId], player.transform);
 
             newBody.AddComponent<PlayerBodyScript>();
+
+            newBody.transform.position = spawnPos;
+
+            cinemachineCameraScript.SetCinemachineFollow(newBody.transform);
 
             // TODO: PlayerBody로서의 처리
         }
