@@ -148,8 +148,10 @@ public static partial class Util
 
     public static string GetFilePath(string fileName) => string.Concat(Application.persistentDataPath, "/", fileName);
 
-    public static void DelayFunc(Action a, float delay, MonoBehaviour mono, bool realTime=false)
+    public static void DelayFunc(Action a, float delay, MonoBehaviour mono = null, bool realTime=false)
     {
+        if (!mono) mono = GameManager.Instance;
+
         mono.StartCoroutine(DelayFuncCo(a, delay,realTime));
     }
 
@@ -187,7 +189,7 @@ public static partial class Util
             yield return new WaitForSeconds(delay);
         else
             yield return new WaitForSecondsRealtime(delay);
-        func?.Invoke();
+        func();
     }
 }
 #endregion

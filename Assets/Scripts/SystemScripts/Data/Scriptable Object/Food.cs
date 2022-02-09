@@ -22,7 +22,6 @@ public class Food : ItemSO
     public override void Use()
     {
         base.Use();
-        Debug.Log("»ç¿ëÇÔ " + name);
     }
 }
 

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Water;
 
 public class Inventory : MonoSingleton<Inventory>
 {
@@ -64,8 +63,6 @@ public class Inventory : MonoSingleton<Inventory>
                 x.ResetData();
             }
         });
-
-
     }
 
     public ItemSlot FindSlot(int id)  // 함수명이 곧 기능 설명
@@ -263,4 +260,50 @@ public class Inventory : MonoSingleton<Inventory>
 
         return list;
     }
+
+    #region 정렬
+    public void SortActiveItems()
+    {
+        int index = 0;
+        for(int i=0; i<itemSlots.Count; i++)
+        {
+            if(itemSlots[i].ExistItem)
+            {
+                itemSlots[i].transform.SetSiblingIndex(index);
+            }
+        }
+    }
+    public void SortInverse()
+    {
+        int index = 0;
+        for (int i = itemSlots.Count-1; i >= 0; i--)
+        {
+            itemSlots[i].transform.SetSiblingIndex(index);
+        }
+    }
+    public void SortType()
+    {
+        itemSlots.Sort((x, y) => y.ItemTypePt.CompareTo(x.ItemTypePt));
+        SortActiveItems();
+    }
+    public void SortName()
+    {
+        itemSlots.Sort((x, y) => y.ItemName.CompareTo(x.ItemName));
+        SortActiveItems();
+    }
+    public void SortTypeAndName()
+    {
+        itemSlots.Sort((x, y) =>
+        {
+            switch (y.ItemTypePt.CompareTo(x.ItemTypePt))
+            {
+                case -1: return -1;
+                case 1: return 1;
+                case 0: return y.ItemName.CompareTo(x.ItemName);
+                default: return y.ItemName.CompareTo(x.ItemName);
+            }
+        });
+        SortActiveItems();
+    }
+    #endregion
 }

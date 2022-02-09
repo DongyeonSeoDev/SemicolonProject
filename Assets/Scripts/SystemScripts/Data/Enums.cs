@@ -2,7 +2,8 @@ public enum ItemType
 {
     EQUIP,
     CONSUME,
-    ETC
+    ETC,
+    NONE
 }
 
 public enum UIType
@@ -20,7 +21,10 @@ public enum UIType
     CLEAR,
     SETTING,
     KEYSETTING,
-    RESOLUTION
+    RESOLUTION,
+    SOUND,
+    HELP,
+    CREDIT
 }
 
 public enum KeyAction

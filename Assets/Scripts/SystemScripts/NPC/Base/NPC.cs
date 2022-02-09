@@ -2,13 +2,19 @@ using UnityEngine;
 
 public abstract class NPC : InteractionObj
 {
-   /* protected virtual void OnBecameInvisible()
-    {
-        SetUI(false);
-    }
+    [SerializeField] protected NPCInfo npcInfo;
 
-    protected virtual void OnBecameVisible()
+    protected void Awake()
     {
-        SetUI(true);
-    }*/
+        npcInfo.npcName = objName;
+    }
+    /* protected virtual void OnBecameInvisible()
+     {
+         SetUI(false);
+     }
+
+     protected virtual void OnBecameVisible()
+     {
+         SetUI(true);
+     }*/
 }
