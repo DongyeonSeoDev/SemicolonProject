@@ -70,6 +70,8 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
     }
     public void PlayerBodyChange(string bodyId)
     {
+        Enemy.Enemy enemy = null;
+
         GameObject newBody = null;
 
         Vector2 spawnPos = currentPlayerBody.transform.position;
@@ -79,6 +81,13 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
         if (bodyId == "origin")
         {
             newBody = Instantiate(originPlayerBody, player.transform);
+
+            enemy = newBody.GetComponent<Enemy.Enemy>();
+
+            if (enemy)
+            {
+                enemy.EnemyControllerChange(Enemy.EnemyController.PLAYER);
+            }
 
             newBody.transform.position = spawnPos;
 
@@ -92,6 +101,13 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             newBody = Instantiate(playerEnemyUnderstandingRateManager.ChangalbeBodyDict[bodyId], player.transform);
 
             newBody.AddComponent<PlayerBodyScript>();
+
+            enemy = newBody.GetComponent<Enemy.Enemy>();
+
+            if (enemy)
+            {
+                enemy.EnemyControllerChange(Enemy.EnemyController.PLAYER);
+            }
 
             newBody.transform.position = spawnPos;
 

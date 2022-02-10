@@ -95,7 +95,7 @@ public class PlayerInput : MonoBehaviour
                 isShoot = true;
             }
 
-            if (Input.GetButtonDown("Drain")) // q
+            if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.DRAIN])) // q
             {
                 isDrain = true;
             }
