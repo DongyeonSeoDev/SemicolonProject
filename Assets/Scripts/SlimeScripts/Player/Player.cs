@@ -98,7 +98,7 @@ public class Player : MonoBehaviour
         playerState.IsDead = false;
         currentHp = playerStat.MaxHp;
 
-        UIManager.Instance.UpdatePlayerHPUI();
+        UIManager.Instance.UpdatePlayerHPUI(true);
 
         EventManager.TriggerEvent("AfterPlayerRespawn");
     }
