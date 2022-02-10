@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using TMPro;
 using Water;
 using System;
-using UnityEngine.Events;
 
 public partial class UIManager : MonoSingleton<UIManager>
 {
@@ -11,6 +10,10 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     private bool isNoticing = false;
     private float noticeCheckElapsed;
+
+    #region Canvas
+    public Canvas ordinaryCvs;
+    #endregion
 
     [HideInInspector] public List<Menu> gameMenuList = new List<Menu>();
     [HideInInspector] public List<InteractionNoticeUI> itrNoticeList = new List<InteractionNoticeUI>();

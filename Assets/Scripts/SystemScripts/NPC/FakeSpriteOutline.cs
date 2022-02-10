@@ -11,6 +11,8 @@ public class FakeSpriteOutline : MonoBehaviour
 
     private SpriteRenderer fakeOutlineSpr;
 
+    //[SerializeField] private SpriteMaskInteraction smi = SpriteMaskInteraction.VisibleInsideMask;
+
     private void Awake()
     {
         sprMsk = GetComponent<SpriteMask>();
@@ -21,5 +23,7 @@ public class FakeSpriteOutline : MonoBehaviour
         sprMsk.sprite = sprMaskSprite;
 
         fakeOutlineSpr.color = outlineColor;
+
+        //fakeOutlineSpr.maskInteraction = smi;
     }
 }
