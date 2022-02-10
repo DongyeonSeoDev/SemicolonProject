@@ -190,7 +190,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 4.34
+  m_Radius: 4
 --- !u!114 &5087356040490237660
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -404,7 +404,9 @@ MonoBehaviour:
   - {r: 0.3607843, g: 1, b: 0.59170854, a: 0.050980393}
   - {r: 0.24705882, g: 0.13725491, b: 1, a: 1}
   - {r: 0.35283017, g: 0.8538696, b: 1, a: 0.14117648}
-  transition_waitTime:
+  transition_wait_loop:
     first: 1
     second: 0.3
+    third: -1
   _ease: 0
+  loopType: 0
