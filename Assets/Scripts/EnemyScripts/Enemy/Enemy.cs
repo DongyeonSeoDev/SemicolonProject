@@ -15,6 +15,7 @@ namespace Enemy
         protected Rigidbody2D rb;
 
         private EnemyState currentState;
+        private PlayerInput playerInput;
 
         private float lastPositionX;
 
@@ -32,6 +33,8 @@ namespace Enemy
                 currentState = null;
                 enemyData.enemyAnimator.enabled = false;
             });
+
+            playerInput = SlimeGameManager.Instance.Player.GetComponent<PlayerInput>();
         }
 
         protected virtual void OnEnable()
@@ -75,6 +78,12 @@ namespace Enemy
                 }
             }
 
+            if (enemyData.eEnemyController == EnemyController.PLAYER && playerInput.IsShoot)
+            {
+                playerInput.IsShoot = false;
+                enemyData.isAttack = true;
+            }
+
             lastPositionX = transform.position.x;
         }
 
@@ -107,6 +116,11 @@ namespace Enemy
         public float EnemyHpPercent()
         {
             return ((float)enemyData.hp / enemyData.maxHP) * 100f;
+        }
+
+        public void EnemyControllerChange(EnemyController eEnemyController)
+        {
+            enemyData.eEnemyController = eEnemyController;
         }
     }
 }

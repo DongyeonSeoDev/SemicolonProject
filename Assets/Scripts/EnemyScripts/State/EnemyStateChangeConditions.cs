@@ -102,6 +102,8 @@ namespace Enemy
                 {
                     ChangeState(new EnemyAttackState(enemyData));
                 }
+
+                enemyData.isAttack = false;
             }
             else
             {
