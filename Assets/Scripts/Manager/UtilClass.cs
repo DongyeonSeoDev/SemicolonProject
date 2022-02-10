@@ -164,25 +164,6 @@ public static partial class Util
         return mainCam.WorldToScreenPoint(worldPos);
     }
 
-    public static Pair<List<T>, List<T>> GetConditionedList<T>(List<T> list, Func<T, bool> condition)  //리스트를 돌아서 해당 조건에 맞는 것들을 뽑아서 아닌 것들과 나눠서 리턴함
-    {
-        Pair<List<T>, List<T>> result = new Pair<List<T>, List<T>>();
-
-        for (int i = 0; i < list.Count; i++)
-        {
-            if (condition(list[i]))
-            {
-                result.first.Add(list[i]);
-            }
-            else
-            {
-                result.second.Add(list[i]);
-            }
-        }
-
-        return result;
-    }
-
     private static IEnumerator DelayFuncCo(Action func, float delay, bool realTime)
     {
         if (!realTime)

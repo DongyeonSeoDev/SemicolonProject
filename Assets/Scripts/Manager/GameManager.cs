@@ -15,10 +15,12 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     private Dictionary<int, ItemSO> itemDataDic = new Dictionary<int, ItemSO>();
 
+    #region prefab and parent
     public GameObject foodBtnPrefab, ingredientImgPrefab;
     public Transform foodBtnParent, ingredientImgParent;
 
     public GameObject itemPrefab, itemCloneEffectPrefab;
+    #endregion
 
     [HideInInspector] public List<Item> droppedItemList = new List<Item>();
 
@@ -118,9 +120,11 @@ public partial class GameManager : MonoSingleton<GameManager>
             droppedItemList.Remove((Item)item);
         });
 
+        //풀 생성
         PoolManager.CreatePool(itemPrefab, transform, 6, "Item");
         PoolManager.CreatePool(itemCloneEffectPrefab, transform, 6, "ItemFollowEffect");
 
+        //이벤트 정의
         EventManager.StartListening("PlayerRespawn", ResetDroppedItems);
     }
 
