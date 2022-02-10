@@ -27,7 +27,7 @@ namespace Water
             transform.SetAsLastSibling();
             rectTrm.anchoredPosition = origin;
 
-            disableTime = Time.time + existTime;
+            disableTime = Time.unscaledTime + existTime;
 
             cvsg.DOFade(1, 0.35f).SetEase(Ease.OutCirc).SetUpdate(true);
             rectTrm.DOAnchorPos(target, 0.35f).SetEase(Ease.OutBack).SetUpdate(true);
@@ -35,11 +35,11 @@ namespace Water
 
         private void Update()
         {
-            if(disableTime < Time.time)
+            if(disableTime < Time.unscaledTime)
             {
                 rectTrm.DOAnchorPos(origin, 0.35f).SetEase(Ease.InBack).SetUpdate(true);
                 cvsg.DOFade(0, 0.35f).SetEase(Ease.InCirc).SetUpdate(true).OnComplete(()=> gameObject.SetActive(false));
-                disableTime = Time.time + 3;
+                disableTime = Time.unscaledTime + 3;
             }
         }
     }

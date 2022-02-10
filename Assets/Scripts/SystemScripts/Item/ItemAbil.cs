@@ -9,12 +9,14 @@ public static class ItemUseMng
         p.PlayerStat.additionalEternalStat.maxHp += value;
         UIManager.Instance.UpdatePlayerHPUI();
         UIManager.Instance.InsertNoticeQueue("ÃÖ´ë HP " + value + " »ó½Â");
+        EffectManager.Instance.OnTopRightBtnEffect(UIType.STAT, true);
     }
 
     public static void IncreaseStr(Player p, int value)
     {
         p.PlayerStat.additionalEternalStat.damage += value;
         UIManager.Instance.InsertNoticeQueue("°ø°Ý·Â " + value + " »ó½Â");
+        EffectManager.Instance.OnTopRightBtnEffect(UIType.STAT, true);
     }
 }
 

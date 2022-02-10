@@ -58,7 +58,9 @@ public partial class UIManager : MonoSingleton<UIManager>
     public Transform npcUICvsTrm;
     #endregion
 
-    public Pair<Image, TextMeshProUGUI> playerHPInfo;
+    public Triple<Image, TextMeshProUGUI, Image> playerHPInfo;
+    private bool isStartDelayHPFillTimer;
+    private float setDelayHPFillTime;
 
     //public Text statText;
     public Text[] statTexts;
@@ -73,6 +75,8 @@ public partial class UIManager : MonoSingleton<UIManager>
 
         CreatePool();
         noticeMsgGrd = noticeUIPair.first.GetComponent<NoticeMsg>().msgTmp.colorGradient;
+        ordinaryCvs.worldCamera = Camera.main;
+        ordinaryCvs.planeDistance = 20;
     }
 
     private void CreatePool()
@@ -132,6 +136,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         UserInput();
         CursorInfo();
         Notice();
+        DelayHPFill();
     }
 
     private void UserInput()
@@ -246,6 +251,10 @@ public partial class UIManager : MonoSingleton<UIManager>
         {
             case UIType.STAT:
                 UpdateStatUI();
+                EffectManager.Instance.OnTopRightBtnEffect(UIType.STAT, false);
+                break;
+            case UIType.INVENTORY:
+                EffectManager.Instance.OnTopRightBtnEffect(UIType.INVENTORY, false);
                 break;
             case UIType.SETTING:
                 EventManager.TriggerEvent("TimePause");
@@ -432,14 +441,32 @@ public partial class UIManager : MonoSingleton<UIManager>
         //statText.text = $"HP\t\t{currentHP}/{stat.hp}\n\n공격력\t\t{stat.damage}\n\n방어력\t\t{stat.defense}\n\n이동속도\t\t{stat.speed}";
     }
 
-    public void UpdatePlayerHPUI()
+    public void UpdatePlayerHPUI(bool decrease = false)
     {
-        Debug.Log(sgm);
         Player p = sgm.Player;
-        int hp = Mathf.Clamp(sgm.Player.CurrentHp, 0, p.PlayerStat.MaxHp);
+        int hp = Mathf.Clamp(p.CurrentHp, 0, p.PlayerStat.MaxHp);
 
-        playerHPInfo.first.DOFillAmount((float)hp / p.PlayerStat.MaxHp, 0.3f);
+        float rate = (float)hp / p.PlayerStat.MaxHp;
+        playerHPInfo.first.DOFillAmount(rate, 0.3f).OnComplete(()=> { if (!decrease) playerHPInfo.third.fillAmount = playerHPInfo.first.fillAmount; });
         playerHPInfo.second.text = string.Concat(hp, '/', p.PlayerStat.MaxHp);
+
+        if (decrease)
+        {
+            EffectManager.Instance.OnDamagedUIEffect(rate);
+            isStartDelayHPFillTimer = true;
+            setDelayHPFillTime = Time.time + 0.5f;
+        }
+    }
+
+    private void DelayHPFill()
+    {
+        if(isStartDelayHPFillTimer)
+        {
+            if(setDelayHPFillTime < Time.time)
+            {
+                playerHPInfo.third.DOFillAmount(playerHPInfo.first.fillAmount, 0.3f).OnComplete(() => isStartDelayHPFillTimer = false);
+            }
+        }
     }
     #endregion
 }
