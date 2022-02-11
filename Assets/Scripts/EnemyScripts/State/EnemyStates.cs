@@ -130,28 +130,31 @@ namespace Enemy
 
         private void SpriteFlipCheck()
         {
-            if (enemyData.isRotate)
+            if (enemyData.eEnemyController == EnemyController.AI)
             {
-                if (enemyData.enemyObject.transform.position.x > enemyData.PlayerObject.transform.position.x)
+                if (enemyData.isRotate)
                 {
-                    enemyData.enemyObject.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                    if (enemyData.enemyObject.transform.position.x > enemyData.PlayerObject.transform.position.x)
+                    {
+                        enemyData.enemyObject.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                    }
+                    else if (enemyData.enemyObject.transform.position.x < enemyData.PlayerObject.transform.position.x)
+                    {
+                        enemyData.enemyObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                    }
                 }
-                else if (enemyData.enemyObject.transform.position.x < enemyData.PlayerObject.transform.position.x)
+                else
                 {
-                    enemyData.enemyObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                    if (enemyData.enemyObject.transform.position.x > enemyData.PlayerObject.transform.position.x)
+                    {
+                        enemyData.enemySpriteRenderer.flipX = true;
+                    }
+                    else if (enemyData.enemyObject.transform.position.x < enemyData.PlayerObject.transform.position.x)
+                    {
+                        enemyData.enemySpriteRenderer.flipX = false;
+                    }
                 }
             }
-            else
-            {
-                if (enemyData.enemyObject.transform.position.x > enemyData.PlayerObject.transform.position.x)
-                {
-                    enemyData.enemySpriteRenderer.flipX = true;
-                }
-                else if (enemyData.enemyObject.transform.position.x < enemyData.PlayerObject.transform.position.x)
-                {
-                    enemyData.enemySpriteRenderer.flipX = false;
-                }
-            } 
         }
     }
 
