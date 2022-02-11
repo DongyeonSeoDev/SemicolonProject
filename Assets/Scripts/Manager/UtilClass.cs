@@ -144,7 +144,16 @@ public static partial class Global
 #region Util
 public static partial class Util
 {
-    public static Camera mainCam;
+    private static Camera mainCam;
+
+    public static Camera MainCam
+    {
+        get
+        {
+            if (mainCam == null) mainCam = Camera.main;
+            return mainCam;
+        }
+    }
 
     public static string GetFilePath(string fileName) => string.Concat(Application.persistentDataPath, "/", fileName);
 
@@ -155,14 +164,7 @@ public static partial class Util
         mono.StartCoroutine(DelayFuncCo(a, delay,realTime));
     }
 
-    public static Vector3 WorldToScreenPoint(Vector3 worldPos)
-    {
-        if (mainCam == null)
-        {
-            mainCam = Camera.main;
-        }
-        return mainCam.WorldToScreenPoint(worldPos);
-    }
+    public static Vector3 WorldToScreenPoint(Vector3 worldPos) => MainCam.WorldToScreenPoint(worldPos);
 
     private static IEnumerator DelayFuncCo(Action func, float delay, bool realTime)
     {

@@ -456,6 +456,7 @@ public partial class UIManager : MonoSingleton<UIManager>
             isStartDelayHPFillTimer = true;
             setDelayHPFillTime = Time.time + 0.5f;
         }
+        EffectManager.Instance.SetHPFillEffectPos(rate);
     }
 
     private void DelayHPFill()

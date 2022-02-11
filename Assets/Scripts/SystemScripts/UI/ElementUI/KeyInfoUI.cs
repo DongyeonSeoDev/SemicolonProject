@@ -20,4 +20,12 @@ public class KeyInfoUI : MonoBehaviour
     {
         keyCodeTxt.text = keyCode.ToString();
     }
+
+    public void SetFixedKey(KeyAction keyAction, string keyCode)
+    {
+        keyActionNameTxt.text = Global.ToKeyActionName(keyAction);
+        keyCodeTxt.text = keyCode;
+        btn.onClick.AddListener(() => UIManager.Instance.RequestSystemMsg("해당 키는 바꿀 수 없습니다."));
+        btn.GetComponent<NameInfoFollowingCursor>().explanation = "고정키";
+    }
 }
