@@ -172,14 +172,17 @@ namespace Enemy
             }
             else if (enemyData.eEnemyController == EnemyController.PLAYER)
             {
-                enemyGetDamagedCommand = new EnemyGetDamagedPlayerControllerCommand();
+                enemyGetDamagedCommand = new EnemyGetDamagedPlayerControllerCommand(enemyData.damagedValue);
             }
         }
 
         protected override void Start()
         {
-            enemyData.hp -= enemyData.damagedValue;
-            enemyData.hpBarFillImage.fillAmount = (float)enemyData.hp / enemyData.maxHP;
+            if (enemyData.eEnemyController == EnemyController.AI)
+            {
+                enemyData.hp -= enemyData.damagedValue;
+                enemyData.hpBarFillImage.fillAmount = (float)enemyData.hp / enemyData.maxHP;
+            }
 
             currentTime = 0f;
 
@@ -225,10 +228,6 @@ namespace Enemy
             if (enemyData.eEnemyController == EnemyController.AI)
             {
                 deadCommand = new EnemyDeadAIControllerCommand(enemyData.enemyObject, enemyData.enemyLootList, enemyData.enemyDeadEffectColor);
-            }
-            else if (enemyData.eEnemyController == EnemyController.PLAYER)
-            {
-                deadCommand = new EnemyDeadPlayerControllerCommand();
             }
         }
 

@@ -131,9 +131,16 @@ namespace Enemy
 
     public class EnemyGetDamagedPlayerControllerCommand : EnemyCommand
     {
+        private int damage;
+
+        public EnemyGetDamagedPlayerControllerCommand(int damage)
+        {
+            this.damage = damage;
+        }
+
         public override void Execute()
         {
-            Debug.Log("플레이어가 데미지를 입는 코드 작성");   
+            SlimeGameManager.Instance.Player.GetDamage(damage);
         }
     }
 
@@ -164,14 +171,6 @@ namespace Enemy
             EnemyPoolManager.Instance.GetPoolObject(Type.DeadEffect, enemyObject.transform.position).GetComponent<EnemyEffect>().Play(enemyColor);
 
             enemyObject.GetComponent<Enemy>().EnemyDestroy();
-        }
-    }
-
-    public class EnemyDeadPlayerControllerCommand : EnemyCommand // 적이 죽음
-    {
-        public override void Execute()
-        {
-            Debug.Log("플레이어가 죽는 코드 작성");
         }
     }
 
