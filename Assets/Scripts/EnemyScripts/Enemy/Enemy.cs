@@ -121,6 +121,17 @@ namespace Enemy
         public void EnemyControllerChange(EnemyController eEnemyController)
         {
             enemyData.eEnemyController = eEnemyController;
+
+            if (eEnemyController == EnemyController.AI)
+            {
+                gameObject.tag = "Untagged";
+                gameObject.layer = LayerMask.NameToLayer("ENEMY");
+            }
+            else if (eEnemyController == EnemyController.PLAYER)
+            {
+                gameObject.tag = "Player";
+                gameObject.layer = LayerMask.NameToLayer("PLAYER");
+            }
         }
     }
 }
