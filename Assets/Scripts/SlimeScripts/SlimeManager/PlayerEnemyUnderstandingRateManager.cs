@@ -11,14 +11,16 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
     {
         public Enemy.EnemyType bodyId;
         public GameObject body;
-    }
+        public EternalStat additionalBodyStat; // 변신 후의 플레이어의 Additional스탯, (이해도 100% 기준)
+    }    
 
     private Dictionary<string, int> playerEnemyUnderStandingRateDic = new Dictionary<string, int>();
 
     [SerializeField]
     private List<ChangeBodyData> changableBodyList = new List<ChangeBodyData>();
-    private Dictionary<string, GameObject> changableBodyDict = new Dictionary<string, GameObject>();
-    public Dictionary<string, GameObject> ChangalbeBodyDict
+
+    private Dictionary<string, (GameObject, EternalStat)> changableBodyDict = new Dictionary<string, (GameObject, EternalStat)>();
+    public Dictionary<string, (GameObject, EternalStat)> ChangalbeBodyDict
     {
         get { return changableBodyDict; }
     }
@@ -32,7 +34,7 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
         changableBodyList.ForEach(x =>
         {
             // x.bodyScript = x.body.GetComponent<Enemy.Enemy>();
-            changableBodyDict.Add(x.bodyId.ToString(), x.body);
+            changableBodyDict.Add(x.bodyId.ToString(), (x.body, x.additionalBodyStat));
             playerEnemyUnderStandingRateDic.Add(x.bodyId.ToString(), 100);
 
             // Debug.Log(enemyId);

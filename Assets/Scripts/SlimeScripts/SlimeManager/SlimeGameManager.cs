@@ -98,7 +98,11 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
         if (playerEnemyUnderstandingRateManager.GetUnderstandingRate(bodyId) >= 100f)
         {
-            newBody = Instantiate(playerEnemyUnderstandingRateManager.ChangalbeBodyDict[bodyId], player.transform);
+            (GameObject, EternalStat) newBodyData = playerEnemyUnderstandingRateManager.ChangalbeBodyDict[bodyId];
+
+            newBody = Instantiate(newBodyData.Item1, player.transform);
+
+            SlimeGameManager.Instance.player.PlayerStat.additionalEternalStat += newBodyData.Item2;
 
             newBody.AddComponent<PlayerBodyScript>();
 

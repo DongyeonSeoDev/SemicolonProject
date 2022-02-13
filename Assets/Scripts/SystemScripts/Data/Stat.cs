@@ -46,6 +46,11 @@ public class Stat
 [Serializable]
 public class EternalStat
 {
+    public static EternalStat operator +(EternalStat a, EternalStat b) => new EternalStat(a.maxHp + b.maxHp, a.damage + b.damage, a.defense + b.defense, a.intellect + b.intellect, a.speed + b.speed, a.criticalRate + b.criticalRate, a.criticalDamage + b.criticalDamage);
+    public static EternalStat operator -(EternalStat a, EternalStat b) => new EternalStat(a.maxHp - b.maxHp, a.damage - b.damage, a.defense - b.defense, a.intellect - b.intellect, a.speed - b.speed, a.criticalRate - b.criticalRate, a.criticalDamage - b.criticalDamage);
+    public static EternalStat operator *(EternalStat a, EternalStat b) => new EternalStat(a.maxHp * b.maxHp, a.damage * b.damage, a.defense * b.defense, a.intellect * b.intellect, a.speed * b.speed, a.criticalRate * b.criticalRate, a.criticalDamage * b.criticalDamage);
+    public static EternalStat operator /(EternalStat a, EternalStat b) => new EternalStat(a.maxHp / b.maxHp, a.damage / b.damage, a.defense / b.defense, a.intellect / b.intellect, a.speed / b.speed, a.criticalRate / b.criticalRate, a.criticalDamage / b.criticalDamage);
+
     //public int currentHp;
     public int maxHp;
     //public int mp;
@@ -60,8 +65,21 @@ public class EternalStat
 
     public float criticalRate;
     public float criticalDamage;
+    public EternalStat()
+    {
 
-    public void SetDefaultStat() //½ºÅÈ ±âº»°ª
+    }
+    public EternalStat(int mh, int d, int df, int intell, float s, float cr, float cd)
+    {
+        maxHp = mh;
+        damage = d;
+        defense = df;
+        intellect = intell;
+        speed = s;
+        criticalRate = cr;
+        criticalDamage = cd;
+    }
+    public void SetDefaultStat() //ï¿½ï¿½ï¿½ï¿½ ï¿½âº»ï¿½ï¿½
     {
         maxHp = 100;
         damage = 10;
