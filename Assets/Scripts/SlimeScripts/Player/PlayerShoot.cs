@@ -42,7 +42,7 @@ public class PlayerShoot : PlayerAction
 
         (temp, findInDic) = slimePoolManager.Find(projectile);
 
-        if (findInDic)
+        if (findInDic && temp != null)
         {
             temp.SetActive(true);
         }
