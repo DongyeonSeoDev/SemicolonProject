@@ -29,6 +29,11 @@ public enum UIType
 
 public enum KeyAction
 {
+    UP,
+    DOWN,
+    LEFT,
+    RIGHT,
+    ATTACK,
     INVENTORY,
     INTERACTION,
     STAT,

@@ -17,8 +17,18 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
 
     public Pair<GameObject, Transform> keyInfoPair;
 
+    private void Awake()
+    {
+        KeySetting.SetFixedKeySetting();
+    }
+
     private void Start()
     {
+        for(int i=0; i<5; i++)
+        {
+            Instantiate(keyInfoPair.first, keyInfoPair.second).GetComponent<KeyInfoUI>()
+            .SetFixedKey((KeyAction)i, i!=4? KeySetting.fixedKeyDict[(KeyAction)i].ToString() : "Left Mouse");
+        }
         foreach(KeyAction action in KeySetting.keyDict.Keys)
         {
             KeyInfoUI keyUI = Instantiate(keyInfoPair.first, keyInfoPair.second).GetComponent<KeyInfoUI>();

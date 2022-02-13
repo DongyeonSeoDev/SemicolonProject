@@ -4,6 +4,7 @@ using UnityEngine;
 public static class KeySetting
 {
     public static Dictionary<KeyAction, KeyCode> keyDict = new Dictionary<KeyAction, KeyCode>();
+    public static Dictionary<KeyAction, KeyCode> fixedKeyDict = new Dictionary<KeyAction, KeyCode>();
 
     public static void SetDefaultKeySetting()
     {
@@ -14,5 +15,14 @@ public static class KeySetting
         keyDict[KeyAction.DRAIN] = KeyCode.Q;
         keyDict[KeyAction.SPECIALATTACK] = KeyCode.LeftShift;
         keyDict[KeyAction.SETTING] = KeyCode.Tab;
+    }
+
+    public static void SetFixedKeySetting()
+    {
+        fixedKeyDict[KeyAction.UP] = KeyCode.W;
+        fixedKeyDict[KeyAction.DOWN] = KeyCode.S;
+        fixedKeyDict[KeyAction.LEFT] = KeyCode.A;
+        fixedKeyDict[KeyAction.RIGHT] = KeyCode.D;
+        fixedKeyDict[KeyAction.ATTACK] = KeyCode.Mouse0;
     }
 }
