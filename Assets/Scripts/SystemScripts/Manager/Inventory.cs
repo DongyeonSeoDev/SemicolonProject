@@ -49,6 +49,13 @@ public class Inventory : MonoSingleton<Inventory>
     {
         Global.AddMonoAction(Global.TryAcquisitionItem, x => GetItem((Item)x));
         Global.AddAction(Global.MakeFood, item => GetItem(item as ItemInfo));  //음식 조합
+        Global.AddMonoAction(Global.PickupPlant, item =>
+        {
+            Pick plant = item as Pick;
+            GetItem(new ItemInfo(plant.itemData.id,1));
+            plant.FollowEffect();
+            plant.gameObject.SetActive(false);
+        });
 
         EventManager.StartListening("PlayerDead", ResetInventory);
     }

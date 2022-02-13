@@ -6,6 +6,8 @@ public class Ingredient : ItemSO
 
     //public string spritePath;  //스프라이트 경로
 
+    public bool isUseable;
+
     public override Sprite GetSprite()
     {
         if (!itemSprite)
@@ -17,6 +19,9 @@ public class Ingredient : ItemSO
 
     public override void Use()
     {
-        
+        if(isUseable)
+        {
+            base.Use();
+        }
     }
 }

@@ -3,6 +3,14 @@ using UnityEngine;
 public static class ItemUseMng
 {
     //private static Player player;
+    
+    public static void IncreaseCurrentHP(Player p, int value)
+    {
+        p.CurrentHp += value;
+        UIManager.Instance.UpdatePlayerHPUI();
+        UIManager.Instance.InsertNoticeQueue("HP " + value + " È¸º¹");
+        EffectManager.Instance.OnTopRightBtnEffect(UIType.STAT, true);
+    }
 
     public static void IncreaseMaxHP(Player p, int value)
     {
@@ -59,5 +67,29 @@ public class SlimeJelly : ItemAbil
     public override void Use()
     {
         ItemUseMng.IncreaseStr(SlimePlayer, 1);
+    }
+}
+
+public class Restorativeherb : ItemAbil
+{
+    public override void Use()
+    {
+        ItemUseMng.IncreaseCurrentHP(SlimePlayer, 40);
+    }
+}
+
+public class Yellowherb : ItemAbil
+{
+    public override void Use()
+    {
+        ItemUseMng.IncreaseCurrentHP(SlimePlayer, 10);
+    }
+}
+
+public class RecoveryPotion : ItemAbil
+{
+    public override void Use()
+    {
+        ItemUseMng.IncreaseCurrentHP(SlimePlayer, 80);
     }
 }

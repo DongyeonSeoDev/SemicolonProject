@@ -5181,7 +5181,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1072796663
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 25
   m_RenderMode: 0
   m_SortMode: 0
@@ -5754,7 +5754,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1072796663
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 25
   m_RenderMode: 0
   m_SortMode: 0
@@ -6742,7 +6742,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1072796663
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 25
   m_RenderMode: 1
   m_SortMode: 0
@@ -18355,7 +18355,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -992757899
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 2
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
   m_Color: {r: 0.24777165, g: 0.1372549, b: 1, a: 1}
@@ -21530,7 +21530,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -992757899
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 5
   m_Sprite: {fileID: -1359371171418374438, guid: 0be0f60159d86244b84ab7a907fe4280, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -26943,7 +26943,7 @@ SpriteMask:
   m_MaskAlphaCutoff: 0.2
   m_FrontSortingLayerID: 1072796663
   m_BackSortingLayerID: 0
-  m_FrontSortingLayer: 4
+  m_FrontSortingLayer: 5
   m_BackSortingLayer: 0
   m_FrontSortingOrder: 27
   m_BackSortingOrder: 0
@@ -34206,7 +34206,7 @@ SpriteMask:
   m_MaskAlphaCutoff: 0.2
   m_FrontSortingLayerID: 1072796663
   m_BackSortingLayerID: 0
-  m_FrontSortingLayer: 4
+  m_FrontSortingLayer: 5
   m_BackSortingLayer: 0
   m_FrontSortingOrder: 27
   m_BackSortingOrder: 0
@@ -40990,7 +40990,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1072796663
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 25
   m_RenderMode: 0
   m_SortMode: 0

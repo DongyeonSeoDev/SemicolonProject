@@ -120,6 +120,11 @@ public partial class UIManager : MonoSingleton<UIManager>
 
         });
 
+        Global.AddMonoAction(Global.PickupPlant, item =>
+        {
+            RequestLeftBottomMsg(string.Format("아이템을 획득하였습니다. ({0} +{1})", ((Pick)item).itemData.itemName, 1));
+        });
+
         Global.AddAction(Global.JunkItem, JunkItem);
 
         EventManager.StartListening("PlayerDead", () => OnUIInteract(UIType.DEATH, true));
@@ -362,7 +367,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         itemTypeTxt.text = Global.GetItemTypeName(data.itemType);
 
         itemUseBtn.gameObject.SetActive(data.itemType != ItemType.ETC);
-
+        if (data.itemType == ItemType.ETC && ((Ingredient)data).isUseable) itemUseBtn.gameObject.SetActive(true);
     }
 
     public void RequestSystemMsg(string msg, int fontSize = 35, float existTime = 1.5f) //화면 중앙 상단에 뜨는 시스템 메시지
