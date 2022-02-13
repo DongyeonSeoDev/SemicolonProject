@@ -19,9 +19,10 @@ namespace Water
             target = new Vector2(origin.x, origin.y - 300f);
         }
 
-        public void Set(string msg, int fontSize, float existTime)
+        public void Set(string msg, int fontSize, float existTime, Color textColor)
         {
             systemText.text = msg;
+            systemText.color = textColor;
             systemText.fontSize = fontSize;
             cvsg.alpha = 0;
             transform.SetAsLastSibling();

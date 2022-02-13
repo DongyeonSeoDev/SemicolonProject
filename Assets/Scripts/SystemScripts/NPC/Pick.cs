@@ -38,13 +38,21 @@ public class Pick : InteractionObj
 
     public override void Interaction()
     {
-        //확률 적용해야 함
-
-        if (Inventory.Instance.CanCombine(_itemData.id, 1))
+        if (!Inventory.Instance.CanCombine(_itemData.id, 1))
         {
+            UIManager.Instance.RequestSystemMsg("인벤토리를 비워주세요.");
+            return;
+        }
+        
+        if (Random.Range(0f, 100f) < pickSuccessProbability)
+        {
+            UIManager.Instance.RequestSystemMsg("채집에 성공하였습니다.", Util.Change255To1Color(114, 168, 255, 255));
             Global.MonoActionTrigger(Global.PickupPlant, this);
         }
         else
-            UIManager.Instance.RequestSystemMsg("인벤토리를 비워주세요.");
+        {
+            UIManager.Instance.RequestSystemMsg("채집에 실패하였습니다.", Util.Change255To1Color(123, 0, 226, 255));
+            gameObject.SetActive(false);
+        }
     }
 }
