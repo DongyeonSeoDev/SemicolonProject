@@ -31,7 +31,7 @@ public class PlayerInteractionCollider : MonoBehaviour
     {
         if (interactionableNPCLayer.CompareGameObjectLayer(other.gameObject))
         {
-            NPC target = other.GetComponent<NPC>();
+            InteractionObj target = other.GetComponent<InteractionObj>();
 
             if (target != null)
             {
