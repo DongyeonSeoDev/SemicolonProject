@@ -3,7 +3,10 @@ using Water;
 
 public class Pick : InteractionObj
 {
-    public float pickSuccessProbability = 50f;
+    [SerializeField] private bool isEnemyStage = true;
+    [SerializeField] private int stageNumber;
+
+    [SerializeField] private float pickSuccessProbability = 50f;
 
     [SerializeField] protected ItemSO _itemData;
     public ItemSO itemData { get { return _itemData; } }
@@ -38,6 +41,11 @@ public class Pick : InteractionObj
 
     public override void Interaction()
     {
+        if(isEnemyStage)
+        {
+
+        }
+
         if (!Inventory.Instance.CanCombine(_itemData.id, 1))
         {
             UIManager.Instance.RequestSystemMsg("인벤토리를 비워주세요.");
