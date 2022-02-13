@@ -75,7 +75,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1646225281
-  m_SortingLayer: 2
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 4534810592809177352, guid: 5c320c3a5af356648a35ce50d8277e78, type: 3}
   m_Color: {r: 0.9811321, g: 0.9811321, b: 0.9811321, a: 1}
@@ -171,6 +171,8 @@ MonoBehaviour:
   enemyMoveSO: {fileID: 11400000, guid: 44c76960a69f7b34aa6fd30cc39b6788, type: 2}
   enemyLootListSO: {fileID: 11400000, guid: f08037efe7334bc46a049b6a12fe431a, type: 2}
   hpBarFillImage: {fileID: 6749001325751788167}
+  hpBar: {fileID: 6749001325011307883}
+  enemyAttackCheck: {fileID: 1379758292269083093}
 --- !u!1 &4651690421332222191
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,6 +386,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
+--- !u!1 &6749001325011307883 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1559462951835451892, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
+  m_PrefabInstance: {fileID: 5191832025836309663}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &6749001325011307879 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1559462951835451896, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}

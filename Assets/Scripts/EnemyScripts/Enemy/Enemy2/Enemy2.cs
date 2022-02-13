@@ -5,6 +5,7 @@ namespace Enemy
     public class Enemy2 : Enemy // 두번째 적
     {
         private EnemyCommand enemyAttackCommand;
+        private EnemyCommand enemyAttackPlayerCommand;
 
         protected override void OnEnable()
         {
@@ -31,14 +32,23 @@ namespace Enemy
                 isSeePlayerDistance = 10f
             };
 
-            enemyAttackCommand = new EnemyAttackCommand(enemyData.enemyObject.transform, enemyData.PlayerObject.transform, enemyData.eEnemyController, enemyData.attackDamage);
-
             base.OnEnable();
         }
 
         public void EnemyAttack()
         {
-            enemyAttackCommand.Execute();
+            if (enemyData.eEnemyController == EnemyController.PLAYER)
+            {
+                enemyAttackPlayerCommand = new EnemyAttackPlayerCommand(transform, enemyData.eEnemyController, enemyData.attackDamage);
+
+                enemyAttackPlayerCommand.Execute();
+            }
+            else if (enemyData.eEnemyController == EnemyController.AI)
+            {
+                enemyAttackCommand = new EnemyAttackCommand(enemyData.enemyObject.transform, enemyData.PlayerObject.transform, enemyData.eEnemyController, enemyData.attackDamage);
+
+                enemyAttackCommand.Execute();
+            }
         }
     }
 }

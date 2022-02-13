@@ -8,6 +8,7 @@ namespace Enemy
         public EnemyMoveSO enemyMoveSO;
         public EnemyLootListSO enemyLootListSO;
         public Image hpBarFillImage;
+        public GameObject hpBar;
 
         protected EnemyData enemyData;
         protected SpriteRenderer sr;
@@ -16,6 +17,8 @@ namespace Enemy
 
         private EnemyState currentState;
         private PlayerInput playerInput;
+
+        public EnemyAttackCheck enemyAttackCheck;
 
         private float lastPositionX;
 
@@ -126,11 +129,28 @@ namespace Enemy
             {
                 gameObject.tag = "Untagged";
                 gameObject.layer = LayerMask.NameToLayer("ENEMY");
+
+                hpBar.SetActive(true);
             }
             else if (eEnemyController == EnemyController.PLAYER)
             {
                 gameObject.tag = "Player";
                 gameObject.layer = LayerMask.NameToLayer("PLAYER");
+
+                hpBar.SetActive(false);
+            }
+
+            if (enemyAttackCheck != null)
+            {
+                if (enemyAttackCheck.enemyControllerChange != null)
+                {
+                    enemyAttackCheck.enemyControllerChange(eEnemyController);
+                }
+                else
+                {
+                    enemyAttackCheck.AddEnemyController();
+                    enemyAttackCheck.enemyControllerChange(eEnemyController);
+                }
             }
         }
     }
