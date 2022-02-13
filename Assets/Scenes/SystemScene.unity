@@ -20212,6 +20212,10 @@ MonoBehaviour:
   itemPrefab: {fileID: 4326160251562388895, guid: 107f39f0dc10f3448b385f13094c50a5, type: 3}
   itemCloneEffectPrefab: {fileID: 4326160251562388895, guid: 3659a623beedfcd45814fe35ac5ebd52, type: 3}
   droppedItemList: []
+  pickList: []
+  checkGameStringKeys:
+    poolKeyList: []
+    eventKeyList: []
 --- !u!1 &4371673833555632301
 GameObject:
   m_ObjectHideFlags: 0

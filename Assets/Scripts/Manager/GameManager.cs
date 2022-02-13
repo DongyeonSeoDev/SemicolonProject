@@ -72,9 +72,9 @@ public partial class GameManager : MonoSingleton<GameManager>
     private void SetData()
     {
         {   //키세팅 정보 불러옴
-            if (saveData.option.keyInputDict.keyList.Count == 0)
-                KeySetting.SetDefaultKeySetting();
-            else
+            KeySetting.SetDefaultKeySetting();
+
+            if (saveData.option.keyInputDict.keyList.Count > 0)
             {
                 foreach (KeyAction key in saveData.option.keyInputDict.keyList)
                 {

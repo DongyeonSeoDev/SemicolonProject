@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemSprite: {fileID: 0}
   itemType: 2
-  id: 30
+  id: 35
   maxCount: 20
   itemName: "\uC950 \uAF2C\uB9AC"
   explanation: "\uC624\uC9D5\uC5B4 \uB2E4\uB9AC\uC640 \uBE44\uC2B7\uD55C \uB9DB\uC774
     \uB0A0 \uC9C0\uB3C4?"
+  isUseable: 0
