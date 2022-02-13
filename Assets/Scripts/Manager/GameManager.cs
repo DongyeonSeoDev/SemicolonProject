@@ -15,6 +15,8 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     private Dictionary<int, ItemSO> itemDataDic = new Dictionary<int, ItemSO>();
 
+    private List<Triple<int, int, int>> limitedBattleCntItems = new List<Triple<int, int, int>>(); //n교전 후에 사라지는 아이템들 리스트 (아이디, 현재 교전 수, 최대 교전 수(가 되면 사라짐))
+
     #region prefab and parent
     public GameObject foodBtnPrefab, ingredientImgPrefab;
     public Transform foodBtnParent, ingredientImgParent;
@@ -118,6 +120,17 @@ public partial class GameManager : MonoSingleton<GameManager>
         {
             item.gameObject.SetActive(false);
             droppedItemList.Remove((Item)item);
+            Global.ActionTrigger("GetItem", ((Item)item).itemData.id);
+        });
+
+        Global.AddAction("GetItem", _id =>
+        {
+            int id = (int)_id;
+            int limitedBattleCount = itemDataDic[id].existBattleCount;
+            if (limitedBattleCount > 0)
+            {
+                limitedBattleCntItems.Add(new Triple<int, int, int>(id, 0, limitedBattleCount));
+            }
         });
 
         //풀 생성
@@ -186,6 +199,26 @@ public partial class GameManager : MonoSingleton<GameManager>
         {
             if (!pickList[i].gameObject.activeSelf) pickList[i].gameObject.SetActive(true);
         }
+
+        limitedBattleCntItems.Clear();
+    }
+
+    public void UpdateItemBattleRestCount() //교전 수가 정해진 아이템들 현재 교전 수 1 증가하고 최대치인 것은 삭제
+    {
+        List<Triple<int, int, int>> sList = new List<Triple<int, int, int>>();
+
+        limitedBattleCntItems.ForEach(item =>
+        {
+            item.second++;
+            if (item.second == item.third)
+                sList.Add(item);
+        });
+
+        sList.ForEach(item =>
+        {
+            limitedBattleCntItems.Remove(item);
+            Inventory.Instance.RemoveItem(item.first, 1);
+        });
     }
 
     #endregion
