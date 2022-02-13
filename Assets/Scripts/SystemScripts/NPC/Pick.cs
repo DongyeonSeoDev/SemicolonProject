@@ -3,10 +3,10 @@ using Water;
 
 public class Pick : InteractionObj
 {
-    [SerializeField] private bool isEnemyStage = true;
-    [SerializeField] private int stageNumber;
+    [SerializeField] private bool isEnemyStage = true;  //적이 있는 스테이지?
+    //[SerializeField] private int stageNumber;  //몇 스테이지의 채집물인지
 
-    [SerializeField] private float pickSuccessProbability = 50f;
+    [SerializeField] private float pickSuccessProbability = 50f;  //채집 성공률
 
     [SerializeField] protected ItemSO _itemData;
     public ItemSO itemData { get { return _itemData; } }
@@ -41,9 +41,10 @@ public class Pick : InteractionObj
 
     public override void Interaction()
     {
-        if(isEnemyStage)
+        if(isEnemyStage && !StageManager.Instance.IsStageClear)
         {
-
+            UIManager.Instance.RequestSystemMsg("몬스터가 남아있을 때는 채집할 수 없습니다.");
+            return;
         }
 
         if (!Inventory.Instance.CanCombine(_itemData.id, 1))

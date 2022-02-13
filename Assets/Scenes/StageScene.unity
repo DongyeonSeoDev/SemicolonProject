@@ -231,6 +231,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8632448655464481713, guid: 80b5371138781eb46819d3c6e08b8d03, type: 3}
+      propertyPath: stageNumber
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8702471488895736902, guid: 80b5371138781eb46819d3c6e08b8d03, type: 3}
       propertyPath: m_Name
       value: RestorativeherbPrefab
@@ -563,6 +567,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4586074380361857248, guid: f6a8318e42595ba44b195df95b6d3e30, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8632448655464481713, guid: f6a8318e42595ba44b195df95b6d3e30, type: 3}
+      propertyPath: isEnemyStage
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8702471488895736902, guid: f6a8318e42595ba44b195df95b6d3e30, type: 3}

@@ -216,9 +216,22 @@ public partial class GameManager : MonoSingleton<GameManager>
 
         sList.ForEach(item =>
         {
-            limitedBattleCntItems.Remove(item);
+            //limitedBattleCntItems.Remove(item);  //Inventory스크립트에서 처리
             Inventory.Instance.RemoveItem(item.first, 1);
+            UIManager.Instance.RequestLeftBottomMsg(string.Format("최대 교전 수 도달로 아이템을 잃었습니다. ({0} -{1})", GetItemData(item.first).itemName, 1));
         });
+    }
+
+    public void RemoveLimitedBattleCntItemsElement(int id)  //limitedBattleCntItems의 요소를 하나 제거
+    {
+        for(int i=0; i< limitedBattleCntItems.Count; ++i)
+        {
+            if(limitedBattleCntItems[i].first == id)
+            {
+                limitedBattleCntItems.RemoveAt(i);
+                return;
+            }
+        }
     }
 
     #endregion
