@@ -103,23 +103,37 @@ public class TalkEffect
     public UnityEvent talkEvent;
 }
 
+
+
+[Serializable]
+public class CheckGameStringKeys
+{
+    public List<string> poolKeyList = new List<string>();
+    public List<Pair<string,EventKeyCheck>> eventKeyList = new List<Pair<string, EventKeyCheck>>();
+}
+
 public class ActionGroup
 {
     public Action voidAction;
     public Action<MonoBehaviour> monoAction;
     public Action<object> objAction;
 
+    public EventKeyCheck ekc;
+
     public ActionGroup(Action voidAction)
     {
         this.voidAction = voidAction;
+        ekc = EventKeyCheck.VOID;
     }
     public ActionGroup(Action<MonoBehaviour> monoAction)
     {
         this.monoAction = monoAction;
+        ekc = EventKeyCheck.MONO;
     }
     public ActionGroup(Action<object> objAction)
     {
         this.objAction = objAction;
+        ekc = EventKeyCheck.OBJECT;
     }
 
     public void ActionTrigger()

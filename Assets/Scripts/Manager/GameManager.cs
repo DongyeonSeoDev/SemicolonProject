@@ -128,6 +128,15 @@ public partial class GameManager : MonoSingleton<GameManager>
         EventManager.StartListening("PlayerRespawn", ResetDroppedItems);
     }
 
+    private void Start()
+    {
+        Util.DelayFunc(() =>
+        {
+            checkGameStringKeys.poolKeyList = PoolManager.poolDic.Keys.ToList();
+            Global.SetResordEventKey();
+        }, 3f);
+    }
+
     #region Item
 
     public ItemSO GetItemData(int id) => itemDataDic[id];
@@ -166,11 +175,17 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     void ResetDroppedItems(Vector2 unusedValue)
     {
-        for (int i = 0; i < droppedItemList.Count; i++)
+        int i;
+        for (i = 0; i < droppedItemList.Count; i++)
         {
             droppedItemList[i].gameObject.SetActive(false);
         }
         droppedItemList.Clear();
+
+        for(i=0; i<pickList.Count; i++)
+        {
+            if (!pickList[i].gameObject.activeSelf) pickList[i].gameObject.SetActive(true);
+        }
     }
 
     #endregion

@@ -8,6 +8,7 @@ public class Pick : InteractionObj
     [SerializeField] protected ItemSO _itemData;
     public ItemSO itemData { get { return _itemData; } }
 
+    public FakeSpriteOutline fsOut;
     //protected int droppedCount = 1;
     //public int DroppedCnt { get { return droppedCount; } }
 
@@ -17,13 +18,28 @@ public class Pick : InteractionObj
         objName = _itemData.itemName;
     }
 
+    private void Start()
+    {
+        GameManager.Instance.pickList.Add(this);
+        fsOut.gameObject.SetActive(false);
+    }
+
     public void FollowEffect()
     {
         PoolManager.GetItem("ItemFollowEffect").GetComponent<ItemCloneEffect>().Set(GetComponent<SpriteRenderer>().sprite, SlimeGameManager.Instance.CurrentPlayerBody.transform, transform.position, Quaternion.identity);
     }
 
+    public override void SetInteractionUI(bool on)
+    {
+        base.SetInteractionUI(on);
+
+        fsOut.gameObject.SetActive(on);
+    }
+
     public override void Interaction()
     {
+        //확률 적용해야 함
+
         if (Inventory.Instance.CanCombine(_itemData.id, 1))
         {
             Global.MonoActionTrigger(Global.PickupPlant, this);

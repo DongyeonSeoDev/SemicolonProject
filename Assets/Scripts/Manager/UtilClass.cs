@@ -49,6 +49,14 @@ public static partial class Global
 
     private static Dictionary<string, ActionGroup> stringToActionDict = new Dictionary<string, ActionGroup>();
 
+    public static void SetResordEventKey()
+    {
+        foreach(string key in stringToActionDict.Keys)
+        {
+            GameManager.Instance.checkGameStringKeys.eventKeyList.Add(new Pair<string, EventKeyCheck>(key, stringToActionDict[key].ekc));
+        }
+    }
+
     private static Sprite[] itemTypeSprites = new Sprite[Enum.GetValues(typeof(ItemType)).Length];
 }
 

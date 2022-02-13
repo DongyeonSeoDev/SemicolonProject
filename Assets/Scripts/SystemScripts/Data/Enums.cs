@@ -43,3 +43,10 @@ public enum KeyAction
     SETTING,
     NULL
 }
+
+public enum EventKeyCheck
+{
+    VOID,
+    OBJECT,
+    MONO
+}
