@@ -5214,7 +5214,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1072796663
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 25
   m_RenderMode: 0
   m_SortMode: 0
@@ -6424,7 +6424,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -992757899
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 2
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
   m_Color: {r: 0.24777165, g: 0.1372549, b: 1, a: 1}
@@ -7295,7 +7295,7 @@ MonoBehaviour:
     id: 30
     count: 10
   testChef: {fileID: 1200683676810737959}
-  isTestMode: 1
+  isTestMode: 0
   foodBtnList: []
   ingredientImages: []
   NpcNameTxt: {fileID: 1200683676452301670}
@@ -10407,7 +10407,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -992757899
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 5
   m_Sprite: {fileID: -1359371171418374438, guid: 0be0f60159d86244b84ab7a907fe4280, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -10791,6 +10791,10 @@ MonoBehaviour:
   itemPrefab: {fileID: 4326160251562388895, guid: 107f39f0dc10f3448b385f13094c50a5, type: 3}
   itemCloneEffectPrefab: {fileID: 4326160251562388895, guid: 3659a623beedfcd45814fe35ac5ebd52, type: 3}
   droppedItemList: []
+  pickList: []
+  checkGameStringKeys:
+    poolKeyList: []
+    eventKeyList: []
 --- !u!1 &1200683676984694138
 GameObject:
   m_ObjectHideFlags: 0
@@ -18805,7 +18809,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1072796663
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 25
   m_RenderMode: 0
   m_SortMode: 0
@@ -26746,7 +26750,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1072796663
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 25
   m_RenderMode: 1
   m_SortMode: 0
@@ -39804,7 +39808,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1072796663
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 25
   m_RenderMode: 0
   m_SortMode: 0
@@ -39907,7 +39911,7 @@ SpriteMask:
   m_MaskAlphaCutoff: 0.2
   m_FrontSortingLayerID: 1072796663
   m_BackSortingLayerID: 0
-  m_FrontSortingLayer: 4
+  m_FrontSortingLayer: 5
   m_BackSortingLayer: 0
   m_FrontSortingOrder: 27
   m_BackSortingOrder: 0
@@ -40667,7 +40671,7 @@ SpriteMask:
   m_MaskAlphaCutoff: 0.2
   m_FrontSortingLayerID: 1072796663
   m_BackSortingLayerID: 0
-  m_FrontSortingLayer: 4
+  m_FrontSortingLayer: 5
   m_BackSortingLayer: 0
   m_FrontSortingOrder: 27
   m_BackSortingOrder: 0

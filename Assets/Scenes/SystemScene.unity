@@ -24572,7 +24572,7 @@ MonoBehaviour:
     id: 30
     count: 10
   testChef: {fileID: 4371673833920559558}
-  isTestMode: 1
+  isTestMode: 0
   foodBtnList: []
   ingredientImages: []
   NpcNameTxt: {fileID: 4371673835214285703}
