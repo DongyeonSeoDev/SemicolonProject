@@ -18,6 +18,7 @@ public class EffectManager : MonoSingleton<EffectManager>
 
     public RectTransform hpFillEffect;
     public Transform hpFillEffectMaskCenter;
+    private float hpFillEffectMaskCenterInitScale;
     //public ScreenToWorldPos hpFillEffectMaskObj;
 
     [Space(20)][Header("TopRight Btn Effects")]
@@ -28,6 +29,7 @@ public class EffectManager : MonoSingleton<EffectManager>
     {
         fillBackWidth = fillBackRect.rect.width;
         damagedHpUIEffectRect = damagedHpUIEffect.GetComponent<RectTransform>();
+        hpFillEffectMaskCenterInitScale = hpFillEffectMaskCenter.localScale.x;
         //hpFillEffectStartX = hpFillEffect.anchoredPosition.x;
         //hpFillEffectMaskObj.screenPoint = new Vector2(fillBackRect.anchoredPosition.x - fillBackWidth * 0.5f, fillBackRect.anchoredPosition.y);
     }
@@ -43,13 +45,13 @@ public class EffectManager : MonoSingleton<EffectManager>
 
     public void OnDamagedUIEffect(float rate)
     {
-        damagedHpUIEffectRect.anchoredPosition = new Vector2(fillBackWidth * rate, damagedHpUIEffectRect.rect.y);
+        damagedHpUIEffectRect.anchoredPosition = new Vector2(fillBackWidth * rate, damagedHpUIEffectRect.anchoredPosition.y);
         damagedHpUIEffect.Play();
     }
     
-    public void SetHPFillEffectPos(float rate) //HPFill 이펙트의 위치를 HPFillAmount에 맞게 설정 (Mask옵젝 만들고 크기를 왼쪽으로 키워서 처리할 수도 있음)
+    public void SetHPFillEffectScale(float rate) 
     {
-        hpFillEffectMaskCenter.transform.localScale = new Vector3(rate, 1, 1);
+        hpFillEffectMaskCenter.transform.localScale = new Vector3(hpFillEffectMaskCenterInitScale * rate, hpFillEffectMaskCenterInitScale, hpFillEffectMaskCenterInitScale);
         //hpFillEffect.anchoredPosition = new Vector2(hpFillEffectStartX - fillBackWidth * (1f - rate), hpFillEffect.anchoredPosition.y);
         //if (rate == 0f) hpFillEffect.anchoredPosition = new Vector2(hpFillEffect.anchoredPosition.x - 50f, hpFillEffect.anchoredPosition.y);
     }
