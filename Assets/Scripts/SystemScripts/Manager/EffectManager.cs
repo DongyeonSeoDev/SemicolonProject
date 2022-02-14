@@ -53,6 +53,7 @@ public class EffectManager : MonoSingleton<EffectManager>
 
     public void OnDamagedUIEffect(float rate)
     {
+        damagedHpUIEffect.Stop();
         damagedHpUIEffectRect.anchoredPosition = new Vector2(fillBackWidth * rate, damagedHpUIEffectRect.anchoredPosition.y);
         damagedHpUIEffect.Play();
     }
