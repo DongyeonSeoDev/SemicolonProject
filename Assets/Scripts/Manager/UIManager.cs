@@ -133,6 +133,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         EventManager.StartListening("TimePause", () => Time.timeScale = 0 );
         EventManager.StartListening("TimeResume", () => Time.timeScale = 1);
         EventManager.StartListening("StageClear", () => { changeNoticeMsgGrd = clearNoticeMsgVGrd; InsertNoticeQueue("Stage Clear", 90, true); });
+        EventManager.StartListening("ChangeBody", () => UpdatePlayerHPUI());
     }
 
     private void Respawn(Vector2 unusedValue) => OnUIInteract(UIType.DEATH, true);
@@ -453,6 +454,8 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     public void UpdatePlayerHPUI(bool decrease = false)
     {
+        isStartDelayHPFillTimer = false;
+
         Player p = sgm.Player;
         int hp = Mathf.Clamp(p.CurrentHp, 0, p.PlayerStat.MaxHp);
 
@@ -475,7 +478,8 @@ public partial class UIManager : MonoSingleton<UIManager>
         {
             if(setDelayHPFillTime < Time.time)
             {
-                playerHPInfo.third.DOFillAmount(playerHPInfo.first.fillAmount, 0.3f).OnComplete(() => isStartDelayHPFillTimer = false);
+                playerHPInfo.third.DOFillAmount(playerHPInfo.first.fillAmount, 0.3f);
+                isStartDelayHPFillTimer = false;
             }
         }
     }
