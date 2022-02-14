@@ -52,16 +52,29 @@ public class Pick : InteractionObj
             UIManager.Instance.RequestSystemMsg("인벤토리를 비워주세요.");
             return;
         }
+
         
         if (Random.Range(0f, 100f) < pickSuccessProbability)
         {
+            CallEffect("PickSuccessEff");
+
             UIManager.Instance.RequestSystemMsg("채집에 성공하였습니다.", Util.Change255To1Color(114, 168, 255, 255));
             Global.MonoActionTrigger(Global.PickupPlant, this);
         }
         else
         {
+            CallEffect("PickFailEff");
+
             UIManager.Instance.RequestSystemMsg("채집에 실패하였습니다.", Util.Change255To1Color(123, 0, 226, 255));
             gameObject.SetActive(false);
         }
+    }
+
+    void CallEffect(string key, float time = 1)
+    {
+        GameObject effObj = PoolManager.GetItem(key);
+        effObj.transform.position = transform.position;
+        effObj.GetComponent<ParticleSystem>().Play();
+        Util.DelayFunc(() => effObj.SetActive(false), time);
     }
 }

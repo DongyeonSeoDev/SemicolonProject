@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Water;
 
 public class EffectManager : MonoSingleton<EffectManager>
 {
@@ -25,11 +26,18 @@ public class EffectManager : MonoSingleton<EffectManager>
     public GameObject inventoryBtnEffect;
     public GameObject statBtnEffect;
 
+    [Space(20)]
+    [Header("채집 성공/실패 이펙트")]
+    public Pair<GameObject, GameObject> pickupPlantEffects;  //채집 성공, 실패 이펙트
+
     private void Awake()
     {
         fillBackWidth = fillBackRect.rect.width;
         damagedHpUIEffectRect = damagedHpUIEffect.GetComponent<RectTransform>();
         hpFillEffectMaskCenterInitScale = hpFillEffectMaskCenter.localScale.x;
+
+        PoolManager.CreatePool(pickupPlantEffects.first, transform, 2, "PickSuccessEff");
+        PoolManager.CreatePool(pickupPlantEffects.second, transform, 2, "PickFailEff");
         //hpFillEffectStartX = hpFillEffect.anchoredPosition.x;
         //hpFillEffectMaskObj.screenPoint = new Vector2(fillBackRect.anchoredPosition.x - fillBackWidth * 0.5f, fillBackRect.anchoredPosition.y);
     }
