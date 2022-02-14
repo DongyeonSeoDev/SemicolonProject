@@ -42,6 +42,8 @@ public class StageCheck : MonoBehaviour
             }
         }
 
+        EventManager.TriggerEvent("StageClear");
+
         StageManager.Instance.IsStageClear = true;
 
         CinemachineCameraScript.Instance.SetCinemachineConfiner(CinemachineCameraScript.Instance.boundingCollider);
