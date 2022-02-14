@@ -27,6 +27,8 @@ namespace Enemy
 
         public List<List<Enemy>> enemyList = new List<List<Enemy>>();
 
+        public Transform player;
+
         private void Awake()
         {
             if (instance != null)

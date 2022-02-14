@@ -75,6 +75,16 @@ namespace Enemy
 
         public override void Execute()
         {
+            if (followObject == null)
+            {
+                followObject = EnemyManager.Instance.player;
+
+                if (followObject == null)
+                {
+                    Debug.LogError("Player를 찾을 수 없습니다.");
+                }
+            }
+
             if (isLongDistanceAttack)
             {
                 // 이동

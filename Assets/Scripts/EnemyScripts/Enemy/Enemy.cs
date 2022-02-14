@@ -138,6 +138,8 @@ namespace Enemy
                 gameObject.layer = LayerMask.NameToLayer("PLAYER");
 
                 hpBar.SetActive(false);
+
+                EnemyManager.Instance.player = transform;
             }
 
             if (enemyAttackCheck != null)

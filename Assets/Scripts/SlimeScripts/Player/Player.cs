@@ -85,6 +85,8 @@ public class Player : MonoBehaviour
     }
     private void PlayerDead()
     {
+        SlimeGameManager.Instance.PlayerBodyChange("origin");
+        
         EventManager.TriggerEvent("PlayerSetActiveFalse");
     }
     private void SetActiveFalse()
