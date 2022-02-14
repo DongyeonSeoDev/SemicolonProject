@@ -81,7 +81,16 @@ namespace Enemy
 
                 if (followObject == null)
                 {
-                    Debug.LogError("Player를 찾을 수 없습니다.");
+                    EnemyManager.Instance.player = GameObject.FindGameObjectWithTag("Player").transform;
+
+                    followObject = EnemyManager.Instance.player;
+
+                    if (followObject == null)
+                    {
+                        Debug.LogError("Player를 찾을 수 없습니다.");
+
+                        return;
+                    }
                 }
             }
 
