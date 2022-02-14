@@ -134,7 +134,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         EventManager.StartListening("GameClear", () => OnUIInteract(UIType.CLEAR, true));
         EventManager.StartListening("TimePause", () => Time.timeScale = 0 );
         EventManager.StartListening("TimeResume", () => Time.timeScale = 1);
-        EventManager.StartListening("StageClear", () => InsertNoticeQueue("Stage Clear", 90, stageClearTxtColors));
+        EventManager.StartListening("StageClear", () => InsertNoticeQueue("Stage Clear", 90));
     }
 
     private void Respawn(Vector2 unusedValue) => OnUIInteract(UIType.DEATH, true);
