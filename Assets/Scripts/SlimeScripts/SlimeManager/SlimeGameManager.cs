@@ -117,6 +117,14 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
             newBody = Instantiate(newBodyData.Item1, player.transform);
 
+            if(pasteBodyAdditionalStat != null)
+            {
+                player.PlayerStat.additionalEternalStat -= pasteBodyAdditionalStat;
+                player.CurrentHp = player.PlayerStat.MaxHp; 
+
+                pasteBodyAdditionalStat = new EternalStat();
+            }
+
             pasteBodyAdditionalStat = newBodyData.Item2;
 
             player.PlayerStat.additionalEternalStat += newBodyData.Item2;
