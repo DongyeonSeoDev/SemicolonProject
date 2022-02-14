@@ -21,7 +21,11 @@ public partial class UIManager : MonoSingleton<UIManager>
     public Pair<GameObject, Transform> noticeUIPair;
     public Pair<GameObject, Transform> interactionMarkPair;
 
-    public VertexGradient noticeMsgGrd;
+    [HideInInspector] public VertexGradient noticeMsgGrd;  // 상단 중앙 알림 메시지 기본 색상
+
+    [HideInInspector] public VertexGradient changeNoticeMsgGrd;  // 상단 중앙 알림 메시지 바꿀 색상 저장
+
+    public VertexGradient clearNoticeMsgVGrd;  //클리어 알림 메시지 색상
 
     private void Notice()
     {
@@ -34,12 +38,12 @@ public partial class UIManager : MonoSingleton<UIManager>
                 isNoticing = true;
                 NoticeUISet nus = noticeQueue.Dequeue();
                 nus.endAction += () => isNoticing = false;
-                PoolManager.GetItem("NoticeMsg").GetComponent<NoticeMsg>().Set(nus.msg, nus.fontSize, nus.colors, nus.endAction);
+                PoolManager.GetItem("NoticeMsg").GetComponent<NoticeMsg>().Set(nus.msg, nus.fontSize, nus.changeVertexGradient, nus.endAction);
             }
         }
     }
 
-    public void InsertNoticeQueue(string msg, float fontSize = 47, Color[] grd = null, Action endAction = null)
-       => noticeQueue.Enqueue(new NoticeUISet(msg, fontSize, grd, endAction));
+    public void InsertNoticeQueue(string msg, float fontSize = 47, bool changeVertexGradient = false, Action endAction = null)
+       => noticeQueue.Enqueue(new NoticeUISet(msg, fontSize, changeVertexGradient, endAction));
 
 }
