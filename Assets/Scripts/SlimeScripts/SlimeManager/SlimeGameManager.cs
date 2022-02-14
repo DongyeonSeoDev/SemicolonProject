@@ -38,6 +38,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
         get { return currentPlayerBody; }
         set { currentPlayerBody = value; }
     }
+    private EternalStat pasteBodyAdditionalStat = new EternalStat();
     private void Awake()
     {
         playerEnemyUnderstandingRateManager = PlayerEnemyUnderstandingRateManager.Instance;
@@ -70,6 +71,8 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
     }
     public void PlayerBodyChange(string bodyId)
     {
+        Player player = SlimeGameManager.Instance.player;
+
         Enemy.Enemy enemy = null;
 
         GameObject newBody = null;
@@ -82,6 +85,14 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
         {
             newBody = Instantiate(originPlayerBody, player.transform);
 
+            if(pasteBodyAdditionalStat != null)
+            {
+                player.PlayerStat.additionalEternalStat -= pasteBodyAdditionalStat;
+                player.CurrentHp = player.PlayerStat.MaxHp; 
+
+                pasteBodyAdditionalStat = new EternalStat();
+            }
+
             enemy = newBody.GetComponent<Enemy.Enemy>();
 
             if (enemy)
@@ -90,6 +101,8 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             }
 
             newBody.transform.position = spawnPos;
+
+            UIManager.Instance.UpdatePlayerHPUI();
 
             cinemachineCameraScript.SetCinemachineFollow(newBody.transform);
 
@@ -102,7 +115,10 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
             newBody = Instantiate(newBodyData.Item1, player.transform);
 
-            SlimeGameManager.Instance.player.PlayerStat.additionalEternalStat += newBodyData.Item2;
+            pasteBodyAdditionalStat = newBodyData.Item2;
+
+            player.PlayerStat.additionalEternalStat += newBodyData.Item2;
+            player.CurrentHp = player.PlayerStat.MaxHp;
 
             newBody.AddComponent<PlayerBodyScript>();
 
@@ -114,6 +130,8 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             }
 
             newBody.transform.position = spawnPos;
+
+            UIManager.Instance.UpdatePlayerHPUI();
 
             cinemachineCameraScript.SetCinemachineFollow(newBody.transform);
 

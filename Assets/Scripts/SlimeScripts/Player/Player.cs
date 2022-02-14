@@ -76,7 +76,7 @@ public class Player : MonoBehaviour
                 playerState.IsDead = true;
             }
 
-            UIManager.Instance.UpdatePlayerHPUI();
+            UIManager.Instance.UpdatePlayerHPUI(true);
         }
     }
     private void WhenGameClear()
@@ -86,7 +86,7 @@ public class Player : MonoBehaviour
     private void PlayerDead()
     {
         SlimeGameManager.Instance.PlayerBodyChange("origin");
-        
+
         EventManager.TriggerEvent("PlayerSetActiveFalse");
     }
     private void SetActiveFalse()
@@ -100,7 +100,7 @@ public class Player : MonoBehaviour
         playerState.IsDead = false;
         currentHp = playerStat.MaxHp;
 
-        UIManager.Instance.UpdatePlayerHPUI(true);
+        UIManager.Instance.UpdatePlayerHPUI();
 
         EventManager.TriggerEvent("AfterPlayerRespawn");
     }
