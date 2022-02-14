@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d5751a2c961df945a34295ccf5e576d, type: 3}
-  m_Name: RestorativeherbBrush
+  m_Name: PickupPlantBrush
   m_EditorClassIdentifier: 
   m_Cells:
   - m_Tile: {fileID: 0}
@@ -37,4 +37,4 @@ MonoBehaviour:
   m_CanChangeZPosition: 0
   m_FloodFillContiguousOnly: 1
   m_Anchor: {x: 0.5, y: 0.5, z: 0.5}
-  m_Prefab: {fileID: 8702471488895736902, guid: 80b5371138781eb46819d3c6e08b8d03, type: 3}
+  m_Prefab: {fileID: 8702471488895736902, guid: 913d8b5e292ca3f4b9cdf9e9ace1a6f4, type: 3}

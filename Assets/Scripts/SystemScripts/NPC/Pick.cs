@@ -17,7 +17,7 @@ public class Pick : InteractionObj
 
     private void Awake()
     {
-        GetComponent<SpriteRenderer>().sprite = _itemData.GetSprite();
+        GetComponent<SpriteRenderer>().sprite = _itemData.GetSecondSprite();
         objName = _itemData.itemName;
     }
 

@@ -4,6 +4,7 @@ using System;
 public abstract class ItemSO : ScriptableObject
 {
     [SerializeField] protected Sprite itemSprite;
+    [SerializeField] protected Sprite secondItemSprite;  //두번째 아이템 스프라이트 (ex : 채집물 요소로서 맵에 배치될 때의 스프라이트는 다르게 할 때 씀)
 
     public ItemType itemType;
 
@@ -22,6 +23,11 @@ public abstract class ItemSO : ScriptableObject
     public virtual Sprite GetSprite()
     {
         return itemSprite;
+    }
+
+    public virtual Sprite GetSecondSprite()
+    {
+        return secondItemSprite;
     }
 
     public virtual void Use()

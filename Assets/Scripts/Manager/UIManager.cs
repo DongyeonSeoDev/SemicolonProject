@@ -58,9 +58,13 @@ public partial class UIManager : MonoSingleton<UIManager>
     public Transform npcUICvsTrm;
     #endregion
 
+    #region HP UI 관련
     public Triple<Image, TextMeshProUGUI, Image> playerHPInfo;
     private bool isStartDelayHPFillTimer;
     private float setDelayHPFillTime;
+    #endregion
+
+    public CanvasGroup normalPanelCanvas;
 
     //public Text statText;
     public Text[] statTexts;
@@ -199,16 +203,18 @@ public partial class UIManager : MonoSingleton<UIManager>
         switch (type)
         {
             case UIType.KEYSETTING:
-                if (KeyActionManager.Instance.IsChangingKeySetting)
+                if (KeyActionManager.Instance.IsChangingKeySetting)  //키세팅 변경 중에는 esc로 키세팅 UI 안꺼지게
                     return true;
                 break;
             case UIType.SETTING:
                 for(int i=0; i<gameMenuList.Count; i++)
                 {
-                    if (gameMenuList[i].gameObject.activeSelf)
+                    if (gameMenuList[i].gameObject.activeSelf)     //설정 속의 메뉴 UI가 켜져있는 중에는 설정창 못 끄게
                         return true;
                 }
+                normalPanelCanvas.DOFade(!gameUIList[(int)UIType.SETTING].gameObject.activeSelf ? 0:1, 0.3f);
                 break;
+                
         }
         return false;
     }
