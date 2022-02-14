@@ -51,7 +51,14 @@ namespace Enemy
 
         public void ReadyEnemyAttack()
         {
-            rushAttackPosition.position = (enemyData.PlayerObject.transform.position - enemyData.enemyObject.transform.position).normalized;
+            if (enemyData.eEnemyController == EnemyController.PLAYER)
+            {
+                rushAttackPosition.position = (playerInput.MousePosition - (Vector2)transform.position).normalized;
+            }
+            else if (enemyData.eEnemyController == EnemyController.AI)
+            {
+                rushAttackPosition.position = (enemyData.PlayerObject.transform.position - enemyData.enemyObject.transform.position).normalized;
+            }
         }
 
         public void EnemyAttack()

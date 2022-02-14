@@ -16,7 +16,7 @@ namespace Enemy
         protected Rigidbody2D rb;
 
         private EnemyState currentState;
-        private PlayerInput playerInput;
+        protected PlayerInput playerInput;
 
         public EnemyAttackCheck enemyAttackCheck;
 

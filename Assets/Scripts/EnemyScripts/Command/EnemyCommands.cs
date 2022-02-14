@@ -234,24 +234,26 @@ namespace Enemy
     {
         PlayerInput playerInput;
         Transform transform;
+        Enemy enemy;
 
         EnemyController enemyController;
 
         int attackDamage;
 
-        public EnemyAttackPlayerCommand(Transform transform, EnemyController controller, int attackDamage)
+        public EnemyAttackPlayerCommand(Transform transform, Enemy enemy, EnemyController controller, int attackDamage)
         {
             playerInput = SlimeGameManager.Instance.Player.GetComponent<PlayerInput>();
             this.transform = transform;
             enemyController = controller;
             this.attackDamage = attackDamage;
+            this.enemy = enemy;
         }
 
         public override void Execute()
         {
             PoolManager bullet = EnemyPoolManager.Instance.GetPoolObject(Type.Bullet, transform.position);
 
-            bullet.GetComponent<EnemyBullet>().Init(enemyController, attackDamage, (playerInput.MousePosition - (Vector2)transform.position).normalized);
+            bullet.GetComponent<EnemyBullet>().Init(enemyController, attackDamage, (playerInput.MousePosition - (Vector2)transform.position).normalized, enemy);
         }
     }
 

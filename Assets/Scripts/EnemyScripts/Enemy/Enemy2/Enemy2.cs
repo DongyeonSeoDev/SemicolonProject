@@ -42,7 +42,7 @@ namespace Enemy
         {
             if (enemyData.eEnemyController == EnemyController.PLAYER)
             {
-                enemyAttackPlayerCommand = new EnemyAttackPlayerCommand(transform, enemyData.eEnemyController, enemyData.attackDamage);
+                enemyAttackPlayerCommand = new EnemyAttackPlayerCommand(transform, this, enemyData.eEnemyController, enemyData.attackDamage);
 
                 enemyAttackPlayerCommand.Execute();
             }

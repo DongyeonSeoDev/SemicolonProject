@@ -16,6 +16,8 @@ namespace Enemy
 
         private int attackDamage;
 
+        private Enemy enemy;
+
         private void Start()
         {
             EventManager.StartListening("AfterPlayerRespawn", () =>
@@ -47,7 +49,7 @@ namespace Enemy
             {
                 Enemy enemy = collision.gameObject.GetComponent<Enemy>();
 
-                if (enemy != null)
+                if (enemy != null && enemy != this.enemy)
                 {
                     enemy.GetDamage(attackDamage);
 
@@ -60,7 +62,7 @@ namespace Enemy
             }
         }
 
-        public void Init(EnemyController controller, int damage, Vector3 direction)
+        public void Init(EnemyController controller, int damage, Vector3 direction, Enemy enemy = null)
         {
             eEnemyController = controller;
             attackDamage = damage;
@@ -68,6 +70,15 @@ namespace Enemy
 
             angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0f, 0f, angle - 90f);
+
+            if (controller == EnemyController.AI)
+            {
+                gameObject.layer = LayerMask.NameToLayer("ENEMYPROJECTILE");
+            }
+            else if (controller == EnemyController.PLAYER)
+            {
+                gameObject.layer = LayerMask.NameToLayer("PLAYERPROJECTILE");
+            }
         }
     }
 }
