@@ -126,13 +126,27 @@ namespace Enemy
 
         public override void Execute()
         {
-            if (!isWorking) // »ö±ò º¯°æ
+            if (enemyData.eEnemyController == EnemyController.AI)
             {
-                enemyData.enemySpriteRenderer.color = enemyData.damagedColor;
+                if (!isWorking) // »ö±ò º¯°æ
+                {
+                    enemyData.enemySpriteRenderer.color = enemyData.damagedColor;
+                }
+                else // »ö±ò º¯°æ ÇØÁ¦
+                {
+                    enemyData.enemySpriteRenderer.color = enemyData.normalColor;
+                }
             }
-            else // »ö±ò º¯°æ ÇØÁ¦
+            else if (enemyData.eEnemyController == EnemyController.PLAYER)
             {
-                enemyData.enemySpriteRenderer.color = enemyData.normalColor;
+                if (!isWorking) // »ö±ò º¯°æ
+                {
+                    enemyData.enemySpriteRenderer.color = enemyData.playerDamagedColor;
+                }
+                else // »ö±ò º¯°æ ÇØÁ¦
+                {
+                    enemyData.enemySpriteRenderer.color = enemyData.playerNormalColor;
+                }
             }
 
             isWorking = !isWorking;

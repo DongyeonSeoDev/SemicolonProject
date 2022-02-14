@@ -51,7 +51,7 @@ namespace Enemy
             enemyData.enemyAnimator.SetBool(enemyData.hashIsDead, false);
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             if (currentState != null)
             {
@@ -131,6 +131,8 @@ namespace Enemy
                 gameObject.layer = LayerMask.NameToLayer("ENEMY");
 
                 hpBar.SetActive(true);
+
+                sr.color = enemyData.normalColor;
             }
             else if (eEnemyController == EnemyController.PLAYER)
             {
@@ -138,6 +140,8 @@ namespace Enemy
                 gameObject.layer = LayerMask.NameToLayer("PLAYER");
 
                 hpBar.SetActive(false);
+
+                sr.color = enemyData.playerNormalColor;
 
                 EnemyManager.Instance.player = transform;
             }
