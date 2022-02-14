@@ -20,7 +20,7 @@ namespace Enemy
                 enemyRigidbody2D = rb,
                 hpBarFillImage = hpBarFillImage,
                 damagedColor = Util.Change255To1Color(255f, 180f, 180f),
-                enemyDeadEffectColor = Util.Change255To1Color(155f, 173f, 183f),
+                enemyDeadEffectColor = Util.Change255To1Color(112f, 173f, 183),
                 normalColor = Color.white,
                 enemyType = EnemyType.Rat_02,
                 isHitAnimation = true,
