@@ -103,7 +103,6 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             newBody.transform.position = spawnPos;
 
             UIManager.Instance.UpdatePlayerHPUI();
-
             cinemachineCameraScript.SetCinemachineFollow(newBody.transform);
 
             EventManager.TriggerEvent("ChangeBody");
@@ -142,8 +141,8 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             newBody.transform.position = spawnPos;
 
             UIManager.Instance.UpdatePlayerHPUI();
-
             cinemachineCameraScript.SetCinemachineFollow(newBody.transform);
+            playerEnemyUnderstandingRateManager.SetUnderstandingRate(bodyId, 0);
 
             EventManager.TriggerEvent("ChangeBody");
 
