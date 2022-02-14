@@ -52,6 +52,10 @@ namespace Enemy
         public Color damagedColor;
         public Color enemyDeadEffectColor;
 
+        public Color playerNormalColor;
+        public Color playerDamagedColor;
+        public Color playerDeadEffectColor;
+
         public float chaseSpeed = 5f;
         public float isSeePlayerDistance = 5f;
         public float isAttackPlayerDistance = 2f;

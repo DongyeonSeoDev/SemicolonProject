@@ -19,6 +19,9 @@ namespace Enemy
                 normalColor = Color.magenta,
                 damagedColor = Color.green,
                 enemyDeadEffectColor = Util.Change255To1Color(96f, 0f, 106f),
+                playerNormalColor = Color.white,
+                playerDamagedColor = Color.red,
+                playerDeadEffectColor = Color.white,
                 enemyType = EnemyType.Slime_01
             };
 
