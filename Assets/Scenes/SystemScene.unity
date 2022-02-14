@@ -37567,6 +37567,16 @@ MonoBehaviour:
     topRight: {r: 0, g: 0, b: 0, a: 0}
     bottomLeft: {r: 0, g: 0, b: 0, a: 0}
     bottomRight: {r: 0, g: 0, b: 0, a: 0}
+  changeNoticeMsgGrd:
+    topLeft: {r: 0, g: 0, b: 0, a: 0}
+    topRight: {r: 0, g: 0, b: 0, a: 0}
+    bottomLeft: {r: 0, g: 0, b: 0, a: 0}
+    bottomRight: {r: 0, g: 0, b: 0, a: 0}
+  clearNoticeMsgVGrd:
+    topLeft: {r: 0.30980393, g: 0.9254902, b: 0, a: 1}
+    topRight: {r: 0.2627451, g: 0.94509804, b: 0.8117647, a: 1}
+    bottomLeft: {r: 0.5137255, g: 0.8392157, b: 1, a: 1}
+    bottomRight: {r: 0.5882353, g: 1, b: 0.21176471, a: 1}
 --- !u!4 &9022571708228272039
 Transform:
   m_ObjectHideFlags: 0

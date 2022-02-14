@@ -65,8 +65,6 @@ public partial class UIManager : MonoSingleton<UIManager>
     //public Text statText;
     public Text[] statTexts;
 
-    public Color[] stageClearTxtColors;
-
     private GameManager gm;
     private SlimeGameManager sgm;
 
@@ -134,7 +132,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         EventManager.StartListening("GameClear", () => OnUIInteract(UIType.CLEAR, true));
         EventManager.StartListening("TimePause", () => Time.timeScale = 0 );
         EventManager.StartListening("TimeResume", () => Time.timeScale = 1);
-        EventManager.StartListening("StageClear", () => InsertNoticeQueue("Stage Clear", 90));
+        EventManager.StartListening("StageClear", () => { changeNoticeMsgGrd = clearNoticeMsgVGrd; InsertNoticeQueue("Stage Clear", 90, true); });
     }
 
     private void Respawn(Vector2 unusedValue) => OnUIInteract(UIType.DEATH, true);

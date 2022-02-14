@@ -72,14 +72,16 @@ public class NoticeUISet
 {
     public string msg;
     public float fontSize;
-    public Color[] colors;
+    public bool changeVertexGradient;
+    //public Color[] colors;
     public Action endAction;
 
-    public NoticeUISet(string msg, float fontSize, Color[] colors, Action endAction)
+    public NoticeUISet(string msg, float fontSize, bool changeVertexGradient, Action endAction)
     {
         this.msg = msg;
         this.fontSize = fontSize;
-        this.colors = colors;
+        this.changeVertexGradient = changeVertexGradient;
+        //this.colors = colors;
         this.endAction = endAction;
     }
 }

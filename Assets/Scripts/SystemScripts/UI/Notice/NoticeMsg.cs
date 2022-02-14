@@ -10,7 +10,7 @@ public class NoticeMsg : MonoBehaviour
 
     private Sequence seq;
 
-    public void Set(string msg, float fontSize, Color[] grd, System.Action endAction)
+    public void Set(string msg, float fontSize, bool changeVertexGradient = false, System.Action endAction = null)
     {
         seq.Kill();
         seq = DOTween.Sequence();
@@ -22,17 +22,19 @@ public class NoticeMsg : MonoBehaviour
         msgTmp.fontSize = fontSize;
         endAction += () => gameObject.SetActive(false);
 
-        if (grd == null)
+        /*if (!changeVertexGradient)
         {
             msgTmp.colorGradient = UIManager.Instance.noticeMsgGrd;
         }
         else
         {
-            msgTmp.colorGradientPreset.topLeft = grd[0];
+            *//*msgTmp.colorGradientPreset.topLeft = grd[0];
             msgTmp.colorGradientPreset.topRight= grd[1];
             msgTmp.colorGradientPreset.bottomLeft = grd[2];
-            msgTmp.colorGradientPreset.bottomRight = grd[3];
-        }
+            msgTmp.colorGradientPreset.bottomRight = grd[3];*//*
+        }*/
+
+        msgTmp.colorGradient = !changeVertexGradient ? UIManager.Instance.noticeMsgGrd : UIManager.Instance.changeNoticeMsgGrd;
 
 
         seq.Append(rectTrm.DOAnchorPos(Global.noticeMsgOriginRectPos, 0.3f).SetEase(Ease.InQuart))
