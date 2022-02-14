@@ -106,6 +106,8 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
             cinemachineCameraScript.SetCinemachineFollow(newBody.transform);
 
+            EventManager.TriggerEvent("ChangeBody");
+
             return;
         }
 
@@ -134,6 +136,8 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             UIManager.Instance.UpdatePlayerHPUI();
 
             cinemachineCameraScript.SetCinemachineFollow(newBody.transform);
+
+            EventManager.TriggerEvent("ChangeBody");
 
             // TODO: PlayerBody로서의 처리
         }
