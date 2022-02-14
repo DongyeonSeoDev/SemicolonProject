@@ -133,7 +133,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         EventManager.StartListening("TimePause", () => Time.timeScale = 0 );
         EventManager.StartListening("TimeResume", () => Time.timeScale = 1);
         EventManager.StartListening("StageClear", () => { changeNoticeMsgGrd = clearNoticeMsgVGrd; InsertNoticeQueue("Stage Clear", 90, true); });
-        EventManager.StartListening("ChangeBody", () => UpdatePlayerHPUI());
+        EventManager.StartListening("ChangeBody", () => { });
     }
 
     private void Respawn(Vector2 unusedValue) => OnUIInteract(UIType.DEATH, true);
