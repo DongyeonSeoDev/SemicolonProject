@@ -139,6 +139,7 @@ public partial class GameManager : MonoSingleton<GameManager>
 
         //이벤트 정의
         EventManager.StartListening("PlayerRespawn", ResetDroppedItems);
+        EventManager.StartListening("StageClear", UpdateItemBattleRestCount);
     }
 
     private void Start()
@@ -217,8 +218,9 @@ public partial class GameManager : MonoSingleton<GameManager>
         sList.ForEach(item =>
         {
             //limitedBattleCntItems.Remove(item);  //Inventory스크립트에서 처리
+            UIManager.Instance.RequestLeftBottomMsg("[최대 교전 수 도달]");
             Inventory.Instance.RemoveItem(item.first, 1);
-            UIManager.Instance.RequestLeftBottomMsg(string.Format("최대 교전 수 도달로 아이템을 잃었습니다. ({0} -{1})", GetItemData(item.first).itemName, 1));
+            //UIManager.Instance.RequestLeftBottomMsg(string.Format("최대 교전 수 도달로 아이템을 잃었습니다. ({0} -{1})", GetItemData(item.first).itemName, 1));
         });
     }
 
@@ -226,7 +228,7 @@ public partial class GameManager : MonoSingleton<GameManager>
     {
         for(int i=0; i< limitedBattleCntItems.Count; ++i)
         {
-            if(limitedBattleCntItems[i].first == id)
+            if(limitedBattleCntItems[i].first == id && limitedBattleCntItems[i].second == limitedBattleCntItems[i].third)
             {
                 limitedBattleCntItems.RemoveAt(i);
                 return;
