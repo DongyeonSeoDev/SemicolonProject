@@ -133,6 +133,8 @@ namespace Enemy
                 hpBar.SetActive(true);
 
                 sr.color = enemyData.normalColor;
+
+                EnemyManager.Instance.player = GameObject.FindGameObjectWithTag("Player").transform;
             }
             else if (eEnemyController == EnemyController.PLAYER)
             {
