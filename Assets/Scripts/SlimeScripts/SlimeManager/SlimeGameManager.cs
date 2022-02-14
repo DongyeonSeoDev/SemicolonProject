@@ -79,10 +79,11 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
         Vector2 spawnPos = currentPlayerBody.transform.position;
 
-        Destroy(currentPlayerBody);
 
         if (bodyId == "origin")
         {
+            Destroy(currentPlayerBody);
+
             newBody = Instantiate(originPlayerBody, player.transform);
 
             if(pasteBodyAdditionalStat != null)
@@ -112,6 +113,8 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
         if (playerEnemyUnderstandingRateManager.GetUnderstandingRate(bodyId) >= 100f)
         {
+            Destroy(currentPlayerBody);
+            
             (GameObject, EternalStat) newBodyData = playerEnemyUnderstandingRateManager.ChangalbeBodyDict[bodyId];
 
             newBody = Instantiate(newBodyData.Item1, player.transform);
