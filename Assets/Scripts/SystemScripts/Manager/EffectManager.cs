@@ -40,6 +40,7 @@ public class EffectManager : MonoSingleton<EffectManager>
         PoolManager.CreatePool(pickupPlantEffects.second, transform, 2, "PickFailEff");
 
         EventManager.StartListening("PlayerRespawn", Respawn);
+
         //hpFillEffectStartX = hpFillEffect.anchoredPosition.x;
         //hpFillEffectMaskObj.screenPoint = new Vector2(fillBackRect.anchoredPosition.x - fillBackWidth * 0.5f, fillBackRect.anchoredPosition.y);
     }

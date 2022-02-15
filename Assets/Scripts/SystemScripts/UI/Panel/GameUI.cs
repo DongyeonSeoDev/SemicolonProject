@@ -35,6 +35,7 @@ public class GameUI : MonoBehaviour
     public virtual void ActiveTransition()
     {
         gameObject.SetActive(true);
+        UIManager.Instance.uiTweeningDic[_UItype] = true;
         switch (_UItype)
         {
             case UIType.CHEF_FOODS_PANEL:
@@ -103,6 +104,7 @@ public class GameUI : MonoBehaviour
 
     public virtual void InActiveTransition()
     {
+        UIManager.Instance.uiTweeningDic[_UItype] = true;
         switch (_UItype)
         {
             case UIType.CHEF_FOODS_PANEL:

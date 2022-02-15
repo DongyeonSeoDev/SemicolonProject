@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 using Water;
+using System;
 
 public partial class UIManager : MonoSingleton<UIManager>
 {
@@ -12,6 +13,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     [SerializeField] private List<GameUI> activeUIList = new List<GameUI>();
 
     public Queue<bool> activeUIQueue = new Queue<bool>(); //어떤 UI가 켜지거나 꺼지는 애니메이션(트위닝) 진행 중에 다른 UI (비)활성화 막기 위한 변수
+    public Dictionary<UIType, bool> uiTweeningDic = new Dictionary<UIType, bool>(); //해당 UI가 트위닝 중인지(켜지거나 꺼지는 중인지) 확인하기 위함
     #endregion
 
     #region 마우스 따라다니는 정보 UI관련 변수들
@@ -81,6 +83,11 @@ public partial class UIManager : MonoSingleton<UIManager>
         noticeMsgGrd = noticeUIPair.first.GetComponent<NoticeMsg>().msgTmp.colorGradient;
         ordinaryCvs.worldCamera = Camera.main;
         ordinaryCvs.planeDistance = 20;
+
+        for(int i=0; i<Enum.GetValues(typeof(UIType)).Length; i++)
+        {
+            uiTweeningDic.Add((UIType)i, false);
+        }
     }
 
     private void CreatePool()
@@ -131,7 +138,7 @@ public partial class UIManager : MonoSingleton<UIManager>
 
         Global.AddAction(Global.JunkItem, JunkItem);
 
-        EventManager.StartListening("PlayerDead", () => OnUIInteract(UIType.DEATH, true));
+        EventManager.StartListening("PlayerDead", () => OnUIInteractSetActive(UIType.DEATH, true, true));
         EventManager.StartListening("PlayerRespawn", Respawn);
         EventManager.StartListening("GameClear", () => OnUIInteract(UIType.CLEAR, true));
         EventManager.StartListening("TimePause", () => Time.timeScale = 0 );
@@ -205,7 +212,9 @@ public partial class UIManager : MonoSingleton<UIManager>
 
         if (activeUIQueue.Count > 0 && !ignoreQueue) return;
         if (ExceptionHandler(type)) return;
-        
+
+        if (uiTweeningDic[type]) return;
+
         activeUIQueue.Enqueue(false);
 
         if (isActive) ui.ActiveTransition();
@@ -246,6 +255,7 @@ public partial class UIManager : MonoSingleton<UIManager>
             InActiveSpecialProcess(ui._UItype);
         }
         activeUIQueue.Dequeue();
+        uiTweeningDic[ui._UItype] = false;
 
         if(activeUIQueue.Count == 0 && isOnCursorInfo)
         {
