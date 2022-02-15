@@ -180,7 +180,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     #region UI (비)활성화 관련
     public void OnUIInteractBtnClick(int type) { OnUIInteract((UIType)type); }
 
-    public void OnUIInteract(UIType type, bool ignoreQueue = false) //UI열거나 닫음
+    public void OnUIInteract(UIType type, bool ignoreQueue = false) //UI열거나 닫음 (현재 액티브 상태의 반대로 해줌)
     {
         if (activeUIQueue.Count > 0 && !ignoreQueue) return;
         if (ExceptionHandler(type)) return;
@@ -196,6 +196,20 @@ public partial class UIManager : MonoSingleton<UIManager>
         {
             ui.InActiveTransition();
         }
+    }
+
+    public void OnUIInteractSetActive(UIType type, bool isActive ,bool ignoreQueue = false) //UI열거나 닫음 (원하는 액티브 상태로 해주고 이미 그 상태면 캔슬)
+    {
+        GameUI ui = gameUIList[(int)type];
+        if (ui.gameObject.activeSelf == isActive) return;
+
+        if (activeUIQueue.Count > 0 && !ignoreQueue) return;
+        if (ExceptionHandler(type)) return;
+        
+        activeUIQueue.Enqueue(false);
+
+        if (isActive) ui.ActiveTransition();
+        else ui.InActiveTransition();
     }
 
     private bool ExceptionHandler(UIType type) //상호작용에 대한 예외처리

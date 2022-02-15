@@ -37,6 +37,18 @@ public class ItemCloneEffect : MonoBehaviour
     {
         if(isFollowing)
         {
+            if(target == null)
+            {
+                if(SlimeGameManager.Instance.CurrentPlayerBody != null)
+                {
+                    target = SlimeGameManager.Instance.CurrentPlayerBody.transform;
+                }
+                else
+                {
+                    return;
+                }
+            }
+
             Vector3 dir = target.position - transform.position;
             transform.position += dir.normalized * currentSpeed * Time.deltaTime;
             currentSpeed += acceleration * Time.deltaTime;
