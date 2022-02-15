@@ -31,13 +31,20 @@ namespace Enemy
 
         private void Start()
         {
-            EventManager.StartListening("PlayerDead", () =>
-            {
-                currentState = null;
-                enemyData.enemyAnimator.enabled = false;
-            });
+            EventManager.StartListening("PlayerDead", EnemyDataReset);
 
             playerInput = SlimeGameManager.Instance.Player.GetComponent<PlayerInput>();
+        }
+
+        private void OnDestroy()
+        {
+            EventManager.StopListening("PlayerDead", EnemyDataReset);
+        }
+
+        private void EnemyDataReset()
+        {
+            currentState = null;
+            enemyData.enemyAnimator.enabled = false;
         }
 
         protected virtual void OnEnable()
