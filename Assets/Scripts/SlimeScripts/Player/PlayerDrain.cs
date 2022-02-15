@@ -89,6 +89,10 @@ public class PlayerDrain : PlayerAction
                     PlayerEnemyUnderstandingRateManager.Instance.SetUnderstandingRate(objId,
                      PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(objId) + item.Item2);
 
+                    if(PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(objId) > PlayerEnemyUnderstandingRateManager.Instance.MaxUnderstandingRate) // 최대치 처리
+                    {
+                        PlayerEnemyUnderstandingRateManager.Instance.SetUnderstandingRate(objId, PlayerEnemyUnderstandingRateManager.Instance.MaxUnderstandingRate);
+                    }
 
                     removeList.Add(item);
 

@@ -111,11 +111,19 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             return;
         }
 
-        if (playerEnemyUnderstandingRateManager.GetUnderstandingRate(bodyId) >= 100f)
+        if (playerEnemyUnderstandingRateManager.GetUnderstandingRate(bodyId) >= playerEnemyUnderstandingRateManager.MinBodyChangeUnderstandingRate)
         {
             Destroy(currentPlayerBody);
             
             (GameObject, EternalStat) newBodyData = playerEnemyUnderstandingRateManager.ChangalbeBodyDict[bodyId];
+
+            float upNewBodyStat = ((playerEnemyUnderstandingRateManager.GetUnderstandingRate(bodyId) 
+            - playerEnemyUnderstandingRateManager.MinBodyChangeUnderstandingRate) / 10f);
+
+            if(upNewBodyStat >= 1f)
+            {
+                newBodyData.Item2 *= upNewBodyStat; // 이해도가 변신가능 이해도보다 20 높으면 상승하는 능력치가 2배가 됌
+            }
 
             newBody = Instantiate(newBodyData.Item1, player.transform);
 
