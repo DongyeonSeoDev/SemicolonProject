@@ -144,7 +144,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         EventManager.StartListening("TimePause", () => Time.timeScale = 0 );
         EventManager.StartListening("TimeResume", () => Time.timeScale = 1);
         EventManager.StartListening("StageClear", () => { changeNoticeMsgGrd = clearNoticeMsgVGrd; InsertNoticeQueue("Stage Clear", 90, true); });
-        EventManager.StartListening("ChangeBody", () => { });
+        EventManager.StartListening("ChangeBody", () => { });  //뭘로 변신했는지 메시지 띄워야함
     }
 
     private void Respawn(Vector2 unusedValue) => OnUIInteract(UIType.DEATH, true);

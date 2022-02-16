@@ -11,13 +11,16 @@ public class Pick : InteractionObj
     [SerializeField] protected ItemSO _itemData;
     public ItemSO itemData { get { return _itemData; } }
 
+    private SpriteRenderer spr;
+
     public FakeSpriteOutline fsOut;
     //protected int droppedCount = 1;
     //public int DroppedCnt { get { return droppedCount; } }
 
     private void Awake()
     {
-        GetComponent<SpriteRenderer>().sprite = _itemData.GetSecondSprite();
+        spr = GetComponent<SpriteRenderer>();
+        spr.sprite = _itemData.GetSecondSprite();
         objName = _itemData.itemName;
     }
 
@@ -27,9 +30,20 @@ public class Pick : InteractionObj
         fsOut.gameObject.SetActive(false);
     }
 
-    public void FollowEffect()
+    public void FollowEffect(bool success = true)
     {
-        PoolManager.GetItem("ItemFollowEffect").GetComponent<ItemCloneEffect>().Set(GetComponent<SpriteRenderer>().sprite, SlimeGameManager.Instance.CurrentPlayerBody.transform, transform.position, Quaternion.identity);
+        Transform target;
+        System.Action arvAction = null;
+
+        if (success) target = SlimeGameManager.Instance.CurrentPlayerBody.transform;
+        else
+        {
+            target = PoolManager.GetItem<Transform>("EmptyObject");
+            target.position = transform.position - new Vector3(0, 6);
+            arvAction = () => target.gameObject.SetActive(false);
+        }
+
+        PoolManager.GetItem<ItemCloneEffect>("ItemFollowEffect").Set(spr.sprite, target, transform.position, Quaternion.identity, arvAction);
     }
 
     public override void SetInteractionUI(bool on)
@@ -65,6 +79,7 @@ public class Pick : InteractionObj
         {
             CallEffect("PickFailEff");
 
+            FollowEffect(false);
             UIManager.Instance.RequestSystemMsg("채집에 실패하였습니다.", Util.Change255To1Color(123, 0, 226, 255));
             gameObject.SetActive(false);
         }
