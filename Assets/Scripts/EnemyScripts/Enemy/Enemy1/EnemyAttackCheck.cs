@@ -80,8 +80,6 @@ namespace Enemy
             if (eEnemyController == EnemyController.AI && collision.CompareTag("Player"))
             {
                 SlimeGameManager.Instance.Player.GetDamage(attackDamage);
-
-                gameObject.SetActive(false);
             }
             else if (eEnemyController == EnemyController.PLAYER)
             {
