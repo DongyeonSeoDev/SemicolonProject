@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Enemy
 {
-    public class EnemyMoveAIControllerCommand : EnemyCommand // Àû ¿òÁ÷ÀÓ
+    public class EnemyMoveAIControllerCommand : EnemyCommand // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     {
         private EnemyMoveSO enemyMoveSO;
         private Transform enemyPosition;
@@ -17,13 +17,13 @@ namespace Enemy
 
         public override void Execute()
         {
-            // ÀÌµ¿
+            // ï¿½Ìµï¿½
             targetPosition = (enemyMoveSO.targetPositions[enemyMoveSO.currentPositionNumber] - enemyPosition.position).normalized;
             targetPosition *= enemyMoveSO.moveSpeed * Time.deltaTime;
 
             enemyPosition.position += targetPosition;
 
-            // °Å¸® È®ÀÎ
+            // ï¿½Å¸ï¿½ È®ï¿½ï¿½
             if (Vector3.Distance(enemyPosition.position, enemyMoveSO.targetPositions[enemyMoveSO.currentPositionNumber]) < enemyMoveSO.targetPositionChangeDistance)
             {
                 enemyMoveSO.currentPositionNumber = (enemyMoveSO.currentPositionNumber + 1) % enemyMoveSO.targetPositions.Count;
@@ -31,10 +31,11 @@ namespace Enemy
         }
     }
 
-    public class EnemyMovePlayerControllerCommand : EnemyCommand // Àû ¿òÁ÷ÀÓ
+    public class EnemyMovePlayerControllerCommand : EnemyCommand // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     {
         private PlayerInput playerInput = null;
         private Stat playerStat = null;
+        private Vector2 lastMoveVec = Vector2.zero;
 
         private Rigidbody2D rigid;
 
@@ -49,11 +50,21 @@ namespace Enemy
         public override void Execute()
         {
             Vector2 MoveVec = playerInput.MoveVector * (playerStat.Speed);
-            rigid.velocity = MoveVec;
+
+            if(MoveVec != Vector2.zero)
+            {
+                lastMoveVec = MoveVec;
+            }
+            else
+            {
+                lastMoveVec = Vector2.Lerp(lastMoveVec, Vector2.zero, Time.fixedDeltaTime * playerStat.Speed / 2f);
+            }
+
+            rigid.velocity = lastMoveVec;
         }
     }
 
-    public class EnemyFollowPlayerCommand : EnemyCommand // Àû ¿òÁ÷ÀÓ
+    public class EnemyFollowPlayerCommand : EnemyCommand // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     {
         private Transform enemyObject;
         private Transform followObject;
@@ -87,7 +98,7 @@ namespace Enemy
 
                     if (followObject == null)
                     {
-                        Debug.LogError("Player¸¦ Ã£À» ¼ö ¾ø½À´Ï´Ù.");
+                        Debug.LogError("Playerï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 
                         return;
                     }
@@ -96,7 +107,7 @@ namespace Enemy
 
             if (isLongDistanceAttack)
             {
-                // ÀÌµ¿
+                // ï¿½Ìµï¿½
                 targetPosition = enemyObject.transform.position - followObject.transform.position;
 
                 angle = Mathf.Atan2(targetPosition.x, targetPosition.y) * Mathf.Rad2Deg + 90f;
@@ -112,7 +123,7 @@ namespace Enemy
             }
             else
             {
-                // ÀÌµ¿
+                // ï¿½Ìµï¿½
                 targetPosition = (followObject.position - enemyObject.position).normalized;
                 targetPosition *= followSpeed * Time.deltaTime;
 
@@ -121,7 +132,7 @@ namespace Enemy
         }
     }
 
-    public class EnemyGetDamagedAIControllerCommand : EnemyCommand // ÀûÀÌ µ¥¹ÌÁö¸¦ ¹ÞÀ½
+    public class EnemyGetDamagedAIControllerCommand : EnemyCommand // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         private EnemyData enemyData;
 
@@ -137,22 +148,22 @@ namespace Enemy
         {
             if (enemyData.eEnemyController == EnemyController.AI)
             {
-                if (!isWorking) // »ö±ò º¯°æ
+                if (!isWorking) // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 {
                     enemyData.enemySpriteRenderer.color = enemyData.damagedColor;
                 }
-                else // »ö±ò º¯°æ ÇØÁ¦
+                else // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 {
                     enemyData.enemySpriteRenderer.color = enemyData.normalColor;
                 }
             }
             else if (enemyData.eEnemyController == EnemyController.PLAYER)
             {
-                if (!isWorking) // »ö±ò º¯°æ
+                if (!isWorking) // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 {
                     enemyData.enemySpriteRenderer.color = enemyData.playerDamagedColor;
                 }
-                else // »ö±ò º¯°æ ÇØÁ¦
+                else // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 {
                     enemyData.enemySpriteRenderer.color = enemyData.playerNormalColor;
                 }
@@ -177,7 +188,7 @@ namespace Enemy
         }
     }
 
-    public class EnemyDeadAIControllerCommand : EnemyCommand // ÀûÀÌ Á×À½
+    public class EnemyDeadAIControllerCommand : EnemyCommand // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         private GameObject enemyObject;
         private EnemyLootListSO enemyLootListSO;
@@ -207,7 +218,7 @@ namespace Enemy
         }
     }
 
-    public class EnemyAttackCommand : EnemyCommand // Àû °ø°Ý
+    public class EnemyAttackCommand : EnemyCommand // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         public Transform enemyTransform;
         public Transform targetTransform;
@@ -230,7 +241,7 @@ namespace Enemy
         }
     }
 
-    public class EnemyAttackPlayerCommand : EnemyCommand // Àû °ø°Ý
+    public class EnemyAttackPlayerCommand : EnemyCommand // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         PlayerInput playerInput;
         Transform transform;
