@@ -44,6 +44,7 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     #region CombinationFood
     public Pair<Image, Text> combInfoUI;
+    public ParticleSystem combEff;
     #endregion
 
     #region Item Remove
@@ -76,15 +77,24 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     private void Awake()
     {
+        InitData();
+        CreatePool();
+    }
+
+    private void InitData()
+    {
         cursorImgRectTrm = cursorInfoImg.GetComponent<RectTransform>();
         sw = cursorImgRectTrm.rect.width;
 
-        CreatePool();
         noticeMsgGrd = noticeUIPair.first.GetComponent<NoticeMsg>().msgTmp.colorGradient;
-        ordinaryCvs.worldCamera = Camera.main;
-        ordinaryCvs.planeDistance = 20;
 
-        for(int i=0; i<Enum.GetValues(typeof(UIType)).Length; i++)
+        int i;
+        for(i=0; i<gameCanvases.Length; i++)
+        {
+            gameCanvases[i].worldCamera = Util.MainCam;
+            gameCanvases[i].planeDistance = 20;
+        }
+        for (i = 0; i < Enum.GetValues(typeof(UIType)).Length; i++)
         {
             uiTweeningDic.Add((UIType)i, false);
         }
@@ -116,6 +126,8 @@ public partial class UIManager : MonoSingleton<UIManager>
         Global.AddAction(Global.MakeFood, item =>
         {
             OnUIInteract(UIType.COMBINATION, true); //음식 제작 성공 완료 패널 띄움
+            combEff.Play();
+
             ItemInfo info = ((ItemInfo)item);
             ItemSO data = gm.GetItemData(info.id);
             combInfoUI.first.sprite = data.GetSprite();
@@ -155,6 +167,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         CursorInfo();
         Notice();
         DelayHPFill();
+        
     }
 
     private void UserInput()
@@ -178,7 +191,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         {
             OnUIInteract(UIType.STAT);
         }
-        else if(Input.GetKeyDown(KeySetting.keyDict[KeyAction.SETTING]))
+        else if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.SETTING]))
         {
             OnUIInteract(UIType.SETTING);
         }
@@ -413,9 +426,9 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     public void RequestLeftBottomMsg(string msg)  //화면 왼쪽 하단에 표시되는 로그 텍스트
     {
-        Text t = PoolManager.GetItem("AcquisitionMsg").GetComponent<Text>();
+        Text t = PoolManager.GetItem<Text>("AcquisitionMsg");
         t.text = msg;
-        Util.DelayFunc(() => t.gameObject.SetActive(false), 2f, this);
+        Util.DelayFunc(() => t.gameObject.SetActive(false), 2f, this, true);
     }
 
     #region 인벤 버튼

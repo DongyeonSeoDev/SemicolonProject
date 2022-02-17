@@ -12,7 +12,8 @@ public partial class UIManager : MonoSingleton<UIManager>
     private float noticeCheckElapsed;
 
     #region Canvas
-    public Canvas ordinaryCvs;
+    //public Canvas ordinaryCvs;
+    public Canvas[] gameCanvases;
     #endregion
 
     [HideInInspector] public List<Menu> gameMenuList = new List<Menu>();

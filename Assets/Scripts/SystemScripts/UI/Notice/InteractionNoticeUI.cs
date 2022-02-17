@@ -7,9 +7,16 @@ public class InteractionNoticeUI : MonoBehaviour
 
     [SerializeField] private TextColorRepeat tcr;
 
+    private RectTransform rectTr;
+
     public Text actionText;
 
     //[SerializeField] private AnimationCurve animCurve;
+
+    private void Awake()
+    {
+        rectTr = GetComponent<RectTransform>();
+    }
 
     public void Set(InteractionObj obj)
     {
@@ -32,7 +39,8 @@ public class InteractionNoticeUI : MonoBehaviour
     {
         if (obj)
         {
-            transform.position = Util.WorldToScreenPoint(obj.transform.position + obj.itrUIOffset);
+            //transform.position = Util.WorldToScreenPoint(obj.transform.position + obj.itrUIOffset);
+            rectTr.anchoredPosition = RectTransformUtility.WorldToScreenPoint(Util.MainCam, obj.transform.position + obj.itrUIOffset);
         }
     }
 
