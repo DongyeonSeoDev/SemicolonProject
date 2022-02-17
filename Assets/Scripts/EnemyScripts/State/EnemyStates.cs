@@ -13,14 +13,7 @@ namespace Enemy
 
         public EnemyMoveState(EnemyData enemyData) : base(eState.MOVE, enemyData)
         {
-            if (enemyData.eEnemyController == EnemyController.AI)
-            {
-                enemyMoveCommand = new EnemyMoveAIControllerCommand(enemyData.enemyMoveSO, enemyData.enemyObject.transform);
-            }
-            else if (enemyData.eEnemyController == EnemyController.PLAYER)
-            {
-                enemyMoveCommand = new EnemyMovePlayerControllerCommand(enemyData.enemyRigidbody2D);
-            }
+            enemyMoveCommand = new EnemyMovePlayerControllerCommand(enemyData.enemyRigidbody2D);
         }
 
         protected override void Start()
@@ -54,7 +47,7 @@ namespace Enemy
         private EnemyCommand enemyFollowPlayerCommand;
 
         public EnemyChaseState(EnemyData enemyData) : base(eState.CHASE, enemyData) =>
-            enemyFollowPlayerCommand = new EnemyFollowPlayerCommand(enemyData.enemyObject.transform, enemyData.PlayerObject.transform, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, enemyData.isLongDistanceAttack);
+            enemyFollowPlayerCommand = new EnemyFollowPlayerCommand(enemyData.enemyObject.transform, enemyData.PlayerObject.transform, enemyData.enemyRigidbody2D, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, enemyData.isLongDistanceAttack);
 
         protected override void Start()
         {

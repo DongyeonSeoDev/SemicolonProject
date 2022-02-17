@@ -2,36 +2,7 @@ using UnityEngine;
 
 namespace Enemy
 {
-    public class EnemyMoveAIControllerCommand : EnemyCommand // 적 움직임
-    {
-        private EnemyMoveSO enemyMoveSO;
-        private Transform enemyPosition;
-
-        private Vector3 targetPosition;
-
-        public EnemyMoveAIControllerCommand(EnemyMoveSO enemyMoveSO, Transform enemyPosition)
-        {
-            this.enemyMoveSO = enemyMoveSO;
-            this.enemyPosition = enemyPosition;
-        }
-
-        public override void Execute()
-        {
-            // 이동
-            targetPosition = (enemyMoveSO.targetPositions[enemyMoveSO.currentPositionNumber] - enemyPosition.position).normalized;
-            targetPosition *= enemyMoveSO.moveSpeed * Time.deltaTime;
-
-            enemyPosition.position += targetPosition;
-
-            // 거리 확인
-            if (Vector3.Distance(enemyPosition.position, enemyMoveSO.targetPositions[enemyMoveSO.currentPositionNumber]) < enemyMoveSO.targetPositionChangeDistance)
-            {
-                enemyMoveSO.currentPositionNumber = (enemyMoveSO.currentPositionNumber + 1) % enemyMoveSO.targetPositions.Count;
-            }
-        }
-    }
-
-    public class EnemyMovePlayerControllerCommand : EnemyCommand // 적 움직임
+    public class EnemyMovePlayerControllerCommand : EnemyCommand
     {
         private PlayerInput playerInput = null;
         private Stat playerStat = null;
@@ -57,6 +28,8 @@ namespace Enemy
     {
         private Transform enemyObject;
         private Transform followObject;
+        private Rigidbody2D rigid;
+
         private float followSpeed;
         private float followDistance;
         private bool isLongDistanceAttack;
@@ -64,10 +37,12 @@ namespace Enemy
         private Vector3 targetPosition;
         private float angle;
 
-        public EnemyFollowPlayerCommand(Transform enemyObject, Transform followObject, float followSpeed, float followDistance, bool isLongDistanceAttack)
+        public EnemyFollowPlayerCommand(Transform enemyObject, Transform followObject, Rigidbody2D rigid, float followSpeed, float followDistance, bool isLongDistanceAttack)
         {
             this.enemyObject = enemyObject;
             this.followObject = followObject;
+            this.rigid = rigid;
+
             this.followSpeed = followSpeed;
             this.followDistance = followDistance;
             this.isLongDistanceAttack = isLongDistanceAttack;
@@ -106,18 +81,16 @@ namespace Enemy
                 targetPosition.z = followObject.transform.position.z;
 
                 targetPosition = (targetPosition - enemyObject.position).normalized;
-                targetPosition *= followSpeed * Time.deltaTime;
-
-                enemyObject.position += targetPosition;
+                targetPosition *= followSpeed;
             }
             else
             {
                 // 이동
                 targetPosition = (followObject.position - enemyObject.position).normalized;
-                targetPosition *= followSpeed * Time.deltaTime;
-
-                enemyObject.position += targetPosition;
+                targetPosition *= followSpeed;
             }
+
+            rigid.velocity = targetPosition;
         }
     }
 
