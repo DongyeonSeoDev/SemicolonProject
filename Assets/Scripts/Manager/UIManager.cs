@@ -92,7 +92,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         for(i=0; i<gameCanvases.Length; i++)
         {
             gameCanvases[i].worldCamera = Util.MainCam;
-            gameCanvases[i].planeDistance = 20;
+            gameCanvases[i].planeDistance = Global.cameraPlaneDistance;
         }
         for (i = 0; i < Enum.GetValues(typeof(UIType)).Length; i++)
         {
