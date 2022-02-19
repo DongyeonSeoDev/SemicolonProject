@@ -333,8 +333,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poolType: 1
   count: 6
-  enemyMoveSO: {fileID: 11400000, guid: cd9686d184f14d546ab683e2357e52ad, type: 2}
   enemyLootListSO: {fileID: 11400000, guid: 6f20300129ecc324b91a107166c8746f, type: 2}
+  enemyDataSO: {fileID: 11400000, guid: 3ba44352f5ee2ad48b2b33a2e2052f51, type: 2}
   hpBarFillImage: {fileID: 2029326397634872474}
   hpBar: {fileID: 2029326398027098998}
   enemyAttackCheck: {fileID: 0}

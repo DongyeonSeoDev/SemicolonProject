@@ -10,22 +10,14 @@ namespace Enemy
 
         protected override void OnEnable()
         {
-            enemyData = new EnemyData()
+            enemyData = new EnemyData(enemyDataSO)
             {
-                eEnemyController = EnemyController.AI,
                 enemyObject = gameObject,
                 enemyLootList = enemyLootListSO,
                 enemyAnimator = anim,
                 enemySpriteRenderer = sr,
                 enemyRigidbody2D = rb,
                 hpBarFillImage = hpBarFillImage,
-                normalColor = Color.white,
-                damagedColor = Color.red,
-                enemyDeadEffectColor = Util.Change255To1Color(99f, 187f, 57f),
-                playerNormalColor = Color.green,
-                playerDamagedColor = Color.red,
-                playerDeadEffectColor = Color.green,
-                enemyType = EnemyType.Slime_03,
                 isAnimation = false,
                 isEndAttackAnimation = true,
                 isSeePlayerDistance = 20f,

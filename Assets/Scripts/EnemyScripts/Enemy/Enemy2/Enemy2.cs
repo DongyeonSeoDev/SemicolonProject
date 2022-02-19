@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace Enemy
 {
     public class Enemy2 : Enemy // 두번째 적
@@ -9,22 +7,14 @@ namespace Enemy
 
         protected override void OnEnable()
         {
-            enemyData = new EnemyData()
+            enemyData = new EnemyData(enemyDataSO)
             {
-                eEnemyController = EnemyController.AI,
                 enemyObject = gameObject,
                 enemyLootList = enemyLootListSO,
                 enemyAnimator = anim,
                 enemySpriteRenderer = sr,
                 enemyRigidbody2D = rb,
                 hpBarFillImage = hpBarFillImage,
-                damagedColor = Util.Change255To1Color(255f, 180f, 180f),
-                enemyDeadEffectColor = Util.Change255To1Color(112f, 173f, 183),
-                normalColor = Color.white,
-                playerNormalColor = Util.Change255To1Color(200f, 255f, 200f),
-                playerDamagedColor = Util.Change255To1Color(255f, 200f, 200f),
-                playerDeadEffectColor = Util.Change255To1Color(200f, 255f, 200f),
-                enemyType = EnemyType.Rat_02,
                 isHitAnimation = true,
                 isAttackCommand = true,
                 isLongDistanceAttack = true,

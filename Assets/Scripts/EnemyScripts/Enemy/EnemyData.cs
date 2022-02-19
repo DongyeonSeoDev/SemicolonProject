@@ -18,7 +18,18 @@ namespace Enemy
 
     public class EnemyData
     {
-        public EnemyController eEnemyController;
+        public EnemyData(EnemyDataSO enemyDataSO)
+        {
+            enemyType = enemyDataSO.enemyType;
+            normalColor = enemyDataSO.normalColor;
+            damagedColor = enemyDataSO.damagedColor;
+            enemyDeadEffectColor = enemyDataSO.enemyDeadEffectColor;
+            playerNormalColor = enemyDataSO.playerNormalColor;
+            playerDamagedColor = enemyDataSO.playerDamagedColor;
+            playerDeadEffectColor = enemyDataSO.playerDeadEffectColor;
+        }
+
+        public EnemyController eEnemyController = EnemyController.AI;
         public EnemyType enemyType;
 
         public GameObject enemyObject;

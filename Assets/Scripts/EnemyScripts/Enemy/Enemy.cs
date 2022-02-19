@@ -6,6 +6,7 @@ namespace Enemy
     public class Enemy : PoolManager // 적 관리 클래스
     {
         public EnemyLootListSO enemyLootListSO;
+        public EnemyDataSO enemyDataSO;
         public Image hpBarFillImage;
         public GameObject hpBar;
 
