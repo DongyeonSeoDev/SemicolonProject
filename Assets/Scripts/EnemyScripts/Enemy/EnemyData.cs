@@ -22,7 +22,6 @@ namespace Enemy
         public EnemyType enemyType;
 
         public GameObject enemyObject;
-        public EnemyMoveSO enemyMoveSO;
         public EnemyLootListSO enemyLootList;
         public Animator enemyAnimator;
         public SpriteRenderer enemySpriteRenderer;

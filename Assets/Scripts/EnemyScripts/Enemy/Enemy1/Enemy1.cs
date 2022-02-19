@@ -10,7 +10,6 @@ namespace Enemy
             {
                 eEnemyController = EnemyController.AI,
                 enemyObject = gameObject,
-                enemyMoveSO = enemyMoveSO,
                 enemyLootList = enemyLootListSO,
                 enemyAnimator = anim,
                 enemySpriteRenderer = sr,
