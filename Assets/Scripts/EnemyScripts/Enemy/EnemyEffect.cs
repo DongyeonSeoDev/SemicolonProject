@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Enemy
 {
-    public class EnemyEffect : PoolManager
+    public class EnemyEffect : EnemyPoolData
     {
         private ParticleSystem particle = null;
 

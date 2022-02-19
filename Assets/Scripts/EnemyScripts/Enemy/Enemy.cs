@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 namespace Enemy
 {
-    public class Enemy : PoolManager // 利 包府 努贰胶
+    public class Enemy : EnemyPoolData // 利 包府 努贰胶
     {
         public EnemyLootListSO enemyLootListSO;
         public EnemyDataSO enemyDataSO;

@@ -27,7 +27,7 @@ namespace Enemy
         {
             for (int i = 0; i < enemySpawnList.Count; i++)
             {
-                PoolManager enemy = EnemyPoolManager.Instance.GetPoolObject(enemySpawnList[i].enemyType, enemySpawnList[i].spawnPosition);
+                EnemyPoolData enemy = EnemyPoolManager.Instance.GetPoolObject(enemySpawnList[i].enemyType, enemySpawnList[i].spawnPosition);
 
                 while (enemyList.Count <= enemySpawnList[i].stageNumber)
                 {

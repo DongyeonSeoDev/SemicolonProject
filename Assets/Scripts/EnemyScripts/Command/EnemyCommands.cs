@@ -197,7 +197,7 @@ namespace Enemy
 
         public override void Execute()
         {
-            PoolManager bullet = EnemyPoolManager.Instance.GetPoolObject(Type.Bullet, enemyTransform.position);
+            EnemyPoolData bullet = EnemyPoolManager.Instance.GetPoolObject(Type.Bullet, enemyTransform.position);
 
             bullet.GetComponent<EnemyBullet>().Init(eEnemyController, attackDamage, (targetTransform.position - enemyTransform.position).normalized);
         }
@@ -224,7 +224,7 @@ namespace Enemy
 
         public override void Execute()
         {
-            PoolManager bullet = EnemyPoolManager.Instance.GetPoolObject(Type.Bullet, transform.position);
+            EnemyPoolData bullet = EnemyPoolManager.Instance.GetPoolObject(Type.Bullet, transform.position);
 
             bullet.GetComponent<EnemyBullet>().Init(enemyController, attackDamage, (playerInput.MousePosition - (Vector2)transform.position).normalized, enemy);
         }

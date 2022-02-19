@@ -34,10 +34,10 @@ namespace Enemy
             }
         }
 
-        public List<PoolManager> poolList = new List<PoolManager>();
+        public List<EnemyPoolData> poolList = new List<EnemyPoolData>();
 
-        private Dictionary<Type, PoolManager> poolDictionary = new Dictionary<Type, PoolManager>();
-        private Dictionary<Type, Queue<PoolManager>> poolQueueDictionary = new Dictionary<Type,Queue<PoolManager>>();
+        private Dictionary<Type, EnemyPoolData> poolDictionary = new Dictionary<Type, EnemyPoolData>();
+        private Dictionary<Type, Queue<EnemyPoolData>> poolQueueDictionary = new Dictionary<Type,Queue<EnemyPoolData>>();
 
         private void Awake()
         {
@@ -52,7 +52,7 @@ namespace Enemy
 
             foreach (Type type in Enum.GetValues(typeof(Type)))
             {
-                poolQueueDictionary[type] = new Queue<PoolManager>();
+                poolQueueDictionary[type] = new Queue<EnemyPoolData>();
 
                 if (poolDictionary.ContainsKey(type))
                 {
@@ -64,9 +64,9 @@ namespace Enemy
             }
         }
 
-        public PoolManager GetPoolObject(Type poolType, Vector2 position)
+        public EnemyPoolData GetPoolObject(Type poolType, Vector2 position)
         {
-            PoolManager pool;
+            EnemyPoolData pool;
 
             if (poolQueueDictionary[poolType].Peek().gameObject.activeSelf)
             {
@@ -85,9 +85,9 @@ namespace Enemy
             return pool;
         }
 
-        private PoolManager MakePoolObject(Type poolType)
+        private EnemyPoolData MakePoolObject(Type poolType)
         {
-            PoolManager pool = Instantiate(poolDictionary[poolType], transform);
+            EnemyPoolData pool = Instantiate(poolDictionary[poolType], transform);
             pool.gameObject.SetActive(false);
 
             return pool;
