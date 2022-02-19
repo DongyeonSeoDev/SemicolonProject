@@ -90,6 +90,18 @@ public class GameUI : MonoBehaviour
                 TweeningData.DOMoveSequence(gameUIFields, true);
                 break;
 
+            case UIType.SOUND:
+                TweeningData.DOMoveSequence(gameUIFields, true);
+                break;
+
+            case UIType.HELP:
+                TweeningData.DOMoveSequence(gameUIFields, true);
+                break;
+
+            case UIType.CREDIT:
+                TweeningData.DOMoveSequence(gameUIFields, true);
+                break;
+
             case UIType.SETTING:
                 //DOFadeAndDissolve(true);
                 TweeningData.DOFadeAndDissolve(gameUIFields, true);
@@ -158,6 +170,18 @@ public class GameUI : MonoBehaviour
                 break;
             case UIType.RESOLUTION:
                 //DOMoveSequence(false);
+                TweeningData.DOMoveSequence(gameUIFields, false);
+                break;
+
+            case UIType.SOUND:
+                TweeningData.DOMoveSequence(gameUIFields, false);
+                break;
+
+            case UIType.HELP:
+                TweeningData.DOMoveSequence(gameUIFields, false);
+                break;
+
+            case UIType.CREDIT:
                 TweeningData.DOMoveSequence(gameUIFields, false);
                 break;
 

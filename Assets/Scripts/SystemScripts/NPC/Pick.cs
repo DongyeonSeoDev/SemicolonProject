@@ -34,16 +34,18 @@ public class Pick : InteractionObj
     {
         Transform target;
         System.Action arvAction = null;
+        Quaternion rot = Quaternion.identity;
 
         if (success) target = SlimeGameManager.Instance.CurrentPlayerBody.transform;
         else
         {
             target = PoolManager.GetItem<Transform>("EmptyObject");
             target.position = transform.position - new Vector3(0, 6);
+            rot = Quaternion.Euler(0, 0, Random.Range(-60f, 60f));
             arvAction = () => target.gameObject.SetActive(false);
         }
 
-        PoolManager.GetItem<ItemCloneEffect>("ItemFollowEffect").Set(spr.sprite, target, transform.position, Quaternion.identity, arvAction);
+        PoolManager.GetItem<ItemCloneEffect>("ItemFollowEffect").Set(spr.sprite, target, transform.position, rot, arvAction);
     }
 
     public override void SetInteractionUI(bool on)
