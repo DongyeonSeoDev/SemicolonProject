@@ -3,9 +3,15 @@ using UnityEngine.UI;
 
 public class NPCUI : MonoBehaviour
 {
+    private RectTransform rectTr;
     private InteractionObj npc;
 
     public Text nameText;
+
+    private void Awake()
+    {
+        rectTr = GetComponent<RectTransform>();
+    }
 
     public void Set(InteractionObj npc)
     {
@@ -17,7 +23,8 @@ public class NPCUI : MonoBehaviour
     {
         if(npc)
         {
-            transform.position = Util.WorldToScreenPoint(npc.transform.position + npc.uiOffset);
+            //transform.position = Util.WorldToScreenPoint(npc.transform.position + npc.uiOffset);  //overlay일때
+            rectTr.anchoredPosition = RectTransformUtility.WorldToScreenPoint(Util.MainCam, npc.transform.position + npc.uiOffset);  //camera일때
         }
     }
 

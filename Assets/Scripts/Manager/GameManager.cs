@@ -136,8 +136,10 @@ public partial class GameManager : MonoSingleton<GameManager>
         //풀 생성
         PoolManager.CreatePool(itemPrefab, transform, 6, "Item");
         PoolManager.CreatePool(itemCloneEffectPrefab, transform, 6, "ItemFollowEffect");
+        PoolManager.CreatePool(emptyPrefab, transform, 3, "EmptyObject");
 
         //이벤트 정의
+        EventManager.StartListening("PlayerDead", PlayerDead);
         EventManager.StartListening("PlayerRespawn", ResetDroppedItems);
         EventManager.StartListening("StageClear", UpdateItemBattleRestCount);
     }
@@ -149,6 +151,12 @@ public partial class GameManager : MonoSingleton<GameManager>
             checkGameStringKeys.poolKeyList = PoolManager.poolDic.Keys.ToList();
             Global.SetResordEventKey();
         }, 3f);
+    }
+
+    void PlayerDead()
+    {
+        PoolManager.PoolObjSetActiveFalse("ItemFollowEffect");
+        PoolManager.PoolObjSetActiveFalse("EmptyObject");
     }
 
     #region Item
@@ -202,6 +210,8 @@ public partial class GameManager : MonoSingleton<GameManager>
         }
 
         limitedBattleCntItems.Clear();
+
+        
     }
 
     public void UpdateItemBattleRestCount() //교전 수가 정해진 아이템들 현재 교전 수 1 증가하고 최대치인 것은 삭제

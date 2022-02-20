@@ -49,8 +49,12 @@ public class EternalStat
     public static EternalStat operator +(EternalStat a, EternalStat b) => new EternalStat(a.maxHp + b.maxHp, a.damage + b.damage, a.defense + b.defense, a.intellect + b.intellect, a.speed + b.speed, a.criticalRate + b.criticalRate, a.criticalDamage + b.criticalDamage);
     public static EternalStat operator -(EternalStat a, EternalStat b) => new EternalStat(a.maxHp - b.maxHp, a.damage - b.damage, a.defense - b.defense, a.intellect - b.intellect, a.speed - b.speed, a.criticalRate - b.criticalRate, a.criticalDamage - b.criticalDamage);
     public static EternalStat operator *(EternalStat a, EternalStat b) => new EternalStat(a.maxHp * b.maxHp, a.damage * b.damage, a.defense * b.defense, a.intellect * b.intellect, a.speed * b.speed, a.criticalRate * b.criticalRate, a.criticalDamage * b.criticalDamage);
+    public static EternalStat operator *(EternalStat a, int b) => new EternalStat(a.maxHp * b, a.damage * b, a.defense * b, a.intellect * b, a.speed * b, a.criticalRate * b, a.criticalDamage * b);
+    public static EternalStat operator *(EternalStat a, float b) => new EternalStat((int)(a.maxHp * b), (int)(a.damage * b), (int)(a.defense * b), (int)(a.intellect * b), (int)(a.speed * b), (int)(a.criticalRate * b), (int)(a.criticalDamage * b));
     public static EternalStat operator /(EternalStat a, EternalStat b) => new EternalStat(a.maxHp / b.maxHp, a.damage / b.damage, a.defense / b.defense, a.intellect / b.intellect, a.speed / b.speed, a.criticalRate / b.criticalRate, a.criticalDamage / b.criticalDamage);
-
+    public static EternalStat operator /(EternalStat a, int b) => new EternalStat(a.maxHp / b, a.damage / b, a.defense / b, a.intellect / b, a.speed / b, a.criticalRate / b, a.criticalDamage / b);
+    public static EternalStat operator /(EternalStat a, float b) => new EternalStat((int)(a.maxHp / b), (int)(a.damage / b), (int)(a.defense / b), (int)(a.intellect / b), (int)(a.speed / b), (int)(a.criticalRate / b), (int)(a.criticalDamage / b));
+    
     //public int currentHp;
     public int maxHp;
     //public int mp;

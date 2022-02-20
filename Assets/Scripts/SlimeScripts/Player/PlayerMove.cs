@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class PlayerMove : PlayerAction
 {
+    Vector2 lastMoveVec = Vector2.zero;
     private Stat playerStat = null;
+
+    [SerializeField]
+    private float breakSpeed = 2f;
+
     public override void Awake()
     {
         playerStat = SlimeGameManager.Instance.Player.PlayerStat;
@@ -23,9 +28,18 @@ public class PlayerMove : PlayerAction
         {
             Vector2 MoveVec = playerInput.MoveVector * (playerStat.Speed);
 
-            rigid.velocity = MoveVec;
+            if(MoveVec != Vector2.zero)
+            {
+                lastMoveVec = MoveVec;
+            }
+            else
+            {
+                lastMoveVec = Vector2.Lerp(lastMoveVec, Vector2.zero, Time.fixedDeltaTime * playerStat.Speed / 2f);
+            }
 
-            childRigids.ForEach(x => x.velocity = Vector2.Lerp(x.velocity, MoveVec * 0.8f, Time.deltaTime));
+            rigid.velocity = lastMoveVec;
+
+            childRigids.ForEach(x => x.velocity = Vector2.Lerp(x.velocity, MoveVec * 0.8f, Time.fixedDeltaTime));
         }
     }
 }

@@ -79,6 +79,23 @@ public class Player : MonoBehaviour
             UIManager.Instance.UpdatePlayerHPUI(true);
         }
     }
+    public void GetHeal(int healAmount)
+    {
+        if (!playerState.IsDead)
+        {
+            if (healAmount > 0)
+            {
+                currentHp += healAmount;
+
+                if (currentHp > playerStat.MaxHp)
+                {
+                    currentHp = playerStat.MaxHp;
+                }
+
+                UIManager.Instance.UpdatePlayerHPUI();
+            }
+        }
+    }
     private void WhenGameClear()
     {
 
