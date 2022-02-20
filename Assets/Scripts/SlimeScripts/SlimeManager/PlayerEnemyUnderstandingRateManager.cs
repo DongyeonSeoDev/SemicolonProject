@@ -53,6 +53,12 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
 
             // Debug.Log(enemyId);
         });
+
+        EventManager.StartListening("PlayerDead", ResetUnderstandingRate);
+    }
+    private void OnDisable() 
+    {
+        EventManager.StopListening("PlayerDead", ResetUnderstandingRate);
     }
     public void SetUnderstandingRate(string key, int value)
     {
@@ -76,6 +82,13 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
             Debug.LogWarning("The key '" + key + "' is not Contain.");
 
             return 0;
+        }
+    }
+    public void ResetUnderstandingRate()
+    {
+        for(int i = 0; i < playerEnemyUnderStandingRateDic.Count; i++)
+        {
+            playerEnemyUnderStandingRateDic[changableBodyList[i].bodyId.ToString()] = 0;
         }
     }
 }
