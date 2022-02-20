@@ -35,7 +35,7 @@ namespace Enemy
         }
     }
 
-    public class EnemyFollowPlayerCommand : EnemyCommand // �� ������
+    public class EnemyFollowPlayerCommand : EnemyCommand // 적 움직임
     {
         private Transform enemyObject;
         private Transform followObject;
@@ -73,7 +73,7 @@ namespace Enemy
 
                     if (followObject == null)
                     {
-                        Debug.LogError("Player�� ã�� �� �����ϴ�.");
+                        Debug.LogError("Player를 찾을 수 없습니다.");
 
                         return;
                     }
@@ -82,7 +82,7 @@ namespace Enemy
 
             if (isLongDistanceAttack)
             {
-                // �̵�
+                // 이동
                 targetPosition = enemyObject.transform.position - followObject.transform.position;
 
                 angle = Mathf.Atan2(targetPosition.x, targetPosition.y) * Mathf.Rad2Deg + 90f;
@@ -96,7 +96,7 @@ namespace Enemy
             }
             else
             {
-                // �̵�
+                // 이동
                 targetPosition = (followObject.position - enemyObject.position).normalized;
                 targetPosition *= followSpeed;
             }
@@ -105,7 +105,7 @@ namespace Enemy
         }
     }
 
-    public class EnemyGetDamagedAIControllerCommand : EnemyCommand // ���� �������� ����
+    public class EnemyGetDamagedAIControllerCommand : EnemyCommand // 적이 데미지를 받음
     {
         private EnemyData enemyData;
 
@@ -121,22 +121,22 @@ namespace Enemy
         {
             if (enemyData.eEnemyController == EnemyController.AI)
             {
-                if (!isWorking) // ���� ����
+                if (!isWorking) // 색깔 변경
                 {
                     enemyData.enemySpriteRenderer.color = enemyData.damagedColor;
                 }
-                else // ���� ���� ����
+                else // 색깔 변경 해제
                 {
                     enemyData.enemySpriteRenderer.color = enemyData.normalColor;
                 }
             }
             else if (enemyData.eEnemyController == EnemyController.PLAYER)
             {
-                if (!isWorking) // ���� ����
+                if (!isWorking) // 색깔 변경
                 {
                     enemyData.enemySpriteRenderer.color = enemyData.playerDamagedColor;
                 }
-                else // ���� ���� ����
+                else // 색깔 변경 해제
                 {
                     enemyData.enemySpriteRenderer.color = enemyData.playerNormalColor;
                 }
@@ -161,7 +161,7 @@ namespace Enemy
         }
     }
 
-    public class EnemyDeadAIControllerCommand : EnemyCommand // ���� ����
+    public class EnemyDeadAIControllerCommand : EnemyCommand // 적이 죽음
     {
         private GameObject enemyObject;
         private EnemyLootListSO enemyLootListSO;
@@ -191,7 +191,7 @@ namespace Enemy
         }
     }
 
-    public class EnemyAttackCommand : EnemyCommand // �� ����
+    public class EnemyAttackCommand : EnemyCommand // 적 공격
     {
         public Transform enemyTransform;
         public Transform targetTransform;
@@ -214,7 +214,7 @@ namespace Enemy
         }
     }
 
-    public class EnemyAttackPlayerCommand : EnemyCommand // �� ����
+    public class EnemyAttackPlayerCommand : EnemyCommand // 적으로 변신한 플레이어가 공격
     {
         PlayerInput playerInput;
         Transform transform;
