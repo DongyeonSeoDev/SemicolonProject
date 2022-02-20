@@ -58,7 +58,7 @@ public class Item : MonoBehaviour
     {
         if(isDropping)
         {
-            itemSprTrm.Rotate(Global.Z90 * rotateDir * rotateSpeed * Time.deltaTime);
+            itemSprTrm.Rotate(SVector3.Z90 * rotateDir * rotateSpeed * Time.deltaTime);
             if(transform.position.y < spawnPos.y)
             {
                 rigid.gravityScale = 0;

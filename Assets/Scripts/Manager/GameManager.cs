@@ -26,14 +26,13 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     [HideInInspector] public List<Item> droppedItemList = new List<Item>();
 
-
     public int InventoryItemCount
-    { get { return savedData.userInfo.userItems.keyValueDic.Keys.Count; } }
+    { get => savedData.userInfo.userItems.keyValueDic.Keys.Count; }
 
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.Confined;
-        filePath = Util.GetFilePath(saveFileName_1);
+        filePath = saveFileName_1.PersistentDataPath();
         saveData = new SaveData();
         Load();
         Init();
