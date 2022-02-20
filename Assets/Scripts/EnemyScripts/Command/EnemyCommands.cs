@@ -28,7 +28,7 @@ namespace Enemy
             }
             else
             {
-                lastMoveVec = Vector2.Lerp(lastMoveVec, Vector2.zero, Time.fixedDeltaTime * playerStat.Speed / 2f);
+                lastMoveVec = Vector2.Lerp(lastMoveVec, Vector2.zero, Time.deltaTime * playerStat.Speed / 2f);
             }
 
             rigid.velocity = lastMoveVec;
