@@ -3,9 +3,11 @@ using System.Collections.Generic;
 
 public partial class GameManager : MonoSingleton<GameManager>  
 {
+    public GameObject emptyPrefab;
+
     [HideInInspector] public List<Pick> pickList = new List<Pick>();
 
-    [Header("확인용")]
+    [Space(10)]  //확인용
     public CheckGameStringKeys checkGameStringKeys = new CheckGameStringKeys();
 
 

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using TMPro;
 using Water;
+using System;
 
 public partial class UIManager : MonoSingleton<UIManager>
 {
@@ -12,6 +13,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     [SerializeField] private List<GameUI> activeUIList = new List<GameUI>();
 
     public Queue<bool> activeUIQueue = new Queue<bool>(); //어떤 UI가 켜지거나 꺼지는 애니메이션(트위닝) 진행 중에 다른 UI (비)활성화 막기 위한 변수
+    public Dictionary<UIType, bool> uiTweeningDic = new Dictionary<UIType, bool>(); //해당 UI가 트위닝 중인지(켜지거나 꺼지는 중인지) 확인하기 위함
     #endregion
 
     #region 마우스 따라다니는 정보 UI관련 변수들
@@ -42,6 +44,7 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     #region CombinationFood
     public Pair<Image, Text> combInfoUI;
+    public ParticleSystem combEff;
     #endregion
 
     #region Item Remove
@@ -58,9 +61,13 @@ public partial class UIManager : MonoSingleton<UIManager>
     public Transform npcUICvsTrm;
     #endregion
 
+    #region HP UI 관련
     public Triple<Image, TextMeshProUGUI, Image> playerHPInfo;
     private bool isStartDelayHPFillTimer;
     private float setDelayHPFillTime;
+    #endregion
+
+    public CanvasGroup normalPanelCanvas;
 
     //public Text statText;
     public Text[] statTexts;
@@ -70,13 +77,27 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     private void Awake()
     {
+        InitData();
+        CreatePool();
+    }
+
+    private void InitData()
+    {
         cursorImgRectTrm = cursorInfoImg.GetComponent<RectTransform>();
         sw = cursorImgRectTrm.rect.width;
 
-        CreatePool();
         noticeMsgGrd = noticeUIPair.first.GetComponent<NoticeMsg>().msgTmp.colorGradient;
-        ordinaryCvs.worldCamera = Camera.main;
-        ordinaryCvs.planeDistance = 20;
+
+        int i;
+        for(i=0; i<gameCanvases.Length; i++)
+        {
+            gameCanvases[i].worldCamera = Util.MainCam;
+            gameCanvases[i].planeDistance = Global.cameraPlaneDistance;
+        }
+        for (i = 0; i < Enum.GetValues(typeof(UIType)).Length; i++)
+        {
+            uiTweeningDic.Add((UIType)i, false);
+        }
     }
 
     private void CreatePool()
@@ -105,6 +126,8 @@ public partial class UIManager : MonoSingleton<UIManager>
         Global.AddAction(Global.MakeFood, item =>
         {
             OnUIInteract(UIType.COMBINATION, true); //음식 제작 성공 완료 패널 띄움
+            combEff.Play();
+
             ItemInfo info = ((ItemInfo)item);
             ItemSO data = gm.GetItemData(info.id);
             combInfoUI.first.sprite = data.GetSprite();
@@ -127,13 +150,13 @@ public partial class UIManager : MonoSingleton<UIManager>
 
         Global.AddAction(Global.JunkItem, JunkItem);
 
-        EventManager.StartListening("PlayerDead", () => OnUIInteract(UIType.DEATH, true));
+        EventManager.StartListening("PlayerDead", () => OnUIInteractSetActive(UIType.DEATH, true, true));
         EventManager.StartListening("PlayerRespawn", Respawn);
         EventManager.StartListening("GameClear", () => OnUIInteract(UIType.CLEAR, true));
         EventManager.StartListening("TimePause", () => Time.timeScale = 0 );
         EventManager.StartListening("TimeResume", () => Time.timeScale = 1);
         EventManager.StartListening("StageClear", () => { changeNoticeMsgGrd = clearNoticeMsgVGrd; InsertNoticeQueue("Stage Clear", 90, true); });
-        EventManager.StartListening("ChangeBody", () => { });
+        EventManager.StartListening("ChangeBody", () => { });  //뭘로 변신했는지 메시지 띄워야함
     }
 
     private void Respawn(Vector2 unusedValue) => OnUIInteract(UIType.DEATH, true);
@@ -144,6 +167,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         CursorInfo();
         Notice();
         DelayHPFill();
+        
     }
 
     private void UserInput()
@@ -167,7 +191,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         {
             OnUIInteract(UIType.STAT);
         }
-        else if(Input.GetKeyDown(KeySetting.keyDict[KeyAction.SETTING]))
+        else if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.SETTING]))
         {
             OnUIInteract(UIType.SETTING);
         }
@@ -176,7 +200,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     #region UI (비)활성화 관련
     public void OnUIInteractBtnClick(int type) { OnUIInteract((UIType)type); }
 
-    public void OnUIInteract(UIType type, bool ignoreQueue = false) //UI열거나 닫음
+    public void OnUIInteract(UIType type, bool ignoreQueue = false) //UI열거나 닫음 (현재 액티브 상태의 반대로 해줌)
     {
         if (activeUIQueue.Count > 0 && !ignoreQueue) return;
         if (ExceptionHandler(type)) return;
@@ -194,21 +218,39 @@ public partial class UIManager : MonoSingleton<UIManager>
         }
     }
 
+    public void OnUIInteractSetActive(UIType type, bool isActive ,bool ignoreQueue = false) //UI열거나 닫음 (원하는 액티브 상태로 해주고 이미 그 상태면 캔슬)
+    {
+        GameUI ui = gameUIList[(int)type];
+        if (ui.gameObject.activeSelf == isActive) return;
+
+        if (activeUIQueue.Count > 0 && !ignoreQueue) return;
+        if (ExceptionHandler(type)) return;
+
+        if (uiTweeningDic[type]) return;
+
+        activeUIQueue.Enqueue(false);
+
+        if (isActive) ui.ActiveTransition();
+        else ui.InActiveTransition();
+    }
+
     private bool ExceptionHandler(UIType type) //상호작용에 대한 예외처리
     {
         switch (type)
         {
             case UIType.KEYSETTING:
-                if (KeyActionManager.Instance.IsChangingKeySetting)
+                if (KeyActionManager.Instance.IsChangingKeySetting)  //키세팅 변경 중에는 esc로 키세팅 UI 안꺼지게
                     return true;
                 break;
             case UIType.SETTING:
                 for(int i=0; i<gameMenuList.Count; i++)
                 {
-                    if (gameMenuList[i].gameObject.activeSelf)
+                    if (gameMenuList[i].gameObject.activeSelf)     //설정 속의 메뉴 UI가 켜져있는 중에는 설정창 못 끄게
                         return true;
                 }
+                normalPanelCanvas.DOFade(!gameUIList[(int)UIType.SETTING].gameObject.activeSelf ? 0:1, 0.3f);
                 break;
+                
         }
         return false;
     }
@@ -226,6 +268,7 @@ public partial class UIManager : MonoSingleton<UIManager>
             InActiveSpecialProcess(ui._UItype);
         }
         activeUIQueue.Dequeue();
+        uiTweeningDic[ui._UItype] = false;
 
         if(activeUIQueue.Count == 0 && isOnCursorInfo)
         {
@@ -383,9 +426,9 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     public void RequestLeftBottomMsg(string msg)  //화면 왼쪽 하단에 표시되는 로그 텍스트
     {
-        Text t = PoolManager.GetItem("AcquisitionMsg").GetComponent<Text>();
+        Text t = PoolManager.GetItem<Text>("AcquisitionMsg");
         t.text = msg;
-        Util.DelayFunc(() => t.gameObject.SetActive(false), 2f, this);
+        Util.DelayFunc(() => t.gameObject.SetActive(false), 2f, this, true);
     }
 
     #region 인벤 버튼

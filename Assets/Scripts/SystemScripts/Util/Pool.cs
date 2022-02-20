@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 namespace Water
 {
@@ -21,8 +22,33 @@ namespace Water
         }
 
         public static GameObject GetItem(string key) => poolDic[key].GetItem();
+        public static T GetItem<T>(string key) => poolDic[key].GetItem<T>();
 
-        public static void ClearPool()
+        public static void PoolObjSetActiveFalse(string key, Action<GameObject> action = null)
+        {
+            if (poolDic.ContainsKey(key))
+            {
+                if(action == null) poolDic[key].PoolSetActiveFalse();
+                else poolDic[key].PoolSetActiveFalse(action);
+            }
+                
+        }
+        /*public static void PoolObjSetActiveFalse(string[] keys)
+        {
+            for (int i = 0; i < keys.Length; i++)
+            {
+                if (poolDic.ContainsKey(keys[i]))
+                    poolDic[keys[i]].PoolSetActiveFalse();
+            }
+        }*/
+
+        public static void ClearPool(string key)
+        {
+            if (poolDic.ContainsKey(key))
+                poolDic.Remove(key);
+        }
+
+        public static void ClearAllPool()
         {
             poolDic.Clear();
         }
@@ -63,6 +89,38 @@ namespace Water
             return o;
         }
 
+        public T GetItem<T>()
+        {
+            GameObject o = queue.Peek();
+            if (o.activeSelf)
+            {
+                o = GameObject.Instantiate(prefab, parent);
+            }
+            else
+            {
+                o = queue.Dequeue();
+                o.SetActive(true);
+            }
+
+            queue.Enqueue(o);
+            return o.GetComponent<T>();
+        }
+
+        public void PoolSetActiveFalse()
+        {
+            queue.ForEach(x => { if (x.activeSelf) x.SetActive(false); });
+        }
+
+        public void PoolSetActiveFalse(Action<GameObject> action)
+        {
+            queue.ForEach(x => { 
+                if (x.activeSelf)
+                {
+                    action(x);
+                    x.SetActive(false);
+                }
+            });
+        }
     }
     
 }

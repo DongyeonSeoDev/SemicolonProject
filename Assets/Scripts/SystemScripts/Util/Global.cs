@@ -2,6 +2,8 @@ using UnityEngine;
 
 public static partial class Global
 {
+    public const float cameraPlaneDistance = 20f;
+
     public const string PickupPlant = "PickupPlant";
 
     public static Vector3 half = Vector3.one * 0.5f;

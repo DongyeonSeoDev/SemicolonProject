@@ -17,6 +17,16 @@ public class Ingredient : ItemSO
         return itemSprite;
     }
 
+    public override Sprite GetSecondSprite()
+    {
+        if (!secondItemSprite)
+        {
+            secondItemSprite = Resources.Load<Sprite>(Global.ingredientSpritePath + name + "Spr2");
+        }
+
+        return secondItemSprite;
+    }
+
     public override void Use()
     {
         if(isUseable)

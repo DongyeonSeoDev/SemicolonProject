@@ -6,6 +6,16 @@ public static partial class Util
 {
     public static Vector3 ScreenToWorldPos(Vector3 screenPos) => MainCam.ScreenToWorldPoint(screenPos);
 
+    public static Vector3 MousePositionForScreenSpace
+    {
+        get
+        {
+            Vector3 v = Input.mousePosition;
+            v.z = Global.cameraPlaneDistance;
+            return ScreenToWorldPos(v);
+        }
+    }
+
     public static void ExecuteFunc(Action func, float delay, float duration, MonoBehaviour mono = null, Action start=null, Action end = null, bool realTime = false)
     {
         if (!mono) mono = GameManager.Instance;

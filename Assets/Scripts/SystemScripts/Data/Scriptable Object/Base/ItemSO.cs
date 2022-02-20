@@ -4,6 +4,7 @@ using System;
 public abstract class ItemSO : ScriptableObject
 {
     [SerializeField] protected Sprite itemSprite;
+    [SerializeField] protected Sprite secondItemSprite;  //두번째 아이템 스프라이트 (ex : 채집물 요소로서 맵에 배치될 때의 스프라이트는 다르게 할 때 씀)
 
     public ItemType itemType;
 
@@ -24,11 +25,18 @@ public abstract class ItemSO : ScriptableObject
         return itemSprite;
     }
 
+    public virtual Sprite GetSecondSprite()
+    {
+        return secondItemSprite;
+    }
+
     public virtual void Use()
     {
         //아이템 사용 클래스 명과 아이템 스크립터블 오브젝트의 이름이 동일해야 함
-        Type type = Type.GetType(name);
-        ItemAbil abil = Activator.CreateInstance(type) as ItemAbil;
-        abil.Use();
+        //Type type = Type.GetType(name);
+        //ItemAbil abil = Activator.CreateInstance(type) as ItemAbil;
+        //abil.Use();
+
+        (Activator.CreateInstance(Type.GetType(name)) as ItemAbil).Use();
     }
 }

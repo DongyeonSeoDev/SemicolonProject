@@ -12,6 +12,13 @@ public class Inventory : MonoSingleton<Inventory>
 
     [SerializeField] private int maxItemSlotCount = 20;
 
+    #region Drag
+    private ItemSlot beginSlot;
+    public Image dragImage;
+    public bool IsDragging { get => dragImage.gameObject.activeSelf; }
+    #endregion
+
+
     private void Awake()
     {
         for (int i = 0; i < maxItemSlotCount; i++)
@@ -333,6 +340,41 @@ public class Inventory : MonoSingleton<Inventory>
             return;
 
         itemSlots.FindAll(x => x.ItemTypePt != (ItemType)itemType).ForEach(x => x.gameObject.SetActive(false));
+    }
+    #endregion
+
+    #region 슬롯 이동
+    public void BeginDrg(bool startDrg, ItemSlot slot = null)  //템 슬롯 드래그 시작 OR 드래그 범위 바깥에서 드래그 종료
+    {
+        dragImage.gameObject.SetActive(startDrg);
+
+        if (slot)
+        {
+            dragImage.sprite = slot.itemImg.sprite;
+            beginSlot = slot;
+        }
+    }
+
+    public void Exchange(ItemSlot i)  //템 슬롯 두개의 위치 바꿈
+    {
+        if (i == beginSlot) return;
+
+        int org = GetItemSlotIndex(beginSlot);
+        int trg = GetItemSlotIndex(i);
+
+        beginSlot.transform.SetSiblingIndex(trg);
+        i.transform.SetSiblingIndex(org);
+    }
+
+    public int GetItemSlotIndex(ItemSlot slot) //해당 아이템 슬롯이 부모 옵젝에서 몇 번째 자식인지 반환
+    {
+        for(int i=0; i<itemSlotParent.childCount; i++)
+        {
+            if (itemSlotParent.GetChild(i) == slot.transform) return i;
+        }
+
+        Debug.LogWarning("해당 슬롯을 찾지 못함");
+        return -1;
     }
     #endregion
 }

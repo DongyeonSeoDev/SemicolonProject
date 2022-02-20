@@ -38,6 +38,9 @@ public class EffectManager : MonoSingleton<EffectManager>
 
         PoolManager.CreatePool(pickupPlantEffects.first, transform, 2, "PickSuccessEff");
         PoolManager.CreatePool(pickupPlantEffects.second, transform, 2, "PickFailEff");
+
+        EventManager.StartListening("PlayerRespawn", Respawn);
+
         //hpFillEffectStartX = hpFillEffect.anchoredPosition.x;
         //hpFillEffectMaskObj.screenPoint = new Vector2(fillBackRect.anchoredPosition.x - fillBackWidth * 0.5f, fillBackRect.anchoredPosition.y);
     }
@@ -49,6 +52,12 @@ public class EffectManager : MonoSingleton<EffectManager>
             OnTopRightBtnEffect(UIType.INVENTORY, true);
         });
         Global.AddAction(Global.MakeFood, unusedValue => OnTopRightBtnEffect(UIType.INVENTORY, true));
+    }
+
+    private void Respawn(Vector2 unusedValue)
+    {
+        inventoryBtnEffect.SetActive(false);
+        statBtnEffect.SetActive(false);
     }
 
     public void OnDamagedUIEffect(float rate)

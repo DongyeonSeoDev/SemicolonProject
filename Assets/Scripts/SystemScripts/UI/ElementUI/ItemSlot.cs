@@ -1,9 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using UnityEngine.EventSystems;
 
 [DisallowMultipleComponent]
-public class ItemSlot : MonoBehaviour
+public class ItemSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
     public ItemInfo itemInfo { get; private set; }
     public int Count { get; set; }
@@ -42,6 +43,8 @@ public class ItemSlot : MonoBehaviour
 
     public NameInfoFollowingCursor nifc;
 
+    private Image dragImg;
+
     private void Awake()
     {
         button.onClick.AddListener(() => 
@@ -51,6 +54,11 @@ public class ItemSlot : MonoBehaviour
             outline.DOColor(new Color(0,1,1,0.3f), 2.5f).SetLoops(-1,LoopType.Yoyo).SetUpdate(true);
         });
         Global.ItemSlotOutlineColor = outline.effectColor;
+    }
+
+    private void Start()
+    {
+        dragImg = Inventory.Instance.dragImage;
     }
 
     public void SetData(ItemInfo item, int count)
@@ -92,5 +100,37 @@ public class ItemSlot : MonoBehaviour
         itemCountTxt.text = count.ToString();
     }
 
+    #region On~~
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        if(ExistItem)
+        {
+            Inventory.Instance.BeginDrg(true, this);
+        }
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        /*if (Inventory.Instance.IsDragging)
+            dragImg.transform.position = eventData.position;*/
+
+        if (Inventory.Instance.IsDragging)
+            dragImg.transform.position = Util.MousePositionForScreenSpace;
+    }
+
+    public void OnDrop(PointerEventData eventData)
+    {
+        if (!Inventory.Instance.IsDragging) return;
+
+        Inventory.Instance.Exchange(this);
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        if (Inventory.Instance.IsDragging)
+            Inventory.Instance.BeginDrg(false);
+    }
+
     
+    #endregion
 }
