@@ -6,7 +6,7 @@ public static class ItemUseMng
     
     public static void IncreaseCurrentHP(Player p, int value)
     {
-        //p.GetHeal(value);
+        p.GetHeal(value);
         UIManager.Instance.InsertNoticeQueue("HP " + value + " È¸º¹");
         EffectManager.Instance.OnTopRightBtnEffect(UIType.STAT, true);
     }

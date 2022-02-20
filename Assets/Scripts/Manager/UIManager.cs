@@ -195,6 +195,10 @@ public partial class UIManager : MonoSingleton<UIManager>
         {
             OnUIInteract(UIType.SETTING);
         }
+        else if(Input.GetKeyDown(KeySetting.keyDict[KeyAction.MONSTER_COLLECTION]))
+        {
+            OnUIInteract(UIType.MONSTER_COLLECTION);
+        }
     }
 
     #region UI (비)활성화 관련
