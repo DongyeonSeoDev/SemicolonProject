@@ -9,15 +9,26 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
     [Serializable]
     public struct ChangeBodyData
     {
+        public string bodyName;
         public Enemy.EnemyType bodyId;
         public GameObject body;
         public EternalStat additionalBodyStat; // 변신 후의 플레이어의 Additional스탯, (이해도 100% 기준)
+        public Sprite bodyImg;
+        public string bodyExplanation;
     }
 
     private Dictionary<string, int> playerEnemyUnderStandingRateDic = new Dictionary<string, int>();
+    public Dictionary<string, int> PlayerEnemyUnderStandingRateDic
+    {
+        get { return playerEnemyUnderStandingRateDic; }
+    }
 
     [SerializeField]
     private List<ChangeBodyData> changableBodyList = new List<ChangeBodyData>();
+    public List<ChangeBodyData> ChangableBodyList
+    {
+        get { return changableBodyList; }
+    }
 
     private Dictionary<string, (GameObject, EternalStat)> changableBodyDict = new Dictionary<string, (GameObject, EternalStat)>();
     public Dictionary<string, (GameObject, EternalStat)> ChangalbeBodyDict
@@ -56,7 +67,7 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
 
         EventManager.StartListening("PlayerDead", ResetUnderstandingRate);
     }
-    private void OnDisable() 
+    private void OnDisable()
     {
         EventManager.StopListening("PlayerDead", ResetUnderstandingRate);
     }
@@ -86,7 +97,7 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
     }
     public void ResetUnderstandingRate()
     {
-        for(int i = 0; i < playerEnemyUnderStandingRateDic.Count; i++)
+        for (int i = 0; i < playerEnemyUnderStandingRateDic.Count; i++)
         {
             playerEnemyUnderStandingRateDic[changableBodyList[i].bodyId.ToString()] = 0;
         }
