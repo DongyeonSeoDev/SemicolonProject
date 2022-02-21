@@ -265,4 +265,30 @@ namespace Enemy
             rigidboyd2D.AddForce(rushAttackPosition.position * rushForce, ForceMode2D.Impulse);
         }
     }
+
+    public class EnemyKnockBackAICommand : EnemyCommand
+    {
+        private Rigidbody2D rigid;
+        private Vector2 direction;
+
+        public EnemyKnockBackAICommand(Rigidbody2D rigid, Vector2 direction)
+        {
+            this.rigid = rigid;
+            this.direction = direction;
+        }
+
+        public override void Execute()
+        {
+            Debug.Log("1");
+            rigid.AddForce(direction, ForceMode2D.Impulse);
+        }
+    }
+
+    public class EnemyKnockBackPlayerCommand : EnemyCommand
+    {
+        public override void Execute()
+        {
+            throw new System.NotImplementedException("플레이어 넉백 구현해야함");
+        }
+    }
 }

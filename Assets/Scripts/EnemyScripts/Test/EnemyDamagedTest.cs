@@ -10,7 +10,7 @@ public class EnemyDamagedTest : MonoBehaviour // 적이 데미지를 받는것 테스트
 
         if (enemy != null)
         {
-            enemy.GetDamage(damage);
+            enemy.GetDamage(damage, true);
             Debug.Log("적이 " + damage + "의 데미지를 받았습니다.");
         }
     }

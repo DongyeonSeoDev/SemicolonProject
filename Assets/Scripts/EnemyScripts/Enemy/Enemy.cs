@@ -97,12 +97,15 @@ namespace Enemy
             lastPositionX = transform.position.x;
         }
 
-        public void GetDamage(int damage)
+        public void GetDamage(int damage, bool isKnockBack = false, float knockBackPower = 10f)
         {
             if (!enemyData.isDamaged)
             {
                 enemyData.isDamaged = true;
                 enemyData.damagedValue = damage;
+
+                enemyData.isKnockBack = isKnockBack;
+                enemyData.knockBackPower = knockBackPower;
             }
         }
 

@@ -74,6 +74,7 @@ namespace Enemy
         public float attackDelay = 1f;
         public float damageDelay = 0.1f;
         public float rushForce = 100f;
+        public float knockBackPower;
 
         public bool isDamaged = false;
         public bool isAttack = false;
@@ -84,6 +85,7 @@ namespace Enemy
         public bool isLongDistanceAttack = false;
         public bool isEnemyMove = false;
         public bool isRotate = false;
+        public bool isKnockBack = false;
 
         public int attackDamage = 10;
         public int damagedValue;

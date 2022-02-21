@@ -153,7 +153,7 @@ namespace Enemy
 
     public partial class EnemyGetDamagedState : EnemyState // 공격을 받은 상태
     {
-        private EnemyCommand enemyGetDamagedCommand;
+        private EnemyCommand[] enemyCommand = new EnemyCommand[2];
 
         private float currentTime;
 
@@ -161,11 +161,21 @@ namespace Enemy
         {
             if (enemyData.eEnemyController == EnemyController.AI)
             {
-                enemyGetDamagedCommand = new EnemyGetDamagedAIControllerCommand(enemyData);
+                enemyCommand[0] = new EnemyGetDamagedAIControllerCommand(enemyData);
+
+                if (enemyData.isKnockBack)
+                {
+                    enemyCommand[1] = new EnemyKnockBackAICommand(enemyData.enemyRigidbody2D, (enemyData.enemyObject.transform.position - enemyData.PlayerObject.transform.position).normalized * enemyData.knockBackPower);
+                }
             }
             else if (enemyData.eEnemyController == EnemyController.PLAYER)
             {
-                enemyGetDamagedCommand = new EnemyGetDamagedPlayerControllerCommand(enemyData.damagedValue);
+                enemyCommand[0] = new EnemyGetDamagedPlayerControllerCommand(enemyData.damagedValue);
+
+                if (enemyData.isKnockBack)
+                {
+                    enemyCommand[1] = new EnemyKnockBackPlayerCommand();
+                }
             }
         }
 
@@ -184,7 +194,14 @@ namespace Enemy
                 enemyData.enemyAnimator.SetTrigger(enemyData.hashHit);
             }
 
-            enemyGetDamagedCommand.Execute();
+            enemyCommand[0].Execute();
+
+            if (enemyData.isKnockBack)
+            {
+                enemyCommand[1].Execute();
+
+                enemyData.isKnockBack = false;
+            }
 
             base.Start();
         }
@@ -195,7 +212,7 @@ namespace Enemy
 
             if (currentTime > enemyData.damageDelay)
             {
-                enemyGetDamagedCommand.Execute();
+                enemyCommand[0].Execute();
 
                 if (enemyData.isHitAnimation)
                 {
