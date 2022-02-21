@@ -113,9 +113,9 @@ public class Player : MonoBehaviour
         playerStat.additionalEternalStat = new EternalStat();
 
         playerState.IsDead = false;
-        // currentHp = playerStat.MaxHp;
+        currentHp = playerStat.MaxHp;
 
-        // UIManager.Instance.UpdatePlayerHPUI();
+        UIManager.Instance.UpdatePlayerHPUI();
         
         SlimeGameManager.Instance.PlayerBodyChange("origin");
 
