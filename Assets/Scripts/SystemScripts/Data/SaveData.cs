@@ -11,11 +11,13 @@ public class SaveData
     public void Save()
     {
         userInfo.userItems.Save();
+        userInfo.monstersAssimilationRate.Save();
         option.keyInputDict.Save();
     }
     public void Load()
     {
         userInfo.userItems.Load();
+        userInfo.monstersAssimilationRate.Load();
         option.keyInputDict.Load();
     }
 }
@@ -23,9 +25,12 @@ public class SaveData
 [Serializable]
 public class UserInfo
 {
+    //스탯 정보
     public int currentHp;
     public Stat playerStat = new Stat();
+
     public SaveDic<int, ItemInfo> userItems = new SaveDic<int, ItemInfo>(); //인벤토리 목록 
+
     public SaveDic<string, int> monstersAssimilationRate = new SaveDic<string, int>(); //몬스터 동화율
 }
 

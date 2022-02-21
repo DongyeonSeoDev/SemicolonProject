@@ -25,6 +25,7 @@ public class EffectManager : MonoSingleton<EffectManager>
     [Space(20)][Header("TopRight Btn Effects")]
     public GameObject inventoryBtnEffect;
     public GameObject statBtnEffect;
+    public GameObject mobColtBtnEffect;
 
     [Space(20)]
     [Header("채집 성공/실패 이펙트")]
@@ -87,6 +88,9 @@ public class EffectManager : MonoSingleton<EffectManager>
                 break;
             case UIType.STAT:
                 statBtnEffect.SetActive(on);
+                break;
+            case UIType.MONSTER_COLLECTION:
+                mobColtBtnEffect.SetActive(on);
                 break;
         }
     }
