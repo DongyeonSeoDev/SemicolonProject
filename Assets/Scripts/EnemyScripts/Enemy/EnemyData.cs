@@ -86,6 +86,8 @@ namespace Enemy
         public bool isEnemyMove = false;
         public bool isRotate = false;
         public bool isKnockBack = false;
+        public bool isCurrentAttackTime = false;
+        public bool isUseDelay = false;
 
         public int attackDamage = 10;
         public int damagedValue;
@@ -114,6 +116,19 @@ namespace Enemy
             {
                 return Vector3.Distance(enemyObject.transform.position, PlayerObject.transform.position) <= isAttackPlayerDistance;
             }
+        }
+
+        public bool IsAttackDelay(float currentAttackDelay = 0)
+        {
+            if (currentAttackDelay <= 0 || isCurrentAttackTime)
+            {
+                return isCurrentAttackTime;
+            }
+
+            isCurrentAttackTime = true;
+            Util.DelayFunc(() => isCurrentAttackTime = false, currentAttackDelay);
+
+            return isCurrentAttackTime;
         }
     }
 }

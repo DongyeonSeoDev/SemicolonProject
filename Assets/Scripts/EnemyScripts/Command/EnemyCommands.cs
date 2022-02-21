@@ -279,7 +279,6 @@ namespace Enemy
 
         public override void Execute()
         {
-            Debug.Log("1");
             rigid.AddForce(direction, ForceMode2D.Impulse);
         }
     }

@@ -78,15 +78,23 @@ namespace Enemy
     public partial class EnemyAttackState : EnemyState // 공격 상태
     {
         private float currentTime;
+        private bool isDelay = false;
 
         public EnemyAttackState(EnemyData enemyData) : base(eState.ATTACK, enemyData) { }
 
         protected override void Start()
         {
-            enemyData.enemyAnimator.SetTrigger(enemyData.hashAttack);
+            if (enemyData.isUseDelay)
+            {
+                isDelay = enemyData.IsAttackDelay();
+            }
+
+            if (!isDelay)
+            {
+                enemyData.enemyAnimator.SetTrigger(enemyData.hashAttack);
+            }
 
             currentTime = 0f;
-
             SpriteFlipCheck();
 
             base.Start();
@@ -94,10 +102,24 @@ namespace Enemy
 
         protected override void Update()
         {
-            currentTime += Time.deltaTime;
+            if (!isDelay)
+            {
+                currentTime += Time.deltaTime;
+            }
+            else
+            {
+                isDelay = enemyData.IsAttackDelay();
+
+                if (!isDelay)
+                {
+                    enemyData.enemyAnimator.SetTrigger(enemyData.hashAttack);
+                    SpriteFlipCheck();
+                }
+            }
 
             if (enemyData.isDamaged)
             {
+                enemyData.IsAttackDelay(enemyData.attackDelay - currentTime);
                 ChangeState(new EnemyGetDamagedState(enemyData));
             }
 

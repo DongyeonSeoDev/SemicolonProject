@@ -20,6 +20,7 @@ namespace Enemy
                 hpBarFillImage = hpBarFillImage,
                 isAnimation = false,
                 isEndAttackAnimation = true,
+                isUseDelay = true,
                 isSeePlayerDistance = 20f,
                 isAttackPlayerDistance = 7f,
                 attackDelay = 3f,
