@@ -63,7 +63,7 @@ public class ItemCloneEffect : MonoBehaviour
                 {
                     isTweening = true;
                     arriveAction?.Invoke();
-                    transform.DOScale(Global.zeroPointThree, 0.3f);
+                    transform.DOScale(SVector3.zeroPointThree, 0.3f);
                     spriteRenderer.DOColor(Color.clear, 0.4f).OnComplete(() => gameObject.SetActive(false));
                 }
             }

@@ -94,7 +94,7 @@ public partial class UIManager : MonoSingleton<UIManager>
             gameCanvases[i].worldCamera = Util.MainCam;
             gameCanvases[i].planeDistance = Global.cameraPlaneDistance;
         }
-        for (i = 0; i < Enum.GetValues(typeof(UIType)).Length; i++)
+        for (i = 0; i < Global.EnumCount<UIType>(); i++)
         {
             uiTweeningDic.Add((UIType)i, false);
         }
@@ -194,6 +194,10 @@ public partial class UIManager : MonoSingleton<UIManager>
         else if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.SETTING]))
         {
             OnUIInteract(UIType.SETTING);
+        }
+        else if(Input.GetKeyDown(KeySetting.keyDict[KeyAction.MONSTER_COLLECTION]))
+        {
+            OnUIInteract(UIType.MONSTER_COLLECTION);
         }
     }
 
