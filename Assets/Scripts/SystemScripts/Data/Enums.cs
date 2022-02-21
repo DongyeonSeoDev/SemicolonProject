@@ -24,7 +24,9 @@ public enum UIType
     RESOLUTION,
     SOUND,
     HELP,
-    CREDIT
+    CREDIT,
+    MONSTER_COLLECTION,
+    MONSTERINFO_DETAIL
 }
 
 public enum KeyAction
@@ -34,9 +36,12 @@ public enum KeyAction
     LEFT,
     RIGHT,
     ATTACK,
+    //여기까지가 고정키
+
     INVENTORY,
-    INTERACTION,
     STAT,
+    MONSTER_COLLECTION,
+    INTERACTION,
     SPECIALATTACK,
     DRAIN,
     MANASTONE,

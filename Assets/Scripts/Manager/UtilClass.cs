@@ -6,17 +6,9 @@ using UnityEngine;
 #region Global
 public static partial class Global
 {
-    public static float slideTransitionTime03 = 0.3f;
-    public static float fullAlphaTransitionTime04 = 0.4f;
-    public static float fullScaleTransitionTime05 = 0.5f;
-    public static float fullScaleTransitionTime03 = 0.3f;
-
-    public static Vector3 onePointTwo = new Vector3(1.2f, 1.2f, 1.2f);
-    public static Vector3 onePointThree = new Vector3(1.3f, 1.3f, 1.3f);
-    public static Vector3 onePointSix = new Vector3(1.6f, 1.6f, 1.6f);
-    public static Vector3 zeroPointSeven = new Vector3(0.7f, 0.7f, 0.7f);
-    public static Vector3 zeroPointThree = new Vector3(0.3f, 0.3f, 0.3f);
-    public static Vector3 Z90 = new Vector3(0, 0, 90);
+    public static float slideTransitionTime03 => 0.3f;
+    public static float fullAlphaTransitionTime04 => 0.4f;
+    public static float fullScaleTransitionTime03 => 0.3f;
 
     private static Color itemSlotOutlineColor;
     public static Color ItemSlotOutlineColor
@@ -47,6 +39,8 @@ public static partial class Global
     public const string AcquisitionItem = "AcquisitionItem"; //아이템 획득 시 이벤트 키
     public const string JunkItem = "JunkItem"; //아이템 버릴 때 이벤트 키
 
+    public static int EnumCount<T>() => Enum.GetValues(typeof(T)).Length;
+
     private static Dictionary<string, ActionGroup> stringToActionDict = new Dictionary<string, ActionGroup>();
 
     public static void SetResordEventKey()
@@ -57,7 +51,7 @@ public static partial class Global
         }
     }
 
-    private static Sprite[] itemTypeSprites = new Sprite[Enum.GetValues(typeof(ItemType)).Length];
+    private static Sprite[] itemTypeSprites = new Sprite[EnumCount<ItemType>()];
 }
 
 public static partial class Global
@@ -163,7 +157,7 @@ public static partial class Util
         }
     }
 
-    public static string GetFilePath(string fileName) => string.Concat(Application.persistentDataPath, "/", fileName);
+    public static string PersistentDataPath(this string fileName) => string.Concat(Application.persistentDataPath, "/", fileName);
 
     public static void DelayFunc(Action a, float delay, MonoBehaviour mono = null, bool realTime=false)
     {

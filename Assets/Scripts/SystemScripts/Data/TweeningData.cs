@@ -14,7 +14,7 @@ public static class TweeningData
         if (active)
         {
             fields.cvsg.alpha = 0f;
-            fields.transform.localScale = Global.zeroPointSeven;
+            fields.transform.localScale = SVector3.zeroPointSeven;
 
             fields.transform.DOScale(Vector3.one, Global.fullScaleTransitionTime03).SetEase(Ease.OutBack).SetUpdate(true);
             fields.cvsg.DOFade(1, Global.fullAlphaTransitionTime04)
@@ -23,7 +23,7 @@ public static class TweeningData
         else
         {
             float time = Global.fullAlphaTransitionTime04;
-            fields.transform.DOScale(Global.zeroPointSeven, time).SetEase(Ease.InBack).SetUpdate(true);
+            fields.transform.DOScale(SVector3.zeroPointSeven, time).SetEase(Ease.InBack).SetUpdate(true);
             fields.cvsg.DOFade(0, time).SetUpdate(true).OnComplete(() => UpdateUIStack(fields.self, false));
         }
     }
@@ -95,11 +95,11 @@ public static class TweeningData
         if (active)
         {
             fields.cvsg.alpha = 0;
-            fields.transform.localScale = Global.half;
+            fields.transform.localScale = SVector3.half;
             fields.rectTrm.anchoredPosition = new Vector2(fields.originPos.x + 600f, fields.originPos.y);
 
             seq.Append(fields.childGameUI.UIFields.cvsg.DOFade(0.4f, 0.5f))
-            .Join(fields.childGameUI.transform.DOScale(Global.half, 0.5f))
+            .Join(fields.childGameUI.transform.DOScale(SVector3.half, 0.5f))
             .Join(fields.childGameUI.UIFields.rectTrm.DOAnchorPos(new Vector2(fields.childGameUI.UIFields.originPos.x - 600f, fields.childGameUI.UIFields.originPos.y), 0.5f));
 
             seq.AppendInterval(0.2f);
@@ -111,7 +111,7 @@ public static class TweeningData
         {
             fields.childGameUI.gameObject.SetActive(true);
             seq.Append(fields.cvsg.DOFade(0.4f, 0.5f))
-            .Join(fields.transform.DOScale(Global.half, 0.5f))
+            .Join(fields.transform.DOScale(SVector3.half, 0.5f))
             .Join(fields.rectTrm.DOAnchorPos(new Vector2(fields.originPos.x + 600f, fields.originPos.y), 0.5f));
 
             seq.AppendInterval(0.2f);

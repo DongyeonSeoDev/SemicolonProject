@@ -100,6 +100,12 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
                 return false;
             case KeyCode.DownArrow:
                 return false;
+            case KeyCode.LeftCommand:
+                return false;
+            case KeyCode.RightCommand:
+                return false;
+            case KeyCode.Menu:
+                return false;
             /*case KeyCode.Escape:
                 return false;*/
         }
