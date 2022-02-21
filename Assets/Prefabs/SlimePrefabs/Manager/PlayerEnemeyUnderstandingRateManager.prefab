@@ -44,7 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   changableBodyList:
-  - bodyId: 0
+  - bodyName: 
+    bodyId: 0
     body: {fileID: 1748969661245656920, guid: 99878bdc48206b64d92b0711ec15cf97, type: 3}
     additionalBodyStat:
       maxHp: 100
@@ -54,7 +55,11 @@ MonoBehaviour:
       speed: 4
       criticalRate: 0
       criticalDamage: 0
-  - bodyId: 1
+    bodyImg: {fileID: -3615960448972296495, guid: 407549c50f6a9884caf01e20bde4d767, type: 3}
+    dropItem: {fileID: 11400000, guid: 06dd51cfab1cb904b9bbbedef6545d02, type: 2}
+    bodyExplanation: 
+  - bodyName: 
+    bodyId: 1
     body: {fileID: 3351713311786356781, guid: bd1420554775ff64abf2f4527d18fcce, type: 3}
     additionalBodyStat:
       maxHp: -20
@@ -64,7 +69,11 @@ MonoBehaviour:
       speed: 6
       criticalRate: 0
       criticalDamage: 0
-  - bodyId: 2
+    bodyImg: {fileID: 7943156567977182894, guid: 527d0ddf082e4724a861fc734336bee7, type: 3}
+    dropItem: {fileID: 11400000, guid: ac78587e7a385054a9d1150a539d138b, type: 2}
+    bodyExplanation: 
+  - bodyName: 
+    bodyId: 2
     body: {fileID: 1985576452176110918, guid: 5cd02f2595541bd499b9053078cfe146, type: 3}
     additionalBodyStat:
       maxHp: 150
@@ -74,3 +83,8 @@ MonoBehaviour:
       speed: -2
       criticalRate: 0
       criticalDamage: 0
+    bodyImg: {fileID: 5557466569650181421, guid: a9de3b96fa106fa43a0fe55cd1aabb17, type: 3}
+    dropItem: {fileID: 0}
+    bodyExplanation: 
+  minBodyChangeUnderstandingRate: 100
+  maxUnderstandingRate: 120
