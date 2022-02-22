@@ -7,8 +7,7 @@ public class PlayerBodySlap : PlayerAction
     private Stat playerStat = null;
     [SerializeField]
     private LayerMask canCrashLayer;
-    [SerializeField]
-    private LayerMask whatIsWall;
+
     [SerializeField]
     private Vector2 bodySlapMoveVec = Vector2.zero;
     private Vector2 lastPos = Vector2.zero; //BodySlap 후 도달할 위치
@@ -57,8 +56,8 @@ public class PlayerBodySlap : PlayerAction
             bodySlapMoveVec = playerInput.LastMoveVector;
 
             moveOriginPos = transform.position;
-            moveTargetPos  = moveOriginPos + bodySlapTime * bodySlapMoveSpeed * bodySlapMoveVec;
-            moveTargetPos = PosCantCrossWall(whatIsWall, moveOriginPos, moveTargetPos);
+            moveTargetPos = moveOriginPos + bodySlapTime * bodySlapMoveSpeed * bodySlapMoveVec;
+            moveTargetPos = PosCantCrossWall(canCrashLayer, moveOriginPos, moveTargetPos);
 
             EventManager.TriggerEvent("PlayerBodySlap", bodySlapTime);
 
@@ -144,7 +143,7 @@ public class PlayerBodySlap : PlayerAction
             // rigid.AddForce(Vector2.Lerp(Vector2.zero, -rigid.velocity / stopBodySlapOffset, stopBodySlapTimer / stopBodySlapTime));
 
             // childRigids.ForEach(x => x.AddForce(Vector2.Lerp(Vector2.zero, -x.velocity / stopBodySlapOffset, stopBodySlapTimer / stopBodySlapTime)));
-            
+
             if (stopBodySlapTimer <= 0f)
             {
                 StopBodySlap();
@@ -155,9 +154,18 @@ public class PlayerBodySlap : PlayerAction
     {
         RaycastHit2D hit = Physics2D.Raycast(startPos, (targetPos - startPos).normalized, Vector2.Distance(startPos, targetPos), wallLayer);
 
-        if(hit)
+        if (hit)
         {
-            return hit.point - (targetPos - startPos).normalized * (Vector2.Distance(startPos, targetPos) / 6f);
+            bodySlapTime = Vector2.Distance(moveOriginPos, moveTargetPos) / bodySlapMoveSpeed;
+
+            if (hit.collider.gameObject.CompareTag("Wall"))
+            {
+                return hit.point - (targetPos - startPos).normalized * (Vector2.Distance(startPos, targetPos) / 6f);
+            }
+            else
+            {
+                return hit.point;
+            }
         }
         else
         {
