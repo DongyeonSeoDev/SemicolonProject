@@ -26,7 +26,8 @@ public enum UIType
     HELP,
     CREDIT,
     MONSTER_COLLECTION,
-    MONSTERINFO_DETAIL
+    MONSTERINFO_DETAIL,
+    CHANGEABLEMOBLIST
 }
 
 public enum KeyAction

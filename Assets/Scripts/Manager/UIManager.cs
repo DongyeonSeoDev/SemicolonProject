@@ -68,7 +68,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     #endregion
 
     #region SelectionWindow
-    private Stack<GameObject> selWdStack = new Stack<GameObject>();
+    private Stack<SelectionWindow> selWdStack = new Stack<SelectionWindow>();
     public bool IsSelecting => selWdStack.Count != 0;
 
     public Pair<GameObject, Transform> selWindowPair;
@@ -450,7 +450,7 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     public void RequestSelectionWindow(string message, List<Action> actions, List<string> btnTexts) //선택창을 띄움
     {
-        selWdStack.ForEach(x => x.SetActive(false));
+        selWdStack.ForEach(x => x.Hide(true));
 
         for (int i = 0; i < actions.Count; i++)
             actions[i] += DefaultSelectionAction;
@@ -458,22 +458,22 @@ public partial class UIManager : MonoSingleton<UIManager>
         SelectionWindow selWd = PoolManager.GetItem<SelectionWindow>("SelWindow");
         selWd.transform.SetAsLastSibling();
         selWd.Set(message, actions, btnTexts);
-        selWdStack.Push(selWd.gameObject);
+        selWdStack.Push(selWd);
     }
 
-    public void DoChangeBody(string id)
+    public void DoChangeBody(string id)  //몸통 저장할지 창 띄움
     {
         EventManager.TriggerEvent("TimePause");
         RequestSelectionWindow(MonsterCollection.Instance.mobIdToSlot[id].bodyData.bodyName + "를(을) 변신 슬롯에 저장하시겠습니까?\n(거절하면 해당 몬스터의 흡수 확률은 다시 0%로 돌아갑니다.)",
             new List<Action>() {() => CancelMonsterSaveChance(id), () => SaveMonsterBody(id) }, new List<string>() {"거절", "저장"});
     }
 
-    public void DefaultSelectionAction()
+    public void DefaultSelectionAction() //시스템 확인창에서 각 버튼마다 눌렸을 때의 실행함수에 이 함수를 더해줌
     {
-        selWdStack.Pop().SetActive(false);
+        selWdStack.Pop().Inactive();
         if(IsSelecting)
         {
-            selWdStack.Peek().SetActive(true);
+            selWdStack.Peek().Hide(false);
         }
         else
         {
@@ -481,12 +481,12 @@ public partial class UIManager : MonoSingleton<UIManager>
         }
     }
 
-    public void CancelMonsterSaveChance(string id)
+    public void CancelMonsterSaveChance(string id)  //변신 가능한 몬스터 저장 거절
     {
         //흡수확률 0퍼로 하고 UI업뎃
     }
 
-    public void SaveMonsterBody(string id)
+    public void SaveMonsterBody(string id) //변신 가능한 몬스터 저장하기
     {
         //몹 저장
     }
