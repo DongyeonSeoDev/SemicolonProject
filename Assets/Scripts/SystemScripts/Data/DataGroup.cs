@@ -12,6 +12,22 @@ public class IngredientCount
 }
 
 [Serializable]
+public class MonsterInfo
+{
+    public string id;
+    public int understandingRate;
+    public int absorptionRate;
+
+    public MonsterInfo() { }
+    public MonsterInfo(string id, int understandingRate, int absorptionRate)
+    {
+        this.id = id;
+        this.understandingRate = understandingRate;
+        this.absorptionRate = absorptionRate;
+    }
+}
+
+[Serializable]
 public class Pair<T,U>
 {
     public T first;

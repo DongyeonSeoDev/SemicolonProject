@@ -7,7 +7,7 @@ using DG.Tweening;
 public class MonsterInfoSlot : MonoBehaviour
 {
     private string monsterBodyID;
-    private PlayerEnemyUnderstandingRateManager.ChangeBodyData bodyData;
+    public PlayerEnemyUnderstandingRateManager.ChangeBodyData bodyData { get; set; }
 
     [SerializeField] private Image monsterImg;
     [SerializeField] private Image understandingRateFill, understandingOverRateFill;

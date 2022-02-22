@@ -67,6 +67,14 @@ public partial class UIManager : MonoSingleton<UIManager>
     private float setDelayHPFillTime;
     #endregion
 
+    #region SelectionWindow
+    private Stack<GameObject> selWdStack = new Stack<GameObject>();
+    public bool IsSelecting => selWdStack.Count != 0;
+
+    public Pair<GameObject, Transform> selWindowPair;
+    public Pair<GameObject, Transform> selectionBtnPair;
+    #endregion
+
     public CanvasGroup normalPanelCanvas;
 
     //public Text statText;
@@ -108,6 +116,8 @@ public partial class UIManager : MonoSingleton<UIManager>
         PoolManager.CreatePool(acquisitionTxtPrefab, acquisitionTxtParent, 5, "AcquisitionMsg");
         PoolManager.CreatePool(noticeUIPair.first, noticeUIPair.second, 2, "NoticeMsg");
         PoolManager.CreatePool(interactionMarkPair.first, interactionMarkPair.second, 2, "InteractionMark");
+        PoolManager.CreatePool(selWindowPair.first, selWindowPair.second, 1, "SelWindow");
+        PoolManager.CreatePool(selectionBtnPair.first, selectionBtnPair.second, 2, "SelBtn");
     }
 
     private void Start()
@@ -436,6 +446,49 @@ public partial class UIManager : MonoSingleton<UIManager>
         Text t = PoolManager.GetItem<Text>("AcquisitionMsg");
         t.text = msg;
         Util.DelayFunc(() => t.gameObject.SetActive(false), 2f, this, true);
+    }
+
+    public void RequestSelectionWindow(string message, List<Action> actions, List<string> btnTexts) //선택창을 띄움
+    {
+        selWdStack.ForEach(x => x.SetActive(false));
+
+        for (int i = 0; i < actions.Count; i++)
+            actions[i] += DefaultSelectionAction;
+        
+        SelectionWindow selWd = PoolManager.GetItem<SelectionWindow>("SelWindow");
+        selWd.transform.SetAsLastSibling();
+        selWd.Set(message, actions, btnTexts);
+        selWdStack.Push(selWd.gameObject);
+    }
+
+    public void DoChangeBody(string id)
+    {
+        EventManager.TriggerEvent("TimePause");
+        RequestSelectionWindow(MonsterCollection.Instance.mobIdToSlot[id].bodyData.bodyName + "를(을) 변신 슬롯에 저장하시겠습니까?\n(거절하면 해당 몬스터의 흡수 확률은 다시 0%로 돌아갑니다.)",
+            new List<Action>() {() => CancelMonsterSaveChance(id), () => SaveMonsterBody(id) }, new List<string>() {"거절", "저장"});
+    }
+
+    public void DefaultSelectionAction()
+    {
+        selWdStack.Pop().SetActive(false);
+        if(IsSelecting)
+        {
+            selWdStack.Peek().SetActive(true);
+        }
+        else
+        {
+            EventManager.TriggerEvent("TimeResume");
+        }
+    }
+
+    public void CancelMonsterSaveChance(string id)
+    {
+        //흡수확률 0퍼로 하고 UI업뎃
+    }
+
+    public void SaveMonsterBody(string id)
+    {
+        //몹 저장
     }
 
     #region 인벤 버튼

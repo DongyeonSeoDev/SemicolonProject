@@ -8,7 +8,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 {
     private PlayerEnemyUnderstandingRateManager urmg;
 
-    private Dictionary<string, MonsterInfoSlot> mobIdToSlot = new Dictionary<string, MonsterInfoSlot>();
+    public Dictionary<string, MonsterInfoSlot> mobIdToSlot = new Dictionary<string, MonsterInfoSlot>();
 
     public Pair<GameObject, Transform> mobInfoUIPair;
 
