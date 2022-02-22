@@ -342,6 +342,9 @@ public partial class UIManager : MonoSingleton<UIManager>
             case UIType.CHEF_FOODS_PANEL:
                 EventManager.TriggerEvent("TimeResume");
                 break;
+            case UIType.MONSTERINFO_DETAIL:
+                MonsterCollection.Instance.CloseDetail();
+                break;
         }
     }
     #endregion

@@ -12,25 +12,72 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
     public Pair<GameObject, Transform> mobInfoUIPair;
 
+    #region Detail View
+    private string selectedDetailMobId;
+
+    public Triple<Image, Text, Text> monsterImgNameEx;
+    #endregion
+
     private void Start()
     {
         urmg = PlayerEnemyUnderstandingRateManager.Instance;
 
-        //mobInfoUIPair.second.GetComponent<GridLayoutGroup>().constraintCount = monsterCount / 3 + 1;
+        mobInfoUIPair.second.GetComponent<GridLayoutGroup>().constraintCount = urmg.ChangableBodyList.Count / 3 + 1;
 
-        //mobIdToSlot에 키와 값 넣고 mobInfoUIPair로 UI생성하고 값들 넣기
-        //저장된 값 있으면 불러옴
+        urmg.ChangableBodyList.ForEach(body =>
+        {
+            MonsterInfoSlot ui = Instantiate(mobInfoUIPair.first, mobInfoUIPair.second).GetComponent<MonsterInfoSlot>();
+            ui.Init(body);
+            mobIdToSlot.Add(body.bodyId.ToString(), ui);
+        });
+
+        Load();
         AllUpdateCollection();
     }
 
     public void UpdateCollection(string id)
-    {
-        //PlayerEnemyUnderstandingRateManager에서 playerEnemyUnderStandingRateDic와 changableBodyList읽을 수 있게 하는 변수 필요. ChangeBodyData에 몹 설명, 이미지, 이름 필요
-        //mobIdToSlot[id].UpdateRate((float)urmg.playerEnemyUnderStandingRateDic[id]/urmg.MinBodyChangeUnderstandingRate);
+    { 
+        mobIdToSlot[id].UpdateRate((float)urmg.PlayerEnemyUnderStandingRateDic[id]/urmg.MinBodyChangeUnderstandingRate);
     }
 
     public void AllUpdateCollection()
     {
+        foreach(string key in mobIdToSlot.Keys)
+            mobIdToSlot[key].UpdateRate((float)urmg.PlayerEnemyUnderStandingRateDic[key] / urmg.MinBodyChangeUnderstandingRate);
+    }
 
+    public void Detail(PlayerEnemyUnderstandingRateManager.ChangeBodyData data, string id)
+    {
+        if (selectedDetailMobId == id) return;
+
+        UIManager.Instance.OnUIInteractSetActive(UIType.MONSTERINFO_DETAIL, true);
+
+        monsterImgNameEx.first.sprite = data.bodyImg;
+        monsterImgNameEx.second.text = data.bodyName;
+        monsterImgNameEx.third.text = data.bodyExplanation;
+
+
+    }
+
+    public void CloseDetail()
+    {
+        selectedDetailMobId = "";
+    }
+    
+
+    public void Save()
+    {
+        foreach(string key in urmg.PlayerEnemyUnderStandingRateDic.Keys)
+        {
+            GameManager.Instance.savedData.userInfo.monstersAssimilationRate[key] = urmg.PlayerEnemyUnderStandingRateDic[key];       
+        }
+    }
+
+    public void Load()
+    {
+        foreach(string key in GameManager.Instance.savedData.userInfo.monstersAssimilationRate.keyList)
+        {
+            urmg.PlayerEnemyUnderStandingRateDic[key] = GameManager.Instance.savedData.userInfo.monstersAssimilationRate[key];
+        }
     }
 }

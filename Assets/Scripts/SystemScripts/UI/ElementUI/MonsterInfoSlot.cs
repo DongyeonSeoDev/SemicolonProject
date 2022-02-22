@@ -7,7 +7,7 @@ using DG.Tweening;
 public class MonsterInfoSlot : MonoBehaviour
 {
     private string monsterBodyID;
-    public string MonsterBodyID { get => monsterBodyID; }
+    private PlayerEnemyUnderstandingRateManager.ChangeBodyData bodyData;
 
     [SerializeField] private Image monsterImg;
     [SerializeField] private Image understandingRateFill, understandingOverRateFill;
@@ -17,16 +17,20 @@ public class MonsterInfoSlot : MonoBehaviour
 
     private UIScale btnUS;
 
+    private ItemSO dropItem;
+
     public void Init(PlayerEnemyUnderstandingRateManager.ChangeBodyData data)
     {
         monsterBodyID = data.bodyId.ToString();
+        bodyData = data;
 
-        //monsterImg.sprite = data.
+        monsterImg.sprite = data.bodyImg;
+        //dropItem = data.
 
         btnUS = transformationBtn.GetComponent<UIScale>();
-        btnUS.transitionEnable = false;
-        transformationBtn.interactable = false;
+
         transformationBtn.onClick.AddListener(() => SlimeGameManager.Instance.PlayerBodyChange(monsterBodyID));
+        monsterImg.GetComponent<Button>().onClick.AddListener(() => MonsterCollection.Instance.Detail(bodyData, monsterBodyID));
     }
 
     public void UpdateRate(float rate)
@@ -41,5 +45,13 @@ public class MonsterInfoSlot : MonoBehaviour
             understandingOverRateFill.fillAmount = 0;
             understandingRateFill.fillAmount = rate;
         }
+
+        Active(rate >= 1f);
+    }
+
+    private void Active(bool active)
+    {
+        btnUS.transitionEnable = active;
+        transformationBtn.interactable = active;
     }
 }
