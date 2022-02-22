@@ -41,5 +41,9 @@ public class PlayerMove : PlayerAction
 
             childRigids.ForEach(x => x.velocity = Vector2.Lerp(x.velocity, MoveVec * 0.8f, Time.fixedDeltaTime));
         }
+        else
+        {
+            lastMoveVec = Vector2.zero;
+        }
     }
 }

@@ -8,13 +8,18 @@ public class PlayerBodySlap : PlayerAction
     [SerializeField]
     private LayerMask canCrashLayer;
     [SerializeField]
+    private LayerMask whatIsWall;
+    [SerializeField]
     private Vector2 bodySlapMoveVec = Vector2.zero;
+    private Vector2 lastPos = Vector2.zero; //BodySlap 후 도달할 위치
+    private Vector2 moveOriginPos = Vector2.zero;
+    private Vector2 moveTargetPos = Vector2.zero;
 
     [Header("돌진하기 전 살짝 뒤로 뺄 때의 속도")]
     [SerializeField]
     private float moveBackSpeed = 8f;
     [SerializeField]
-    private float bodySlapMovePower = 2f;
+    private float bodySlapMoveSpeed = 2f;
 
     [SerializeField]
     private float bodySlapTime = 3f;
@@ -51,10 +56,16 @@ public class PlayerBodySlap : PlayerAction
 
             bodySlapMoveVec = playerInput.LastMoveVector;
 
-            rigid.velocity = -bodySlapMoveVec * moveBackSpeed;
-            childRigids.ForEach(x => x.velocity = -bodySlapMoveVec * moveBackSpeed);
+            moveOriginPos = transform.position;
+            moveTargetPos  = moveOriginPos + bodySlapTime * bodySlapMoveSpeed * bodySlapMoveVec;
+            moveTargetPos = PosCantCrossWall(whatIsWall, moveOriginPos, moveTargetPos);
 
-            bodySlapTimer = bodySlapTime;
+            EventManager.TriggerEvent("PlayerBodySlap", bodySlapTime);
+
+            // rigid.velocity = -bodySlapMoveVec * moveBackSpeed;
+            // childRigids.ForEach(x => x.velocity = -bodySlapMoveVec * moveBackSpeed);
+
+            bodySlapTimer = 0f;
         }
 
         CheckBodySlapTime();
@@ -62,11 +73,15 @@ public class PlayerBodySlap : PlayerAction
     }
     private void FixedUpdate()
     {
-        if (playerState.BodySlapping && bodySlapStart) // 움직임
+        if (playerState.BodySlapping && bodySlapStart && !bodyStopBodySlapTimerStart) // 움직임
         {
-            rigid.AddForce(bodySlapMoveVec * bodySlapMovePower);
+            // rigid.AddForce(bodySlapMoveVec * bodySlapMovePower);
 
-            childRigids.ForEach(x => x.AddForce(Vector2.Lerp(bodySlapMoveVec, bodySlapMoveVec * bodySlapMovePower, Time.fixedDeltaTime)));
+            // childRigids.ForEach(x => x.AddForce(Vector2.Lerp(bodySlapMoveVec, bodySlapMoveVec * bodySlapMovePower, Time.fixedDeltaTime)));
+
+            transform.position = Vector2.Lerp(moveOriginPos, moveTargetPos, bodySlapTimer / bodySlapTime);
+
+            Debug.Log(bodySlapTimer);
         }
     }
     private void OnDisable()
@@ -89,23 +104,31 @@ public class PlayerBodySlap : PlayerAction
             {
                 bodyStopBodySlapTimerStart = true;
                 stopBodySlapTimer = stopBodySlapTime;
+
             }
         }
+    }
+    private void StartBodySlap()
+    {
+
     }
     private void StopBodySlap()
     {
         stopBodySlapTimer = 0f;
+
+        // rigid.velocity = Vector2.zero;
+        // childRigids.ForEach(x => x.velocity = Vector2.zero);
 
         bodySlapStart = false;
         playerState.BodySlapping = false;
     }
     private void CheckBodySlapTime()
     {
-        if (bodySlapTimer > 0f)
+        if (bodySlapTimer < bodySlapTime)
         {
-            bodySlapTimer -= Time.deltaTime;
+            bodySlapTimer += Time.deltaTime;
 
-            if (bodySlapTimer <= 0f)
+            if (bodySlapTimer > bodySlapTime)
             {
                 stopBodySlapTimer = stopBodySlapTime;
                 bodyStopBodySlapTimerStart = false;
@@ -118,14 +141,27 @@ public class PlayerBodySlap : PlayerAction
         {
             stopBodySlapTimer -= Time.deltaTime;
 
-            rigid.AddForce(Vector2.Lerp(Vector2.zero, -rigid.velocity / stopBodySlapOffset, stopBodySlapTimer / stopBodySlapTime));
+            // rigid.AddForce(Vector2.Lerp(Vector2.zero, -rigid.velocity / stopBodySlapOffset, stopBodySlapTimer / stopBodySlapTime));
 
-            childRigids.ForEach(x => x.AddForce(Vector2.Lerp(Vector2.zero, -x.velocity / stopBodySlapOffset, stopBodySlapTimer / stopBodySlapTime)));
-
+            // childRigids.ForEach(x => x.AddForce(Vector2.Lerp(Vector2.zero, -x.velocity / stopBodySlapOffset, stopBodySlapTimer / stopBodySlapTime)));
+            
             if (stopBodySlapTimer <= 0f)
             {
                 StopBodySlap();
             }
+        }
+    }
+    private Vector2 PosCantCrossWall(LayerMask wallLayer, Vector2 startPos, Vector2 targetPos)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(startPos, (targetPos - startPos).normalized, Vector2.Distance(startPos, targetPos), wallLayer);
+
+        if(hit)
+        {
+            return hit.point - (targetPos - startPos).normalized * (Vector2.Distance(startPos, targetPos) / 6f);
+        }
+        else
+        {
+            return targetPos;
         }
     }
 }

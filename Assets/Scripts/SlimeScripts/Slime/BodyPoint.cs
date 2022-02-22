@@ -46,6 +46,7 @@ public class BodyPoint : MonoBehaviour
     private void OnEnable()
     {
         EventManager.StartListening("PlayerShoot", PlayerShoot);
+        EventManager.StartListening("PlayerBodySlap", PlayerBodySlap);
     }
     private void Update()
     {
@@ -68,10 +69,15 @@ public class BodyPoint : MonoBehaviour
     private void OnDisable()
     {
         EventManager.StopListening("PlayerShoot", PlayerShoot);
+        EventManager.StopListening("PlayerBodySlap", PlayerBodySlap);
     }
     private void PlayerShoot()
     {
         moveToMiddleTimer = moveToMiddleTime;
+    }
+    private void PlayerBodySlap(float bodySlapTime)
+    {
+        moveToMiddleTimer = bodySlapTime;
     }
     private void MoveToMiddleTimerCheck()
     {

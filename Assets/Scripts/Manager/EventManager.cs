@@ -5,6 +5,7 @@ using UnityEngine;
 public partial class EventManager
 {
     private static Dictionary<string, Action> eventDictionary = new Dictionary<string, Action>();
+    private static Dictionary<string, Action<float>> float_eventDictionary = new Dictionary<string, Action<float>>();
     private static Dictionary<string, Action<string, int>> str_int_eventDictionary = new Dictionary<string, Action<string, int>>();
     private static Dictionary<string, Action<Vector2>> vec2_EventDictionary = new Dictionary<string, Action<Vector2>>();
     private static Dictionary<string, Action<GameObject>> gmo_EventDictionary = new Dictionary<string, Action<GameObject>>();
@@ -22,6 +23,20 @@ public partial class EventManager
         else
         {
             eventDictionary.Add(eventName, listener);
+        }
+    }
+    public static void StartListening(string eventName, Action<float> listener)
+    {
+        Action<float> thisEvent;
+
+        if (float_eventDictionary.TryGetValue(eventName, out thisEvent)) // ���� �̸��� DIctionary�ִ��� üũ
+        {
+            thisEvent += listener;                   // ���� �̸����� �� ����
+            float_eventDictionary[eventName] = thisEvent;
+        }
+        else
+        {
+            float_eventDictionary.Add(eventName, listener);
         }
     }
     public static void StartListening(string eventName, Action<string, int> listener)
@@ -95,6 +110,20 @@ public partial class EventManager
             eventDictionary.Remove(eventName);
         }
     }
+    public static void StopListening(string eventName, Action<float> listener)
+    {
+        Action<float> thisEvent;
+
+        if (float_eventDictionary.TryGetValue(eventName, out thisEvent))
+        {
+            thisEvent -= listener;
+            float_eventDictionary[eventName] = thisEvent;
+        }
+        else
+        {
+            float_eventDictionary.Remove(eventName);
+        }
+    }
     public static void StopListening(string eventName, Action<string, int> listener)
     {
         Action<string, int> thisEvent;
@@ -158,6 +187,15 @@ public partial class EventManager
         if (eventDictionary.TryGetValue(eventName, out thisEvent))
         {
             thisEvent?.Invoke();
+        }
+    }
+    public static void TriggerEvent(string eventName, float float_param)
+    {
+        Action<float> thisEvent;
+
+        if (float_eventDictionary.TryGetValue(eventName, out thisEvent))
+        {
+            thisEvent?.Invoke(float_param);
         }
     }
     public static void TriggerEvent(string eventName, string str_param, int int_param)

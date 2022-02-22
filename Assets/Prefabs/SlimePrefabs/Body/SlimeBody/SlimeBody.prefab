@@ -364,6 +364,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c872b1212dc70bb469dc62210b26664a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  breakSpeed: 2
 --- !u!114 &1014413151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -379,11 +380,14 @@ MonoBehaviour:
   canCrashLayer:
     serializedVersion: 2
     m_Bits: 192
+  whatIsWall:
+    serializedVersion: 2
+    m_Bits: 64
   bodySlapMoveVec: {x: 0, y: 0}
   moveBackSpeed: 5
-  bodySlapMovePower: 2
-  bodySlapTime: 3
-  stopBodySlapTime: 2
+  bodySlapMoveSpeed: 50
+  bodySlapTime: 0.15
+  stopBodySlapTime: 0.2
   stopBodySlapOffset: 3
 --- !u!114 &4791505076498265380
 MonoBehaviour:

@@ -80,7 +80,11 @@ public class PlayerInput : MonoBehaviour
 
             moveVector = moveVector.normalized;
 
-            if (moveVector != Vector2.zero)
+            if(playerState.BodySlapping)
+            {
+                moveVector = Vector2.zero;
+            }
+            else if (moveVector != Vector2.zero)
             {
                 lastMoveVector = moveVector;
             }
