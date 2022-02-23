@@ -9,8 +9,8 @@ using System;
 public partial class UIManager : MonoSingleton<UIManager>
 {
     #region 게임 UI 관리 변수들
-    public List<GameUI> gameUIList = new List<GameUI>();
-    [SerializeField] private List<GameUI> activeUIList = new List<GameUI>();
+    public List<GameUI> gameUIList = new List<GameUI>(); //UIType 열겨형 순서에 맞게 UI 옵젝을 인스펙터에 집어넣어야 함
+    [SerializeField] private List<GameUI> activeUIList = new List<GameUI>();  //활성화 되어있는 UI들 확인용으로 [SerializeField]
 
     public Queue<bool> activeUIQueue = new Queue<bool>(); //어떤 UI가 켜지거나 꺼지는 애니메이션(트위닝) 진행 중에 다른 UI (비)활성화 막기 위한 변수
     public Dictionary<UIType, bool> uiTweeningDic = new Dictionary<UIType, bool>(); //해당 UI가 트위닝 중인지(켜지거나 꺼지는 중인지) 확인하기 위함
@@ -31,8 +31,8 @@ public partial class UIManager : MonoSingleton<UIManager>
     #endregion
 
     #region Inventory Item Detail View
-    private int selectedItemId = -1;
-    private ItemSlot selectedItemSlot;
+    private int selectedItemId = -1; //클릭한 아이템 슬롯의 아이템 아이디
+    private ItemSlot selectedItemSlot; //클릭한 아이템 슬롯
 
     [Space(20)]
     public Image itemImg, itemTypeImg;
@@ -43,11 +43,13 @@ public partial class UIManager : MonoSingleton<UIManager>
     #endregion
 
     #region CombinationFood
+    [Space(10)]
     public Pair<Image, Text> combInfoUI;
     public ParticleSystem combEff;
     #endregion
 
     #region Item Remove
+    [Space(10)]
     public Pair<Image, Text> removeItemInfo;
     public InputField itemRemoveCntInput;
     #endregion
@@ -57,25 +59,35 @@ public partial class UIManager : MonoSingleton<UIManager>
     public GameObject systemMsgPrefab, acquisitionTxtPrefab;
     public Transform systemMsgParent, acquisitionTxtParent;
 
-    public GameObject npcNameUIPrefab;
-    public Transform npcUICvsTrm;
+    public GameObject npcNameUIPrefab; //NPC Name Text UI
+    public Transform npcUICvsTrm;  //
     #endregion
 
     #region HP UI 관련
-    public Triple<Image, TextMeshProUGUI, Image> playerHPInfo;
-    private bool isStartDelayHPFillTimer;
-    private float setDelayHPFillTime;
+    [Space(10)]
+    public Triple<Image, TextMeshProUGUI, Image> playerHPInfo;  //HPBar Image, HP Text (TMP), Green HPBar (Delay)
+    private bool isStartDelayHPFillTimer; // green HP bar decrease soon
+    private float setDelayHPFillTime; //time to reduce green hp bar
     #endregion
 
     #region SelectionWindow
     private Stack<SelectionWindow> selWdStack = new Stack<SelectionWindow>();
     public bool IsSelecting => selWdStack.Count != 0;
 
+    [Space(10)]
     public Pair<GameObject, Transform> selWindowPair;
     public Pair<GameObject, Transform> selectionBtnPair;
     #endregion
 
-    public CanvasGroup normalPanelCanvas;
+    #region CanvasGroup
+    [Space(10)]
+    public CanvasGroup normalPanelCanvasg;
+    public CanvasGroup priorNormalPanelCvsg;
+    public CanvasGroup settingCvsg;
+    public CanvasGroup npcUICvsg;
+    public CanvasGroup ordinaryCvsg;
+    public CanvasGroup msgCvsg;
+    #endregion
 
     //public Text statText;
     public Text[] statTexts;
@@ -110,7 +122,7 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     private void CreatePool()
     {
-        //UI관련 풀 생성
+        //UI관련 풀 생성   Pool Create (related UI)
         PoolManager.CreatePool(systemMsgPrefab, systemMsgParent, 5, "SystemMsg");
         PoolManager.CreatePool(npcNameUIPrefab, npcUICvsTrm, 2, "NPCNameUI");
         PoolManager.CreatePool(acquisitionTxtPrefab, acquisitionTxtParent, 5, "AcquisitionMsg");
@@ -133,6 +145,7 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     private void DefineAction()
     {
+        //음식을 만듦 (만든 음식 추가)   made food.( add item)
         Global.AddAction(Global.MakeFood, item =>
         {
             OnUIInteract(UIType.COMBINATION, true); //음식 제작 성공 완료 패널 띄움
@@ -144,20 +157,23 @@ public partial class UIManager : MonoSingleton<UIManager>
             combInfoUI.second.text = string.Format("{0} <color=blue>{1}</color>개", data.itemName, info.count);
 
             RequestLeftBottomMsg(string.Format("아이템을 획득하였습니다. ({0} +{1})", data.itemName, info.count));
+
+            OnUIInteractSetActive(UIType.ITEM_DETAIL, false, true); //음식 제작 성공창이 띄워졌을 때 템 자세히 보기창 열려있으면 꺼줌
         });
 
+        //Pickup item
         Global.AddMonoAction(Global.AcquisitionItem, i =>
         {
             Item item = i as Item;
             RequestLeftBottomMsg(string.Format("아이템을 획득하였습니다. ({0} +{1})", item.itemData.itemName, item.DroppedCnt));
 
         });
-
+        //Pickup plant (채집 성공)
         Global.AddMonoAction(Global.PickupPlant, item =>
         {
             RequestLeftBottomMsg(string.Format("아이템을 획득하였습니다. ({0} +{1})", ((Pick)item).itemData.itemName, 1));
         });
-
+        //아이템 버림  
         Global.AddAction(Global.JunkItem, JunkItem);
 
         EventManager.StartListening("PlayerDead", () => OnUIInteractSetActive(UIType.DEATH, true, true));
@@ -216,6 +232,8 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     public void OnUIInteract(UIType type, bool ignoreQueue = false) //UI열거나 닫음 (현재 액티브 상태의 반대로 해줌)
     {
+        if (!CheckExistUI((int)type)) return;
+
         if (activeUIQueue.Count > 0 && !ignoreQueue) return;
         if (ExceptionHandler(type)) return;
 
@@ -236,11 +254,10 @@ public partial class UIManager : MonoSingleton<UIManager>
     {
         GameUI ui = gameUIList[(int)type];
         if (ui.gameObject.activeSelf == isActive) return;
+        if (uiTweeningDic[type]) return;
 
         if (activeUIQueue.Count > 0 && !ignoreQueue) return;
         if (ExceptionHandler(type)) return;
-
-        if (uiTweeningDic[type]) return;
 
         activeUIQueue.Enqueue(false);
 
@@ -262,7 +279,7 @@ public partial class UIManager : MonoSingleton<UIManager>
                     if (gameMenuList[i].gameObject.activeSelf)     //설정 속의 메뉴 UI가 켜져있는 중에는 설정창 못 끄게
                         return true;
                 }
-                normalPanelCanvas.DOFade(!gameUIList[(int)UIType.SETTING].gameObject.activeSelf ? 0:1, 0.3f);
+                normalPanelCanvasg.DOFade(!gameUIList[(int)UIType.SETTING].gameObject.activeSelf ? 0:1, 0.3f);
                 break;
             case UIType.MONSTERINFO_DETAIL:
                 if (gameUIList[(int)UIType.MONSTERINFO_DETAIL_ITEM].gameObject.activeSelf || gameUIList[(int)UIType.MONSTERINFO_DETAIL_STAT].gameObject.activeSelf)
@@ -366,6 +383,14 @@ public partial class UIManager : MonoSingleton<UIManager>
                 break;
         }
     }
+
+    private bool CheckExistUI(int num)
+    {
+        if (gameUIList.Count > num)
+            return true;
+        RequestSystemMsg("개발중인 UI이거나 버그로 인해서 UI가 제대로 안나옴");
+        return false;
+    }
     #endregion
 
     #region UI Position
@@ -412,7 +437,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     }
     #endregion
 
-
+    #region Inventory
     public void DetailItemSlot(ItemSlot slot)  //인벤토리에서 아이템 슬롯 클릭
     {
         int itemID = slot.itemInfo.id;
@@ -440,7 +465,9 @@ public partial class UIManager : MonoSingleton<UIManager>
         itemUseBtn.gameObject.SetActive(data.itemType != ItemType.ETC);
         if (data.itemType == ItemType.ETC && ((Ingredient)data).isUseable) itemUseBtn.gameObject.SetActive(true);
     }
+    #endregion
 
+    #region Message
     public void RequestSystemMsg(string msg, int fontSize = 35, float existTime = 1.5f) //화면 중앙 상단에 뜨는 시스템 메시지
     {
         PoolManager.GetItem("SystemMsg").GetComponent<SystemMsg>().Set(msg, fontSize, existTime, Util.Change255To1Color(221, 0, 0, 255));
@@ -469,11 +496,12 @@ public partial class UIManager : MonoSingleton<UIManager>
         selWd.Set(message, actions, btnTexts);
         selWdStack.Push(selWd);
     }
+    #endregion
 
     public void DoChangeBody(string id)  //몸통 저장할지 창 띄움
     {
         EventManager.TriggerEvent("TimePause");
-        RequestSelectionWindow(MonsterCollection.Instance.mobIdToSlot[id].bodyData.bodyName + "를(을) 변신 슬롯에 저장하시겠습니까?\n(거절하면 해당 몬스터의 흡수 확률은 다시 0%로 돌아갑니다.)",
+        RequestSelectionWindow(MonsterCollection.Instance.mobIdToSlot[id].bodyData.bodyName + "를(을) 변신 슬롯에 저장하시겠습니까?\n(거절하면 해당 몬스터의 흡수 확률은 0%로 돌아갑니다.)",
             new List<Action>() {() => CancelMonsterSaveChance(id), () => SaveMonsterBody(id) }, new List<string>() {"거절", "저장"});
     }
 
@@ -497,10 +525,10 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     public void SaveMonsterBody(string id) //변신 가능한 몬스터 저장하기
     {
-        //몹 저장
+        //몹 저장후 UI업뎃
     }
 
-    #region 인벤 버튼
+    #region 인벤 버튼 (inventory button)
     public void OnClickRemoveItemBtn()  //아이템 버리기 버튼
     {
         removeItemInfo.first.sprite = selectedItemSlot.itemImg.sprite;
@@ -532,12 +560,11 @@ public partial class UIManager : MonoSingleton<UIManager>
     {
         Inventory.Instance.RemoveItem(selectedItemId, (int)rmCount);
 
-        OnUIInteract(UIType.REMOVE_ITEM);
+        OnUIInteract(UIType.REMOVE_ITEM);  //아이템 버리기를 했다는 건 이 패널이 켜져있었다는 것이다 (그러므로 다시 꺼준다)
 
         if (selectedItemSlot.itemInfo == null)
-            OnUIInteract(UIType.ITEM_DETAIL, true);
-        if (gameUIList[(int)UIType.PRODUCTION_PANEL].gameObject.activeSelf)
-            OnUIInteract(UIType.PRODUCTION_PANEL, true);
+            OnUIInteract(UIType.ITEM_DETAIL, true); //버린 아이템 슬롯에 더 이상 아이템 없으면 인벤 아이템 자세히 보기창은 꺼줌
+        OnUIInteractSetActive(UIType.PRODUCTION_PANEL, false, true);  //요리 제작창이 켜져있으면 꺼줌
     }
 
     public void OnClickItemUseBtn()
@@ -558,8 +585,10 @@ public partial class UIManager : MonoSingleton<UIManager>
         statTexts[0].text = string.Concat(Mathf.Clamp(sgm.Player.CurrentHp, 0, stat.MaxHp), '/', stat.MaxHp);
         statTexts[1].text = stat.Damage.ToString();
         statTexts[2].text = stat.Defense.ToString();
-        statTexts[3].text = Mathf.RoundToInt(Mathf.Abs(stat.Speed)).ToString();
-
+        statTexts[3].text = Mathf.RoundToInt(Mathf.Abs(stat.Speed)).ToString(); //스피드가 몇인지 소수로 나오면 어색할 것 같아서 일단은 정수로 나오게 함.
+        statTexts[4].text = string.Concat(stat.CriticalRate, '%');
+        statTexts[5].text = stat.CriticalDamage.ToString();
+        statTexts[6].text = stat.Intellect.ToString();
 
         //statText.text = $"HP\t\t{currentHP}/{stat.hp}\n\n공격력\t\t{stat.damage}\n\n방어력\t\t{stat.defense}\n\n이동속도\t\t{stat.speed}";
     }

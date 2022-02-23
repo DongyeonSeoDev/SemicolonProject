@@ -9,14 +9,14 @@ public class GameUI : MonoBehaviour
     private Vector3 originPos;
 
     [SerializeField] private CanvasGroup cvsg;
-
     public UIType _UItype;
-
     public GameUI childGameUI;
+    public Pair<bool, Transform> setLastSibling; //UI가 켜지면 제일 아래로 정렬할지, 옮길 Transform
+
 
     private GameUIFields gameUIFields;
-
     public GameUIFields UIFields { get { return gameUIFields; } }
+
 
     public void ResetPos() => rectTrm.anchoredPosition = originPos;
 
@@ -37,6 +37,10 @@ public class GameUI : MonoBehaviour
     {
         gameObject.SetActive(true);
         UIManager.Instance.uiTweeningDic[_UItype] = true;
+        if(setLastSibling.first)
+        {
+            setLastSibling.second.SetAsLastSibling();
+        }
         switch (_UItype)
         {
             case UIType.CHEF_FOODS_PANEL:
