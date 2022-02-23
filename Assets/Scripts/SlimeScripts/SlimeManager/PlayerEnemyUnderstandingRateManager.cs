@@ -36,6 +36,18 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
     {
         get { return changableBodyDict; }
     }
+
+    private Dictionary<string, float> mountingPercentageDict = new Dictionary<string, float>();
+    public Dictionary<string, float> MountingPercentageDict
+    {
+        get { return mountingPercentageDict; }
+    }
+
+    [SerializeField]
+    private int canMountObjNum = 2;
+
+    private List<string> mountedObjList = new List<string>(); // 장착한 오브젝트들의 아이디관련 List
+
     [Header("변신을 위한 최소의 이해도")]
     [SerializeField]
     private int minBodyChangeUnderstandingRate = 100;
@@ -72,6 +84,29 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
     {
         EventManager.StopListening("PlayerDead", ResetUnderstandingRate);
     }
+    public void SetMountingPercentageDict(string key, float value) // 적을 처치했을 때도 올라야함
+    {
+        if (mountingPercentageDict.ContainsKey(key))
+        {
+            mountingPercentageDict[key] = value;
+        }
+        else
+        {
+            mountingPercentageDict.Add(key, value);
+        }
+    }
+    public float GetMountingPercentageDict(string key)
+    {
+        if (mountingPercentageDict.ContainsKey(key))
+        {
+            return mountingPercentageDict[key];
+        }
+        else
+        {
+            Debug.LogWarning("The key '" + key + "' is not Contain.");
+            return 0f;
+        }
+    }
     public void SetUnderstandingRate(string key, int value)
     {
         if (playerEnemyUnderStandingRateDic.ContainsKey(key))
@@ -102,5 +137,24 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
         {
             playerEnemyUnderStandingRateDic[changableBodyList[i].bodyId.ToString()] = 0;
         }
+    }
+    public bool CheckCanMountObj()
+    {
+        return mountedObjList.Count < canMountObjNum;
+    }
+    public void SetMountObj(string objId)
+    {
+        if(CheckCanMountObj())
+        {
+            mountedObjList.Add(objId);
+        }
+    }
+    public void UnSetMountObj(string objId)
+    {
+        mountedObjList.Remove(objId);
+    }
+    public bool CheckMountObjIdContain(string objId)
+    {
+        return mountedObjList.Contains(objId);
     }
 }
