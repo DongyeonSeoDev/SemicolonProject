@@ -25,7 +25,7 @@ public class MonsterInfoSlot : MonoBehaviour
         bodyData = data;
 
         monsterImg.sprite = data.bodyImg;
-        //dropItem = data.
+        dropItem = data.dropItem;
 
         btnUS = transformationBtn.GetComponent<UIScale>();
 

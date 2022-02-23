@@ -264,7 +264,10 @@ public partial class UIManager : MonoSingleton<UIManager>
                 }
                 normalPanelCanvas.DOFade(!gameUIList[(int)UIType.SETTING].gameObject.activeSelf ? 0:1, 0.3f);
                 break;
-                
+            case UIType.MONSTERINFO_DETAIL:
+                if (gameUIList[(int)UIType.MONSTERINFO_DETAIL_ITEM].gameObject.activeSelf || gameUIList[(int)UIType.MONSTERINFO_DETAIL_STAT].gameObject.activeSelf)
+                    return true;
+                break;
         }
         return false;
     }
@@ -322,6 +325,12 @@ public partial class UIManager : MonoSingleton<UIManager>
                 break;
             case UIType.SETTING:
                 EventManager.TriggerEvent("TimePause");
+                break;
+            case UIType.MONSTERINFO_DETAIL_STAT:
+                MonsterCollection.Instance.DetailStat();
+                break;
+            case UIType.MONSTERINFO_DETAIL_ITEM:
+                MonsterCollection.Instance.DetailItem();
                 break;
         }
     }
