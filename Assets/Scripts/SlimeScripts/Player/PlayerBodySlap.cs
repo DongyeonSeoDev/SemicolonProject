@@ -21,6 +21,9 @@ public class PlayerBodySlap : PlayerAction
     private float bodySlapMoveSpeed = 2f;
 
     [SerializeField]
+    private float bodySlapDelay = 5f;
+    private float bodySlapDelayTimer = 0f;
+    [SerializeField]
     private float bodySlapTime = 3f;
     private float currentBodySlapTime = 0f;
     private float bodySlapTimer = 0f;
@@ -34,6 +37,7 @@ public class PlayerBodySlap : PlayerAction
     [SerializeField]
     private float stopBodySlapOffset = 3f;
 
+    private bool canBodySlap = true;
     private bool bodySlapStart = false;
     private bool bodyStopBodySlapTimerStart = false;
 
@@ -41,7 +45,10 @@ public class PlayerBodySlap : PlayerAction
     {
         base.Awake();
         playerStat = SlimeGameManager.Instance.Player.PlayerStat;
-
+    }
+    private void Start() 
+    {
+        bodySlapTimer = bodySlapTime;
     }
     private void OnEnable()
     {
@@ -50,7 +57,7 @@ public class PlayerBodySlap : PlayerAction
     }
     void Update()
     {
-        if (playerState.BodySlapping && !bodySlapStart)
+        if (playerState.BodySlapping && !bodySlapStart && canBodySlap)
         {
             bodySlapStart = true;
 
@@ -66,12 +73,15 @@ public class PlayerBodySlap : PlayerAction
 
             EventManager.TriggerEvent("PlayerBodySlap", bodySlapTime);
 
-            // rigid.velocity = -bodySlapMoveVec * moveBackSpeed;
-            // childRigids.ForEach(x => x.velocity = -bodySlapMoveVec * moveBackSpeed);
-
             bodySlapTimer = 0f;
+            bodySlapDelayTimer = bodySlapDelay;
+        }
+        else if(!canBodySlap)
+        {
+            playerState.BodySlapping = false;
         }
 
+        CheckBodySlapDelay();
         CheckBodySlapTime();
         CheckStopBodySlapTime();
     }
@@ -79,10 +89,6 @@ public class PlayerBodySlap : PlayerAction
     {
         if (playerState.BodySlapping && bodySlapStart && !bodyStopBodySlapTimerStart) // 움직임
         {
-            // rigid.AddForce(bodySlapMoveVec * bodySlapMovePower);
-
-            // childRigids.ForEach(x => x.AddForce(Vector2.Lerp(bodySlapMoveVec, bodySlapMoveVec * bodySlapMovePower, Time.fixedDeltaTime)));
-
             transform.position = Vector2.Lerp(moveOriginPos, moveTargetPos, bodySlapTimer / currentBodySlapTime);
 
             Debug.Log(bodySlapTimer);
@@ -120,10 +126,9 @@ public class PlayerBodySlap : PlayerAction
     private void StopBodySlap()
     {
         stopBodySlapTimer = 0f;
+        bodySlapDelayTimer = bodySlapDelay;
 
-        // rigid.velocity = Vector2.zero;
-        // childRigids.ForEach(x => x.velocity = Vector2.zero);
-
+        canBodySlap = false;
         bodySlapStart = false;
         playerState.BodySlapping = false;
     }
@@ -133,10 +138,22 @@ public class PlayerBodySlap : PlayerAction
         {
             bodySlapTimer += Time.deltaTime;
 
-            if (bodySlapTimer > bodySlapTime)
+            if (bodySlapTimer >= bodySlapTime)
             {
                 stopBodySlapTimer = stopBodySlapTime;
                 bodyStopBodySlapTimerStart = false;
+            }
+        }
+    }
+    private void CheckBodySlapDelay()
+    {
+        if(bodySlapDelayTimer > 0f)
+        {
+            bodySlapDelayTimer -= Time.deltaTime;
+
+            if(bodySlapDelayTimer <= 0f)
+            {
+                canBodySlap = true;
             }
         }
     }
@@ -164,7 +181,7 @@ public class PlayerBodySlap : PlayerAction
         {
             if (hit.collider.gameObject.CompareTag("Wall"))
             {
-                return hit.point - (targetPos - startPos).normalized * (Vector2.Distance(startPos, targetPos) / 6f);
+                return hit.point - (targetPos - startPos).normalized * (Vector2.Distance(startPos, targetPos) / 10f);
             }
             else
             {
