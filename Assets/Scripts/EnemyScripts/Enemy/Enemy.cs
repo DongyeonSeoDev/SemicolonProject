@@ -114,6 +114,8 @@ namespace Enemy
             gameObject.SetActive(false);
 
             EnemyManager.Instance.EnemyDestroy();
+
+            EventManager.TriggerEvent("EnemyDead", enemyData.enemyType.ToString());
         }
 
         public string GetEnemyId()
