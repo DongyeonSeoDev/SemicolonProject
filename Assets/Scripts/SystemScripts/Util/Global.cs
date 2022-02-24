@@ -9,6 +9,7 @@ public static partial class Global
     public const string PickupPlant = "PickupPlant";
 
     public static Vector2 noticeMsgOriginRectPos = new Vector2(0, -229.61f);
+    public static Vector3 damageTextMove = new Vector3(0, 2.5f, 0);
     
     private static string[] keyActionNameArr;
 

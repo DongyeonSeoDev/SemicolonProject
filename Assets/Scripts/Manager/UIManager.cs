@@ -84,7 +84,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     public CanvasGroup normalPanelCanvasg;
     public CanvasGroup priorNormalPanelCvsg;
     public CanvasGroup settingCvsg;
-    public CanvasGroup npcUICvsg;
+    public CanvasGroup worldUICvsg;
     public CanvasGroup ordinaryCvsg;
     public CanvasGroup msgCvsg;
     #endregion

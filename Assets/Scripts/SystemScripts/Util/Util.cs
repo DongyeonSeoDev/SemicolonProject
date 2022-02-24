@@ -6,6 +6,8 @@ public static partial class Util
 {
     public static Vector3 ScreenToWorldPos(Vector3 screenPos) => MainCam.ScreenToWorldPoint(screenPos);
 
+    public static Vector3 ScreenToWorldPosForScreenSpace(Vector3 point) => RectTransformUtility.WorldToScreenPoint(MainCam, point);  //camera¿œ∂ß
+
     public static Vector3 MousePositionForScreenSpace
     {
         get
