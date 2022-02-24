@@ -105,14 +105,14 @@ public class PlayerDrain : PlayerAction
 
                     if (PlayerEnemyUnderstandingRateManager.Instance.CheckMountObjIdContain(objId))
                     {
-                        if (CheckMountingEnemy(objId))
-                        {
-                            UpUnderStandingRate(objId, item.Item2);
-                        }
+                        PlayerEnemyUnderstandingRateManager.Instance.UpUnderStandingRate(objId, item.Item2);
                     }
                     else
                     {
-                        UpUnderStandingRate(objId, item.Item2);
+                        if (PlayerEnemyUnderstandingRateManager.Instance.CheckMountingEnemy(objId))
+                        {
+                            PlayerEnemyUnderstandingRateManager.Instance.UpUnderStandingRate(objId, item.Item2);
+                        }
                     }
 
                     removeList.Add(item);
@@ -138,43 +138,6 @@ public class PlayerDrain : PlayerAction
                 moveTimerDic.Remove(x.Item1);
                 drainList.Remove(x);
             });
-        }
-    }
-    private bool CheckMountingEnemy(string objId)
-    {
-        if (!PlayerEnemyUnderstandingRateManager.Instance.MountingPercentageDict.ContainsKey(objId))
-        {
-            return false;
-        }
-
-        float value = Random.Range(0f, 100f);
-
-        if (value <= PlayerEnemyUnderstandingRateManager.Instance.GetMountingPercentageDict(objId)) // 확률 체크
-        {
-            if (!PlayerEnemyUnderstandingRateManager.Instance.CheckCanMountObj())
-            {
-                return false;
-            }
-            // 장착을 물어봄
-            // 장착을 하면 true를, 장착을 하지 않으면 flase를 return함, 지금은 그냥 true를 return
-
-            PlayerEnemyUnderstandingRateManager.Instance.SetMountObj(objId);
-
-            return true;
-        }
-        else
-        {
-            return false;
-        }
-    }
-    private void UpUnderStandingRate(string objId, int upValue) // 이해도(동화율)을 올려줌
-    {
-        PlayerEnemyUnderstandingRateManager.Instance.SetUnderstandingRate(objId,
-            PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(objId) + upValue);
-
-        if (PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(objId) > PlayerEnemyUnderstandingRateManager.Instance.MaxUnderstandingRate) // 최대치 처리
-        {
-            PlayerEnemyUnderstandingRateManager.Instance.SetUnderstandingRate(objId, PlayerEnemyUnderstandingRateManager.Instance.MaxUnderstandingRate);
         }
     }
     private void OnDisable()

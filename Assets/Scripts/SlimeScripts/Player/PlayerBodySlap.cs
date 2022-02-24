@@ -23,6 +23,10 @@ public class PlayerBodySlap : PlayerAction
     [SerializeField]
     private float bodySlapDelay = 5f;
     private float bodySlapDelayTimer = 0f;
+    public float BodySlapDelayTimer
+    {
+        get { return bodySlapDelayTimer; }
+    }
     [SerializeField]
     private float bodySlapTime = 3f;
     private float currentBodySlapTime = 0f;
@@ -46,7 +50,7 @@ public class PlayerBodySlap : PlayerAction
         base.Awake();
         playerStat = SlimeGameManager.Instance.Player.PlayerStat;
     }
-    private void Start() 
+    private void Start()
     {
         bodySlapTimer = bodySlapTime;
     }
@@ -76,7 +80,7 @@ public class PlayerBodySlap : PlayerAction
             bodySlapTimer = 0f;
             bodySlapDelayTimer = bodySlapDelay;
         }
-        else if(!canBodySlap)
+        else if (!canBodySlap)
         {
             playerState.BodySlapping = false;
         }
@@ -147,11 +151,11 @@ public class PlayerBodySlap : PlayerAction
     }
     private void CheckBodySlapDelay()
     {
-        if(bodySlapDelayTimer > 0f)
+        if (bodySlapDelayTimer > 0f)
         {
             bodySlapDelayTimer -= Time.deltaTime;
 
-            if(bodySlapDelayTimer <= 0f)
+            if (bodySlapDelayTimer <= 0f)
             {
                 canBodySlap = true;
             }
