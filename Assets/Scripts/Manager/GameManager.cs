@@ -34,6 +34,8 @@ public partial class GameManager : MonoSingleton<GameManager>
         Cursor.lockState = CursorLockMode.Confined;
         filePath = saveFileName_1.PersistentDataPath();
         saveData = new SaveData();
+        KeyCodeToString.Init();
+
         Load();
         Init();
     }

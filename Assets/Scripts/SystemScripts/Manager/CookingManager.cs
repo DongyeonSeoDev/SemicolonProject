@@ -73,6 +73,7 @@ public class CookingManager : MonoSingleton<CookingManager>
         countMinusBtn.onClick.AddListener(() => ChangeMakeFoodCount(false));
 
         Global.AddMonoAction(Global.TalkWithChef, x => ShowFoodList((Chef)x));
+
         Global.AddAction(Global.MakeFood, item =>
         {
             selectedFoodIngrImgs.ForEach(x => 
@@ -82,11 +83,12 @@ public class CookingManager : MonoSingleton<CookingManager>
             MakeFoodInfoUIReset();
             CheckCannotMakeFoods();
             SortMakeFoods();
-            UIManager.Instance.OnUIInteract(UIType.PRODUCTION_PANEL);
+            UIManager.Instance.OnUIInteract(UIType.PRODUCTION_PANEL);  //음식을 만들었다는건 음식 만들기 버튼을 눌렀다는 것이고 음식 제작 패널이 켜져있었다는 것이므로 이것을 꺼준다.
         });
+
         Global.AddAction(Global.JunkItem, x =>
         {
-            if (UIManager.Instance.gameUIList[(int)UIType.CHEF_FOODS_PANEL].gameObject.activeSelf)
+            if (UIManager.Instance.gameUIList[(int)UIType.CHEF_FOODS_PANEL].gameObject.activeSelf) //요리사 대화 패널(만들 음식 리스트 패널)이 켜져있으면 재필터링&재정렬한다
             {
                 Util.DelayFunc(() =>
                 {

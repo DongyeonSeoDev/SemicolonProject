@@ -12,13 +12,13 @@ public class KeyInfoUI : MonoBehaviour
     public void Set(KeyAction keyAction, KeyCode keyCode, System.Action action)
     {
         keyActionNameTxt.text = Global.ToKeyActionName(keyAction);
-        keyCodeTxt.text = keyCode.ToString();
+        keyCodeTxt.text = KeyCodeToString.GetString(keyCode);
         btn.onClick.AddListener(()=>action());
         ID = (int)keyAction;
     }
     public void Set(KeyCode keyCode)
     {
-        keyCodeTxt.text = keyCode.ToString();
+        keyCodeTxt.text = KeyCodeToString.GetString(keyCode);
     }
 
     public void SetFixedKey(KeyAction keyAction, string keyCode)
