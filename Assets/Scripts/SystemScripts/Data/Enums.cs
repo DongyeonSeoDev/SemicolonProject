@@ -26,7 +26,10 @@ public enum UIType
     HELP,
     CREDIT,
     MONSTER_COLLECTION,
-    MONSTERINFO_DETAIL
+    MONSTERINFO_DETAIL,
+    MONSTERINFO_DETAIL_STAT,
+    MONSTERINFO_DETAIL_ITEM,
+    CHANGEABLEMOBLIST
 }
 
 public enum KeyAction
@@ -46,7 +49,11 @@ public enum KeyAction
     DRAIN,
     MANASTONE,
     SETTING,
-    NULL
+    CHANGE_SLIME,
+    CHANGE_MONSTER1,
+    CHANGE_MONSTER2,
+
+    NULL  //아무것도 없는 값
 }
 
 public enum EventKeyCheck

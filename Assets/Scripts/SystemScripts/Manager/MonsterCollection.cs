@@ -8,7 +8,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 {
     private PlayerEnemyUnderstandingRateManager urmg;
 
-    private Dictionary<string, MonsterInfoSlot> mobIdToSlot = new Dictionary<string, MonsterInfoSlot>();
+    public Dictionary<string, MonsterInfoSlot> mobIdToSlot = new Dictionary<string, MonsterInfoSlot>();
 
     public Pair<GameObject, Transform> mobInfoUIPair;
 
@@ -16,6 +16,11 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     private string selectedDetailMobId;
 
     public Triple<Image, Text, Text> monsterImgNameEx;
+
+    public Image mobDropItemImg;
+
+    //몹 드랍템 정보 확인창
+    public Triple<Image, Text, Text> mobItemImgNameEx;
     #endregion
 
     private void Start()
@@ -24,6 +29,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
         mobInfoUIPair.second.GetComponent<GridLayoutGroup>().constraintCount = urmg.ChangableBodyList.Count / 3 + 1;
 
+        //모든 몹 정보 가져와서 UI생성하고 값 넣음
         urmg.ChangableBodyList.ForEach(body =>
         {
             MonsterInfoSlot ui = Instantiate(mobInfoUIPair.first, mobInfoUIPair.second).GetComponent<MonsterInfoSlot>();
@@ -35,20 +41,21 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         AllUpdateCollection();
     }
 
-    public void UpdateCollection(string id)
+    public void UpdateCollection(string id)  //몹 동화율 정보 업뎃
     { 
         mobIdToSlot[id].UpdateRate((float)urmg.PlayerEnemyUnderStandingRateDic[id]/urmg.MinBodyChangeUnderstandingRate);
     }
 
-    public void AllUpdateCollection()
+    public void AllUpdateCollection()   //모든 몹 동화율 정보 업뎃
     {
         foreach(string key in mobIdToSlot.Keys)
             mobIdToSlot[key].UpdateRate((float)urmg.PlayerEnemyUnderStandingRateDic[key] / urmg.MinBodyChangeUnderstandingRate);
     }
 
-    public void Detail(PlayerEnemyUnderstandingRateManager.ChangeBodyData data, string id)
+    public void Detail(PlayerEnemyUnderstandingRateManager.ChangeBodyData data, string id) //몹 정보 자세히 보기
     {
         if (selectedDetailMobId == id) return;
+        selectedDetailMobId = id;
 
         UIManager.Instance.OnUIInteractSetActive(UIType.MONSTERINFO_DETAIL, true);
 
@@ -56,14 +63,39 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         monsterImgNameEx.second.text = data.bodyName;
         monsterImgNameEx.third.text = data.bodyExplanation;
 
-
+        ItemSO item = mobIdToSlot[selectedDetailMobId].bodyData.dropItem;
+        mobDropItemImg.sprite = item.GetSprite();
+        mobDropItemImg.GetComponent<NameInfoFollowingCursor>().explanation = item.itemName;
     }
 
-    public void CloseDetail()
+    public void CloseDetail() //몹 정보 자세히 보기 닫음
     {
         selectedDetailMobId = "";
     }
-    
+
+    #region Detail Stat
+
+    public void DetailStat()
+    {
+        EternalStat stat = mobIdToSlot[selectedDetailMobId].bodyData.additionalBodyStat;
+
+
+    }
+
+    #endregion
+
+    #region Detail Item
+
+    public void DetailItem()
+    {
+        ItemSO item = mobIdToSlot[selectedDetailMobId].bodyData.dropItem;
+
+        mobItemImgNameEx.first.sprite = item.GetSprite();
+        mobItemImgNameEx.second.text = item.itemName;
+        mobItemImgNameEx.third.text = item.explanation;
+    }
+
+    #endregion
 
     public void Save()
     {

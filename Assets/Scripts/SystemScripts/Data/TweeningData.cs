@@ -2,7 +2,8 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-public static class TweeningData
+//나중에 전체적으로 코드 리펙토링 필요함
+public static class TweeningData    
 {
     public static void UpdateUIStack(GameUI self,bool add = true)
     {
@@ -118,6 +119,43 @@ public static class TweeningData
             seq.Append(fields.cvsg.DOFade(0, 0.4f));
             seq.Join(fields.childGameUI.UIFields.cvsg.DOFade(1, 0.5f)).Join(fields.childGameUI.transform.DOScale(Vector3.one, 0.5f)).Join(fields.childGameUI.UIFields.rectTrm.DOAnchorPos(fields.childGameUI.UIFields.originPos, 0.3f));
             seq.AppendCallback(() => UpdateUIStack(fields.self,false)).SetUpdate(true).Play();
+        }
+    }
+
+    public static void DOQuaternion(GameUIFields fields, bool active)
+    {
+        CanvasGroup chCvsg;
+        if(active)
+        {
+            chCvsg = fields.transform.GetChild(0).GetComponent<CanvasGroup>();
+            fields.cvsg.alpha = 0;
+            fields.transform.rotation = SQuaternion.Y90;
+            chCvsg.alpha = 0;
+            fields.childGameUI.transform.DORotateQuaternion(SQuaternion.Y90, 0.3f).OnComplete(() =>
+            {
+                fields.childGameUI.UIFields.cvsg.alpha = 0;
+                fields.cvsg.alpha = 1;
+                fields.transform.DORotateQuaternion(SQuaternion.Y180, 0.3f).OnComplete(() =>
+                {
+                    fields.transform.rotation = Quaternion.identity;
+                    chCvsg.DOFade(1, 0.2f).OnComplete(() => UpdateUIStack(fields.self)).SetUpdate(true);
+                }).SetUpdate(true);
+            }).SetUpdate(true);
+        }
+        else
+        {
+            chCvsg = fields.childGameUI.transform.GetChild(0).GetComponent<CanvasGroup>();
+            chCvsg.alpha = 0;
+            
+            fields.transform.DORotateQuaternion(SQuaternion.Y90, 0.3f).OnComplete(() =>
+            {
+                fields.cvsg.alpha = 0;
+                fields.childGameUI.UIFields.cvsg.alpha = 1;
+                fields.childGameUI.transform.DORotateQuaternion(Quaternion.identity, 0.3f).OnComplete(() =>
+                {
+                    chCvsg.DOFade(1, 0.2f).OnComplete(() => UpdateUIStack(fields.self,false)).SetUpdate(true);
+                }).SetUpdate(true);
+            }).SetUpdate(true);
         }
     }
 }
