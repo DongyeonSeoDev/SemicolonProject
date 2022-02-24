@@ -27,7 +27,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         for(int i=0; i<5; i++)
         {
             Instantiate(keyInfoPair.first, keyInfoPair.second).GetComponent<KeyInfoUI>()
-            .SetFixedKey((KeyAction)i, i!=4? KeySetting.fixedKeyDict[(KeyAction)i].ToString() : "Left Mouse");
+            .SetFixedKey((KeyAction)i, KeyCodeToString.GetString( KeySetting.fixedKeyDict[(KeyAction)i] ));
         }
         foreach(KeyAction action in KeySetting.keyDict.Keys)
         {
