@@ -107,7 +107,7 @@ public class PlayerBodySlap : PlayerAction
 
             if (enemy != null)
             {
-                enemy.GetDamage(playerStat.Damage);
+                enemy.GetDamage(playerStat.Damage, true);
             }
 
             if (!bodyStopBodySlapTimerStart)

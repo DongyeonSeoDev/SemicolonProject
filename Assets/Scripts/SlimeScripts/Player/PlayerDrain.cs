@@ -16,9 +16,17 @@ public class PlayerDrain : PlayerAction
     [Header("흡수를 했을 때의 장착 확률을 올려주는 수치")]
     [SerializeField]
     private float upMountingPercentageValue = 5f;
+    public float UpMountingPercentageValue
+    {
+        get { return upMountingPercentageValue; }
+    }
     [Header("흡수를 했을 때 장착한 적의 동화율을 올려주는 수치")]
     [SerializeField]
     private int upUnderstandingRateValue = 1;
+    public int UpUnderstandingRateValue
+    {
+        get { return upUnderstandingRateValue; }
+    }
 
     [Header("Drain되는 오브젝트가 빨려들어오는 속도")]
     [SerializeField]
