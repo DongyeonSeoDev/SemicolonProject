@@ -39,7 +39,7 @@ public class EffectManager : MonoSingleton<EffectManager>
     public Pair<GameObject, Transform> damageTextPair;
 
     [System.Serializable]
-    public struct DamageTextVG
+    public class DamageTextVG
     {
         public VertexGradient normal;
         public VertexGradient cri;

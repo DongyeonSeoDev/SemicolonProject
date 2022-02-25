@@ -28,6 +28,17 @@ public class MonsterInfo
 }
 
 [Serializable]
+public class SkillInfo
+{
+    public SkillType skillType;
+
+    public string skillName;
+    [TextArea] public string skillExplanation;
+
+    public Sprite skillSpr;
+}
+
+[Serializable]
 public class Pair<T,U>
 {
     public T first;

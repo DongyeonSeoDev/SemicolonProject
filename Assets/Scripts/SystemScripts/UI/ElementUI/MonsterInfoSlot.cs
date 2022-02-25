@@ -11,11 +11,13 @@ public class MonsterInfoSlot : MonoBehaviour
 
     [SerializeField] private Image monsterImg;
     [SerializeField] private Image understandingRateFill, understandingOverRateFill;
+
+    [SerializeField] private Image drainProbabilityFill;
     //[SerializeField] private Text understandingRateText;
 
-    [SerializeField] private Button transformationBtn;
+    //[SerializeField] private Button transformationBtn;
 
-    private UIScale btnUS;
+    //private UIScale btnUS;
 
     private ItemSO dropItem;
 
@@ -27,13 +29,13 @@ public class MonsterInfoSlot : MonoBehaviour
         monsterImg.sprite = data.bodyImg;
         dropItem = data.dropItem;
 
-        btnUS = transformationBtn.GetComponent<UIScale>();
+        //btnUS = transformationBtn.GetComponent<UIScale>();
 
-        transformationBtn.onClick.AddListener(() => SlimeGameManager.Instance.PlayerBodyChange(monsterBodyID));
+        //transformationBtn.onClick.AddListener(() => SlimeGameManager.Instance.PlayerBodyChange(monsterBodyID));
         monsterImg.GetComponent<Button>().onClick.AddListener(() => MonsterCollection.Instance.Detail(bodyData, monsterBodyID));
     }
 
-    public void UpdateRate(float rate)
+    public void UpdateAssimilationRate(float rate)
     {
         if(rate > 1f)
         {
@@ -46,12 +48,26 @@ public class MonsterInfoSlot : MonoBehaviour
             understandingRateFill.fillAmount = rate;
         }
 
-        Active(rate >= 1f);
+        //Active(rate >= 1f);
     }
 
-    private void Active(bool active)
+    public void UpdateDrainProbability(float prob)
+    {
+        drainProbabilityFill.fillAmount = Mathf.Clamp(prob, 0, 1f);
+
+        if(prob >= 1)
+        {
+            //π∫∞° UI ¿Ã∆Â∆Æ §°
+        }
+        else
+        {
+            //π∫∞° UI ¿Ã∆Â∆Æ §§
+        }
+    }
+
+    /*private void Active(bool active)
     {
         btnUS.transitionEnable = active;
         transformationBtn.interactable = active;
-    }
+    }*/
 }

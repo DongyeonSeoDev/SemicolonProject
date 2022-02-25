@@ -4,6 +4,7 @@ using System;
 using System.Text;
 using System.IO;
 using Water;
+using System.Runtime.InteropServices;
 
 public partial class GameManager : MonoSingleton<GameManager>
 {

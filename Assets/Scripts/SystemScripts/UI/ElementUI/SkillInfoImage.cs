@@ -12,18 +12,50 @@ public class SkillInfoImage : MonoBehaviour
 
     [SerializeField] private SkillType skillType;
 
-    public void Register()
-    {
+    private UICommand skillUICmd;
+    public bool Registered { get; set; }
 
+    public void Register(Sprite skillSpr, string skillName)
+    {
+        gameObject.SetActive(true);
+        skillImgCoolTxtImgTriple.first.sprite = skillSpr;
+
+        switch (skillType)
+        {
+            case SkillType.ATTACK:
+                skillUICmd = new DefaultAttackUICommand(skillImgCoolTxtImgTriple.third, skillImgCoolTxtImgTriple.second);
+                skillName += "(기본공격)";
+                break;
+            case SkillType.SPECIALATTACK:
+                skillUICmd = new SpecialAttackUICommand(skillImgCoolTxtImgTriple.third, skillImgCoolTxtImgTriple.second);
+                skillName += "(특수공격)";
+                break;
+            case SkillType.DRAIN:
+                skillUICmd = new DrainUICommand(skillImgCoolTxtImgTriple.third, skillImgCoolTxtImgTriple.second);
+                //skillName += "(슬라임 전용)";
+                break;
+        }
+
+        nifc.explanation = skillName;
+        Registered = true;
     }
 
     public void Unregister()
     {
-
+        Registered = false;
+        gameObject.SetActive(false);
     }
 
     public void UpdateKeyCode()
     {
         keyCodeTxt.text = KeyCodeToString.GetString(KeySetting.GetKeyCode((KeyAction)Enum.Parse(typeof(KeyAction), skillType.ToString())));
+    }
+
+    private void Update()
+    {
+        if(Registered)
+        {
+            skillUICmd.Execute();
+        }
     }
 }

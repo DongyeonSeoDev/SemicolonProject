@@ -26,8 +26,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     private void Start()
     {
         urmg = PlayerEnemyUnderstandingRateManager.Instance;
-
-        mobInfoUIPair.second.GetComponent<GridLayoutGroup>().constraintCount = urmg.ChangableBodyList.Count / 3 + 1;
+        
+        mobInfoUIPair.second.GetComponent<GridLayoutGroup>().constraintCount = Mathf.Clamp(urmg.ChangableBodyList.Count / 3 + 1, 6, 10000);
 
         //¸ðµç ¸÷ Á¤º¸ °¡Á®¿Í¼­ UI»ý¼ºÇÏ°í °ª ³ÖÀ½
         urmg.ChangableBodyList.ForEach(body =>
@@ -39,17 +39,28 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
         Load();
         AllUpdateCollection();
+        AllUpdateDrainProbability();
     }
 
     public void UpdateCollection(string id)  //¸÷ µ¿È­À² Á¤º¸ ¾÷µ«
     { 
-        mobIdToSlot[id].UpdateRate((float)urmg.PlayerEnemyUnderStandingRateDic[id]/urmg.MinBodyChangeUnderstandingRate);
+        mobIdToSlot[id].UpdateAssimilationRate((float)urmg.PlayerEnemyUnderStandingRateDic[id]/urmg.MinBodyChangeUnderstandingRate);
     }
 
     public void AllUpdateCollection()   //¸ðµç ¸÷ µ¿È­À² Á¤º¸ ¾÷µ«
     {
-        foreach(string key in mobIdToSlot.Keys)
-            mobIdToSlot[key].UpdateRate((float)urmg.PlayerEnemyUnderStandingRateDic[key] / urmg.MinBodyChangeUnderstandingRate);
+        foreach (string key in mobIdToSlot.Keys)
+            UpdateCollection(key);
+    }
+
+    public void UpdateDrainProbability(string id) //¸÷ Èí¼ö È®·ü Á¤º¸ ¾÷µ«
+    {
+        mobIdToSlot[id].UpdateDrainProbability(urmg.GetMountingPercentageDict(id));
+    }
+    public void AllUpdateDrainProbability()
+    {
+        foreach (string key in mobIdToSlot.Keys)
+            UpdateDrainProbability(key);
     }
 
     public void Detail(PlayerEnemyUnderstandingRateManager.ChangeBodyData data, string id) //¸÷ Á¤º¸ ÀÚ¼¼È÷ º¸±â
@@ -63,14 +74,14 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         monsterImgNameEx.second.text = data.bodyName;
         monsterImgNameEx.third.text = data.bodyExplanation;
 
-        ItemSO item = mobIdToSlot[selectedDetailMobId].bodyData.dropItem;
+        ItemSO item = data.dropItem;
         mobDropItemImg.sprite = item.GetSprite();
         mobDropItemImg.GetComponent<NameInfoFollowingCursor>().explanation = item.itemName;
     }
 
     public void CloseDetail() //¸÷ Á¤º¸ ÀÚ¼¼È÷ º¸±â ´ÝÀ½
     {
-        selectedDetailMobId = "";
+        selectedDetailMobId = string.Empty;
     }
 
     #region Detail Stat

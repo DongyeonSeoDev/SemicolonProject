@@ -7,6 +7,14 @@ public class ChangeBodySlot : MonoBehaviour
     [SerializeField] private string bodyID = ""; //이 슬롯에 저장되어있는 몬스터 아이디   (monster id)
 
     public Pair<Image, Text> monsterImgName;
+    public Button transformBtn, deleteBtn;
+
+    //private Button mobDetailBtn;
+
+    /*private void Awake()
+    {
+        mobDetailBtn = monsterImgName.first.GetComponent<Button>();
+    }*/
 
     public void Set(int slotID)
     {
