@@ -24,10 +24,10 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
 
     private void Start()
     {
-        for(int i=0; i<5; i++)
+        foreach(KeyAction action in KeySetting.fixedKeyDict.Keys)
         {
             Instantiate(keyInfoPair.first, keyInfoPair.second).GetComponent<KeyInfoUI>()
-            .SetFixedKey((KeyAction)i, KeyCodeToString.GetString( KeySetting.fixedKeyDict[(KeyAction)i] ));
+            .SetFixedKey(action, KeyCodeToString.GetString( KeySetting.fixedKeyDict[action] ));
         }
         foreach(KeyAction action in KeySetting.keyDict.Keys)
         {
@@ -35,6 +35,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
             keyUI.Set(action, KeySetting.keyDict[action], ()=>ChangeUserCustomKey((int)action, keyUI.ID));
             keyInfoDic.Add(keyUI.ID, keyUI);
         }
+        SkillUIManager.Instance.UpdateSkillKeyCode();
     }
 
     private void Update()

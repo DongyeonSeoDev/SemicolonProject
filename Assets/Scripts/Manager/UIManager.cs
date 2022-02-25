@@ -225,6 +225,10 @@ public partial class UIManager : MonoSingleton<UIManager>
         {
             OnUIInteract(UIType.MONSTER_COLLECTION);
         }
+        else if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.CHANGEABLEBODYS]))
+        {
+            OnUIInteract(UIType.CHANGEABLEMOBLIST);
+        }
     }
 
     #region UI (비)활성화 관련
@@ -373,7 +377,10 @@ public partial class UIManager : MonoSingleton<UIManager>
                 break;
             case UIType.SETTING:
                 EventManager.TriggerEvent("TimeResume");
+                break;
+            case UIType.KEYSETTING:
                 itrNoticeList.ForEach(x => x.Set());
+                SkillUIManager.Instance.UpdateSkillKeyCode();
                 break;
             case UIType.CHEF_FOODS_PANEL:
                 EventManager.TriggerEvent("TimeResume");

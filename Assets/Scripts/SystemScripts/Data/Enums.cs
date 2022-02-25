@@ -39,11 +39,13 @@ public enum KeyAction
     LEFT,
     RIGHT,
     ATTACK,
+    ESCAPE,
     //여기까지가 고정키
 
     INVENTORY,
     STAT,
     MONSTER_COLLECTION,
+    CHANGEABLEBODYS,
     INTERACTION,
     SPECIALATTACK,
     DRAIN,
@@ -55,6 +57,16 @@ public enum KeyAction
 
     NULL  //아무것도 없는 값
 }
+
+public enum SkillType
+{
+    ATTACK,
+    SPECIALATTACK,
+    DRAIN,
+    MANASTONE,
+    NULL
+}
+
 
 public enum EventKeyCheck
 {

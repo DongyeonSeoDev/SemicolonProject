@@ -6,11 +6,14 @@ public static class KeySetting
     public static Dictionary<KeyAction, KeyCode> keyDict = new Dictionary<KeyAction, KeyCode>();
     public static Dictionary<KeyAction, KeyCode> fixedKeyDict = new Dictionary<KeyAction, KeyCode>();
 
-    public static void SetDefaultKeySetting() //커스텀 키셋 가능한 키세팅 기본값 설정
+    public static void SetDefaultKeySetting() //커스텀 키셋 가능한 키세팅 기본값 설정. 
     {
+        //순서대로 키세팅 UI에 표시됨
+
         keyDict[KeyAction.INVENTORY] = KeyCode.I;
         keyDict[KeyAction.STAT] = KeyCode.T;
         keyDict[KeyAction.MONSTER_COLLECTION] = KeyCode.C;
+        keyDict[KeyAction.CHANGEABLEBODYS] = KeyCode.H;
         keyDict[KeyAction.INTERACTION] = KeyCode.F;
         keyDict[KeyAction.MANASTONE] = KeyCode.E;
         keyDict[KeyAction.DRAIN] = KeyCode.Q;
@@ -28,6 +31,17 @@ public static class KeySetting
         fixedKeyDict[KeyAction.LEFT] = KeyCode.A;
         fixedKeyDict[KeyAction.RIGHT] = KeyCode.D;
         fixedKeyDict[KeyAction.ATTACK] = KeyCode.Mouse0;
+        fixedKeyDict[KeyAction.ESCAPE] = KeyCode.Escape;
+    }
+
+    public static KeyCode GetKeyCode(KeyAction k)
+    {
+        KeyCode code;
+        if (keyDict.TryGetValue(k, out code))
+            return code;
+        if (fixedKeyDict.TryGetValue(k, out code))
+            return code;
+        return KeyCode.None;
     }
 }
 
