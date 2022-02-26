@@ -15,3 +15,4 @@ MonoBehaviour:
   nextStageList:
   - {fileID: 11400000, guid: 2a470474a3ac0f24d93d875e56cbdb39, type: 2}
   stage: {fileID: 5957432569591016901, guid: 1e79489275854ff42ae73904fdb43d54, type: 3}
+  playerStartPosition: {x: -7, y: 0}

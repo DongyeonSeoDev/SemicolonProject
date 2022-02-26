@@ -5,4 +5,5 @@ public partial class StageDataSO : ScriptableObject
 {
     public List<StageDataSO> nextStageList = new List<StageDataSO>();
     public GameObject stage;
+    public Vector2 playerStartPosition;
 }

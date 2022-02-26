@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nextStageList: []
   stage: {fileID: 5957432569591016901, guid: 3fd6964bfaf22914d8ba83e9a26a76bf, type: 3}
+  playerStartPosition: {x: -7, y: 0}

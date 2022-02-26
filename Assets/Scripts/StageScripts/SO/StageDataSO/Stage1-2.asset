@@ -17,3 +17,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 19145b3842a54464fbbfd0d9d99b9304, type: 2}
   - {fileID: 11400000, guid: 0f38dff1e654b004ba5a6518f3d44e1c, type: 2}
   stage: {fileID: 5957432569591016901, guid: 20483a164c246e744bc647faba50ae60, type: 3}
+  playerStartPosition: {x: -7, y: 0}
