@@ -13,6 +13,8 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
     public SkillInfoImage specialSkill;
     public SkillInfoImage drain;
 
+    public Triple<Image, Text, Text> skillDetailImgNameEx;
+
     private void Awake()
     {
         skillInfoUIArr = skillImgUIParent.GetComponentsInChildren<SkillInfoImage>();
@@ -24,5 +26,11 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
         {
             skillInfoUIArr[i].UpdateKeyCode();
         }
+    }
+
+    public void OnClickSkillButton()
+    {
+        UIManager.Instance.OnUIInteractSetActive(UIType.SKILLDETAIL, true);
+
     }
 }

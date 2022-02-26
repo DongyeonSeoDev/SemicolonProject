@@ -15,6 +15,13 @@ public class SkillInfoImage : MonoBehaviour
     private UICommand skillUICmd;
     public bool Registered { get; set; }
 
+
+    private void Awake()
+    {
+        skillBtn.onClick.AddListener(() => SkillUIManager.Instance.OnClickSkillButton());
+    }
+
+
     public void Register(Sprite skillSpr, string skillName)
     {
         gameObject.SetActive(true);
@@ -48,7 +55,7 @@ public class SkillInfoImage : MonoBehaviour
 
     public void UpdateKeyCode()
     {
-        keyCodeTxt.text = KeyCodeToString.GetString(KeySetting.GetKeyCode((KeyAction)Enum.Parse(typeof(KeyAction), skillType.ToString())));
+        keyCodeTxt.text = KeyCodeToString.GetString(KeySetting.GetKeyCode(Util.EnumParse<KeyAction>(skillType.ToString())));
     }
 
     private void Update()

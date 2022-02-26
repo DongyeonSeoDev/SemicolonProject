@@ -45885,6 +45885,10 @@ MonoBehaviour:
   defaultSkill: {fileID: 8546830875655787554}
   specialSkill: {fileID: 7522217690780596012}
   drain: {fileID: 7522217690728692994}
+  skillDetailImgNameEx:
+    first: {fileID: 5468489817786863219}
+    second: {fileID: 8512286304566549832}
+    third: {fileID: 7351687483723835900}
 --- !u!1 &7522217690282855906
 GameObject:
   m_ObjectHideFlags: 0
