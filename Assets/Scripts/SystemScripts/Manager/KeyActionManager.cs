@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEngine.UI;
 
 public class KeyActionManager : MonoSingleton<KeyActionManager>
 {
@@ -83,7 +82,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
 
     private bool CanChangeKey(KeyCode keyCode) //해당 키로 변경할 수 있는지 (방향키와 esc 제외시킴)
     {
-        switch(keyCode)
+        switch(keyCode) 
         {
             case KeyCode.W:
                 return false;

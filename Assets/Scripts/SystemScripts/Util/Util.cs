@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System;
+using System.Runtime.InteropServices;
 
 public static partial class Util
 {
@@ -45,5 +46,10 @@ public static partial class Util
         }
 
         end?.Invoke();
+    }
+
+    public static void PrintStructSize(Type type)
+    {
+        Debug.Log(type.ToString() + " Size : " + Marshal.SizeOf(type));
     }
 }
