@@ -1,51 +1,88 @@
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class StageSelect : MonoBehaviour
+public class StageSelect : MonoSingleton<StageSelect>
 {
-    [System.Serializable]
-    public struct Stage
-    {
-        public GameObject stageObject;
-        public bool isInstantiate;
-    }
+    public StageDataSO startStage;
 
-    public List<Stage> stageList = new List<Stage>();
-    public int startStageId = 0;
+    [SerializeField]
+    private GameObject uiObject;
+    [SerializeField]
+    private Button[] stageButton;
 
-    private int currentStageId = 0;
+    private GameObject currentStage;
+    private Text stageButtonText1;
 
     private void Start()
     {
-        for (int i = 0; i < stageList.Count; i++)
+        currentStage = Instantiate(startStage.stage, transform.position, Quaternion.identity);
+        SlimeGameManager.Instance.CurrentPlayerBody.transform.position = startStage.playerStartPosition;
+
+        stageButtonText1 = stageButton[1].GetComponentInChildren<Text>();
+
+        for (int i = 0; i < stageButton.Length; i++)
         {
-            if (!stageList[i].isInstantiate)
+            int number = i;
+
+            if (number == 1)
             {
-                Stage stage = new Stage();
-
-                stage.stageObject = Instantiate(stageList[i].stageObject, transform.position, Quaternion.identity);
-                stage.stageObject.SetActive(false);
-                stage.isInstantiate = true;
-
-                stageList[i] = stage;
+                stageButton[number].onClick.AddListener(() =>
+                {
+                    if (startStage.nextStageList.Count == 1)
+                    {
+                        NextStage(0);
+                    }
+                    else
+                    {
+                        NextStage(1);
+                    }
+                });
             }
-
-            if (stageList[i].stageObject.activeSelf)
+            else
             {
-                stageList[i].stageObject.SetActive(false);
+                stageButton[number].onClick.AddListener(() => NextStage(number));
             }
         }
-
-        stageList[startStageId].stageObject.SetActive(true);
-
-        currentStageId = startStageId;
     }
 
-    public void NextStage(int stageId)
+    public void ShowUI()
     {
-        stageList[currentStageId].stageObject.SetActive(false);
-        stageList[stageId].stageObject.SetActive(true);
+        if (startStage.nextStageList.Count == 1)
+        {
+            for (int i = 0; i < stageButton.Length; i++)
+            {
+                stageButton[i].gameObject.SetActive(false);
+            }
 
-        currentStageId = stageId;
+            stageButton[1].gameObject.SetActive(true);
+            stageButtonText1.text = "1";
+        }
+        else
+        {
+            stageButtonText1.text = "2";
+
+            for (int i = 0; i < stageButton.Length; i++)
+            {
+                stageButton[i].gameObject.SetActive(true);
+            }
+        }
+        
+        uiObject.SetActive(true);
+    }
+
+    public void NextStage(int nextStage)
+    {
+        uiObject.SetActive(false);
+
+        if (startStage.nextStageList.Count <= nextStage)
+        {
+            return;
+        }
+
+        currentStage.SetActive(false);
+        startStage = startStage.nextStageList[nextStage];
+
+        currentStage = Instantiate(startStage.stage, transform.position, Quaternion.identity);
+        SlimeGameManager.Instance.CurrentPlayerBody.transform.position = startStage.playerStartPosition;
     }
 }
