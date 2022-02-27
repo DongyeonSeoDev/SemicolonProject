@@ -89,6 +89,10 @@ public partial class UIManager : MonoSingleton<UIManager>
     public CanvasGroup msgCvsg;
     #endregion
 
+    #region Warning Window UI
+    public WarningWindow wnWd;
+    #endregion
+
     //public Text statText;
     public Text[] statTexts;
 
@@ -225,10 +229,10 @@ public partial class UIManager : MonoSingleton<UIManager>
         {
             OnUIInteract(UIType.MONSTER_COLLECTION);
         }
-        else if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.CHANGEABLEBODYS]))
+        /*else if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.CHANGEABLEBODYS]))
         {
             OnUIInteract(UIType.CHANGEABLEMOBLIST);
-        }
+        }*/
     }
 
     #region UI (비)활성화 관련
@@ -381,6 +385,7 @@ public partial class UIManager : MonoSingleton<UIManager>
             case UIType.KEYSETTING:
                 itrNoticeList.ForEach(x => x.Set());
                 SkillUIManager.Instance.UpdateSkillKeyCode();
+                MonsterCollection.Instance.UpdateSavedBodyChangeKeyCodeTxt();
                 break;
             case UIType.CHEF_FOODS_PANEL:
                 EventManager.TriggerEvent("TimeResume");
@@ -491,7 +496,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         Util.DelayFunc(() => t.gameObject.SetActive(false), 2f, this, true);
     }
 
-    public void RequestSelectionWindow(string message, List<Action> actions, List<string> btnTexts, bool timePause = true) //선택창을 띄움
+    public void RequestSelectionWindow(string message, List<Action> actions, List<string> btnTexts, bool timePause = true, bool activeWarning = true) //선택창을 띄움
     {
         if(timePause) EventManager.TriggerEvent("TimePause");
 
@@ -502,17 +507,20 @@ public partial class UIManager : MonoSingleton<UIManager>
         
         SelectionWindow selWd = PoolManager.GetItem<SelectionWindow>("SelWindow");
         selWd.transform.SetAsLastSibling();
-        selWd.Set(message, actions, btnTexts);
+        selWd.Set(message, actions, btnTexts, activeWarning);
         selWdStack.Push(selWd);
+    }
+
+    public void RequestWarningWindow(Action confirm, string warning, string verify = "확인", string cancel = "취소")
+    {
+        wnWd.Register(confirm, warning, verify, cancel);
     }
     #endregion
 
     public void DoChangeBody(string id)  //몸통 저장할지 창 띄움
     {
         RequestSelectionWindow(MonsterCollection.Instance.mobIdToSlot[id].bodyData.bodyName + "를(을) 변신 슬롯에 저장하시겠습니까?\n(거절하면 해당 몬스터의 흡수 확률은 0%로 돌아갑니다.)",
-            new List<Action>() {() => CancelMonsterSaveChance(id), () => SaveMonsterBody(id) }, new List<string>() {"거절", "저장"});
-
-       
+            new List<Action>() {() => CancelMonsterSaveChance(id) , () => SaveMonsterBody(id) }, new List<string>() {"거절", "저장"});
     }
   
 
@@ -531,12 +539,12 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     public void CancelMonsterSaveChance(string id)  //변신 가능한 몬스터 저장 거절
     {
-        //흡수확률 0퍼로 하고 UI업뎃
+        EventManager.TriggerEvent("PlayerBodySet", id, false);
     }
 
     public void SaveMonsterBody(string id) //변신 가능한 몬스터 저장하기
     {
-        //몹 저장후 UI업뎃
+        EventManager.TriggerEvent("PlayerBodySet", id, true);
     }
 
     #region 인벤 버튼 (inventory button)

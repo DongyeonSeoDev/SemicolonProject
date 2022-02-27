@@ -13,7 +13,7 @@ public class SelectionWindow : MonoBehaviour
     public Text msgText;
     public Transform selBtnParent;
 
-    public void Set(string msg, List<Action> clickEv, List<string> btnTexts)
+    public void Set(string msg, List<Action> clickEv, List<string> btnTexts, bool activeWarning)
     {
         //ResetData();
         ActiveButtons(clickEv.Count);
@@ -30,8 +30,16 @@ public class SelectionWindow : MonoBehaviour
             for (int i = 0; i < clickEv.Count; i++)
             {
                 int si = i;  //안하면 AddListener에서 호출하는 함수에서 마지막 i 값으로 함
-                btnList[i].onClick.AddListener(() => clickEv[si]());
+                if (!activeWarning)
+                {
+                    btnList[i].onClick.AddListener(() => clickEv[si]());
+                }
+                else
+                {
+                    UIManager.Instance.RequestWarningWindow(() => clickEv[si](), "결정이 확실합니까?");
+                }
                 btnList[i].transform.GetChild(0).GetComponent<Text>().text = btnTexts[i];
+
                 btnList[i].transform.SetParent(selBtnParent);  //트위닝이 다 끝나면 버튼들의 부모를 설정함
                 btnList[i].transform.localScale = Vector3.one;  //스케일 값이 다를 수 있으니 초기화시켜줌
             }
@@ -56,6 +64,7 @@ public class SelectionWindow : MonoBehaviour
         for(int i = 0; i<count; i++)
         {
             Button b = PoolManager.GetItem<Button>("SelBtn");
+            b.onClick.RemoveAllListeners();
             btnList.Add(b);
         }
     }

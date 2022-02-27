@@ -12,7 +12,7 @@ public static class DOUtil
     {
         Action act = () => ExecuteTweening("DOT_Light2D_Intensity_" + light.name, DOIntensityCo(light, endValue, duration, setUpdate, onComplete), light);
         act();
-        CTween t = new CTween(() => act());
+        CTween t = new CTween(act);
         return t;
     }
 

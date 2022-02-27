@@ -29,8 +29,11 @@ public enum UIType
     MONSTERINFO_DETAIL,
     MONSTERINFO_DETAIL_STAT,
     MONSTERINFO_DETAIL_ITEM,
-    CHANGEABLEMOBLIST,
     SKILLDETAIL
+
+
+
+    //CHANGEABLEMOBLIST
 }
 
 public enum KeyAction
@@ -46,7 +49,6 @@ public enum KeyAction
     INVENTORY,
     STAT,
     MONSTER_COLLECTION,
-    CHANGEABLEBODYS,
     INTERACTION,
     SPECIALATTACK,
     DRAIN,
@@ -57,6 +59,10 @@ public enum KeyAction
     CHANGE_MONSTER2,
 
     NULL  //아무것도 없는 값
+
+
+
+    //CHANGEABLEBODYS
 }
 
 public enum SkillType

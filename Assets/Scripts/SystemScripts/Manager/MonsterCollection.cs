@@ -21,6 +21,14 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
     //¸÷ µå¶øÅÛ Á¤º¸ È®ÀÎÃ¢
     public Triple<Image, Text, Text> mobItemImgNameEx;
+
+    //¸÷ ÀúÀå ½½·Ô ²Ë Ã¡À» ¶§ Á¦°ÅÇÒ ½½·Ô ¼±ÅÃÃ¢ÀÇ ½½·Ôµé
+    [Space(15)]
+    [SerializeField] private List<ChangeBodySlot> changeBodySlots;
+
+    //Bottom Left Save Body UI List
+    [Space(15)]
+    [SerializeField] private List<ChangeableBody> savedBodys;
     #endregion
 
     private void Start()
@@ -108,6 +116,19 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
     #endregion
 
+    #region ChangeableBodyList
+
+    public void UpdateSavedBodyChangeKeyCodeTxt()
+    {
+        for(int i=0; i<savedBodys.Count; i++)
+        {
+            savedBodys[i].UpdateKeyCodeTxt();
+        }
+    }
+
+    #endregion
+
+    #region save and load
     public void Save()
     {
         foreach(string key in urmg.PlayerEnemyUnderStandingRateDic.Keys)
@@ -123,4 +144,5 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             urmg.PlayerEnemyUnderStandingRateDic[key] = GameManager.Instance.savedData.userInfo.monstersAssimilationRate[key];
         }
     }
+    #endregion
 }

@@ -28,7 +28,7 @@ public class EffectManager : MonoSingleton<EffectManager>
     public GameObject inventoryBtnEffect;
     public GameObject statBtnEffect;
     //public GameObject mobColtBtnEffect;
-    public GameObject changeableMobListBtnEffect;
+    
 
     [Space(20)]
     [Header("채집 성공/실패 이펙트")]
@@ -109,9 +109,6 @@ public class EffectManager : MonoSingleton<EffectManager>
                 break;
             case UIType.STAT:
                 statBtnEffect.SetActive(on);
-                break;
-            case UIType.CHANGEABLEMOBLIST:
-                changeableMobListBtnEffect.SetActive(on);
                 break;
         }
     }

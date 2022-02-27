@@ -35,6 +35,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
             keyInfoDic.Add(keyUI.ID, keyUI);
         }
         SkillUIManager.Instance.UpdateSkillKeyCode();
+        MonsterCollection.Instance.UpdateSavedBodyChangeKeyCodeTxt();
     }
 
     private void Update()

@@ -13,7 +13,7 @@ public static class KeySetting
         keyDict[KeyAction.INVENTORY] = KeyCode.I;
         keyDict[KeyAction.STAT] = KeyCode.T;
         keyDict[KeyAction.MONSTER_COLLECTION] = KeyCode.C;
-        keyDict[KeyAction.CHANGEABLEBODYS] = KeyCode.H;
+        //keyDict[KeyAction.CHANGEABLEBODYS] = KeyCode.H;
         keyDict[KeyAction.INTERACTION] = KeyCode.F;
         keyDict[KeyAction.MANASTONE] = KeyCode.E;
         keyDict[KeyAction.DRAIN] = KeyCode.Q;

@@ -5,6 +5,9 @@ public abstract class UICommand
 {
     protected Image coolFill;
     protected Text coolText;
+
+    protected SlimeGameManager Sgm => SlimeGameManager.Instance;
+
     public abstract void Execute();
 
     public UICommand() { }
