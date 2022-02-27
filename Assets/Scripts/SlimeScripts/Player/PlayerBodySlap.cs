@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBodySlap : PlayerAction
+public class PlayerBodySlap : PlayerSpecialSkill
 {
     private Stat playerStat = null;
     [SerializeField]
@@ -25,13 +25,10 @@ public class PlayerBodySlap : PlayerAction
     [SerializeField]
     private float bodySlapMoveSpeed = 2f;
 
-    [SerializeField]
-    private float bodySlapDelay = 5f;
-    private float bodySlapDelayTimer = 0f;
-    public float BodySlapDelayTimer
-    {
-        get { return bodySlapDelayTimer; }
-    }
+    // [SerializeField]
+    // private float bodySlapDelay = 5f;
+    // private float bodySlapDelayTimer = 0f;
+
     [SerializeField]
     private float bodySlapTime = 3f;
     private float currentBodySlapTime = 0f;
@@ -59,38 +56,26 @@ public class PlayerBodySlap : PlayerAction
     {
         bodySlapTimer = bodySlapTime;
     }
-    private void OnEnable()
+    public override void OnEnable()
     {
+        base.OnEnable();
+
         EventManager.StartListening("BodyPointCrash", BodyPointCrash);
         EventManager.StartListening("PlayerDead", StopBodySlap);
     }
-    void Update()
+    public override void Update()
     {
+        base.Update();
+
         if (playerState.BodySlapping && !bodySlapStart && canBodySlap)
         {
-            bodySlapStart = true;
-
-            bodySlapMoveVec = playerInput.LastMoveVector;
-
-            currentBodySlapTime = bodySlapTime;
-
-            moveOriginPos = transform.position;
-            moveTargetPos = moveOriginPos + bodySlapTime * bodySlapMoveSpeed * bodySlapMoveVec;
-            moveTargetPos = PosCantCrossWall(canCrashLayer, moveOriginPos, moveTargetPos);
-
-            currentBodySlapTime = Vector2.Distance(moveOriginPos, moveTargetPos) / bodySlapMoveSpeed;
-
-            EventManager.TriggerEvent("PlayerBodySlap", bodySlapTime);
-
-            bodySlapTimer = 0f;
-            bodySlapDelayTimer = bodySlapDelay;
+            DoSkill();
         }
         else if (!canBodySlap)
         {
             playerState.BodySlapping = false;
         }
 
-        CheckBodySlapDelay();
         CheckBodySlapTime();
         CheckStopBodySlapTime();
     }
@@ -100,6 +85,25 @@ public class PlayerBodySlap : PlayerAction
         {
             transform.position = Vector2.Lerp(moveOriginPos, moveTargetPos, bodySlapTimer / currentBodySlapTime);
         }
+    }
+    public override void DoSkill()
+    {
+        bodySlapStart = true;
+
+        bodySlapMoveVec = playerInput.LastMoveVector;
+
+        currentBodySlapTime = bodySlapTime;
+
+        moveOriginPos = transform.position;
+        moveTargetPos = moveOriginPos + bodySlapTime * bodySlapMoveSpeed * bodySlapMoveVec;
+        moveTargetPos = PosCantCrossWall(canCrashLayer, moveOriginPos, moveTargetPos);
+
+        currentBodySlapTime = Vector2.Distance(moveOriginPos, moveTargetPos) / bodySlapMoveSpeed;
+
+        EventManager.TriggerEvent("PlayerBodySlap", bodySlapTime);
+
+        bodySlapTimer = 0f;
+        skillDelayTimer = skillDelay;
     }
     private void OnDisable()
     {
@@ -130,10 +134,16 @@ public class PlayerBodySlap : PlayerAction
     {
 
     }
+    public override void WhenSkillDelayTimerZero()
+    {
+        base.WhenSkillDelayTimerZero();
+
+        canBodySlap = true;
+    }
     private void StopBodySlap()
     {
         stopBodySlapTimer = 0f;
-        bodySlapDelayTimer = bodySlapDelay;
+        skillDelayTimer = skillDelay;
 
         canBodySlap = false;
         bodySlapStart = false;
@@ -149,18 +159,6 @@ public class PlayerBodySlap : PlayerAction
             {
                 stopBodySlapTimer = stopBodySlapTime;
                 bodyStopBodySlapTimerStart = false;
-            }
-        }
-    }
-    private void CheckBodySlapDelay()
-    {
-        if (bodySlapDelayTimer > 0f)
-        {
-            bodySlapDelayTimer -= Time.deltaTime;
-
-            if (bodySlapDelayTimer <= 0f)
-            {
-                canBodySlap = true;
             }
         }
     }

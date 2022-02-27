@@ -39,6 +39,21 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
         set { currentPlayerBody = value; }
     }
     private EternalStat pasteBodyAdditionalStat = new EternalStat();
+
+    private float currentSkillDelay = 0f;
+    public float CurrentSkillDelay
+    {
+        get { return currentSkillDelay; }
+        set { currentSkillDelay = value; }
+    }
+
+    private float currentSkillDelayTimer = 0f;
+    public float CurrentSkillDelayTimer
+    {
+        get { return currentSkillDelayTimer; }
+        set { currentSkillDelayTimer = value; }
+    }
+
     private void Awake()
     {
         playerEnemyUnderstandingRateManager = PlayerEnemyUnderstandingRateManager.Instance;
@@ -88,7 +103,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
             newBody = Instantiate(originPlayerBody, player.transform);
 
-            if(pasteBodyAdditionalStat != null)
+            if (pasteBodyAdditionalStat != null)
             {
                 player.PlayerStat.additionalEternalStat -= pasteBodyAdditionalStat;
 
@@ -115,13 +130,13 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
         if (playerEnemyUnderstandingRateManager.GetUnderstandingRate(bodyId) >= playerEnemyUnderstandingRateManager.MinBodyChangeUnderstandingRate)
         {
             Destroy(currentPlayerBody);
-            
+
             (GameObject, EternalStat) newBodyData = playerEnemyUnderstandingRateManager.ChangalbeBodyDict[bodyId];
 
-            int upNewBodyStat = ((playerEnemyUnderstandingRateManager.GetUnderstandingRate(bodyId) 
+            int upNewBodyStat = ((playerEnemyUnderstandingRateManager.GetUnderstandingRate(bodyId)
             - playerEnemyUnderstandingRateManager.MinBodyChangeUnderstandingRate) / 10);
 
-            if(upNewBodyStat >= 1) // this code is "imsi" code that inserted "imsi" values.
+            if (upNewBodyStat >= 1) // this code is "imsi" code that inserted "imsi" values.
             {
                 upNewBodyStat /= 5; // 10% 마다 0.2배씩 상승
                 newBodyData.Item2 += newBodyData.Item2 * upNewBodyStat;
@@ -129,7 +144,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
             newBody = Instantiate(newBodyData.Item1, player.transform);
 
-            if(pasteBodyAdditionalStat != null)
+            if (pasteBodyAdditionalStat != null)
             {
                 player.PlayerStat.additionalEternalStat -= pasteBodyAdditionalStat;
 
@@ -140,7 +155,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
             player.PlayerStat.additionalEternalStat += newBodyData.Item2;
             Debug.Log(hpPercentage);
-            player.CurrentHp = (int)(player.PlayerStat.MaxHp * hpPercentage); 
+            player.CurrentHp = (int)(player.PlayerStat.MaxHp * hpPercentage);
 
             newBody.AddComponent<PlayerBodyScript>();
 

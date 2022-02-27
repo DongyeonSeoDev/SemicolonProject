@@ -96,6 +96,7 @@ public class Player : MonoBehaviour
                 playerState.IsDead = true;
             }
 
+            EffectManager.Instance.OnDamaged(damage, false,false, transform.position); 
             UIManager.Instance.UpdatePlayerHPUI(true);
         }
     }
