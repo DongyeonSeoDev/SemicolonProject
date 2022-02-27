@@ -6,6 +6,8 @@ public class StageSelect : MonoSingleton<StageSelect>
     public StageDataSO startStage;
 
     [SerializeField]
+    private GameObject nextStageCheck;
+    [SerializeField]
     private GameObject uiObject;
     [SerializeField]
     private Button[] stageButton;
@@ -81,6 +83,11 @@ public class StageSelect : MonoSingleton<StageSelect>
 
         currentStage.SetActive(false);
         startStage = startStage.nextStageList[nextStage];
+
+        if (startStage.nextStageList.Count == 0)
+        {
+            nextStageCheck.SetActive(false);
+        }
 
         currentStage = Instantiate(startStage.stage, transform.position, Quaternion.identity);
         SlimeGameManager.Instance.CurrentPlayerBody.transform.position = startStage.playerStartPosition;

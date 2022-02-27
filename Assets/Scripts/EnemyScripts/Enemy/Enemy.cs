@@ -106,6 +106,8 @@ namespace Enemy
 
                 enemyData.isKnockBack = isKnockBack;
                 enemyData.knockBackPower = knockBackPower;
+
+                EffectManager.Instance.OnDamaged(damage, false, true, transform.position);
             }
         }
 
