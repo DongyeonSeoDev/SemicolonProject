@@ -63,7 +63,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             UpdateDrainProbability(key);
     }
 
-    public void Detail(PlayerEnemyUnderstandingRateManager.ChangeBodyData data, string id) //몹 정보 자세히 보기
+    public void Detail(ChangeBodyData data, string id) //몹 정보 자세히 보기
     {
         if (selectedDetailMobId == id) return;
         selectedDetailMobId = id;
