@@ -118,12 +118,13 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             
             (GameObject, EternalStat) newBodyData = playerEnemyUnderstandingRateManager.ChangalbeBodyDict[bodyId];
 
-            float upNewBodyStat = ((playerEnemyUnderstandingRateManager.GetUnderstandingRate(bodyId) 
-            - playerEnemyUnderstandingRateManager.MinBodyChangeUnderstandingRate) / 10f);
+            int upNewBodyStat = ((playerEnemyUnderstandingRateManager.GetUnderstandingRate(bodyId) 
+            - playerEnemyUnderstandingRateManager.MinBodyChangeUnderstandingRate) / 10);
 
-            if(upNewBodyStat >= 1f)
+            if(upNewBodyStat >= 1) // this code is "imsi" code that inserted "imsi" values.
             {
-                newBodyData.Item2 *= upNewBodyStat; // 이해도가 변신가능 이해도보다 20 높으면 상승하는 능력치가 2배가 됌
+                upNewBodyStat /= 5; // 10% 마다 0.2배씩 상승
+                newBodyData.Item2 += newBodyData.Item2 * upNewBodyStat;
             }
 
             newBody = Instantiate(newBodyData.Item1, player.transform);

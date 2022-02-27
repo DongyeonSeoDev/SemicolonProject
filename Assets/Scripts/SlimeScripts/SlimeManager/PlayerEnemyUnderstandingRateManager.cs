@@ -4,20 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using Water;
 
+[Serializable]
+public struct ChangeBodyData
+{
+    public string bodyName;
+    public Enemy.EnemyType bodyId;
+    public GameObject body;
+    public EternalStat additionalBodyStat; // 변신 후의 플레이어의 Additional스탯, (이해도 100% 기준)
+    public Sprite bodyImg;
+    public ItemSO dropItem;
+    public string bodyExplanation;
+}
 public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnderstandingRateManager>
 {
-    [Serializable]
-    public struct ChangeBodyData
-    {
-        public string bodyName;
-        public Enemy.EnemyType bodyId;
-        public GameObject body;
-        public EternalStat additionalBodyStat; // 변신 후의 플레이어의 Additional스탯, (이해도 100% 기준)
-        public Sprite bodyImg;
-        public ItemSO dropItem;
-        public string bodyExplanation;
-    }
-
     private Dictionary<string, int> playerEnemyUnderStandingRateDic = new Dictionary<string, int>();
     public Dictionary<string, int> PlayerEnemyUnderStandingRateDic
     {
@@ -47,6 +46,10 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
     private int canMountObjNum = 2;
 
     private List<string> mountedObjList = new List<string>(); // 장착한 오브젝트들의 아이디관련 List
+    public List<string> MountedObjList
+    {
+        get { return mountedObjList; }
+    }
 
     [Header("변신을 위한 최소의 이해도")]
     [SerializeField]
@@ -84,7 +87,7 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
     {
         EventManager.StopListening("PlayerDead", ResetUnderstandingRate);
     }
-    public void SetMountingPercentageDict(string key, float value) // 적을 처치했을 때도 올라야함
+    public void SetMountingPercentageDict(string key, float value) 
     {
         if (mountingPercentageDict.ContainsKey(key))
         {
@@ -144,7 +147,7 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
     }
     public void SetMountObj(string objId)
     {
-        if(CheckCanMountObj())
+        if (CheckCanMountObj())
         {
             mountedObjList.Add(objId);
         }
@@ -175,6 +178,9 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
             // 장착을 물어봄
             // 장착을 하면 true를, 장착을 하지 않으면 flase를 return함, 지금은 그냥 true를 return
 
+            Debug.Log("장착 물어보는 창이 뜨네요");
+
+            PlayerEnemyUnderstandingRateManager.Instance.SetMountingPercentageDict(objId, 0); // 장착을 했건 안했건 확률은 0이된다
             PlayerEnemyUnderstandingRateManager.Instance.SetMountObj(objId);
 
             return true;

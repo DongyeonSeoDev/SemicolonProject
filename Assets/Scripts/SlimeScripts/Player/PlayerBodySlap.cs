@@ -14,6 +14,11 @@ public class PlayerBodySlap : PlayerAction
     private Vector2 moveOriginPos = Vector2.zero;
     private Vector2 moveTargetPos = Vector2.zero;
 
+    [Header("BodySlap이 기본 데미지의 몇배의 데미지를 줄 것인가에 대한 값.")]
+    [Header("예를 들어 이 값이 2 이고 기본 데미지가 4면 8의 BodySlap데미지가 들어감")]
+    [SerializeField]
+    private float DamageMagnificationOfBodySlap = 2f;
+
     [Header("돌진하기 전 살짝 뒤로 뺄 때의 속도")]
     [SerializeField]
     private float moveBackSpeed = 8f;
@@ -94,8 +99,6 @@ public class PlayerBodySlap : PlayerAction
         if (playerState.BodySlapping && bodySlapStart && !bodyStopBodySlapTimerStart) // 움직임
         {
             transform.position = Vector2.Lerp(moveOriginPos, moveTargetPos, bodySlapTimer / currentBodySlapTime);
-
-            Debug.Log(bodySlapTimer);
         }
     }
     private void OnDisable()
@@ -111,7 +114,7 @@ public class PlayerBodySlap : PlayerAction
 
             if (enemy != null)
             {
-                enemy.GetDamage(playerStat.Damage, true);
+                enemy.GetDamage((int)(playerStat.Damage * DamageMagnificationOfBodySlap), true);
             }
 
             if (!bodyStopBodySlapTimerStart)
