@@ -96,7 +96,7 @@ public class Player : MonoBehaviour
                 playerState.IsDead = true;
             }
 
-            EffectManager.Instance.OnDamaged(damage, false,false, SlimeGameManager.Instance.CurrentPlayerBody.transform.position); 
+            EffectManager.Instance.OnDamaged(dm, false,false, SlimeGameManager.Instance.CurrentPlayerBody.transform.position); 
             UIManager.Instance.UpdatePlayerHPUI(true);
         }
     }
