@@ -491,8 +491,10 @@ public partial class UIManager : MonoSingleton<UIManager>
         Util.DelayFunc(() => t.gameObject.SetActive(false), 2f, this, true);
     }
 
-    public void RequestSelectionWindow(string message, List<Action> actions, List<string> btnTexts) //선택창을 띄움
+    public void RequestSelectionWindow(string message, List<Action> actions, List<string> btnTexts, bool timePause = true) //선택창을 띄움
     {
+        if(timePause) EventManager.TriggerEvent("TimePause");
+
         selWdStack.ForEach(x => x.Hide(true));
 
         for (int i = 0; i < actions.Count; i++)
@@ -507,10 +509,12 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     public void DoChangeBody(string id)  //몸통 저장할지 창 띄움
     {
-        EventManager.TriggerEvent("TimePause");
         RequestSelectionWindow(MonsterCollection.Instance.mobIdToSlot[id].bodyData.bodyName + "를(을) 변신 슬롯에 저장하시겠습니까?\n(거절하면 해당 몬스터의 흡수 확률은 0%로 돌아갑니다.)",
             new List<Action>() {() => CancelMonsterSaveChance(id), () => SaveMonsterBody(id) }, new List<string>() {"거절", "저장"});
+
+       
     }
+  
 
     public void DefaultSelectionAction() //시스템 확인창에서 각 버튼마다 눌렸을 때의 실행함수에 이 함수를 더해줌
     {
