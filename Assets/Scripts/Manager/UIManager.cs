@@ -332,6 +332,8 @@ public partial class UIManager : MonoSingleton<UIManager>
                 return;
             case UIType.DEATH:
                 return;
+            case UIType.CHANGEABLEMOBLIST:
+                return;
         }
         if (add) activeUIList.Add(ui);
         else activeUIList.Remove(ui);
@@ -522,7 +524,13 @@ public partial class UIManager : MonoSingleton<UIManager>
         RequestSelectionWindow(MonsterCollection.Instance.mobIdToSlot[id].bodyData.bodyName + "를(을) 변신 슬롯에 저장하시겠습니까?\n(거절하면 해당 몬스터의 흡수 확률은 0%로 돌아갑니다.)",
             new List<Action>() {() => CancelMonsterSaveChance(id) , () => SaveMonsterBody(id) }, new List<string>() {"거절", "저장"});
     }
-  
+    
+    public void ShowSavedBodyList(bool isShow)
+    {
+        OnUIInteract(UIType.CHANGEABLEMOBLIST, true);
+
+        EventManager.TriggerEvent(isShow ? "TimePause" : "TimeResume");
+    }
 
     public void DefaultSelectionAction() //시스템 확인창에서 각 버튼마다 눌렸을 때의 실행함수에 이 함수를 더해줌
     {
