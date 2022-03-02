@@ -53,8 +53,8 @@ public class MonsterInfoSlot : MonoBehaviour
 
     public void UpdateDrainProbability(float prob)
     {
-        drainProbabilityFill.fillAmount = Mathf.Clamp(prob, 0, 1f);
-
+        drainProbabilityFill.fillAmount = Mathf.Clamp(prob/100f, 0, 1f);
+        
         if(prob >= 1)
         {
             //π∫∞° UI ¿Ã∆Â∆Æ §°
