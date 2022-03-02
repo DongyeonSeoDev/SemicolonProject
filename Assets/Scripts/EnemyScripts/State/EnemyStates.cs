@@ -226,6 +226,7 @@ namespace Enemy
             if (enemyData.isKnockBack)
             {
                 enemyCommand[1].Execute();
+                currentTime -= enemyData.stunTime;
 
                 enemyData.isKnockBack = false;
             }
