@@ -135,13 +135,13 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             return;
         }
 
-        if (playerEnemyUnderstandingRateManager.GetUnderstandingRate(bodyId) >= playerEnemyUnderstandingRateManager.MinBodyChangeUnderstandingRate)
+        if (playerEnemyUnderstandingRateManager.GetCollection(bodyId) >= playerEnemyUnderstandingRateManager.MinBodyChangeUnderstandingRate)
         {
             Destroy(currentPlayerBody);
 
             (GameObject, EternalStat) newBodyData = playerEnemyUnderstandingRateManager.ChangalbeBodyDict[bodyId];
 
-            int upNewBodyStat = ((playerEnemyUnderstandingRateManager.GetUnderstandingRate(bodyId)
+            int upNewBodyStat = ((playerEnemyUnderstandingRateManager.GetCollection(bodyId)
             - playerEnemyUnderstandingRateManager.MinBodyChangeUnderstandingRate) / 10);
 
             if (upNewBodyStat >= 1) // this code is "imsi" code that inserted "imsi" values.
@@ -178,7 +178,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
             UIManager.Instance.UpdatePlayerHPUI();
             cinemachineCameraScript.SetCinemachineFollow(newBody.transform);
-            playerEnemyUnderstandingRateManager.SetUnderstandingRate(bodyId, 0);
+            playerEnemyUnderstandingRateManager.SetCollection(bodyId, 0);
 
             EventManager.TriggerEvent("ChangeBody");
 

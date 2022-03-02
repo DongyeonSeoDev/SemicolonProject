@@ -19,14 +19,14 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
     public Image mobDropItemImg;
 
-    //¸÷ µå¶øÅÛ Á¤º¸ È®ÀÎÃ¢
+    //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½Ã¢
     public Triple<Image, Text, Text> mobItemImgNameEx;
 
-    public Text[] statText; //¸÷À¸·Î º¯½Å½Ã »ó½Â ´É·ÂÄ¡ È®ÀÎ ÅØ½ºÆ®
+    public Text[] statText; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Å½ï¿½ ï¿½ï¿½ï¿½ ï¿½É·ï¿½Ä¡ È®ï¿½ï¿½ ï¿½Ø½ï¿½Æ®
 
     #endregion
 
-    //¸÷ ÀúÀå ½½·Ô ²Ë Ã¡À» ¶§ Á¦°ÅÇÒ ½½·Ô ¼±ÅÃÃ¢ÀÇ ½½·Ôµé
+    //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Ã¡ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¢ï¿½ï¿½ ï¿½ï¿½ï¿½Ôµï¿½
     [Space(15)]
     [SerializeField] private List<ChangeBodySlot> changeBodySlots;
 
@@ -40,7 +40,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         
         mobInfoUIPair.second.GetComponent<GridLayoutGroup>().constraintCount = Mathf.Clamp(urmg.ChangableBodyList.Count / 3 + 1, 6, 10000);
 
-        //¸ðµç ¸÷ Á¤º¸ °¡Á®¿Í¼­ UI»ý¼ºÇÏ°í °ª ³ÖÀ½
+        //ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í¼ï¿½ UIï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         urmg.ChangableBodyList.ForEach(body =>
         {
             MonsterInfoSlot ui = Instantiate(mobInfoUIPair.first, mobInfoUIPair.second).GetComponent<MonsterInfoSlot>();
@@ -59,20 +59,20 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         });
     }
 
-    public void UpdateCollection(string id)  //¸÷ µ¿È­À² Á¤º¸ ¾÷µ«
+    public void UpdateCollection(string id)  //ï¿½ï¿½ ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     { 
-        mobIdToSlot[id].UpdateAssimilationRate((float)urmg.PlayerEnemyUnderStandingRateDic[id]/urmg.MinBodyChangeUnderstandingRate);
+        mobIdToSlot[id].UpdateAssimilationRate((float)urmg.PlayerEnemyCollectionDic[id]/urmg.MinBodyChangeUnderstandingRate);
     }
 
-    public void AllUpdateCollection()   //¸ðµç ¸÷ µ¿È­À² Á¤º¸ ¾÷µ«
+    public void AllUpdateCollection()   //ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½È­ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         foreach (string key in mobIdToSlot.Keys)
             UpdateCollection(key);
     }
 
-    public void UpdateDrainProbability(string id) //¸÷ Èí¼ö È®·ü Á¤º¸ ¾÷µ«
+    public void UpdateDrainProbability(string id) //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
-        mobIdToSlot[id].UpdateDrainProbability(urmg.GetMountingPercentageDict(id));
+        mobIdToSlot[id].UpdateDrainProbability(urmg.GetDrainProbabilityDict(id));
     }
     public void AllUpdateDrainProbability()
     {
@@ -80,7 +80,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             UpdateDrainProbability(key);
     }
 
-    public void Detail(ChangeBodyData data, string id) //¸÷ Á¤º¸ ÀÚ¼¼È÷ º¸±â
+    public void Detail(ChangeBodyData data, string id) //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         if (selectedDetailMobId == id) return;
         selectedDetailMobId = id;
@@ -96,7 +96,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         mobDropItemImg.GetComponent<NameInfoFollowingCursor>().explanation = item.itemName;
     }
 
-    public void CloseDetail() //¸÷ Á¤º¸ ÀÚ¼¼È÷ º¸±â ´ÝÀ½
+    public void CloseDetail() //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         selectedDetailMobId = string.Empty;
     }
@@ -110,7 +110,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         statText[0].text = "+" + stat.maxHp.ToString();
         statText[1].text = "+" + stat.damage.ToString();
         statText[2].text = "+" + stat.defense.ToString();
-        statText[3].text = "+" + Mathf.RoundToInt(Mathf.Abs(stat.speed)).ToString(); //½ºÇÇµå°¡ ¸îÀÎÁö ¼Ò¼ö·Î ³ª¿À¸é ¾î»öÇÒ °Í °°¾Æ¼­ ÀÏ´ÜÀº Á¤¼ö·Î ³ª¿À°Ô ÇÔ.
+        statText[3].text = "+" + Mathf.RoundToInt(Mathf.Abs(stat.speed)).ToString(); //ï¿½ï¿½ï¿½Çµå°¡ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò¼ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Æ¼ï¿½ ï¿½Ï´ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½.
         statText[4].text = "+" + string.Concat(stat.criticalRate, '%');
         statText[5].text = string.Concat( '+', stat.criticalDamage);
         statText[6].text = string.Concat('+', stat.intellect);
@@ -147,9 +147,9 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     public void Save()
     {
         UserInfo uInfo = GameManager.Instance.savedData.userInfo;
-        foreach(string key in urmg.PlayerEnemyUnderStandingRateDic.Keys)
+        foreach(string key in urmg.PlayerEnemyCollectionDic.Keys)
         {
-            uInfo.monsterInfoDic[key] = new MonsterInfo(key, urmg.PlayerEnemyUnderStandingRateDic[key], urmg.GetMountingPercentageDict(key));
+            uInfo.monsterInfoDic[key] = new MonsterInfo(key, urmg.PlayerEnemyCollectionDic[key], urmg.GetDrainProbabilityDict(key));
         }
     }
 
@@ -158,8 +158,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         UserInfo uInfo = GameManager.Instance.savedData.userInfo;
         foreach (string key in uInfo.monsterInfoDic.keyList)
         {
-            urmg.PlayerEnemyUnderStandingRateDic[key] = uInfo.monsterInfoDic[key].understandingRate;
-            urmg.MountingPercentageDict[key] = uInfo.monsterInfoDic[key].absorptionRate;
+            urmg.PlayerEnemyCollectionDic[key] = uInfo.monsterInfoDic[key].understandingRate;
+            urmg.DrainProbabilityDict[key] = uInfo.monsterInfoDic[key].absorptionRate;
         }
     }
     #endregion
