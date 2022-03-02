@@ -175,9 +175,9 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
 
         float value = UnityEngine.Random.Range(0f, 100f);
 
-        if (value <= PlayerEnemyUnderstandingRateManager.Instance.GetMountingPercentageDict(objId)) // 확률 체크
+        if (value <= GetMountingPercentageDict(objId)) // 확률 체크
         {
-            if (!PlayerEnemyUnderstandingRateManager.Instance.CheckCanMountObj())
+            if (!CheckCanMountObj())
             {
                 return;
             }
@@ -198,7 +198,7 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
                 willUpUnderstandingRateDict.Add(objId, queue);
             }
 
-            PlayerEnemyUnderstandingRateManager.Instance.SetMountingPercentageDict(objId, 0); // 장착을 했건 안했건 확률은 0이된다
+            SetMountingPercentageDict(objId, 0); // 장착을 했건 안했건 확률은 0이된다
         }
     }
     public void MountBody(string objId, bool mountIt)
@@ -213,12 +213,11 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
     }
     public void UpUnderStandingRate(string objId, int upValue) // 이해도(동화율)을 올려줌
     {
-        PlayerEnemyUnderstandingRateManager.Instance.SetUnderstandingRate(objId,
-            PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(objId) + upValue);
+        SetUnderstandingRate(objId, GetUnderstandingRate(objId) + upValue);
 
-        if (PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(objId) > PlayerEnemyUnderstandingRateManager.Instance.MaxUnderstandingRate) // 최대치 처리
+        if (GetUnderstandingRate(objId) > MaxUnderstandingRate) // 최대치 처리
         {
-            PlayerEnemyUnderstandingRateManager.Instance.SetUnderstandingRate(objId, PlayerEnemyUnderstandingRateManager.Instance.MaxUnderstandingRate);
+            SetUnderstandingRate(objId, MaxUnderstandingRate);
         }
     }
 }
