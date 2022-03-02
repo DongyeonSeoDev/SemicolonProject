@@ -75,6 +75,7 @@ namespace Enemy
         public float damageDelay = 0.1f;
         public float rushForce = 100f;
         public float knockBackPower;
+        public float stunTime;
 
         public bool isDamaged = false;
         public bool isAttack = false;

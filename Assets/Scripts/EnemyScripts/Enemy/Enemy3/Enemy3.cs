@@ -23,7 +23,7 @@ namespace Enemy
                 isUseDelay = true,
                 isSeePlayerDistance = 20f,
                 isAttackPlayerDistance = 7f,
-                attackDelay = 3f,
+                attackDelay = 2f,
                 chaseSpeed = 2f,
                 attackDamage = 20,
                 maxHP = 50,

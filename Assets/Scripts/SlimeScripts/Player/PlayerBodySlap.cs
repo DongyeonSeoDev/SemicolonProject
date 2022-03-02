@@ -17,7 +17,7 @@ public class PlayerBodySlap : PlayerSpecialSkill
     [Header("BodySlap이 기본 데미지의 몇배의 데미지를 줄 것인가에 대한 값.")]
     [Header("예를 들어 이 값이 2 이고 기본 데미지가 4면 8의 BodySlap데미지가 들어감")]
     [SerializeField]
-    private float DamageMagnificationOfBodySlap = 2f;
+    private float damageMagnificationOfBodySlap = 2f;
 
     [Header("돌진하기 전 살짝 뒤로 뺄 때의 속도")]
     [SerializeField]
@@ -118,7 +118,7 @@ public class PlayerBodySlap : PlayerSpecialSkill
 
             if (enemy != null)
             {
-                enemy.GetDamage((int)(playerStat.Damage * DamageMagnificationOfBodySlap), true);
+                enemy.GetDamage((int)(playerStat.Damage * damageMagnificationOfBodySlap), true);
             }
 
             if (!bodyStopBodySlapTimerStart)

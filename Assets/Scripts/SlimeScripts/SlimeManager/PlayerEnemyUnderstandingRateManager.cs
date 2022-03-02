@@ -51,6 +51,8 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
         get { return mountedObjList; }
     }
 
+    private Dictionary<string, Queue<int>> willUpUnderstandingRateDict = new Dictionary<string, Queue<int>>(); // 후에 올라갈 이해도의 몹 아이디값과 올라갈 수치값
+
     [Header("변신을 위한 최소의 이해도")]
     [SerializeField]
     private int minBodyChangeUnderstandingRate = 100;
@@ -58,6 +60,7 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
     {
         get { return minBodyChangeUnderstandingRate; }
     }
+
     [Header("이해도를 어디까지 올릴 수 있는가")]
     [SerializeField]
     private int maxUnderstandingRate = 120;
@@ -65,6 +68,7 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
     {
         get { return maxUnderstandingRate; }
     }
+
 
     void Start()
     {
@@ -82,10 +86,12 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
         });
 
         EventManager.StartListening("PlayerDead", ResetUnderstandingRate);
+        EventManager.StartListening("PlayerBodySet", MountBody);
     }
     private void OnDisable()
     {
         EventManager.StopListening("PlayerDead", ResetUnderstandingRate);
+        EventManager.StopListening("PlayerBodySet", MountBody);
     }
     public void SetMountingPercentageDict(string key, float value) 
     {
@@ -97,6 +103,8 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
         {
             mountingPercentageDict.Add(key, value);
         }
+
+        MonsterCollection.Instance.UpdateDrainProbability(key);
     }
     public float GetMountingPercentageDict(string key)
     {
@@ -120,6 +128,8 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
         {
             playerEnemyUnderStandingRateDic.Add(key, value);
         }
+
+        MonsterCollection.Instance.UpdateCollection(key);
     }
     public int GetUnderstandingRate(string key)
     {
@@ -160,44 +170,58 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
     {
         return mountedObjList.Contains(objId);
     }
-    public bool CheckMountingEnemy(string objId)
+    public void CheckMountingEnemy(string objId, int upValue)
     {
         if (!PlayerEnemyUnderstandingRateManager.Instance.MountingPercentageDict.ContainsKey(objId))
         {
-            return false;
+            return;
         }
 
         float value = UnityEngine.Random.Range(0f, 100f);
 
-        if (value <= PlayerEnemyUnderstandingRateManager.Instance.GetMountingPercentageDict(objId)) // 확률 체크
+        if (value <= GetMountingPercentageDict(objId)) // 확률 체크
         {
-            if (!PlayerEnemyUnderstandingRateManager.Instance.CheckCanMountObj())
+            if (!CheckCanMountObj())
             {
-                return false;
+                return;
             }
             // 장착을 물어봄
             // 장착을 하면 true를, 장착을 하지 않으면 flase를 return함, 지금은 그냥 true를 return
 
             Debug.Log("장착 물어보는 창이 뜨네요");
 
-            PlayerEnemyUnderstandingRateManager.Instance.SetMountingPercentageDict(objId, 0); // 장착을 했건 안했건 확률은 0이된다
-            PlayerEnemyUnderstandingRateManager.Instance.SetMountObj(objId);
+            if(willUpUnderstandingRateDict.ContainsKey(objId))
+            {
+                willUpUnderstandingRateDict[objId].Enqueue(upValue);
+            }
+            else
+            {
+                Queue<int> queue = new Queue<int>();
+                queue.Enqueue(upValue);
 
-            return true;
+                willUpUnderstandingRateDict.Add(objId, queue);
+            }
+
+            SetMountingPercentageDict(objId, 0); // 장착을 했건 안했건 확률은 0이된다
         }
-        else
+    }
+    public void MountBody(string objId, bool mountIt)
+    {
+        int upValue = willUpUnderstandingRateDict[objId].Dequeue();
+
+        if(mountIt)
         {
-            return false;
+            SetMountObj(objId);
+            UpUnderStandingRate(objId, upValue);
         }
     }
     public void UpUnderStandingRate(string objId, int upValue) // 이해도(동화율)을 올려줌
     {
-        PlayerEnemyUnderstandingRateManager.Instance.SetUnderstandingRate(objId,
-            PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(objId) + upValue);
+        SetUnderstandingRate(objId, GetUnderstandingRate(objId) + upValue);
 
-        if (PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(objId) > PlayerEnemyUnderstandingRateManager.Instance.MaxUnderstandingRate) // 최대치 처리
+        if (GetUnderstandingRate(objId) > MaxUnderstandingRate) // 최대치 처리
         {
-            PlayerEnemyUnderstandingRateManager.Instance.SetUnderstandingRate(objId, PlayerEnemyUnderstandingRateManager.Instance.MaxUnderstandingRate);
+            SetUnderstandingRate(objId, MaxUnderstandingRate);
         }
     }
 }

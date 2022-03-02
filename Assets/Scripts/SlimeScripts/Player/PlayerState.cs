@@ -48,12 +48,30 @@ public class PlayerState : MonoBehaviour
         set { bodySlapping = value; }
     }
 
+    private bool isKnockBack = false;
+    public bool IsKnockBack
+    {
+        get { return isKnockBack; }
+        set { isKnockBack = value; }
+    }
+    private bool isSturn = false;
+    public bool IsSturn
+    {
+        get { return isSturn; }
+        set { isSturn = value; }
+    }
+
     void Start()
     {
         playerInput = GetComponent<PlayerInput>();
     }
 
     void Update()
+    {
+        LastMovingPointSet();
+    }
+
+    private void LastMovingPointSet()
     {
         float horizontal = playerInput.MoveVector.x;
         float vertical = playerInput.MoveVector.y;
