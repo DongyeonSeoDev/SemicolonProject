@@ -103,6 +103,8 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
         {
             mountingPercentageDict.Add(key, value);
         }
+
+        MonsterCollection.Instance.UpdateDrainProbability(key);
     }
     public float GetMountingPercentageDict(string key)
     {
@@ -126,6 +128,8 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
         {
             playerEnemyUnderStandingRateDic.Add(key, value);
         }
+
+        MonsterCollection.Instance.UpdateCollection(key);
     }
     public int GetUnderstandingRate(string key)
     {
