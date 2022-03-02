@@ -93,22 +93,24 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
                 return false;
             case KeyCode.D:
                 return false;
-            case KeyCode.UpArrow:
-                return false;
-            case KeyCode.LeftArrow:
-                return false;
-            case KeyCode.RightArrow:
-                return false;
-            case KeyCode.DownArrow:
-                return false;
             case KeyCode.LeftCommand:
                 return false;
             case KeyCode.RightCommand:
                 return false;
             case KeyCode.Menu:
                 return false;
-            /*case KeyCode.Escape:
+
+
+           /*case KeyCode.UpArrow:
+                return false;
+            case KeyCode.LeftArrow:
+                return false;
+            case KeyCode.RightArrow:
+                return false;
+            case KeyCode.DownArrow:
                 return false;*/
+                /*case KeyCode.Escape:
+                    return false;*/
         }
         return true;
     }
