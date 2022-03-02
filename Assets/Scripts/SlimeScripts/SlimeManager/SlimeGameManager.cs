@@ -146,7 +146,6 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
             if (upNewBodyStat >= 1) // this code is "imsi" code that inserted "imsi" values.
             {
-                // TODO: 5 이거 변수로 빼두기
                 upNewBodyStat = (int)(upNewBodyStat * upStatPercentage); // 10% 마다 0.2배씩 상승
                 newBodyData.Item2 += newBodyData.Item2 * upNewBodyStat;
             }
