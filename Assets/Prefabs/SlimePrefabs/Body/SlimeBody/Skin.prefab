@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2719926800889116082}
   - component: {fileID: 79265675134852617}
   - component: {fileID: 8381510225919103737}
+  - component: {fileID: 7622354014953315865}
   m_Layer: 3
   m_Name: Skin
   m_TagString: Untagged
@@ -71,7 +72,7 @@ SpriteShapeRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1646225281
-  m_SortingLayer: 1
+  m_SortingLayer: 4
   m_SortingOrder: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_MaskInteraction: 0
@@ -210,3 +211,16 @@ MonoBehaviour:
   m_EnableTangents: 0
   m_GeometryCached: 0
   m_UTess2D: 0
+--- !u!114 &7622354014953315865
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8424396612067375027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f05ec78752e5ac4a8d241937c095199, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shader: {fileID: -6465566751694194690, guid: c364b2f6d92c3d94fb154cb63a77dd9c, type: 3}
