@@ -89,6 +89,11 @@ namespace Enemy
                 isDelay = enemyData.IsAttackDelay();
             }
 
+            if (enemyData.isEndAttackAnimation)
+            {
+                enemyData.enemyAnimator.ResetTrigger(enemyData.hashEndAttack);
+            }
+
             if (!isDelay)
             {
                 enemyData.enemyAnimator.SetTrigger(enemyData.hashAttack);
