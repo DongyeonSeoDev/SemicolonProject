@@ -15,11 +15,11 @@ public class IngredientCount
 public class MonsterInfo
 {
     public string id;
-    public int understandingRate;
-    public int absorptionRate;
+    public int understandingRate; //ÀÌÇØµµ (µ¿È­À²)
+    public float absorptionRate; //Èí¼ö È®·ü
 
     public MonsterInfo() { }
-    public MonsterInfo(string id, int understandingRate, int absorptionRate)
+    public MonsterInfo(string id, int understandingRate, float absorptionRate)
     {
         this.id = id;
         this.understandingRate = understandingRate;

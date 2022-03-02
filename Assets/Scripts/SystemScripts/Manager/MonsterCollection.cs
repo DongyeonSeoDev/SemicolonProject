@@ -22,6 +22,10 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     //몹 드랍템 정보 확인창
     public Triple<Image, Text, Text> mobItemImgNameEx;
 
+    public Text[] statText; //몹으로 변신시 상승 능력치 확인 텍스트
+
+    #endregion
+
     //몹 저장 슬롯 꽉 찼을 때 제거할 슬롯 선택창의 슬롯들
     [Space(15)]
     [SerializeField] private List<ChangeBodySlot> changeBodySlots;
@@ -29,7 +33,6 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     //Bottom Left Save Body UI List
     [Space(15)]
     [SerializeField] private List<ChangeableBody> savedBodys;
-    #endregion
 
     private void Start()
     {
@@ -48,6 +51,12 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         Load();
         AllUpdateCollection();
         AllUpdateDrainProbability();
+
+        EventManager.StartListening("PlayerDead", () =>
+        {
+            AllUpdateCollection();
+            AllUpdateDrainProbability();
+        });
     }
 
     public void UpdateCollection(string id)  //몹 동화율 정보 업뎃
@@ -98,7 +107,13 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     {
         EternalStat stat = mobIdToSlot[selectedDetailMobId].bodyData.additionalBodyStat;
 
-
+        statText[0].text = "+" + stat.maxHp.ToString();
+        statText[1].text = "+" + stat.damage.ToString();
+        statText[2].text = "+" + stat.defense.ToString();
+        statText[3].text = "+" + Mathf.RoundToInt(Mathf.Abs(stat.speed)).ToString(); //스피드가 몇인지 소수로 나오면 어색할 것 같아서 일단은 정수로 나오게 함.
+        statText[4].text = "+" + string.Concat(stat.criticalRate, '%');
+        statText[5].text = string.Concat( '+', stat.criticalDamage);
+        statText[6].text = string.Concat('+', stat.intellect);
     }
 
     #endregion
@@ -131,17 +146,20 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     #region save and load
     public void Save()
     {
+        UserInfo uInfo = GameManager.Instance.savedData.userInfo;
         foreach(string key in urmg.PlayerEnemyUnderStandingRateDic.Keys)
         {
-            GameManager.Instance.savedData.userInfo.monstersAssimilationRate[key] = urmg.PlayerEnemyUnderStandingRateDic[key];       
+            uInfo.monsterInfoDic[key] = new MonsterInfo(key, urmg.PlayerEnemyUnderStandingRateDic[key], urmg.GetMountingPercentageDict(key));
         }
     }
 
     public void Load()
     {
-        foreach(string key in GameManager.Instance.savedData.userInfo.monstersAssimilationRate.keyList)
+        UserInfo uInfo = GameManager.Instance.savedData.userInfo;
+        foreach (string key in uInfo.monsterInfoDic.keyList)
         {
-            urmg.PlayerEnemyUnderStandingRateDic[key] = GameManager.Instance.savedData.userInfo.monstersAssimilationRate[key];
+            urmg.PlayerEnemyUnderStandingRateDic[key] = uInfo.monsterInfoDic[key].understandingRate;
+            urmg.MountingPercentageDict[key] = uInfo.monsterInfoDic[key].absorptionRate;
         }
     }
     #endregion

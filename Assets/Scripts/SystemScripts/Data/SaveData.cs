@@ -11,13 +11,13 @@ public class SaveData
     public void Save()
     {
         userInfo.userItems.Save();
-        userInfo.monstersAssimilationRate.Save();
+        userInfo.monsterInfoDic.Save();
         option.keyInputDict.Save();
     }
     public void Load()
     {
         userInfo.userItems.Load();
-        userInfo.monstersAssimilationRate.Load();
+        userInfo.monsterInfoDic.Load();
         option.keyInputDict.Load();
     }
 }
@@ -31,7 +31,7 @@ public class UserInfo
 
     public SaveDic<int, ItemInfo> userItems = new SaveDic<int, ItemInfo>(); //인벤토리 목록 
 
-    public SaveDic<string, int> monstersAssimilationRate = new SaveDic<string, int>(); //몬스터 동화율
+    //public SaveDic<string, int> monstersAssimilationRate = new SaveDic<string, int>(); //몬스터 동화율
 
     public SaveDic<string, MonsterInfo> monsterInfoDic = new SaveDic<string, MonsterInfo>(); //몬스터 이해도(동화율), 흡수 확률 등의 정보
 }
