@@ -54,6 +54,14 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
         set { currentSkillDelayTimer = value; }
     }
 
+    [Header("동화율 10퍼당 변신시 오르게되는 능력치가 오르게 되는 수치")]
+    [SerializeField]
+    private float upStatPercentage = 0.2f;
+    public float UpStatPercentage
+    {
+        get { return upStatPercentage; }
+    }
+
     private void Awake()
     {
         playerEnemyUnderstandingRateManager = PlayerEnemyUnderstandingRateManager.Instance;
@@ -138,7 +146,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
             if (upNewBodyStat >= 1) // this code is "imsi" code that inserted "imsi" values.
             {
-                upNewBodyStat /= 5; // 10% 마다 0.2배씩 상승
+                upNewBodyStat = (int)(upNewBodyStat * upStatPercentage); // 10% 마다 0.2배씩 상승
                 newBodyData.Item2 += newBodyData.Item2 * upNewBodyStat;
             }
 

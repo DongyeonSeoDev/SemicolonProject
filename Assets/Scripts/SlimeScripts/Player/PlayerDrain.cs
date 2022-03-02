@@ -103,16 +103,15 @@ public class PlayerDrain : PlayerAction
 
                     PlayerEnemyUnderstandingRateManager.Instance.SetMountingPercentageDict(objId, PlayerEnemyUnderstandingRateManager.Instance.GetMountingPercentageDict(objId) + upMountingPercentageValue);
 
+                    PlayerEnemyUnderstandingRateManager.Instance.CheckMountingEnemy(objId, item.Item2);
+
                     if (PlayerEnemyUnderstandingRateManager.Instance.CheckMountObjIdContain(objId))
                     {
                         PlayerEnemyUnderstandingRateManager.Instance.UpUnderStandingRate(objId, item.Item2);
                     }
                     else
                     {
-                        if (PlayerEnemyUnderstandingRateManager.Instance.CheckMountingEnemy(objId))
-                        {
-                            PlayerEnemyUnderstandingRateManager.Instance.UpUnderStandingRate(objId, item.Item2);
-                        }
+                        PlayerEnemyUnderstandingRateManager.Instance.CheckMountingEnemy(objId, item.Item2);
                     }
 
                     removeList.Add(item);

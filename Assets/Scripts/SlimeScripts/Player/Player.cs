@@ -129,16 +129,15 @@ public class Player : MonoBehaviour
     {
         PlayerEnemyUnderstandingRateManager.Instance.SetMountingPercentageDict(objId, PlayerEnemyUnderstandingRateManager.Instance.GetMountingPercentageDict(objId) + upMountingPercentageValueWhenEnemyDead);
 
+        PlayerEnemyUnderstandingRateManager.Instance.CheckMountingEnemy(objId, upUnderstandingRateValueWhenEnemyDead);
+
         if (PlayerEnemyUnderstandingRateManager.Instance.CheckMountObjIdContain(objId))
         {
             PlayerEnemyUnderstandingRateManager.Instance.UpUnderStandingRate(objId, upUnderstandingRateValueWhenEnemyDead);
         }
         else
         {
-            if (PlayerEnemyUnderstandingRateManager.Instance.CheckMountingEnemy(objId))
-            {
-                PlayerEnemyUnderstandingRateManager.Instance.UpUnderStandingRate(objId, upUnderstandingRateValueWhenEnemyDead);
-            }
+            PlayerEnemyUnderstandingRateManager.Instance.CheckMountingEnemy(objId, upUnderstandingRateValueWhenEnemyDead);
         }
     }
     private void SetActiveFalse()

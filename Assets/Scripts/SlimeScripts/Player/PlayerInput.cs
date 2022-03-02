@@ -71,7 +71,7 @@ public class PlayerInput : MonoBehaviour
 
     void Update()
     {
-        if (!playerState.IsDead && !isPause)
+        if (!(playerState.IsDead || playerState.IsSturn || playerState.IsKnockBack) && !isPause)
         {
             mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 

@@ -12,22 +12,34 @@ public class PlayerShoot : PlayerAction
     [SerializeField]
     private float projectileSpeed = 1f;
 
+    [SerializeField]
+    private float projectileDelayTime = 0.2f;
+    private float projectileDelayTimer = 0f;
+
+    private bool canShoot = true;
+
     public override void Awake()
     {
         slimePoolManager = SlimePoolManager.Instance;
 
         base.Awake();
     }
-
+    private void Update()
+    {
+        CheckProjectileDelayTimer();
+    }
     void FixedUpdate()
     {
         if (playerInput.IsShoot && !playerState.BodySlapping)
         {
-            Shoot();
+            if (canShoot)
+            {
+                Shoot();
+            }
 
             playerInput.IsShoot = false;
         }
-        else if(playerInput.IsShoot)
+        else if (playerInput.IsShoot)
         {
             playerInput.IsShoot = false;
         }
@@ -54,6 +66,22 @@ public class PlayerShoot : PlayerAction
         temp.transform.position = transform.position;
         temp.GetComponent<PlayerProjectile>().OnSpawn(direction, projectileSpeed);
 
+        projectileDelayTimer = projectileDelayTime;
+        canShoot = false;
+
         EventManager.TriggerEvent("PlayerShoot");
     }
+    private void CheckProjectileDelayTimer()
+    {
+        if (projectileDelayTimer > 0f)
+        {
+            projectileDelayTimer -= Time.deltaTime;
+
+            if (projectileDelayTimer <= 0f)
+            {
+                canShoot = true;
+            }
+        }
+    }
+
 }

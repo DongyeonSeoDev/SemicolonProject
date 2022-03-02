@@ -197,6 +197,7 @@ GameObject:
   - component: {fileID: 4791505076498265380}
   - component: {fileID: 3493340178899303131}
   - component: {fileID: 5835559770882864823}
+  - component: {fileID: 8968387448068834084}
   m_Layer: 3
   m_Name: SlimeBody
   m_TagString: Player
@@ -331,6 +332,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ee162ed4446db94c87dc466abfbdab4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  whatIsWall:
+    serializedVersion: 2
+    m_Bits: 0
   returnToOriginSpeed: 2
   moveToMiddleSpeed: 1
   moveToMiddleTime: 1
@@ -377,13 +381,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59d36701c30794f4dbc1bfef38a2c877, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillDelay: 5
   canCrashLayer:
     serializedVersion: 2
     m_Bits: 192
-  whatIsWall:
-    serializedVersion: 2
-    m_Bits: 64
   bodySlapMoveVec: {x: 0, y: 0}
+  damageMagnificationOfBodySlap: 2
   moveBackSpeed: 5
   bodySlapMoveSpeed: 50
   bodySlapTime: 0.15
@@ -403,6 +406,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   projectile: {fileID: 8223448895546236962, guid: 6188b8fe7b7eef448a7491f9bdb9599e, type: 3}
   projectileSpeed: 10
+  projectileDelayTime: 0.2
 --- !u!114 &3493340178899303131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -416,6 +420,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   drainCollider: {fileID: 6491635181836223920}
+  upMountingPercentageValue: 5
+  upUnderstandingRateValue: 1
   drainSpeed: 2
   drainDoneDistance: 0.1
   reDrainTime: 10
@@ -429,6 +435,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f35d13af0e2cb884da1f8d005be3517d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8968387448068834084
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6840160282341942530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e6897f257b5453499242149c42bbd4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &252599340897420603

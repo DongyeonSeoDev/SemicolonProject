@@ -7,6 +7,9 @@ public class BodyPoint : MonoBehaviour
     private MiddlePoint middlePoint = null;
 
     [SerializeField]
+    private LayerMask whatIsWall;
+
+    [SerializeField]
     private float returnToOriginSpeed = 2f;
     [SerializeField]
     private float moveToMiddleSpeed = 1f;
@@ -54,6 +57,7 @@ public class BodyPoint : MonoBehaviour
 
         if (!isMiddlePoint)
         {
+            CheckCrossWall();
             MoveToMiddleTimerCheck();
         }
     }
@@ -70,6 +74,23 @@ public class BodyPoint : MonoBehaviour
     {
         EventManager.StopListening("PlayerShoot", PlayerShoot);
         EventManager.StopListening("PlayerBodySlap", PlayerBodySlap);
+    }
+    private void CheckCrossWall()
+    {
+        Ray2D ray;
+        RaycastHit2D hit;
+        float distance = 0f;
+
+        ray = new Ray2D(transform.position, (middlePoint.transform.position - transform.position).normalized);
+        distance = Vector2.Distance(transform.position, middlePoint.transform.position);
+
+        hit = Physics2D.Raycast(ray.origin, ray.direction, distance, whatIsWall);
+
+        if (hit)
+        {
+            moveToMiddleTimer = 0.1f;
+            Debug.Log("앗 벽에 끼었수다. 지금 빼드리리다");
+        }
     }
     private void PlayerShoot()
     {
