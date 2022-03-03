@@ -92,7 +92,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
     {
         currentPlayerBody.SetActive(false);
     }
-    public void PlayerBodyChange(string bodyId)
+    public void PlayerBodyChange(string bodyId, bool isDead = false)
     {
         Player player = SlimeGameManager.Instance.player;
 
@@ -111,7 +111,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
             newBody = Instantiate(originPlayerBody, player.transform);
 
-            if (pasteBodyAdditionalStat != null)
+            if (pasteBodyAdditionalStat != null && !isDead)
             {
                 player.PlayerStat.additionalEternalStat -= pasteBodyAdditionalStat;
 
@@ -152,7 +152,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
             newBody = Instantiate(newBodyData.Item1, player.transform);
 
-            if (pasteBodyAdditionalStat != null)
+            if (pasteBodyAdditionalStat != null && !isDead)
             {
                 player.PlayerStat.additionalEternalStat -= pasteBodyAdditionalStat;
 

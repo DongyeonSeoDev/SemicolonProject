@@ -153,7 +153,7 @@ public class Player : MonoBehaviour
 
         UIManager.Instance.UpdatePlayerHPUI();
 
-        SlimeGameManager.Instance.PlayerBodyChange("origin");
+        SlimeGameManager.Instance.PlayerBodyChange("origin", true);
 
         EventManager.TriggerEvent("AfterPlayerRespawn");
     }
