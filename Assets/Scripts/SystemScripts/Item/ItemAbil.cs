@@ -21,7 +21,9 @@ public static class ItemUseMng
 
     public static void IncreaseStr(Player p, int value)
     {
-        p.PlayerStat.additionalEternalStat.damage += value;
+        p.PlayerStat.additionalEternalStat.minDamage += value;
+        p.PlayerStat.additionalEternalStat.maxDamage += value;
+
         UIManager.Instance.InsertNoticeQueue("°ø°Ý·Â " + value + " »ó½Â");
         EffectManager.Instance.OnTopRightBtnEffect(UIType.STAT, true);
     }

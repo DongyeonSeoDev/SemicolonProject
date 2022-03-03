@@ -118,7 +118,9 @@ public class PlayerBodySlap : PlayerSpecialSkill
 
             if (enemy != null)
             {
-                enemy.GetDamage((int)(playerStat.Damage * damageMagnificationOfBodySlap), true);
+                int damage = Random.Range(SlimeGameManager.Instance.Player.PlayerStat.MinDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage + 1);
+
+                enemy.GetDamage((int)(damage * damageMagnificationOfBodySlap), true);
             }
 
             if (!bodyStopBodySlapTimerStart)
