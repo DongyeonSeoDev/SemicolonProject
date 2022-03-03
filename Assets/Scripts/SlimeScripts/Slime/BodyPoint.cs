@@ -123,5 +123,7 @@ public class BodyPoint : MonoBehaviour
     private void MoveToMiddle()
     {
         transform.position = Vector2.Lerp(transform.position, middlePoint.transform.position, Time.deltaTime * moveToMiddleSpeed);
+
+        CheckCrossWall();
     }
 }
