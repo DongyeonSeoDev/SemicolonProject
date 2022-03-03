@@ -108,7 +108,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         EternalStat stat = mobIdToSlot[selectedDetailMobId].bodyData.additionalBodyStat;
 
         statText[0].text = "+" + stat.maxHp.ToString();
-        statText[1].text = "+" + stat.damage.ToString();
+        statText[1].text = "+" + stat.maxDamage.ToString();
         statText[2].text = "+" + stat.defense.ToString();
         statText[3].text = "+" + Mathf.RoundToInt(Mathf.Abs(stat.speed)).ToString(); 
         statText[4].text = "+" + string.Concat(stat.criticalRate, '%');

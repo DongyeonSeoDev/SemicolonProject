@@ -610,7 +610,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         Stat stat = sgm.Player.PlayerStat;
 
         statTexts[0].text = string.Concat(Mathf.Clamp(sgm.Player.CurrentHp, 0, stat.MaxHp), '/', stat.MaxHp);
-        statTexts[1].text = stat.Damage.ToString();
+        statTexts[1].text = string.Concat( stat.MinDamage, '~', stat.MaxDamage);
         statTexts[2].text = stat.Defense.ToString();
         statTexts[3].text = Mathf.RoundToInt(Mathf.Abs(stat.Speed)).ToString(); //스피드가 몇인지 소수로 나오면 어색할 것 같아서 일단은 정수로 나오게 함.
         statTexts[4].text = string.Concat(stat.CriticalRate, '%');
