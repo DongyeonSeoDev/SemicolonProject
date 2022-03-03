@@ -61,7 +61,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
     public void UpdateCollection(string id)  //�� ��ȭ�� ���� ����
     { 
-        mobIdToSlot[id].UpdateAssimilationRate((float)urmg.PlayerEnemyCollectionDic[id]/urmg.MinBodyChangeUnderstandingRate);
+        mobIdToSlot[id].UpdateAssimilationRate((float)urmg.PlayerEnemyUnderStandingRateDic[id]/urmg.MinBodyChangeUnderstandingRate);
     }
 
     public void AllUpdateCollection()   //��� �� ��ȭ�� ���� ����
@@ -72,7 +72,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
     public void UpdateDrainProbability(string id) //�� ���� Ȯ�� ���� ����
     {
-        mobIdToSlot[id].UpdateDrainProbability(urmg.GetDrainProbabilityDict(id));
+        mobIdToSlot[id].UpdateDrainProbability(urmg.GetMountingPercentageDict(id));
     }
     public void AllUpdateDrainProbability()
     {
@@ -147,9 +147,9 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     public void Save()
     {
         UserInfo uInfo = GameManager.Instance.savedData.userInfo;
-        foreach(string key in urmg.PlayerEnemyCollectionDic.Keys)
+        foreach(string key in urmg.PlayerEnemyUnderStandingRateDic.Keys)
         {
-            uInfo.monsterInfoDic[key] = new MonsterInfo(key, urmg.PlayerEnemyCollectionDic[key], urmg.GetDrainProbabilityDict(key));
+            uInfo.monsterInfoDic[key] = new MonsterInfo(key, urmg.PlayerEnemyUnderStandingRateDic[key], urmg.GetMountingPercentageDict(key));
         }
     }
 
@@ -158,8 +158,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         UserInfo uInfo = GameManager.Instance.savedData.userInfo;
         foreach (string key in uInfo.monsterInfoDic.keyList)
         {
-            urmg.PlayerEnemyCollectionDic[key] = uInfo.monsterInfoDic[key].understandingRate;
-            urmg.DrainProbabilityDict[key] = uInfo.monsterInfoDic[key].absorptionRate;
+            urmg.PlayerEnemyUnderStandingRateDic[key] = uInfo.monsterInfoDic[key].understandingRate;
+            urmg.MountingPercentageDict[key] = uInfo.monsterInfoDic[key].absorptionRate;
         }
     }
     #endregion

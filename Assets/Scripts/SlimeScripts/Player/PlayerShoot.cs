@@ -9,6 +9,21 @@ public class PlayerShoot : PlayerAction
     [SerializeField]
     private GameObject projectile = null;
 
+    [Header("총알 발사시에 사용하는 에너지")]
+    [SerializeField]
+    private float maxEnergy = 10f;
+
+    [Header("총알을 발사할 때 마다 사용하는 에너지")]
+    [SerializeField]
+    private float useAmount = 1f;
+
+    private float currentEnergy = 0f; // 현재의 에너지
+    public float CurrentEnergy
+    {
+        get { return currentEnergy; }
+        set { currentEnergy = value; }
+    }
+
     [SerializeField]
     private float projectileSpeed = 1f;
 
@@ -24,12 +39,14 @@ public class PlayerShoot : PlayerAction
 
         base.Awake();
     }
-    private void Update()
+    private void OnEnable() 
     {
-        CheckProjectileDelayTimer();
+        currentEnergy = maxEnergy;
     }
     void FixedUpdate()
     {
+        CheckProjectileDelayTimer();
+        
         if (playerInput.IsShoot && !playerState.BodySlapping)
         {
             if (canShoot)
@@ -75,7 +92,7 @@ public class PlayerShoot : PlayerAction
     {
         if (projectileDelayTimer > 0f)
         {
-            projectileDelayTimer -= Time.deltaTime;
+            projectileDelayTimer -= Time.fixedDeltaTime;
 
             if (projectileDelayTimer <= 0f)
             {
