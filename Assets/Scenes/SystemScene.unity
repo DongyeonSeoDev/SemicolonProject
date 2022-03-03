@@ -1117,7 +1117,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotNumber: 0
-  slotKey: 16
   bodyID: 
   monsterImgName:
     first: {fileID: 898761420}
@@ -1161,6 +1160,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 195583809}
   m_CullTransparentMesh: 1
+--- !u!1 &233731043
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 233731044}
+  m_Layer: 0
+  m_Name: StageTest
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &233731044
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 233731043}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &283468316
 GameObject:
   m_ObjectHideFlags: 0
@@ -1364,7 +1393,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotNumber: 0
-  slotKey: 15
   bodyID: 
   monsterImgName:
     first: {fileID: 553806008}
@@ -6375,7 +6403,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotNumber: 0
-  slotKey: 17
   bodyID: 
   monsterImgName:
     first: {fileID: 581102823}
@@ -6965,6 +6992,83 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1607831852}
   m_CullTransparentMesh: 1
+--- !u!1 &1627408721
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1627408722}
+  m_Layer: 0
+  m_Name: Stages
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1627408722
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1627408721}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1387108802339034993}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1649915842
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1649915843}
+  - component: {fileID: 1649915844}
+  m_Layer: 0
+  m_Name: StageManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1649915843
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1649915842}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1387108801525605192}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1649915844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1649915842}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44ec3ba82e9aeb64f8ae477f991b8fe8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startStageClearState: 1
+  openDoorSpr: {fileID: -7341407202210888751, guid: 03b2cb25aeebd414fbde96a1c2ebdd0f, type: 3}
+  closeDoorSpr: {fileID: 6623719234781301212, guid: 03b2cb25aeebd414fbde96a1c2ebdd0f, type: 3}
+  stageParent: {fileID: 1627408722}
 --- !u!1 &1653813325
 GameObject:
   m_ObjectHideFlags: 0
@@ -18939,6 +19043,7 @@ Transform:
   - {fileID: 7435595260994424267}
   - {fileID: 409812014591843916}
   - {fileID: 7911620553794595963}
+  - {fileID: 1649915843}
   m_Father: {fileID: 1387108802339034993}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -20646,6 +20751,7 @@ MonoBehaviour:
   ordinaryCvsg: {fileID: 1387108801413172420}
   msgCvsg: {fileID: 1387108802453445868}
   wnWd: {fileID: 1379797206}
+  loadingCvsg: {fileID: 7911620554002577447}
   statTexts:
   - {fileID: 1387108802107137588}
   - {fileID: 1387108801721881860}
@@ -22124,6 +22230,7 @@ Transform:
   - {fileID: 1387108801525605192}
   - {fileID: 7959722226348592992}
   - {fileID: 1703532015}
+  - {fileID: 1627408722}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -22168,7 +22275,8 @@ MonoBehaviour:
       playerStat:
         eternalStat:
           maxHp: 0
-          damage: 0
+          minDamage: 0
+          maxDamage: 0
           defense: 0
           intellect: 0
           speed: 0
@@ -22176,7 +22284,8 @@ MonoBehaviour:
           criticalDamage: 0
         additionalEternalStat:
           maxHp: 0
-          damage: 0
+          minDamage: 0
+          maxDamage: 0
           defense: 0
           intellect: 0
           speed: 0
@@ -59787,7 +59896,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotNumber: 0
-  slotKey: 14
   bodyID: 
   monsterImgName:
     first: {fileID: 7911620552226864566}
@@ -60056,7 +60164,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &7911620554002577444
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60122,7 +60230,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7911620554002577449}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -60428,6 +60536,7 @@ MonoBehaviour:
     first: {fileID: 3358822391346451162}
     second: {fileID: 3358822391202572995}
   keyCodeTxt: {fileID: 3358822390647546837}
+  cvsg: {fileID: 0}
 --- !u!225 &8276704268164134949
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -60562,6 +60671,7 @@ MonoBehaviour:
     first: {fileID: 590793549}
     second: {fileID: 122120285}
   keyCodeTxt: {fileID: 1312649418}
+  cvsg: {fileID: 0}
 --- !u!1 &8276704268482741303
 GameObject:
   m_ObjectHideFlags: 0
@@ -60713,6 +60823,7 @@ MonoBehaviour:
     first: {fileID: 1570649045}
     second: {fileID: 841301291}
   keyCodeTxt: {fileID: 1008789400}
+  cvsg: {fileID: 0}
 --- !u!1 &8276704269735588755
 GameObject:
   m_ObjectHideFlags: 0

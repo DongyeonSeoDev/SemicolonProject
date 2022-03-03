@@ -93,6 +93,8 @@ public partial class UIManager : MonoSingleton<UIManager>
     public WarningWindow wnWd;
     #endregion
 
+    [SerializeField] private CanvasGroup loadingCvsg;
+
     //public Text statText;
     public Text[] statTexts;
 
@@ -101,6 +103,7 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     private void Awake()
     {
+        StartLoading();
         InitData();
         CreatePool();
     }
@@ -554,6 +557,33 @@ public partial class UIManager : MonoSingleton<UIManager>
     {
         EventManager.TriggerEvent("PlayerBodySet", id, true);
     }
+
+    #region loading
+
+    public void StartLoading(Action loadingAction = null, Action loadingEndAction = null, float start = 0.6f, float middle = 0.4f, float end = 0.5f)
+    {
+        loadingCvsg.alpha = 0;
+        loadingCvsg.gameObject.SetActive(true);
+        loadingEndAction += () => loadingCvsg.gameObject.SetActive(false);
+
+        Sequence seq = DOTween.Sequence();
+        seq.SetUpdate(true);
+        seq.Append(loadingCvsg.DOFade(1, start).SetEase(Ease.OutQuad).OnComplete(()=>loadingAction?.Invoke()));
+        seq.AppendInterval(middle);
+        seq.Append(loadingCvsg.DOFade(0, end).SetEase(Ease.OutQuad));
+        seq.OnComplete(() => loadingEndAction());
+        seq.Play();
+    }
+
+    public void StartLoading()
+    {
+        loadingCvsg.alpha = 1;
+        loadingCvsg.gameObject.SetActive(true);
+
+        loadingCvsg.DOFade(0, 1).SetEase(Ease.OutQuad).SetUpdate(true).OnComplete(() => loadingCvsg.gameObject.SetActive(false));
+    }
+
+    #endregion
 
     #region 인벤 버튼 (inventory button)
     public void OnClickRemoveItemBtn()  //아이템 버리기 버튼
