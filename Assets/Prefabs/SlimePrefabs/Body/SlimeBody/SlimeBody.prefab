@@ -382,6 +382,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   skillDelay: 5
+  skillIdx: 1
   canCrashLayer:
     serializedVersion: 2
     m_Bits: 192
@@ -404,9 +405,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c80f6fc8486f5b4b9226d543d4ed142, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillDelay: 0.2
+  skillIdx: 0
   projectile: {fileID: 8223448895546236962, guid: 6188b8fe7b7eef448a7491f9bdb9599e, type: 3}
+  maxEnergy: 10
+  energyRegenSpeed: 1
+  useEnergyAmount: 1
   projectileSpeed: 10
-  projectileDelayTime: 0.2
 --- !u!114 &3493340178899303131
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -419,12 +424,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4d4b519c041d8e94e91e583d43867292, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillDelay: 5
+  skillIdx: 2
   drainCollider: {fileID: 6491635181836223920}
   upMountingPercentageValue: 5
   upUnderstandingRateValue: 1
   drainSpeed: 2
   drainDoneDistance: 0.1
-  reDrainTime: 10
 --- !u!114 &5835559770882864823
 MonoBehaviour:
   m_ObjectHideFlags: 0

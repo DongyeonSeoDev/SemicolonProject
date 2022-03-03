@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerShoot : PlayerAction
+public class PlayerShoot : PlayerSkill
 {
     private SlimePoolManager slimePoolManager = null;
 
@@ -24,6 +24,10 @@ public class PlayerShoot : PlayerAction
     [Header("총알을 발사할 때 마다 깎이는 에너지의 양")]
     [SerializeField]
     private float useEnergyAmount = 1f;
+    public float UseEnergyAmount
+    {
+        get { return useEnergyAmount; }
+    }
 
     private float currentEnergy = 0f; // 현재의 에너지
     public float CurrentEnergy
@@ -35,9 +39,18 @@ public class PlayerShoot : PlayerAction
     [SerializeField]
     private float projectileSpeed = 1f;
 
-    [SerializeField]
-    private float projectileDelayTime = 0.2f;
-    private float projectileDelayTimer = 0f;
+    //[SerializeField]
+    //private float projectileDelayTime = 0.2f;
+    //public float ProjectileDelayTime
+    //{
+    //    get { return projectileDelayTime; }
+    //}
+
+    //private float projectileDelayTimer = 0f;
+    //public float ProjectileDelayTimer
+    //{
+    //    get { return projectileDelayTimer; }
+    //}
 
     private bool canShoot = true;
 
@@ -51,16 +64,20 @@ public class PlayerShoot : PlayerAction
     {
         currentEnergy = maxEnergy;
     }
+    public override void Update()
+    {
+        base.Update();
+    }
     void FixedUpdate()
     {
-        CheckProjectileDelayTimer();
+        CheckSkillDelay();
         UpEnergy();
 
         if (playerInput.IsShoot && CheckEnergy() && !playerState.BodySlapping)
         {
             if (canShoot)
             {
-                Shoot();
+                DoSkill();
             }
 
             playerInput.IsShoot = false;
@@ -70,7 +87,7 @@ public class PlayerShoot : PlayerAction
             playerInput.IsShoot = false;
         }
     }
-    private void Shoot()
+    public override void DoSkill()
     {
         GameObject temp = null;
 
@@ -93,23 +110,29 @@ public class PlayerShoot : PlayerAction
         temp.GetComponent<PlayerProjectile>().OnSpawn(direction, projectileSpeed);
 
         currentEnergy -= useEnergyAmount;
-        projectileDelayTimer = projectileDelayTime;
+        SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = skillDelay;
         canShoot = false;
 
         EventManager.TriggerEvent("PlayerShoot");
     }
-    private void CheckProjectileDelayTimer()
+    public override void WhenSkillDelayTimerZero()
     {
-        if (projectileDelayTimer > 0f)
-        {
-            projectileDelayTimer -= Time.fixedDeltaTime;
+        base.WhenSkillDelayTimerZero();
 
-            if (projectileDelayTimer <= 0f)
-            {
-                canShoot = true;
-            }
-        }
+        canShoot = true;
     }
+    //private void CheckProjectileDelayTimer()
+    //{
+    //    if (projectileDelayTimer > 0f)
+    //    {
+    //        projectileDelayTimer -= Time.fixedDeltaTime;
+
+    //        if (projectileDelayTimer <= 0f)
+    //        {
+    //            canShoot = true;
+    //        }
+    //    }
+    //}
     private void UpEnergy()
     {
         currentEnergy += Time.fixedDeltaTime * energyRegenSpeed;

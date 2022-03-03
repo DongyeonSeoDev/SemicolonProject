@@ -155,11 +155,23 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
     {
         return mountedObjList.Count < canMountObjNum;
     }
-    public void SetMountObj(string objId)
+    public void SetMountObj(string objId, int idx = -1)
     {
-        if (CheckCanMountObj())
+        if (idx <= -1)
         {
-            mountedObjList.Add(objId);
+            if (CheckCanMountObj())
+            {
+                mountedObjList.Add(objId);
+            }
+            else
+            {
+                UIManager.Instance.OnUIInteract(UIType.CHANGEABLEMOBLIST, true);
+            }
+
+        }
+        else
+        {
+            mountedObjList[idx] = objId;
         }
     }
     public void UnSetMountObj(string objId)
@@ -181,10 +193,6 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
 
         if (value <= GetDrainProbabilityDict(objId)) // 확률 체크
         {
-            if (!CheckCanMountObj())
-            {
-                return;
-            }
             // 장착을 물어봄
             // 장착을 하면 true를, 장착을 하지 않으면 flase를 return함, 지금은 그냥 true를 return
 

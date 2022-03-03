@@ -40,18 +40,17 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
     }
     private EternalStat pasteBodyAdditionalStat = new EternalStat();
 
-    private float currentSkillDelay = 0f;
-    public float CurrentSkillDelay
+    private float[] currentSkillDelay = new float[3]; // 0 => 기본공격, 1 => 스킬 1, 2 => 스킬 2
+    public float[] SkillDelays
     {
         get { return currentSkillDelay; }
-        set { currentSkillDelay = value; }
+
     }
 
-    private float currentSkillDelayTimer = 0f;
-    public float CurrentSkillDelayTimer
+    private float[] currentSkillDelayTimer = new float[3]; //  0 => 기본공격, 1 => 스킬 1, 2 => 스킬 2
+    public float[] CurrentSkillDelayTimer
     {
         get { return currentSkillDelayTimer; }
-        set { currentSkillDelayTimer = value; }
     }
 
     [Header("동화율 10퍼당 변신시 오르게되는 능력치가 오르게 되는 수치")]

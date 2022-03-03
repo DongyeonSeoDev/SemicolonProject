@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerDrain : PlayerAction
+public class PlayerDrain : PlayerSkill
 {
 
     [SerializeField]
@@ -36,9 +36,9 @@ public class PlayerDrain : PlayerAction
     [SerializeField]
     private float drainDoneDistance = 0.1f;
 
-    [SerializeField]
-    private float reDrainTime = 10f;
-    private float reDrainTimer = 0f;
+    //[SerializeField]
+    //private float reDrainTime = 10f;
+    //private float reDrainTimer = 0f;
 
     public override void Awake()
     {
@@ -48,33 +48,35 @@ public class PlayerDrain : PlayerAction
 
         drainCollider.SetActive(false);
     }
-    void Update()
+    public override void Update()
     {
-        if (reDrainTimer > 0f)
-        {
-            reDrainTimer -= Time.deltaTime;
+        base.Update();
+        //if (reDrainTimer > 0f)
+        //{
+        //    reDrainTimer -= Time.deltaTime;
 
-            if (reDrainTimer <= 0f)
-            {
-                reDrainTimer = 0f;
-            }
-        }
+        //    if (reDrainTimer <= 0f)
+        //    {
+        //        reDrainTimer = 0f;
+        //    }
+        //}
 
         if (playerInput.IsDrain)
         {
             playerInput.IsDrain = false;
-
-            if (reDrainTimer <= 0f)
-            {
-                reDrainTimer = reDrainTime;
-
-                drainCollider.SetActive(true);
-            }
         }
 
-        DrainObjMove();
+        DoSkill();
     }
-    private void DrainObjMove()
+    public override void WhenSkillDelayTimerZero()
+    {
+        base.WhenSkillDelayTimerZero();
+
+        SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = skillDelay;
+
+        drainCollider.SetActive(true);
+    }
+    public override void DoSkill()
     {
         if (drainList.Count > 0)
         {

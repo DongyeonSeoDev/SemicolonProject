@@ -199,6 +199,28 @@ public static partial class ScriptHelper
 
         return results;
     }
+    public static int Abs(this int a)
+    {
+        if(a < 0)
+        {
+            return -a;
+        }
+        else
+        {
+            return a;
+        }
+    }
+    public static float Abs(this float a)
+    {
+        if (a < 0)
+        {
+            return -a;
+        }
+        else
+        {
+            return a;
+        }
+    }
     public static Vector2 RandomVector(Vector2 min, Vector2 max)
     {
         float x = UnityEngine.Random.Range(min.x, max.x);

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerBodySlap : PlayerSpecialSkill
+public class PlayerBodySlap : PlayerSkill
 {
     private Stat playerStat = null;
     [SerializeField]
@@ -103,7 +103,7 @@ public class PlayerBodySlap : PlayerSpecialSkill
         EventManager.TriggerEvent("PlayerBodySlap", bodySlapTime);
 
         bodySlapTimer = 0f;
-        skillDelayTimer = skillDelay;
+        SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = skillDelay;
     }
     private void OnDisable()
     {
@@ -145,7 +145,7 @@ public class PlayerBodySlap : PlayerSpecialSkill
     private void StopBodySlap()
     {
         stopBodySlapTimer = 0f;
-        skillDelayTimer = skillDelay;
+        SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = skillDelay;
 
         canBodySlap = false;
         bodySlapStart = false;

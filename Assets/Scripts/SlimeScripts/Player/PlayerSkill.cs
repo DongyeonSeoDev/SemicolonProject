@@ -2,11 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class PlayerSpecialSkill : PlayerAction
+public abstract class PlayerSkill : PlayerAction
 {
     [SerializeField]
     protected float skillDelay = 5f;
-    protected float skillDelayTimer = 0f;
+
+    [Header("이 스킬의 종류를 나타내는 값 0: 기본공격, 1: 스킬1, 2: 스킬2")]
+    [SerializeField]
+    protected int skillIdx = 0;
 
     public virtual void Update()
     {
@@ -19,8 +22,8 @@ public abstract class PlayerSpecialSkill : PlayerAction
 
     public void WhenChangeSkill()
     {
-        SlimeGameManager.Instance.CurrentSkillDelay = skillDelay;
-        SlimeGameManager.Instance.CurrentSkillDelay = skillDelayTimer;
+        SlimeGameManager.Instance.SkillDelays[skillIdx] = skillDelay;
+        SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = 0f;
     }
     public virtual void DoSkill()
     {
@@ -28,12 +31,11 @@ public abstract class PlayerSpecialSkill : PlayerAction
     }
     protected void CheckSkillDelay()
     {
-        if (skillDelayTimer > 0f)
+        if (SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] > 0f)
         {
-            skillDelayTimer -= Time.deltaTime;
-            SlimeGameManager.Instance.CurrentSkillDelay = skillDelayTimer;
+            SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] -= Time.deltaTime;
 
-            if (skillDelayTimer <= 0f)
+            if (SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] <= 0f)
             {
                 WhenSkillDelayTimerZero();
             }
