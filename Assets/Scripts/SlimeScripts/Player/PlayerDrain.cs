@@ -101,7 +101,7 @@ public class PlayerDrain : PlayerAction
                     Enemy.Enemy enemy = item.Item1.GetComponent<Enemy.Enemy>();
                     string objId = enemy.GetEnemyId();
 
-                    PlayerEnemyUnderstandingRateManager.Instance.SetMountingPercentageDict(objId, PlayerEnemyUnderstandingRateManager.Instance.GetMountingPercentageDict(objId) + upMountingPercentageValue);
+                    PlayerEnemyUnderstandingRateManager.Instance.SetDrainProbabilityDict(objId, PlayerEnemyUnderstandingRateManager.Instance.GetDrainProbabilityDict(objId) + upMountingPercentageValue);
 
                     PlayerEnemyUnderstandingRateManager.Instance.CheckMountingEnemy(objId, item.Item2);
 
