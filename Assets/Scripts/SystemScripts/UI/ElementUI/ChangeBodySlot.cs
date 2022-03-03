@@ -4,7 +4,6 @@ using UnityEngine.UI;
 public class ChangeBodySlot : MonoBehaviour
 {
     [SerializeField] private int slotNumber;
-    [SerializeField] private KeyAction slotKey; 
     [SerializeField] private string bodyID = ""; //이 슬롯에 저장되어있는 몬스터 아이디   (monster id)
 
     public Pair<Image, Text> monsterImgName;
