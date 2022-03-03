@@ -36,10 +36,10 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
         get { return changableBodyDict; }
     }
 
-    private Dictionary<string, float> mountingPercentageDict = new Dictionary<string, float>();
-    public Dictionary<string, float> MountingPercentageDict
+    private Dictionary<string, float> drainProbabilityDict = new Dictionary<string, float>();
+    public Dictionary<string, float> DrainProbabilityDict
     {
-        get { return mountingPercentageDict; }
+        get { return drainProbabilityDict; }
     }
 
     [SerializeField]
@@ -95,22 +95,22 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
     }
     public void SetMountingPercentageDict(string key, float value) 
     {
-        if (mountingPercentageDict.ContainsKey(key))
+        if (drainProbabilityDict.ContainsKey(key))
         {
-            mountingPercentageDict[key] = value;
+            drainProbabilityDict[key] = value;
         }
         else
         {
-            mountingPercentageDict.Add(key, value);
+            drainProbabilityDict.Add(key, value);
         }
 
         MonsterCollection.Instance.UpdateDrainProbability(key);
     }
-    public float GetMountingPercentageDict(string key)
+    public float GetDrainProbabilityDict(string key)
     {
-        if (mountingPercentageDict.ContainsKey(key))
+        if (drainProbabilityDict.ContainsKey(key))
         {
-            return mountingPercentageDict[key];
+            return drainProbabilityDict[key];
         }
         else
         {
@@ -172,14 +172,14 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
     }
     public void CheckMountingEnemy(string objId, int upValue)
     {
-        if (!PlayerEnemyUnderstandingRateManager.Instance.MountingPercentageDict.ContainsKey(objId))
+        if (!PlayerEnemyUnderstandingRateManager.Instance.DrainProbabilityDict.ContainsKey(objId))
         {
             return;
         }
 
         float value = UnityEngine.Random.Range(0f, 100f);
 
-        if (value <= GetMountingPercentageDict(objId)) // 확률 체크
+        if (value <= GetDrainProbabilityDict(objId)) // 확률 체크
         {
             if (!CheckCanMountObj())
             {
