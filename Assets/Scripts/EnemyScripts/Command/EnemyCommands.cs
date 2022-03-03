@@ -39,11 +39,16 @@ namespace Enemy
     {
         private EnemyData enemyData = null;
         private EnemyCommand enemyRunAwayCommand;
+        private Vector2 targetPosition = Vector2.zero;
+        private float currentMoveTime;
+        private float angle = 0;
 
         public EnemyRandomMoveCommand(EnemyData enemyData)
         {
             this.enemyData = enemyData;
             enemyRunAwayCommand = new EnemyFollowPlayerCommand(enemyData.enemyObject.transform, enemyData.PlayerObject.transform, enemyData.enemyRigidbody2D, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, true);
+
+            currentMoveTime = 0f;
         }
 
         public override void Execute()
@@ -54,15 +59,24 @@ namespace Enemy
             }
             else
             {
-                float angle = Random.Range(0f, 360f);
-                Vector2 targetPosition = Vector2.zero;
+                if (currentMoveTime <= 0f)
+                {
+                    angle = Random.Range(0f, 360f);
 
-                targetPosition.y = Mathf.Sin(angle * Mathf.Deg2Rad);
-                targetPosition.x = Mathf.Cos(angle * Mathf.Deg2Rad);
+                    targetPosition.y = Mathf.Sin(angle * Mathf.Deg2Rad);
+                    targetPosition.x = Mathf.Cos(angle * Mathf.Deg2Rad);
 
-                targetPosition *= 10f;
+                    targetPosition *= 5f;
 
-                enemyData.enemyRigidbody2D.velocity = targetPosition;
+                    enemyData.enemyRigidbody2D.velocity = targetPosition;
+
+                    currentMoveTime += 1f;
+                }
+                else
+                {
+                    enemyData.enemyRigidbody2D.velocity = targetPosition;
+                    currentMoveTime -= Time.deltaTime;
+                }
             }
         }
     }

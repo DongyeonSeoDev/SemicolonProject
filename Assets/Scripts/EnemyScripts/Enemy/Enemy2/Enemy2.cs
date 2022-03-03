@@ -20,8 +20,9 @@ namespace Enemy
                 isLongDistanceAttack = true,
                 isRotate = true,
                 damageDelay = 0.4f,
-                chaseSpeed = 3f,
+                chaseSpeed = 7f,
                 isSeePlayerDistance = 10f,
+                attackDelay = 2f
             };
 
             enemyData.enemyMoveCommand = new EnemyRandomMoveCommand(enemyData);
