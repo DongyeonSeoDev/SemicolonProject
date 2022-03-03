@@ -33,6 +33,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     //Bottom Left Save Body UI List
     [Space(15)]
     [SerializeField] private List<ChangeableBody> savedBodys;
+    public Sprite notExistBodySpr; //빈 슬롯일 때의 스프라이트
 
     private void Start()
     {

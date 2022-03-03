@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +8,8 @@ public class StageDoor : InteractionObj
     public FakeSpriteOutline fsOut;
 
     public StageDataSO nextStageData;
+
+    public List<Enemy.EnemySpawnSO> enemySpawnSOList;
 
     private void Awake()
     {

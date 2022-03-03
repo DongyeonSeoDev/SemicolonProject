@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public static partial class Global
 {
@@ -15,6 +16,8 @@ public static partial class Global
     
     private static string[] keyActionNameArr;
 
+    private static Dictionary<string, Sprite> idToBodySprDict = new Dictionary<string, Sprite>();
+
     public static string ToKeyActionName(KeyAction keyAction)
     {
         if(keyActionNameArr==null)
@@ -23,5 +26,24 @@ public static partial class Global
             keyActionNameArr = kta.text.Split('\n');
         }
         return keyActionNameArr[(int)keyAction];
+    }
+
+
+    public static Sprite GetMonsterBodySprite(string id)
+    {
+        if(idToBodySprDict.ContainsKey(id))
+        {
+            return idToBodySprDict[id];
+        }
+        else
+        {
+            Sprite spr = Resources.Load<Sprite>("System/Sprites/MonsterBody/" + id);
+            if (!spr)
+            {
+                return MonsterCollection.Instance.notExistBodySpr;
+            }
+            idToBodySprDict.Add(id, spr);
+            return spr;
+        }
     }
 }
