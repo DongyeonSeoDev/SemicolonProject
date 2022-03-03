@@ -19,14 +19,14 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
     public Image mobDropItemImg;
 
-    //�� ����� ���� Ȯ��â
+    //몹 드랍템 정보 확인창
     public Triple<Image, Text, Text> mobItemImgNameEx;
 
-    public Text[] statText; //������ ���Ž� ��� �ɷ�ġ Ȯ�� �ؽ�Ʈ
+    public Text[] statText; //몹으로 변신시 상승 능력치 확인 텍스트
 
     #endregion
 
-    //�� ���� ���� �� á�� �� ������ ���� ����â�� ���Ե�
+    //몹 저장 슬롯 꽉 찼을 때 제거할 슬롯 선택창의 슬롯들
     [Space(15)]
     [SerializeField] private List<ChangeBodySlot> changeBodySlots;
 
@@ -40,7 +40,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         
         mobInfoUIPair.second.GetComponent<GridLayoutGroup>().constraintCount = Mathf.Clamp(urmg.ChangableBodyList.Count / 3 + 1, 6, 10000);
 
-        //��� �� ���� �����ͼ� UI�����ϰ� �� ����
+        //모든 몹 정보 가져와서 UI생성하고 값 넣음
         urmg.ChangableBodyList.ForEach(body =>
         {
             MonsterInfoSlot ui = Instantiate(mobInfoUIPair.first, mobInfoUIPair.second).GetComponent<MonsterInfoSlot>();
@@ -59,18 +59,18 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         });
     }
 
-    public void UpdateUnderstanding(string id)  //�� ��ȭ�� ���� ����
+    public void UpdateUnderstanding(string id)  //몹 동화율 정보 업뎃
     { 
         mobIdToSlot[id].UpdateAssimilationRate((float)urmg.PlayerEnemyUnderStandingRateDic[id]/urmg.MinBodyChangeUnderstandingRate);
     }
 
-    public void AllUpdateUnderstanding()   //��� �� ��ȭ�� ���� ����
+    public void AllUpdateUnderstanding()   //모든 몹 동화율 정보 업뎃
     {
         foreach (string key in mobIdToSlot.Keys)
             UpdateUnderstanding(key);
     }
 
-    public void UpdateDrainProbability(string id) //�� ���� Ȯ�� ���� ����
+    public void UpdateDrainProbability(string id) //몹 흡수 확률 정보 업뎃
     {
         mobIdToSlot[id].UpdateDrainProbability(urmg.GetDrainProbabilityDict(id));
     }
@@ -80,7 +80,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             UpdateDrainProbability(key);
     }
 
-    public void Detail(ChangeBodyData data, string id) //�� ���� �ڼ��� ����
+    public void Detail(ChangeBodyData data, string id) //몹 정보 자세히 보기
     {
         if (selectedDetailMobId == id) return;
         selectedDetailMobId = id;
@@ -96,7 +96,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         mobDropItemImg.GetComponent<NameInfoFollowingCursor>().explanation = item.itemName;
     }
 
-    public void CloseDetail() //�� ���� �ڼ��� ���� ����
+    public void CloseDetail() //몹 정보 자세히 보기 닫음
     {
         selectedDetailMobId = string.Empty;
     }
@@ -110,7 +110,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         statText[0].text = "+" + stat.maxHp.ToString();
         statText[1].text = "+" + stat.damage.ToString();
         statText[2].text = "+" + stat.defense.ToString();
-        statText[3].text = "+" + Mathf.RoundToInt(Mathf.Abs(stat.speed)).ToString(); //���ǵ尡 ������ �Ҽ��� ������ ����� �� ���Ƽ� �ϴ��� ������ ������ ��.
+        statText[3].text = "+" + Mathf.RoundToInt(Mathf.Abs(stat.speed)).ToString(); 
         statText[4].text = "+" + string.Concat(stat.criticalRate, '%');
         statText[5].text = string.Concat( '+', stat.criticalDamage);
         statText[6].text = string.Concat('+', stat.intellect);
