@@ -12,9 +12,13 @@ public class Stat
     {
         get { return eternalStat.maxHp + additionalEternalStat.maxHp; }
     }
-    public int Damage
+    public int MinDamage
     {
-        get { return eternalStat.damage + additionalEternalStat.damage; }
+        get { return eternalStat.minDamage + additionalEternalStat.minDamage; }
+    }
+    public int MaxDamage
+    {
+        get { return additionalEternalStat.maxDamage + additionalEternalStat.maxDamage; }
     }
     public int Defense
     {
@@ -46,20 +50,21 @@ public class Stat
 [Serializable]
 public class EternalStat
 {
-    public static EternalStat operator +(EternalStat a, EternalStat b) => new EternalStat(a.maxHp + b.maxHp, a.damage + b.damage, a.defense + b.defense, a.intellect + b.intellect, a.speed + b.speed, a.criticalRate + b.criticalRate, a.criticalDamage + b.criticalDamage);
-    public static EternalStat operator -(EternalStat a, EternalStat b) => new EternalStat(a.maxHp - b.maxHp, a.damage - b.damage, a.defense - b.defense, a.intellect - b.intellect, a.speed - b.speed, a.criticalRate - b.criticalRate, a.criticalDamage - b.criticalDamage);
-    public static EternalStat operator *(EternalStat a, EternalStat b) => new EternalStat(a.maxHp * b.maxHp, a.damage * b.damage, a.defense * b.defense, a.intellect * b.intellect, a.speed * b.speed, a.criticalRate * b.criticalRate, a.criticalDamage * b.criticalDamage);
-    public static EternalStat operator *(EternalStat a, int b) => new EternalStat(a.maxHp * b, a.damage * b, a.defense * b, a.intellect * b, a.speed * b, a.criticalRate * b, a.criticalDamage * b);
-    public static EternalStat operator *(EternalStat a, float b) => new EternalStat((int)(a.maxHp * b), (int)(a.damage * b), (int)(a.defense * b), (int)(a.intellect * b), (int)(a.speed * b), (int)(a.criticalRate * b), (int)(a.criticalDamage * b));
-    public static EternalStat operator /(EternalStat a, EternalStat b) => new EternalStat(a.maxHp / b.maxHp, a.damage / b.damage, a.defense / b.defense, a.intellect / b.intellect, a.speed / b.speed, a.criticalRate / b.criticalRate, a.criticalDamage / b.criticalDamage);
-    public static EternalStat operator /(EternalStat a, int b) => new EternalStat(a.maxHp / b, a.damage / b, a.defense / b, a.intellect / b, a.speed / b, a.criticalRate / b, a.criticalDamage / b);
-    public static EternalStat operator /(EternalStat a, float b) => new EternalStat((int)(a.maxHp / b), (int)(a.damage / b), (int)(a.defense / b), (int)(a.intellect / b), (int)(a.speed / b), (int)(a.criticalRate / b), (int)(a.criticalDamage / b));
+    public static EternalStat operator +(EternalStat a, EternalStat b) => new EternalStat(a.maxHp + b.maxHp, a.minDamage + b.minDamage, a.maxDamage + b.maxDamage, a.defense + b.defense, a.intellect + b.intellect, a.speed + b.speed, a.criticalRate + b.criticalRate, a.criticalDamage + b.criticalDamage);
+    public static EternalStat operator -(EternalStat a, EternalStat b) => new EternalStat(a.maxHp - b.maxHp, a.minDamage - b.minDamage, a.maxDamage - b.maxDamage, a.defense - b.defense, a.intellect - b.intellect, a.speed - b.speed, a.criticalRate - b.criticalRate, a.criticalDamage - b.criticalDamage);
+    public static EternalStat operator *(EternalStat a, EternalStat b) => new EternalStat(a.maxHp * b.maxHp, a.minDamage * b.minDamage, a.maxDamage * b.maxDamage, a.defense * b.defense, a.intellect * b.intellect, a.speed * b.speed, a.criticalRate * b.criticalRate, a.criticalDamage * b.criticalDamage);
+    public static EternalStat operator *(EternalStat a, int b) => new EternalStat(a.maxHp * b, a.minDamage * b, a.maxDamage * b, a.defense * b, a.intellect * b, a.speed * b, a.criticalRate * b, a.criticalDamage * b);
+    public static EternalStat operator *(EternalStat a, float b) => new EternalStat((int)(a.maxHp * b), (int)(a.minDamage * b), (int)(a.maxDamage * b), (int)(a.defense * b), (int)(a.intellect * b), (int)(a.speed * b), (int)(a.criticalRate * b), (int)(a.criticalDamage * b));
+    public static EternalStat operator /(EternalStat a, EternalStat b) => new EternalStat(a.maxHp / b.maxHp, a.minDamage / b.minDamage, a.maxDamage / b.maxDamage, a.defense / b.defense, a.intellect / b.intellect, a.speed / b.speed, a.criticalRate / b.criticalRate, a.criticalDamage / b.criticalDamage);
+    public static EternalStat operator /(EternalStat a, int b) => new EternalStat(a.maxHp / b, a.minDamage / b, a.maxDamage / b, a.defense / b, a.intellect / b, a.speed / b, a.criticalRate / b, a.criticalDamage / b);
+    public static EternalStat operator /(EternalStat a, float b) => new EternalStat((int)(a.maxHp / b), (int)(a.minDamage / b), (int)(a.maxDamage / b), (int)(a.defense / b), (int)(a.intellect / b), (int)(a.speed / b), (int)(a.criticalRate / b), (int)(a.criticalDamage / b));
     
     //public int currentHp;
     public int maxHp;
     //public int mp;
 
-    public int damage;
+    public int minDamage;
+    public int maxDamage;
 
     public int defense;
 
@@ -73,26 +78,17 @@ public class EternalStat
     {
 
     }
-    public EternalStat(int mh, int d, int df, int intell, float s, float cr, float cd)
+    public EternalStat(int mh, int mind, int maxd, int df, int intell, float s, float cr, float cd)
     {
         maxHp = mh;
-        damage = d;
+        minDamage = mind;
+        maxDamage = maxd;
+
         defense = df;
         intellect = intell;
         speed = s;
         criticalRate = cr;
         criticalDamage = cd;
-    }
-    public void SetDefaultStat() //���� �⺻��
-    {
-        maxHp = 100;
-        damage = 10;
-        intellect = 1;
-        defense = 2;
-
-        speed = 8f;
-        criticalRate = 5;
-        criticalDamage = 1;
     }
 }
 

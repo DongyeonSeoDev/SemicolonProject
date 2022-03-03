@@ -51,7 +51,9 @@ public class PlayerProjectile : MonoBehaviour
 
                 if (enemy != null)
                 {
-                    enemy.GetDamage(SlimeGameManager.Instance.Player.PlayerStat.Damage);
+                    int damage = Random.Range(SlimeGameManager.Instance.Player.PlayerStat.MinDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage + 1);
+
+                    enemy.GetDamage(damage);
                 }
             }
 
