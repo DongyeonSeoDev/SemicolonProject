@@ -8,7 +8,6 @@ using Water;
 public partial class GameManager : MonoSingleton<GameManager>
 {
     private string savedJson, filePath;
-    private readonly string saveFileName_1 = "SaveFile1";
 
     [SerializeField] private SaveData saveData;
     public SaveData savedData { get { return saveData; } }
@@ -32,7 +31,7 @@ public partial class GameManager : MonoSingleton<GameManager>
     private void Awake()
     {
         Cursor.lockState = CursorLockMode.Confined;
-        filePath = saveFileName_1.PersistentDataPath();
+        filePath = Global.saveFileName_1.PersistentDataPath();
         saveData = new SaveData();
         KeyCodeToString.Init();
         

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
+using System.IO;
 
 namespace Water
 {
@@ -51,6 +52,15 @@ namespace Water
                         break;
                 }
             });
+        }
+
+        [MenuItem("File/Delete/SaveFile")]
+        static void DeleteSaveFile()
+        {
+            if(File.Exists(Global.saveFileName_1.PersistentDataPath()))
+            {
+                File.Delete(Global.saveFileName_1.PersistentDataPath());
+            }
         }
 
        /* [MenuItem("Hierarchy Manage/UI/ActiveUIMoveObj")]
