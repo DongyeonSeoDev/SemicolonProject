@@ -79,7 +79,7 @@ namespace Enemy
 
             if (eEnemyController == EnemyController.AI && collision.CompareTag("Player"))
             {
-                SlimeGameManager.Instance.Player.GetDamage(attackDamage);
+                SlimeGameManager.Instance.Player.GetDamage(UnityEngine.Random.Range(attackDamage - 5, attackDamage + 6));
             }
             else if (eEnemyController == EnemyController.PLAYER)
             {
@@ -87,7 +87,7 @@ namespace Enemy
 
                 if (enemy != null && enemy != this.enemy)
                 {
-                    enemy.GetDamage(attackDamage);
+                    enemy.GetDamage(UnityEngine.Random.Range(attackDamage - 5, attackDamage + 6));
                 }
             }
         }
