@@ -12,6 +12,10 @@ public class PlayerShoot : PlayerAction
     [Header("최대 에너지")]
     [SerializeField]
     private float maxEnergy = 10f;
+    public float MaxEnergy
+    {
+        get { return maxEnergy; }
+    }
 
     [Header("에너지가 다시 차는 속도")]
     [SerializeField]
@@ -108,7 +112,7 @@ public class PlayerShoot : PlayerAction
     }
     private void UpEnergy()
     {
-        currentEnergy += Time.fixedDeltaTime;
+        currentEnergy += Time.fixedDeltaTime * energyRegenSpeed;
 
         if(currentEnergy >= maxEnergy)
         {
