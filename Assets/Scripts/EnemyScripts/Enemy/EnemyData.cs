@@ -38,6 +38,7 @@ namespace Enemy
         public SpriteRenderer enemySpriteRenderer;
         public Rigidbody2D enemyRigidbody2D;
         public Image hpBarFillImage;
+        public EnemyCommand enemyMoveCommand;
 
         private GameObject playerObject;
         public GameObject PlayerObject
@@ -117,6 +118,18 @@ namespace Enemy
             {
                 return Vector3.Distance(enemyObject.transform.position, PlayerObject.transform.position) <= isAttackPlayerDistance;
             }
+        }
+
+        public bool IsRunAway()
+        {
+            if (isLongDistanceAttack)
+            {
+                float distance = Vector3.Distance(enemyObject.transform.position, PlayerObject.transform.position);
+
+                return isMinAttackPlayerDistance > distance;
+            }
+
+            return false;
         }
 
         public bool IsAttackDelay(float currentAttackDelay = 0)

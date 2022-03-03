@@ -21,9 +21,10 @@ namespace Enemy
                 isRotate = true,
                 damageDelay = 0.4f,
                 chaseSpeed = 3f,
-                isSeePlayerDistance = 10f
+                isSeePlayerDistance = 10f,
             };
 
+            enemyData.enemyMoveCommand = new EnemyRandomMoveCommand(enemyData);
             base.OnEnable();
         }
 

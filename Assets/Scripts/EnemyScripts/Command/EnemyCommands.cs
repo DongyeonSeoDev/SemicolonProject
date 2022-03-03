@@ -35,6 +35,38 @@ namespace Enemy
         }
     }
 
+    public class EnemyRandomMoveCommand : EnemyCommand
+    {
+        private EnemyData enemyData = null;
+        private EnemyCommand enemyRunAwayCommand;
+
+        public EnemyRandomMoveCommand(EnemyData enemyData)
+        {
+            this.enemyData = enemyData;
+            enemyRunAwayCommand = new EnemyFollowPlayerCommand(enemyData.enemyObject.transform, enemyData.PlayerObject.transform, enemyData.enemyRigidbody2D, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, true);
+        }
+
+        public override void Execute()
+        {
+            if (enemyData.IsRunAway())
+            {
+                enemyRunAwayCommand.Execute();
+            }
+            else
+            {
+                float angle = Random.Range(0f, 360f);
+                Vector2 targetPosition = Vector2.zero;
+
+                targetPosition.y = Mathf.Sin(angle * Mathf.Deg2Rad);
+                targetPosition.x = Mathf.Cos(angle * Mathf.Deg2Rad);
+
+                targetPosition *= 10f;
+
+                enemyData.enemyRigidbody2D.velocity = targetPosition;
+            }
+        }
+    }
+
     public class EnemyFollowPlayerCommand : EnemyCommand // 적 움직임
     {
         private Transform enemyObject;
