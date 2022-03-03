@@ -30,14 +30,14 @@ public class StageSelect : MonoSingleton<StageSelect>
             {
                 stageButton[number].onClick.AddListener(() =>
                 {
-                    if (startStage.nextStageList.Count == 1)
+                   /* if (startStage.nextStageList.Count == 1)
                     {
                         NextStage(0);
                     }
                     else
                     {
                         NextStage(1);
-                    }
+                    }*/
                 });
             }
             else
@@ -49,7 +49,7 @@ public class StageSelect : MonoSingleton<StageSelect>
 
     public void ShowUI()
     {
-        if (startStage.nextStageList.Count == 1)
+       /* if (startStage.nextStageList.Count == 1)
         {
             for (int i = 0; i < stageButton.Length; i++)
             {
@@ -67,7 +67,7 @@ public class StageSelect : MonoSingleton<StageSelect>
             {
                 stageButton[i].gameObject.SetActive(true);
             }
-        }
+        }*/
         
         uiObject.SetActive(true);
     }
@@ -76,7 +76,7 @@ public class StageSelect : MonoSingleton<StageSelect>
     {
         uiObject.SetActive(false);
 
-        if (startStage.nextStageList.Count <= nextStage)
+        /*if (startStage.nextStageList.Count <= nextStage)
         {
             return;
         }
@@ -87,7 +87,7 @@ public class StageSelect : MonoSingleton<StageSelect>
         if (startStage.nextStageList.Count == 0)
         {
             nextStageCheck.SetActive(false);
-        }
+        }*/
 
         currentStage = Instantiate(startStage.stage, transform.position, Quaternion.identity);
         SlimeGameManager.Instance.CurrentPlayerBody.transform.position = startStage.playerStartPosition;
