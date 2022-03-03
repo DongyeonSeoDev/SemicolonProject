@@ -25,6 +25,15 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
     private void Awake()
     {
         slotNumber = transform.GetSiblingIndex() + 1;
+        coolTimeUIPair.second.gameObject.SetActive(false);
+    }
+
+    private void Start()
+    {
+        if(slotKey == KeyAction.CHANGE_SLIME)
+        {
+            Register("origin");
+        }
     }
 
     public void UpdateKeyCodeTxt()
@@ -32,10 +41,10 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
         keyCodeTxt.text = KeyCodeToString.GetString(KeySetting.keyDict[slotKey]);
     }
 
-    public void Register(string id, Sprite bodySpr)
+    public void Register(string id)
     {
         bodyID = id;
-        bodyImg.sprite = bodySpr;
+        bodyImg.sprite = Global.GetMonsterBodySprite(id);
     }
 
     public void Unregister()

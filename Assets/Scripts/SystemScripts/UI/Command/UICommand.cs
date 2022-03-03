@@ -37,7 +37,7 @@ public class SpecialAttackUICommand : UICommand
     }
     public override void Execute()
     {
-       
+        //coolFill.fillAmount = Sgm.CurrentSkillDelayTimer / Sgm.CurrentSkillDelay;
     }
 }
 

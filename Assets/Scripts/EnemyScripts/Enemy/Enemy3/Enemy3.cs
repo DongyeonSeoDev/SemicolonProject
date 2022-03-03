@@ -27,9 +27,10 @@ namespace Enemy
                 chaseSpeed = 2f,
                 attackDamage = 20,
                 maxHP = 50,
-                hp = 50
+                hp = 50,
             };
 
+            enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(transform, enemyData.PlayerObject.transform, rb, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, false);
             enemyAttackCommand = new EnemyRushAttackCommand(rb, rushAttackPosition, enemyData.rushForce);
 
             base.OnEnable();

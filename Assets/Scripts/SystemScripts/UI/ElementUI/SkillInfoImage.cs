@@ -19,6 +19,7 @@ public class SkillInfoImage : MonoBehaviour
     private void Awake()
     {
         skillBtn.onClick.AddListener(() => SkillUIManager.Instance.OnClickSkillButton());
+        Register(null, "");
     }
 
 

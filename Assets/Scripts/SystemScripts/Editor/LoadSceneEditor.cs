@@ -36,6 +36,12 @@ public class LoadSceneEditor : EditorWindow
     {
         LoadScene("SlimeScene");
     }
+
+    [MenuItem("Load/Stage Test Scene")]
+    public static void LoadStageTest()
+    {
+        LoadScene("StageTestScene");
+    }
     #endregion
 
     private static void LoadScene(string sceneName)

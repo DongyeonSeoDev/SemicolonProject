@@ -6,16 +6,20 @@ namespace Enemy
     public class EnemyAttackCheck : MonoBehaviour
     {
         private Enemy enemy;
+        private PlayerStatusEffect playerStatusEffect;
 
         private EnemyController eEnemyController;
 
         private bool isAttackInit = false;
+        private bool isKnockBack = false;
         private int attackDamage = 0;
 
         public Action<EnemyController> enemyControllerChange = null;
 
         private void Start()
         {
+            playerStatusEffect = SlimeGameManager.Instance.CurrentPlayerBody.GetComponent<PlayerStatusEffect>();
+
             AddEnemyController();
         }
 
@@ -48,6 +52,8 @@ namespace Enemy
                 enemy1.InitData(out eEnemyController, out attackDamage);
 
                 enemy = enemy1;
+
+                isKnockBack = false;
             }
             else
             {
@@ -56,6 +62,8 @@ namespace Enemy
                 enemy3.InitData(out eEnemyController, out attackDamage);
 
                 enemy = enemy3;
+
+                isKnockBack = true;
             }
 
             if (eEnemyController == EnemyController.PLAYER)
@@ -80,6 +88,12 @@ namespace Enemy
             if (eEnemyController == EnemyController.AI && collision.CompareTag("Player"))
             {
                 SlimeGameManager.Instance.Player.GetDamage(UnityEngine.Random.Range(attackDamage - 5, attackDamage + 6));
+
+                if (isKnockBack)
+                {
+                    playerStatusEffect.KnockBack((Vector2)(collision.transform.position - transform.position), 20f);
+                    playerStatusEffect.Sturn(1f);
+                }
             }
             else if (eEnemyController == EnemyController.PLAYER)
             {

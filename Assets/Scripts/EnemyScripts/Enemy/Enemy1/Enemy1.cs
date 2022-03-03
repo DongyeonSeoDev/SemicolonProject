@@ -14,6 +14,7 @@ namespace Enemy
                 hpBarFillImage = hpBarFillImage,
             };
 
+            enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(transform, enemyData.PlayerObject.transform, rb, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, false);
             base.OnEnable();
         }
 

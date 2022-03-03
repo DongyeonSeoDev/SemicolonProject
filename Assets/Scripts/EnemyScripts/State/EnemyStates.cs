@@ -44,10 +44,10 @@ namespace Enemy
 
     public partial class EnemyChaseState : EnemyState // 추격 상태
     {
-        private EnemyCommand enemyFollowPlayerCommand;
+        public EnemyChaseState(EnemyData enemyData) : base(eState.CHASE, enemyData)
+        {
 
-        public EnemyChaseState(EnemyData enemyData) : base(eState.CHASE, enemyData) =>
-            enemyFollowPlayerCommand = new EnemyFollowPlayerCommand(enemyData.enemyObject.transform, enemyData.PlayerObject.transform, enemyData.enemyRigidbody2D, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, enemyData.isLongDistanceAttack);
+        }
 
         protected override void Start()
         {
@@ -61,7 +61,7 @@ namespace Enemy
 
         protected override void Update()
         {
-            enemyFollowPlayerCommand.Execute();
+            enemyData.enemyMoveCommand.Execute();
 
             base.Update();
         }
