@@ -49,30 +49,30 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         });
 
         Load();
-        AllUpdateCollection();
+        AllUpdateUnderstanding();
         AllUpdateDrainProbability();
 
         EventManager.StartListening("PlayerDead", () =>
         {
-            AllUpdateCollection();
+            AllUpdateUnderstanding();
             AllUpdateDrainProbability();
         });
     }
 
-    public void UpdateCollection(string id)  //�� ��ȭ�� ���� ����
+    public void UpdateUnderstanding(string id)  //�� ��ȭ�� ���� ����
     { 
         mobIdToSlot[id].UpdateAssimilationRate((float)urmg.PlayerEnemyUnderStandingRateDic[id]/urmg.MinBodyChangeUnderstandingRate);
     }
 
-    public void AllUpdateCollection()   //��� �� ��ȭ�� ���� ����
+    public void AllUpdateUnderstanding()   //��� �� ��ȭ�� ���� ����
     {
         foreach (string key in mobIdToSlot.Keys)
-            UpdateCollection(key);
+            UpdateUnderstanding(key);
     }
 
     public void UpdateDrainProbability(string id) //�� ���� Ȯ�� ���� ����
     {
-        mobIdToSlot[id].UpdateDrainProbability(urmg.GetMountingPercentageDict(id));
+        mobIdToSlot[id].UpdateDrainProbability(urmg.GetDrainProbabilityDict(id));
     }
     public void AllUpdateDrainProbability()
     {
@@ -149,7 +149,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         UserInfo uInfo = GameManager.Instance.savedData.userInfo;
         foreach(string key in urmg.PlayerEnemyUnderStandingRateDic.Keys)
         {
-            uInfo.monsterInfoDic[key] = new MonsterInfo(key, urmg.PlayerEnemyUnderStandingRateDic[key], urmg.GetMountingPercentageDict(key));
+            uInfo.monsterInfoDic[key] = new MonsterInfo(key, urmg.PlayerEnemyUnderStandingRateDic[key], urmg.GetDrainProbabilityDict(key));
         }
     }
 
@@ -159,7 +159,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         foreach (string key in uInfo.monsterInfoDic.keyList)
         {
             urmg.PlayerEnemyUnderStandingRateDic[key] = uInfo.monsterInfoDic[key].understandingRate;
-            urmg.MountingPercentageDict[key] = uInfo.monsterInfoDic[key].absorptionRate;
+            urmg.DrainProbabilityDict[key] = uInfo.monsterInfoDic[key].absorptionRate;
         }
     }
     #endregion
