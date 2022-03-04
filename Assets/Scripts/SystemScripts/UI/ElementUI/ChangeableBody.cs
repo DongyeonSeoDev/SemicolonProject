@@ -13,6 +13,8 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
 
     public Text keyCodeTxt;
 
+    public CustomContentsSizeFilter customContentsSizeFilter;
+
     #region timer
 
     [SerializeField] CanvasGroup cvsg;
@@ -39,6 +41,7 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
     public void UpdateKeyCodeTxt()
     {
         keyCodeTxt.text = KeyCodeToString.GetString(KeySetting.keyDict[slotKey]);
+        Util.DelayFunc(() => customContentsSizeFilter.UpdateSize(), 0.2f);
     }
 
     public void Register(string id)
@@ -51,13 +54,14 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
     {
         coolTimeUIPair.first.fillAmount = 0;
         coolTimeUIPair.second.gameObject.SetActive(false);
-        //bodyImg.sprite = 아무것도 없는 걸 나타내는 스프라이트;
+        bodyImg.sprite = MonsterCollection.Instance.notExistBodySpr;
         bodyID = string.Empty;
         cvsg.alpha = 0.4f;
     }
 
     public void StartCoolTimeUI()
     {
+        //elapsed = coolTime;
         elapsed = 0f;
         isCoolTime = true;
         coolTimeUIPair.second.gameObject.SetActive(true);
@@ -67,10 +71,19 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
     {
         if(isCoolTime)
         {
+            //elapsed -= Time.deltaTime;
+            //coolTimeUIPair.first.fillAmount = elapsed / coolTime;
+
             elapsed += Time.deltaTime;
-            coolTimeUIPair.first.fillAmount = elapsed / coolTime;
+            coolTimeUIPair.first.fillAmount = (coolTime - elapsed) / coolTime;
             coolTimeUIPair.second.text = elapsed.ToString("0.0");
-            //coolTimeUIPair.second.text = elapsed.ToString("F2");
+
+            if(elapsed > coolTime)
+            {
+                isCoolTime = false;
+                coolTimeUIPair.second.gameObject.SetActive(false);
+                coolTimeUIPair.first.fillAmount = 0;
+            }
         }
     }
 }

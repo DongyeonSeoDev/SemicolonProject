@@ -1,6 +1,5 @@
 using UnityEngine.UI;
 using UnityEngine;
-using System;
 
 public class SkillInfoImage : MonoBehaviour
 {
@@ -10,7 +9,11 @@ public class SkillInfoImage : MonoBehaviour
     [SerializeField] Button skillBtn;
     [SerializeField] CanvasGroup cvsg;
 
+    [SerializeField] private string skillEx;
+
     [SerializeField] private SkillType skillType;
+
+    public CustomContentsSizeFilter ccsf;
 
     private UICommand skillUICmd;
     public bool Registered { get; set; }
@@ -18,14 +21,13 @@ public class SkillInfoImage : MonoBehaviour
 
     private void Awake()
     {
-        skillBtn.onClick.AddListener(() => SkillUIManager.Instance.OnClickSkillButton());
-        Register(null, ""); //임시임
+        skillBtn.onClick.AddListener(() => SkillUIManager.Instance.OnClickSkillButton(skillImgCoolTxtImgTriple.first.sprite, nifc.explanation, skillEx));
     }
 
 
     public void Register(Sprite skillSpr, string skillName)
     {
-        gameObject.SetActive(true);
+        cvsg.alpha = 1;
         skillImgCoolTxtImgTriple.first.sprite = skillSpr;
 
         switch (skillType)
@@ -36,11 +38,11 @@ public class SkillInfoImage : MonoBehaviour
                 break;
             case SkillType.SPECIALATTACK:
                 skillUICmd = new SpecialAttackUICommand(skillImgCoolTxtImgTriple.third, skillImgCoolTxtImgTriple.second);
-                skillName += "(특수공격)";
+                skillName += "(특수공격1)";
                 break;
             case SkillType.DRAIN:
                 skillUICmd = new DrainUICommand(skillImgCoolTxtImgTriple.third, skillImgCoolTxtImgTriple.second);
-                //skillName += "(슬라임 전용)";
+                skillName += "(특수공격2)";
                 break;
         }
 
@@ -51,12 +53,15 @@ public class SkillInfoImage : MonoBehaviour
     public void Unregister()
     {
         Registered = false;
-        gameObject.SetActive(false);
+        skillImgCoolTxtImgTriple.second.gameObject.SetActive(false);
+        skillImgCoolTxtImgTriple.first.sprite = SkillUIManager.Instance.emptySkillSpr;
+        cvsg.alpha = 0.4f;
     }
 
     public void UpdateKeyCode()
     {
         keyCodeTxt.text = KeyCodeToString.GetString(KeySetting.GetKeyCode(Util.EnumParse<KeyAction>(skillType.ToString())));
+        Util.DelayFunc(() => ccsf.UpdateSize(), 0.2f);
     }
 
     private void Update()

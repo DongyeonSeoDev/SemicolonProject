@@ -16,11 +16,6 @@ public class StageDoor : InteractionObj
         spr = GetComponent<SpriteRenderer>();
     }
 
-    private void OnEnable()
-    {
-        Close();
-    }
-
     public override void Interaction()
     {
         if(StageManager.Instance.IsStageClear)
