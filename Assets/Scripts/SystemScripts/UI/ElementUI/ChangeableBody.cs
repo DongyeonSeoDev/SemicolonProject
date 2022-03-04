@@ -85,5 +85,10 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
                 coolTimeUIPair.first.fillAmount = 0;
             }
         }
+
+        if(Input.GetKeyDown(KeySetting.keyDict[slotKey]))
+        {
+            SlimeGameManager.Instance.PlayerBodyChange(bodyID);
+        }
     }
 }
