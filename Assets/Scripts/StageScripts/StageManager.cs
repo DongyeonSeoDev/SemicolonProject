@@ -9,6 +9,7 @@ public class StageManager : MonoSingleton<StageManager>
     private StageGround currentStage = null;
 
     [SerializeField] private bool startStageClearState;
+    [SerializeField] private string startStageID;
 
     public Sprite openDoorSpr, closeDoorSpr;
     public Transform stageParent;
@@ -27,7 +28,8 @@ public class StageManager : MonoSingleton<StageManager>
 
     private void Start()
     {
-        IsStageClear = startStageClearState;
+        //IsStageClear = startStageClearState;
+        Util.DelayFunc(() => NextStage(startStageID), 0.2f);
     }
 
     public void NextStage(string id)
@@ -49,6 +51,10 @@ public class StageManager : MonoSingleton<StageManager>
         }
 
         IsStageClear = currentStage.EnemyCnt == 0;
+
+        if (IsStageClear) currentStage.OpenDoors();
+        else currentStage.CloseDoor();
+        
         SlimeGameManager.Instance.CurrentPlayerBody.transform.position = data.playerStartPosition;
         CinemachineCameraScript.Instance.SetCinemachineConfiner(currentStage.camStageCollider);
     }
@@ -56,7 +62,7 @@ public class StageManager : MonoSingleton<StageManager>
     public void StageClear()
     {
         IsStageClear = true;
-        currentStage.OpenDoor();
+        currentStage.OpenDoors();
 
         EventManager.TriggerEvent("StageClear");
 

@@ -33,7 +33,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     //Bottom Left Save Body UI List
     [Space(15)]
     [SerializeField] private List<ChangeableBody> savedBodys;
-    public Sprite notExistBodySpr; //빈 슬롯일 때의 스프라이트
+
+    public Sprite notExistBodySpr; //빈 슬롯일 때의 스프라이트 (몸)
 
     private void Start()
     {
@@ -57,6 +58,13 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         {
             AllUpdateUnderstanding();
             AllUpdateDrainProbability();
+        });
+        EventManager.StartListening("ChangeBody", () => 
+        {
+            for(int i=0; i< savedBodys.Count; i++)
+            {
+                savedBodys[i].StartCoolTimeUI();
+            }
         });
     }
 
