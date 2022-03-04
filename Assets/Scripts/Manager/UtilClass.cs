@@ -33,11 +33,11 @@ public static partial class Global
     public const string foodDataPath = "System/FoodData/";
     public const string ingredientDataPath = "System/IngredientData/";
 
-    public const string TalkWithChef = "TalkWithChef"; //요리사 NPC와 대화했을 때의 이벤트 키
-    public const string MakeFood = "MakeFood"; //음식을 만들었을 때의 이벤트 키
-    public const string TryAcquisitionItem = "TryAcquisitionItem"; //아이템 획득 시도 시 이벤트 키
-    public const string AcquisitionItem = "AcquisitionItem"; //아이템 획득 시 이벤트 키
-    public const string JunkItem = "JunkItem"; //아이템 버릴 때 이벤트 키
+    public const string TalkWithChef = "TalkWithChef"; 
+    public const string MakeFood = "MakeFood"; 
+    public const string TryAcquisitionItem = "TryAcquisitionItem"; 
+    public const string AcquisitionItem = "AcquisitionItem"; 
+    public const string JunkItem = "JunkItem"; 
 
     public static int EnumCount<T>() => Enum.GetValues(typeof(T)).Length;
 
