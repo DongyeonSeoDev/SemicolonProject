@@ -40,6 +40,22 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
     }
     private EternalStat pasteBodyAdditionalStat = new EternalStat();
 
+    private bool canBodyChange = true;
+
+    [SerializeField]
+    private float bodyChangeTime = 10f;
+    public float BodyChangeTime
+    {
+        get { return bodyChangeTime; }
+    }
+
+    private float bodyChangeTimer = 0f;
+    public float BodyChangeTimer
+    {
+        get { return bodyChangeTimer; }
+    }
+
+
     private float[] currentSkillDelay = new float[3]; // 0 => 기본공격, 1 => 스킬 1, 2 => 스킬 2
     public float[] SkillDelays
     {
@@ -77,6 +93,10 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
     {
         EventManager.StopListening("PlayerRespawn", PlayerBodySpawn);
     }
+    private void Update()
+    {
+        CheckBodyTimer();
+    }
 
     private void PlayerBodySpawn(Vector2 spawnPosition)
     {
@@ -93,6 +113,11 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
     }
     public void PlayerBodyChange(string bodyId, bool isDead = false)
     {
+        if(bodyId == "" || !canBodyChange)
+        {
+            return;
+        }
+
         Player player = SlimeGameManager.Instance.player;
 
         Enemy.Enemy enemy = null;
@@ -102,7 +127,6 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
         Vector2 spawnPos = currentPlayerBody.transform.position;
 
         float hpPercentage = player.CurrentHp / (float)player.PlayerStat.MaxHp;
-
 
         if (bodyId == "origin")
         {
@@ -115,6 +139,8 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
                 player.PlayerStat.additionalEternalStat -= pasteBodyAdditionalStat;
 
                 pasteBodyAdditionalStat = new EternalStat();
+
+                SetCanBodyChangeFalse();
             }
 
             enemy = newBody.GetComponent<Enemy.Enemy>();
@@ -181,11 +207,32 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
             EventManager.TriggerEvent("ChangeBody");
 
+            SetCanBodyChangeFalse();
+
             // TODO: PlayerBody로서의 처리
         }
         else
         {
             Debug.Log("Body Id: '" + bodyId + "' 로의 Body Change에 실패했습니다.");
+        }
+    }
+
+    private void SetCanBodyChangeFalse()
+    {
+        canBodyChange = false;
+        bodyChangeTimer = bodyChangeTime;
+    }
+
+    private void CheckBodyTimer()
+    {
+        if(bodyChangeTimer > 0f)
+        {
+            bodyChangeTimer -= Time.deltaTime;
+
+            if(bodyChangeTimer <= 0f)
+            {
+                canBodyChange = true;
+            }
         }
     }
 }
