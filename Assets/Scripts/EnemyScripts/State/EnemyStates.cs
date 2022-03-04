@@ -186,22 +186,17 @@ namespace Enemy
 
         public EnemyGetDamagedState(EnemyData enemyData) : base(eState.GETDAMAGED, enemyData)
         {
-            if (enemyData.eEnemyController == EnemyController.AI)
-            {
-                enemyCommand[0] = new EnemyGetDamagedAIControllerCommand(enemyData);
+            enemyCommand[0] = new EnemyGetDamagedCommand(enemyData);
 
-                if (enemyData.isKnockBack)
+            if (enemyData.isKnockBack)
+            {
+                if (enemyData.knockBackDirection != null)
                 {
-                    enemyCommand[1] = new EnemyKnockBackAICommand(enemyData.enemyRigidbody2D, (enemyData.enemyObject.transform.position - enemyData.PlayerObject.transform.position).normalized * enemyData.knockBackPower);
+                    enemyCommand[1] = new EnemyKnockBackCommand(enemyData.enemyRigidbody2D, enemyData.knockBackDirection.Value.normalized * enemyData.knockBackPower);
                 }
-            }
-            else if (enemyData.eEnemyController == EnemyController.PLAYER)
-            {
-                enemyCommand[0] = new EnemyGetDamagedPlayerControllerCommand(enemyData.damagedValue);
-
-                if (enemyData.isKnockBack)
+                else
                 {
-                    enemyCommand[1] = new EnemyKnockBackPlayerCommand();
+                    enemyCommand[1] = new EnemyKnockBackCommand(enemyData.enemyRigidbody2D, (enemyData.enemyObject.transform.position - enemyData.PlayerObject.transform.position).normalized * enemyData.knockBackPower);
                 }
             }
         }

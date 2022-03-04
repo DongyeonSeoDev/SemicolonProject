@@ -151,13 +151,13 @@ namespace Enemy
         }
     }
 
-    public class EnemyGetDamagedAIControllerCommand : EnemyCommand // 적이 데미지를 받음
+    public class EnemyGetDamagedCommand : EnemyCommand // 적이 데미지를 받음
     {
         private EnemyData enemyData;
 
         private bool isWorking = false;
 
-        public EnemyGetDamagedAIControllerCommand(EnemyData enemyData)
+        public EnemyGetDamagedCommand(EnemyData enemyData)
         {
             this.enemyData = enemyData;
             isWorking = false;
@@ -312,12 +312,12 @@ namespace Enemy
         }
     }
 
-    public class EnemyKnockBackAICommand : EnemyCommand
+    public class EnemyKnockBackCommand : EnemyCommand
     {
         private Rigidbody2D rigid;
         private Vector2 direction;
 
-        public EnemyKnockBackAICommand(Rigidbody2D rigid, Vector2 direction)
+        public EnemyKnockBackCommand(Rigidbody2D rigid, Vector2 direction)
         {
             this.rigid = rigid;
             this.direction = direction;
@@ -326,14 +326,6 @@ namespace Enemy
         public override void Execute()
         {
             rigid.AddForce(direction, ForceMode2D.Impulse);
-        }
-    }
-
-    public class EnemyKnockBackPlayerCommand : EnemyCommand
-    {
-        public override void Execute()
-        {
-            throw new System.NotImplementedException("플레이어 넉백 구현해야함");
         }
     }
 }

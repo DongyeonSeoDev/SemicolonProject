@@ -97,7 +97,7 @@ namespace Enemy
             lastPositionX = transform.position.x;
         }
 
-        public void GetDamage(int damage, bool isKnockBack = false, float knockBackPower = 10f, float stunTime = 1f)
+        public void GetDamage(int damage, bool isKnockBack = false, float knockBackPower = 10f, float stunTime = 1f, Vector2? direction = null)
         {
             if (!enemyData.isDamaged)
             {
@@ -107,6 +107,8 @@ namespace Enemy
                 enemyData.isKnockBack = isKnockBack;
                 enemyData.knockBackPower = knockBackPower;
                 enemyData.stunTime = stunTime;
+
+                enemyData.knockBackDirection = direction;
 
                 EffectManager.Instance.OnDamaged(damage, false, true, transform.position);
             }

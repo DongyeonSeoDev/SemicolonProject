@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7261487446772812252
 Transform:
   m_ObjectHideFlags: 0
@@ -115,7 +115,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7261487446953573928
 Transform:
   m_ObjectHideFlags: 0
@@ -291,6 +291,8 @@ MonoBehaviour:
   npcUI: {fileID: 0}
   itrUI: {fileID: 0}
   fsOut: {fileID: 7261487446772812253}
+  nextStageData: {fileID: 0}
+  enemySpawnSOList: []
 --- !u!1 &7261487448192597873
 GameObject:
   m_ObjectHideFlags: 0

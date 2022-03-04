@@ -15,7 +15,11 @@ public class ChangeBodySlot : MonoBehaviour
 
         changeBtn.onClick.AddListener(() =>
         {
-            //해당 슬롯 몹 몸 없앰
+            UIManager.Instance.RequestWarningWindow(() =>
+            {
+                //다른 몹으로 덮어쓰기
+                UIManager.Instance.OnUIInteract(UIType.CHANGEABLEMOBLIST, true);
+            }, "선택된 흡수한 몸을 제거하시겠습니까?");
         });
     }
 
