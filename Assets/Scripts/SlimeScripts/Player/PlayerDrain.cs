@@ -36,6 +36,8 @@ public class PlayerDrain : PlayerSkill
     [SerializeField]
     private float drainDoneDistance = 0.1f;
 
+    private bool canDrain = true;
+
     //[SerializeField]
     //private float reDrainTime = 10f;
     //private float reDrainTimer = 0f;
@@ -61,9 +63,15 @@ public class PlayerDrain : PlayerSkill
         //    }
         //}
 
-        if (playerInput.IsDrain)
+        if (playerInput.IsDrain && canDrain)
         {
             playerInput.IsDrain = false;
+
+            SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = skillDelay;
+
+            drainCollider.SetActive(true);
+
+            canDrain = false;
         }
 
         DoSkill();
@@ -72,9 +80,7 @@ public class PlayerDrain : PlayerSkill
     {
         base.WhenSkillDelayTimerZero();
 
-        SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = skillDelay;
-
-        drainCollider.SetActive(true);
+        canDrain = true;
     }
     public override void DoSkill()
     {
