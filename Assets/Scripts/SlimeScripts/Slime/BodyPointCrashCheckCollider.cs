@@ -17,7 +17,7 @@ public class BodyPointCrashCheckCollider : MonoBehaviour
 
     void Update()
     {
-        transform.localPosition = bodyPoint.transform.localPosition;
+        transform.localPosition = Vector3.zero;
     }
     private void OnDisable()
     {

@@ -10,6 +10,11 @@ public class SlimeSkin : MonoBehaviour
 
     private Material[] materials;
 
+    [SerializeField]
+    private Vector3 waveVisuals = Vector3.zero;
+    [SerializeField]
+    private Vector3 waveVisualsWhenIdle = Vector3.zero;
+
     void Start()
     {
         renderer = GetComponent<SpriteShapeRenderer>();
@@ -21,16 +26,32 @@ public class SlimeSkin : MonoBehaviour
 
     void Update()
     {
-        float waveZ = 0f;
+        //Vector3 wave = Vector3.zero;
+        Vector3 newWave = Vector3.zero;
 
         for (int i = 0; i < 2; i++)
         {
-            if (playerInput.MoveVector.x == 0f)
+            //wave = materials[i].GetVector("_WaveVisuals");
+
+            if (playerInput.MoveVector != Vector2.zero)
             {
-                waveZ = materials[i].GetVector("_WaveVisuals").y;
+                newWave.x = waveVisuals.x;
+                newWave.y = waveVisuals.y;
+
+                if (playerInput.MoveVector.x == 0f)
+                {
+                    newWave.z = waveVisuals.z;
+                }
+            }
+            else
+            {
+                newWave.x = waveVisualsWhenIdle.x;
+                newWave.y = waveVisualsWhenIdle.y;
+                newWave.z = waveVisualsWhenIdle.z;
             }
 
-            materials[i].SetFloat("_WaveZ", waveZ);
+            materials[i].SetVector("_WaveVisuals", newWave);
+            materials[i].SetVector("_WaveDirections", SlimeGameManager.Instance.Player.GetComponent<PlayerInput>().MoveVector);
         }
     }
 }

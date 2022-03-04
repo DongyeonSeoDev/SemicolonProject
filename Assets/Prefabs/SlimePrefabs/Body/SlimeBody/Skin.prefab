@@ -223,4 +223,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f05ec78752e5ac4a8d241937c095199, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shader: {fileID: -6465566751694194690, guid: c364b2f6d92c3d94fb154cb63a77dd9c, type: 3}
+  waveVisuals: {x: 0.02, y: 5, z: 1}
+  waveVisualsWhenIdle: {x: 0.05, y: 0.8, z: 1}
