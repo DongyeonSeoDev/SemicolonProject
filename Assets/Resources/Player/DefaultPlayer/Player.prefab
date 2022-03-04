@@ -50,8 +50,8 @@ MonoBehaviour:
   playerStat:
     eternalStat:
       maxHp: 100
-      minDamage: 3
-      maxDamage: 5
+      minDamage: 8
+      maxDamage: 12
       defense: 2
       intellect: 0
       speed: 8

@@ -18,7 +18,7 @@ public class Stat
     }
     public int MaxDamage
     {
-        get { return additionalEternalStat.maxDamage + additionalEternalStat.maxDamage; }
+        get { return eternalStat.maxDamage + additionalEternalStat.maxDamage; }
     }
     public int Defense
     {
