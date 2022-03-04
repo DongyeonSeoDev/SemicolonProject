@@ -59,6 +59,8 @@ namespace Enemy
             }
         }
 
+        public Vector2? knockBackDirection;
+
         public Color normalColor;
         public Color damagedColor;
         public Color enemyDeadEffectColor;

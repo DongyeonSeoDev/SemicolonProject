@@ -7,6 +7,7 @@ namespace Enemy
     {
         private Enemy enemy;
         private PlayerStatusEffect playerStatusEffect;
+        private EnemyCommand knockBackCommand;
 
         private EnemyController eEnemyController;
 
@@ -18,8 +19,11 @@ namespace Enemy
 
         private void Start()
         {
-            playerStatusEffect = SlimeGameManager.Instance.CurrentPlayerBody.GetComponent<PlayerStatusEffect>();
-
+            if (SlimeGameManager.Instance.CurrentPlayerBody != null)
+            {
+                playerStatusEffect = SlimeGameManager.Instance.CurrentPlayerBody.GetComponent<PlayerStatusEffect>();
+            }
+            
             AddEnemyController();
         }
 
@@ -89,10 +93,29 @@ namespace Enemy
             {
                 SlimeGameManager.Instance.Player.GetDamage(UnityEngine.Random.Range(attackDamage - 5, attackDamage + 6));
 
+                var enemy = collision.GetComponent<Enemy>();
+
                 if (isKnockBack)
                 {
-                    playerStatusEffect.KnockBack((Vector2)(collision.transform.position - transform.position), 20f);
-                    playerStatusEffect.Sturn(1f);
+                    if (playerStatusEffect != null)
+                    {
+                        playerStatusEffect.KnockBack(collision.transform.position - transform.position, 20f);
+                        playerStatusEffect.Sturn(1f);
+                    }
+                    else
+                    {
+                        if (enemy != null)
+                        {
+                            enemy.GetDamage(0, true, 20f, 1f, collision.transform.position - transform.position);
+                        }
+                    }
+                }
+                else
+                {
+                    if (enemy != null)
+                    {
+                        enemy.GetDamage(0);
+                    }
                 }
             }
             else if (eEnemyController == EnemyController.PLAYER)
@@ -101,7 +124,7 @@ namespace Enemy
 
                 if (enemy != null && enemy != this.enemy)
                 {
-                    enemy.GetDamage(UnityEngine.Random.Range(attackDamage - 5, attackDamage + 6));
+                    enemy.GetDamage(UnityEngine.Random.Range(attackDamage - 5, attackDamage + 6), true);
                 }
             }
         }
