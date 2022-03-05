@@ -26,7 +26,7 @@ public class Pick : InteractionObj
 
     private void Start()
     {
-        GameManager.Instance.pickList.Add(this);
+        //GameManager.Instance.pickList.Add(this);
         fsOut.gameObject.SetActive(false);
     }
 

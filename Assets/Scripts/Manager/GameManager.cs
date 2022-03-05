@@ -142,7 +142,7 @@ public partial class GameManager : MonoSingleton<GameManager>
 
         //이벤트 정의
         EventManager.StartListening("PlayerDead", PlayerDead);
-        EventManager.StartListening("PlayerRespawn", ResetDroppedItems);
+        EventManager.StartListening("PlayerRespawn", PlayerRespawnEvent);
         EventManager.StartListening("StageClear", UpdateItemBattleRestCount);
     }
 
@@ -197,23 +197,25 @@ public partial class GameManager : MonoSingleton<GameManager>
         }
     }
 
-    void ResetDroppedItems(Vector2 unusedValue)
+    void PlayerRespawnEvent(Vector2 unusedValue)
     {
-        int i;
-        for (i = 0; i < droppedItemList.Count; i++)
+        ResetDroppedItems();
+
+        /*for(i=0; i<pickList.Count; i++)
+        {
+            if (!pickList[i].gameObject.activeSelf) pickList[i].gameObject.SetActive(true);
+        }*/
+
+        limitedBattleCntItems.Clear();
+    }
+
+    public void ResetDroppedItems()
+    {
+        for (int i = 0; i < droppedItemList.Count; i++)
         {
             droppedItemList[i].gameObject.SetActive(false);
         }
         droppedItemList.Clear();
-
-        for(i=0; i<pickList.Count; i++)
-        {
-            if (!pickList[i].gameObject.activeSelf) pickList[i].gameObject.SetActive(true);
-        }
-
-        limitedBattleCntItems.Clear();
-
-        
     }
 
     public void UpdateItemBattleRestCount() //교전 수가 정해진 아이템들 현재 교전 수 1 증가하고 최대치인 것은 삭제

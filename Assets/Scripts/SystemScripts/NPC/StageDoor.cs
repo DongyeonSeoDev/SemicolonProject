@@ -20,7 +20,7 @@ public class StageDoor : InteractionObj
     {
         if(StageManager.Instance.IsStageClear)
         {
-            UIManager.Instance.StartLoading(() => StageManager.Instance.NextStage(nextStageData.stageID), null); //null에는 나중에 스테이지 입장 시 이벤트를 발생시킬 것 (지역 이름 잠시동안 뜨기 등)
+            UIManager.Instance.StartLoading(() => StageManager.Instance.NextStage(nextStageData.stageID),()=> EventManager.TriggerEvent("StartNextStage", nextStageData.stageName)); 
         }
         else
         {

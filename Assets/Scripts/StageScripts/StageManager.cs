@@ -60,6 +60,7 @@ public class StageManager : MonoSingleton<StageManager>
         
         SlimeGameManager.Instance.CurrentPlayerBody.transform.position = data.playerStartPosition;
         CinemachineCameraScript.Instance.SetCinemachineConfiner(currentStage.camStageCollider);
+        GameManager.Instance.ResetDroppedItems();
     }
 
     public void StageClear()

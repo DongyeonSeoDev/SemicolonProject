@@ -10,15 +10,24 @@ public class StageGround : MonoBehaviour
     [SerializeField] private bool autoInsertStageDoors;
     public StageDoor[] stageDoors;
 
+    [SerializeField] private bool autoInsertPlants;
+    public Pick[] plants;
+
     private void Awake()
     {
         if(autoInsertStageDoors)
             stageDoors = GetComponentsInChildren<StageDoor>();
+        if(autoInsertPlants)    
+            plants = GetComponentsInChildren<Pick>();
     }
 
     private void OnEnable()
     {
         Enemy.EnemyManager.Instance.enemyCount = enemyCount;
+        for(int i = 0; i < plants.Length; i++)
+        {
+            plants[i].gameObject.SetActive(true);
+        }
     }
 
     public void OpenDoors()

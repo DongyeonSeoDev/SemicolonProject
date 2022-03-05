@@ -328,6 +328,9 @@ MonoBehaviour:
   stageDoors:
   - {fileID: 5797867113151078277}
   - {fileID: 5797867112884080770}
+  autoInsertPlants: 0
+  plants:
+  - {fileID: 4863689028953432099}
 --- !u!1 &1378282382014638738
 GameObject:
   m_ObjectHideFlags: 0
@@ -21001,6 +21004,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b9ff0b0188dca0e448ec2fd4d00024b3, type: 3}
+--- !u!4 &5797867112884080771 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7261487447096875062, guid: b9ff0b0188dca0e448ec2fd4d00024b3, type: 3}
+  m_PrefabInstance: {fileID: 3797613345273202869}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &5797867112884080770 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7261487447096875063, guid: b9ff0b0188dca0e448ec2fd4d00024b3, type: 3}
@@ -21012,11 +21020,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b9e200c7d6f9e14ab3cc9a33c90f74e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &5797867112884080771 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7261487447096875062, guid: b9ff0b0188dca0e448ec2fd4d00024b3, type: 3}
-  m_PrefabInstance: {fileID: 3797613345273202869}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3797613346870109074
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21078,6 +21081,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 913d8b5e292ca3f4b9cdf9e9ace1a6f4, type: 3}
+--- !u!114 &4863689028953432099 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8632448655464481713, guid: 913d8b5e292ca3f4b9cdf9e9ace1a6f4, type: 3}
+  m_PrefabInstance: {fileID: 3797613346870109074}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d26a08ab189ceb34e9725d88e0992cda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &799062852232371058 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4586074380361857248, guid: 913d8b5e292ca3f4b9cdf9e9ace1a6f4, type: 3}
