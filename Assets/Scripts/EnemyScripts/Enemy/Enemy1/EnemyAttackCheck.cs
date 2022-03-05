@@ -106,7 +106,7 @@ namespace Enemy
                     {
                         if (enemy != null)
                         {
-                            enemy.GetDamage(0, true, 20f, 1f, collision.transform.position - transform.position);
+                            enemy.GetDamage(0, true, false ,20f, 1f, collision.transform.position - transform.position);
                         }
                     }
                 }
