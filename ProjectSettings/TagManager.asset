@@ -23,7 +23,7 @@ TagManager:
   - ENEMYPROJECTILE
   - PLAYERCRASHCHECK
   - CHECKCOLLIDER
-  - 
+  - CAMERACOLLIDER
   - 
   - 
   - 
