@@ -10,6 +10,7 @@ public class StageManager : MonoSingleton<StageManager>
 
     [SerializeField] private bool startStageClearState;
     [SerializeField] private string startStageID;
+    [HideInInspector] public Vector2 respawnPos;
 
     public Sprite openDoorSpr, closeDoorSpr;
     public Transform stageParent;
@@ -30,6 +31,8 @@ public class StageManager : MonoSingleton<StageManager>
     {
         //IsStageClear = startStageClearState;
         Util.DelayFunc(() => NextStage(startStageID), 0.2f);
+        respawnPos = idToStageDataDict[startStageID].playerStartPosition;
+        EventManager.StartListening("PlayerRespawn", Respawn);
     }
 
     public void NextStage(string id)
@@ -38,6 +41,7 @@ public class StageManager : MonoSingleton<StageManager>
 
         StageDataSO data = idToStageDataDict[id];
         IsLastStage = data.endStage;
+        currentStage = null;
 
         if (!idToStageObjDict.TryGetValue(id, out currentStage))
         {
@@ -46,7 +50,6 @@ public class StageManager : MonoSingleton<StageManager>
         }
         else
         {
-            currentStage = idToStageObjDict[id];
             currentStage.gameObject.SetActive(true);
         }
 
@@ -67,7 +70,10 @@ public class StageManager : MonoSingleton<StageManager>
         EventManager.TriggerEvent("StageClear");
 
         CinemachineCameraScript.Instance.SetCinemachineConfiner(CinemachineCameraScript.Instance.boundingCollider);
+    }
 
-        
+    private void Respawn(Vector2 unusedValue)
+    {
+        NextStage(startStageID);
     }
 }

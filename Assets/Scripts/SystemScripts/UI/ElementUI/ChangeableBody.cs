@@ -4,13 +4,15 @@ using UnityEngine;
 public class ChangeableBody : MonoBehaviour  //bottom left UI
 {
     [SerializeField] private int slotNumber;
+    public int SlotNumber => slotNumber;
+
     [SerializeField] private KeyAction slotKey;
+
     [SerializeField] private string bodyID = ""; //이 슬롯에 저장되어있는 몬스터 아이디   (monster id)
+    public bool Registered => !string.IsNullOrEmpty(bodyID);
 
     public Image bodyImg;
-
     public Pair<Image, Text> coolTimeUIPair;
-
     public Text keyCodeTxt;
 
     public CustomContentsSizeFilter customContentsSizeFilter;
@@ -36,6 +38,10 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
         {
             Register("origin");
         }
+        else
+        {
+            Unregister();
+        }
     }
 
     public void UpdateKeyCodeTxt()
@@ -52,6 +58,13 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
 
     public void Unregister()
     {
+        if(isCoolTime)
+        {
+            isCoolTime = false;
+            Util.DelayFunc(() => Unregister(), 0.1f);
+            return;
+        }
+
         coolTimeUIPair.first.fillAmount = 0;
         coolTimeUIPair.second.gameObject.SetActive(false);
         bodyImg.sprite = MonsterCollection.Instance.notExistBodySpr;
@@ -61,6 +74,8 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
 
     public void StartCoolTimeUI()
     {
+        if (string.IsNullOrEmpty(bodyID)) return;
+
         //elapsed = coolTime;
         elapsed = 0f;
         isCoolTime = true;

@@ -25,10 +25,12 @@ public class SkillInfoImage : MonoBehaviour
     }
 
 
-    public void Register(Sprite skillSpr, string skillName)
+    public void Register(SkillInfo info)
     {
         cvsg.alpha = 1;
-        skillImgCoolTxtImgTriple.first.sprite = skillSpr;
+        skillImgCoolTxtImgTriple.first.sprite = info.skillSpr;
+        string skillName = info.skillName;
+        skillEx = info.skillExplanation;
 
         switch (skillType)
         {
@@ -54,6 +56,7 @@ public class SkillInfoImage : MonoBehaviour
     {
         Registered = false;
         skillImgCoolTxtImgTriple.second.gameObject.SetActive(false);
+        skillImgCoolTxtImgTriple.third.fillAmount = 0;
         skillImgCoolTxtImgTriple.first.sprite = SkillUIManager.Instance.emptySkillSpr;
         cvsg.alpha = 0.4f;
     }

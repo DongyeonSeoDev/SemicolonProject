@@ -23,6 +23,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     public Triple<Image, Text, Text> mobItemImgNameEx;
 
     public Text[] statText; //몹으로 변신시 상승 능력치 확인 텍스트
+    public Text statIncrRatePerAssim; //동화율 n 오를 때마다 처음 스탯의 m퍼센트만큼 증가함을 나타내는 텍스트
 
     #endregion
 
@@ -41,6 +42,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         urmg = PlayerEnemyUnderstandingRateManager.Instance;
         
         mobInfoUIPair.second.GetComponent<GridLayoutGroup>().constraintCount = Mathf.Clamp(urmg.ChangableBodyList.Count / 3 + 1, 6, 10000);
+        statIncrRatePerAssim.text = "[동화율 10%당 " + (SlimeGameManager.Instance.UpStatPercentage * 100f).ToString() + "%씩 스탯 상승]";
+        changeBodySlots.ForEach(x => x.SetSlotNumber());
 
         //모든 몹 정보 가져와서 UI생성하고 값 넣음
         urmg.ChangableBodyList.ForEach(body =>
@@ -140,13 +143,78 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
     #endregion
 
-    #region ChangeableBodyList
+    #region ChangeableBodyList Bottom Left
 
     public void UpdateSavedBodyChangeKeyCodeTxt()
     {
         for(int i=0; i<savedBodys.Count; i++)
         {
             savedBodys[i].UpdateKeyCodeTxt();
+        }
+    }
+    
+    public void AddSavedBody(string id, int slotNumber = -1)
+    {
+        int i;
+        if (slotNumber == -1) 
+        {
+            for (i = 0; i < savedBodys.Count; i++)
+            {
+                if(!savedBodys[i].Registered)
+                {
+                    savedBodys[i].Register(id);
+                }
+            }
+        }
+        else
+        {
+            savedBodys.Find(x => x.SlotNumber == slotNumber).Register(id);
+        } 
+    }
+
+    public void RemoveSavedBody(int slotNumber)
+    {
+        for (int i = 0; i < savedBodys.Count; i++)
+        {
+            if (savedBodys[i].SlotNumber == slotNumber)
+            {
+                savedBodys[i].Unregister();
+            }
+        }
+    }
+
+    #endregion
+
+    #region RemoveableBodySlotList
+
+    //함수명 변수명 뭐라고 해야할지 애매하네
+    public void AddBody(string id, int slotNumber = -1)
+    {
+        int i;
+        if (slotNumber == -1)
+        {
+            for (i = 0; i < changeBodySlots.Count; i++)
+            {
+                if (!changeBodySlots[i].Registered)
+                {
+                    changeBodySlots[i].Register(id, "몬스터 이름");
+                }
+            }
+        }
+        else
+        {
+            changeBodySlots.Find(x => x.SlotNumber == slotNumber).Register(id, "몬스터 이름");
+        }
+    }
+
+    public void RemoveBody(int slotNumber)
+    {
+        for (int i = 0; i < changeBodySlots.Count; i++)
+        {
+            if (changeBodySlots[i].SlotNumber == slotNumber)
+            {
+                changeBodySlots[i].Unregister();
+            }
         }
     }
 

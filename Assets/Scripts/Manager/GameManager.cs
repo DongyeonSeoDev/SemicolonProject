@@ -240,7 +240,7 @@ public partial class GameManager : MonoSingleton<GameManager>
     {
         for(int i=0; i< limitedBattleCntItems.Count; ++i)
         {
-            if(limitedBattleCntItems[i].first == id && limitedBattleCntItems[i].second == limitedBattleCntItems[i].third)
+            if(limitedBattleCntItems[i].first == id)
             {
                 limitedBattleCntItems.RemoveAt(i);
                 return;
@@ -252,7 +252,7 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     public void RespawnPlayer()
     {
-        EventManager.TriggerEvent("PlayerRespawn", new Vector2(0.3f, 4.55f)); //일단 임시로 일케함
+        EventManager.TriggerEvent("PlayerRespawn", StageManager.Instance.respawnPos); 
     }
 
     public void QuitGame()
