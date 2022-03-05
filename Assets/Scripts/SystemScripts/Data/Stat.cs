@@ -40,7 +40,7 @@ public class Stat
         get { return eternalStat.criticalRate + additionalEternalStat.criticalRate; }
     }
 
-    public float CriticalDamage
+    public int CriticalDamage
     {
         get { return eternalStat.criticalDamage + additionalEternalStat.criticalDamage; }
     }
@@ -73,12 +73,12 @@ public class EternalStat
     public float speed;
 
     public float criticalRate;
-    public float criticalDamage;
+    public int criticalDamage;
     public EternalStat()
     {
 
     }
-    public EternalStat(int mh, int mind, int maxd, int df, int intell, float s, float cr, float cd)
+    public EternalStat(int mh, int mind, int maxd, int df, int intell, float s, float cr, int cd)
     {
         maxHp = mh;
         minDamage = mind;

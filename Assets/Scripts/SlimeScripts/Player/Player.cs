@@ -100,6 +100,40 @@ public class Player : MonoBehaviour
             UIManager.Instance.UpdatePlayerHPUI(true);
         }
     }
+    public void GiveDamage(Enemy.Enemy targetEnemy, int minDamage, int maxDamage)
+    {
+        int damage = Random.Range(minDamage, maxDamage + 1);
+
+        damage = CriticalCheck(damage);
+
+        targetEnemy.GetDamage(damage);
+    }
+    public void GiveDamage(Enemy.Enemy targetEnemy, int minDamage, int maxDamage, float magnification)
+    {
+        int damage = Random.Range(minDamage, maxDamage + 1);
+
+        damage = CriticalCheck(damage);
+
+        damage = (int)(damage * magnification);
+
+        targetEnemy.GetDamage(damage);
+    }
+    private int CriticalCheck(int damage)
+    {
+        int n_damage = damage;
+
+        float checkRate = 0f;
+
+        checkRate = Random.Range(0f, 100f);
+
+        if(checkRate <= playerStat.CriticalRate)
+        {
+            n_damage += playerStat.CriticalDamage;
+        }
+
+        return n_damage;
+    }
+
     public void GetHeal(int healAmount)
     {
         if (!playerState.IsDead)
@@ -139,6 +173,8 @@ public class Player : MonoBehaviour
         {
             PlayerEnemyUnderstandingRateManager.Instance.CheckMountingEnemy(objId, upUnderstandingRateValueWhenEnemyDead);
         }
+
+        
     }
     private void SetActiveFalse()
     {
