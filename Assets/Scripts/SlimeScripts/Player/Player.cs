@@ -78,7 +78,7 @@ public class Player : MonoBehaviour
         EventManager.StopListening("PlayerSetActiveFalse", SetActiveFalse);
         EventManager.StopListening("GameClear", WhenGameClear);
     }
-    public void GetDamage(int damage)
+    public void GetDamage(int damage, bool critical = false)
     {
         if (!playerState.IsDead)
         {
@@ -96,10 +96,50 @@ public class Player : MonoBehaviour
                 playerState.IsDead = true;
             }
 
-            EffectManager.Instance.OnDamaged(dm, false,false, SlimeGameManager.Instance.CurrentPlayerBody.transform.position); 
+            EffectManager.Instance.OnDamaged(dm, critical, false, SlimeGameManager.Instance.CurrentPlayerBody.transform.position); 
             UIManager.Instance.UpdatePlayerHPUI(true);
         }
     }
+    public void GiveDamage(Enemy.Enemy targetEnemy, int minDamage, int maxDamage, bool isKnockBack = false)
+    {
+        (int, bool) damage;
+        damage.Item1 = Random.Range(minDamage, maxDamage + 1);
+        damage.Item2 = false;
+
+        damage = CriticalCheck(damage.Item1);
+
+        targetEnemy.GetDamage(damage.Item1, damage.Item2, isKnockBack);
+    }
+    public void GiveDamage(Enemy.Enemy targetEnemy, int minDamage, int maxDamage, float magnification, bool isKnockBack = false)
+    {
+        (int, bool) damage;
+        damage.Item1 = Random.Range(minDamage, maxDamage + 1);
+        damage.Item2 = false;
+
+        damage = CriticalCheck(damage.Item1);
+
+        damage.Item1 = (int)(damage.Item1 * magnification);
+
+        targetEnemy.GetDamage(damage.Item1, damage.Item2, isKnockBack);
+    }
+    private (int, bool) CriticalCheck(int damage)
+    {
+        int n_damage = damage;
+        bool isCritical = false;
+
+        float checkRate = 0f;
+
+        checkRate = Random.Range(0f, 100f);
+
+        if(checkRate <= playerStat.CriticalRate)
+        {
+            n_damage += playerStat.CriticalDamage;
+            isCritical = true;
+        }
+
+        return (n_damage, isCritical);
+    }
+
     public void GetHeal(int healAmount)
     {
         if (!playerState.IsDead)
@@ -139,6 +179,8 @@ public class Player : MonoBehaviour
         {
             PlayerEnemyUnderstandingRateManager.Instance.CheckMountingEnemy(objId, upUnderstandingRateValueWhenEnemyDead);
         }
+
+        
     }
     private void SetActiveFalse()
     {
