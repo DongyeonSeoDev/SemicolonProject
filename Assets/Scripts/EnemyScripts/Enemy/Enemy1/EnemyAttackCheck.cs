@@ -6,6 +6,7 @@ namespace Enemy
     public class EnemyAttackCheck : MonoBehaviour
     {
         private Enemy enemy;
+        private Rigidbody2D enemyRigidbody;
         private PlayerStatusEffect playerStatusEffect;
         private EnemyCommand knockBackCommand;
 
@@ -66,6 +67,7 @@ namespace Enemy
                 enemy3.InitData(out eEnemyController, out attackDamage);
 
                 enemy = enemy3;
+                enemyRigidbody = enemy.GetComponent<Rigidbody2D>();
 
                 isKnockBack = true;
             }
@@ -89,6 +91,14 @@ namespace Enemy
                 Init();
             }
 
+            if (isKnockBack && collision.CompareTag("Wall"))
+            {
+                Debug.Log(collision.name);
+
+                enemyRigidbody.velocity = Vector2.zero;
+                enemyRigidbody.angularVelocity = 0f;
+            }
+
             if (eEnemyController == EnemyController.AI && collision.CompareTag("Player"))
             {
                 SlimeGameManager.Instance.Player.GetDamage(UnityEngine.Random.Range(attackDamage - 5, attackDamage + 6));
@@ -97,6 +107,11 @@ namespace Enemy
 
                 if (isKnockBack)
                 {
+                    Debug.Log(collision.name);
+
+                    enemyRigidbody.velocity = Vector2.zero;
+                    enemyRigidbody.angularVelocity = 0f;
+
                     if (playerStatusEffect != null)
                     {
                         playerStatusEffect.KnockBack(collision.transform.position - transform.position, 20f);
