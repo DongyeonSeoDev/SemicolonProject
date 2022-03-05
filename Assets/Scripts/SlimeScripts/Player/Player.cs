@@ -78,7 +78,7 @@ public class Player : MonoBehaviour
         EventManager.StopListening("PlayerSetActiveFalse", SetActiveFalse);
         EventManager.StopListening("GameClear", WhenGameClear);
     }
-    public void GetDamage(int damage)
+    public void GetDamage(int damage, bool critical = false)
     {
         if (!playerState.IsDead)
         {
@@ -96,31 +96,36 @@ public class Player : MonoBehaviour
                 playerState.IsDead = true;
             }
 
-            EffectManager.Instance.OnDamaged(dm, false,false, SlimeGameManager.Instance.CurrentPlayerBody.transform.position); 
+            EffectManager.Instance.OnDamaged(dm, critical, false, SlimeGameManager.Instance.CurrentPlayerBody.transform.position); 
             UIManager.Instance.UpdatePlayerHPUI(true);
         }
     }
-    public void GiveDamage(Enemy.Enemy targetEnemy, int minDamage, int maxDamage)
+    public void GiveDamage(Enemy.Enemy targetEnemy, int minDamage, int maxDamage, bool isKnockBack = false)
     {
-        int damage = Random.Range(minDamage, maxDamage + 1);
+        (int, bool) damage;
+        damage.Item1 = Random.Range(minDamage, maxDamage + 1);
+        damage.Item2 = false;
 
-        damage = CriticalCheck(damage);
+        damage = CriticalCheck(damage.Item1);
 
-        targetEnemy.GetDamage(damage);
+        targetEnemy.GetDamage(damage.Item1, damage.Item2, isKnockBack);
     }
-    public void GiveDamage(Enemy.Enemy targetEnemy, int minDamage, int maxDamage, float magnification)
+    public void GiveDamage(Enemy.Enemy targetEnemy, int minDamage, int maxDamage, float magnification, bool isKnockBack = false)
     {
-        int damage = Random.Range(minDamage, maxDamage + 1);
+        (int, bool) damage;
+        damage.Item1 = Random.Range(minDamage, maxDamage + 1);
+        damage.Item2 = false;
 
-        damage = CriticalCheck(damage);
+        damage = CriticalCheck(damage.Item1);
 
-        damage = (int)(damage * magnification);
+        damage.Item1 = (int)(damage.Item1 * magnification);
 
-        targetEnemy.GetDamage(damage);
+        targetEnemy.GetDamage(damage.Item1, damage.Item2, isKnockBack);
     }
-    private int CriticalCheck(int damage)
+    private (int, bool) CriticalCheck(int damage)
     {
         int n_damage = damage;
+        bool isCritical = false;
 
         float checkRate = 0f;
 
@@ -129,9 +134,10 @@ public class Player : MonoBehaviour
         if(checkRate <= playerStat.CriticalRate)
         {
             n_damage += playerStat.CriticalDamage;
+            isCritical = true;
         }
 
-        return n_damage;
+        return (n_damage, isCritical);
     }
 
     public void GetHeal(int healAmount)

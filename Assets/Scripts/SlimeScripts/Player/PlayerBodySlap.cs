@@ -118,7 +118,7 @@ public class PlayerBodySlap : PlayerSkill
 
             if (enemy != null)
             {
-                SlimeGameManager.Instance.Player.GiveDamage(enemy, SlimeGameManager.Instance.Player.PlayerStat.MinDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, damageMagnificationOfBodySlap);
+                SlimeGameManager.Instance.Player.GiveDamage(enemy, SlimeGameManager.Instance.Player.PlayerStat.MinDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, damageMagnificationOfBodySlap, true);
             }
 
             if (!bodyStopBodySlapTimerStart)
