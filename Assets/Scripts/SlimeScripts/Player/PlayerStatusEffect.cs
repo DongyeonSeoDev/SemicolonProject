@@ -21,21 +21,21 @@ public class PlayerStatusEffect : PlayerAction
         CheckSturnTimer();
     }
     
-    public void KnockBack(Vector2 direction, float power)
+    public void KnockBack(Vector2 direction, float speed, float knockBackTime)
     {
-        rigid.AddForce(direction.normalized * power, ForceMode2D.Impulse);
+        rigid.AddForce(direction.normalized * speed, ForceMode2D.Impulse);
 
-        childRigids.ForEach(x => x.AddForce(direction.normalized * power, ForceMode2D.Impulse));
+        childRigids.ForEach(x => x.AddForce(direction.normalized * speed, ForceMode2D.Impulse));
 
         playerState.IsKnockBack = true;
 
         EventManager.TriggerEvent("PlayerKnockBack");
     }
-    public void KnockBack(Vector2 direction, float power, float sturnTime)
+    public void KnockBack(Vector2 direction, float speed, float knockBackTime, float sturnTime)
     {
-        rigid.AddForce(direction.normalized * power, ForceMode2D.Impulse);
+        rigid.AddForce(direction.normalized * speed, ForceMode2D.Impulse);
 
-        childRigids.ForEach(x => x.AddForce(direction.normalized * power, ForceMode2D.Impulse));
+        childRigids.ForEach(x => x.AddForce(direction.normalized * speed, ForceMode2D.Impulse));
 
         playerState.IsKnockBack = true;
 
