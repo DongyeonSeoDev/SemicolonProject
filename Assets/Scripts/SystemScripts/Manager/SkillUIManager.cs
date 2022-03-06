@@ -34,6 +34,26 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
         defaultSkill.Register(playerOriginBodySkills.second[0]);
         specialSkill.Register(playerOriginBodySkills.second[1]);
         drain.Register(playerOriginBodySkills.second[2]);
+
+        EventManager.StartListening("ChangeBody", str =>
+        {
+            SkillInfo[] skill = monsterSkillsDic[str];
+            foreach(SkillInfo skillInfo in skill)
+            {
+                switch(skillInfo.skillType)
+                {
+                    case SkillType.ATTACK:
+                        defaultSkill.Register(skillInfo);
+                        break;
+                    case SkillType.SPECIALATTACK:
+                        specialSkill.Register(skillInfo);
+                        break;
+                    case SkillType.DRAIN:
+                        drain.Register(skillInfo);
+                        break;
+                }
+            }
+        });
     }
 
     public void UpdateSkillKeyCode()
