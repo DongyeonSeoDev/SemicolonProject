@@ -27,7 +27,7 @@ public class PlayerStatusEffect : PlayerAction
 
         childRigids.ForEach(x => x.AddForce(direction.normalized * power, ForceMode2D.Impulse));
 
-        Debug.Log("aaa");
+        playerState.IsKnockBack = true;
 
         EventManager.TriggerEvent("PlayerKnockBack");
     }
@@ -37,7 +37,7 @@ public class PlayerStatusEffect : PlayerAction
 
         childRigids.ForEach(x => x.AddForce(direction.normalized * power, ForceMode2D.Impulse));
 
-        Debug.Log("bbb");
+        playerState.IsKnockBack = true;
 
         EventManager.TriggerEvent("PlayerKnockBack");
 
@@ -56,8 +56,6 @@ public class PlayerStatusEffect : PlayerAction
         if (sturnTimer > 0f)
         {
             sturnTimer -= Time.deltaTime;
-
-            Debug.Log("ccc");
 
             if (sturnTimer <= 0f)
             {
