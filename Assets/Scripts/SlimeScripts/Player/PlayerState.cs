@@ -54,6 +54,7 @@ public class PlayerState : MonoBehaviour
         get { return isKnockBack; }
         set { isKnockBack = value; }
     }
+
     private bool isSturn = false;
     public bool IsSturn
     {
@@ -64,6 +65,14 @@ public class PlayerState : MonoBehaviour
     void Start()
     {
         playerInput = GetComponent<PlayerInput>();
+    }
+    private void OnEnable()
+    {
+        EventManager.StartListening("PlayerDead", PlayerDead);
+    }
+    private void OnDisable()
+    {
+        EventManager.StopListening("PlayerDead", PlayerDead);
     }
 
     void Update()
@@ -114,5 +123,11 @@ public class PlayerState : MonoBehaviour
         {
             lastPlayerMovingPoint = State.MovingState.down;
         }
+    }
+    private void PlayerDead()
+    {
+        bodySlapping = false;
+        isKnockBack = false;
+        isSturn = false;
     }
 }

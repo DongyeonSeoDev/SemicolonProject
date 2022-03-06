@@ -21,23 +21,23 @@ public class PlayerStatusEffect : PlayerAction
         CheckSturnTimer();
     }
     
-    public void KnockBack(Vector2 direction, float power)
+    public void KnockBack(Vector2 direction, float speed, float knockBackTime)
     {
-        rigid.AddForce(direction.normalized * power, ForceMode2D.Impulse);
+        rigid.AddForce(direction.normalized * speed, ForceMode2D.Impulse);
 
-        childRigids.ForEach(x => x.AddForce(direction.normalized * power, ForceMode2D.Impulse));
+        childRigids.ForEach(x => x.AddForce(direction.normalized * speed, ForceMode2D.Impulse));
 
-        Debug.Log("aaa");
+        playerState.IsKnockBack = true;
 
         EventManager.TriggerEvent("PlayerKnockBack");
     }
-    public void KnockBack(Vector2 direction, float power, float sturnTime)
+    public void KnockBack(Vector2 direction, float speed, float knockBackTime, float sturnTime)
     {
-        rigid.AddForce(direction.normalized * power, ForceMode2D.Impulse);
+        rigid.AddForce(direction.normalized * speed, ForceMode2D.Impulse);
 
-        childRigids.ForEach(x => x.AddForce(direction.normalized * power, ForceMode2D.Impulse));
+        childRigids.ForEach(x => x.AddForce(direction.normalized * speed, ForceMode2D.Impulse));
 
-        Debug.Log("bbb");
+        playerState.IsKnockBack = true;
 
         EventManager.TriggerEvent("PlayerKnockBack");
 
@@ -56,8 +56,6 @@ public class PlayerStatusEffect : PlayerAction
         if (sturnTimer > 0f)
         {
             sturnTimer -= Time.deltaTime;
-
-            Debug.Log("ccc");
 
             if (sturnTimer <= 0f)
             {

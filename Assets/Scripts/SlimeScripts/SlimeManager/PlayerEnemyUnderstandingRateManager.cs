@@ -167,11 +167,14 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
             {
                 UIManager.Instance.OnUIInteract(UIType.CHANGEABLEMOBLIST, true);
             }
-
+            MonsterCollection.Instance.AddSavedBody(objId);
+            MonsterCollection.Instance.AddBody(objId);
         }
         else
         {
             mountedObjList[idx] = objId;
+            MonsterCollection.Instance.AddSavedBody(objId, idx + 2);
+            MonsterCollection.Instance.AddBody(objId, idx + 1);
         }
     }
     public void UnSetMountObj(string objId)
@@ -184,8 +187,15 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
     }
     public void CheckMountingEnemy(string objId, int upValue)
     {
-        if (!PlayerEnemyUnderstandingRateManager.Instance.DrainProbabilityDict.ContainsKey(objId))
+        if (!DrainProbabilityDict.ContainsKey(objId))
         {
+            return;
+        }
+
+        if(mountedObjList.Contains(objId))
+        {
+            UpUnderstandingRate(objId, upValue);
+
             return;
         }
 
@@ -195,24 +205,29 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
         {
             // 장착을 물어봄
             // 장착을 하면 true를, 장착을 하지 않으면 flase를 return함, 지금은 그냥 true를 return
+            UIManager.Instance.DoChangeBody(objId);
+            //Debug.Log("장착 물어보는 창이 뜨네요");
 
-            Debug.Log("장착 물어보는 창이 뜨네요");
-
-            if(willUpUnderstandingRateDict.ContainsKey(objId))
-            {
-                willUpUnderstandingRateDict[objId].Enqueue(upValue);
-            }
-            else
-            {
-                Queue<int> queue = new Queue<int>();
-                queue.Enqueue(upValue);
-
-                willUpUnderstandingRateDict.Add(objId, queue);
-            }
-
+            UpUnderstandingRate(objId, upValue);
             SetMountingPercentageDict(objId, 0); // 장착을 했건 안했건 확률은 0이된다
         }
     }
+
+    private void UpUnderstandingRate(string objId, int upValue)
+    {
+        if (willUpUnderstandingRateDict.ContainsKey(objId))
+        {
+            willUpUnderstandingRateDict[objId].Enqueue(upValue);
+        }
+        else
+        {
+            Queue<int> queue = new Queue<int>();
+            queue.Enqueue(upValue);
+
+            willUpUnderstandingRateDict.Add(objId, queue);
+        }
+    }
+
     public void MountBody(string objId, bool mountIt)
     {
         int upValue = willUpUnderstandingRateDict[objId].Dequeue();
