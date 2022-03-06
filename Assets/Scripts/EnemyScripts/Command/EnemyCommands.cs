@@ -57,6 +57,15 @@ namespace Enemy
             {
                 enemyRunAwayCommand.Execute();
             }
+            else if (enemyData.isWall)
+            {
+                targetPosition = enemyData.oppositeDirectionWall * 5f;
+                enemyData.enemyRigidbody2D.velocity = targetPosition;
+
+                currentMoveTime = 1f;
+
+                enemyData.isWall = false;
+            }
             else
             {
                 if (currentMoveTime <= 0f)

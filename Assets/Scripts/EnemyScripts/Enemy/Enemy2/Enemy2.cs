@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Enemy
 {
     public class Enemy2 : Enemy // 두번째 적
@@ -27,6 +29,15 @@ namespace Enemy
 
             enemyData.enemyMoveCommand = new EnemyRandomMoveCommand(enemyData);
             base.OnEnable();
+        }
+
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.gameObject.CompareTag("Wall"))
+            {
+                enemyData.isWall = true;
+                enemyData.oppositeDirectionWall = collision.contacts[0].normal;
+            }
         }
 
         public void EnemyAttack()

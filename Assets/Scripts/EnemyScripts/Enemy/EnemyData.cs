@@ -60,6 +60,7 @@ namespace Enemy
         }
 
         public Vector2? knockBackDirection;
+        public Vector2 oppositeDirectionWall;
 
         public Color normalColor;
         public Color damagedColor;
@@ -92,6 +93,7 @@ namespace Enemy
         public bool isKnockBack = false;
         public bool isCurrentAttackTime = false;
         public bool isUseDelay = false;
+        public bool isWall = false;
 
         public int attackDamage = 10;
         public int damagedValue;
