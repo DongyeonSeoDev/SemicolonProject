@@ -6,7 +6,7 @@ namespace Enemy
     {
         private EnemyCommand enemyAttackCommand;
 
-        private EnemyRushAttackCommand.RushAttackPosition rushAttackPosition = new EnemyRushAttackCommand.RushAttackPosition();
+        private EnemyPositionCheckData positionCheckData = new EnemyPositionCheckData();
 
         protected override void OnEnable()
         {
@@ -31,26 +31,32 @@ namespace Enemy
             };
 
             enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(transform, enemyData.PlayerObject.transform, rb, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, false);
-            enemyAttackCommand = new EnemyRushAttackCommand(rb, rushAttackPosition, enemyData.rushForce);
+            enemyAttackCommand = new EnemyRushAttackCommand(rb, positionCheckData, enemyData.rushForce);
 
             base.OnEnable();
         }
 
-        public void InitData(out EnemyController controller, out int damage)
+        public void InitData(out EnemyPositionCheckData positionData, out EnemyController controller, out int damage)
         {
+            positionData = positionCheckData;
             controller = enemyData.eEnemyController;
             damage = enemyData.attackDamage;
         }
 
         public void ReadyEnemyAttack()
         {
+            if (positionCheckData.isWall)
+            {
+                rb.velocity = positionCheckData.oppositeDirectionWall;
+            }
+
             if (enemyData.eEnemyController == EnemyController.PLAYER)
             {
-                rushAttackPosition.position = (playerInput.MousePosition - (Vector2)transform.position).normalized;
+                positionCheckData.position = (playerInput.MousePosition - (Vector2)transform.position).normalized;
             }
             else if (enemyData.eEnemyController == EnemyController.AI)
             {
-                rushAttackPosition.position = (enemyData.PlayerObject.transform.position - enemyData.enemyObject.transform.position).normalized;
+                positionCheckData.position = (enemyData.PlayerObject.transform.position - enemyData.enemyObject.transform.position).normalized;
             }
         }
 

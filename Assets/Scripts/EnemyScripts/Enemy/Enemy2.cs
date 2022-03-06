@@ -7,6 +7,8 @@ namespace Enemy
         private EnemyCommand enemyAttackCommand;
         private EnemyCommand enemyAttackPlayerCommand;
 
+        private EnemyPositionCheckData positionCheckData = new EnemyPositionCheckData();
+
         protected override void OnEnable()
         {
             enemyData = new EnemyData(enemyDataSO)
@@ -27,7 +29,7 @@ namespace Enemy
                 attackDelay = 2f
             };
 
-            enemyData.enemyMoveCommand = new EnemyRandomMoveCommand(enemyData);
+            enemyData.enemyMoveCommand = new EnemyRandomMoveCommand(enemyData, positionCheckData);
             base.OnEnable();
         }
 
@@ -35,8 +37,8 @@ namespace Enemy
         {
             if (collision.gameObject.CompareTag("Wall"))
             {
-                enemyData.isWall = true;
-                enemyData.oppositeDirectionWall = collision.contacts[0].normal;
+                positionCheckData.isWall = true;
+                positionCheckData.oppositeDirectionWall = collision.contacts[0].normal;
             }
         }
 

@@ -60,7 +60,6 @@ namespace Enemy
         }
 
         public Vector2? knockBackDirection;
-        public Vector2 oppositeDirectionWall;
 
         public Color normalColor;
         public Color damagedColor;
@@ -77,7 +76,7 @@ namespace Enemy
         public float isMaxAttackPlayerDistance = 8f;
         public float attackDelay = 1f;
         public float damageDelay = 0.1f;
-        public float rushForce = 100f;
+        public float rushForce = 50f;
         public float knockBackPower;
         public float stunTime;
 
@@ -93,7 +92,6 @@ namespace Enemy
         public bool isKnockBack = false;
         public bool isCurrentAttackTime = false;
         public bool isUseDelay = false;
-        public bool isWall = false;
 
         public int attackDamage = 10;
         public int damagedValue;
