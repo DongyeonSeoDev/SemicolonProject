@@ -30,7 +30,9 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     private void Awake()
     {
+#if !UNITY_EDITOR
         Cursor.lockState = CursorLockMode.Confined;
+#endif
         filePath = Global.saveFileName_1.PersistentDataPath();
         saveData = new SaveData();
         KeyCodeToString.Init();
@@ -39,7 +41,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         Init();
     }
 
-    #region Data
+#region Data
 
     public void SaveData()
     {
@@ -91,7 +93,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         //몬스터 동화율 정보 불러오기 --> MonsterCollection 스크립트에서 처리
     }
 
-    #endregion
+#endregion
 
     private void Init()
     {
@@ -161,7 +163,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         PoolManager.PoolObjSetActiveFalse("EmptyObject");
     }
 
-    #region Item
+#region Item
 
     public ItemSO GetItemData(int id) => itemDataDic[id];
     public bool ExistItem(int id) => itemDataDic.ContainsKey(id);
@@ -250,7 +252,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         }
     }
 
-    #endregion
+#endregion
 
     public void RespawnPlayer()
     {
@@ -264,7 +266,7 @@ public partial class GameManager : MonoSingleton<GameManager>
 
 
 
-    #region OnApplication
+#region OnApplication
     private void OnApplicationQuit()
     {
         Save();
@@ -283,5 +285,5 @@ public partial class GameManager : MonoSingleton<GameManager>
             Save();
         }
     }
-    #endregion
+#endregion
 }
