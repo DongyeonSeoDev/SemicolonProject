@@ -13,7 +13,7 @@ public class WarningWindow : MonoBehaviour
 
     [SerializeField] CanvasGroup cvsg;
 
-    private void OnEnable()
+    private void ExecuteTweening()
     {
         cvsg.alpha = 0;
         cvsg.interactable = false;
@@ -30,8 +30,11 @@ public class WarningWindow : MonoBehaviour
 
     public void Register(System.Action confirmAc, string warning, string confirmTx, string cancelTx)
     {
-        cvsg.DOKill();
         gameObject.SetActive(true);
+
+        transform.DOKill();
+        cvsg.DOKill();
+        ExecuteTweening();
 
         confirmBtn.onClick.RemoveAllListeners();
         confirmAc += DefaultConfirmAction;

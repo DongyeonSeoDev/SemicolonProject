@@ -22,7 +22,7 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
     [SerializeField] CanvasGroup cvsg;
     private bool isCoolTime = false;
     private float elapsed = 0f;
-    private float coolTime = 10f; //테스트용 임시 변수
+    private float CoolTime => SlimeGameManager.Instance.BodyChangeTime;
 
     #endregion
 
@@ -54,6 +54,7 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
     {
         bodyID = id;
         bodyImg.sprite = Global.GetMonsterBodySprite(id);
+        cvsg.alpha = 1;
     }
 
     public void Unregister()
@@ -90,10 +91,10 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
             //coolTimeUIPair.first.fillAmount = elapsed / coolTime;
 
             elapsed += Time.deltaTime;
-            coolTimeUIPair.first.fillAmount = (coolTime - elapsed) / coolTime;
+            coolTimeUIPair.first.fillAmount = (CoolTime - elapsed) / CoolTime;
             coolTimeUIPair.second.text = elapsed.ToString("0.0");
 
-            if(elapsed > coolTime)
+            if(elapsed > CoolTime)
             {
                 isCoolTime = false;
                 coolTimeUIPair.second.gameObject.SetActive(false);

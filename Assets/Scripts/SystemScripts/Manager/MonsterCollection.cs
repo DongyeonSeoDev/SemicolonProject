@@ -64,8 +64,9 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             AllUpdateUnderstanding();
             AllUpdateDrainProbability();
         });
-        EventManager.StartListening("ChangeBody", () => 
+        EventManager.StartListening("ChangeBody", str => 
         {
+            string.IsNullOrEmpty(str); //매개변수 string인걸 나타내기위한 것
             for(int i=0; i< savedBodys.Count; i++)
             {
                 savedBodys[i].StartCoolTimeUI();
@@ -119,7 +120,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
     public void DetailStat()
     {
-        EternalStat stat = mobIdToSlot[selectedDetailMobId].bodyData.additionalBodyStat;
+        EternalStat stat = mobIdToSlot[selectedDetailMobId].BodyData.additionalBodyStat;
 
         statText[0].text = "+" + stat.maxHp.ToString();
         statText[1].text = "+" + stat.maxDamage.ToString();
@@ -136,7 +137,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
     public void DetailItem()
     {
-        ItemSO item = mobIdToSlot[selectedDetailMobId].bodyData.dropItem;
+        ItemSO item = mobIdToSlot[selectedDetailMobId].BodyData.dropItem;
 
         mobItemImgNameEx.first.sprite = item.GetSprite();
         mobItemImgNameEx.second.text = item.itemName;
