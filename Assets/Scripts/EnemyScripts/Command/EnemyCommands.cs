@@ -39,13 +39,17 @@ namespace Enemy
     {
         private EnemyData enemyData = null;
         private EnemyCommand enemyRunAwayCommand;
+        private EnemyPositionCheckData positionCheckData;
+
         private Vector2 targetPosition = Vector2.zero;
         private float currentMoveTime;
         private float angle = 0;
 
-        public EnemyRandomMoveCommand(EnemyData enemyData)
+        public EnemyRandomMoveCommand(EnemyData enemyData, EnemyPositionCheckData positionCheckData)
         {
             this.enemyData = enemyData;
+            this.positionCheckData = positionCheckData;
+
             enemyRunAwayCommand = new EnemyFollowPlayerCommand(enemyData.enemyObject.transform, enemyData.PlayerObject.transform, enemyData.enemyRigidbody2D, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, true);
 
             currentMoveTime = 0f;
@@ -56,6 +60,15 @@ namespace Enemy
             if (enemyData.IsRunAway())
             {
                 enemyRunAwayCommand.Execute();
+            }
+            else if (positionCheckData.isWall)
+            {
+                targetPosition = positionCheckData.oppositeDirectionWall * 5f;
+                enemyData.enemyRigidbody2D.velocity = targetPosition;
+
+                currentMoveTime = 1f;
+
+                positionCheckData.isWall = false;
             }
             else
             {
@@ -289,26 +302,21 @@ namespace Enemy
 
     public class EnemyRushAttackCommand : EnemyCommand
     {
-        public class RushAttackPosition
-        {
-            public Vector2 position;
-        }
-
         private Rigidbody2D rigidboyd2D;
-        private RushAttackPosition rushAttackPosition;
+        private EnemyPositionCheckData positionCheckData;
 
         private float rushForce;
 
-        public EnemyRushAttackCommand(Rigidbody2D rigid, RushAttackPosition attackPosition, float force)
+        public EnemyRushAttackCommand(Rigidbody2D rigid, EnemyPositionCheckData positionData, float force)
         {
             rigidboyd2D = rigid;
             rushForce = force;
-            rushAttackPosition = attackPosition;
+            positionCheckData = positionData;
         }
 
         public override void Execute()
         {
-            rigidboyd2D.AddForce(rushAttackPosition.position * rushForce, ForceMode2D.Impulse);
+            rigidboyd2D.AddForce(positionCheckData.position * rushForce, ForceMode2D.Impulse);
         }
     }
 

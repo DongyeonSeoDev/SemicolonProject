@@ -76,7 +76,7 @@ namespace Enemy
         public float isMaxAttackPlayerDistance = 8f;
         public float attackDelay = 1f;
         public float damageDelay = 0.1f;
-        public float rushForce = 100f;
+        public float rushForce = 50f;
         public float knockBackPower;
         public float stunTime;
 

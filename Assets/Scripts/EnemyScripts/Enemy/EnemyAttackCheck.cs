@@ -8,7 +8,7 @@ namespace Enemy
         private Enemy enemy;
         private Rigidbody2D enemyRigidbody;
         private PlayerStatusEffect playerStatusEffect;
-        private EnemyCommand knockBackCommand;
+        private EnemyPositionCheckData positionCheckData;
 
         private EnemyController eEnemyController;
 
@@ -64,7 +64,7 @@ namespace Enemy
             {
                 Enemy3 enemy3 = GetComponentInParent<Enemy3>();
 
-                enemy3.InitData(out eEnemyController, out attackDamage);
+                enemy3.InitData(out positionCheckData, out eEnemyController, out attackDamage);
 
                 enemy = enemy3;
                 enemyRigidbody = enemy.GetComponent<Rigidbody2D>();
@@ -93,10 +93,11 @@ namespace Enemy
 
             if (isKnockBack && collision.CompareTag("Wall"))
             {
-                Debug.Log(collision.name);
-
                 enemyRigidbody.velocity = Vector2.zero;
                 enemyRigidbody.angularVelocity = 0f;
+
+                positionCheckData.isWall = true;
+                positionCheckData.oppositeDirectionWall = (collision.transform.position - transform.position).normalized;
             }
 
             if (eEnemyController == EnemyController.AI && collision.CompareTag("Player"))
@@ -107,21 +108,19 @@ namespace Enemy
 
                 if (isKnockBack)
                 {
-                    Debug.Log(collision.name);
-
                     enemyRigidbody.velocity = Vector2.zero;
                     enemyRigidbody.angularVelocity = 0f;
 
                     if (playerStatusEffect != null)
                     {
-                        playerStatusEffect.KnockBack(collision.transform.position - transform.position, 20f);
+                        // playerStatusEffect.KnockBack(positionCheckData.position, 30f);
                         playerStatusEffect.Sturn(1f);
                     }
                     else
                     {
                         if (enemy != null)
                         {
-                            enemy.GetDamage(0, true, false ,20f, 1f, collision.transform.position - transform.position);
+                            enemy.GetDamage(0, true, false, 30f, 1f, positionCheckData.position);
                         }
                     }
                 }
