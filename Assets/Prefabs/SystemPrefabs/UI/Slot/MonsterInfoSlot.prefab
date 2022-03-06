@@ -431,6 +431,7 @@ MonoBehaviour:
   understandingRateFill: {fileID: 2358478532142700615}
   understandingOverRateFill: {fileID: 2358478532057833439}
   drainProbabilityFill: {fileID: 8434938789041219955}
+  acqMarkPar: {fileID: 5603175749117681467}
 --- !u!1 &2358478532358980228
 GameObject:
   m_ObjectHideFlags: 0
@@ -1011,6 +1012,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 22.4, y: 41}
+  m_AnchoredPosition: {x: 19.2, y: 41}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}

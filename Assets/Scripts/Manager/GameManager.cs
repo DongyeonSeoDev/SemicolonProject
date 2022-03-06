@@ -254,7 +254,8 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     public void RespawnPlayer()
     {
-        EventManager.TriggerEvent("PlayerRespawn", StageManager.Instance.respawnPos); 
+        //EventManager.TriggerEvent("PlayerRespawn", StageManager.Instance.respawnPos);   //나중에 스테이지 되면 이걸로
+        EventManager.TriggerEvent("PlayerRespawn", Vector2.zero); //임시용
     }
 
     public void QuitGame()

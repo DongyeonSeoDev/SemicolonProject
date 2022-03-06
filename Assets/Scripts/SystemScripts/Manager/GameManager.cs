@@ -8,7 +8,7 @@ public partial class GameManager : MonoSingleton<GameManager>
     //[HideInInspector] public List<Pick> pickList = new List<Pick>();
 
     [Space(10)]  //È®ÀÎ¿ë
-    [HideInInspector] public CheckGameStringKeys checkGameStringKeys = new CheckGameStringKeys();
+    public CheckGameStringKeys checkGameStringKeys = new CheckGameStringKeys();
 
 
 }

@@ -11,6 +11,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     public Dictionary<string, MonsterInfoSlot> mobIdToSlot = new Dictionary<string, MonsterInfoSlot>();
 
     public Pair<GameObject, Transform> mobInfoUIPair;
+    public GameObject trfAbleTxtPref;
 
     #region Detail View
     private string selectedDetailMobId;
@@ -40,6 +41,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     private void Start()
     {
         urmg = PlayerEnemyUnderstandingRateManager.Instance;
+        Water.PoolManager.CreatePool(trfAbleTxtPref, mobInfoUIPair.second, 2, "CanTrfMark");
         
         mobInfoUIPair.second.GetComponent<GridLayoutGroup>().constraintCount = Mathf.Clamp(urmg.ChangableBodyList.Count / 3 + 1, 6, 10000);
         statIncrRatePerAssim.text = "[동화율 10%당 " + (SlimeGameManager.Instance.UpStatPercentage * 100f).ToString() + "%씩 스탯 상승]";
@@ -169,7 +171,9 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         else
         {
             savedBodys.Find(x => x.SlotNumber == slotNumber).Register(id);
-        } 
+        }
+
+        EffectManager.Instance.OnTopRightBtnEffect(UIType.MONSTER_COLLECTION, true);
     }
 
     public void RemoveSavedBody(int slotNumber)

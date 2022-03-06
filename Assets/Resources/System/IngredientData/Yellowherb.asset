@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Yellowherb
   m_EditorClassIdentifier: 
   itemSprite: {fileID: 21300000, guid: f21e32ea32f3a46498a6f4cda40d5fc6, type: 3}
+  secondItemSprite: {fileID: 21300000, guid: 0e7205b49e6cb19488942142c13f024f, type: 2}
   itemType: 2
   id: 55
   maxCount: 20

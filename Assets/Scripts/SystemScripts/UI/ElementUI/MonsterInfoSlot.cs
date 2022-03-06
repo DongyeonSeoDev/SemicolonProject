@@ -13,6 +13,8 @@ public class MonsterInfoSlot : MonoBehaviour
     [SerializeField] private Image understandingRateFill, understandingOverRateFill;
 
     [SerializeField] private Image drainProbabilityFill;
+
+    public Transform acqMarkPar; //변신 가능 텍스트 UI의 부모
     //[SerializeField] private Text understandingRateText;
 
     //[SerializeField] private Button transformationBtn;
@@ -63,6 +65,13 @@ public class MonsterInfoSlot : MonoBehaviour
         {
             //뭔가 UI 이펙트 ㄴ
         }
+    }
+
+    public void MarkAcqBody() //변신 가능 텍스트 UI 띄우거나 없앰
+    {
+        //Water.PoolManager.GetItem<Transform>("CanTrfMark").SetParent(acqMarkPar);
+        //if(acqMarkPar.childCount > 0)
+        //acqMarkPar.GetChild(0).gameObject.SetActive(false);
     }
 
     /*private void Active(bool active)

@@ -354,6 +354,9 @@ public partial class UIManager : MonoSingleton<UIManager>
             case UIType.INVENTORY:
                 EffectManager.Instance.OnTopRightBtnEffect(UIType.INVENTORY, false);
                 break;
+            case UIType.MONSTER_COLLECTION:
+                EffectManager.Instance.OnTopRightBtnEffect(UIType.MONSTER_COLLECTION, false);
+                break;
             case UIType.SETTING:
                 EventManager.TriggerEvent("TimePause");
                 break;
