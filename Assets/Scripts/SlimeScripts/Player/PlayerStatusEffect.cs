@@ -23,23 +23,25 @@ public class PlayerStatusEffect : PlayerAction
     
     public void KnockBack(Vector2 direction, float speed, float knockBackTime)
     {
-        rigid.AddForce(direction.normalized * speed, ForceMode2D.Impulse);
+        //rigid.AddForce(direction.normalized * speed, ForceMode2D.Impulse);
+        float moveDistance = speed * knockBackTime;
 
-        childRigids.ForEach(x => x.AddForce(direction.normalized * speed, ForceMode2D.Impulse));
+        //childRigids.ForEach(x => x.AddForce(direction.normalized * speed, ForceMode2D.Impulse));
 
         playerState.IsKnockBack = true;
 
-        EventManager.TriggerEvent("PlayerKnockBack");
+        EventManager.TriggerEvent("PlayerKnockBack", moveDistance, speed, knockBackTime);
     }
     public void KnockBack(Vector2 direction, float speed, float knockBackTime, float sturnTime)
     {
-        rigid.AddForce(direction.normalized * speed, ForceMode2D.Impulse);
+        //rigid.AddForce(direction.normalized * speed, ForceMode2D.Impulse);
+        float moveDistance = speed * knockBackTime;
 
-        childRigids.ForEach(x => x.AddForce(direction.normalized * speed, ForceMode2D.Impulse));
+        //childRigids.ForEach(x => x.AddForce(direction.normalized * speed, ForceMode2D.Impulse));
 
         playerState.IsKnockBack = true;
 
-        EventManager.TriggerEvent("PlayerKnockBack");
+        EventManager.TriggerEvent("PlayerKnockBack", moveDistance, speed, knockBackTime);
 
         Sturn(sturnTime);
     }
