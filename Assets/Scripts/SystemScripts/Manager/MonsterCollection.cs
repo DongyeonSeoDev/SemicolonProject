@@ -28,6 +28,9 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
     #endregion
 
+    [SerializeField] private ChangeBodyData defaultSlimeBodyData;
+    [SerializeField] private string defaultSlimeID;
+
     //몹 저장 슬롯 꽉 찼을 때 제거할 슬롯 선택창의 슬롯들
     [Space(15)]
     [SerializeField] private List<ChangeBodySlot> changeBodySlots;
@@ -35,6 +38,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     //Bottom Left Save Body UI List
     [Space(15)]
     [SerializeField] private List<ChangeableBody> savedBodys;
+    [SerializeField] private int maxSavedBodyCount = 3;
 
     public Sprite notExistBodySpr; //빈 슬롯일 때의 스프라이트 (몸)
 
@@ -47,6 +51,12 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         statIncrRatePerAssim.text = "[동화율 10%당 " + (SlimeGameManager.Instance.UpStatPercentage * 100f).ToString() + "%씩 스탯 상승]";
         changeBodySlots.ForEach(x => x.SetSlotNumber());
 
+        {  //정보 읽기용으로 기본 슬라임(주인공) 정보도 딕셔너리에 넣어줌
+            MonsterInfoSlot ui = Instantiate(mobInfoUIPair.first, mobInfoUIPair.second).GetComponent<MonsterInfoSlot>();
+            ui.Init(defaultSlimeBodyData);
+            mobIdToSlot.Add(defaultSlimeID, ui);
+            ui.gameObject.SetActive(false);
+        }
         //모든 몹 정보 가져와서 UI생성하고 값 넣음
         urmg.ChangableBodyList.ForEach(body =>
         {
@@ -54,6 +64,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             ui.Init(body);
             mobIdToSlot.Add(body.bodyId.ToString(), ui);
         });
+
+        savedBodys.ForEach(x => x.InitSet());
 
         Load();
         AllUpdateUnderstanding();
@@ -63,6 +75,14 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         {
             AllUpdateUnderstanding();
             AllUpdateDrainProbability();
+
+            foreach (MonsterInfoSlot slot in mobIdToSlot.Values)
+                slot.MarkAcqBody(false);
+            for(int i=2; i<=maxSavedBodyCount; i++)
+            {
+                RemoveSavedBody(i);
+            }
+            changeBodySlots.ForEach(x => x.Unregister());
         });
         EventManager.StartListening("ChangeBody", str => 
         {
@@ -116,6 +136,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         selectedDetailMobId = string.Empty;
     }
 
+    public ChangeBodyData GetMonsterInfo(string id) => mobIdToSlot[id].BodyData;
+
     #region Detail Stat
 
     public void DetailStat()
@@ -165,26 +187,41 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
                 if(!savedBodys[i].Registered)
                 {
                     savedBodys[i].Register(id);
+                    break;
                 }
             }
         }
-        else
+        else  //원하는 (이미 저장된)슬롯 하나 제거하고 넣음
         {
-            savedBodys.Find(x => x.SlotNumber == slotNumber).Register(id);
+            if(slotNumber == 1)
+            {
+                Debug.Log("기본 캐릭터에 덮어씌우기 못함");
+                return;
+            }
+            savedBodys[slotNumber-1].Register(id);  
         }
 
         EffectManager.Instance.OnTopRightBtnEffect(UIType.MONSTER_COLLECTION, true);
+        mobIdToSlot[id].MarkAcqBody(true);
     }
 
     public void RemoveSavedBody(int slotNumber)
     {
-        for (int i = 0; i < savedBodys.Count; i++)
+        if (slotNumber == 1)
+        {
+            Debug.Log("기본 캐릭터는 삭제 못함");
+            return;
+        }
+
+        savedBodys[slotNumber - 1].Unregister();          //2번 슬롯을 삭제하려면 인덱스 1로 접근해야함
+
+        /*for (int i = 0; i < savedBodys.Count; i++)
         {
             if (savedBodys[i].SlotNumber == slotNumber)
             {
                 savedBodys[i].Unregister();
             }
-        }
+        }*/
     }
 
     #endregion
@@ -194,32 +231,26 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     //함수명 변수명 뭐라고 해야할지 애매하네
     public void AddBody(string id, int slotNumber = -1)
     {
-        int i;
         if (slotNumber == -1)
         {
-            for (i = 0; i < changeBodySlots.Count; i++)
+            for (int i = 0; i < changeBodySlots.Count; i++)
             {
                 if (!changeBodySlots[i].Registered)
                 {
-                    changeBodySlots[i].Register(id, "몬스터 이름");
+                    changeBodySlots[i].Register(id);
                 }
             }
         }
         else
         {
-            changeBodySlots.Find(x => x.SlotNumber == slotNumber).Register(id, "몬스터 이름");
+            //changeBodySlots.Find(x => x.SlotNumber == slotNumber).Register(id, "몬스터 이름");
+            changeBodySlots[slotNumber - 1].Register(id);
         }
     }
 
     public void RemoveBody(int slotNumber)
     {
-        for (int i = 0; i < changeBodySlots.Count; i++)
-        {
-            if (changeBodySlots[i].SlotNumber == slotNumber)
-            {
-                changeBodySlots[i].Unregister();
-            }
-        }
+        changeBodySlots[slotNumber - 1].Unregister();
     }
 
     #endregion

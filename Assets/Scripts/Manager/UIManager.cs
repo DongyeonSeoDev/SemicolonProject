@@ -189,8 +189,8 @@ public partial class UIManager : MonoSingleton<UIManager>
         EventManager.StartListening("GameClear", () => OnUIInteract(UIType.CLEAR, true));
         EventManager.StartListening("TimePause", () => Time.timeScale = 0 );
         EventManager.StartListening("TimeResume", () => Time.timeScale = 1);
-        EventManager.StartListening("StageClear", () => { changeNoticeMsgGrd = clearNoticeMsgVGrd; InsertNoticeQueue("Stage Clear", 90, true); });
-        EventManager.StartListening("ChangeBody", str => InsertNoticeQueue(MonsterCollection.Instance.mobIdToSlot[str].BodyData.bodyName + "(으)로 변신하였습니다"));  //이거 안뜨는 버그 수정해야함
+        EventManager.StartListening("StageClear", () =>InsertNoticeQueue("Stage Clear", clearNoticeMsgVGrd, 90));
+        EventManager.StartListening("ChangeBody", str => InsertNoticeQueue(MonsterCollection.Instance.mobIdToSlot[str].BodyData.bodyName + "(으)로 변신하였습니다"));  
     }
 
     private void Respawn(Vector2 unusedValue) => OnUIInteract(UIType.DEATH, true);

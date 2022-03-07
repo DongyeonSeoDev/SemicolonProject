@@ -33,9 +33,9 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
         coolTimeUIPair.second.gameObject.SetActive(false);
     }
 
-    private void Start()
+    public void InitSet()
     {
-        if(slotKey == KeyAction.CHANGE_SLIME)
+        if (slotKey == KeyAction.CHANGE_SLIME)
         {
             Register("origin");
         }

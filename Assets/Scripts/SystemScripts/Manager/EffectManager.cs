@@ -80,6 +80,7 @@ public class EffectManager : MonoSingleton<EffectManager>
     {
         inventoryBtnEffect.SetActive(false);
         statBtnEffect.SetActive(false);
+        monColBtnEffect.SetActive(false);
     }
 
     public void OnDamagedUIEffect(float rate) //Damage Particle Effect of HP UI
