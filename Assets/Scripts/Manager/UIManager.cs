@@ -190,7 +190,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         EventManager.StartListening("TimePause", () => Time.timeScale = 0 );
         EventManager.StartListening("TimeResume", () => Time.timeScale = 1);
         EventManager.StartListening("StageClear", () =>InsertNoticeQueue("Stage Clear", clearNoticeMsgVGrd, 90));
-        EventManager.StartListening("ChangeBody", str => InsertNoticeQueue(MonsterCollection.Instance.mobIdToSlot[str].BodyData.bodyName + "(으)로 변신하였습니다"));  
+        EventManager.StartListening("ChangeBody", str => InsertNoticeQueue(MonsterCollection.Instance.mobIdToSlot[str].BodyData.bodyName + "(으)로 변신하였습니다"));  //부활할 때도 뜨는 버그 수정해야 함. 매개변수로 죽어서 변신한건지 bool 받아야 할듯
     }
 
     private void Respawn(Vector2 unusedValue) => OnUIInteract(UIType.DEATH, true);

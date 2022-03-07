@@ -45,6 +45,14 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
         }
     }
 
+    public void CheckUsedMob(string id)
+    {
+        if (Registered)
+        {
+            //outline같은걸로 표시 필요
+        }
+    }
+
     public void UpdateKeyCodeTxt()
     {
         keyCodeTxt.text = KeyCodeToString.GetString(KeySetting.keyDict[slotKey]);
