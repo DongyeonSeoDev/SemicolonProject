@@ -155,7 +155,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             UIManager.Instance.UpdatePlayerHPUI();
             cinemachineCameraScript.SetCinemachineFollow(newBody.transform);
 
-            EventManager.TriggerEvent("ChangeBody", bodyId);
+            EventManager.TriggerEvent("ChangeBody", bodyId, isDead);
 
             return;
         }
@@ -204,7 +204,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             UIManager.Instance.UpdatePlayerHPUI();
             cinemachineCameraScript.SetCinemachineFollow(newBody.transform);
 
-            EventManager.TriggerEvent("ChangeBody", bodyId);
+            EventManager.TriggerEvent("ChangeBody", bodyId, isDead);
 
             SetCanBodyChangeFalse();
 
