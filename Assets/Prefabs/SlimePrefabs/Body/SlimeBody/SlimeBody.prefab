@@ -198,6 +198,7 @@ GameObject:
   - component: {fileID: 3493340178899303131}
   - component: {fileID: 5835559770882864823}
   - component: {fileID: 8968387448068834084}
+  - component: {fileID: 176500872896431467}
   m_Layer: 3
   m_Name: SlimeBody
   m_TagString: Player
@@ -368,7 +369,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c872b1212dc70bb469dc62210b26664a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  breakSpeed: 2
 --- !u!114 &1014413151
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -455,6 +455,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e6897f257b5453499242149c42bbd4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &176500872896431467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6840160282341942530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 539c67006c916ad4d8fc61f6c74dd231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  whatIsCantCrossLayer:
+    serializedVersion: 2
+    m_Bits: 192
 --- !u!1001 &252599340897420603
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1197,14 +1212,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
---- !u!50 &5452748366477322728 stripped
-Rigidbody2D:
-  m_CorrespondingSourceObject: {fileID: 1531553962166875679, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-  m_PrefabInstance: {fileID: 6840160281678880759}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5452748366477322726 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1531553962166875665, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
+  m_PrefabInstance: {fileID: 6840160281678880759}
+  m_PrefabAsset: {fileID: 0}
+--- !u!50 &5452748366477322728 stripped
+Rigidbody2D:
+  m_CorrespondingSourceObject: {fileID: 1531553962166875679, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
   m_PrefabInstance: {fileID: 6840160281678880759}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6840160281823012931

@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private Stat playerStat = new Stat();
-    private Stat originStat = new Stat();
+
     public Stat PlayerStat
     {
         get { return playerStat; }
@@ -41,8 +41,6 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         playerState = GetComponent<PlayerState>();
-
-        // originStat = PlayerStat;
     }
     private void Start()
     {
@@ -52,7 +50,6 @@ public class Player : MonoBehaviour
         currentHp = playerStat.MaxHp;
 
         UIManager.Instance.UpdatePlayerHPUI();
-
     }
     private void OnEnable()
     {
@@ -61,7 +58,6 @@ public class Player : MonoBehaviour
         EventManager.StartListening("PlayerSetActiveFalse", SetActiveFalse);
         EventManager.StartListening("GameClear", WhenGameClear);
 
-        // playerStat = originStat;
         playerState.IsDead = false;
     }
     private void Update()

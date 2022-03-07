@@ -38,6 +38,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
         get { return currentPlayerBody; }
         set { currentPlayerBody = value; }
     }
+
     private EternalStat pasteBodyAdditionalStat = new EternalStat();
 
     private bool canBodyChange = true;
@@ -55,7 +56,6 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
         get { return bodyChangeTimer; }
     }
 
-
     private float[] currentSkillDelay = new float[3]; // 0 => 기본공격, 1 => 스킬 1, 2 => 스킬 2
     public float[] SkillDelays
     {
@@ -69,7 +69,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
         get { return currentSkillDelayTimer; }
     }
 
-    [Header("동화율 10퍼당 변신시 오르게되는 능력치가 오르게 되는 수치")]
+    [Header("동화율 10퍼당 변신시 오르게되는 능력치가 오르게 되는 수치(배율)")]
     [SerializeField]
     private float upStatPercentage = 0.2f;
     public float UpStatPercentage
@@ -118,7 +118,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             return;
         }
 
-        Player player = SlimeGameManager.Instance.player;
+        Player player = this.player;
 
         Enemy.Enemy enemy = null;
 
@@ -232,6 +232,26 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             {
                 canBodyChange = true;
             }
+        }
+    }
+    public Vector2 PosCantCrossWall(LayerMask wallLayer, Vector2 startPos, Vector2 targetPos)
+    {
+        RaycastHit2D hit = Physics2D.Raycast(startPos, (targetPos - startPos).normalized, Vector2.Distance(startPos, targetPos), wallLayer);
+
+        if (hit)
+        {
+            if (wallLayer.CompareGameObjectLayer(hit.collider.gameObject))
+            {
+                return hit.point - (targetPos - startPos).normalized * (Vector2.Distance(startPos, targetPos) / 10f);
+            }
+            else
+            {
+                return hit.point;
+            }
+        }
+        else
+        {
+            return targetPos;
         }
     }
 }

@@ -4,6 +4,21 @@ using UnityEngine;
 
 public class PlayerKnockBack : MonoBehaviour
 {
+    private PlayerMove playerMove = null;
+
+    [SerializeField]
+    private LayerMask whatIsCantCrossLayer;
+
+    private Vector2 originPos = Vector2.zero;
+    private Vector2 targetPos = Vector2.zero;
+
+    private float knockBackTime = 0f;
+    private float knocBackTimer = 0f;
+
+    private void Start()
+    {
+        playerMove = GetComponent<PlayerMove>();
+    }
     private void OnEnable()
     {
         EventManager.StartListening("PlayerKnockBack", OnKnockBack);
@@ -16,10 +31,38 @@ public class PlayerKnockBack : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        CheckKnockBackTimer();
     }
-    private void OnKnockBack(float moveDistance, float speed, float moveTime)
+    private void CheckKnockBackTimer()
     {
+        if (knocBackTimer < knockBackTime)
+        {
+            knocBackTimer += Time.deltaTime;
 
+            if(knocBackTimer >= knockBackTime)
+            {
+                knocBackTimer = knockBackTime;
+
+                EventManager.TriggerEvent("KnockBackDone");
+
+                return;
+            }
+
+            DoKnockBack();
+        }
+    }
+    private void DoKnockBack()
+    {
+        transform.position = Vector2.Lerp(originPos, targetPos, knocBackTimer / knockBackTime);
+    }
+    private void OnKnockBack(Vector2 direction, float moveDistance, float moveTime)
+    {
+        originPos = transform.position;
+
+        targetPos = (direction * moveDistance) + originPos;
+        targetPos = SlimeGameManager.Instance.PosCantCrossWall(whatIsCantCrossLayer, originPos, targetPos);
+
+        knockBackTime = moveTime;
+        knocBackTimer = 0f;
     }
 }

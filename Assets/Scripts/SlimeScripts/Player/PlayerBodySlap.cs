@@ -96,7 +96,7 @@ public class PlayerBodySlap : PlayerSkill
 
         moveOriginPos = transform.position;
         moveTargetPos = moveOriginPos + bodySlapTime * bodySlapMoveSpeed * bodySlapMoveVec;
-        moveTargetPos = PosCantCrossWall(canCrashLayer, moveOriginPos, moveTargetPos);
+        moveTargetPos = SlimeGameManager.Instance.PosCantCrossWall(canCrashLayer, moveOriginPos, moveTargetPos);
 
         currentBodySlapTime = Vector2.Distance(moveOriginPos, moveTargetPos) / bodySlapMoveSpeed;
 
@@ -176,26 +176,6 @@ public class PlayerBodySlap : PlayerSkill
             {
                 StopBodySlap();
             }
-        }
-    }
-    private Vector2 PosCantCrossWall(LayerMask wallLayer, Vector2 startPos, Vector2 targetPos)
-    {
-        RaycastHit2D hit = Physics2D.Raycast(startPos, (targetPos - startPos).normalized, Vector2.Distance(startPos, targetPos), wallLayer);
-
-        if (hit)
-        {
-            if (hit.collider.gameObject.CompareTag("Wall"))
-            {
-                return hit.point - (targetPos - startPos).normalized * (Vector2.Distance(startPos, targetPos) / 10f);
-            }
-            else
-            {
-                return hit.point;
-            }
-        }
-        else
-        {
-            return targetPos;
         }
     }
 }

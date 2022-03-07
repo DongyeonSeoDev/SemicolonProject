@@ -8,29 +8,24 @@ public class PlayerMove : PlayerAction
 
     private Stat playerStat = null;
 
-    //private List<Rigidbody2D> leftChildRigids = new List<Rigidbody2D>();
-    //private List<Rigidbody2D> rightChildRigids = new List<Rigidbody2D>();
-    private Rigidbody2D upestRigid = new Rigidbody2D();
+    private BodyPoint upestPoint = null;
     private float middleToUpestDistance = 0f;
 
-    private Rigidbody2D downestRigid = new Rigidbody2D();
+    private BodyPoint downestPoint = null;
     private float middleToDownestDistance = 0f;
 
-    private Rigidbody2D rightestRigid = new Rigidbody2D(); // 오른쪽 끝에 위치한 바디포인트
+    private BodyPoint rightestPoint = null; // 오른쪽 끝에 위치한 바디포인트
     private float middleToRightestDistance = 0f; // Rightest와 Middle의 거리
 
-    private Rigidbody2D leftestRigid = new Rigidbody2D(); // 왼쪽 끝에 위치한 바디포인트
+    private BodyPoint leftestPoint = null; // 왼쪽 끝에 위치한 바디포인트
     private float middleToLeftestDistance = 0f; // Leftest와 Middle의 거리
 
-    private List<Rigidbody2D> upChildRigids = new List<Rigidbody2D>();
-    private List<Rigidbody2D> downChildRigids = new List<Rigidbody2D>();
+    private List<BodyPoint> upChildRigids = new List<BodyPoint>();
+    private List<BodyPoint> downChildRigids = new List<BodyPoint>();
 
     // 각 바디포인트들은 왼쪽으로 이동한다면 왼쪽 끝의 바디포인트와의 거리에 비례한 힘을 얻어 왼쪽으로 이동한다.
     // 각 끝부분의 포인트들은 움직이지 않는다.
     // 다만 바닥면의 포인트들은 안움직인다.
-
-    [SerializeField]
-    private float breakSpeed = 2f;
 
     public override void Awake()
     {
@@ -46,9 +41,17 @@ public class PlayerMove : PlayerAction
     private void SetRigids()
     {
         float distance = 0f;
+        BodyPoint bodyPoint = null;
 
-        childRigids.ForEach(r =>
+        foreach(var r in childRigids)
         {
+            bodyPoint = r.GetComponent<BodyPoint>();
+
+            if (bodyPoint == null)
+            {
+                continue;
+            }
+
             distance = Vector2.Distance(r.position, rigid.position);
 
             if (r.position.x > rigid.position.x)
@@ -56,7 +59,7 @@ public class PlayerMove : PlayerAction
                 if (distance > middleToRightestDistance)
                 {
                     middleToRightestDistance = distance;
-                    rightestRigid = r;
+                    rightestPoint = bodyPoint;
                 }
             }
             else if (r.position.x < rigid.position.x)
@@ -64,31 +67,31 @@ public class PlayerMove : PlayerAction
                 if (distance > middleToLeftestDistance)
                 {
                     middleToLeftestDistance = distance;
-                    leftestRigid = r;
+                    leftestPoint = bodyPoint;
                 }
             }
 
             if (r.position.y > rigid.position.y)
             {
-                upChildRigids.Add(r);
+                upChildRigids.Add(bodyPoint);
 
-                if(distance > middleToUpestDistance)
+                if (distance > middleToUpestDistance)
                 {
                     middleToUpestDistance = distance;
-                    upestRigid = r;
+                    upestPoint = r.GetComponent<BodyPoint>();
                 }
             }
             else if (r.position.y < rigid.position.y)
             {
-                downChildRigids.Add(r);
+                downChildRigids.Add(bodyPoint);
 
-                if(distance > middleToDownestDistance)
+                if (distance > middleToDownestDistance)
                 {
                     middleToDownestDistance = distance;
-                    downestRigid = r;
+                    downestPoint = bodyPoint;
                 }
             }
-        });
+        }
     }
 
     private void FixedUpdate()
@@ -123,20 +126,17 @@ public class PlayerMove : PlayerAction
                 {
                     if (MoveVec.x > 0)
                     {
-                        movePower = Vector2.Distance(x.position, leftestRigid.position);
-                        movePower = (middleToRightestDistance - movePower).Abs();
+                        movePower = GetMovePower(x.transform.position, leftestPoint.transform.position, middleToRightestDistance);
                     }
                     else if(MoveVec.y != 0)
                     {
                         if(MoveVec.y > 0)
                         {
-                            movePower = Vector2.Distance(x.position, upestRigid.position);
-                            movePower = (middleToUpestDistance - movePower).Abs();
+                            movePower = GetMovePower(x.transform.position, upestPoint.transform.position, middleToUpestDistance);
                         }
                         else
                         {
-                            movePower = Vector2.Distance(x.position, downestRigid.position);
-                            movePower = (middleToDownestDistance - movePower).Abs();
+                            movePower = GetMovePower(x.transform.position, downestPoint.transform.position, middleToDownestDistance);
                         }
                     }
                 }
@@ -144,25 +144,22 @@ public class PlayerMove : PlayerAction
                 {
                     if (MoveVec.x < 0)
                     {
-                        movePower = Vector2.Distance(x.position, rightestRigid.position);
-                        movePower = (middleToLeftestDistance - movePower).Abs();
+                        movePower = GetMovePower(x.transform.position, rightestPoint.transform.position, middleToLeftestDistance);
                     }
                     else if (MoveVec.y != 0)
                     {
                         if (MoveVec.y > 0)
                         {
-                            movePower = Vector2.Distance(x.position, upestRigid.position);
-                            movePower = (middleToUpestDistance - movePower).Abs();
+                            movePower = GetMovePower(x.transform.position, upestPoint.transform.position, middleToUpestDistance);
                         }
                         else
                         {
-                            movePower = Vector2.Distance(x.position, downestRigid.position);
-                            movePower = (middleToDownestDistance - movePower).Abs();
+                            movePower = GetMovePower(x.transform.position, downestPoint.transform.position, middleToDownestDistance);
                         }
                     }
                 }
 
-                x.velocity = MoveVec * movePower;
+                x.GetComponent<Rigidbody2D>().velocity = MoveVec * movePower;
             });
 
             //downChildRigids.ForEach(x => x.velocity = -new Vector2(MoveVec.x, x.velocity.y));
@@ -173,8 +170,17 @@ public class PlayerMove : PlayerAction
             lastMoveVec = Vector2.zero;
         }
     }
-    private bool isRightChildRigid(Rigidbody2D r)
+    private float GetMovePower(Vector2 pos1, Vector2 pos2, float maxDistanceOfDirection)
     {
-        return r.position.x > rigid.position.x;
+        float movePower = 0f;
+
+        movePower = Vector2.Distance(pos1, pos2);
+        movePower = (maxDistanceOfDirection - movePower).Abs();
+
+        return movePower;
+    }
+    private bool isRightChildRigid(BodyPoint r)
+    {
+        return r.transform.position.x > rigid.position.x;
     }
 }

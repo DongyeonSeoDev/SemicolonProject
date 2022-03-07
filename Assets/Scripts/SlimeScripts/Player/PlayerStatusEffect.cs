@@ -10,6 +10,14 @@ public class PlayerStatusEffect : PlayerAction
    {
        base.Awake();
    }
+    private void OnEnable()
+    {
+        EventManager.StartListening("KnockBackDone", OnKnockBackDone);
+    }
+    private void OnDisable()
+    {
+        EventManager.StopListening("KnockBackDone", OnKnockBackDone);
+    }
     void Start()
     {
         playerState = SlimeGameManager.Instance.Player.GetComponent<PlayerState>();
@@ -21,29 +29,27 @@ public class PlayerStatusEffect : PlayerAction
         CheckSturnTimer();
     }
     
-    public void KnockBack(Vector2 direction, float speed, float knockBackTime)
+    public void KnockBack(Vector2 direction, float speed, float knockBackTime) // knockBackTime은 knockBack되는 시간이다.
     {
-        //rigid.AddForce(direction.normalized * speed, ForceMode2D.Impulse);
         float moveDistance = speed * knockBackTime;
-
-        //childRigids.ForEach(x => x.AddForce(direction.normalized * speed, ForceMode2D.Impulse));
 
         playerState.IsKnockBack = true;
 
-        EventManager.TriggerEvent("PlayerKnockBack", moveDistance, speed, knockBackTime);
+        EventManager.TriggerEvent("PlayerKnockBack", direction, moveDistance, knockBackTime);
     }
-    public void KnockBack(Vector2 direction, float speed, float knockBackTime, float sturnTime)
+    public void KnockBack(Vector2 direction, float speed, float knockBackTime, float sturnTime) // knockBackTime은 knockBack되는 시간이다.
     {
-        //rigid.AddForce(direction.normalized * speed, ForceMode2D.Impulse);
         float moveDistance = speed * knockBackTime;
-
-        //childRigids.ForEach(x => x.AddForce(direction.normalized * speed, ForceMode2D.Impulse));
 
         playerState.IsKnockBack = true;
 
-        EventManager.TriggerEvent("PlayerKnockBack", moveDistance, speed, knockBackTime);
+        EventManager.TriggerEvent("PlayerKnockBack", direction, moveDistance, knockBackTime);
 
         Sturn(sturnTime);
+    }
+    private void OnKnockBackDone()
+    {
+        playerState.IsKnockBack = false;
     }
     public void Sturn(float sturnTime)
     {

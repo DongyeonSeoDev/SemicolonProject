@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BodyPoint : MonoBehaviour
 {
+    private Rigidbody2D rigid = null;
+
     private MiddlePoint middlePoint = null;
 
     [SerializeField]
@@ -36,7 +38,10 @@ public class BodyPoint : MonoBehaviour
         get { return isMoveToMiddle; }
         set { isMoveToMiddle = value; }
     }
-
+    private void Awake()
+    {
+        rigid = GetComponent<Rigidbody2D>();
+    }
     private void Start()
     {
         originLocalPosition = transform.localPosition;

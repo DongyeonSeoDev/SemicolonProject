@@ -19,7 +19,10 @@ public class PlayerDrainCollider : MonoBehaviour
     {
         drainTimer = drainTime;
     }
-
+    private void Start()
+    {
+        //EventManager.StartListening("ssss", );
+    }
     void Update()
     {
         if (drainTimer > 0f)
@@ -49,6 +52,7 @@ public class PlayerDrainCollider : MonoBehaviour
                 // enemy.EnemyDestroy();
 
                 EventManager.TriggerEvent("OnDrain", other.gameObject, 1); // 여기의 param은 임시 값
+              
                 Debug.Log("Do Drain");
             }
         }
