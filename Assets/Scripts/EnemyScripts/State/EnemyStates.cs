@@ -142,6 +142,7 @@ namespace Enemy
         {
             if (enemyData.isEndAttackAnimation)
             {
+                Debug.Log("¿€µø");
                 enemyData.enemyAnimator.SetTrigger(enemyData.hashEndAttack);
             }
 

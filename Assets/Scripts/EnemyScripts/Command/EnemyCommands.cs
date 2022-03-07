@@ -306,6 +306,7 @@ namespace Enemy
         private EnemyPositionCheckData positionCheckData;
 
         private float rushForce;
+        private int wallLayout = LayerMask.GetMask("WALL");
 
         public EnemyRushAttackCommand(Rigidbody2D rigid, EnemyPositionCheckData positionData, float force)
         {
@@ -316,7 +317,20 @@ namespace Enemy
 
         public override void Execute()
         {
-            rigidboyd2D.AddForce(positionCheckData.position * rushForce, ForceMode2D.Impulse);
+            var ray = Physics2D.Raycast(rigidboyd2D.transform.position, positionCheckData.position, 10f, wallLayout);
+
+            Debug.Log(ray.collider);
+
+            if (ray.collider != null)
+            {
+                rigidboyd2D.AddForce(positionCheckData.position * 10f, ForceMode2D.Impulse);
+                Debug.Log("작동 1");
+            }
+            else
+            {
+                rigidboyd2D.AddForce(positionCheckData.position * rushForce, ForceMode2D.Impulse);
+                Debug.Log("작동 2");
+            }
         }
     }
 
