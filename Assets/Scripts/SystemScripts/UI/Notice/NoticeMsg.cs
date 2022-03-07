@@ -10,7 +10,7 @@ public class NoticeMsg : MonoBehaviour
 
     private Sequence seq;
 
-    public void Set(string msg, float fontSize, bool changeVertexGradient = false, System.Action endAction = null)
+    public void Set(NoticeUISet nus)
     {
         seq.Kill();
         seq = DOTween.Sequence();
@@ -18,9 +18,9 @@ public class NoticeMsg : MonoBehaviour
         rectTrm.anchoredPosition = Global.noticeMsgOriginRectPos - new Vector2(200, 0);
         cvsg.alpha = 0;
 
-        msgTmp.text = msg;
-        msgTmp.fontSize = fontSize;
-        endAction += () => gameObject.SetActive(false);
+        msgTmp.text = nus.msg;
+        msgTmp.fontSize = nus.fontSize;
+        nus.endAction += () => gameObject.SetActive(false);
 
         /*if (!changeVertexGradient)
         {
@@ -34,13 +34,12 @@ public class NoticeMsg : MonoBehaviour
             msgTmp.colorGradientPreset.bottomRight = grd[3];*//*
         }*/
 
-        msgTmp.colorGradient = !changeVertexGradient ? UIManager.Instance.noticeMsgGrd : UIManager.Instance.changeNoticeMsgGrd;
-
+        msgTmp.colorGradient = !nus.changeVertexGradient ? UIManager.Instance.noticeMsgGrd : nus.vg;
 
         seq.Append(rectTrm.DOAnchorPos(Global.noticeMsgOriginRectPos, 0.3f).SetEase(Ease.InQuart))
             .Join(cvsg.DOFade(1, 0.3f)).AppendInterval(2f);
         seq.Append(rectTrm.DOAnchorPos(Global.noticeMsgOriginRectPos + new Vector2(200, 0), 0.3f).SetEase(Ease.OutQuart))
-            .Join(cvsg.DOFade(0, 0.3f)).AppendCallback(() => endAction());
+            .Join(cvsg.DOFade(0, 0.3f)).AppendCallback(() => nus.endAction());
         seq.SetUpdate(true).Play();
     }
 }

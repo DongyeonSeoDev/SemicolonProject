@@ -97,7 +97,7 @@ namespace Enemy
             lastPositionX = transform.position.x;
         }
 
-        public void GetDamage(int damage, bool critical = false, bool isKnockBack = false, float knockBackPower = 10f, float stunTime = 1f, Vector2? direction = null)
+        public void GetDamage(int damage, bool critical = false, bool isKnockBack = false, float knockBackPower = 20f, float stunTime = 1f, Vector2? direction = null)
         {
             if (!enemyData.isDamaged)
             {

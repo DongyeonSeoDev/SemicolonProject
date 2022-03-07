@@ -16,8 +16,6 @@ public static partial class Global
     
     private static string[] keyActionNameArr;
 
-    private static Dictionary<string, Sprite> idToBodySprDict = new Dictionary<string, Sprite>();
-
     public static string ToKeyActionName(KeyAction keyAction)
     {
         if(keyActionNameArr==null)
@@ -31,19 +29,15 @@ public static partial class Global
 
     public static Sprite GetMonsterBodySprite(string id)
     {
-        if(idToBodySprDict.ContainsKey(id))
-        {
-            return idToBodySprDict[id];
-        }
-        else
-        {
-            Sprite spr = Resources.Load<Sprite>("System/Sprites/MonsterBody/" + id);
-            if (!spr)
-            {
-                return MonsterCollection.Instance.notExistBodySpr;
-            }
-            idToBodySprDict.Add(id, spr);
-            return spr;
-        }
+        Sprite spr = MonsterCollection.Instance.GetMonsterInfo(id).bodyImg;
+        if (!spr) spr = MonsterCollection.Instance.notExistBodySpr;
+        return spr;
+    }
+
+    public static string GetMonsterName(string id)
+    {
+        string str = MonsterCollection.Instance.GetMonsterInfo(id).bodyName;
+        if (string.IsNullOrEmpty(str)) str = "몬스터 이름";
+        return str;
     }
 }

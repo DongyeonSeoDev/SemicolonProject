@@ -3,6 +3,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
+using TMPro;
 
 [Serializable]
 public class IngredientCount
@@ -100,16 +101,24 @@ public class NoticeUISet
     public string msg;
     public float fontSize;
     public bool changeVertexGradient;
-    //public Color[] colors;
+    public VertexGradient vg;
     public Action endAction;
 
-    public NoticeUISet(string msg, float fontSize, bool changeVertexGradient, Action endAction)
+    public NoticeUISet(string msg, float fontSize, Action endAction)
     {
         this.msg = msg;
         this.fontSize = fontSize;
-        this.changeVertexGradient = changeVertexGradient;
-        //this.colors = colors;
         this.endAction = endAction;
+        changeVertexGradient = false;
+    }
+
+    public NoticeUISet(string msg, float fontSize,VertexGradient vg ,Action endAction)
+    {
+        this.msg = msg;
+        this.fontSize = fontSize;
+        this.vg = vg;
+        this.endAction = endAction;
+        changeVertexGradient = true;
     }
 }
 

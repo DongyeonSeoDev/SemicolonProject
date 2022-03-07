@@ -192,11 +192,11 @@ namespace Enemy
             {
                 if (enemyData.knockBackDirection != null)
                 {
-                    enemyCommand[1] = new EnemyKnockBackCommand(enemyData.enemyRigidbody2D, enemyData.knockBackDirection.Value.normalized * enemyData.knockBackPower);
+                    enemyCommand[1] = new EnemyAddForceCommand(enemyData.enemyRigidbody2D, enemyData.knockBackPower, null, enemyData.knockBackDirection.Value.normalized);
                 }
                 else
                 {
-                    enemyCommand[1] = new EnemyKnockBackCommand(enemyData.enemyRigidbody2D, (enemyData.enemyObject.transform.position - enemyData.PlayerObject.transform.position).normalized * enemyData.knockBackPower);
+                    enemyCommand[1] = new EnemyAddForceCommand(enemyData.enemyRigidbody2D, enemyData.knockBackPower, null, (enemyData.enemyObject.transform.position - enemyData.PlayerObject.transform.position).normalized);
                 }
             }
         }

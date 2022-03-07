@@ -26,12 +26,12 @@ public class ChangeBodySlot : MonoBehaviour  //클래스명 뭐라할지 애매하네
         });
     }
 
-    public void Register(string bodyID, string mobName)
+    public void Register(string bodyID)
     {
         this.bodyID = bodyID;
 
         monsterImgName.first.sprite = Global.GetMonsterBodySprite(bodyID);
-        monsterImgName.second.text = mobName;
+        monsterImgName.second.text = Global.GetMonsterName(bodyID);
 
         changeBtn.interactable = true;
         changeBtn.GetComponent<UIScale>().transitionEnable = true;

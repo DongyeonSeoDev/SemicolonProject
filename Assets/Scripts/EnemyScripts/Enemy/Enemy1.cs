@@ -1,3 +1,7 @@
+
+
+using UnityEngine;
+
 namespace Enemy
 {
     public class Enemy1 : Enemy // 첫번째 적
@@ -12,6 +16,7 @@ namespace Enemy
                 enemySpriteRenderer = sr,
                 enemyRigidbody2D = rb,
                 hpBarFillImage = hpBarFillImage,
+                isEndAttackAnimation = true,
             };
 
             enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(transform, enemyData.PlayerObject.transform, rb, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, false);

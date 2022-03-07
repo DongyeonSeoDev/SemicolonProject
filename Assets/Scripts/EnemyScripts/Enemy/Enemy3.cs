@@ -31,7 +31,7 @@ namespace Enemy
             };
 
             enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(transform, enemyData.PlayerObject.transform, rb, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, false);
-            enemyAttackCommand = new EnemyRushAttackCommand(rb, positionCheckData, enemyData.rushForce);
+            enemyAttackCommand = new EnemyAddForceCommand(rb, enemyData.rushForce, positionCheckData);
 
             base.OnEnable();
         }

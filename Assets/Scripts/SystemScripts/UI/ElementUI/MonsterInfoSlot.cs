@@ -61,17 +61,19 @@ public class MonsterInfoSlot : MonoBehaviour
         {
             //뭔가 UI 이펙트 ㄱ
         }
-        else
-        {
-            //뭔가 UI 이펙트 ㄴ
-        }
+       
     }
 
-    public void MarkAcqBody() //변신 가능 텍스트 UI 띄우거나 없앰
+    public void MarkAcqBody(bool on) //변신 가능 텍스트 UI 띄우거나 없앰
     {
-        //Water.PoolManager.GetItem<Transform>("CanTrfMark").SetParent(acqMarkPar);
-        //if(acqMarkPar.childCount > 0)
-        //acqMarkPar.GetChild(0).gameObject.SetActive(false);
+        /*for(int i=0; i< acqMarkPar.childCount; i++)
+            acqMarkPar.GetChild(i).gameObject.SetActive(false);
+
+        if(on)
+        {
+            Water.PoolManager.GetItem<Transform>("CanTrfMark").SetParent(acqMarkPar);
+        }*/
+        acqMarkPar.GetChild(0).gameObject.SetActive(on);  //위치 버그때문에 일단 잠시 이렇게
     }
 
     /*private void Active(bool active)

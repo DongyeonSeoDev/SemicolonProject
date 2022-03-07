@@ -189,8 +189,8 @@ public partial class UIManager : MonoSingleton<UIManager>
         EventManager.StartListening("GameClear", () => OnUIInteract(UIType.CLEAR, true));
         EventManager.StartListening("TimePause", () => Time.timeScale = 0 );
         EventManager.StartListening("TimeResume", () => Time.timeScale = 1);
-        EventManager.StartListening("StageClear", () => { changeNoticeMsgGrd = clearNoticeMsgVGrd; InsertNoticeQueue("Stage Clear", 90, true); });
-        EventManager.StartListening("ChangeBody", str => InsertNoticeQueue(MonsterCollection.Instance.mobIdToSlot[str].BodyData.bodyName + "(으)로 변신하였습니다"));  
+        EventManager.StartListening("StageClear", () =>InsertNoticeQueue("Stage Clear", clearNoticeMsgVGrd, 90));
+        EventManager.StartListening("ChangeBody", str => InsertNoticeQueue(MonsterCollection.Instance.mobIdToSlot[str].BodyData.bodyName + "(으)로 변신하였습니다"));  //부활할 때도 뜨는 버그 수정해야 함. 매개변수로 죽어서 변신한건지 bool 받아야 할듯
     }
 
     private void Respawn(Vector2 unusedValue) => OnUIInteract(UIType.DEATH, true);
@@ -528,7 +528,7 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     public void DoChangeBody(string id)  //몸통 저장할지 창 띄움
     {
-        RequestSelectionWindow(MonsterCollection.Instance.mobIdToSlot[id].BodyData.bodyName + "를(을) 변신 슬롯에 저장하시겠습니까?\n(거절하면 해당 몬스터의 흡수 확률은 0%로 돌아갑니다.)",
+        RequestSelectionWindow("<color=#7A98FF>" + MonsterCollection.Instance.mobIdToSlot[id].BodyData.bodyName + "</color>를(을) 변신 슬롯에 저장하시겠습니까?\n(거절하면 해당 몬스터의 흡수 확률은 0%로 돌아갑니다.)",
             new List<Action>() {() => CancelMonsterSaveChance(id) , () => SaveMonsterBody(id) }, new List<string>() {"거절", "저장"});
     }
     

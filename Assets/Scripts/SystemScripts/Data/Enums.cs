@@ -66,8 +66,8 @@ public enum SkillType
 {
     ATTACK,
     SPECIALATTACK,
-    DRAIN,
-    MANASTONE,
+    DRAIN,         //두번째 특수 스킬
+    MANASTONE,     //마석 스킬 (여기에 넣어야할진 아직 미정)
     NULL
 }
 
