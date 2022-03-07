@@ -300,40 +300,40 @@ namespace Enemy
         }
     }
 
-    public class EnemyRushAttackCommand : EnemyCommand
+    public class EnemyAddForceCommand : EnemyCommand
     {
         private Rigidbody2D rigidboyd2D;
+        private float force;
         private EnemyPositionCheckData positionCheckData;
+        Vector2? direction;
+        private int wallCheck = LayerMask.GetMask("WALL");
 
-        private float rushForce;
-
-        public EnemyRushAttackCommand(Rigidbody2D rigid, EnemyPositionCheckData positionData, float force)
+        public EnemyAddForceCommand(Rigidbody2D rigid, float force, EnemyPositionCheckData positionData = null, Vector2? direction = null)
         {
             rigidboyd2D = rigid;
-            rushForce = force;
+            this.force = force;
             positionCheckData = positionData;
-        }
-
-        public override void Execute()
-        {
-            rigidboyd2D.AddForce(positionCheckData.position * rushForce, ForceMode2D.Impulse);
-        }
-    }
-
-    public class EnemyKnockBackCommand : EnemyCommand
-    {
-        private Rigidbody2D rigid;
-        private Vector2 direction;
-
-        public EnemyKnockBackCommand(Rigidbody2D rigid, Vector2 direction)
-        {
-            this.rigid = rigid;
             this.direction = direction;
         }
 
         public override void Execute()
         {
-            rigid.AddForce(direction, ForceMode2D.Impulse);
+            if (positionCheckData != null)
+            {
+                direction = positionCheckData.position;
+            }
+
+            var ray = Physics2D.Raycast(rigidboyd2D.transform.position, direction.Value, force / 10f, wallCheck);
+
+            if (ray.collider != null)
+            {
+                float distance = Vector2.Distance(ray.point, rigidboyd2D.transform.position) * 10f;
+                rigidboyd2D.AddForce(direction.Value * distance, ForceMode2D.Impulse);
+            }
+            else
+            {
+                rigidboyd2D.AddForce(direction.Value * force, ForceMode2D.Impulse);
+            }
         }
     }
 }
