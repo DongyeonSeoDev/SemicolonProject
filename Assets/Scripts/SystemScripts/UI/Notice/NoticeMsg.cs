@@ -10,6 +10,7 @@ public class NoticeMsg : MonoBehaviour
 
     private Sequence seq;
 
+    //나중에 colorGradient 넣도록 수정해야함
     public void Set(string msg, float fontSize, bool changeVertexGradient = false, System.Action endAction = null)
     {
         seq.Kill();
