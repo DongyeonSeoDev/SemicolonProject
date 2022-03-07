@@ -36,7 +36,7 @@ public class SelectionWindow : MonoBehaviour
                 }
                 else
                 {
-                    UIManager.Instance.RequestWarningWindow(() => clickEv[si](), "결정이 확실합니까?");
+                    btnList[i].onClick.AddListener(() => UIManager.Instance.RequestWarningWindow(() => clickEv[si](), "결정이 확실합니까?"));
                 }
                 btnList[i].transform.GetChild(0).GetComponent<Text>().text = btnTexts[i];
 

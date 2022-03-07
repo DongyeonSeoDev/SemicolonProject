@@ -528,7 +528,7 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     public void DoChangeBody(string id)  //몸통 저장할지 창 띄움
     {
-        RequestSelectionWindow(MonsterCollection.Instance.mobIdToSlot[id].BodyData.bodyName + "를(을) 변신 슬롯에 저장하시겠습니까?\n(거절하면 해당 몬스터의 흡수 확률은 0%로 돌아갑니다.)",
+        RequestSelectionWindow("<color=#7A98FF>" + MonsterCollection.Instance.mobIdToSlot[id].BodyData.bodyName + "</color>를(을) 변신 슬롯에 저장하시겠습니까?\n(거절하면 해당 몬스터의 흡수 확률은 0%로 돌아갑니다.)",
             new List<Action>() {() => CancelMonsterSaveChance(id) , () => SaveMonsterBody(id) }, new List<string>() {"거절", "저장"});
     }
     

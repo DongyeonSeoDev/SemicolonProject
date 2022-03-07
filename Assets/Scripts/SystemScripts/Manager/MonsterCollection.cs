@@ -158,10 +158,9 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     
     public void AddSavedBody(string id, int slotNumber = -1)
     {
-        int i;
         if (slotNumber == -1) 
         {
-            for (i = 0; i < savedBodys.Count; i++)
+            for (int i = 0; i < savedBodys.Count; i++)
             {
                 if(!savedBodys[i].Registered)
                 {
