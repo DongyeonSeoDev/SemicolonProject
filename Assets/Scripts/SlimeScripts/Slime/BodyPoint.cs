@@ -32,6 +32,13 @@ public class BodyPoint : MonoBehaviour
         set { isWall = value; }
     }
 
+    private bool isMove = false;
+    public bool IsMove
+    {
+        get { return isMove; }
+        set { isMove = value; }
+    }
+
     private bool isMoveToMiddle = false;
     public bool IsMoveToMiddle
     {
@@ -69,7 +76,7 @@ public class BodyPoint : MonoBehaviour
 
     private void MoveToOriginPos()
     {
-        if (!isWall && !isMiddlePoint && !isMoveToMiddle)
+        if ((!isWall || isMove) && !isMiddlePoint && !isMoveToMiddle)
         {
             transform.localPosition = Vector2.Lerp(transform.localPosition, originLocalPosition, Time.deltaTime * returnToOriginSpeed);
         }

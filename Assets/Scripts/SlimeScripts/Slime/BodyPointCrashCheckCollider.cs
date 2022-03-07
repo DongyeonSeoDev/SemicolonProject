@@ -22,7 +22,6 @@ public class BodyPointCrashCheckCollider : MonoBehaviour
     private void OnDisable()
     {
         EventManager.StopListening("BodyPointCrash", BodyPointCrash);
-
     }
     private void OnTriggerEnter2D(Collider2D other)
     {

@@ -20,8 +20,8 @@ public class PlayerMove : PlayerAction
     private BodyPoint leftestPoint = null; // 왼쪽 끝에 위치한 바디포인트
     private float middleToLeftestDistance = 0f; // Leftest와 Middle의 거리
 
-    private List<BodyPoint> upChildRigids = new List<BodyPoint>();
-    private List<BodyPoint> downChildRigids = new List<BodyPoint>();
+    private List<BodyPoint> upChildPoints = new List<BodyPoint>();
+    private List<BodyPoint> downChildPoints = new List<BodyPoint>();
 
     // 각 바디포인트들은 왼쪽으로 이동한다면 왼쪽 끝의 바디포인트와의 거리에 비례한 힘을 얻어 왼쪽으로 이동한다.
     // 각 끝부분의 포인트들은 움직이지 않는다.
@@ -73,7 +73,7 @@ public class PlayerMove : PlayerAction
 
             if (r.position.y > rigid.position.y)
             {
-                upChildRigids.Add(bodyPoint);
+                upChildPoints.Add(bodyPoint);
 
                 if (distance > middleToUpestDistance)
                 {
@@ -83,7 +83,7 @@ public class PlayerMove : PlayerAction
             }
             else if (r.position.y < rigid.position.y)
             {
-                downChildRigids.Add(bodyPoint);
+                downChildPoints.Add(bodyPoint);
 
                 if (distance > middleToDownestDistance)
                 {
@@ -111,7 +111,7 @@ public class PlayerMove : PlayerAction
             }
             else
             {
-                lastMoveVec = Vector2.Lerp(lastMoveVec, Vector2.zero, Time.fixedDeltaTime * playerStat.Speed / 2f);
+                lastMoveVec = Vector2.Lerp(lastMoveVec, Vector2.zero, Time.fixedDeltaTime * playerStat.Speed / 2f); // 움직임이 멈췄을 때 갑자기 멈추는 것을 방지
             }
 
             rigid.velocity = lastMoveVec;
@@ -120,7 +120,7 @@ public class PlayerMove : PlayerAction
 
             float movePower = 0f;
 
-            upChildRigids.ForEach(x => 
+            upChildPoints.ForEach(x => 
             {
                 if(isRightChildRigid(x))
                 {
@@ -159,11 +159,38 @@ public class PlayerMove : PlayerAction
                     }
                 }
 
+                if(MoveVec != Vector2.zero)
+                {
+                    x.IsMove = true;
+                }
+                else
+                {
+                    x.IsMove = false;
+                }
+
                 x.GetComponent<Rigidbody2D>().velocity = MoveVec * movePower;
             });
 
             //downChildRigids.ForEach(x => x.velocity = -new Vector2(MoveVec.x, x.velocity.y));
-            downChildRigids.ForEach((x) => x.transform.localPosition = Vector2.Lerp(x.transform.localPosition, (Vector2)x.transform.localPosition - MoveVec, Time.fixedDeltaTime)); ;
+
+            foreach(var x in downChildPoints)
+            {
+                //if (x.IsMoveToMiddle)
+                //{
+                //    continue;
+                //}
+
+                if (MoveVec != Vector2.zero)
+                {
+                    x.IsMove = true;
+                }
+                else
+                {
+                    x.IsMove = false;
+                }
+
+                x.transform.localPosition = Vector2.Lerp(x.transform.localPosition, (Vector2)x.transform.localPosition - MoveVec, Time.fixedDeltaTime);
+            }
         }
         else
         {
