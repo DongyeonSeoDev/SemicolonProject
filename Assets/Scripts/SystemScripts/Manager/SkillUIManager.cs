@@ -35,8 +35,9 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
         specialSkill.Register(playerOriginBodySkills.second[1]);
         drain.Register(playerOriginBodySkills.second[2]);
 
-        EventManager.StartListening("ChangeBody", str =>
+        EventManager.StartListening("ChangeBody", (str, dead) =>
         {
+            if(dead){} //bool타입인걸 알리기위한
             SkillInfo[] skill = monsterSkillsDic[str];
             foreach(SkillInfo skillInfo in skill)
             {
