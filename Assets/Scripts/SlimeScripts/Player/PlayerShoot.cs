@@ -64,6 +64,14 @@ public class PlayerShoot : PlayerSkill
     {
         currentEnergy = maxEnergy;
     }
+    public override void OnEnable()
+    {
+        base.OnEnable();
+    }
+    public override void OnDisable()
+    {
+        base.OnDisable();
+    }
     public override void Update()
     {
         base.Update();
@@ -73,47 +81,54 @@ public class PlayerShoot : PlayerSkill
         CheckSkillDelay();
         UpEnergy();
 
-        if (playerInput.IsShoot && CheckEnergy() && !playerState.BodySlapping)
-        {
-            if (canShoot)
-            {
-                DoSkill();
-            }
+        //if (playerInput.IsDoSkill0)
+        //{
+        //    if (canShoot)
+        //    {
+        //        DoSkill();
+        //    }
 
-            playerInput.IsShoot = false;
-        }
-        else if (playerInput.IsShoot)
-        {
-            playerInput.IsShoot = false;
-        }
+            
+        //}
+        //else if (playerInput.IsDoSkill0)
+        //{
+        //    playerInput.IsDoSkill0 = false;
+        //}
     }
     public override void DoSkill()
     {
-        GameObject temp = null;
+        base.DoSkill();
 
-        Vector2 direction = (playerInput.MousePosition - (Vector2)transform.position).normalized;
-
-        bool findInDic = false;
-
-        (temp, findInDic) = slimePoolManager.Find(projectile);
-
-        if (findInDic && temp != null)
+        if (canShoot && CheckEnergy() && !playerState.BodySlapping)
         {
-            temp.SetActive(true);
+            GameObject temp = null;
+
+            Vector2 direction = (playerInput.MousePosition - (Vector2)transform.position).normalized;
+
+            bool findInDic = false;
+
+            (temp, findInDic) = slimePoolManager.Find(projectile);
+
+            if (findInDic && temp != null)
+            {
+                temp.SetActive(true);
+            }
+            else
+            {
+                temp = Instantiate(projectile, transform);
+            }
+
+            temp.transform.position = transform.position;
+            temp.GetComponent<PlayerProjectile>().OnSpawn(direction, projectileSpeed);
+
+            currentEnergy -= useEnergyAmount;
+            SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = skillDelay;
+            canShoot = false;
+
+            EventManager.TriggerEvent("PlayerShoot");
         }
-        else
-        {
-            temp = Instantiate(projectile, transform);
-        }
 
-        temp.transform.position = transform.position;
-        temp.GetComponent<PlayerProjectile>().OnSpawn(direction, projectileSpeed);
-
-        currentEnergy -= useEnergyAmount;
-        SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = skillDelay;
-        canShoot = false;
-
-        EventManager.TriggerEvent("PlayerShoot");
+        playerInput.IsDoSkill0 = false;
     }
     public override void WhenSkillDelayTimerZero()
     {

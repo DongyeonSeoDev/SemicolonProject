@@ -22,14 +22,6 @@ public class PlayerInput : MonoBehaviour
     {
         get { return mousePosition; }
     }
-
-    private bool isBodySlap = false;
-    public bool IsBodySlap
-    {
-        get { return isBodySlap; }
-        set { isBodySlap = value; }
-    }
-
     private bool isInteraction = false;
     public bool IsInterraction
     {
@@ -37,18 +29,24 @@ public class PlayerInput : MonoBehaviour
         set { isInteraction = value; }
     }
 
-    private bool isShoot = false;
-    public bool IsShoot
+    private bool isDoSkill0 = false;
+    public bool IsDoSkill0
     {
-        get { return isShoot; }
-        set { isShoot = value; }
+        get { return isDoSkill0; }
+        set { isDoSkill0 = value; }
+    }
+    private bool isDoSkill1 = false;
+    public bool IsDoSkill1
+    {
+        get { return isDoSkill1; }
+        set { isDoSkill1 = value; }
     }
 
-    private bool isDrain = false;
-    public bool IsDrain
+    private bool isDoSkill2 = false;
+    public bool IsDoSkill2
     {
-        get { return isDrain; }
-        set { isDrain = value; }
+        get { return isDoSkill2; }
+        set { isDoSkill2 = value; }
     }
     private bool isPause = false;
 
@@ -91,17 +89,17 @@ public class PlayerInput : MonoBehaviour
 
             if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.SPECIALATTACK])) // left shift
             {
-                isBodySlap = true;
+                isDoSkill1 = true;
             }
 
             if (Input.GetButtonDown("Shoot") && !EventSystem.current.IsPointerOverGameObject()) // mouse 0
             {
-                isShoot = true;
+                isDoSkill0 = true;
             }
 
             if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.DRAIN])) // q
             {
-                isDrain = true;
+                isDoSkill2 = true;
             }
 
             if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.INTERACTION])) // e
@@ -113,19 +111,35 @@ public class PlayerInput : MonoBehaviour
         {
             moveVector = Vector2.zero;
 
-            isBodySlap = false;
-            isShoot = false;
-            isDrain = false;
+            isDoSkill0 = false;
+            isDoSkill1 = false;
+            isDoSkill2 = false;
             isInteraction = false;
         }
     }
     private void FixedUpdate()
     {
-        if (isBodySlap)
+        if (isDoSkill0)
         {
-            playerState.BodySlapping = true;
-            isBodySlap = false;
+            EventManager.TriggerEvent("StartSkill0"); // 기본공격
+
+            isDoSkill0 = false;
         }
+
+        if (isDoSkill1)
+        {
+            EventManager.TriggerEvent("StartSkill1"); // 스킬1
+
+            isDoSkill1 = false;
+        }
+
+        if(isDoSkill2)
+        {
+            EventManager.TriggerEvent("StartSkill2"); // 스킬2
+
+            isDoSkill2 = false;
+        }
+
     }
     private void TimePause()
     {

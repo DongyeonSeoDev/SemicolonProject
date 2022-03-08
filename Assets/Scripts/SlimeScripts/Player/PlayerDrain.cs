@@ -46,9 +46,19 @@ public class PlayerDrain : PlayerSkill
     {
         base.Awake();
 
-        EventManager.StartListening("OnDrain", OnDrain);
-
         drainCollider.SetActive(false);
+    }
+    public override void OnEnable()
+    {
+        base.OnEnable();
+
+        EventManager.StartListening("OnDrain", OnDrain);
+    }
+    public override void OnDisable()
+    {
+        base.OnDisable();
+
+        EventManager.StopListening("OnDrain", OnDrain);
     }
     public override void Update()
     {
@@ -63,18 +73,8 @@ public class PlayerDrain : PlayerSkill
         //    }
         //}
 
-        if (playerInput.IsDrain && canDrain)
-        {
-            playerInput.IsDrain = false;
-
-            SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = skillDelay;
-
-            drainCollider.SetActive(true);
-
-            canDrain = false;
-        }
-
-        DoSkill();
+        //DoSkill();
+        DoDrain();
     }
     public override void WhenSkillDelayTimerZero()
     {
@@ -83,6 +83,19 @@ public class PlayerDrain : PlayerSkill
         canDrain = true;
     }
     public override void DoSkill()
+    {
+        base.DoSkill();
+
+        if (canDrain)
+        {
+            SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = skillDelay;
+
+            drainCollider.SetActive(true);
+
+            canDrain = false;
+        }
+    }
+    private void DoDrain()
     {
         if (drainList.Count > 0)
         {
@@ -102,7 +115,6 @@ public class PlayerDrain : PlayerSkill
                 }
 
                 item.Item1.transform.position = Vector2.Lerp(item.Item1.transform.position, transform.position, moveTimerDic[item.Item1] / moveTimeDic[item.Item1]);
-                Debug.Log(distance);
 
                 if (distance <= drainDoneDistance) // 흡수 판정 체크
                 {
@@ -146,10 +158,6 @@ public class PlayerDrain : PlayerSkill
                 drainList.Remove(x);
             });
         }
-    }
-    private void OnDisable()
-    {
-        EventManager.StopListening("OnDrain", OnDrain);
     }
     private void OnDrain(GameObject obj, int upValue) // upValue는 이해도(동화율)이 얼마나 오를 것인가.
     {

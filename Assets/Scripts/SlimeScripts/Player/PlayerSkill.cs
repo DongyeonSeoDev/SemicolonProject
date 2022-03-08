@@ -18,6 +18,12 @@ public abstract class PlayerSkill : PlayerAction
     public virtual void OnEnable()
     {
         WhenChangeSkill();
+
+        EventManager.StartListening("StartSkill" + skillIdx, DoSkill);
+    }
+    public virtual void OnDisable()
+    {
+        EventManager.StopListening("StartSkill" + skillIdx, DoSkill);
     }
 
     public void WhenChangeSkill()
@@ -27,7 +33,7 @@ public abstract class PlayerSkill : PlayerAction
     }
     public virtual void DoSkill()
     {
-
+     
     }
     protected void CheckSkillDelay()
     {

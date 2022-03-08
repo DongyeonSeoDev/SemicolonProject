@@ -113,7 +113,7 @@ namespace Enemy
 
                     if (playerStatusEffect != null)
                     {
-                        //playerStatusEffect.KnockBack(positionCheckData.position, 50f);
+                        playerStatusEffect.KnockBack(positionCheckData.position, 30f, 1f);
                         playerStatusEffect.Sturn(1f);
                     }
                     else
