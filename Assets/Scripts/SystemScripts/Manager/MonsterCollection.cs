@@ -79,13 +79,13 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             }
             changeBodySlots.ForEach(x => x.Unregister());
         });
-        EventManager.StartListening("ChangeBody", str => 
+        EventManager.StartListening("ChangeBody", (str, dead) => 
         {
-            //string.IsNullOrEmpty(str); //매개변수 string인걸 나타내기위한 것
-            for(int i=0; i< savedBodys.Count; i++)
+            for (int i = 0; i < savedBodys.Count; i++)
             {
                 savedBodys[i].CheckUsedMob(str);
-                savedBodys[i].StartCoolTimeUI();
+                if(!dead)
+                   savedBodys[i].StartCoolTimeUI();
             }
         });
     }
