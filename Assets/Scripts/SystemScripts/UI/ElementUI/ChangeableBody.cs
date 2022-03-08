@@ -75,7 +75,7 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
             return;
         }
 
-        MonsterCollection.Instance.mobIdToSlot[bodyID].MarkAcqBody(false);
+        MonsterCollection.Instance.MarkAcqBodyFalse(bodyID);
         coolTimeUIPair.first.fillAmount = 0;
         coolTimeUIPair.second.gameObject.SetActive(false);
         bodyImg.sprite = MonsterCollection.Instance.notExistBodySpr;

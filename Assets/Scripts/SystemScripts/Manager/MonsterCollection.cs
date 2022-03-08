@@ -47,7 +47,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     {
         urmg = PlayerEnemyUnderstandingRateManager.Instance;
         //Water.PoolManager.CreatePool(trfAbleTxtPref, mobInfoUIPair.second, 2, "CanTrfMark");
-        
+
         mobInfoUIPair.second.GetComponent<GridLayoutGroup>().constraintCount = Mathf.Clamp(urmg.ChangableBodyList.Count / 3 + 1, 6, 10000);
         statIncrRatePerAssim.text = "[동화율 10%당 " + (SlimeGameManager.Instance.UpStatPercentage * 100f).ToString() + "%씩 스탯 상승]";
         changeBodySlots.ForEach(x => x.SetSlotNumber());
@@ -80,20 +80,20 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             }
             changeBodySlots.ForEach(x => x.Unregister());
         });
-        EventManager.StartListening("ChangeBody", (str, dead) => 
+        EventManager.StartListening("ChangeBody", (str, dead) =>
         {
             for (int i = 0; i < savedBodys.Count; i++)
             {
                 savedBodys[i].CheckUsedMob(str);
-                if(!dead)
-                   savedBodys[i].StartCoolTimeUI();
+                if (!dead)
+                    savedBodys[i].StartCoolTimeUI();
             }
         });
     }
 
     public void UpdateUnderstanding(string id)  //몹 동화율 정보 업뎃
-    { 
-        mobIdToSlot[id].UpdateAssimilationRate((float)urmg.PlayerEnemyUnderStandingRateDic[id]/urmg.MinBodyChangeUnderstandingRate);
+    {
+        mobIdToSlot[id].UpdateAssimilationRate((float)urmg.PlayerEnemyUnderStandingRateDic[id] / urmg.MinBodyChangeUnderstandingRate);
     }
 
     public void AllUpdateUnderstanding()   //모든 몹 동화율 정보 업뎃
@@ -138,6 +138,14 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         if (mobIdToSlot.ContainsKey(id)) return mobIdToSlot[id].BodyData;
         else if (id == Global.OriginBodyID) return defaultSlimeBodyData;
         else return new ChangeBodyData();
+    }
+
+    public void MarkAcqBodyFalse(string id)  //도감에서 변신가능 표시 끔
+    {
+        if(mobIdToSlot.ContainsKey(id))
+        {
+            mobIdToSlot[id].MarkAcqBody(false);
+        }
     }
 
     #region Detail Stat

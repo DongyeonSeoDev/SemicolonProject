@@ -96,9 +96,9 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
     {
         if(energeBarAndEff.first.activeSelf)
         {
-            //float rate = 0f
-            //energeFill.fillAmount = rate;
-            //energeEffMask.localScale = new Vector3(orgEnergeEffMaskScl.x * rate,orgEnergeEffMaskScl.y,orgEnergeEffMaskScl.z);
+            float rate = Global.CurrentPlayer.CurrentEnergy / Global.CurrentPlayer.MaxEnergy;
+            energeFill.fillAmount = rate;
+            energeEffMask.localScale = new Vector3(orgEnergeEffMaskScl.x * rate,orgEnergeEffMaskScl.y,orgEnergeEffMaskScl.z);
         }
     }
 }
