@@ -68,11 +68,13 @@ public class PlayerState : MonoBehaviour
     }
     private void OnEnable()
     {
-        EventManager.StartListening("PlayerDead", PlayerDead);
+        EventManager.StartListening("PlayerDead", PlayerReset);
+        EventManager.StartListening("ChangeBody", PlayerReset);
     }
     private void OnDisable()
     {
-        EventManager.StopListening("PlayerDead", PlayerDead);
+        EventManager.StopListening("PlayerDead", PlayerReset);
+        EventManager.StopListening("ChangeBody", PlayerReset);
     }
 
     void Update()
@@ -124,7 +126,7 @@ public class PlayerState : MonoBehaviour
             lastPlayerMovingPoint = State.MovingState.down;
         }
     }
-    private void PlayerDead()
+    private void PlayerReset()
     {
         bodySlapping = false;
         isKnockBack = false;
