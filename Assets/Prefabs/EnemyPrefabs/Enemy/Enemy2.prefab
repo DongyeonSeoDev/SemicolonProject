@@ -178,6 +178,7 @@ GameObject:
   - component: {fileID: -8995185503151190707}
   - component: {fileID: 3351713311786356778}
   - component: {fileID: 3351713311786356777}
+  - component: {fileID: 5319378484579225603}
   m_Layer: 7
   m_Name: Enemy2
   m_TagString: Untagged
@@ -338,6 +339,19 @@ MonoBehaviour:
   hpBarFillImage: {fileID: 2029326397634872474}
   hpBar: {fileID: 2029326398027098998}
   enemyAttackCheck: {fileID: 0}
+--- !u!114 &5319378484579225603
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3351713311786356781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ad308a1d6eb99347b6b15b3a403cefe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addAngle: 10
 --- !u!1001 &688433718241700482
 PrefabInstance:
   m_ObjectHideFlags: 0
