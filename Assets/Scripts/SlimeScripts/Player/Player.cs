@@ -172,7 +172,7 @@ public class Player : MonoBehaviour
 
         targetEnemy.GetDamage(damage.Item1, damage.Item2, isKnockBack);
     }
-    private (int, bool) CriticalCheck(int damage)
+    public (int, bool) CriticalCheck(int damage)
     {
         int n_damage = damage;
         bool isCritical = false;
