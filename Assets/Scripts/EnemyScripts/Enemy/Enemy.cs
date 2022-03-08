@@ -32,6 +32,10 @@ namespace Enemy
         private void Start()
         {
             EventManager.StartListening("PlayerDead", EnemyDataReset);
+            if(enemyData.eEnemyController == EnemyController.PLAYER)
+            {
+                EventManager.StartListening("StartSkill0", () => enemyData.isAttack = true);
+            }
 
             playerInput = SlimeGameManager.Instance.Player.GetComponent<PlayerInput>();
         }
@@ -86,12 +90,6 @@ namespace Enemy
                 {
                     sr.flipX = false;
                 }
-            }
-
-            if (enemyData.eEnemyController == EnemyController.PLAYER && playerInput.IsShoot)
-            {
-                playerInput.IsShoot = false;
-                enemyData.isAttack = true;
             }
 
             lastPositionX = transform.position.x;

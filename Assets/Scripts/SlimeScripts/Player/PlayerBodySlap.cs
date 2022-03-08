@@ -63,18 +63,25 @@ public class PlayerBodySlap : PlayerSkill
         EventManager.StartListening("BodyPointCrash", BodyPointCrash);
         EventManager.StartListening("PlayerDead", StopBodySlap);
     }
+    public override void OnDisable()
+    {
+        base.OnDisable();
+
+        EventManager.StopListening("BodyPointCrash", BodyPointCrash);
+        EventManager.StopListening("PlayerDead", StopBodySlap);
+    }
     public override void Update()
     {
         base.Update();
 
-        if (playerState.BodySlapping && !bodySlapStart && canBodySlap)
-        {
-            DoSkill();
-        }
-        else if (!canBodySlap)
-        {
-            playerState.BodySlapping = false;
-        }
+        //if (playerState.BodySlapping && !bodySlapStart && canBodySlap)
+        //{
+        //    DoSkill();
+        //}
+        //else if (!canBodySlap)
+        //{
+        //    playerState.BodySlapping = false;
+        //}
 
         CheckBodySlapTime();
         CheckStopBodySlapTime();
@@ -88,27 +95,28 @@ public class PlayerBodySlap : PlayerSkill
     }
     public override void DoSkill()
     {
-        bodySlapStart = true;
+        base.DoSkill();
 
-        bodySlapMoveVec = playerInput.LastMoveVector;
+        if (canBodySlap)
+        {
+            playerState.BodySlapping = true;
+            bodySlapStart = true;
 
-        currentBodySlapTime = bodySlapTime;
+            bodySlapMoveVec = playerInput.LastMoveVector;
 
-        moveOriginPos = transform.position;
-        moveTargetPos = moveOriginPos + bodySlapTime * bodySlapMoveSpeed * bodySlapMoveVec;
-        moveTargetPos = SlimeGameManager.Instance.PosCantCrossWall(canCrashLayer, moveOriginPos, moveTargetPos);
+            currentBodySlapTime = bodySlapTime;
 
-        currentBodySlapTime = Vector2.Distance(moveOriginPos, moveTargetPos) / bodySlapMoveSpeed;
+            moveOriginPos = transform.position;
+            moveTargetPos = moveOriginPos + bodySlapTime * bodySlapMoveSpeed * bodySlapMoveVec;
+            moveTargetPos = SlimeGameManager.Instance.PosCantCrossWall(canCrashLayer, moveOriginPos, moveTargetPos);
 
-        EventManager.TriggerEvent("PlayerBodySlap", bodySlapTime);
+            currentBodySlapTime = Vector2.Distance(moveOriginPos, moveTargetPos) / bodySlapMoveSpeed;
 
-        bodySlapTimer = 0f;
-        SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = skillDelay;
-    }
-    private void OnDisable()
-    {
-        EventManager.StopListening("BodyPointCrash", BodyPointCrash);
-        EventManager.StopListening("PlayerDead", StopBodySlap);
+            EventManager.TriggerEvent("PlayerBodySlap", bodySlapTime);
+
+            bodySlapTimer = 0f;
+            SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = skillDelay;
+        }
     }
     private void BodyPointCrash(GameObject targetObject) // BodyPoint가 특정 오브젝트와 충돌했을 때 호출
     {
@@ -143,7 +151,6 @@ public class PlayerBodySlap : PlayerSkill
     private void StopBodySlap()
     {
         stopBodySlapTimer = 0f;
-        SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = skillDelay;
 
         canBodySlap = false;
         bodySlapStart = false;
