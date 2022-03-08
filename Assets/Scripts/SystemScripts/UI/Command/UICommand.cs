@@ -37,7 +37,10 @@ public class DefaultAttackUICommand : UICommand
         else
         {
             if (coolText.gameObject.activeSelf)
+            {
                 coolText.gameObject.SetActive(false);
+                coolFill.fillAmount = 0;
+            }
         }
     }
 }
@@ -60,7 +63,10 @@ public class SpecialAttackUICommand : UICommand
         else
         {
             if (coolText.gameObject.activeSelf)
+            {
                 coolText.gameObject.SetActive(false);
+                coolFill.fillAmount = 0;
+            }
         }
     }
 }
@@ -83,7 +89,10 @@ public class DrainUICommand : UICommand
         else
         {
             if (coolText.gameObject.activeSelf)
+            {
                 coolText.gameObject.SetActive(false);
+                coolFill.fillAmount = 0;
+            }
         }
     }
 }
