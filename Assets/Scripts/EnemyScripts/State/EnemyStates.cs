@@ -84,6 +84,8 @@ namespace Enemy
 
         protected override void Start()
         {
+            enemyData.isAttacking = true;
+
             if (enemyData.isUseDelay)
             {
                 isDelay = enemyData.IsAttackDelay();
@@ -146,10 +148,15 @@ namespace Enemy
             }
 
             enemyData.enemyAnimator.ResetTrigger(enemyData.hashAttack);
+
+            enemyData.isAttacking = false;
         }
 
         private void SpriteFlipCheck()
         {
+            enemyData.enemyRigidbody2D.velocity = Vector2.zero;
+            enemyData.enemyRigidbody2D.angularVelocity = 0f;
+
             if (enemyData.eEnemyController == EnemyController.AI)
             {
                 if (enemyData.isRotate)
@@ -170,6 +177,33 @@ namespace Enemy
                         enemyData.enemySpriteRenderer.flipX = true;
                     }
                     else if (enemyData.enemyObject.transform.position.x < enemyData.PlayerObject.transform.position.x)
+                    {
+                        enemyData.enemySpriteRenderer.flipX = false;
+                    }
+                }
+            }
+            else if (enemyData.eEnemyController == EnemyController.PLAYER)
+            {
+                float mousePositionX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
+
+                if (enemyData.isRotate)
+                {
+                    if (enemyData.enemyObject.transform.position.x > mousePositionX)
+                    {
+                        enemyData.enemyObject.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                    }
+                    else if (enemyData.enemyObject.transform.position.x < mousePositionX)
+                    {
+                        enemyData.enemyObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                    }
+                }
+                else
+                {
+                    if (enemyData.enemyObject.transform.position.x > mousePositionX)
+                    {
+                        enemyData.enemySpriteRenderer.flipX = true;
+                    }
+                    else if (enemyData.enemyObject.transform.position.x < mousePositionX)
                     {
                         enemyData.enemySpriteRenderer.flipX = false;
                     }

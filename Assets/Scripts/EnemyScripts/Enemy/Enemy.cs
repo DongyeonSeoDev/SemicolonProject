@@ -69,26 +69,29 @@ namespace Enemy
                 currentState = currentState.Process();
             }
 
-            if (enemyData.isRotate)
+            if (!enemyData.isUseAttacking || !enemyData.isAttacking)
             {
-                if (lastPositionX > transform.position.x)
+                if (enemyData.isRotate)
                 {
-                    transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                    if (lastPositionX > transform.position.x)
+                    {
+                        transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                    }
+                    else if (lastPositionX < transform.position.x)
+                    {
+                        transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                    }
                 }
-                else if (lastPositionX < transform.position.x)
+                else
                 {
-                    transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-                }
-            }
-            else
-            {
-                if (lastPositionX > transform.position.x)
-                {
-                    sr.flipX = true;
-                }
-                else if (lastPositionX < transform.position.x)
-                {
-                    sr.flipX = false;
+                    if (lastPositionX > transform.position.x)
+                    {
+                        sr.flipX = true;
+                    }
+                    else if (lastPositionX < transform.position.x)
+                    {
+                        sr.flipX = false;
+                    }
                 }
             }
 

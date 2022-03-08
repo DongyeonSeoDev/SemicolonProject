@@ -50,7 +50,7 @@ namespace Enemy
             this.enemyData = enemyData;
             this.positionCheckData = positionCheckData;
 
-            enemyRunAwayCommand = new EnemyFollowPlayerCommand(enemyData.enemyObject.transform, enemyData.PlayerObject.transform, enemyData.enemyRigidbody2D, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, true);
+            enemyRunAwayCommand = new EnemyFollowPlayerCommand(enemyData.enemyObject.transform, enemyData.PlayerObject.transform, enemyData.enemyRigidbody2D, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, true, positionCheckData);
 
             currentMoveTime = 0f;
         }
@@ -99,6 +99,7 @@ namespace Enemy
         private Transform enemyObject;
         private Transform followObject;
         private Rigidbody2D rigid;
+        private EnemyPositionCheckData positionCheckData;
 
         private float followSpeed;
         private float followDistance;
@@ -107,7 +108,11 @@ namespace Enemy
         private Vector3 targetPosition;
         private float angle;
 
-        public EnemyFollowPlayerCommand(Transform enemyObject, Transform followObject, Rigidbody2D rigid, float followSpeed, float followDistance, bool isLongDistanceAttack)
+        private float currentTime = 0f;
+        private float angleChangeTime = 1f;
+        private float addAngle = 0;
+
+        public EnemyFollowPlayerCommand(Transform enemyObject, Transform followObject, Rigidbody2D rigid, float followSpeed, float followDistance, bool isLongDistanceAttack, EnemyPositionCheckData positionCheckData = null)
         {
             this.enemyObject = enemyObject;
             this.followObject = followObject;
@@ -116,6 +121,10 @@ namespace Enemy
             this.followSpeed = followSpeed;
             this.followDistance = followDistance;
             this.isLongDistanceAttack = isLongDistanceAttack;
+
+            this.positionCheckData = positionCheckData;
+
+            currentTime = 0;
         }
 
         public override void Execute()
@@ -142,16 +151,33 @@ namespace Enemy
             if (isLongDistanceAttack)
             {
                 // 이동
-                targetPosition = enemyObject.transform.position - followObject.transform.position;
+                currentTime -= Time.deltaTime;
 
-                angle = Mathf.Atan2(targetPosition.x, targetPosition.y) * Mathf.Rad2Deg + 90f;
+                if (positionCheckData != null && positionCheckData.isWall)
+                {
+                    currentTime = 0.5f;
+                    targetPosition = positionCheckData.oppositeDirectionWall * followSpeed;
+                    positionCheckData.isWall = false;
+                }
+                else if (currentTime <= 0)
+                {
+                    targetPosition = enemyObject.transform.position - followObject.transform.position;
 
-                targetPosition.x = followObject.transform.position.x + (followDistance * Mathf.Cos(angle * Mathf.Deg2Rad) * -1f);
-                targetPosition.y = followObject.transform.position.y + (followDistance * Mathf.Sin(angle * Mathf.Deg2Rad));
-                targetPosition.z = followObject.transform.position.z;
+                    angle = Mathf.Atan2(targetPosition.x, targetPosition.y) * Mathf.Rad2Deg + 90f;
 
-                targetPosition = (targetPosition - enemyObject.position).normalized;
-                targetPosition *= followSpeed;
+                    addAngle = Random.Range(-60f, 60f);
+                    currentTime = angleChangeTime;
+
+                    angle = (angle + addAngle) % 360;
+                    Debug.Log("작동" + angle);
+
+                    targetPosition.x = followObject.transform.position.x + (followDistance * Mathf.Cos(angle * Mathf.Deg2Rad) * -1f);
+                    targetPosition.y = followObject.transform.position.y + (followDistance * Mathf.Sin(angle * Mathf.Deg2Rad));
+                    targetPosition.z = followObject.transform.position.z;
+
+                    targetPosition = (targetPosition - enemyObject.position).normalized;
+                    targetPosition *= followSpeed;
+                }
             }
             else
             {

@@ -73,6 +73,7 @@ namespace Enemy
         public float isSeePlayerDistance = 5f;
         public float isAttackPlayerDistance = 2f;
         public float isMinAttackPlayerDistance = 5f;
+        public float isRunAwayDistance = 7f;
         public float isMaxAttackPlayerDistance = 8f;
         public float attackDelay = 1f;
         public float damageDelay = 0.1f;
@@ -87,11 +88,14 @@ namespace Enemy
         public bool isEndAttackAnimation = false;
         public bool isAttackCommand = false;
         public bool isLongDistanceAttack = false;
+        public bool isRunAway = false;
         public bool isEnemyMove = false;
         public bool isRotate = false;
         public bool isKnockBack = false;
         public bool isCurrentAttackTime = false;
         public bool isUseDelay = false;
+        public bool isAttacking = false;
+        public bool isUseAttacking = false;
 
         public int attackDamage = 10;
         public int damagedValue;
@@ -114,6 +118,11 @@ namespace Enemy
             {
                 float distance = Vector3.Distance(enemyObject.transform.position, PlayerObject.transform.position);
 
+                if (isRunAway)
+                {
+                    return isRunAwayDistance <= distance && distance <= isMaxAttackPlayerDistance;
+                }
+
                 return isMinAttackPlayerDistance <= distance && distance <= isMaxAttackPlayerDistance;
             }
             else
@@ -128,7 +137,21 @@ namespace Enemy
             {
                 float distance = Vector3.Distance(enemyObject.transform.position, PlayerObject.transform.position);
 
-                return isMinAttackPlayerDistance > distance;
+                if (isRunAway)
+                {
+                    if (isRunAwayDistance <= distance)
+                    {
+                        isRunAway = false;
+                    }
+
+                    return isRunAway;
+                }
+                else if (isMinAttackPlayerDistance > distance)
+                {
+                    isRunAway = true;
+
+                    return true;
+                }
             }
 
             return false;
