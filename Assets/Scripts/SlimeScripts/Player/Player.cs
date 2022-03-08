@@ -108,7 +108,7 @@ public class Player : MonoBehaviour
     }
     private void UpEnergy()
     {
-        currentEnergy += Time.fixedDeltaTime * energyRegenSpeed;
+        currentEnergy += Time.deltaTime * energyRegenSpeed;
 
         if (currentEnergy >= maxEnergy)
         {
