@@ -165,6 +165,7 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
             }
             else
             {
+                EventManager.TriggerEvent("TimePause");
                 UIManager.Instance.OnUIInteract(UIType.CHANGEABLEMOBLIST, true);
             }
             MonsterCollection.Instance.AddSavedBody(objId);
