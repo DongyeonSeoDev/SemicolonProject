@@ -138,6 +138,8 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             {
                 player.PlayerStat.additionalEternalStat -= pasteBodyAdditionalStat;
 
+                player.CurrentHp = (int)(player.PlayerStat.MaxHp * hpPercentage);
+
                 pasteBodyAdditionalStat = new EternalStat();
 
                 SetCanBodyChangeFalse();

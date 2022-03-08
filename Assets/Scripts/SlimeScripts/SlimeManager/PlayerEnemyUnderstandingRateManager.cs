@@ -80,17 +80,17 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
         {
             // x.bodyScript = x.body.GetComponent<Enemy.Enemy>();
             changableBodyDict.Add(x.bodyId.ToString(), (x.body, x.additionalBodyStat));
-            playerEnemyUnderStandingRateDict .Add(x.bodyId.ToString(), 100);
+            playerEnemyUnderStandingRateDict .Add(x.bodyId.ToString(), 120);
 
             // Debug.Log(enemyId);
         });
 
-        EventManager.StartListening("PlayerDead", ResetUnderstandingRate);
+        EventManager.StartListening("PlayerDead", ResetDicts);
         EventManager.StartListening("PlayerBodySet", MountBody);
     }
     private void OnDisable()
     {
-        EventManager.StopListening("PlayerDead", ResetUnderstandingRate);
+        EventManager.StopListening("PlayerDead", ResetDicts);
         EventManager.StopListening("PlayerBodySet", MountBody);
     }
     public void SetMountingPercentageDict(string key, float value) 
@@ -144,12 +144,14 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
             return 0;
         }
     }
-    public void ResetUnderstandingRate()
+    public void ResetDicts()
     {
         for (int i = 0; i < playerEnemyUnderStandingRateDict .Count; i++)
         {
             playerEnemyUnderStandingRateDict [changableBodyList[i].bodyId.ToString()] = 0;
         }
+
+        mountedObjList.Clear();
     }
     public bool CheckCanMountObj()
     {

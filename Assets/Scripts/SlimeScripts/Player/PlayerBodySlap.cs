@@ -99,6 +99,7 @@ public class PlayerBodySlap : PlayerSkill
 
         if (canBodySlap)
         {
+            canBodySlap = false;
             playerState.BodySlapping = true;
             bodySlapStart = true;
 

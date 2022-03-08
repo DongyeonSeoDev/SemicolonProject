@@ -120,7 +120,7 @@ namespace Enemy
                     {
                         if (enemy != null)
                         {
-                            enemy.GetDamage(0, true, false, 30f, 1f, positionCheckData.position);
+                            enemy.GetDamage(0, false, false, 30f, 1f, positionCheckData.position);
                         }
                     }
                 }
@@ -138,7 +138,11 @@ namespace Enemy
 
                 if (enemy != null && enemy != this.enemy)
                 {
-                    enemy.GetDamage(UnityEngine.Random.Range(attackDamage - 5, attackDamage + 6), true);
+                    (int, bool) damage;
+                    damage.Item1 = UnityEngine.Random.Range(SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage + 1);
+                    damage = SlimeGameManager.Instance.Player.CriticalCheck(damage.Item1);
+                    
+                    enemy.GetDamage(damage.Item1, damage.Item2);
                 }
             }
         }
