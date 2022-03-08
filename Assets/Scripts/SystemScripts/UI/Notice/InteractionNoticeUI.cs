@@ -35,12 +35,17 @@ public class InteractionNoticeUI : MonoBehaviour
         }
     }
 
-    private void Update()
+    //테스트 
+    public Canvas cv => UIManager.Instance.gameCanvases[2];
+
+    private void LateUpdate()
     {
         if (obj)
         {
             //transform.position = Util.WorldToScreenPoint(obj.transform.position + obj.itrUIOffset);
-            rectTr.anchoredPosition = RectTransformUtility.WorldToScreenPoint(Util.MainCam, obj.transform.position + obj.itrUIOffset);
+            //rectTr.anchoredPosition = RectTransformUtility.WorldToScreenPoint(Util.MainCam, obj.transform.position + obj.itrUIOffset); --> 이 경우에는 anchor를 left bottom으로
+
+            rectTr.anchoredPosition = Util.ScreenToWorldPosForScreenSpace(obj.transform.position + obj.itrUIOffset, Util.WorldCvs);
         }
     }
 
