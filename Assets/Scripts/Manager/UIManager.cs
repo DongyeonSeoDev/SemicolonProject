@@ -561,7 +561,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     public void SaveMonsterBody(string id) //변신 가능한 몬스터 저장하기
     {
         EventManager.TriggerEvent("PlayerBodySet", id, true);
-
+        MonsterCollection.Instance.IDToSave = id;
     }
 
     #region loading
