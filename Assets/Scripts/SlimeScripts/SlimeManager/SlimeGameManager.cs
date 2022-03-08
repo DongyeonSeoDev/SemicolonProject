@@ -39,6 +39,13 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
         set { currentPlayerBody = value; }
     }
 
+    private string currentBodyId = "origin";
+    public string CurrentBodyId
+    {
+        get { return currentBodyId; }
+        set { currentBodyId = value; }
+    }
+
     private EternalStat pasteBodyAdditionalStat = new EternalStat();
 
     private bool canBodyChange = true;
@@ -118,6 +125,13 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             return;
         }
 
+        if(bodyId == currentBodyId)
+        {
+            Debug.Log("이미 해당 Body로 변신중입니다.");
+
+            return;
+        }
+
         Player player = this.player;
 
         Enemy.Enemy enemy = null;
@@ -133,6 +147,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             Destroy(currentPlayerBody);
 
             newBody = Instantiate(originPlayerBody, player.transform);
+            currentBodyId = bodyId;
 
             if (pasteBodyAdditionalStat != null && !isDead)
             {
@@ -167,6 +182,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             Destroy(currentPlayerBody);
 
             (GameObject, EternalStat) newBodyData = playerEnemyUnderstandingRateManager.ChangalbeBodyDict[bodyId];
+            currentBodyId = bodyId;
 
             int upNewBodyStat = ((playerEnemyUnderstandingRateManager.GetUnderstandingRate(bodyId)
             - playerEnemyUnderstandingRateManager.MinBodyChangeUnderstandingRate) / 10);
