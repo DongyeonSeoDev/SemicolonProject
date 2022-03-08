@@ -190,7 +190,8 @@ public partial class UIManager : MonoSingleton<UIManager>
         EventManager.StartListening("TimePause", () => Time.timeScale = 0 );
         EventManager.StartListening("TimeResume", () => Time.timeScale = 1);
         EventManager.StartListening("StageClear", () =>InsertNoticeQueue("Stage Clear", clearNoticeMsgVGrd, 90));
-        EventManager.StartListening("ChangeBody", (str, dead) => { if(!dead) InsertNoticeQueue(MonsterCollection.Instance.mobIdToSlot[str].BodyData.bodyName + "(으)로 변신하였습니다"); });  
+        EventManager.StartListening("ChangeBody", (str, dead) => { if(!dead) InsertNoticeQueue(MonsterCollection.Instance.mobIdToSlot[str].BodyData.bodyName + "(으)로 변신하였습니다"); });
+        //EventManager.StartListening("StartNextStage", stageName => );  스테이지 이름 띄우기
     }
 
     private void Respawn(Vector2 unusedValue) => OnUIInteract(UIType.DEATH, true);
