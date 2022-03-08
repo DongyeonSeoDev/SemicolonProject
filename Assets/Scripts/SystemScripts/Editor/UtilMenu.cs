@@ -54,6 +54,14 @@ namespace Water
             });
         }
 
+        [MenuItem("Resource Manage/Data/Set Stage Prefab")]
+        static void SetStagePrefab()
+        {
+            StageDataSO[] datas = Resources.LoadAll<StageDataSO>("Stage/SO/Stage1/");
+            foreach (StageDataSO data in datas)
+                data.SetPrefab();
+        }
+
         [MenuItem("File/Delete/SaveFile")]
         static void DeleteSaveFile()
         {

@@ -915,7 +915,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 233731043}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -3.37, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1403849591}
@@ -50031,9 +50031,10 @@ MonoBehaviour:
   startStageClearState: 1
   startStageID: Stage1-1
   respawnPos: {x: 0, y: 0}
-  openDoorSpr: {fileID: -7341407202210888751, guid: 03b2cb25aeebd414fbde96a1c2ebdd0f, type: 3}
-  closeDoorSpr: {fileID: 6623719234781301212, guid: 03b2cb25aeebd414fbde96a1c2ebdd0f, type: 3}
+  openDoorSpr: {fileID: -2195051911085196302, guid: 22f325c1d6cb4e544b3d8cdfd3cab170, type: 3}
+  closeDoorSpr: {fileID: 5410233927699993740, guid: 22f325c1d6cb4e544b3d8cdfd3cab170, type: 3}
   stageParent: {fileID: 6659591736315830725}
+  stageSOFolderName: Stage1
 --- !u!4 &6659591736369389396
 Transform:
   m_ObjectHideFlags: 0

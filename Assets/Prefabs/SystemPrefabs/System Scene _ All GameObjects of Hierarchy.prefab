@@ -10832,8 +10832,8 @@ MonoBehaviour:
   startStageClearState: 1
   startStageID: Stage1-1
   respawnPos: {x: 0, y: 0}
-  openDoorSpr: {fileID: -7341407202210888751, guid: 03b2cb25aeebd414fbde96a1c2ebdd0f, type: 3}
-  closeDoorSpr: {fileID: 6623719234781301212, guid: 03b2cb25aeebd414fbde96a1c2ebdd0f, type: 3}
+  openDoorSpr: {fileID: -2195051911085196302, guid: 22f325c1d6cb4e544b3d8cdfd3cab170, type: 3}
+  closeDoorSpr: {fileID: 5410233927699993740, guid: 22f325c1d6cb4e544b3d8cdfd3cab170, type: 3}
   stageParent: {fileID: 735310210312420482}
 --- !u!1 &735310211669288267
 GameObject:

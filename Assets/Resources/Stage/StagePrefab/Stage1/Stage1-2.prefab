@@ -88,6 +88,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyCount: 0
   camStageCollider: {fileID: 8648534772182156580}
+  playerSpawnPoint: {fileID: 998791116210713733}
   autoInsertStageDoors: 0
   stageDoors:
   - {fileID: 1659494001217920397}
@@ -9929,7 +9930,7 @@ GameObject:
   m_Layer: 0
   m_Name: SpawnPoint
   m_TagString: Untagged
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -10099,7 +10100,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4586074380361857248, guid: 913d8b5e292ca3f4b9cdf9e9ace1a6f4, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.5
+      value: -4.5
       objectReference: {fileID: 0}
     - target: {fileID: 4586074380361857248, guid: 913d8b5e292ca3f4b9cdf9e9ace1a6f4, type: 3}
       propertyPath: m_LocalPosition.y
@@ -10137,6 +10138,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8632448655464481713, guid: 913d8b5e292ca3f4b9cdf9e9ace1a6f4, type: 3}
+      propertyPath: _itemData
+      value: 
+      objectReference: {fileID: 11400000, guid: f4122a4ced4ee8349ae86eb5adef071a, type: 2}
     - target: {fileID: 8702471488895736902, guid: 913d8b5e292ca3f4b9cdf9e9ace1a6f4, type: 3}
       propertyPath: m_Name
       value: PickItemSample
