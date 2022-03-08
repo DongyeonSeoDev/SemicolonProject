@@ -5,6 +5,8 @@ public static partial class Global
 {
     public const string saveFileName_1 = "SaveFile1";
 
+    public const string OriginBodyID = "origin";
+
     public const int playerLayer = 3;
 
     public const float cameraPlaneDistance = 20f;

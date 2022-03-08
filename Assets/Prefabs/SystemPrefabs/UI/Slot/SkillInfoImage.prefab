@@ -202,6 +202,7 @@ MonoBehaviour:
   nifc: {fileID: 4870787070711797208}
   skillBtn: {fileID: 4870787070711797191}
   cvsg: {fileID: 4870787070711797190}
+  skillEx: 
   skillType: 0
   ccsf: {fileID: 6023767009730862125}
 --- !u!1 &5354620198144440413
@@ -626,7 +627,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6603774, g: 0.6603774, b: 0.6603774, a: 0.6666667}
+  m_Color: {r: 0.27450982, g: 0.27450982, b: 0.27450982, a: 0.6666667}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

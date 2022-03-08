@@ -29,7 +29,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     #endregion
 
     [SerializeField] private ChangeBodyData defaultSlimeBodyData;
-    [SerializeField] private string defaultSlimeID;
+
+    public string IDToSave { get; set; }  //저장할 몬스터 몸 아이디 일시 저장
 
     //몹 저장 슬롯 꽉 찼을 때 제거할 슬롯 선택창의 슬롯들
     [Space(15)]
@@ -135,7 +136,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     public ChangeBodyData GetMonsterInfo(string id)
     {
         if (mobIdToSlot.ContainsKey(id)) return mobIdToSlot[id].BodyData;
-        else if (id == defaultSlimeID) return defaultSlimeBodyData;
+        else if (id == Global.OriginBodyID) return defaultSlimeBodyData;
         else return new ChangeBodyData();
     }
 
@@ -215,6 +216,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         }
 
         EffectManager.Instance.OnTopRightBtnEffect(UIType.MONSTER_COLLECTION, true);
+        UIManager.Instance.RequestLeftBottomMsg(GetMonsterInfo(id).bodyName + "(를)을 흡수하였습니다.");
         mobIdToSlot[id].MarkAcqBody(true);
     }
 

@@ -285,6 +285,7 @@ MonoBehaviour:
     first: {fileID: 1331222542293177615}
     second: {fileID: 1331222542168632598}
   keyCodeTxt: {fileID: 1331222541642572800}
+  customContentsSizeFilter: {fileID: 0}
   cvsg: {fileID: 1331222542215954925}
 --- !u!1 &1331222542293177609
 GameObject:
@@ -344,7 +345,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.6603774, g: 0.6603774, b: 0.6603774, a: 0.6666667}
+  m_Color: {r: 0.3764706, g: 0.3764706, b: 0.3764706, a: 0.6666667}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

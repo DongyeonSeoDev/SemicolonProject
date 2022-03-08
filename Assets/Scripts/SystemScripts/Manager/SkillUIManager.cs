@@ -21,9 +21,16 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
     [SerializeField] private List<Pair<Enemy.EnemyType, SkillInfo[]>> monsterSkillsList;
     private Dictionary<string, SkillInfo[]> monsterSkillsDic = new Dictionary<string, SkillInfo[]>();
 
+    //에너지바
+    public Pair<GameObject, GameObject> energeBarAndEff;
+    public Transform energeEffMask;
+    public Image energeFill;
+    private Vector3 orgEnergeEffMaskScl;
+
     private void Awake()
     {
         skillInfoUIArr = skillImgUIParent.GetComponentsInChildren<SkillInfoImage>();
+        orgEnergeEffMaskScl = energeEffMask.localScale;
 
         monsterSkillsDic.Add(playerOriginBodySkills.first, playerOriginBodySkills.second);
         for(int i= 0; i < monsterSkillsList.Count; i++)
@@ -38,6 +45,7 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
         EventManager.StartListening("ChangeBody", (str, dead) =>
         {
             if(dead){} //bool타입인걸 알리기위한
+            skillInfoUIArr.ForEach(x => x.Unregister());
             SkillInfo[] skill = monsterSkillsDic[str];
             foreach(SkillInfo skillInfo in skill)
             {
@@ -54,6 +62,11 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
                         break;
                 }
             }
+
+            bool org = str == Global.OriginBodyID;
+
+            energeBarAndEff.first.SetActive(org);
+            energeBarAndEff.second.SetActive(org); 
         });
     }
 
@@ -72,5 +85,20 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
         skillDetailImgNameEx.first.sprite = spr;
         skillDetailImgNameEx.second.text = sName;
         skillDetailImgNameEx.third.text = ex;
+    }
+
+    private void LateUpdate()
+    {
+        UpdateEnergeBarUI();
+    }
+
+    private void UpdateEnergeBarUI()
+    {
+        if(energeBarAndEff.first.activeSelf)
+        {
+            //float rate = 0f
+            //energeFill.fillAmount = rate;
+            //energeEffMask.localScale = new Vector3(orgEnergeEffMaskScl.x * rate,orgEnergeEffMaskScl.y,orgEnergeEffMaskScl.z);
+        }
     }
 }
