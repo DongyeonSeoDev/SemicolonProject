@@ -17,6 +17,8 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
 
     public CustomContentsSizeFilter customContentsSizeFilter;
 
+    public GameObject outlineObj;
+
     #region timer
 
     [SerializeField] CanvasGroup cvsg;
@@ -38,6 +40,7 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
         if (slotKey == KeyAction.CHANGE_SLIME)
         {
             Register("origin");
+            outlineObj.SetActive(true);
         }
         else
         {
@@ -49,7 +52,12 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
     {
         if (Registered)
         {
-            //outline같은걸로 표시 필요
+            outlineObj.SetActive(id == bodyID);
+        }
+        else
+        {
+            if (outlineObj.activeSelf)
+                outlineObj.SetActive(false);
         }
     }
 
@@ -64,6 +72,11 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
         bodyID = id;
         bodyImg.sprite = Global.GetMonsterBodySprite(id);
         cvsg.alpha = 1;
+
+        if(SlimeGameManager.Instance.BodyChangeTimer > 0)
+        {
+            StartCoolTimeUI(SlimeGameManager.Instance.BodyChangeTimer);
+        }
     }
 
     public void Unregister()
@@ -83,12 +96,14 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
         cvsg.alpha = 0.4f;
     }
 
-    public void StartCoolTimeUI()
+    public void StartCoolTimeUI(float time = -1f)
     {
         if (string.IsNullOrEmpty(bodyID)) return;
 
+        if (time == -1f) time = CoolTime;
+
         //elapsed = 0f;
-        coolTimer = CoolTime;
+        coolTimer = time;
         isCoolTime = true;
         coolTimeUIPair.second.gameObject.SetActive(true);
     }
