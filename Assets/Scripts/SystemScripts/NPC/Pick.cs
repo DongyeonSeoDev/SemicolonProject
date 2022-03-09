@@ -12,6 +12,7 @@ public class Pick : InteractionObj
     public ItemSO itemData { get { return _itemData; } }
 
     private SpriteRenderer spr;
+    //private OutlineCtrl sprOutline;
 
     public FakeSpriteOutline fsOut;
     //protected int droppedCount = 1;
@@ -22,12 +23,14 @@ public class Pick : InteractionObj
         spr = GetComponent<SpriteRenderer>();
         spr.sprite = _itemData.GetSecondSprite();
         objName = _itemData.itemName;
+        //sprOutline = GetComponent<OutlineCtrl>();
     }
 
     private void Start()
     {
         //GameManager.Instance.pickList.Add(this);
         fsOut.gameObject.SetActive(false);
+        //sprOutline.SetOutlineIntensity(0);
     }
 
     public void FollowEffect(bool success = true)
@@ -53,6 +56,7 @@ public class Pick : InteractionObj
         base.SetInteractionUI(on);
 
         fsOut.gameObject.SetActive(on);
+        //sprOutline.SetOutlineIntensity(on?1:0);
     }
 
     public override void Interaction()
