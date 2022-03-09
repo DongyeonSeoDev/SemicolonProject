@@ -66,7 +66,7 @@ namespace Enemy
                 targetPosition = positionCheckData.oppositeDirectionWall * 5f;
                 enemyData.enemyRigidbody2D.velocity = targetPosition;
 
-                currentMoveTime = 1f;
+                currentMoveTime = 2f;
 
                 positionCheckData.isWall = false;
             }
@@ -83,7 +83,12 @@ namespace Enemy
 
                     enemyData.enemyRigidbody2D.velocity = targetPosition;
 
-                    currentMoveTime += 1f;
+                    currentMoveTime = 2f;
+                }
+                else if (currentMoveTime <= 1f)
+                {
+                    enemyData.enemyRigidbody2D.velocity = Vector2.zero;
+                    currentMoveTime -= Time.deltaTime;
                 }
                 else
                 {
