@@ -174,7 +174,6 @@ namespace Enemy
                     currentTime = angleChangeTime;
 
                     angle = (angle + addAngle) % 360;
-                    Debug.Log("작동" + angle);
 
                     targetPosition.x = followObject.transform.position.x + (followDistance * Mathf.Cos(angle * Mathf.Deg2Rad) * -1f);
                     targetPosition.y = followObject.transform.position.y + (followDistance * Mathf.Sin(angle * Mathf.Deg2Rad));
@@ -304,7 +303,7 @@ namespace Enemy
         }
     }
 
-    public class EnemyAttackPlayerCommand : EnemyCommand // 적으로 변신한 플레이어가 공격
+    public class EnemyAttackPlayerCommand : EnemyCommand
     {
         PlayerInput playerInput;
         Transform transform;

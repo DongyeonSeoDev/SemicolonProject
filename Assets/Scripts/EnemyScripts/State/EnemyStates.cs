@@ -79,77 +79,117 @@ namespace Enemy
     {
         private float currentTime;
         private bool isDelay = false;
+        private bool isNoAttack = false;
 
         public EnemyAttackState(EnemyData enemyData) : base(eState.ATTACK, enemyData) { }
 
         protected override void Start()
         {
-            enemyData.isAttacking = true;
-
-            if (enemyData.isUseDelay)
-            {
-                isDelay = enemyData.IsAttackDelay();
-            }
-
             if (enemyData.isEndAttackAnimation)
             {
                 enemyData.enemyAnimator.ResetTrigger(enemyData.hashEndAttack);
             }
 
-            if (!isDelay)
+            if (enemyData.eEnemyController == EnemyController.AI)
             {
-                enemyData.enemyAnimator.SetTrigger(enemyData.hashAttack);
+                enemyData.isAttacking = true;
+
+                if (enemyData.isUseDelay)
+                {
+                    isDelay = enemyData.IsAttackDelay();
+                }
+
+                if (!isDelay)
+                {
+                    enemyData.enemyAnimator.SetTrigger(enemyData.hashAttack);
+                }
+
+                currentTime = 0f;
+            }
+            else if (enemyData.eEnemyController == EnemyController.PLAYER)
+            {
+                if (SlimeGameManager.Instance.CurrentSkillDelayTimer[0] <= 0)
+                {
+                    SlimeGameManager.Instance.SetSkillDelay(0, 1f);
+                    SlimeGameManager.Instance.CurrentSkillDelayTimer[0] = SlimeGameManager.Instance.SkillDelays[0];
+
+                    enemyData.enemyAnimator.SetTrigger(enemyData.hashAttack);
+                }
+                else
+                {
+                    isNoAttack = true;
+                }
             }
 
-            currentTime = 0f;
             SpriteFlipCheck();
-
             base.Start();
         }
 
         protected override void Update()
         {
-            if (!isDelay)
+            if (enemyData.eEnemyController == EnemyController.AI)
             {
-                currentTime += Time.deltaTime;
+                if (!isDelay)
+                {
+                    currentTime += Time.deltaTime;
+                }
+                else
+                {
+                    isDelay = enemyData.IsAttackDelay();
+
+                    if (!isDelay)
+                    {
+                        enemyData.enemyAnimator.SetTrigger(enemyData.hashAttack);
+                        SpriteFlipCheck();
+                    }
+                }
+
+                if (currentTime >= enemyData.attackDelay)
+                {
+                    currentTime = 0f;
+
+                    SpriteFlipCheck();
+
+                    base.Update();
+                }
             }
             else
             {
-                isDelay = enemyData.IsAttackDelay();
-
-                if (!isDelay)
+                if (isNoAttack)
                 {
-                    enemyData.enemyAnimator.SetTrigger(enemyData.hashAttack);
-                    SpriteFlipCheck();
+                    base.Update();
+                }
+
+                if (SlimeGameManager.Instance.CurrentSkillDelayTimer[0] <= 0)
+                {
+                    base.Update();
                 }
             }
 
             if (enemyData.isDamaged)
             {
-                enemyData.IsAttackDelay(enemyData.attackDelay - currentTime);
+                if (enemyData.eEnemyController == EnemyController.AI)
+                {
+                    enemyData.IsAttackDelay(enemyData.attackDelay - currentTime);
+                }
+
                 ChangeState(new EnemyGetDamagedState(enemyData));
-            }
-
-            if (currentTime >= enemyData.attackDelay)
-            {
-                currentTime = 0f;
-
-                SpriteFlipCheck();
-
-                base.Update();
             }
         }
 
         protected override void End()
         {
-            if (enemyData.isEndAttackAnimation)
+            if (enemyData.eEnemyController == EnemyController.AI)
             {
-                enemyData.enemyAnimator.SetTrigger(enemyData.hashEndAttack);
-            }
+                if (enemyData.isEndAttackAnimation)
+                {
+                    enemyData.enemyAnimator.SetTrigger(enemyData.hashEndAttack);
+                }
 
-            enemyData.enemyAnimator.ResetTrigger(enemyData.hashAttack);
+                enemyData.enemyAnimator.ResetTrigger(enemyData.hashAttack);
 
-            enemyData.isAttacking = false;
+                enemyData.isAttacking = false;
+            } 
         }
 
         private void SpriteFlipCheck()

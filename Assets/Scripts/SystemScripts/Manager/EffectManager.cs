@@ -47,6 +47,7 @@ public class EffectManager : MonoSingleton<EffectManager>
 
     public DamageTextVG playerDamagedTextVG;
     public DamageTextVG enemyDamagedTextVG;
+    public DamageTextVG pickupPlantSucFaiVG;
 
     public AnimationCurve damageTxtScaleCurve;
     #endregion
@@ -128,9 +129,9 @@ public class EffectManager : MonoSingleton<EffectManager>
         tmp.transform.SetAsLastSibling();
 
         //tmp.transform.DOMoveY(2.5f, 0.8f).SetRelative();
-        tmp.transform.DOMove(tmp.transform.position + Global.damageTextMove, 0.8f);
-        tmp.transform.DOScale(!critical ? SVector3.zeroPointSeven : Vector3.one, 1f).SetEase(damageTxtScaleCurve);
-        tmp.DOColor(Color.clear, 1.1f).SetEase(damageTxtScaleCurve).OnComplete(() => tmp.gameObject.SetActive(false));
+        tmp.transform.DOMove(tmp.transform.position + Global.damageTextMove, 0.6f);
+        tmp.transform.DOScale(!critical ? SVector3.zeroPointSeven : Vector3.one, 0.8f).SetEase(damageTxtScaleCurve);
+        tmp.DOColor(Color.clear, 0.9f).SetEase(damageTxtScaleCurve).OnComplete(() => tmp.gameObject.SetActive(false));
     }
     public void OnDamaged(int damage, Vector2 pos, Vector3 scale, VertexGradient textColor)
     {
@@ -143,8 +144,24 @@ public class EffectManager : MonoSingleton<EffectManager>
         tmp.transform.SetAsLastSibling();
 
         //tmp.transform.DOMoveY(2.5f, 0.8f).SetRelative();
-        tmp.transform.DOMove(tmp.transform.position + Global.damageTextMove, 0.8f);
-        tmp.transform.DOScale(scale - SVector3.zeroPointThree, 1).SetEase(damageTxtScaleCurve);
-        tmp.DOColor(Color.clear, 1.1f).SetEase(damageTxtScaleCurve).OnComplete(() => tmp.gameObject.SetActive(false));
+        tmp.transform.DOMove(tmp.transform.position + Global.damageTextMove, 0.6f);
+        tmp.transform.DOScale(scale - SVector3.zeroPointThree, 0.8f).SetEase(damageTxtScaleCurve);
+        tmp.DOColor(Color.clear, 0.9f).SetEase(damageTxtScaleCurve).OnComplete(() => tmp.gameObject.SetActive(false));
+    }
+
+    public void OnWorldTextEffect(string msg, Vector2 pos, Vector3 scale, VertexGradient textColor)
+    {
+        TextMeshProUGUI tmp = PoolManager.GetItem<TextMeshProUGUI>("DamageTextEff");
+        tmp.color = Color.white;
+        tmp.transform.localScale = scale;
+        tmp.SetText(msg);
+        tmp.colorGradient = textColor;
+        tmp.transform.position = pos + Vector2.up;
+        tmp.transform.SetAsLastSibling();
+
+        //tmp.transform.DOMoveY(2.5f, 0.8f).SetRelative();
+        tmp.transform.DOMove(tmp.transform.position + Global.worldTxtMove, 0.75f);
+        tmp.transform.DOScale(SVector3.zeroPointSeven, 0.9f).SetEase(damageTxtScaleCurve);
+        tmp.DOColor(Color.clear, 1).SetEase(damageTxtScaleCurve).OnComplete(() => tmp.gameObject.SetActive(false));
     }
 }
