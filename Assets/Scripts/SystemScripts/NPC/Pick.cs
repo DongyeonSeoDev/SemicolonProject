@@ -78,7 +78,8 @@ public class Pick : InteractionObj
         {
             CallEffect("PickSuccessEff");
 
-            UIManager.Instance.RequestSystemMsg("채집에 성공하였습니다.", Util.Change255To1Color(114, 168, 255, 255));
+            //UIManager.Instance.RequestSystemMsg("채집에 성공하였습니다.", Util.Change255To1Color(114, 168, 255, 255));
+            EffectManager.Instance.OnWorldTextEffect("채집 성공", transform.position, Vector3.one, EffectManager.Instance.pickupPlantSucFaiVG.normal);
             Global.MonoActionTrigger(Global.PickupPlant, this);
         }
         else
@@ -86,7 +87,8 @@ public class Pick : InteractionObj
             CallEffect("PickFailEff");
 
             FollowEffect(false);
-            UIManager.Instance.RequestSystemMsg("채집에 실패하였습니다.", Util.Change255To1Color(123, 0, 226, 255));
+            EffectManager.Instance.OnWorldTextEffect("채집 실패", transform.position, Vector3.one, EffectManager.Instance.pickupPlantSucFaiVG.cri);
+            //UIManager.Instance.RequestSystemMsg("채집에 실패하였습니다.", Util.Change255To1Color(123, 0, 226, 255));
             gameObject.SetActive(false);
         }
     }

@@ -8,6 +8,11 @@ public class OutlineCtrl : ShaderCtrl  //아웃라인 적용될 스프라이트 옵젝에 이거 
     [SerializeField] private float outlineThickness = 3f;
     [SerializeField] private float outlineIntensity = 1f;
 
+    private void Awake()
+    {
+        matName = "Outline2DMat";
+    }
+
     public override void AdditionalInitSet()
     {
         newMat.SetColor("_OutlineColor", outlineHDRColor);
