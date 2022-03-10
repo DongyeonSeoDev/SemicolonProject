@@ -298,6 +298,10 @@ public partial class UIManager : MonoSingleton<UIManager>
                 if (gameUIList[(int)UIType.MONSTERINFO_DETAIL_ITEM].gameObject.activeSelf || gameUIList[(int)UIType.MONSTERINFO_DETAIL_STAT].gameObject.activeSelf)
                     return true;
                 break;
+            case UIType.CHANGEABLEMOBLIST:
+                if (!gameUIList[(int)UIType.CHANGEABLEMOBLIST].gameObject.activeSelf)
+                    Util.DelayFunc(() => EventManager.TriggerEvent("TimePause"), 0.1f);
+                break;
         }
         return false;
     }
@@ -367,6 +371,7 @@ public partial class UIManager : MonoSingleton<UIManager>
             case UIType.MONSTERINFO_DETAIL_ITEM:
                 MonsterCollection.Instance.DetailItem();
                 break;
+           
         }
     }
 

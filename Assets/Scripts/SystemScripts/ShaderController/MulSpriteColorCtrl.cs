@@ -22,12 +22,6 @@ public class MulSpriteColorCtrl : ShaderCtrl
         newMat.SetFloat("_Scale", scale);
     }
 
-    public void SetColor(Color hdrC)
-    {
-        InitSet();
-        newMat.SetColor("_Color", hdrC);
-    }
-
     public void SetSpeed(float speed)
     {
         InitSet();
