@@ -71,6 +71,13 @@ public enum SkillType
     NULL
 }
 
+public enum ApplyMatCompoType
+{
+    SPRITERENDERER,
+    IMAGE,
+    RAWIMAGE
+}
+
 
 public enum EventKeyCheck
 {
