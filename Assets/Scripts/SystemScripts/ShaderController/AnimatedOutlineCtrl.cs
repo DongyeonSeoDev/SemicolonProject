@@ -12,6 +12,12 @@ public class AnimatedOutlineCtrl : ShaderCtrl
     [SerializeField] private float speed = 5f;
     [SerializeField] private float scale = 8f;
 
+
+    private void Awake()
+    {
+        matName = "Outline2DAnimatedMat";
+    }
+
     public override void AdditionalInitSet()
     {
         newMat.SetColor("_OutlineColor", outlineHDRColor);
