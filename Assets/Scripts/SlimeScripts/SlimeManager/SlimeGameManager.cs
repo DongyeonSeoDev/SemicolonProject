@@ -274,13 +274,20 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
     }
     public void SetSkillDelay(int skillIdx, float delayTime)
     {
-        if (skillIdx == 0) // skillIdx가 0이면 그거슨 기본공격
+        try
         {
-            currentSkillDelay[skillIdx] = delayTime / player.PlayerStat.AttackSpeed;
+            if (skillIdx == 0) // skillIdx가 0이면 그거슨 기본공격
+            {
+                currentSkillDelay[skillIdx] = delayTime / player.PlayerStat.AttackSpeed;
+            }
+            else
+            {
+                currentSkillDelay[skillIdx] = delayTime;
+            }
         }
-        else
+        catch (Exception ex)
         {
-            currentSkillDelay[skillIdx] = delayTime;
+            Debug.LogException(ex);
         }
     }
     public Vector2 PosCantCrossWall(LayerMask crashableLayer, Vector2 startPos, Vector2 targetPos)

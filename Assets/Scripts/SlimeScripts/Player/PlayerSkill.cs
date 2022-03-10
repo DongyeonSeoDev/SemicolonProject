@@ -34,7 +34,7 @@ public abstract class PlayerSkill : PlayerAction
     }
     public virtual void DoSkill()
     {
-        SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = SlimeGameManager.Instance.SkillDelays[skillIdx];
+        
     }
     public virtual void WhenSkillDelayTimerZero()
     {
