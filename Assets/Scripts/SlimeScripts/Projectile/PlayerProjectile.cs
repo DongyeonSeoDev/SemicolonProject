@@ -21,6 +21,9 @@ public class PlayerProjectile : MonoBehaviour
     private float moveTime = 3f;
     private float moveTimer = 0f;
 
+    [SerializeField]
+    private float knockBackPower = 0f;
+
     private void Awake()
     {
         slimePoolManager = SlimePoolManager.Instance;
@@ -51,7 +54,7 @@ public class PlayerProjectile : MonoBehaviour
 
                 if (enemy != null)
                 {
-                    SlimeGameManager.Instance.Player.GiveDamage(enemy, SlimeGameManager.Instance.Player.PlayerStat.MinDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage);
+                    SlimeGameManager.Instance.Player.GiveDamage(enemy, SlimeGameManager.Instance.Player.PlayerStat.MinDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, 0f, knockBackPower, true);
                 }
             }
 

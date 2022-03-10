@@ -181,15 +181,14 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             return;
         }
 
-        if (playerEnemyUnderstandingRateManager.GetUnderstandingRate(bodyId) >= playerEnemyUnderstandingRateManager.MinBodyChangeUnderstandingRate)
+        if (playerEnemyUnderstandingRateManager.MountedObjList.Contains(bodyId))
         {
             Destroy(currentPlayerBody);
 
             (GameObject, EternalStat) newBodyData = playerEnemyUnderstandingRateManager.ChangalbeBodyDict[bodyId];
             currentBodyId = bodyId;
 
-            int upNewBodyStat = ((playerEnemyUnderstandingRateManager.GetUnderstandingRate(bodyId)
-            - playerEnemyUnderstandingRateManager.MinBodyChangeUnderstandingRate) / understadingRatePercentageWhenUpStat);
+            int upNewBodyStat = (playerEnemyUnderstandingRateManager.GetUnderstandingRate(bodyId) / understadingRatePercentageWhenUpStat);
 
             if (upNewBodyStat >= 1) // this code is "imsi" code that inserted "imsi" values.
             {
@@ -284,13 +283,13 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             currentSkillDelay[skillIdx] = delayTime;
         }
     }
-    public Vector2 PosCantCrossWall(LayerMask wallLayer, Vector2 startPos, Vector2 targetPos)
+    public Vector2 PosCantCrossWall(LayerMask crashableLayer, Vector2 startPos, Vector2 targetPos)
     {
-        RaycastHit2D hit = Physics2D.Raycast(startPos, (targetPos - startPos).normalized, Vector2.Distance(startPos, targetPos), wallLayer);
+        RaycastHit2D hit = Physics2D.Raycast(startPos, (targetPos - startPos).normalized, Vector2.Distance(startPos, targetPos), crashableLayer);
 
         if (hit)
         {
-            if (wallLayer.CompareGameObjectLayer(hit.collider.gameObject))
+            if (crashableLayer.CompareGameObjectLayer(hit.collider.gameObject))
             {
                 return hit.point - (targetPos - startPos).normalized * (Vector2.Distance(startPos, targetPos) / 10f);
             }

@@ -191,6 +191,7 @@ GameObject:
   - component: {fileID: 6840160282341942542}
   - component: {fileID: 6840160282341942541}
   - component: {fileID: 5860127214316570770}
+  - component: {fileID: 6030300000594730899}
   - component: {fileID: 1014413143}
   - component: {fileID: 1014413144}
   - component: {fileID: 1014413151}
@@ -199,6 +200,7 @@ GameObject:
   - component: {fileID: 5835559770882864823}
   - component: {fileID: 8968387448068834084}
   - component: {fileID: 176500872896431467}
+  - component: {fileID: 4331802093199943809}
   m_Layer: 3
   m_Name: SlimeBody
   m_TagString: Player
@@ -340,6 +342,23 @@ MonoBehaviour:
   moveToMiddleSpeed: 1
   moveToMiddleTime: 1
   isMiddlePoint: 1
+  edgeCollider2D: {fileID: 4331802093199943809}
+--- !u!114 &6030300000594730899
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6840160282341942530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8298103f916b95b4086d4737b269822e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bodyPoint: {fileID: 5860127214316570770}
+  whatIsWall:
+    serializedVersion: 2
+    m_Bits: 192
 --- !u!114 &1014413143
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -386,6 +405,9 @@ MonoBehaviour:
   canCrashLayer:
     serializedVersion: 2
     m_Bits: 192
+  whatIsEnemy:
+    serializedVersion: 2
+    m_Bits: 0
   bodySlapMoveVec: {x: 0, y: 0}
   damageMagnificationOfBodySlap: 2
   moveBackSpeed: 5
@@ -468,6 +490,35 @@ MonoBehaviour:
   whatIsCantCrossLayer:
     serializedVersion: 2
     m_Bits: 64
+--- !u!68 &4331802093199943809
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6840160282341942530}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: -0.5, y: 0}
+  - {x: 0.5, y: 0}
+  - {x: 0.5, y: 0}
+  - {x: 0.5, y: 0}
+  - {x: 0.5, y: 0}
+  - {x: 0.5, y: 0}
+  - {x: 0.5, y: 0}
+  - {x: 0.5, y: 0}
+  - {x: 0.5, y: 0}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0
 --- !u!1001 &252599340897420603
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -975,6 +1026,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9b97e39c54eac0442be1f0fc9e71b478, type: 3}
+--- !u!4 &4189251823079099214 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2719926800889116082, guid: 9b97e39c54eac0442be1f0fc9e71b478, type: 3}
+  m_PrefabInstance: {fileID: 2277740960270450428}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &7767920394982435845 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8381510225919103737, guid: 9b97e39c54eac0442be1f0fc9e71b478, type: 3}
@@ -986,11 +1042,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90539df1cd5704abcb25fec9f3f5f84b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &4189251823079099214 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2719926800889116082, guid: 9b97e39c54eac0442be1f0fc9e71b478, type: 3}
-  m_PrefabInstance: {fileID: 2277740960270450428}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2320309030034664642
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1426,14 +1477,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
---- !u!4 &5452748366477322726 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1531553962166875665, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-  m_PrefabInstance: {fileID: 6840160281678880759}
-  m_PrefabAsset: {fileID: 0}
 --- !u!50 &5452748366477322728 stripped
 Rigidbody2D:
   m_CorrespondingSourceObject: {fileID: 1531553962166875679, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
+  m_PrefabInstance: {fileID: 6840160281678880759}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &5452748366477322726 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1531553962166875665, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
   m_PrefabInstance: {fileID: 6840160281678880759}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6840160281823012931

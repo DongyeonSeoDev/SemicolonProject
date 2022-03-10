@@ -7,6 +7,7 @@ public class BodyPointCrashCheckCollider : MonoBehaviour
     [SerializeField]
     private BodyPoint bodyPoint = null; // Set this in Inspector
 
+
     [SerializeField]
     private LayerMask whatIsWall;
 
@@ -17,7 +18,10 @@ public class BodyPointCrashCheckCollider : MonoBehaviour
 
     void Update()
     {
-        transform.localPosition = Vector3.zero;
+        if (bodyPoint.GetComponent<MiddlePoint>() == null)
+        {
+            transform.localPosition = Vector3.zero;
+        }
     }
     private void OnDisable()
     {

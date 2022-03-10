@@ -63,6 +63,11 @@ public class BodyPoint : MonoBehaviour
         EventManager.StartListening("PlayerShoot", PlayerShoot);
         EventManager.StartListening("PlayerBodySlap", PlayerBodySlap);
     }
+    private void OnDisable()
+    {
+        EventManager.StopListening("PlayerShoot", PlayerShoot);
+        EventManager.StopListening("PlayerBodySlap", PlayerBodySlap);
+    }
     private void Update()
     {
         MoveToOriginPos();
@@ -82,11 +87,7 @@ public class BodyPoint : MonoBehaviour
         }
     }
 
-    private void OnDisable()
-    {
-        EventManager.StopListening("PlayerShoot", PlayerShoot);
-        EventManager.StopListening("PlayerBodySlap", PlayerBodySlap);
-    }
+
     private void CheckCrossWall()
     {
         Ray2D ray;

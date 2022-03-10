@@ -15,6 +15,12 @@ public class SoftBody : MonoBehaviour
     private List<Transform> points;
     [SerializeField]
     private List<Transform> notMiddlePoints = new List<Transform>();
+    public List<Transform> NotMiddlePoints
+    {
+        get { return notMiddlePoints; }
+    }
+
+    private readonly float radius = 0.2f; // 각 바디포인트 사이의 거리
 
     [Header("MiddlePoint와 다른 Point들 사이의 SpringJoint의 Frequency값")]
     [SerializeField]
@@ -33,9 +39,11 @@ public class SoftBody : MonoBehaviour
         points.Clear();
         transform.GetComponentsInChildren<BodyPoint>().ForEach(x => points.Add(x.transform));
 
+        MiddlePoint middlePoint = null;
         foreach (Transform item in points)
         {
-            if (item.GetComponent<MiddlePoint>() == null)
+            middlePoint = item.GetComponent<MiddlePoint>();
+            if (middlePoint == null)
             {
                 notMiddlePoints.Add(item);
 
@@ -49,36 +57,32 @@ public class SoftBody : MonoBehaviour
                 distanceJoint2D.connectedBody = itemRigid;
                 distanceJoint2D.maxDistanceOnly = true;
             }
+            else
+            {
+                middlePoint.SoftBody = this;
+            }
         }
 
         for (int i = 0; i < notMiddlePoints.Count; i++)
         {
+            int upNotMiddleBodyPointNum = (i - 1).Limit(0, notMiddlePoints.Count - 1);
+            int downNotMiddleBodyPointnum = (i + 1).Limit(0, notMiddlePoints.Count - 1);
+
+            Transform upPoint = notMiddlePoints[upNotMiddleBodyPointNum];
+            Transform downPoint = notMiddlePoints[downNotMiddleBodyPointnum];
+
             RelativeJoint2D notMiddleRelativeJoint2D = null;
-            // notMiddlePoints[i].gameObject.AddComponent<DistanceJoint2D>();
-            // notMiddleDistanceJoint2D.connectedBody = points[0].GetComponent<Rigidbody2D>();
-            // notMiddleDistanceJoint2D.maxDistanceOnly = true;
-
-            // notMiddlePoints[i].gameObject.AddComponent<DistanceJoint2D>().connectedBody = points[0].GetComponent<Rigidbody2D>();
-
-            // notMiddleDistanceJoint2D = notMiddlePoints[i].gameObject.AddComponent<DistanceJoint2D>();
-            // notMiddleDistanceJoint2D.connectedBody = notMiddlePoints[(i - 1).Limit(0, notMiddlePoints.Count - 1)].GetComponent<Rigidbody2D>();
-            // notMiddleDistanceJoint2D.distance *= 2f;
-            // notMiddleDistanceJoint2D.maxDistanceOnly = true;
-
             notMiddleRelativeJoint2D = notMiddlePoints[i].gameObject.AddComponent<RelativeJoint2D>();
-            notMiddleRelativeJoint2D.connectedBody = notMiddlePoints[(i + 1).Limit(0, notMiddlePoints.Count - 1)].GetComponent<Rigidbody2D>();
-            // notMiddleDistanceJoint2D.distance *= 2f;
-            // notMiddleDistanceJoint2D.maxDistanceOnly = true;
+            notMiddleRelativeJoint2D.connectedBody = downPoint.GetComponent<Rigidbody2D>();
 
             SpringJoint2D upNotMiddleSpringJoint2D = notMiddlePoints[i].gameObject.AddComponent<SpringJoint2D>();
-            upNotMiddleSpringJoint2D.connectedBody = notMiddlePoints[(i - 1).Limit(0, notMiddlePoints.Count - 1)].GetComponent<Rigidbody2D>();
+            upNotMiddleSpringJoint2D.connectedBody = upPoint.GetComponent<Rigidbody2D>();
             upNotMiddleSpringJoint2D.frequency = pointToPointSpringJointFrequency;
 
             SpringJoint2D downNotMiddleSpringJoint2D = notMiddlePoints[i].gameObject.AddComponent<SpringJoint2D>();
-            downNotMiddleSpringJoint2D.connectedBody = notMiddlePoints[(i + 1).Limit(0, notMiddlePoints.Count - 1)].GetComponent<Rigidbody2D>();
+            downNotMiddleSpringJoint2D.connectedBody = upPoint.GetComponent<Rigidbody2D>();
             downNotMiddleSpringJoint2D.frequency = pointToPointSpringJointFrequency;
         }
-
     }
     private void Update()
     {
@@ -91,21 +95,21 @@ public class SoftBody : MonoBehaviour
     {
         for (int i = 0; i < notMiddlePoints.Count; i++)
         {
-            Vector2 _vertex = notMiddlePoints[i].localPosition;
+            Vector2 _vertex = notMiddlePoints[i].transform.localPosition;
 
             Vector2 _towardsCenter = (-_vertex).normalized;
 
-            float _colliderRadius = notMiddlePoints[i].gameObject.GetComponent<CircleCollider2D>().radius;
+            //float _radius = 1f;
 
             try
             {
-                spriteShapeController.spline.SetPosition(i, (_vertex - _towardsCenter * _colliderRadius));
+                spriteShapeController.spline.SetPosition(i, (_vertex - _towardsCenter * radius));
             }
             catch
             {
                 Debug.Log("Spline Points들이 서로 너무 가깝습니다.. recalculate");
 
-                spriteShapeController.spline.SetPosition(i, (_vertex - _towardsCenter * (_colliderRadius + splineOffset)));
+                spriteShapeController.spline.SetPosition(i, (_vertex - _towardsCenter * (radius + splineOffset)));
             }
 
             Vector2 _lt = spriteShapeController.spline.GetLeftTangent(i);

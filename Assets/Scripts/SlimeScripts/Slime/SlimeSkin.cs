@@ -21,7 +21,6 @@ public class SlimeSkin : MonoBehaviour
         playerInput = SlimeGameManager.Instance.Player.GetComponent<PlayerInput>();
 
         materials = renderer.materials;
-
     }
 
     void Update()

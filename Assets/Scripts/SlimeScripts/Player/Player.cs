@@ -150,7 +150,7 @@ public class Player : MonoBehaviour
             UIManager.Instance.UpdatePlayerHPUI(true);
         }
     }
-    public void GiveDamage(Enemy.Enemy targetEnemy, int minDamage, int maxDamage, bool isKnockBack = false)
+    public void GiveDamage(Enemy.Enemy targetEnemy, int minDamage, int maxDamage, float sturnTime = 1, float knockBackPower = 20, bool isKnockBack = true)
     {
         (int, bool) damage;
         damage.Item1 = Random.Range(minDamage, maxDamage + 1);
@@ -158,9 +158,9 @@ public class Player : MonoBehaviour
 
         damage = CriticalCheck(damage.Item1);
 
-        targetEnemy.GetDamage(damage.Item1, damage.Item2, isKnockBack);
+        targetEnemy.GetDamage(damage.Item1, damage.Item2, isKnockBack, knockBackPower, sturnTime);
     }
-    public void GiveDamage(Enemy.Enemy targetEnemy, int minDamage, int maxDamage, float magnification, bool isKnockBack = false)
+    public void Mag_GiveDamage(Enemy.Enemy targetEnemy, int minDamage, int maxDamage, float magnification, float strunTime = 1, float knockBackPower = 20, bool isKnockBack = true)
     {
         (int, bool) damage;
         damage.Item1 = Random.Range(minDamage, maxDamage + 1);
@@ -170,7 +170,7 @@ public class Player : MonoBehaviour
 
         damage.Item1 = (int)(damage.Item1 * magnification);
 
-        targetEnemy.GetDamage(damage.Item1, damage.Item2, isKnockBack);
+        targetEnemy.GetDamage(damage.Item1, damage.Item2, isKnockBack, knockBackPower, strunTime);
     }
     public (int, bool) CriticalCheck(int damage)
     {

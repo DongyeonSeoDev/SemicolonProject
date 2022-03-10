@@ -55,7 +55,7 @@ MonoBehaviour:
       defense: 2
       intellect: 0
       speed: 8
-      attackSpeed: 1
+      attackSpeed: 2
       criticalRate: 0
       criticalDamage: 0
     additionalEternalStat:

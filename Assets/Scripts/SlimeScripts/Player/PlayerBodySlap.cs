@@ -7,6 +7,8 @@ public class PlayerBodySlap : PlayerSkill
     private Stat playerStat = null;
     [SerializeField]
     private LayerMask canCrashLayer;
+    [SerializeField]
+    private LayerMask whatIsEnemy;
 
     [SerializeField]
     private Vector2 bodySlapMoveVec = Vector2.zero;
@@ -127,7 +129,7 @@ public class PlayerBodySlap : PlayerSkill
 
             if (enemy != null)
             {
-                SlimeGameManager.Instance.Player.GiveDamage(enemy, SlimeGameManager.Instance.Player.PlayerStat.MinDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, damageMagnificationOfBodySlap, true);
+                SlimeGameManager.Instance.Player.Mag_GiveDamage(enemy, SlimeGameManager.Instance.Player.PlayerStat.MinDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, damageMagnificationOfBodySlap);
             }
 
             if (!bodyStopBodySlapTimerStart)

@@ -54,6 +54,7 @@ MonoBehaviour:
       defense: 2
       intellect: 0
       speed: 4
+      attackSpeed: 0
       criticalRate: 0
       criticalDamage: 0
     bodyImg: {fileID: -3615960448972296495, guid: 407549c50f6a9884caf01e20bde4d767, type: 3}
@@ -70,6 +71,7 @@ MonoBehaviour:
       defense: 0
       intellect: 0
       speed: 6
+      attackSpeed: 0
       criticalRate: 0
       criticalDamage: 0
     bodyImg: {fileID: 7943156567977182894, guid: 527d0ddf082e4724a861fc734336bee7, type: 3}
@@ -86,6 +88,7 @@ MonoBehaviour:
       defense: 2
       intellect: 0
       speed: -2
+      attackSpeed: 0
       criticalRate: 0
       criticalDamage: 0
     bodyImg: {fileID: 5557466569650181421, guid: a9de3b96fa106fa43a0fe55cd1aabb17, type: 3}
@@ -93,4 +96,4 @@ MonoBehaviour:
     bodyExplanation: "\uC5B4\uCA4C\uBA74 \uB098\uC640 \uB2EE\uC558\uC744\uC9C0\uB3C4?"
   canMountObjNum: 2
   minBodyChangeUnderstandingRate: 100
-  maxUnderstandingRate: 120
+  maxUnderstandingRate: 100
