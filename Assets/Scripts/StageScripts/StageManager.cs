@@ -20,6 +20,7 @@ public class StageManager : MonoSingleton<StageManager>
     public bool IsLastStage { get; set; }
 
     #region ValuableForEditor
+    [Header("Test")]
     public string stageSOFolderName;
     #endregion
 
