@@ -32,6 +32,7 @@ namespace Enemy
         private void Start()
         {
             EventManager.StartListening("PlayerDead", EnemyDataReset);
+
             if(enemyData.eEnemyController == EnemyController.PLAYER)
             {
                 EventManager.StartListening("StartSkill0", () => enemyData.isAttack = true);
