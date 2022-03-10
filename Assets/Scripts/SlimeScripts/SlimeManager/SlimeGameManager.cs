@@ -188,10 +188,11 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             int upNewBodyStat = ((playerEnemyUnderstandingRateManager.GetUnderstandingRate(bodyId)
             - playerEnemyUnderstandingRateManager.MinBodyChangeUnderstandingRate) / 10);
 
+            Debug.Log(upNewBodyStat);
+
             if (upNewBodyStat >= 1) // this code is "imsi" code that inserted "imsi" values.
             {
-                upNewBodyStat = (int)(upNewBodyStat * upStatPercentage); // 10% 마다 0.2배씩 상승
-                newBodyData.Item2 += newBodyData.Item2 * upNewBodyStat;
+                newBodyData.Item2 += newBodyData.Item2 * upNewBodyStat * upStatPercentage;// 10% 마다 upStatPercentage배씩 상승
             }
 
             newBody = Instantiate(newBodyData.Item1, player.transform);

@@ -39,7 +39,14 @@ public abstract class PlayerSkill : PlayerAction
     {
         if (SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] > 0f)
         {
-            SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] -= Time.deltaTime * SlimeGameManager.Instance.Player.PlayerStat.AttackSpeed;
+            if (skillIdx == 0)
+            {
+                SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] -= Time.deltaTime * SlimeGameManager.Instance.Player.PlayerStat.AttackSpeed;
+            }
+            else
+            {
+                SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] -= Time.deltaTime;
+            }
 
             if (SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] <= 0f)
             {
