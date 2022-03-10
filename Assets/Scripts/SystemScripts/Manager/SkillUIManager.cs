@@ -17,8 +17,9 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
 
     public Sprite emptySkillSpr; //빈 슬롯일 때의 스프라이트 (스킬)
 
-    [SerializeField] private Pair<string, SkillInfo[]> playerOriginBodySkills;
-    [SerializeField] private List<Pair<Enemy.EnemyType, SkillInfo[]>> monsterSkillsList;
+    //[SerializeField] private Pair<string, SkillInfo[]> playerOriginBodySkills;
+    //[SerializeField] private List<Pair<Enemy.EnemyType, SkillInfo[]>> monsterSkillsList;
+    [SerializeField] private SkillsInfoSO skillsSO;
     private Dictionary<string, SkillInfo[]> monsterSkillsDic = new Dictionary<string, SkillInfo[]>();
 
     //에너지바
@@ -32,15 +33,15 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
         skillInfoUIArr = skillImgUIParent.GetComponentsInChildren<SkillInfoImage>();
         orgEnergeEffMaskScl = energeEffMask.localScale;
 
-        monsterSkillsDic.Add(playerOriginBodySkills.first, playerOriginBodySkills.second);
-        for(int i= 0; i < monsterSkillsList.Count; i++)
+        monsterSkillsDic.Add(skillsSO.playerOriginBodySkills.first, skillsSO.playerOriginBodySkills.second);
+        for(int i= 0; i < skillsSO.monsterSkillsList.Count; i++)
         {
-            monsterSkillsDic.Add(monsterSkillsList[i].first.ToString(), monsterSkillsList[i].second);
+            monsterSkillsDic.Add(skillsSO.monsterSkillsList[i].first.ToString(), skillsSO.monsterSkillsList[i].second);
         }
 
-        defaultSkill.Register(playerOriginBodySkills.second[0]);
-        specialSkill.Register(playerOriginBodySkills.second[1]);
-        drain.Register(playerOriginBodySkills.second[2]);
+        defaultSkill.Register(skillsSO.playerOriginBodySkills.second[0]);
+        specialSkill.Register(skillsSO.playerOriginBodySkills.second[1]);
+        drain.Register(skillsSO.playerOriginBodySkills.second[2]);
 
         EventManager.StartListening("ChangeBody", (str, dead) =>
         {

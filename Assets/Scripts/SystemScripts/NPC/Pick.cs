@@ -86,7 +86,7 @@ public class Pick : InteractionObj
         {
             CallEffect("PickFailEff");
 
-            FollowEffect(false);
+            //FollowEffect(false);
             EffectManager.Instance.OnWorldTextEffect("채집 실패", transform.position, Vector3.one, EffectManager.Instance.pickupPlantSucFaiVG.cri);
             //UIManager.Instance.RequestSystemMsg("채집에 실패하였습니다.", Util.Change255To1Color(123, 0, 226, 255));
             gameObject.SetActive(false);
