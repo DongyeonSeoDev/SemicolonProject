@@ -159,6 +159,13 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
     }
     public void SetMountObj(string objId, int idx = -1)
     {
+        if(mountedObjList.Contains(objId))
+        {
+            Debug.Log(objId + "는 이미 장착한 오브젝트입니다.");
+
+            return;
+        }
+
         if (idx <= -1)
         {
             if (CheckCanMountObj())
@@ -204,10 +211,9 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
 
         float value = UnityEngine.Random.Range(0f, 100f);
 
-        if (value <= GetDrainProbabilityDict(objId)) // 확률 체크
+        if (value <= GetDrainProbabilityDict(objId)) // 확률 체크, 예외처리
         {
             // 장착을 물어봄
-            // 장착을 하면 true를, 장착을 하지 않으면 flase를 return함, 지금은 그냥 true를 return
             UIManager.Instance.DoChangeBody(objId);
             //Debug.Log("장착 물어보는 창이 뜨네요");
 

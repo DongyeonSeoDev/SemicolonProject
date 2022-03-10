@@ -138,7 +138,6 @@ public class PlayerDrain : PlayerSkill
 
                     if (enemy != null)
                     {
-                        Debug.Log(distance);
                         enemy.EnemyDestroy();
 
                         continue;
