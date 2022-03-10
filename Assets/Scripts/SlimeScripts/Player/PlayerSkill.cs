@@ -13,39 +13,28 @@ public abstract class PlayerSkill : PlayerAction
 
     public virtual void Update()
     {
-        CheckSkillDelay();
+        //CheckSkillDelay();
     }
     public virtual void OnEnable()
     {
         WhenChangeSkill();
 
         EventManager.StartListening("StartSkill" + skillIdx, DoSkill);
+        EventManager.StartListening("Skill" + skillIdx + "DelayTimerZero", WhenSkillDelayTimerZero);
     }
     public virtual void OnDisable()
     {
         EventManager.StopListening("StartSkill" + skillIdx, DoSkill);
+        EventManager.StopListening("Skill" + skillIdx + "DelayTimerZero", WhenSkillDelayTimerZero);
     }
 
     public void WhenChangeSkill()
     {
-        SlimeGameManager.Instance.SkillDelays[skillIdx] = skillDelay;
-        SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = 0f;
+        SlimeGameManager.Instance.SetSkillDelay(skillIdx, skillDelay);
     }
     public virtual void DoSkill()
     {
-     
-    }
-    protected void CheckSkillDelay()
-    {
-        if (SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] > 0f)
-        {
-            SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] -= Time.deltaTime * SlimeGameManager.Instance.Player.PlayerStat.AttackSpeed;
-
-            if (SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] <= 0f)
-            {
-                WhenSkillDelayTimerZero();
-            }
-        }
+        SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = SlimeGameManager.Instance.SkillDelays[skillIdx];
     }
     public virtual void WhenSkillDelayTimerZero()
     {

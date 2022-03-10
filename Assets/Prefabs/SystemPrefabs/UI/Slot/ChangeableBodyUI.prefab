@@ -452,6 +452,7 @@ GameObject:
   - component: {fileID: 8860588919381844091}
   - component: {fileID: 4697553023212393686}
   - component: {fileID: 923072479284207383}
+  - component: {fileID: 3515121668565535288}
   m_Layer: 5
   m_Name: OutlineObject
   m_TagString: Untagged
@@ -531,6 +532,28 @@ MonoBehaviour:
   m_EffectColor: {r: 0.32135987, g: 0.49957916, b: 0.9622642, a: 0.6313726}
   m_EffectDistance: {x: 2, y: -2}
   m_UseGraphicAlpha: 1
+--- !u!114 &3515121668565535288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3585396295854810252}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f8b0f16cdbaf7cc4e83ef0a9f565211a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cmpnt: 1
+  matName: Outline2DAnimatedMat
+  bStartAutoInitSet: 1
+  bStartAutoSetMatTex: 1
+  outlineHDRColor: {r: 0.047058824, g: 0.3764706, b: 2, a: 0}
+  outlineThickness: 3
+  outlineIntensity: 4
+  outlineHDRColor2: {r: 0.21960784, g: 2, b: 0.8235294, a: 0}
+  speed: 0.5
+  scale: 4
 --- !u!1 &7370267828823159493
 GameObject:
   m_ObjectHideFlags: 0

@@ -116,7 +116,7 @@ public class PlayerBodySlap : PlayerSkill
             EventManager.TriggerEvent("PlayerBodySlap", bodySlapTime);
 
             bodySlapTimer = 0f;
-            SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = skillDelay;
+            SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = SlimeGameManager.Instance.SkillDelays[skillIdx];
         }
     }
     private void BodyPointCrash(GameObject targetObject) // BodyPoint가 특정 오브젝트와 충돌했을 때 호출

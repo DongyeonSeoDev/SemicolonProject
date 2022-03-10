@@ -38,7 +38,7 @@ public class PlayerShoot : PlayerSkill
     }
     void FixedUpdate()
     {
-        CheckSkillDelay();
+        //CheckSkillDelay();
     }
     public override void DoSkill()
     {
@@ -67,7 +67,8 @@ public class PlayerShoot : PlayerSkill
             temp.GetComponent<PlayerProjectile>().OnSpawn(direction, projectileSpeed);
 
             SlimeGameManager.Instance.Player.UseEnergy(useEnergyAmount);
-            SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = skillDelay;
+            SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = SlimeGameManager.Instance.SkillDelays[skillIdx];
+
             canShoot = false;
 
             EventManager.TriggerEvent("PlayerShoot");
