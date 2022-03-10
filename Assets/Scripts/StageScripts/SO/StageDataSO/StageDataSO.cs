@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Stage Data", menuName = "Scriptable Object/Stage Data", order = 0)]
+[CreateAssetMenu(fileName = "Stage Data", menuName = "Scriptable Object/Stage Data", order = int.MaxValue)]
 public partial class StageDataSO : ScriptableObject
 {
     //public List<StageDataSO> nextStageList = new List<StageDataSO>();
