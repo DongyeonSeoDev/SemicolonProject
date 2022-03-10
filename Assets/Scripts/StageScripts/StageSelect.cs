@@ -18,7 +18,7 @@ public class StageSelect : MonoSingleton<StageSelect>
     private void Start()
     {
         currentStage = Instantiate(startStage.stage, transform.position, Quaternion.identity);
-        SlimeGameManager.Instance.CurrentPlayerBody.transform.position = startStage.playerStartPosition;
+        //SlimeGameManager.Instance.CurrentPlayerBody.transform.position = startStage.playerStartPosition;
 
         stageButtonText1 = stageButton[1].GetComponentInChildren<Text>();
 
@@ -90,6 +90,6 @@ public class StageSelect : MonoSingleton<StageSelect>
         }*/
 
         currentStage = Instantiate(startStage.stage, transform.position, Quaternion.identity);
-        SlimeGameManager.Instance.CurrentPlayerBody.transform.position = startStage.playerStartPosition;
+        //SlimeGameManager.Instance.CurrentPlayerBody.transform.position = startStage.playerStartPosition;
     }
 }

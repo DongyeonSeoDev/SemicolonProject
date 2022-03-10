@@ -7,6 +7,8 @@ public class StageGround : MonoBehaviour
 
     public Collider2D camStageCollider;
 
+    public Transform playerSpawnPoint;
+
     [SerializeField] private bool autoInsertStageDoors;
     public StageDoor[] stageDoors;
 

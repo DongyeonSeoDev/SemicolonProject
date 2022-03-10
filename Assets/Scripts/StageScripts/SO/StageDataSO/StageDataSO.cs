@@ -14,5 +14,11 @@ public partial class StageDataSO : ScriptableObject
     public string stageID;
 
     public GameObject stage;
-    public Vector3 playerStartPosition;
+    //public Vector3 playerStartPosition;
+
+    public void SetPrefab()
+    {
+        GameObject go = Resources.Load<GameObject>("Stage/StagePrefab/Stage1/" + stageID);
+        if (go != null) stage = go;
+    }
 }
