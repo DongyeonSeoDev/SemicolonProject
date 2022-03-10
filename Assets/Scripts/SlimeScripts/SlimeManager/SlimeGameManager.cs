@@ -66,17 +66,19 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
     private float[] currentSkillDelay = new float[3]; // 0 => 기본공격, 1 => 스킬 1, 2 => 스킬 2
     public float[] SkillDelays
     {
-        get { return currentSkillDelay; }
-
+        get { return currentSkillDelay; } // 이 배열의 타이머를 Set해줄때는 반드시 SetSkillDelay함수를 활용할 것. 여기에 직접 넣게되면 SkillSpeed가 적용되지 않음.
     }
 
     private float[] currentSkillDelayTimer = new float[3]; //  0 => 기본공격, 1 => 스킬 1, 2 => 스킬 2
     public float[] CurrentSkillDelayTimer
     {
-        get { return currentSkillDelayTimer; }
+        get { return currentSkillDelayTimer; } 
     }
 
-    [Header("동화율 10퍼당 변신시 오르게되는 능력치가 오르게 되는 수치(배율)")]
+    [Header("동화율 몇퍼당 변신시 능력치가 오를지를 정하는 변수")]
+    [SerializeField]
+    private int understadingRatePercentageWhenUpStat = 10;
+    [Header("동화율 'understadingRatePercentageWhenUpStat'퍼당 변신시 오르게되는 능력치가 오르게 되는 수치(배율)")]
     [SerializeField]
     private float upStatPercentage = 0.2f;
     public float UpStatPercentage
@@ -103,6 +105,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
     private void Update()
     {
         CheckBodyTimer();
+        CheckSkillTimer();
     }
 
     private void PlayerBodySpawn(Vector2 spawnPosition)
@@ -186,9 +189,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             currentBodyId = bodyId;
 
             int upNewBodyStat = ((playerEnemyUnderstandingRateManager.GetUnderstandingRate(bodyId)
-            - playerEnemyUnderstandingRateManager.MinBodyChangeUnderstandingRate) / 10);
-
-            Debug.Log(upNewBodyStat);
+            - playerEnemyUnderstandingRateManager.MinBodyChangeUnderstandingRate) / understadingRatePercentageWhenUpStat);
 
             if (upNewBodyStat >= 1) // this code is "imsi" code that inserted "imsi" values.
             {
@@ -207,7 +208,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             pasteBodyAdditionalStat = newBodyData.Item2;
 
             player.PlayerStat.additionalEternalStat += newBodyData.Item2;
-            Debug.Log(hpPercentage);
+            
             player.CurrentHp = (int)(player.PlayerStat.MaxHp * hpPercentage);
 
             newBody.AddComponent<PlayerBodyScript>();
@@ -253,6 +254,34 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             {
                 canBodyChange = true;
             }
+        }
+    }
+    private void CheckSkillTimer()
+    {
+        for(int i = 0; i < currentSkillDelayTimer.Length; i++)
+        {
+            if(currentSkillDelayTimer[i] > 0f)
+            {
+                currentSkillDelayTimer[i] -= Time.deltaTime;
+
+                if(currentSkillDelayTimer[i] <= 0f)
+                {
+                    currentSkillDelayTimer[i] = 0f;
+
+                    EventManager.TriggerEvent("Skill" + i + "DelayTimerZero");
+                }
+            }
+        }
+    }
+    public void SetSkillDelay(int skillIdx, float delayTime)
+    {
+        if (skillIdx == 0) // skillIdx가 0이면 그거슨 기본공격
+        {
+            currentSkillDelay[skillIdx] = delayTime / player.PlayerStat.AttackSpeed;
+        }
+        else
+        {
+            currentSkillDelay[skillIdx] = delayTime;
         }
     }
     public Vector2 PosCantCrossWall(LayerMask wallLayer, Vector2 startPos, Vector2 targetPos)

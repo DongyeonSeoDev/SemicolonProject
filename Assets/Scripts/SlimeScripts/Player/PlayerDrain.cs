@@ -88,7 +88,7 @@ public class PlayerDrain : PlayerSkill
 
         if (canDrain)
         {
-            SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = skillDelay;
+            SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = SlimeGameManager.Instance.SkillDelays[skillIdx];
 
             drainCollider.SetActive(true);
 
