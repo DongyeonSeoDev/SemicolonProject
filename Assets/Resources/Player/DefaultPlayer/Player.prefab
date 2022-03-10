@@ -56,8 +56,8 @@ MonoBehaviour:
       intellect: 0
       speed: 8
       attackSpeed: 2
-      criticalRate: 0
-      criticalDamage: 0
+      criticalRate: 50
+      criticalDamage: 10
     additionalEternalStat:
       maxHp: 0
       minDamage: 0
@@ -81,7 +81,7 @@ MonoBehaviour:
       cookingAbility: 0
   maxEnergy: 10
   energyRegenSpeed: 1
-  upMountingPercentageValueWhenEnemyDead: 2
+  upMountingPercentageValueWhenEnemyDead: 100
   upUnderstandingRateValueWhenEnemyDead: 1
 --- !u!114 &5427881869486345104
 MonoBehaviour:
@@ -126,6 +126,94 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5427881869486345069}
     m_Modifications:
+    - target: {fileID: 1014413144, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: maxBodyPointLocalPos
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 804748403637607259, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.54
+      objectReference: {fileID: 0}
+    - target: {fileID: 804748403637607259, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.44
+      objectReference: {fileID: 0}
+    - target: {fileID: 3851220836599241427, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.74
+      objectReference: {fileID: 0}
+    - target: {fileID: 3851220836599241427, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.45
+      objectReference: {fileID: 0}
+    - target: {fileID: 4327631336810169174, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.27
+      objectReference: {fileID: 0}
+    - target: {fileID: 4327631336810169174, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.46
+      objectReference: {fileID: 0}
+    - target: {fileID: 4331802093199943809, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_Points.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 4331802093199943809, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_Points.Array.data[9].x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4457970834551369897, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.37
+      objectReference: {fileID: 0}
+    - target: {fileID: 4457970834551369897, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.46
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452748365009911102, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.27
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452748365009911102, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452748365560110710, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.03
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452748365560110710, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452748365791315108, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.95
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452748365791315108, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.75
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452748366344068690, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.78
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452748366344068690, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.91
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452748366477322726, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -1.36
+      objectReference: {fileID: 0}
+    - target: {fileID: 5452748366477322726, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.31
+      objectReference: {fileID: 0}
+    - target: {fileID: 6491635181836223920, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6840160282341942530, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: m_Name
       value: Slime
