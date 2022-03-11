@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerBodyScript : MonoBehaviour
 {
-    private void OnEnable() 
+    private void Start() 
     {
         SlimeGameManager.Instance.CurrentPlayerBody = gameObject;
 

@@ -114,6 +114,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
         currentPlayerBody.SetActive(true);
 
         currentPlayerBody.transform.position = spawnPosition;
+        pasteBodyAdditionalStat = new EternalStat();
 
         player.WhenRespawn();
     }
@@ -123,19 +124,20 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
     }
     public void PlayerBodyChange(string bodyId, bool isDead = false)
     {
-        if(bodyId == "" || !canBodyChange)
+        if (!isDead)
         {
-            return;
+            if (bodyId == "" || !canBodyChange)
+            {
+                return;
+            }
+
+            if (bodyId == currentBodyId)
+            {
+                Debug.Log("이미 해당 Body로 변신중입니다.");
+
+                return;
+            }
         }
-
-        if(bodyId == currentBodyId)
-        {
-            Debug.Log("이미 해당 Body로 변신중입니다.");
-
-            return;
-        }
-
-        Player player = this.player;
 
         Enemy.Enemy enemy = null;
 
@@ -145,6 +147,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
         float hpPercentage = player.CurrentHp / player.PlayerStat.MaxHp;
 
+        #region 원래의 모습으로 변신
         if (bodyId == "origin")
         {
             Destroy(currentPlayerBody);
@@ -163,6 +166,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
                 SetCanBodyChangeFalse();
             }
+            Debug.Log(isDead);
 
             enemy = newBody.GetComponent<Enemy.Enemy>();
 
@@ -181,7 +185,8 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
             return;
         }
-
+        #endregion
+        #region 원래와는 다른 모습으로 변신
         if (playerEnemyUnderstandingRateManager.MountedObjList.Contains(bodyId))
         {
             Destroy(currentPlayerBody);
@@ -232,6 +237,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
         {
             Debug.Log("Body Id: '" + bodyId + "' 로의 Body Change에 실패했습니다.");
         }
+        #endregion
     }
     public EternalStat GetExtraUpStat(string objId)
     {
