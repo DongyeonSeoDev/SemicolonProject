@@ -104,6 +104,8 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
             drainProbabilityDict.Add(key, value);
         }
 
+        Debug.Log("aa" + drainProbabilityDict[key]);
+
         MonsterCollection.Instance.UpdateDrainProbability(key);
     }
     public float GetDrainProbabilityDict(string key)

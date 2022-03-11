@@ -8,7 +8,7 @@ public class Stat
     public ChoiceStat choiceStat = new ChoiceStat();
 
     #region default stat + additional stat  property
-    public int MaxHp  
+    public float MaxHp  
     {
         get { return eternalStat.maxHp + additionalEternalStat.maxHp; }
     }
@@ -63,7 +63,7 @@ public class EternalStat
     public static EternalStat operator /(EternalStat a, float b) => new EternalStat((int)(a.maxHp / b), (int)(a.minDamage / b), (int)(a.maxDamage / b), (int)(a.defense / b), (int)(a.intellect / b), (int)(a.speed / b), (int)(a.attackSpeed / b), (int)(a.criticalRate / b), (int)(a.criticalDamage / b));
     
     //public int currentHp;
-    public int maxHp;
+    public float maxHp;
     //public int mp;
 
     public int minDamage;
@@ -82,7 +82,7 @@ public class EternalStat
     {
 
     }
-    public EternalStat(int mh, int mind, int maxd, int df, int intell, float s, float aS, float cr, int cd)
+    public EternalStat(float mh, int mind, int maxd, int df, int intell, float s, float aS, float cr, int cd)
     {
         maxHp = mh;
         minDamage = mind;

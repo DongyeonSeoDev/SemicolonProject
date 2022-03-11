@@ -65,8 +65,8 @@ public class Player : MonoBehaviour
     }
     #endregion
 
-    private int currentHp = 0;
-    public int CurrentHp
+    private float currentHp = 0;
+    public float CurrentHp
     {
         get { return currentHp; }
         set { currentHp = value; }
@@ -229,7 +229,7 @@ public class Player : MonoBehaviour
         {
             PlayerEnemyUnderstandingRateManager.Instance.SetMountingPercentageDict(objId, PlayerEnemyUnderstandingRateManager.Instance.GetDrainProbabilityDict(objId) + upMountingPercentageValueWhenEnemyDead);
 
-            PlayerEnemyUnderstandingRateManager.Instance.CheckMountingEnemy(objId, upUnderstandingRateValueWhenEnemyDead);
+            //PlayerEnemyUnderstandingRateManager.Instance.CheckMountingEnemy(objId, upUnderstandingRateValueWhenEnemyDead);
 
             if (PlayerEnemyUnderstandingRateManager.Instance.CheckMountObjIdContain(objId))
             {

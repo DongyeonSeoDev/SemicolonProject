@@ -221,6 +221,27 @@ public static partial class ScriptHelper
             return a;
         }
     }
+    public static int Round(this float a)
+    {
+        float result = a;
+
+        while(true)
+        {
+            if(--result < 1)
+            {
+                break;
+            }
+        }
+
+        if(result < 0.5f)
+        {
+            return (int)(a - result);
+        }
+        else
+        {
+            return (int)++a;
+        }
+    }
     public static Vector2 RandomVector(Vector2 min, Vector2 max)
     {
         float x = UnityEngine.Random.Range(min.x, max.x);

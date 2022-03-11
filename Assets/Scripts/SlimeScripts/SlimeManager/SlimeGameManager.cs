@@ -143,7 +143,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
         Vector2 spawnPos = currentPlayerBody.transform.position;
 
-        float hpPercentage = player.CurrentHp / (float)player.PlayerStat.MaxHp;
+        float hpPercentage = player.CurrentHp / player.PlayerStat.MaxHp;
 
         if (bodyId == "origin")
         {
@@ -156,7 +156,8 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             {
                 player.PlayerStat.additionalEternalStat -= pasteBodyAdditionalStat;
 
-                player.CurrentHp = (int)(player.PlayerStat.MaxHp * hpPercentage);
+                //player.CurrentHp = (player.PlayerStat.MaxHp * hpPercentage).Round();
+                player.CurrentHp = player.PlayerStat.MaxHp * hpPercentage;
 
                 pasteBodyAdditionalStat = new EternalStat();
 
@@ -207,8 +208,9 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             pasteBodyAdditionalStat = newBodyData.Item2;
 
             player.PlayerStat.additionalEternalStat += newBodyData.Item2;
-            
-            player.CurrentHp = (int)(player.PlayerStat.MaxHp * hpPercentage);
+
+            //player.CurrentHp = (player.PlayerStat.MaxHp * hpPercentage).Round();
+            player.CurrentHp = player.PlayerStat.MaxHp * hpPercentage;
 
             newBody.AddComponent<PlayerBodyScript>();
 
