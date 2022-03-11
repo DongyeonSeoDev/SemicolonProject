@@ -14,7 +14,7 @@ public class UIMove : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHa
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (isMoving) moveUI.position = eventData.position;
+        if (isMoving) moveUI.position = Util.MousePositionForScreenSpace;
     }
 
     public void OnDrop(PointerEventData eventData)

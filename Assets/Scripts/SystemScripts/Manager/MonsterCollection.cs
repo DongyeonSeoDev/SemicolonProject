@@ -17,6 +17,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     private string selectedDetailMobId;
 
     public Triple<Image, Text, Text> monsterImgNameEx;
+    public Pair<TextMeshProUGUI, TextMeshProUGUI> mobDrainProbAndAssimTmp;
 
     public Image mobDropItemImg;
 
@@ -65,6 +66,9 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         Load();
         AllUpdateUnderstanding();
         AllUpdateDrainProbability();
+
+        foreach (MonsterInfoSlot slot in mobIdToSlot.Values)
+            slot.MarkAcqBody(false);
 
         EventManager.StartListening("PlayerRespawn", unusedValue =>
         {
@@ -123,9 +127,17 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         monsterImgNameEx.second.text = data.bodyName;
         monsterImgNameEx.third.text = data.bodyExplanation;
 
+        mobDrainProbAndAssimTmp.first.SetText("흡수확률: " + urmg.GetDrainProbabilityDict(id).ToString());
+        mobDrainProbAndAssimTmp.second.SetText("동화율: " + urmg.PlayerEnemyUnderStandingRateDic[id].ToString());
+
         ItemSO item = data.dropItem;
         mobDropItemImg.sprite = item.GetSprite();
         mobDropItemImg.GetComponent<NameInfoFollowingCursor>().explanation = item.itemName;
+
+        if (UIManager.Instance.gameUIList[(int)UIType.MONSTERINFO_DETAIL_ITEM].gameObject.activeSelf)
+            DetailItem();
+        if (UIManager.Instance.gameUIList[(int)UIType.MONSTERINFO_DETAIL_STAT].gameObject.activeSelf)
+            DetailStat();
     }
 
     public void CloseDetail() //몹 정보 자세히 보기 닫음
@@ -161,6 +173,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         statText[4].text = string.Concat(MinusException(stat.criticalRate), '%');
         statText[5].text = MinusException(stat.criticalDamage);
         statText[6].text = MinusException(stat.intellect);
+        statText[7].text = MinusException(stat.attackSpeed);
     }
 
     private string MinusException(int value)

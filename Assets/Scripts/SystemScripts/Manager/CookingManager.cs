@@ -98,11 +98,22 @@ public class CookingManager : MonoSingleton<CookingManager>
                 }, 0.5f, this, true);
             }
         });
+
+        Global.AddAction("ItemUse", id =>
+        {
+            if (UIManager.Instance.gameUIList[(int)UIType.CHEF_FOODS_PANEL].gameObject.activeSelf)
+            {
+                MakeFoodInfoUIReset();
+                CheckCannotMakeFoods();
+                SortMakeFoods();
+                UIManager.Instance.OnUIInteractSetActive(UIType.PRODUCTION_PANEL, false, true);
+            }
+        });
     }
 
     public void ShowFoodList(Chef currentChef) //대화한 요리사가 만들 수 있는 음식 리스트 표시
     {
-        EventManager.TriggerEvent("TimePause");
+        TimeManager.TimePause();
         NpcNameTxt.SetText(currentChef.ObjName);
         foodBtnList.ForEach(x => x.gameObject.SetActive(false));
         currentChef.CanFoodList.ForEach(x =>
@@ -214,7 +225,7 @@ public class CookingManager : MonoSingleton<CookingManager>
         else UIManager.Instance.RequestSystemMsg("인벤토리에 전부 담을 수 없습니다.");
     }
 
-    public void MakeFoodInfoUIReset()
+    public void MakeFoodInfoUIReset()  //만들 음식 아직 선택 안한 상태로 돌려놓음
     {
         if (selectedFoodBtn)
         {
@@ -222,6 +233,7 @@ public class CookingManager : MonoSingleton<CookingManager>
             selectedFoodBtn = null;
         }
     }
+
 
     public void OnPointerFoodImage(bool on)  //음식 제작 --> 만들 음식의 이미지에 마우스 대거나 뗼때
     {

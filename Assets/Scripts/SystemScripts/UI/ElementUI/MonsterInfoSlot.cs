@@ -14,7 +14,7 @@ public class MonsterInfoSlot : MonoBehaviour
 
     [SerializeField] private Image drainProbabilityFill;
 
-    public Transform acqMarkPar; //변신 가능 텍스트 UI의 부모
+    //public Transform acqMarkPar; //변신 가능 텍스트 UI의 부모
     //[SerializeField] private Text understandingRateText;
 
     //[SerializeField] private Button transformationBtn;
@@ -22,6 +22,8 @@ public class MonsterInfoSlot : MonoBehaviour
     //private UIScale btnUS;
 
     private ItemSO dropItem;
+
+    public MulSpriteColorCtrl msc;
 
     public void Init(ChangeBodyData data)
     {
@@ -66,14 +68,15 @@ public class MonsterInfoSlot : MonoBehaviour
 
     public void MarkAcqBody(bool on) //변신 가능 텍스트 UI 띄우거나 없앰
     {
+        msc.SetIntensity(on ? 0.6f : 0);
+
         /*for(int i=0; i< acqMarkPar.childCount; i++)
             acqMarkPar.GetChild(i).gameObject.SetActive(false);
-
         if(on)
         {
             Water.PoolManager.GetItem<Transform>("CanTrfMark").SetParent(acqMarkPar);
         }*/
-        acqMarkPar.GetChild(0).gameObject.SetActive(on);  //위치 버그때문에 일단 잠시 이렇게
+        //acqMarkPar.GetChild(0).gameObject.SetActive(on);  
     }
 
     /*private void Active(bool active)

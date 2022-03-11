@@ -38,5 +38,6 @@ public abstract class ItemSO : ScriptableObject
         //abil.Use();
 
         (Activator.CreateInstance(Type.GetType(name)) as ItemAbil).Use();
+        //Global.ActionTrigger("ItemUse", id);
     }
 }
