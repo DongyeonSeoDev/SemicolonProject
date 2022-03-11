@@ -8,24 +8,9 @@ public class PlayerMove : PlayerAction
 
     private Stat playerStat = null;
 
-    private BodyPoint upestPoint = null;
-    private float middleToUpestDistance = 0f;
-
-    private BodyPoint downestPoint = null;
-    private float middleToDownestDistance = 0f;
-
-    private BodyPoint rightestPoint = null; // 오른쪽 끝에 위치한 바디포인트
-    private float middleToRightestDistance = 0f; // Rightest와 Middle의 거리
-
-    private BodyPoint leftestPoint = null; // 왼쪽 끝에 위치한 바디포인트
-    private float middleToLeftestDistance = 0f; // Leftest와 Middle의 거리
-
-    private List<BodyPoint> upChildPoints = new List<BodyPoint>();
-    private List<BodyPoint> downChildPoints = new List<BodyPoint>();
-
-    // 각 바디포인트들은 왼쪽으로 이동한다면 왼쪽 끝의 바디포인트와의 거리에 비례한 힘을 얻어 왼쪽으로 이동한다.
-    // 각 끝부분의 포인트들은 움직이지 않는다.
-    // 다만 바닥면의 포인트들은 안움직인다.
+    [Header("바디포인트의 localPosition의 x, y 각각의 값은 처음의 위치에서 이 값 이상 멀어지지 못한다.")]
+    [SerializeField]
+    private float maxBodyPointLocalPos = 0.1f;
 
     public override void Awake()
     {
@@ -33,66 +18,37 @@ public class PlayerMove : PlayerAction
 
         base.Awake();
     }
-    private void Start()
-    {
-        SetRigids();
-    }
+    //private void Start()
+    //{
+    //    SetRigids();
+    //}
 
-    private void SetRigids()
-    {
-        float distance = 0f;
-        BodyPoint bodyPoint = null;
+    //private void SetRigids()
+    //{
+    //    float distance = 0f;
+    //    BodyPoint bodyPoint = null;
 
-        foreach(var r in childRigids)
-        {
-            bodyPoint = r.GetComponent<BodyPoint>();
+    //    foreach(var r in childRigids)
+    //    {
+    //        bodyPoint = r.GetComponent<BodyPoint>();
 
-            if (bodyPoint == null)
-            {
-                continue;
-            }
+    //        if (bodyPoint == null)
+    //        {
+    //            continue;
+    //        }
 
-            distance = Vector2.Distance(r.position, rigid.position);
+    //        distance = Vector2.Distance(r.position, rigid.position);
 
-            if (r.position.x > rigid.position.x)
-            {
-                if (distance > middleToRightestDistance)
-                {
-                    middleToRightestDistance = distance;
-                    rightestPoint = bodyPoint;
-                }
-            }
-            else if (r.position.x < rigid.position.x)
-            {
-                if (distance > middleToLeftestDistance)
-                {
-                    middleToLeftestDistance = distance;
-                    leftestPoint = bodyPoint;
-                }
-            }
-
-            if (r.position.y > rigid.position.y)
-            {
-                upChildPoints.Add(bodyPoint);
-
-                if (distance > middleToUpestDistance)
-                {
-                    middleToUpestDistance = distance;
-                    upestPoint = r.GetComponent<BodyPoint>();
-                }
-            }
-            else if (r.position.y < rigid.position.y)
-            {
-                downChildPoints.Add(bodyPoint);
-
-                if (distance > middleToDownestDistance)
-                {
-                    middleToDownestDistance = distance;
-                    downestPoint = bodyPoint;
-                }
-            }
-        }
-    }
+    //        if (r.position.y > rigid.position.y)
+    //        {
+    //            upChildPoints.Add(bodyPoint);
+    //        }
+    //        else if (r.position.y < rigid.position.y)
+    //        {
+    //            downChildPoints.Add(bodyPoint);
+    //        }
+    //    }
+    //}
 
     private void FixedUpdate()
     {
@@ -120,65 +76,11 @@ public class PlayerMove : PlayerAction
 
             float movePower = 0f;
 
-            upChildPoints.ForEach(x => 
+            float distance = 0f;
+
+            softBody.UpNotMiddlePoints.ForEach(x => 
             {
-                if(isRightChildRigid(x))
-                {
-                    if (MoveVec.x > 0)
-                    {
-                        movePower = GetMovePower(x.transform.position, leftestPoint.transform.position, middleToRightestDistance);
-                    }
-                    else if(MoveVec.y != 0)
-                    {
-                        if(MoveVec.y > 0)
-                        {
-                            movePower = GetMovePower(x.transform.position, upestPoint.transform.position, middleToUpestDistance);
-                        }
-                        else
-                        {
-                            movePower = GetMovePower(x.transform.position, downestPoint.transform.position, middleToDownestDistance);
-                        }
-                    }
-                }
-                else
-                {
-                    if (MoveVec.x < 0)
-                    {
-                        movePower = GetMovePower(x.transform.position, rightestPoint.transform.position, middleToLeftestDistance);
-                    }
-                    else if (MoveVec.y != 0)
-                    {
-                        if (MoveVec.y > 0)
-                        {
-                            movePower = GetMovePower(x.transform.position, upestPoint.transform.position, middleToUpestDistance);
-                        }
-                        else
-                        {
-                            movePower = GetMovePower(x.transform.position, downestPoint.transform.position, middleToDownestDistance);
-                        }
-                    }
-                }
-
-                if(MoveVec != Vector2.zero)
-                {
-                    x.IsMove = true;
-                }
-                else
-                {
-                    x.IsMove = false;
-                }
-
-                x.GetComponent<Rigidbody2D>().velocity = MoveVec * movePower;
-            });
-
-            //downChildRigids.ForEach(x => x.velocity = -new Vector2(MoveVec.x, x.velocity.y));
-
-            foreach(var x in downChildPoints)
-            {
-                //if (x.IsMoveToMiddle)
-                //{
-                //    continue;
-                //}
+                movePower = GetMovePower(x.transform);
 
                 if (MoveVec != Vector2.zero)
                 {
@@ -189,7 +91,32 @@ public class PlayerMove : PlayerAction
                     x.IsMove = false;
                 }
 
-                x.transform.localPosition = Vector2.Lerp(x.transform.localPosition, (Vector2)x.transform.localPosition - MoveVec, Time.fixedDeltaTime);
+                distance = Vector2.Distance(x.transform.localPosition, x.OriginLocalPosition);
+
+                if (distance < maxBodyPointLocalPos)
+                {
+                    x.transform.localPosition = Vector2.Lerp(x.transform.localPosition, (Vector2)x.transform.localPosition + MoveVec * movePower, Time.fixedDeltaTime);
+                }
+            });
+
+            foreach(var x in softBody.DownNotMiddlePoints)
+            {
+                movePower = GetMovePower(x.transform);
+                if (MoveVec != Vector2.zero)
+                {
+                    x.IsMove = true;
+                }
+                else
+                {
+                    x.IsMove = false;
+                }
+
+                distance = Vector2.Distance(x.transform.localPosition, x.OriginLocalPosition);
+
+                if (distance < maxBodyPointLocalPos)
+                {
+                    x.transform.localPosition = Vector2.Lerp(x.transform.localPosition, (Vector2)x.transform.localPosition - MoveVec * movePower, Time.fixedDeltaTime);
+                }
             }
         }
         else
@@ -197,17 +124,12 @@ public class PlayerMove : PlayerAction
             lastMoveVec = Vector2.zero;
         }
     }
-    private float GetMovePower(Vector2 pos1, Vector2 pos2, float maxDistanceOfDirection)
+    private float GetMovePower(Transform pos)
     {
         float movePower = 0f;
 
-        movePower = Vector2.Distance(pos1, pos2);
-        movePower = (maxDistanceOfDirection - movePower).Abs();
+        movePower = pos.localPosition.y;
 
-        return movePower;
-    }
-    private bool isRightChildRigid(BodyPoint r)
-    {
-        return r.transform.position.x > rigid.position.x;
+        return movePower.Abs();
     }
 }

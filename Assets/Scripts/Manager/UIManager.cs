@@ -671,7 +671,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         isStartDelayHPFillTimer = false;
 
         Player p = sgm.Player;
-        int hp = Mathf.Clamp(p.CurrentHp, 0, p.PlayerStat.MaxHp);
+        float hp = Mathf.Clamp(p.CurrentHp, 0f, p.PlayerStat.MaxHp);
 
         float rate = (float)hp / p.PlayerStat.MaxHp;
         playerHPInfo.first.DOFillAmount(rate, 0.3f).OnComplete(()=> { if (!decrease) playerHPInfo.third.fillAmount = playerHPInfo.first.fillAmount; });

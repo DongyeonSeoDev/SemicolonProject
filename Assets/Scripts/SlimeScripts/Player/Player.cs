@@ -55,10 +55,18 @@ public class Player : MonoBehaviour
     {
         get { return upUnderstandingRateValueWhenEnemyDead; }
     }
+
+    [Header("특정 몹으로 변신하여 그 상태로 적을 죽였을 때 해당 몹에 대한 동화율이 오르는 값")]
+    [SerializeField]
+    private int upUnderstandingRateValueWhenEnemyDeadAfterBodyChanged = 3;
+    public int UpUnderstandingRateValueWhenBodyChanged
+    {
+        get { return upUnderstandingRateValueWhenEnemyDeadAfterBodyChanged; }
+    }
     #endregion
 
-    private int currentHp = 0;
-    public int CurrentHp
+    private float currentHp = 0;
+    public float CurrentHp
     {
         get { return currentHp; }
         set { currentHp = value; }
@@ -217,20 +225,26 @@ public class Player : MonoBehaviour
     }
     private void EnemyDead(string objId)
     {
-        PlayerEnemyUnderstandingRateManager.Instance.SetMountingPercentageDict(objId, PlayerEnemyUnderstandingRateManager.Instance.GetDrainProbabilityDict(objId) + upMountingPercentageValueWhenEnemyDead);
-
-        PlayerEnemyUnderstandingRateManager.Instance.CheckMountingEnemy(objId, upUnderstandingRateValueWhenEnemyDead);
-
-        if (PlayerEnemyUnderstandingRateManager.Instance.CheckMountObjIdContain(objId))
+        if (SlimeGameManager.Instance.CurrentBodyId == "origin")
         {
-            PlayerEnemyUnderstandingRateManager.Instance.UpUnderStandingRate(objId, upUnderstandingRateValueWhenEnemyDead);
+            PlayerEnemyUnderstandingRateManager.Instance.SetMountingPercentageDict(objId, PlayerEnemyUnderstandingRateManager.Instance.GetDrainProbabilityDict(objId) + upMountingPercentageValueWhenEnemyDead);
+
+            //PlayerEnemyUnderstandingRateManager.Instance.CheckMountingEnemy(objId, upUnderstandingRateValueWhenEnemyDead);
+
+            if (PlayerEnemyUnderstandingRateManager.Instance.CheckMountObjIdContain(objId))
+            {
+                PlayerEnemyUnderstandingRateManager.Instance.UpUnderStandingRate(objId, upUnderstandingRateValueWhenEnemyDead);
+            }
+            else
+            {
+                PlayerEnemyUnderstandingRateManager.Instance.CheckMountingEnemy(objId, upUnderstandingRateValueWhenEnemyDead);
+            }
         }
         else
         {
-            PlayerEnemyUnderstandingRateManager.Instance.CheckMountingEnemy(objId, upUnderstandingRateValueWhenEnemyDead);
+            Debug.Log("우오옷 동화율이 오른다앗");
+            PlayerEnemyUnderstandingRateManager.Instance.SetUnderstandingRate(SlimeGameManager.Instance.CurrentBodyId, upUnderstandingRateValueWhenEnemyDeadAfterBodyChanged);
         }
-
-        
     }
     private void SetActiveFalse()
     {

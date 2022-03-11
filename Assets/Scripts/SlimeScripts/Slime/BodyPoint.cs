@@ -21,6 +21,10 @@ public class BodyPoint : MonoBehaviour
     private float moveToMiddleTimer = 0f;
 
     private Vector2 originLocalPosition = Vector2.zero;
+    public Vector2 OriginLocalPosition
+    {
+        get { return originLocalPosition; }
+    }
 
     [SerializeField]
     private bool isMiddlePoint = false;
@@ -60,14 +64,20 @@ public class BodyPoint : MonoBehaviour
     }
     private void OnEnable()
     {
-        EventManager.StartListening("PlayerShoot", PlayerShoot);
-        EventManager.StartListening("PlayerBodySlap", PlayerBodySlap);
+         EventManager.StartListening("PlayerShoot", PlayerShoot);
+         EventManager.StartListening("PlayerBodySlap", PlayerBodySlap);
     }
     private void OnDisable()
+    {
+         StopListenings();
+    }
+
+    public void StopListenings()
     {
         EventManager.StopListening("PlayerShoot", PlayerShoot);
         EventManager.StopListening("PlayerBodySlap", PlayerBodySlap);
     }
+
     private void Update()
     {
         MoveToOriginPos();

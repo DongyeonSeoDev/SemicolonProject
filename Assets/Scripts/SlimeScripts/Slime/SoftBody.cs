@@ -20,6 +20,17 @@ public class SoftBody : MonoBehaviour
         get { return notMiddlePoints; }
     }
 
+    private List<BodyPoint> upNotMiddlePoints = new List<BodyPoint>();
+    public List<BodyPoint> UpNotMiddlePoints
+    {
+        get { return upNotMiddlePoints; }
+    }
+    private List<BodyPoint> downNotMiddlePoints = new List<BodyPoint>();
+    public List<BodyPoint > DownNotMiddlePoints
+    {
+        get { return downNotMiddlePoints; }
+    }
+
     private readonly float radius = 0.2f; // 각 바디포인트 사이의 거리
 
     [Header("MiddlePoint와 다른 Point들 사이의 SpringJoint의 Frequency값")]
@@ -33,8 +44,16 @@ public class SoftBody : MonoBehaviour
     private void Awake()
     {
         UpdateVerticies();
+        SetPoints();
+
+        for (int i = 0; i < notMiddlePoints.Count; i++)
+        {
+            CheckPointType(i);
+            SetJoints(i);
+        }
     }
-    private void Start()
+
+    private void SetPoints()
     {
         points.Clear();
         transform.GetComponentsInChildren<BodyPoint>().ForEach(x => points.Add(x.transform));
@@ -62,28 +81,46 @@ public class SoftBody : MonoBehaviour
                 middlePoint.SoftBody = this;
             }
         }
+    }
 
-        for (int i = 0; i < notMiddlePoints.Count; i++)
+    private void CheckPointType(int i)
+    {
+        BodyPoint bodyPoint = notMiddlePoints[i].GetComponent<BodyPoint>();
+        
+        Transform bodyPointTrm = notMiddlePoints[i];
+
+        if (bodyPointTrm.position.y > transform.position.y)
         {
-            int upNotMiddleBodyPointNum = (i - 1).Limit(0, notMiddlePoints.Count - 1);
-            int downNotMiddleBodyPointnum = (i + 1).Limit(0, notMiddlePoints.Count - 1);
-
-            Transform upPoint = notMiddlePoints[upNotMiddleBodyPointNum];
-            Transform downPoint = notMiddlePoints[downNotMiddleBodyPointnum];
-
-            RelativeJoint2D notMiddleRelativeJoint2D = null;
-            notMiddleRelativeJoint2D = notMiddlePoints[i].gameObject.AddComponent<RelativeJoint2D>();
-            notMiddleRelativeJoint2D.connectedBody = downPoint.GetComponent<Rigidbody2D>();
-
-            SpringJoint2D upNotMiddleSpringJoint2D = notMiddlePoints[i].gameObject.AddComponent<SpringJoint2D>();
-            upNotMiddleSpringJoint2D.connectedBody = upPoint.GetComponent<Rigidbody2D>();
-            upNotMiddleSpringJoint2D.frequency = pointToPointSpringJointFrequency;
-
-            SpringJoint2D downNotMiddleSpringJoint2D = notMiddlePoints[i].gameObject.AddComponent<SpringJoint2D>();
-            downNotMiddleSpringJoint2D.connectedBody = upPoint.GetComponent<Rigidbody2D>();
-            downNotMiddleSpringJoint2D.frequency = pointToPointSpringJointFrequency;
+            upNotMiddlePoints.Add(bodyPoint);
+        }
+        else if (bodyPointTrm.position.y < transform.position.y)
+        {
+            bodyPoint.StopListenings();
+            downNotMiddlePoints.Add(bodyPoint);
         }
     }
+
+    private void SetJoints(int i)
+    {
+        int upNotMiddleBodyPointNum = (i - 1).Limit(0, notMiddlePoints.Count - 1);
+        int downNotMiddleBodyPointnum = (i + 1).Limit(0, notMiddlePoints.Count - 1);
+
+        Transform upPoint = notMiddlePoints[upNotMiddleBodyPointNum];
+        Transform downPoint = notMiddlePoints[downNotMiddleBodyPointnum];
+
+        RelativeJoint2D notMiddleRelativeJoint2D = null;
+        notMiddleRelativeJoint2D = notMiddlePoints[i].gameObject.AddComponent<RelativeJoint2D>();
+        notMiddleRelativeJoint2D.connectedBody = downPoint.GetComponent<Rigidbody2D>();
+
+        SpringJoint2D upNotMiddleSpringJoint2D = notMiddlePoints[i].gameObject.AddComponent<SpringJoint2D>();
+        upNotMiddleSpringJoint2D.connectedBody = upPoint.GetComponent<Rigidbody2D>();
+        upNotMiddleSpringJoint2D.frequency = pointToPointSpringJointFrequency;
+
+        SpringJoint2D downNotMiddleSpringJoint2D = notMiddlePoints[i].gameObject.AddComponent<SpringJoint2D>();
+        downNotMiddleSpringJoint2D.connectedBody = upPoint.GetComponent<Rigidbody2D>();
+        downNotMiddleSpringJoint2D.frequency = pointToPointSpringJointFrequency;
+    }
+
     private void Update()
     {
         UpdateVerticies();
