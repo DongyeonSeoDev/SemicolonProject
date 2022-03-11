@@ -4,7 +4,9 @@ public class MulSpriteColorCtrl : ShaderCtrl
 {
     [ColorUsage(true, true)]
     public Color hdrColor;
+    [Range(-50f, 50f)]
     public float speed = 0.2f;
+    [Range(0f,100f)]
     public float scale = 5f;
     public float intensity = 1f;
 
@@ -24,13 +26,13 @@ public class MulSpriteColorCtrl : ShaderCtrl
 
     public void SetSpeed(float speed)
     {
-        InitSet();
+        base.InitSet();
         newMat.SetFloat("_Speed", speed);
     }
 
     public void SetScale(float scale)
     {
-        InitSet();
+        base.InitSet();
         newMat.SetFloat("_Scale", scale);
     }
 }

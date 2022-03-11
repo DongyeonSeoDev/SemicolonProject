@@ -174,12 +174,14 @@ public partial class UIManager : MonoSingleton<UIManager>
         {
             Item item = i as Item;
             RequestLeftBottomMsg(string.Format("아이템을 획득하였습니다. ({0} +{1})", item.itemData.itemName, item.DroppedCnt));
-
+            UpdateInventoryItemCount(item.itemData.id);
         });
         //Pickup plant (채집 성공)
         Global.AddMonoAction(Global.PickupPlant, item =>
         {
-            RequestLeftBottomMsg(string.Format("아이템을 획득하였습니다. ({0} +{1})", ((Pick)item).itemData.itemName, 1));
+            Pick p = (Pick)item;
+            RequestLeftBottomMsg(string.Format("아이템을 획득하였습니다. ({0} +{1})", p.itemData.itemName, 1));
+            UpdateInventoryItemCount(p.itemData.id);
         });
         //아이템 버림  
         Global.AddAction(Global.JunkItem, JunkItem);
@@ -187,8 +189,6 @@ public partial class UIManager : MonoSingleton<UIManager>
         EventManager.StartListening("PlayerDead", () => OnUIInteractSetActive(UIType.DEATH, true, true));
         EventManager.StartListening("PlayerRespawn", Respawn);
         EventManager.StartListening("GameClear", () => OnUIInteract(UIType.CLEAR, true));
-        EventManager.StartListening("TimePause", () => Time.timeScale = 0 );
-        EventManager.StartListening("TimeResume", () => Time.timeScale = 1);
         EventManager.StartListening("StageClear", () =>InsertNoticeQueue("Stage Clear", clearNoticeMsgVGrd, 90));
         EventManager.StartListening("ChangeBody", (str, dead) => { if(!dead) InsertNoticeQueue(MonsterCollection.Instance.GetMonsterInfo(str).bodyName + "(으)로 변신하였습니다"); });
         //EventManager.StartListening("StartNextStage", stageName => );  스테이지 이름 띄우기
@@ -294,13 +294,33 @@ public partial class UIManager : MonoSingleton<UIManager>
                 }
                 normalPanelCanvasg.DOFade(!gameUIList[(int)UIType.SETTING].gameObject.activeSelf ? 0:1, 0.3f);
                 break;
-            case UIType.MONSTERINFO_DETAIL:
+            case UIType.MONSTERINFO_DETAIL:  //몹 드랍템 정보창이나 추가스탯 창 UI켜져있으면 몹 정보 자세히 보기 UI 상호작용 여닫기 X
                 if (gameUIList[(int)UIType.MONSTERINFO_DETAIL_ITEM].gameObject.activeSelf || gameUIList[(int)UIType.MONSTERINFO_DETAIL_STAT].gameObject.activeSelf)
                     return true;
-                break;
-            case UIType.CHANGEABLEMOBLIST:
+                break; 
+            case UIType.CHANGEABLEMOBLIST:      //몸 제거창 뜨면 일시정지
                 if (!gameUIList[(int)UIType.CHANGEABLEMOBLIST].gameObject.activeSelf)
-                    Util.DelayFunc(() => EventManager.TriggerEvent("TimePause"), 0.1f);
+                    TimeManager.TimePause();
+                break;
+            case UIType.STAT:  //스탯 UI 업데이트
+                UpdateStatUI();
+                EffectManager.Instance.OnTopRightBtnEffect(UIType.STAT, false);
+                break;
+            case UIType.MONSTERINFO_DETAIL_STAT: //몹 자세히 보기에서 추가 스탯 정보 UI 업뎃
+                MonsterCollection.Instance.DetailStat();
+                break;
+            case UIType.MONSTERINFO_DETAIL_ITEM:  //몹 자세히 보기에서 드랍템 정보 UI 업뎃
+                MonsterCollection.Instance.DetailItem();
+                break;
+            case UIType.CHEF_FOODS_PANEL:
+                if (gameUIList[(int)type].gameObject.activeSelf)  //만들 요리 고르는 창 닫으려는데 음식 제작 패널 켜져있으면 그걸 먼저 닫아줌
+                {
+                    if(gameUIList[(int)UIType.PRODUCTION_PANEL].gameObject.activeSelf)
+                    {
+                        OnUIInteract(UIType.PRODUCTION_PANEL);
+                        return true;
+                    }
+                }
                 break;
         }
         return false;
@@ -352,10 +372,6 @@ public partial class UIManager : MonoSingleton<UIManager>
     {
         switch (type)
         {
-            case UIType.STAT:
-                UpdateStatUI();
-                EffectManager.Instance.OnTopRightBtnEffect(UIType.STAT, false);
-                break;
             case UIType.INVENTORY:
                 EffectManager.Instance.OnTopRightBtnEffect(UIType.INVENTORY, false);
                 break;
@@ -363,13 +379,7 @@ public partial class UIManager : MonoSingleton<UIManager>
                 EffectManager.Instance.OnTopRightBtnEffect(UIType.MONSTER_COLLECTION, false);
                 break;
             case UIType.SETTING:
-                EventManager.TriggerEvent("TimePause");
-                break;
-            case UIType.MONSTERINFO_DETAIL_STAT:
-                MonsterCollection.Instance.DetailStat();
-                break;
-            case UIType.MONSTERINFO_DETAIL_ITEM:
-                MonsterCollection.Instance.DetailItem();
+                TimeManager.TimePause();
                 break;
            
         }
@@ -395,7 +405,7 @@ public partial class UIManager : MonoSingleton<UIManager>
                 }
                 break;
             case UIType.SETTING:
-                EventManager.TriggerEvent("TimeResume");
+                TimeManager.TimeResume();
                 break;
             case UIType.KEYSETTING:
                 itrNoticeList.ForEach(x => x.Set());
@@ -403,7 +413,7 @@ public partial class UIManager : MonoSingleton<UIManager>
                 MonsterCollection.Instance.UpdateSavedBodyChangeKeyCodeTxt();
                 break;
             case UIType.CHEF_FOODS_PANEL:
-                EventManager.TriggerEvent("TimeResume");
+                TimeManager.TimeResume();
                 break;
             case UIType.MONSTERINFO_DETAIL:
                 MonsterCollection.Instance.CloseDetail();
@@ -495,7 +505,10 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     public void UpdateInventoryItemCount(int id)
     {
-        itemCntTxt.text = string.Format("수량: {0}개", gm.GetItemCount(id));
+        if (selectedItemId == id)
+        {
+            itemCntTxt.text = string.Format("수량: {0}개", gm.GetItemCount(id));
+        }
     }
     #endregion
 
@@ -518,7 +531,7 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     public void RequestSelectionWindow(string message, List<Action> actions, List<string> btnTexts, bool timePause = true, bool activeWarning = true) //선택창을 띄움
     {
-        if(timePause) EventManager.TriggerEvent("TimePause");
+        if(timePause) TimeManager.TimePause();
 
         selWdStack.ForEach(x => x.Hide(true));
 
@@ -559,7 +572,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         }
         else
         {
-            EventManager.TriggerEvent("TimeResume");
+            TimeManager.TimeResume();
         }
     }
 
@@ -647,6 +660,8 @@ public partial class UIManager : MonoSingleton<UIManager>
 
         if (selectedItemSlot.itemInfo == null)
             OnUIInteract(UIType.ITEM_DETAIL, true);
+
+        Global.ActionTrigger("ItemUse", selectedItemId);
     }
     #endregion
 
@@ -655,13 +670,14 @@ public partial class UIManager : MonoSingleton<UIManager>
     {
         Stat stat = sgm.Player.PlayerStat;
 
-        statTexts[0].text = string.Concat(Mathf.Clamp(sgm.Player.CurrentHp, 0, stat.MaxHp), '/', stat.MaxHp);
+        statTexts[0].text = string.Concat(Mathf.Ceil( Mathf.Clamp(sgm.Player.CurrentHp, 0, stat.MaxHp)), '/',Mathf.Ceil( stat.MaxHp));
         statTexts[1].text = string.Concat( stat.MinDamage, '~', stat.MaxDamage);
         statTexts[2].text = stat.Defense.ToString();
         statTexts[3].text = Mathf.RoundToInt(Mathf.Abs(stat.Speed)).ToString(); //스피드가 몇인지 소수로 나오면 어색할 것 같아서 일단은 정수로 나오게 함.
         statTexts[4].text = string.Concat(stat.CriticalRate, '%');
         statTexts[5].text = stat.CriticalDamage.ToString();
         statTexts[6].text = stat.Intellect.ToString();
+        statTexts[7].text = stat.AttackSpeed.ToString();
 
         //statText.text = $"HP\t\t{currentHP}/{stat.hp}\n\n공격력\t\t{stat.damage}\n\n방어력\t\t{stat.defense}\n\n이동속도\t\t{stat.speed}";
     }
@@ -675,7 +691,7 @@ public partial class UIManager : MonoSingleton<UIManager>
 
         float rate = (float)hp / p.PlayerStat.MaxHp;
         playerHPInfo.first.DOFillAmount(rate, 0.3f).OnComplete(()=> { if (!decrease) playerHPInfo.third.fillAmount = playerHPInfo.first.fillAmount; });
-        playerHPInfo.second.text = string.Concat(hp, '/', p.PlayerStat.MaxHp);
+        playerHPInfo.second.text = string.Concat(Mathf.Ceil(hp), '/', Mathf.Ceil(p.PlayerStat.MaxHp));  //표시만 올림해서
 
         if (decrease)
         {
