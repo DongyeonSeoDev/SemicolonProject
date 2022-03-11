@@ -51,9 +51,11 @@ namespace Enemy
 
                 if (enemy != null && enemy != this.enemy)
                 {
-                    (int, bool) damage = SlimeGameManager.Instance.Player.CriticalCheck(attackDamage);
+                    (int, bool) damage;
+                    damage.Item1 = Random.Range(SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage + 1);
+                    damage = SlimeGameManager.Instance.Player.CriticalCheck(damage.Item1);
 
-                    enemy.GetDamage(Random.Range(damage.Item1 - 5, damage.Item1 + 6), damage.Item2);
+                    enemy.GetDamage(damage.Item1, damage.Item2);
 
                     gameObject.SetActive(false);
                 }
