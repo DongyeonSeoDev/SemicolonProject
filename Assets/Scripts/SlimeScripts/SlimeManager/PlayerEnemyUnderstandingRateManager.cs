@@ -53,14 +53,6 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
 
     private Dictionary<string, Queue<int>> willUpUnderstandingRateDict = new Dictionary<string, Queue<int>>(); // 후에 올라갈 이해도의 몹 아이디값과 올라갈 수치값
 
-    //[Header("변신을 위한 최소의 이해도")]
-    //[SerializeField]
-    //private int minBodyChangeUnderstandingRate = 100;
-    //public int MinBodyChangeUnderstandingRate
-    //{
-    //    get { return minBodyChangeUnderstandingRate; }
-    //}
-
     [Header("이해도를 어디까지 올릴 수 있는가")]
     [SerializeField]
     private int maxUnderstandingRate = 120;

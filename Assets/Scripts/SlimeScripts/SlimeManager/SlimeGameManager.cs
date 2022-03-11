@@ -189,12 +189,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             (GameObject, EternalStat) newBodyData = playerEnemyUnderstandingRateManager.ChangalbeBodyDict[bodyId];
             currentBodyId = bodyId;
 
-            int upNewBodyStat = (playerEnemyUnderstandingRateManager.GetUnderstandingRate(bodyId) / understadingRatePercentageWhenUpStat);
-
-            if (upNewBodyStat >= 1) // this code is "imsi" code that inserted "imsi" values.
-            {
-                newBodyData.Item2 += newBodyData.Item2 * upNewBodyStat * upStatPercentage;// 10% 마다 upStatPercentage배씩 상승
-            }
+            newBodyData.Item2 += GetExtraUpStat(bodyId);
 
             newBody = Instantiate(newBodyData.Item1, player.transform);
 
@@ -237,6 +232,27 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
         {
             Debug.Log("Body Id: '" + bodyId + "' 로의 Body Change에 실패했습니다.");
         }
+    }
+    public EternalStat GetExtraUpStat(string objId)
+    {
+        EternalStat result = new EternalStat();
+        EternalStat upStat = playerEnemyUnderstandingRateManager.ChangalbeBodyDict[objId].Item2;
+
+        if (PlayerEnemyUnderstandingRateManager.Instance.ChangalbeBodyDict.ContainsKey(objId))
+        {
+            int upNewBodyStat = (playerEnemyUnderstandingRateManager.GetUnderstandingRate(objId) / understadingRatePercentageWhenUpStat);
+
+            if (upNewBodyStat >= 1) // this code is "imsi" code that inserted "imsi" values.
+            {
+                result = upStat * upNewBodyStat * upStatPercentage;// 10% 마다 upStatPercentage배씩 상승
+            }
+        }
+        else
+        {
+            Debug.LogWarning(objId + " is not on the changableBodyList!");
+        }
+
+        return result;
     }
 
     private void SetCanBodyChangeFalse()
