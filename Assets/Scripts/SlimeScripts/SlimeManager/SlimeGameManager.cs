@@ -166,7 +166,6 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
                 SetCanBodyChangeFalse();
             }
-            Debug.Log(isDead);
 
             enemy = newBody.GetComponent<Enemy.Enemy>();
 
