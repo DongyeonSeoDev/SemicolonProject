@@ -250,6 +250,8 @@ public class Inventory : MonoSingleton<Inventory>
                 if(slot.Count == 0)
                     slot.ResetData();
             }
+
+            UIManager.Instance.UpdateInventoryItemCount(id);
         }
     }
 

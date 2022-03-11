@@ -492,6 +492,11 @@ public partial class UIManager : MonoSingleton<UIManager>
         itemUseBtn.gameObject.SetActive(data.itemType != ItemType.ETC);
         if (data.itemType == ItemType.ETC && ((Ingredient)data).isUseable) itemUseBtn.gameObject.SetActive(true);
     }
+
+    public void UpdateInventoryItemCount(int id)
+    {
+        itemCntTxt.text = string.Format("¼ö·®: {0}°³", gm.GetItemCount(id));
+    }
     #endregion
 
     #region Message
