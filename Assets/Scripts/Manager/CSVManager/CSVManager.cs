@@ -1,39 +1,42 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using UnityEngine;
 
-public static class CSVManager
+public abstract class CSVManager
 {
-    private static Dictionary<string, string> csvData = new Dictionary<string, string>();
-    private static string path = Path.Combine(Application.dataPath, "Data", "Test.csv");
-    private static bool isRead = false;
+    protected Dictionary<string, string> csvData = new Dictionary<string, string>();
 
-    private static void ReadData()
+    private bool isRead = false;
+
+    protected abstract string path { get; }
+
+    protected virtual void HowToRead(string[] data)
     {
-        isRead = true;
-
-        using (StreamReader streamReader = new StreamReader(path))
-        {
-            while (!streamReader.EndOfStream)
-            {
-                string[] data = streamReader.ReadLine().Split(',');
-                csvData.Add(data[0], data[1]);
-            }
-        }
+        csvData.Add(data[0], data[1]);
     }
 
-    private static void WriteData()
+    protected virtual void HowToWrite(StreamWriter streamWriter, KeyValuePair<string, string> data)
     {
-        using (StreamWriter streamWriter = new StreamWriter(path))
-        {
-            foreach (KeyValuePair<string, string> data in csvData)
-            {
-                streamWriter.WriteLine(data.Key + ',' + data.Value);
-            }
-        }
+        streamWriter.WriteLine(data.Key + ',' + data.Value);
     }
 
-    public static void SetData(string key, string value)
+    public string GetData(string key)
+    {
+        if (!isRead)
+        {
+            ReadData();
+        }
+
+        if (csvData.ContainsKey(key))
+        {
+            return csvData[key];
+        }
+
+        return null;
+    }
+
+    public void SetData(string key, string value)
     {
         if (!isRead)
         {
@@ -52,18 +55,27 @@ public static class CSVManager
         WriteData();
     }
 
-    public static string GetData(string key)
+    private void ReadData()
     {
-        if (!isRead)
-        {
-            ReadData();
-        }
+        isRead = true;
 
-        if (csvData.ContainsKey(key))
+        using (StreamReader streamReader = new StreamReader(path, Encoding.UTF8))
         {
-            return csvData[key];
+            while (!streamReader.EndOfStream)
+            {
+                HowToRead(streamReader.ReadLine().Split(','));
+            }
         }
+    }
 
-        return null;
+    private void WriteData()
+    {
+        using (StreamWriter streamWriter = new StreamWriter(path, false, Encoding.UTF8))
+        {
+            foreach (KeyValuePair<string, string> data in csvData)
+            {
+                HowToWrite(streamWriter, data);
+            }
+        }
     }
 }

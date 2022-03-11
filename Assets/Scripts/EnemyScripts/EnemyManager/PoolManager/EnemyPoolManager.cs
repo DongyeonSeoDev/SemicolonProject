@@ -7,10 +7,10 @@ namespace Enemy
 {
     public enum Type
     {
-        Slime_01,
+        Slime_01 = 1,
         Rat_02,
         Slime_03,
-        Bullet,
+        Bullet = 100,
         EnemyLoot,
         DeadEffect
     }

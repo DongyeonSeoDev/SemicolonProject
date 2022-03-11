@@ -9,8 +9,6 @@ public class StageDoor : InteractionObj
 
     public StageDataSO nextStageData;
 
-    public List<Enemy.EnemySpawnSO> enemySpawnSOList;
-
     private void Awake()
     {
         spr = GetComponent<SpriteRenderer>();
