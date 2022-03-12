@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,7 +6,7 @@ namespace Enemy
 {
     public class Enemy : EnemyPoolData // 적 관리 클래스
     {
-        public EnemyLootListSO enemyLootListSO;
+        public List<EnemyLootData> enemyLootListSO;
         public EnemyDataSO enemyDataSO;
         public Image hpBarFillImage;
         public GameObject hpBar;
@@ -22,11 +23,14 @@ namespace Enemy
 
         private float lastPositionX;
 
-        protected virtual void Awake()
+        private void Awake()
         {
             anim = GetComponent<Animator>();
             sr = GetComponent<SpriteRenderer>();
             rb = GetComponent<Rigidbody2D>();
+
+            CSVEnemyLoot.Instance.GetData("");
+            enemyLootListSO = CSVEnemyLoot.Instance.lootData[(int)enemyDataSO.enemyType];
         }
 
         private void Start()

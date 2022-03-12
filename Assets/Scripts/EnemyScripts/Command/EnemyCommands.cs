@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Enemy
@@ -253,24 +254,31 @@ namespace Enemy
     public class EnemyDeadAIControllerCommand : EnemyCommand // 적이 죽음
     {
         private GameObject enemyObject;
-        private EnemyLootListSO enemyLootListSO;
+        private List<EnemyLootData> enemyLootList;
 
         private Color enemyColor;
 
-        public EnemyDeadAIControllerCommand(GameObject enemyObj, EnemyLootListSO lootListSO, Color color)
+        public EnemyDeadAIControllerCommand(GameObject enemyObj, List<EnemyLootData> lootList, Color color)
         {
             enemyObject = enemyObj;
-            enemyLootListSO = lootListSO;
+            enemyLootList = lootList;
             enemyColor = color;
         }
 
         public override void Execute()
         {
-            for (int i = 0; i < enemyLootListSO.enemyLootList.Count; i++)
+            for (int i = 0; i < enemyLootList.Count; i++)
             {
-                for (int j = 0; j < enemyLootListSO.enemyLootList[i].lootCount; j++)
+                for (int j = 0; j < enemyLootList[i].count; j++)
                 {
-                    Water.PoolManager.GetItem("Item").GetComponent<Item>().SetData(enemyLootListSO.enemyLootList[i].enemyLoot.id, enemyObject.transform.position);
+                    if (CSVEnemyLoot.Instance.itemDictionary.ContainsKey(enemyLootList[i].lootName))
+                    {
+                        Water.PoolManager.GetItem("Item").GetComponent<Item>().SetData(CSVEnemyLoot.Instance.itemDictionary[enemyLootList[i].lootName].id, enemyObject.transform.position);
+                    }
+                    else
+                    {
+                        Debug.Log(enemyLootList[i].lootName);
+                    }
                 }
             }
 

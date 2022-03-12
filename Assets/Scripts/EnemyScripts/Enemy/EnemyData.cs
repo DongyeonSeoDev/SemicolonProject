@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -32,8 +33,9 @@ namespace Enemy
         public EnemyController eEnemyController = EnemyController.AI;
         public EnemyType enemyType;
 
+        public List<EnemyLootData> enemyLootList;
+
         public GameObject enemyObject;
-        public EnemyLootListSO enemyLootList;
         public Animator enemyAnimator;
         public SpriteRenderer enemySpriteRenderer;
         public Rigidbody2D enemyRigidbody2D;
