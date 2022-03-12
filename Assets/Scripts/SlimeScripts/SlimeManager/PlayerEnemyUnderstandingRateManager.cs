@@ -61,22 +61,22 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
         get { return maxUnderstandingRate; }
     }
 
-
-    void Start()
+    private void Awake()
     {
-        // SetUnderstandingRate("Enemy", 0); // For Test
-
         changableBodyDict.Clear();
 
         changableBodyList.ForEach(x =>
         {
             // x.bodyScript = x.body.GetComponent<Enemy.Enemy>();
             changableBodyDict.Add(x.bodyId.ToString(), (x.body, x.additionalBodyStat));
-            playerEnemyUnderStandingRateDict .Add(x.bodyId.ToString(), 120);
+            playerEnemyUnderStandingRateDict.Add(x.bodyId.ToString(), 120);
 
             // Debug.Log(enemyId);
         });
-
+    }
+    void Start()
+    {
+        // SetUnderstandingRate("Enemy", 0); // For Test
         EventManager.StartListening("PlayerDead", ResetDicts);
         EventManager.StartListening("PlayerBodySet", MountBody);
     }
