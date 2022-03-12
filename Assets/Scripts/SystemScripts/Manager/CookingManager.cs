@@ -83,7 +83,7 @@ public class CookingManager : MonoSingleton<CookingManager>
             MakeFoodInfoUIReset();
             CheckCannotMakeFoods();
             SortMakeFoods();
-            UIManager.Instance.OnUIInteract(UIType.PRODUCTION_PANEL);  //음식을 만들었다는건 음식 만들기 버튼을 눌렀다는 것이고 음식 제작 패널이 켜져있었다는 것이므로 이것을 꺼준다.
+            UIManager.Instance.OnUIInteractSetActive(UIType.PRODUCTION_PANEL, false, true);  //음식 제작 창 꺼줌
         });
 
         Global.AddAction(Global.JunkItem, x =>
@@ -106,8 +106,8 @@ public class CookingManager : MonoSingleton<CookingManager>
                 MakeFoodInfoUIReset();
                 CheckCannotMakeFoods();
                 SortMakeFoods();
-                UIManager.Instance.OnUIInteractSetActive(UIType.PRODUCTION_PANEL, false, true);
             }
+            UIManager.Instance.OnUIInteractSetActive(UIType.PRODUCTION_PANEL, false, true);
         });
     }
 

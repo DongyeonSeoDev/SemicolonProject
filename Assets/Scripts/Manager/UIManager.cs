@@ -96,6 +96,8 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     [SerializeField] private CanvasGroup loadingCvsg;
 
+    [SerializeField] private ResolutionOption resolutionOption;
+
     //public Text statText;
     public Text[] statTexts;
 
@@ -115,6 +117,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         sw = cursorImgRectTrm.rect.width;
 
         noticeMsgGrd = noticeUIPair.first.GetComponent<NoticeMsg>().msgTmp.colorGradient;
+        allCanvasScalers = canvasParent.GetComponentsInChildren<CanvasScaler>();
 
         int i;
         for(i=0; i<gameCanvases.Length; i++)
@@ -140,15 +143,38 @@ public partial class UIManager : MonoSingleton<UIManager>
         PoolManager.CreatePool(selectionBtnPair.first, selectionBtnPair.second, 2, "SelBtn");
     }
 
-    private void Start()
+    private void OnEnable()
     {
         gm = GameManager.Instance;
         sgm = SlimeGameManager.Instance;
+    }
 
+    private void Start()
+    {
         DefineAction();
+    }
 
+    public void OnChangedResolution()
+    {
         screenHalf.first = Screen.width * 0.5f;
         screenHalf.second = Screen.height * 0.5f;
+
+        /*int i;
+        for(i=0; i<allCanvasScalers.Length; i++)
+        {
+            allCanvasScalers[i].referenceResolution = new Vector2(Screen.width, Screen.height);
+        }*/
+
+       /* float fixedAspectRatio = 1080f / 1920f;
+        float currentAspectRatio = (float)Screen.width / Screen.height;
+
+        float mwh = currentAspectRatio > fixedAspectRatio ? 1 : 0;
+        if (currentAspectRatio == fixedAspectRatio) mwh = 0.5f;
+
+        for (i = 0; i < allCanvasScalers.Length; i++)
+        {
+            allCanvasScalers[i].matchWidthOrHeight = mwh;
+        }*/
     }
 
     private void DefineAction()
@@ -185,6 +211,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         });
         //아이템 버림  
         Global.AddAction(Global.JunkItem, JunkItem);
+        Global.AddAction("ChangeResolution", OnChangedResolution);
 
         EventManager.StartListening("PlayerDead", () => OnUIInteractSetActive(UIType.DEATH, true, true));
         EventManager.StartListening("PlayerRespawn", Respawn);
@@ -278,7 +305,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         else ui.InActiveTransition();
     }
 
-    private bool ExceptionHandler(UIType type) //상호작용에 대한 예외처리
+    private bool ExceptionHandler(UIType type) //UI여닫는 상호작용에 대한 예외처리. true를 리턴하면 상호작용 안함 
     {
         switch (type)
         {
@@ -390,12 +417,12 @@ public partial class UIManager : MonoSingleton<UIManager>
         switch (type)
         {
             case UIType.PRODUCTION_PANEL:
-                CookingManager.Instance.MakeFoodInfoUIReset();
+                CookingManager.Instance.MakeFoodInfoUIReset();  //음식 선택 표시 없애기
                 break;
             case UIType.FOOD_DETAIL:
-                CookingManager.Instance.detailID = -1;
+                CookingManager.Instance.detailID = -1;  
                 break;
-            case UIType.ITEM_DETAIL:
+            case UIType.ITEM_DETAIL:  //아이템 선택표시 없애기
                 selectedItemId = -1;
                 if (selectedItemSlot)
                 {
@@ -407,7 +434,7 @@ public partial class UIManager : MonoSingleton<UIManager>
             case UIType.SETTING:
                 TimeManager.TimeResume();
                 break;
-            case UIType.KEYSETTING:
+            case UIType.KEYSETTING:  //키세팅 창 닫히면 상호작용 표시, 스킬 슬롯, 몸 저장 슬롯 등 키코드가 나오는 UI들을 다시 업데이트함
                 itrNoticeList.ForEach(x => x.Set());
                 SkillUIManager.Instance.UpdateSkillKeyCode();
                 MonsterCollection.Instance.UpdateSavedBodyChangeKeyCodeTxt();
@@ -417,6 +444,9 @@ public partial class UIManager : MonoSingleton<UIManager>
                 break;
             case UIType.MONSTERINFO_DETAIL:
                 MonsterCollection.Instance.CloseDetail();
+                break;
+            case UIType.RESOLUTION:
+                resolutionOption.ExitResolutionPanel();
                 break;
         }
     }

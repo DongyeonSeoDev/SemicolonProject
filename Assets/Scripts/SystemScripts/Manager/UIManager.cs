@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 using TMPro;
 using Water;
@@ -13,7 +14,10 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     #region Canvas
     //public Canvas ordinaryCvs;
-    public Canvas[] gameCanvases;
+    private CanvasScaler[] allCanvasScalers;
+
+    public Transform canvasParent;
+    public Canvas[] gameCanvases;  //overlay 아닌 애들
     #endregion
 
     [HideInInspector] public List<Menu> gameMenuList = new List<Menu>();

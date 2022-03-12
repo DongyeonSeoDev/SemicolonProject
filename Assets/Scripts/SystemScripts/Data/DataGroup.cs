@@ -18,6 +18,7 @@ public class MonsterInfo
     public string id;
     public int understandingRate; //이해도 (동화율)
     public float absorptionRate; //흡수 확률
+    public bool isSaveBody; //이 몬스터의 몸을 저장했는지
 
     public MonsterInfo() { }
     public MonsterInfo(string id, int understandingRate, float absorptionRate)
