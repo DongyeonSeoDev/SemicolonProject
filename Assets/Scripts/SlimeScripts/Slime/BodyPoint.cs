@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -65,7 +66,7 @@ public class BodyPoint : MonoBehaviour
     private void OnEnable()
     {
          EventManager.StartListening("PlayerShoot", PlayerShoot);
-         EventManager.StartListening("PlayerBodySlap", PlayerBodySlap);
+         EventManager.StartListening("PlayerBodySlap", (Action<float>)PlayerBodySlap);
     }
     private void OnDisable()
     {
@@ -75,7 +76,7 @@ public class BodyPoint : MonoBehaviour
     public void StopListenings()
     {
         EventManager.StopListening("PlayerShoot", PlayerShoot);
-        EventManager.StopListening("PlayerBodySlap", PlayerBodySlap);
+        EventManager.StopListening("PlayerBodySlap", (Action<float>)PlayerBodySlap);
     }
 
     private void Update()
