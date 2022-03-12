@@ -127,8 +127,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         monsterImgNameEx.second.text = data.bodyName;
         monsterImgNameEx.third.text = data.bodyExplanation;
 
-        mobDrainProbAndAssimTmp.first.SetText("흡수확률: " + urmg.GetDrainProbabilityDict(id).ToString());
-        mobDrainProbAndAssimTmp.second.SetText("동화율: " + urmg.PlayerEnemyUnderStandingRateDic[id].ToString());
+        mobDrainProbAndAssimTmp.first.SetText("흡수확률: " + urmg.GetDrainProbabilityDict(id).ToString() + "%");
+        mobDrainProbAndAssimTmp.second.SetText("동화율: " + urmg.PlayerEnemyUnderStandingRateDic[id].ToString() + "%");
 
         ItemSO item = data.dropItem;
         mobDropItemImg.sprite = item.GetSprite();
