@@ -4875,5 +4875,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d858b925ac30174ba63041d24d86ed9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolType: 5
+  poolType: 102
   count: 5

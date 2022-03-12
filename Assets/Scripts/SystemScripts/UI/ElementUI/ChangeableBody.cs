@@ -128,7 +128,7 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
             }
         }
 
-        if(Input.GetKeyDown(KeySetting.keyDict[slotKey]))
+        if(Input.GetKeyDown(KeySetting.keyDict[slotKey]) && !TimeManager.IsTimePaused)
         {
             SlimeGameManager.Instance.PlayerBodyChange(bodyID);
         }

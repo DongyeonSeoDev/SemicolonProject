@@ -14,13 +14,7 @@ public class Environment : MonoSingleton<Environment>
 
     private void DefineEvent()
     {
-        EventManager.StartListening("TimePause", () =>
-        {
-            mainLight.DOIntensity(0.7f, 0.5f, true);
-        });
-        EventManager.StartListening("TimeResume", () =>
-        {
-            mainLight.DOIntensity(1f, 0.5f, true);
-        });
+        TimeManager.timePauseAction += ()=> mainLight.DOIntensity(0.7f, 0.5f, true);
+        TimeManager.timeResumeAction += () => mainLight.DOIntensity(1f, 0.5f, true);
     }
 }

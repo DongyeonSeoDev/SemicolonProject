@@ -58,13 +58,14 @@ public class PlayerInput : MonoBehaviour
     }
     private void OnEnable()
     {
-        EventManager.StartListening("TimePause", TimePause);
-        EventManager.StartListening("TimeResume", TimeResume);
+        TimeManager.timePauseAction += TimePause;
+        TimeManager.timeResumeAction += TimeResume;
+        
     }
     private void OnDisable()
     {
-        EventManager.StopListening("TimePause", TimePause);
-        EventManager.StopListening("TimeResume", TimeResume);
+        TimeManager.timePauseAction -= TimePause;
+        TimeManager.timeResumeAction -= TimeResume;
     }
 
     void Update()

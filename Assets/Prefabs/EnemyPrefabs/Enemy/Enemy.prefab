@@ -258,7 +258,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 77b3797ea0751164d8b4bb0da8c1cf14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  poolType: 0
+  poolType: 1
   count: 4
   enemyLootListSO: {fileID: 11400000, guid: f08037efe7334bc46a049b6a12fe431a, type: 2}
   enemyDataSO: {fileID: 11400000, guid: 786762c1c87c93a44a38cd24d2c534d1, type: 2}

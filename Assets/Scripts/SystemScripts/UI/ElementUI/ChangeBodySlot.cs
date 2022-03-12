@@ -22,7 +22,7 @@ public class ChangeBodySlot : MonoBehaviour  //클래스명 뭐라할지 애매하네
             {
                 PlayerEnemyUnderstandingRateManager.Instance.SetMountObj(MonsterCollection.Instance.IDToSave, SlotNumber - 1);
                 UIManager.Instance.OnUIInteract(UIType.CHANGEABLEMOBLIST, true);
-                EventManager.TriggerEvent("TimeResume");
+                TimeManager.TimeResume();
             }, "선택된 흡수한 몸을 제거하시겠습니까?");
         });
     }
