@@ -167,14 +167,14 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         EternalStat stat = mobIdToSlot[selectedDetailMobId].BodyData.additionalBodyStat;
         EternalStat addiStat = SlimeGameManager.Instance.GetExtraUpStat(selectedDetailMobId);
 
-        statText[0].text = MinusException(stat.maxHp) + AdditionalStat(stat.maxHp);
-        statText[1].text = MinusException(stat.maxDamage) + AdditionalStat(stat.maxDamage);  //maxDamage만큼 min/max 데미지를 올려준다
-        statText[2].text = MinusException(stat.defense) + AdditionalStat(stat.defense);
-        statText[3].text = MinusException(Mathf.RoundToInt(Mathf.Abs(stat.speed))) + AdditionalStat(Mathf.RoundToInt(Mathf.Abs(stat.speed)));
-        statText[4].text = string.Concat(MinusException(stat.criticalRate), '%') + AdditionalStat(stat.criticalRate, true);
-        statText[5].text = string.Concat( MinusException(stat.criticalDamage), '%') + AdditionalStat(stat.criticalDamage, true);
-        statText[6].text = MinusException(stat.intellect) + AdditionalStat(stat.intellect);
-        statText[7].text = MinusException(stat.attackSpeed) + AdditionalStat(stat.attackSpeed);
+        statText[0].text = MinusException(stat.maxHp) + AdditionalStat(addiStat.maxHp);
+        statText[1].text = MinusException(stat.maxDamage) + AdditionalStat(addiStat.maxDamage);  //maxDamage만큼 min/max 데미지를 올려준다
+        statText[2].text = MinusException(stat.defense) + AdditionalStat(addiStat.defense);
+        statText[3].text = MinusException(Mathf.RoundToInt(stat.speed)) + AdditionalStat(Mathf.RoundToInt(addiStat.speed));
+        statText[4].text = string.Concat(MinusException(stat.criticalRate), '%') + AdditionalStat(addiStat.criticalRate, true);
+        statText[5].text = string.Concat( MinusException(stat.criticalDamage), '%') + AdditionalStat(addiStat.criticalDamage, true);
+        statText[6].text = MinusException(stat.intellect) + AdditionalStat(addiStat.intellect);
+        statText[7].text = MinusException(stat.attackSpeed) + AdditionalStat(addiStat.attackSpeed);
     }
 
     private string MinusException(int value)
