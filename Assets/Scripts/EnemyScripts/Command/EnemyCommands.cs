@@ -236,21 +236,6 @@ namespace Enemy
         }
     }
 
-    public class EnemyGetDamagedPlayerControllerCommand : EnemyCommand
-    {
-        private int damage;
-
-        public EnemyGetDamagedPlayerControllerCommand(int damage)
-        {
-            this.damage = damage;
-        }
-
-        public override void Execute()
-        {
-            SlimeGameManager.Instance.Player.GetDamage(damage);
-        }
-    }
-
     public class EnemyDeadAIControllerCommand : EnemyCommand // 적이 죽음
     {
         private GameObject enemyObject;

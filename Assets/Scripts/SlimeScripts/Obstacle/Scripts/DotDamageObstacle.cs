@@ -21,7 +21,7 @@ public class DotDamageObstacle : MonoBehaviour
 
         if(isPlayerIn && damageTimer >= damageDelay)
         {
-            SlimeGameManager.Instance.Player.GetDamage(dotDamage);
+            SlimeGameManager.Instance.Player.GetDamage(gameObject, dotDamage);
 
             damageTimer = 0;
         }
