@@ -307,7 +307,12 @@ namespace Enemy
         {
             currentTime += Time.deltaTime;
 
-            if (currentTime > enemyData.damageDelay)
+            if (enemyData.hp <= 0)
+            {
+                currentTime = enemyData.damageDelay;
+            }
+
+            if (currentTime >= enemyData.damageDelay)
             {
                 enemyCommand[0].Execute();
 

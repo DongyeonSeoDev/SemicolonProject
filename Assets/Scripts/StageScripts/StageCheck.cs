@@ -61,10 +61,7 @@ public class StageCheck : MonoBehaviour
                 Enemy.EnemyManager.Instance.enemyCount = enemyCount;
             }
 
-            for (int i = 0; i < Enemy.EnemyManager.Instance.enemyList[stageNumber].Count; i++)
-            {
-                Enemy.EnemyManager.Instance.enemyList[stageNumber][i].MoveEnemy();
-            }
+            EventManager.TriggerEvent("EnemyMove", stageNumber);
 
             col.enabled = false;
 
