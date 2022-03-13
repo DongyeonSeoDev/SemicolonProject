@@ -12,13 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6ae80f34d028b34ea450ad167b600e5, type: 3}
   m_Name: RecoveryPotion
   m_EditorClassIdentifier: 
-  itemSprite: {fileID: 0}
+  itemSprite: {fileID: 21300000, guid: 00e8d0d75dedaa240b7117b8f61c11f6, type: 3}
+  secondItemSprite: {fileID: 0}
   itemType: 1
-  id: 15
   maxCount: 5
+  existBattleCount: -1
   itemName: "\uD68C\uBCF5 \uBB3C\uC57D"
   explanation: "\uCCB4\uB825\uC774 80 \uD68C\uBCF5\uB41C\uB2E4.\n\n<b>\uCCB4\uB825
-    +80</b>"
+    +80%</b>"
   needIngredients:
   - ingredient: {fileID: 11400000, guid: 9fc9500b9b1a4b34aabf03d842ac24af, type: 2}
     needCount: 1

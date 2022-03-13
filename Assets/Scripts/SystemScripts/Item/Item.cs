@@ -29,7 +29,7 @@ public class Item : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
     }
 
-    public virtual void SetData(int id, Vector3 enemyPos, int droppedCount = 1)
+    public virtual void SetData(string id, Vector3 enemyPos, int droppedCount = 1)
     {
         _itemData = GameManager.Instance.GetItemData(id);
         spriteRenderer.sprite = _itemData.GetSprite();

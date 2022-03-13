@@ -165,15 +165,16 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     public void DetailStat()
     {
         EternalStat stat = mobIdToSlot[selectedDetailMobId].BodyData.additionalBodyStat;
+        EternalStat addiStat = SlimeGameManager.Instance.GetExtraUpStat(selectedDetailMobId);
 
-        statText[0].text = MinusException(stat.maxHp);
-        statText[1].text = MinusException(stat.maxDamage);  //maxDamage만큼 min/max 데미지를 올려준다
-        statText[2].text = MinusException(stat.defense);
-        statText[3].text = MinusException(Mathf.RoundToInt(Mathf.Abs(stat.speed)));
-        statText[4].text = string.Concat(MinusException(stat.criticalRate), '%');
-        statText[5].text = MinusException(stat.criticalDamage);
-        statText[6].text = MinusException(stat.intellect);
-        statText[7].text = MinusException(stat.attackSpeed);
+        statText[0].text = MinusException(stat.maxHp) + AdditionalStat(stat.maxHp);
+        statText[1].text = MinusException(stat.maxDamage) + AdditionalStat(stat.maxDamage);  //maxDamage만큼 min/max 데미지를 올려준다
+        statText[2].text = MinusException(stat.defense) + AdditionalStat(stat.defense);
+        statText[3].text = MinusException(Mathf.RoundToInt(Mathf.Abs(stat.speed))) + AdditionalStat(Mathf.RoundToInt(Mathf.Abs(stat.speed)));
+        statText[4].text = string.Concat(MinusException(stat.criticalRate), '%') + AdditionalStat(stat.criticalRate, true);
+        statText[5].text = string.Concat( MinusException(stat.criticalDamage), '%') + AdditionalStat(stat.criticalDamage, true);
+        statText[6].text = MinusException(stat.intellect) + AdditionalStat(stat.intellect);
+        statText[7].text = MinusException(stat.attackSpeed) + AdditionalStat(stat.attackSpeed);
     }
 
     private string MinusException(int value)
@@ -186,6 +187,17 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     {
         if (value < 0) return value.ToString();
         else return "+" + value.ToString();
+    }
+
+    private string AdditionalStat(int value, bool percent = false)
+    {
+        if (!percent) return string.Concat("(+", value, ')');
+        else return string.Concat("(+", value, "%)");
+    }
+    private string AdditionalStat(float value, bool percent = false)
+    {
+        if (!percent) return string.Concat("(+", value, ')');
+        else return string.Concat("(+", value, "%)");
     }
 
     #endregion

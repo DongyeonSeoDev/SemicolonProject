@@ -12,9 +12,9 @@ public partial class GameManager : MonoSingleton<GameManager>
     [SerializeField] private SaveData saveData;
     public SaveData savedData { get { return saveData; } }
 
-    private Dictionary<int, ItemSO> itemDataDic = new Dictionary<int, ItemSO>();
+    private Dictionary<string, ItemSO> itemDataDic = new Dictionary<string, ItemSO>();
 
-    private List<Triple<int, int, int>> limitedBattleCntItems = new List<Triple<int, int, int>>(); //n교전 후에 사라지는 아이템들 리스트 (아이디, 현재 교전 수, 최대 교전 수(가 되면 사라짐))
+    private List<Triple<string, int, int>> limitedBattleCntItems = new List<Triple<string, int, int>>(); //n교전 후에 사라지는 아이템들 리스트 (아이디, 현재 교전 수, 최대 교전 수(가 되면 사라짐))
 
     #region prefab and parent
     public GameObject foodBtnPrefab, ingredientImgPrefab;
@@ -129,11 +129,11 @@ public partial class GameManager : MonoSingleton<GameManager>
 
         Global.AddAction("GetItem", _id =>
         {
-            int id = (int)_id;
+            string id = (string)_id;
             int limitedBattleCount = itemDataDic[id].existBattleCount;
             if (limitedBattleCount > 0)
             {
-                limitedBattleCntItems.Add(new Triple<int, int, int>(id, 0, limitedBattleCount));
+                limitedBattleCntItems.Add(new Triple<string, int, int>(id, 0, limitedBattleCount));
             }
         });
 
@@ -165,10 +165,10 @@ public partial class GameManager : MonoSingleton<GameManager>
 
 #region Item
 
-    public ItemSO GetItemData(int id) => itemDataDic[id];
-    public bool ExistItem(int id) => itemDataDic.ContainsKey(id);
+    public ItemSO GetItemData(string id) => itemDataDic[id];
+    public bool ExistItem(string id) => itemDataDic.ContainsKey(id);
 
-    public int GetItemCount(int id) //보유중인 해당 id의 아이템 개수 가져옴 
+    public int GetItemCount(string id) //보유중인 해당 id의 아이템 개수 가져옴 
     {
         if (savedData.userInfo.userItems.keyValueDic.ContainsKey(id))
             return savedData.userInfo.userItems[id].count;
@@ -183,7 +183,7 @@ public partial class GameManager : MonoSingleton<GameManager>
             saveData.userInfo.userItems[itemInfo.id] = itemInfo;
     }
 
-    public void RemoveItem(int id, int count = 1)
+    public void RemoveItem(string id, int count = 1)
     {
         if (saveData.userInfo.userItems.keyValueDic.ContainsKey(id) && saveData.userInfo.userItems[id].count >= count)
         {
@@ -222,7 +222,7 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     public void UpdateItemBattleRestCount() //교전 수가 정해진 아이템들 현재 교전 수 1 증가하고 최대치인 것은 삭제
     {
-        List<Triple<int, int, int>> sList = new List<Triple<int, int, int>>();
+        List<Triple<string, int, int>> sList = new List<Triple<string, int, int>>();
 
         limitedBattleCntItems.ForEach(item =>
         {
@@ -240,7 +240,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         });
     }
 
-    public void RemoveLimitedBattleCntItemsElement(int id)  //limitedBattleCntItems의 요소를 하나 제거
+    public void RemoveLimitedBattleCntItemsElement(string id)  //limitedBattleCntItems의 요소를 하나 제거
     {
         for(int i=0; i< limitedBattleCntItems.Count; ++i)
         {

@@ -4,14 +4,16 @@ public static class ItemUseMng
 {
     //private static Player player;
     
-    public static void IncreaseCurrentHP(Player p, int value)
+    public static void IncreaseCurrentHP(Player p, float value)
     {
-        p.GetHeal(value);
-        UIManager.Instance.InsertNoticeQueue("HP " + value + " 회복");
+        value *= p.PlayerStat.MaxHp * 0.01f;
+        int iValue = Mathf.CeilToInt(value);
+        p.GetHeal(iValue);
+        UIManager.Instance.InsertNoticeQueue("HP " + iValue + " 회복");
         EffectManager.Instance.OnTopRightBtnEffect(UIType.STAT, true);
     }
 
-    public static void IncreaseMaxHP(Player p, int value)
+    public static void IncreaseMaxHP(Player p, float value)
     {
         p.PlayerStat.additionalEternalStat.maxHp += value;
         UIManager.Instance.UpdatePlayerHPUI();

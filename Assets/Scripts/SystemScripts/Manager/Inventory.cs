@@ -79,7 +79,7 @@ public class Inventory : MonoSingleton<Inventory>
         });
     }
 
-    public ItemSlot FindSlot(int id)  // 함수명이 곧 기능 설명
+    public ItemSlot FindSlot(string id)  // 함수명이 곧 기능 설명
     {
         for(int i=0; i<itemSlots.Count; ++i)
         {
@@ -90,7 +90,7 @@ public class Inventory : MonoSingleton<Inventory>
         return null;
     }
 
-    public ItemSlot FindInsertableSlot(int id)  //해당 id의 템이 존재하는 슬롯 가져옴 (더 집어넣을 수 있는 칸이면)
+    public ItemSlot FindInsertableSlot(string id)  //해당 id의 템이 존재하는 슬롯 가져옴 (더 집어넣을 수 있는 칸이면)
     {
         for (int i = 0; i < itemSlots.Count; ++i)
         {
@@ -113,7 +113,7 @@ public class Inventory : MonoSingleton<Inventory>
         return null;
     }
 
-    public bool CanCombine(int id, int count) //조합으로 얻는 음식을 넣을 칸이 있는지
+    public bool CanCombine(string id, int count) //조합으로 얻는 음식을 넣을 칸이 있는지
     {
         ItemSlot slot = FindInsertableSlot(id);
         if (slot || EmptySlot())
@@ -190,7 +190,7 @@ public class Inventory : MonoSingleton<Inventory>
         gm.AddItem(item);
 
         int count = item.count;
-        int id = item.id;
+        string id = item.id;
         int tmp;
 
         ItemSlot slot = FindInsertableSlot(id);
@@ -219,7 +219,7 @@ public class Inventory : MonoSingleton<Inventory>
         Global.ActionTrigger("GetItem", id);
     }
 
-    public void RemoveItem(int id, int count)  //아이템 조짐
+    public void RemoveItem(string id, int count)  //아이템 조짐
     {
         if(gm.ExistItem(id))
         {
@@ -255,7 +255,7 @@ public class Inventory : MonoSingleton<Inventory>
         }
     }
 
-    public List<ItemSlot> GetInsertableSlots(int id, int count) //해당 아이디의 템을 count개 만큼 인벤토리에 집어넣을 때 사용한 아이템 슬롯들을 반환
+    public List<ItemSlot> GetInsertableSlots(string id, int count) //해당 아이디의 템을 count개 만큼 인벤토리에 집어넣을 때 사용한 아이템 슬롯들을 반환
     {
         List<ItemSlot> list = new List<ItemSlot>();
 

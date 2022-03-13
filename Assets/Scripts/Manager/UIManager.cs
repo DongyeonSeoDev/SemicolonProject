@@ -31,7 +31,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     #endregion
 
     #region Inventory Item Detail View
-    private int selectedItemId = -1; //클릭한 아이템 슬롯의 아이템 아이디
+    private string selectedItemId = String.Empty; //클릭한 아이템 슬롯의 아이템 아이디
     private ItemSlot selectedItemSlot; //클릭한 아이템 슬롯
 
     [Space(20)]
@@ -420,10 +420,10 @@ public partial class UIManager : MonoSingleton<UIManager>
                 CookingManager.Instance.MakeFoodInfoUIReset();  //음식 선택 표시 없애기
                 break;
             case UIType.FOOD_DETAIL:
-                CookingManager.Instance.detailID = -1;  
+                CookingManager.Instance.detailID = string.Empty;  
                 break;
             case UIType.ITEM_DETAIL:  //아이템 선택표시 없애기
-                selectedItemId = -1;
+                selectedItemId = String.Empty;
                 if (selectedItemSlot)
                 {
                     selectedItemSlot.outline.DOKill();
@@ -507,7 +507,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     #region Inventory
     public void DetailItemSlot(ItemSlot slot)  //인벤토리에서 아이템 슬롯 클릭
     {
-        int itemID = slot.itemInfo.id;
+        string itemID = slot.itemInfo.id;
 
         if (selectedItemSlot)
         {
@@ -517,7 +517,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         selectedItemSlot = slot;
 
         if (selectedItemId == itemID) return;
-        else if (selectedItemId == -1) OnUIInteract(UIType.ITEM_DETAIL);
+        else if (string.IsNullOrEmpty(selectedItemId)) OnUIInteract(UIType.ITEM_DETAIL);
         selectedItemId = itemID;
 
         ItemSO data = gm.GetItemData(itemID);
@@ -533,7 +533,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         if (data.itemType == ItemType.ETC && ((Ingredient)data).isUseable) itemUseBtn.gameObject.SetActive(true);
     }
 
-    public void UpdateInventoryItemCount(int id)
+    public void UpdateInventoryItemCount(string id)
     {
         if (selectedItemId == id)
         {

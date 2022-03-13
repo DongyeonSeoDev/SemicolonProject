@@ -85,11 +85,11 @@ public class GameUIFields
 [Serializable]
 public class ItemInfo
 {
-    public int id;
+    public string id;
     public int count;
 
     public ItemInfo() { }
-    public ItemInfo(int id, int count)
+    public ItemInfo(string id, int count)
     {
         this.id = id;
         this.count = count;

@@ -20,7 +20,7 @@ public class CookingManager : MonoSingleton<CookingManager>
 
     private GameManager gm;
 
-    private Dictionary<int, FoodButton> foodBtnDic = new Dictionary<int, FoodButton>();  
+    private Dictionary<string, FoodButton> foodBtnDic = new Dictionary<string, FoodButton>();  
 
     private FoodButton selectedFoodBtn = null;  //음식 만들기 창에서 자신이 선택한 음식 버튼
     private List<IngredientImage> selectedFoodIngrImgs = new List<IngredientImage>(); //만들 음식 선택하고 보여지는 필요 재료 UI들
@@ -48,7 +48,7 @@ public class CookingManager : MonoSingleton<CookingManager>
     #region 음식이나 재료 자세히 보기창
     public Image detailFoodImg;
     public Text detailNameTxt, explanationTxt;
-    [HideInInspector] public int detailID = -1; //현재 자세히 보기중인 음식 혹은 재료의 아이디
+    [HideInInspector] public string detailID = string.Empty; //현재 자세히 보기중인 음식 혹은 재료의 아이디
     #endregion
 
     private void Start()
@@ -253,7 +253,7 @@ public class CookingManager : MonoSingleton<CookingManager>
 
     void Detail(ItemSO data)
     {
-        if (detailID == -1)
+        if (string.IsNullOrEmpty(detailID))
         {
             UIManager.Instance.OnUIInteract(UIType.FOOD_DETAIL);
         }
@@ -287,12 +287,6 @@ public class CookingManager : MonoSingleton<CookingManager>
         {
             Global.MonoActionTrigger(Global.TalkWithChef, testChef);
         }
-        else if (Input.GetKeyDown(KeyCode.LeftShift))
-        {
-            for (int i = 0; i <= 40; i += 5)
-            {
-                Inventory.Instance.GetItem(new ItemInfo(i, 6));
-            }
-        }
+        
     }
 }
