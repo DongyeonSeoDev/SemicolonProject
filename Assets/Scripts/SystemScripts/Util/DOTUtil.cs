@@ -57,6 +57,23 @@ public static class DOUtil
         tweeningDict[key] = tc;
         mono.StartCoroutine(tweeningDict[key]);
     }
+
+    public static void StartCo(string key, IEnumerator co, MonoBehaviour mono = null)
+    {
+        if (!mono) mono = Environment.Instance;
+        ExecuteTweening(key,co, mono);
+    }
+
+    public static void StopCo(string key, MonoBehaviour mono = null)
+    {
+        if(mono == null) mono = Environment.Instance;
+
+        if (tweeningDict.ContainsKey(key))
+        {
+            mono.StopCoroutine(tweeningDict[key]);
+            tweeningDict[key] = null;
+        }
+    }
 }
 
 public class CTween
