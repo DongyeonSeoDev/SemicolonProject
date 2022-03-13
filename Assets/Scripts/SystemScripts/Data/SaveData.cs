@@ -25,26 +25,30 @@ public class SaveData
 [Serializable]
 public class UserInfo
 {
+    //stage
+    public string currentStageID; //어느 스테이지까지 갔는지
+
     //스탯 정보
-    public int currentHp;
-    public Stat playerStat = new Stat();
+    public int currentHp; //현재 HP
+    public Stat playerStat = new Stat();  //현재 스탯
 
+    public string currentBodyID; //현재 장착중인 몸 아이디
+
+    public List<Triple<int, int, int>> limitedBattleCntItems = new List<Triple<int, int, int>>(); //n교전 후에 사라지는 아이템들 리스트 (아이디, 현재 교전 수, 최대 교전 수(가 되면 사라짐))
     public SaveDic<int, ItemInfo> userItems = new SaveDic<int, ItemInfo>(); //인벤토리 목록 
-
-    //public SaveDic<string, int> monstersAssimilationRate = new SaveDic<string, int>(); //몬스터 동화율
-
     public SaveDic<string, MonsterInfo> monsterInfoDic = new SaveDic<string, MonsterInfo>(); //몬스터 이해도(동화율), 흡수 확률 등의 정보
 }
 
 [Serializable]
 public class Option
 {
-    public SaveDic<KeyAction, KeyCode> keyInputDict = new SaveDic<KeyAction, KeyCode>();
+    public SaveDic<KeyAction, KeyCode> keyInputDict = new SaveDic<KeyAction, KeyCode>();  //키세팅
 
     //해상도는 자동으로 저장됨
     //public Pair<float, float> screenWidthHeight = new Pair<float, float>();
     //public bool isFullScreen = true;
-
+    
+    //볼륨
     public float masterSound = 0.5f;
     public float bgmSize = 0.6f;
     public float soundEffectSize = 0.7f;
@@ -52,7 +56,7 @@ public class Option
 
 
 
-
+#region Dic
 [Serializable]
 public class SaveDic<K, V>
 {
@@ -98,3 +102,4 @@ public class SaveDic<K, V>
         keyValueDic.Clear();
     }
 }
+#endregion
