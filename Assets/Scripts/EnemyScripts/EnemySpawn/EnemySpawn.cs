@@ -14,15 +14,14 @@ namespace Enemy
             PlayerRespawnEvent();
 
             EventManager.StartListening("AfterPlayerRespawn", PlayerRespawnEvent);
-
-            //EventManager.StartListening("SpawnEnemy", SpawnEnemy);
             EventManager.StartListening("SpawnEnemy", SpawnEnemy);
+            EventManager.StartListening("EnemyMove", EnemyMove);
 
             CSVEnemySpawn.Instance.GetData("");
             
             for (int i = 0; i < 3; i++)
             {
-                EventManager.TriggerEvent("SpawnEnemy", "", i);
+                EventManager.TriggerEvent("SpawnEnemy", i);
             }
         }
 
@@ -31,26 +30,11 @@ namespace Enemy
             EnemyManager.Instance.PlayerDeadEvent();
         }
 
-        //private void SpawnEnemy(int stageNumber)
-        //{
-        //    for (int i = 0; i < CSVEnemySpawn.Instance.enemySpawnDatas[stageNumber].Count; i++)
-        //    {
-        //        EnemyPoolData enemy = EnemyPoolManager.Instance.GetPoolObject((Type)CSVEnemySpawn.Instance.enemySpawnDatas[stageNumber][i].enemyId, CSVEnemySpawn.Instance.enemySpawnDatas[stageNumber][i].position);
-
-        //        while (enemyList.Count <= stageNumber)
-        //        {
-        //            enemyList.Add(new List<Enemy>());
-        //        }
-
-        //        enemyList[stageNumber].Add(enemy.GetComponent<Enemy>());
-        //    }
-        //}
-
-        private void SpawnEnemy(string temp, int stageNumber)
+        private void SpawnEnemy(int stageNumber)
         {
             if (CSVEnemySpawn.Instance.enemySpawnDatas.Count <= stageNumber)
             {
-                return;
+                Debug.LogError("잘못된 stageNumber 입니다. SpawnEnemy 실행 실패");
             }
 
             for (int i = 0; i < CSVEnemySpawn.Instance.enemySpawnDatas[stageNumber].Count; i++)
@@ -63,6 +47,19 @@ namespace Enemy
                 }
 
                 enemyList[stageNumber].Add(enemy.GetComponent<Enemy>());
+            }
+        }
+
+        private void EnemyMove(int stageNumber)
+        {
+            if (enemyList.Count <= stageNumber)
+            {
+                Debug.LogError("잘못된 stageNumber 입니다. EnemyMove 실행 실패");
+            }
+
+            for (int i = 0; i < enemyList[stageNumber].Count; i++)
+            {
+                enemyList[stageNumber][i].MoveEnemy();
             }
         }
     }
