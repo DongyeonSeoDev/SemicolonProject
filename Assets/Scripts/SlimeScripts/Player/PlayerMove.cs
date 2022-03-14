@@ -12,6 +12,8 @@ public class PlayerMove : PlayerAction
 
     private Stat playerStat = null;
 
+    [SerializeField]
+    private float bodyPointMovePower = 1f;
     [Header("바디포인트의 localPosition의 x, y 각각의 값은 처음의 위치에서 이 값 이상 멀어지지 못한다.")]
     [SerializeField]
     private float maxBodyPointLocalPos = 0.1f;
@@ -145,6 +147,6 @@ public class PlayerMove : PlayerAction
 
         movePower = pos.localPosition.y;
 
-        return movePower.Abs();
+        return movePower.Abs() * bodyPointMovePower;
     }
 }

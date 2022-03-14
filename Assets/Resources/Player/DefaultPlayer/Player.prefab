@@ -128,6 +128,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 5427881869486345069}
     m_Modifications:
     - target: {fileID: 1014413144, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: bodyPointMovePower
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1014413144, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: maxBodyPointLocalPos
       value: 0.1
       objectReference: {fileID: 0}
