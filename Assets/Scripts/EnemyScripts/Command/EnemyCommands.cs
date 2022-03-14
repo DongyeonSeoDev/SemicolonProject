@@ -330,7 +330,7 @@ namespace Enemy
         {
             EnemyPoolData bullet = EnemyPoolManager.Instance.GetPoolObject(Type.Bullet, transform.position);
 
-            bullet.GetComponent<EnemyBullet>().Init(enemyController, attackDamage, (playerInput.MousePosition - (Vector2)transform.position).normalized, enemy);
+            bullet.GetComponent<EnemyBullet>().Init(enemyController, attackDamage, (playerInput.AttackMousePosition - (Vector2)transform.position).normalized, enemy);
         }
     }
 

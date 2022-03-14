@@ -39,7 +39,11 @@ namespace Enemy
 
             if(enemyData.eEnemyController == EnemyController.PLAYER)
             {
-                EventManager.StartListening("StartSkill0", () => enemyData.isAttack = true);
+                EventManager.StartListening("StartSkill0", () => 
+                {
+                    enemyData.isAttack = true;
+                    playerInput.AttackMousePosition = playerInput.MousePosition;
+                });
             }
 
             playerInput = SlimeGameManager.Instance.Player.GetComponent<PlayerInput>();

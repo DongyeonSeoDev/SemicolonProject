@@ -41,7 +41,7 @@ namespace Enemy
         {
             if (eEnemyController == EnemyController.AI && collision.CompareTag("Player"))
             {
-                SlimeGameManager.Instance.Player.GetDamage(enemy.gameObject, Random.Range(attackDamage - 5, attackDamage + 6));
+                SlimeGameManager.Instance.Player.GetDamage(Random.Range(attackDamage - 5, attackDamage + 6));
 
                 gameObject.SetActive(false);
             }
