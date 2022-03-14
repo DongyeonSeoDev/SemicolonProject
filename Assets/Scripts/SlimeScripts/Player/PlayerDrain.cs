@@ -157,7 +157,7 @@ public class PlayerDrain : PlayerSkill
             });
         }
     }
-    private void OnDrain(GameObject obj, int upValue) // upValue는 이해도(동화율)이 얼마나 오를 것인가.
+    private void OnDrain(GameObject obj, Vector2 position, int upValue) // upValue는 이해도(동화율)이 얼마나 오를 것인가.
     {
         moveTimerDic.Add(obj, 0f);
         player.DrainList.Add((obj, upValue));

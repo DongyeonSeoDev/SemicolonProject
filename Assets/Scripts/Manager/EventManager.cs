@@ -13,9 +13,11 @@ public partial class EventManager
     private static Dictionary<string, Action<string, bool>> str_bool_eventDictionary = new Dictionary<string, Action<string, bool>>();
     private static Dictionary<string, Action<string, int>> str_int_eventDictionary = new Dictionary<string, Action<string, int>>();
     private static Dictionary<string, Action<Vector2>> vec2_EventDictionary = new Dictionary<string, Action<Vector2>>();
+    private static Dictionary<string, Action<Vector2, bool>> vec2_bool_EventDictionary = new Dictionary<string, Action<Vector2, bool>> ();
     private static Dictionary<string, Action<Vector2, float, float>> vec2_float_float_eventDictionary = new Dictionary<string, Action<Vector2, float, float>>();
     private static Dictionary<string, Action<GameObject>> gmo_EventDictionary = new Dictionary<string, Action<GameObject>>();
     private static Dictionary<string, Action<GameObject, int>> gmo_int_EventDictionary = new Dictionary<string, Action<GameObject, int>>();
+    private static Dictionary<string, Action<GameObject, Vector2, int>> gmo_vec2_int_EventDictionary = new Dictionary<string, Action<GameObject, Vector2, int>>();
     #endregion
 
     #region StargetListening함수
@@ -131,6 +133,20 @@ public partial class EventManager
             vec2_EventDictionary.Add(eventName, listener);
         }
     }
+    public static void StartListening(string eventName, Action<Vector2, bool> listener)
+    {
+        Action<Vector2, bool> thisEvent;
+
+        if (vec2_bool_EventDictionary.TryGetValue(eventName, out thisEvent)) // ���� �̸��� DIctionary�ִ��� üũ
+        {
+            thisEvent += listener;                   // ���� �̸����� �� ����
+            vec2_bool_EventDictionary[eventName] = thisEvent;
+        }
+        else
+        {
+            vec2_bool_EventDictionary.Add(eventName, listener);
+        }
+    }
     public static void StartListening(string eventName, Action<Vector2, float, float> listener)
     {
         Action<Vector2, float, float> thisEvent;
@@ -171,6 +187,20 @@ public partial class EventManager
         else
         {
             gmo_int_EventDictionary.Add(eventName, listener);
+        }
+    }
+    public static void StartListening(string eventName, Action<GameObject, Vector2, int> listener)
+    {
+        Action<GameObject, Vector2, int> thisEvent;
+
+        if (gmo_vec2_int_EventDictionary.TryGetValue(eventName, out thisEvent)) // ���� �̸��� DIctionary�ִ��� üũ
+        {
+            thisEvent += listener;                   // ���� �̸����� �� ����
+            gmo_vec2_int_EventDictionary[eventName] = thisEvent;
+        }
+        else
+        {
+            gmo_vec2_int_EventDictionary.Add(eventName, listener);
         }
     }
     #endregion
@@ -287,6 +317,20 @@ public partial class EventManager
             vec2_EventDictionary.Remove(eventName);
         }
     }
+    public static void StopListening(string eventName, Action<Vector2, bool> listener)
+    {
+        Action<Vector2, bool> thisEvent;
+
+        if (vec2_bool_EventDictionary.TryGetValue(eventName, out thisEvent))
+        {
+            thisEvent -= listener;
+            vec2_bool_EventDictionary[eventName] = thisEvent;
+        }
+        else
+        {
+            vec2_bool_EventDictionary.Remove(eventName);
+        }
+    }
     public static void StopListening(string eventName, Action<Vector2, float, float> listener)
     {
         Action<Vector2, float, float> thisEvent;
@@ -327,6 +371,20 @@ public partial class EventManager
         else
         {
             gmo_int_EventDictionary.Remove(eventName);
+        }
+    }
+    public static void StopListening(string eventName, Action<GameObject, Vector2, int> listener)
+    {
+        Action<GameObject, Vector2, int> thisEvent;
+
+        if (gmo_vec2_int_EventDictionary.TryGetValue(eventName, out thisEvent))
+        {
+            thisEvent -= listener;
+            gmo_vec2_int_EventDictionary[eventName] = thisEvent;
+        }
+        else
+        {
+            gmo_vec2_int_EventDictionary.Remove(eventName);
         }
     }
     #endregion
@@ -435,6 +493,19 @@ public partial class EventManager
             Debug.LogWarning("The Linked ActionsNum is zero of The '" + eventName + "' Event but you tried 'TriggerEvent'");
         }
     }
+    public static void TriggerEvent(string eventName, Vector2 vec2_param, bool bool_param)
+    {
+        Action<Vector2, bool> thisEvent;
+
+        if (vec2_bool_EventDictionary.TryGetValue(eventName, out thisEvent))
+        {
+            thisEvent?.Invoke(vec2_param, bool_param);
+        }
+        else
+        {
+            Debug.LogWarning("The Linked ActionsNum is zero of The '" + eventName + "' Event but you tried 'TriggerEvent'");
+        }
+    }
     public static void TriggerEvent(string eventName, Vector2 vec2_param, float float_param1, float float_param2)
     {
         Action<Vector2, float, float> thisEvent;
@@ -468,6 +539,19 @@ public partial class EventManager
         if (gmo_int_EventDictionary.TryGetValue(eventName, out thisEvent))
         {
             thisEvent?.Invoke(gmo_param, int_param);
+        }
+        else
+        {
+            Debug.LogWarning("The Linked ActionsNum is zero of The '" + eventName + "' Event but you tried 'TriggerEvent'");
+        }
+    }
+    public static void TriggerEvent(string eventName, GameObject gmo_param, Vector2 vec2_param, int int_param)
+    {
+        Action<GameObject, Vector2, int> thisEvent;
+
+        if (gmo_vec2_int_EventDictionary.TryGetValue(eventName, out thisEvent))
+        {
+            thisEvent?.Invoke(gmo_param, vec2_param, int_param);
         }
         else
         {

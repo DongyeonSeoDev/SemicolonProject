@@ -51,9 +51,14 @@ public class PlayerDrainCollider : MonoBehaviour
             {
                 // enemy.EnemyDestroy();
 
-                EventManager.TriggerEvent("OnDrain", other.gameObject, 1); // 여기의 param은 임시 값
+                EventManager.TriggerEvent("TryDrain", other.transform.position, true);
+                EventManager.TriggerEvent("OnDrain", other.gameObject, other.transform.position, 1); // 여기의 param은 임시 값
               
                 Debug.Log("Do Drain");
+            }
+            else if(enemy != null)
+            {
+                EventManager.TriggerEvent("TryDrain", other.transform.position, false);
             }
         }
     }
