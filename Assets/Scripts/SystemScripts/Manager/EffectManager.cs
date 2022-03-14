@@ -48,6 +48,7 @@ public class EffectManager : MonoSingleton<EffectManager>
     public DamageTextVG playerDamagedTextVG;
     public DamageTextVG enemyDamagedTextVG;
     public DamageTextVG pickupPlantSucFaiVG;
+    public DamageTextVG drainVG;
 
     public AnimationCurve damageTxtScaleCurve;
     #endregion
@@ -63,6 +64,7 @@ public class EffectManager : MonoSingleton<EffectManager>
         PoolManager.CreatePool(damageTextPair.first, damageTextPair.second, 4, "DamageTextEff");
 
         EventManager.StartListening("PlayerRespawn", Respawn);
+        //EventManager.StartListening("Drain", OnDrain); //나중에 이벤트 추가후에 주석 풀어야 함
 
         //hpFillEffectStartX = hpFillEffect.anchoredPosition.x;
         //hpFillEffectMaskObj.screenPoint = new Vector2(fillBackRect.anchoredPosition.x - fillBackWidth * 0.5f, fillBackRect.anchoredPosition.y);
@@ -149,7 +151,7 @@ public class EffectManager : MonoSingleton<EffectManager>
         tmp.DOColor(Color.clear, 0.9f).SetEase(damageTxtScaleCurve).OnComplete(() => tmp.gameObject.SetActive(false));
     }
 
-    public void OnWorldTextEffect(string msg, Vector2 pos, Vector3 scale, VertexGradient textColor)
+    public void OnWorldTextEffect(string msg, Vector2 pos, Vector3 scale, VertexGradient textColor)  //게임 속에서 어떤 이벤트에 대해 텍스트 효과를 잠깐 띄움
     {
         TextMeshProUGUI tmp = PoolManager.GetItem<TextMeshProUGUI>("DamageTextEff");
         tmp.color = Color.white;
@@ -163,5 +165,10 @@ public class EffectManager : MonoSingleton<EffectManager>
         tmp.transform.DOMove(tmp.transform.position + Global.worldTxtMove, 0.75f);
         tmp.transform.DOScale(SVector3.zeroPointSeven, 0.9f).SetEase(damageTxtScaleCurve);
         tmp.DOColor(Color.clear, 1).SetEase(damageTxtScaleCurve).OnComplete(() => tmp.gameObject.SetActive(false));
+    }
+
+    private void OnDrain(Vector2 mobPos, bool drainSuc)
+    {
+        OnWorldTextEffect(drainSuc ? "흡수" : "흡수실패", mobPos, Vector3.one, drainSuc ? drainVG.normal : drainVG.cri);
     }
 }

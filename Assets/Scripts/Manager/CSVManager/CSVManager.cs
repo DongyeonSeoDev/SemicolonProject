@@ -13,12 +13,12 @@ public abstract class CSVManager
 
     protected virtual void HowToRead(string[] data)
     {
-        csvData.Add(data[0], data[1]);
-    }
+        if (data.Length < 2)
+        {
+            return;
+        }
 
-    protected virtual void HowToWrite(StreamWriter streamWriter, KeyValuePair<string, string> data)
-    {
-        streamWriter.WriteLine(data.Key + ',' + data.Value);
+        csvData.Add(data[0], data[1]);
     }
 
     public string GetData(string key)
@@ -36,46 +36,16 @@ public abstract class CSVManager
         return null;
     }
 
-    public void SetData(string key, string value)
-    {
-        if (!isRead)
-        {
-            ReadData();
-        }
-
-        if (!csvData.ContainsKey(key))
-        {
-            csvData.Add(key, value);
-        }
-        else
-        {
-            csvData[key] = value;
-        }
-
-        WriteData();
-    }
-
     private void ReadData()
     {
         isRead = true;
 
-        using (StreamReader streamReader = new StreamReader(path, Encoding.UTF8))
-        {
-            while (!streamReader.EndOfStream)
-            {
-                HowToRead(streamReader.ReadLine().Split(','));
-            }
-        }
-    }
+        string[] datas = Resources.Load(path).ToString().Split('\n');
 
-    private void WriteData()
-    {
-        using (StreamWriter streamWriter = new StreamWriter(path, false, Encoding.UTF8))
+        foreach (string data in datas)
         {
-            foreach (KeyValuePair<string, string> data in csvData)
-            {
-                HowToWrite(streamWriter, data);
-            }
+            Debug.Log(data);
+            HowToRead(data.Split(','));
         }
     }
 }

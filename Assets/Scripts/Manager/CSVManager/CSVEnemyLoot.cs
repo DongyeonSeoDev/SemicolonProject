@@ -71,10 +71,15 @@ public class CSVEnemyLoot : CSVManager
     private int value;
     private bool isReadItemData = false;
 
-    protected override string path { get => Path.Combine(Application.dataPath, "Data", "EnemyLootData.csv"); }
+    protected override string path { get => "Data/EnemyLootData"; }
 
     protected override void HowToRead(string[] data)
     {
+        if (data.Length < 2)
+        {
+            return;
+        }
+
         for (int i = 1; i < data.Length; i++)
         {
             sb.Append(data[i] + ',');
