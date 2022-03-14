@@ -7,7 +7,8 @@ namespace Enemy
     {
         private PlayerInput playerInput = null;
         private Stat playerStat = null;
-        private Vector2 lastMoveVec = Vector2.zero;
+        private float lastForce = 0f;
+        private int wallCheck = LayerMask.GetMask("WALL");
 
         private Rigidbody2D rigid;
 
@@ -21,18 +22,28 @@ namespace Enemy
 
         public override void Execute()
         {
-            Vector2 MoveVec = playerInput.MoveVector * (playerStat.Speed);
+            float force = 0;
 
-            if(MoveVec != Vector2.zero)
+            if (playerInput.MoveVector * (playerStat.Speed) != Vector2.zero)
             {
-                lastMoveVec = MoveVec;
+                lastForce = force = playerStat.Speed;
             }
             else
             {
-                lastMoveVec = Vector2.Lerp(lastMoveVec, Vector2.zero, Time.deltaTime * playerStat.Speed / 2f);
+                lastForce = Mathf.Lerp(lastForce, 0f, Time.deltaTime * playerStat.Speed / 2f);
             }
 
-            rigid.velocity = lastMoveVec;
+            var ray = Physics2D.Raycast(rigid.transform.position, playerInput.MoveVector, lastForce / 10f, wallCheck);
+
+            if (ray.collider != null)
+            {
+                float distance = Vector2.Distance(ray.point, rigid.transform.position) * 10f;
+                rigid.velocity = playerInput.MoveVector * distance;
+            }
+            else
+            {
+                rigid.velocity = playerInput.LastMoveVector * lastForce;
+            }
         }
     }
 

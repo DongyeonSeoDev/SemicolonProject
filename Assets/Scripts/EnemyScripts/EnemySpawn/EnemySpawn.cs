@@ -28,6 +28,11 @@ namespace Enemy
         private void PlayerRespawnEvent()
         {
             EnemyManager.Instance.PlayerDeadEvent();
+
+            for (int i = 0; i < 3; i++)
+            {
+                EventManager.TriggerEvent("SpawnEnemy", i);
+            }
         }
 
         private void SpawnEnemy(int stageNumber)
