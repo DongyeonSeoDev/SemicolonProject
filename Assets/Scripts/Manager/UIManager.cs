@@ -77,6 +77,8 @@ public partial class UIManager : MonoSingleton<UIManager>
     [Space(10)]
     public Pair<GameObject, Transform> selWindowPair;
     public Pair<GameObject, Transform> selectionBtnPair;
+
+    public Dictionary<string, bool> mobSaveWindowActiveDic = new Dictionary<string, bool>(); //해당 아이디의 몬스터를 장착할지 물어보는 창이 떴는지 확인
     #endregion
 
     #region CanvasGroup
@@ -152,6 +154,8 @@ public partial class UIManager : MonoSingleton<UIManager>
     private void Start()
     {
         DefineAction();
+
+        PlayerEnemyUnderstandingRateManager.Instance.ChangableBodyList.ForEach(x => mobSaveWindowActiveDic.Add(x.bodyId.ToString(), false));
     }
 
     public void OnChangedResolution()
@@ -582,6 +586,10 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     public void DoChangeBody(string id)  //몸통 저장할지 창 띄움
     {
+        if (mobSaveWindowActiveDic[id]) return;
+
+        mobSaveWindowActiveDic[id] = true;
+
         RequestSelectionWindow("<color=#7A98FF>" + MonsterCollection.Instance.mobIdToSlot[id].BodyData.bodyName + "</color>를(을) 변신 슬롯에 저장하시겠습니까?\n(거절하면 해당 몬스터의 흡수 확률은 0%로 돌아갑니다.)",
             new List<Action>() {() => CancelMonsterSaveChance(id) , () => SaveMonsterBody(id) }, new List<string>() {"거절", "저장"});
     }
@@ -595,24 +603,23 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     public void DefaultSelectionAction() //시스템 확인창에서 각 버튼마다 눌렸을 때의 실행함수에 이 함수를 더해줌
     {
+        TimeManager.TimeResume();
         selWdStack.Pop().Inactive();
         if(IsSelecting)
         {
             selWdStack.Peek().Hide(false);
         }
-        else
-        {
-            TimeManager.TimeResume();
-        }
     }
 
     public void CancelMonsterSaveChance(string id)  //변신 가능한 몬스터 저장 거절
     {
+        mobSaveWindowActiveDic[id] = false;
         EventManager.TriggerEvent("PlayerBodySet", id, false);
     }
 
     public void SaveMonsterBody(string id) //변신 가능한 몬스터 저장하기
     {
+        mobSaveWindowActiveDic[id] = false;
         EventManager.TriggerEvent("PlayerBodySet", id, true);
         MonsterCollection.Instance.IDToSave = id;
     }
@@ -705,7 +712,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         statTexts[2].text = stat.Defense.ToString();
         statTexts[3].text = Mathf.RoundToInt(Mathf.Abs(stat.Speed)).ToString(); //스피드가 몇인지 소수로 나오면 어색할 것 같아서 일단은 정수로 나오게 함.
         statTexts[4].text = string.Concat(stat.CriticalRate, '%');
-        statTexts[5].text = stat.CriticalDamage.ToString();
+        statTexts[5].text = stat.CriticalDamage.ToString() + "%";
         statTexts[6].text = stat.Intellect.ToString();
         statTexts[7].text = stat.AttackSpeed.ToString();
 

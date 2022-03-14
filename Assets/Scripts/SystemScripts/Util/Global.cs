@@ -16,7 +16,7 @@ public static partial class Global
     public static Player CurrentPlayer => SlimeGameManager.Instance.Player;
 
     public static Vector2 noticeMsgOriginRectPos = new Vector2(0, -229.61f);
-    public static Vector3 damageTextMove = new Vector3(0, 2.2f, 0);
+    public static Vector3 damageTextMove = new Vector3(0, 0.8f, 0);
     public static Vector3 worldTxtMove = new Vector3(0, 0.6f, 0);
     
     private static string[] keyActionNameArr;
