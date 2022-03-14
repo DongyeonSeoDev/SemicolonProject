@@ -36,6 +36,11 @@ public class BodyPoint : MonoBehaviour
         get { return isWall; }
         set { isWall = value; }
     }
+    private bool isCrossWall = false;
+    public bool IsCrossWall
+    {
+        get { return isCrossWall; }
+    }
 
     private bool isMove = false;
     public bool IsMove
@@ -119,8 +124,12 @@ public class BodyPoint : MonoBehaviour
 
         if (hit)
         {
+            isCrossWall = true;
             moveToMiddleTimer = 0.1f;
-            Debug.Log("앗 벽에 끼었수다. 지금 빼드리리다");
+        }
+        else
+        {
+            isCrossWall = false;
         }
     }
     private void PlayerShoot()

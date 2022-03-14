@@ -82,8 +82,13 @@ public class PlayerMove : PlayerAction
 
             float distance = 0f;
 
-            softBody.UpNotMiddlePoints.ForEach(x => 
+            foreach(var x in softBody.UpNotMiddlePoints)
             {
+                if(x.IsWall || x.IsCrossWall)
+                {
+                    continue;
+                }
+
                 movePower = GetMovePower(x.transform);
 
                 if (MoveVec != Vector2.zero)
@@ -101,11 +106,17 @@ public class PlayerMove : PlayerAction
                 {
                     x.transform.localPosition = Vector2.Lerp(x.transform.localPosition, (Vector2)x.transform.localPosition + MoveVec * movePower, Time.fixedDeltaTime);
                 }
-            });
+            }
 
             foreach(var x in softBody.DownNotMiddlePoints)
             {
+                if (x.IsWall || x.IsCrossWall)
+                {
+                    continue;
+                }
+
                 movePower = GetMovePower(x.transform);
+
                 if (MoveVec != Vector2.zero)
                 {
                     x.IsMove = true;
