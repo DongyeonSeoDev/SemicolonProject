@@ -102,7 +102,7 @@ namespace Enemy
 
             if (eEnemyController == EnemyController.AI && collision.CompareTag("Player"))
             {
-                SlimeGameManager.Instance.Player.GetDamage(UnityEngine.Random.Range(attackDamage - 5, attackDamage + 6));
+                SlimeGameManager.Instance.Player.GetDamage(this.enemy.gameObject, UnityEngine.Random.Range(attackDamage - 5, attackDamage + 6));
 
                 var enemy = collision.GetComponent<Enemy>();
 

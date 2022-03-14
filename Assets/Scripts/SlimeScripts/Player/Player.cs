@@ -8,11 +8,16 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     private Stat playerStat = new Stat();
-
     public Stat PlayerStat
     {
         get { return playerStat; }
         set { playerStat = value; }
+    }
+
+    private List<(GameObject, int)> drainList = new List<(GameObject, int)>();
+    public List<(GameObject, int)> DrainList
+    {
+        get { return drainList; }
     }
 
     #region 에너지 관련 변수들
@@ -154,6 +159,36 @@ public class Player : MonoBehaviour
                 playerState.IsDead = true;
             }
 
+            EffectManager.Instance.OnDamaged(dm, critical, false, SlimeGameManager.Instance.CurrentPlayerBody.transform.position);
+            UIManager.Instance.UpdatePlayerHPUI(true);
+        }
+    }
+    public void GetDamage(GameObject attacker, int damage, bool critical = false)
+    {
+        foreach(var item in drainList)
+        {
+            if(item.Item1 == attacker)
+            {
+                return;
+            }
+        }
+        
+        if (!playerState.IsDead)
+        {
+            int dm = damage - playerStat.Defense;
+
+            if (dm <= 0)
+            {
+                dm = 0;
+            }
+
+            currentHp -= dm;
+
+            if (currentHp <= 0)
+            {
+                playerState.IsDead = true;
+            }
+
             EffectManager.Instance.OnDamaged(dm, critical, false, SlimeGameManager.Instance.CurrentPlayerBody.transform.position); 
             UIManager.Instance.UpdatePlayerHPUI(true);
         }
@@ -263,4 +298,5 @@ public class Player : MonoBehaviour
 
         EventManager.TriggerEvent("AfterPlayerRespawn");
     }
+
 }

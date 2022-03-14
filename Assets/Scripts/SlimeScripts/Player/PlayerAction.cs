@@ -4,6 +4,7 @@ using UnityEngine;
 
 public abstract class PlayerAction : MonoBehaviour
 {
+    protected Player player = null;
     protected PlayerState playerState = null;
     protected PlayerInput playerInput = null;
     protected SoftBody softBody = null;
@@ -13,8 +14,9 @@ public abstract class PlayerAction : MonoBehaviour
 
     public virtual void Awake()
     {
-        playerState = SlimeGameManager.Instance.Player.GetComponent<PlayerState>();
-        playerInput = SlimeGameManager.Instance.Player.GetComponent<PlayerInput>();
+        player = SlimeGameManager.Instance.Player;
+        playerState = player.GetComponent<PlayerState>();
+        playerInput = player.GetComponent<PlayerInput>();
         softBody = GetComponent<SoftBody>();
 
         rigid = GetComponent<Rigidbody2D>();

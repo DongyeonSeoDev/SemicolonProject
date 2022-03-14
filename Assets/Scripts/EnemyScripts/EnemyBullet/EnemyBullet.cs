@@ -41,7 +41,7 @@ namespace Enemy
         {
             if (eEnemyController == EnemyController.AI && collision.CompareTag("Player"))
             {
-                SlimeGameManager.Instance.Player.GetDamage(Random.Range(attackDamage - 5, attackDamage + 6));
+                SlimeGameManager.Instance.Player.GetDamage(enemy.gameObject, Random.Range(attackDamage - 5, attackDamage + 6));
 
                 gameObject.SetActive(false);
             }
@@ -71,6 +71,7 @@ namespace Enemy
             eEnemyController = controller;
             attackDamage = damage;
             targetDirection = direction;
+            this.enemy = enemy;
 
             angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0f, 0f, angle - 90f);

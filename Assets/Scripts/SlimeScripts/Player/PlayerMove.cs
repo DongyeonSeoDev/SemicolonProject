@@ -5,6 +5,10 @@ using UnityEngine;
 public class PlayerMove : PlayerAction
 {
     private Vector2 lastMoveVec = Vector2.zero;
+    public Vector2 LastMoveVec
+    {
+        get { return lastMoveVec; }
+    }
 
     private Stat playerStat = null;
 

@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class PlayerDrain : PlayerSkill
 {
-
     [SerializeField]
     private GameObject drainCollider = null; // drain 체크에 사용될 Collider
 
-    private List<(GameObject, int)> drainList = new List<(GameObject, int)>();
+    //private List<(GameObject, int)> drainList = new List<(GameObject, int)>();
 
     private Dictionary<GameObject, float> moveTimeDic = new Dictionary<GameObject, float>();
     private Dictionary<GameObject, float> moveTimerDic = new Dictionary<GameObject, float>();
@@ -97,11 +96,11 @@ public class PlayerDrain : PlayerSkill
     }
     private void DoDrain()
     {
-        if (drainList.Count > 0)
+        if (player.DrainList.Count > 0)
         {
             List<(GameObject, int)> removeList = new List<(GameObject, int)>();
 
-            foreach (var item in drainList)
+            foreach (var item in player.DrainList)
             {
                 // Vector2 direction = transform.position - item.Item1.transform.position;
                 // direction = direction.normalized;
@@ -154,13 +153,13 @@ public class PlayerDrain : PlayerSkill
             {
                 moveTimeDic.Remove(x.Item1);
                 moveTimerDic.Remove(x.Item1);
-                drainList.Remove(x);
+                player.DrainList.Remove(x);
             });
         }
     }
     private void OnDrain(GameObject obj, int upValue) // upValue는 이해도(동화율)이 얼마나 오를 것인가.
     {
         moveTimerDic.Add(obj, 0f);
-        drainList.Add((obj, upValue));
+        player.DrainList.Add((obj, upValue));
     }
 }
