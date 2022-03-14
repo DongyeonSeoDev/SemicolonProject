@@ -87,10 +87,15 @@ public class CSVEnemySpawn : CSVManager
     private StringBuilder sb = new StringBuilder(128);
     private int value;
 
-    protected override string path { get => Path.Combine(Application.dataPath, "Data", "EnemySpawnData.csv"); }
+    protected override string path { get => "Data/EnemySpawnData"; }
 
     protected override void HowToRead(string[] data)
     {
+        if (data.Length < 2)
+        {
+            return;
+        }
+
         for (int i = 1; i < data.Length; i++)
         {
             sb.Append(data[i] + ',');
