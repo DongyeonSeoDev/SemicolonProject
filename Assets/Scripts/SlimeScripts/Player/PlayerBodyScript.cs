@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class PlayerBodyScript : MonoBehaviour
 {
-    private void Start() 
+    private void Awake()
     {
         SlimeGameManager.Instance.CurrentPlayerBody = gameObject;
-
+    }
+    private void Start() 
+    {
         PlayerInteractionCollider x = GetComponentInChildren<PlayerInteractionCollider>();
 
         if(x == null)
