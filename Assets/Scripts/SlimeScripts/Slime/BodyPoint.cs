@@ -50,6 +50,7 @@ public class BodyPoint : MonoBehaviour
         get { return isMoveToMiddle; }
         set { isMoveToMiddle = value; }
     }
+    private bool isDownBodyPoint = false;
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -62,18 +63,26 @@ public class BodyPoint : MonoBehaviour
         {
             middlePoint = transform.parent.GetComponent<MiddlePoint>();
         }
+
+        if (isDownBodyPoint)
+        {
+            StopListenings();
+        }
     }
     private void OnEnable()
     {
-         EventManager.StartListening("PlayerShoot", PlayerShoot);
-         EventManager.StartListening("PlayerBodySlap", (Action<float>)PlayerBodySlap);
+        EventManager.StartListening("PlayerShoot", PlayerShoot);
+        EventManager.StartListening("PlayerBodySlap", (Action<float>)PlayerBodySlap);
     }
     private void OnDisable()
     {
-         StopListenings();
+        StopListenings();
     }
-
-    public void StopListenings()
+    public void SetTrueisDownBodyPoint()
+    {
+        isDownBodyPoint = true;
+    }
+    private void StopListenings()
     {
         EventManager.StopListening("PlayerShoot", PlayerShoot);
         EventManager.StopListening("PlayerBodySlap", (Action<float>)PlayerBodySlap);
@@ -97,8 +106,6 @@ public class BodyPoint : MonoBehaviour
             transform.localPosition = Vector2.Lerp(transform.localPosition, originLocalPosition, Time.deltaTime * returnToOriginSpeed);
         }
     }
-
-
     private void CheckCrossWall()
     {
         Ray2D ray;

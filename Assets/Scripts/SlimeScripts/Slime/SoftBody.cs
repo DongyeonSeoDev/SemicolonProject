@@ -95,7 +95,7 @@ public class SoftBody : MonoBehaviour
         }
         else if (bodyPointTrm.position.y < transform.position.y)
         {
-            bodyPoint.StopListenings();
+            bodyPoint.SetTrueisDownBodyPoint();
             downNotMiddlePoints.Add(bodyPoint);
         }
     }

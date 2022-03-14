@@ -55,7 +55,7 @@ MonoBehaviour:
       defense: 2
       intellect: 0
       speed: 8
-      attackSpeed: 2
+      attackSpeed: 1
       criticalRate: 50
       criticalDamage: 10
     additionalEternalStat:
@@ -81,8 +81,9 @@ MonoBehaviour:
       cookingAbility: 0
   maxEnergy: 10
   energyRegenSpeed: 1
-  upMountingPercentageValueWhenEnemyDead: 100
+  upMountingPercentageValueWhenEnemyDead: 2
   upUnderstandingRateValueWhenEnemyDead: 1
+  upUnderstandingRateValueWhenEnemyDeadAfterBodyChanged: 3
 --- !u!114 &5427881869486345104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -128,11 +129,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1014413144, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: maxBodyPointLocalPos
-      value: 0.5
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 804748403637607259, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.54
+      value: -1.572
       objectReference: {fileID: 0}
     - target: {fileID: 804748403637607259, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: m_LocalPosition.y
@@ -140,15 +141,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3851220836599241427, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.74
+      value: -0.756
       objectReference: {fileID: 0}
     - target: {fileID: 3851220836599241427, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.45
+      value: -0.537
       objectReference: {fileID: 0}
     - target: {fileID: 4327631336810169174, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.27
+      value: 1.436
       objectReference: {fileID: 0}
     - target: {fileID: 4327631336810169174, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: m_LocalPosition.y
@@ -164,19 +165,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4457970834551369897, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.37
+      value: 0.457
       objectReference: {fileID: 0}
     - target: {fileID: 4457970834551369897, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.46
+      value: -0.57
       objectReference: {fileID: 0}
     - target: {fileID: 5452748365009911102, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.27
+      value: 1.302
       objectReference: {fileID: 0}
     - target: {fileID: 5452748365009911102, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.17
+      value: 0.225
       objectReference: {fileID: 0}
     - target: {fileID: 5452748365560110710, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: m_LocalPosition.x
@@ -184,15 +185,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5452748365560110710, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.05
+      value: 1.018
       objectReference: {fileID: 0}
     - target: {fileID: 5452748365791315108, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.95
+      value: 0.848
       objectReference: {fileID: 0}
     - target: {fileID: 5452748365791315108, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.75
+      value: 0.821
       objectReference: {fileID: 0}
     - target: {fileID: 5452748366344068690, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: m_LocalPosition.x
