@@ -80,26 +80,54 @@ namespace Enemy
 
             if (!enemyData.isUseAttacking || !enemyData.isAttacking)
             {
-                if (enemyData.isRotate)
+                if (enemyData.eEnemyController == EnemyController.AI)
                 {
-                    if (lastPositionX > transform.position.x)
+                    if (enemyData.isRotate)
                     {
-                        transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                        if (lastPositionX > transform.position.x)
+                        {
+                            transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                        }
+                        else if (lastPositionX < transform.position.x)
+                        {
+                            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                        }
                     }
-                    else if (lastPositionX < transform.position.x)
+                    else
                     {
-                        transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                        if (lastPositionX > transform.position.x)
+                        {
+                            sr.flipX = true;
+                        }
+                        else if (lastPositionX < transform.position.x)
+                        {
+                            sr.flipX = false;
+                        }
                     }
                 }
-                else
+                else if (enemyData.eEnemyController == EnemyController.PLAYER)
                 {
-                    if (lastPositionX > transform.position.x)
+                    if (enemyData.isRotate)
                     {
-                        sr.flipX = true;
+                        if (playerInput.MoveVector.x < 0)
+                        {
+                            transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                        }
+                        else if (playerInput.MoveVector.x > 0)
+                        {
+                            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                        }
                     }
-                    else if (lastPositionX < transform.position.x)
+                    else
                     {
-                        sr.flipX = false;
+                        if (playerInput.MoveVector.x < 0)
+                        {
+                            sr.flipX = true;
+                        }
+                        else if (playerInput.MoveVector.x > 0)
+                        {
+                            sr.flipX = false;
+                        }
                     }
                 }
             }
