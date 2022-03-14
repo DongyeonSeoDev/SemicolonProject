@@ -7,6 +7,8 @@ public static partial class Util
 {
     public static Canvas WorldCvs => UIManager.Instance.gameCanvases[2];
 
+    public static bool IsActiveGameUI(UIType type) => UIManager.Instance.gameUIList[(int)type].gameObject.activeSelf;
+
     public static Vector3 ScreenToWorldPos(Vector3 screenPos) => MainCam.ScreenToWorldPoint(screenPos);
 
     //이것을 쓸거면 Anchor가 Left Bottom으로 설정되어있어야 함

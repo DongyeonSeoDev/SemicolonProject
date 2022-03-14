@@ -93,6 +93,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
                     savedBodys[i].StartCoolTimeUI();
             }
         });
+        EventManager.StartListening("EnemyDead", id => Util.DelayFunc(()=>UpdateMonsterDetailPanel(id), 0.3f));  //몹 잡았는데 몹 자세히 보기 열려있으면 새로고침하는데 함수 호출 순서 이슈때문에 약간의 딜레이를 줌
     }
 
     public void UpdateUnderstanding(string id)  //몹 동화율 정보 업뎃
@@ -138,6 +139,15 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             DetailItem();
         if (UIManager.Instance.gameUIList[(int)UIType.MONSTERINFO_DETAIL_STAT].gameObject.activeSelf)
             DetailStat();
+    }
+
+    public void UpdateMonsterDetailPanel(string id) //흡수확률과 동화율 새로 고침한다
+    {
+        if (Util.IsActiveGameUI(UIType.MONSTERINFO_DETAIL))
+        {
+            mobDrainProbAndAssimTmp.first.SetText("흡수확률: " + urmg.GetDrainProbabilityDict(id).ToString() + "%");
+            mobDrainProbAndAssimTmp.second.SetText("동화율: " + urmg.PlayerEnemyUnderStandingRateDic[id].ToString() + "%");
+        }
     }
 
     public void CloseDetail() //몹 정보 자세히 보기 닫음
@@ -249,7 +259,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         }
 
         EffectManager.Instance.OnTopRightBtnEffect(UIType.MONSTER_COLLECTION, true);
-        UIManager.Instance.RequestLeftBottomMsg(GetMonsterInfo(id).bodyName + "(를)을 흡수하였습니다.");
+        UIManager.Instance.RequestLeftBottomMsg(GetMonsterInfo(id).bodyName + "(를)을 완전히 흡수하였습니다.");
         mobIdToSlot[id].MarkAcqBody(true);
     }
 
