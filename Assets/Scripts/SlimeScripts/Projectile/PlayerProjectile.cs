@@ -5,6 +5,10 @@ using UnityEngine;
 public class PlayerProjectile : MonoBehaviour
 {
     private SlimePoolManager slimePoolManager = null;
+    private PlayerInput playerInput = null;
+
+    [SerializeField]
+    private GameObject onCrashEffect = null;
 
     [SerializeField]
     private LayerMask whatIsCrashable;
@@ -27,6 +31,7 @@ public class PlayerProjectile : MonoBehaviour
     private void Awake()
     {
         slimePoolManager = SlimePoolManager.Instance;
+        playerInput = SlimeGameManager.Instance.Player.GetComponent<PlayerInput>();
 
         rigid = GetComponent<Rigidbody2D>();
     }
@@ -58,15 +63,41 @@ public class PlayerProjectile : MonoBehaviour
                 }
             }
 
+            ShowOnCrashEffect();
             Despawn();
         }
     }
+    private void ShowOnCrashEffect()
+    {
+        GameObject target = null;
+        bool foundObj = false;
+
+        (target, foundObj) = slimePoolManager.Find(onCrashEffect);
+
+        if(foundObj && target != null)
+        {
+            target.SetActive(true);
+        }
+        else
+        {
+            target = Instantiate(onCrashEffect, SlimePoolManager.Instance.transform);
+        }
+
+        PlayerOnCrashProjectileEffect effect = target.GetComponent<PlayerOnCrashProjectileEffect>();
+
+        effect.OnSpawn(transform.rotation, transform.position);
+    }
     public void OnSpawn(Vector2 direction, float speed)
     {
+        //r = distance
+        //x = direction.x
+
+        transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg));
+
         moveVec = direction;
-        moveSpeed = speed;
 
         moveTimer = moveTime;
+        moveSpeed = speed;
     }
     private void Move()
     {
