@@ -409,6 +409,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c872b1212dc70bb469dc62210b26664a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bodyPointMovePower: 1
   maxBodyPointLocalPos: 0.1
 --- !u!114 &1014413151
 MonoBehaviour:
@@ -452,7 +453,7 @@ MonoBehaviour:
   skillDelay: 0.2
   skillIdx: 0
   projectile: {fileID: 8223448895546236962, guid: 6188b8fe7b7eef448a7491f9bdb9599e, type: 3}
-  projectileSpeed: 10
+  projectileSpeed: 15
   useEnergyAmount: 1
 --- !u!114 &3493340178899303131
 MonoBehaviour:
