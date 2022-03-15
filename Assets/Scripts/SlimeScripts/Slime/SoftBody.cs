@@ -31,10 +31,10 @@ public class SoftBody : MonoBehaviour
         get { return downNotMiddlePoints; }
     }
 
-    private BodyPoint leftestDownNotMiddlePoint = new BodyPoint();
+    private BodyPoint leftestDownNotMiddlePoint = null;
     private float leftestDownNotMiddlePointDistance = 0f;
 
-    private BodyPoint rightestDownNotMiddlePoint = new BodyPoint();
+    private BodyPoint rightestDownNotMiddlePoint = null;
     private float rightestDownNotMiddlePointDistance = 0f;
 
     private readonly float radius = 0.2f; // 각 바디포인트 사이의 거리

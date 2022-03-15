@@ -98,7 +98,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
     public void UpdateUnderstanding(string id)  //몹 동화율 정보 업뎃
     {
-        mobIdToSlot[id].UpdateAssimilationRate((float)urmg.PlayerEnemyUnderStandingRateDic[id] / 100);
+        mobIdToSlot[id].UpdateAssimilationRate((float)urmg.GetUnderstandingRate(id) / 100);
     }
 
     public void AllUpdateUnderstanding()   //모든 몹 동화율 정보 업뎃

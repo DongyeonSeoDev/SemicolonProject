@@ -62,17 +62,7 @@ public class PlayerDrain : PlayerSkill
     public override void Update()
     {
         base.Update();
-        //if (reDrainTimer > 0f)
-        //{
-        //    reDrainTimer -= Time.deltaTime;
 
-        //    if (reDrainTimer <= 0f)
-        //    {
-        //        reDrainTimer = 0f;
-        //    }
-        //}
-
-        //DoSkill();
         DoDrain();
     }
     public override void WhenSkillDelayTimerZero()
@@ -102,10 +92,6 @@ public class PlayerDrain : PlayerSkill
 
             foreach (var item in player.DrainList)
             {
-                // Vector2 direction = transform.position - item.Item1.transform.position;
-                // direction = direction.normalized;
-
-                // x.Item1.transform.Translate(direction * Time.deltaTime);
                 float distance = Vector2.Distance(transform.position, item.Item1.transform.position);
 
                 if (!moveTimeDic.ContainsKey(item.Item1))
@@ -121,8 +107,6 @@ public class PlayerDrain : PlayerSkill
                     string objId = enemy.GetEnemyId();
 
                     PlayerEnemyUnderstandingRateManager.Instance.SetMountingPercentageDict(objId, PlayerEnemyUnderstandingRateManager.Instance.GetDrainProbabilityDict(objId) + upMountingPercentageValue);
-
-                    //PlayerEnemyUnderstandingRateManager.Instance.CheckMountingEnemy(objId, item.Item2);
 
                     if (PlayerEnemyUnderstandingRateManager.Instance.CheckMountObjIdContain(objId))
                     {

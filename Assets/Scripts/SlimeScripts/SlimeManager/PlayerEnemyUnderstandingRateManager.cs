@@ -18,6 +18,7 @@ public struct ChangeBodyData
 public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnderstandingRateManager>
 {
     private Dictionary<string, int> playerEnemyUnderStandingRateDict  = new Dictionary<string, int>();
+    [Obsolete("확그냥 죽여벌랑. GetUnderstandingRate나 SetUnderstandingRate를! 사용하라 맨이야.")]
     public Dictionary<string, int> PlayerEnemyUnderStandingRateDic
     {
         get { return playerEnemyUnderStandingRateDict ; }
@@ -69,7 +70,7 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
         {
             // x.bodyScript = x.body.GetComponent<Enemy.Enemy>();
             changableBodyDict.Add(x.bodyId.ToString(), (x.body, x.additionalBodyStat));
-            playerEnemyUnderStandingRateDict.Add(x.bodyId.ToString(), 120);
+            //playerEnemyUnderStandingRateDict.Add(x.bodyId.ToString(), 120);
 
             // Debug.Log(enemyId);
         });
