@@ -137,7 +137,7 @@ namespace Enemy
 
         public void GetDamage(int damage, bool critical = false, bool isKnockBack = false, float knockBackPower = 20f, float stunTime = 1f, Vector2? direction = null)
         {
-            if (!enemyData.isDamaged)
+            if (enemyData.isEnemyMove && !enemyData.isDamaged)
             {
                 enemyData.isDamaged = true;
                 enemyData.damagedValue = damage;
