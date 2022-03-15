@@ -77,6 +77,8 @@ public partial class UIManager : MonoSingleton<UIManager>
     [Space(10)]
     public Pair<GameObject, Transform> selWindowPair;
     public Pair<GameObject, Transform> selectionBtnPair;
+
+    public Dictionary<string, bool> mobSaveWindowActiveDic = new Dictionary<string, bool>(); //해당 아이디의 몬스터를 장착할지 물어보는 창이 떴는지 확인
     #endregion
 
     #region CanvasGroup
@@ -98,6 +100,8 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     [SerializeField] private ResolutionOption resolutionOption;
 
+    public Setting setting;
+
     //public Text statText;
     public Text[] statTexts;
 
@@ -118,6 +122,8 @@ public partial class UIManager : MonoSingleton<UIManager>
 
         noticeMsgGrd = noticeUIPair.first.GetComponent<NoticeMsg>().msgTmp.colorGradient;
         allCanvasScalers = canvasParent.GetComponentsInChildren<CanvasScaler>();
+        defaultTopCenterMsgVG = topCenterMsgTMP.colorGradient;
+        //topCenterMsgTMPCvsg = topCenterMsgTMP.GetComponent<CanvasGroup>();
 
         int i;
         for(i=0; i<gameCanvases.Length; i++)
@@ -129,6 +135,8 @@ public partial class UIManager : MonoSingleton<UIManager>
         {
             uiTweeningDic.Add((UIType)i, false);
         }
+
+        setting.InitSet();
     }
 
     private void CreatePool()
@@ -152,12 +160,19 @@ public partial class UIManager : MonoSingleton<UIManager>
     private void Start()
     {
         DefineAction();
+
+        PlayerEnemyUnderstandingRateManager.Instance.ChangableBodyList.ForEach(x => mobSaveWindowActiveDic.Add(x.bodyId.ToString(), false));
     }
 
     public void OnChangedResolution()
     {
         screenHalf.first = Screen.width * 0.5f;
         screenHalf.second = Screen.height * 0.5f;
+
+        if(Screen.width > resolutionOption.MaxScrWH.Item1 || Screen.height > resolutionOption.MaxScrWH.Item2)
+        {
+            Screen.SetResolution(resolutionOption.MaxScrWH.Item1, resolutionOption.MaxScrWH.Item2, Screen.fullScreenMode);
+        }
 
         /*int i;
         for(i=0; i<allCanvasScalers.Length; i++)
@@ -218,7 +233,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         EventManager.StartListening("GameClear", () => OnUIInteract(UIType.CLEAR, true));
         EventManager.StartListening("StageClear", () =>InsertNoticeQueue("Stage Clear", clearNoticeMsgVGrd, 90));
         EventManager.StartListening("ChangeBody", (str, dead) => { if(!dead) InsertNoticeQueue(MonsterCollection.Instance.GetMonsterInfo(str).bodyName + "(으)로 변신하였습니다"); });
-        //EventManager.StartListening("StartNextStage", stageName => );  스테이지 이름 띄우기
+        EventManager.StartListening("StartNextStage", stageName => InsertTopCenterNoticeQueue(stageName)); 
     }
 
     private void Respawn(Vector2 unusedValue) => OnUIInteract(UIType.DEATH, true);
@@ -582,6 +597,10 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     public void DoChangeBody(string id)  //몸통 저장할지 창 띄움
     {
+        if (mobSaveWindowActiveDic[id]) return;
+
+        mobSaveWindowActiveDic[id] = true;
+
         RequestSelectionWindow("<color=#7A98FF>" + MonsterCollection.Instance.mobIdToSlot[id].BodyData.bodyName + "</color>를(을) 변신 슬롯에 저장하시겠습니까?\n(거절하면 해당 몬스터의 흡수 확률은 0%로 돌아갑니다.)",
             new List<Action>() {() => CancelMonsterSaveChance(id) , () => SaveMonsterBody(id) }, new List<string>() {"거절", "저장"});
     }
@@ -595,24 +614,23 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     public void DefaultSelectionAction() //시스템 확인창에서 각 버튼마다 눌렸을 때의 실행함수에 이 함수를 더해줌
     {
+        TimeManager.TimeResume();
         selWdStack.Pop().Inactive();
         if(IsSelecting)
         {
             selWdStack.Peek().Hide(false);
         }
-        else
-        {
-            TimeManager.TimeResume();
-        }
     }
 
     public void CancelMonsterSaveChance(string id)  //변신 가능한 몬스터 저장 거절
     {
+        mobSaveWindowActiveDic[id] = false;
         EventManager.TriggerEvent("PlayerBodySet", id, false);
     }
 
     public void SaveMonsterBody(string id) //변신 가능한 몬스터 저장하기
     {
+        mobSaveWindowActiveDic[id] = false;
         EventManager.TriggerEvent("PlayerBodySet", id, true);
         MonsterCollection.Instance.IDToSave = id;
     }
@@ -634,12 +652,19 @@ public partial class UIManager : MonoSingleton<UIManager>
         seq.Play();
     }
 
-    public void StartLoading()
+    public void StartLoadingIn()
     {
         loadingCvsg.alpha = 1;
         loadingCvsg.gameObject.SetActive(true);
 
         loadingCvsg.DOFade(0, 1).SetEase(Ease.OutQuad).SetUpdate(true).OnComplete(() => loadingCvsg.gameObject.SetActive(false));
+    }
+    public void StartLoadingOut()
+    {
+        loadingCvsg.alpha = 0;
+        loadingCvsg.gameObject.SetActive(true);
+
+        loadingCvsg.DOFade(1, 1).SetEase(Ease.OutQuad).SetUpdate(true);
     }
 
     #endregion
@@ -705,7 +730,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         statTexts[2].text = stat.Defense.ToString();
         statTexts[3].text = Mathf.RoundToInt(Mathf.Abs(stat.Speed)).ToString(); //스피드가 몇인지 소수로 나오면 어색할 것 같아서 일단은 정수로 나오게 함.
         statTexts[4].text = string.Concat(stat.CriticalRate, '%');
-        statTexts[5].text = stat.CriticalDamage.ToString();
+        statTexts[5].text = stat.CriticalDamage.ToString() + "%";
         statTexts[6].text = stat.Intellect.ToString();
         statTexts[7].text = stat.AttackSpeed.ToString();
 
@@ -726,6 +751,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         if (decrease)
         {
             EffectManager.Instance.OnDamagedUIEffect(rate);
+            Environment.Instance.OnDamaged();
             isStartDelayHPFillTimer = true;
             setDelayHPFillTime = Time.time + 0.5f;
         }

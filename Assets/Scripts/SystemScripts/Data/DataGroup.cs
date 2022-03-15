@@ -105,21 +105,25 @@ public class NoticeUISet
     public VertexGradient vg;
     public Action endAction;
 
-    public NoticeUISet(string msg, float fontSize, Action endAction)
+    public float existTime;
+
+    public NoticeUISet(string msg, float fontSize, Action endAction, float existTime = 2.5f)
     {
         this.msg = msg;
         this.fontSize = fontSize;
         this.endAction = endAction;
         changeVertexGradient = false;
+        this.existTime = existTime;
     }
 
-    public NoticeUISet(string msg, float fontSize,VertexGradient vg ,Action endAction)
+    public NoticeUISet(string msg, float fontSize,VertexGradient vg ,Action endAction, float existTime = 2.5f)
     {
         this.msg = msg;
         this.fontSize = fontSize;
         this.vg = vg;
         this.endAction = endAction;
         changeVertexGradient = true;
+        this.existTime = existTime;
     }
 }
 

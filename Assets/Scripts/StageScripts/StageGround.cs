@@ -2,9 +2,6 @@ using UnityEngine;
 
 public class StageGround : MonoBehaviour
 {
-    [SerializeField] private int enemyCount;
-    public int EnemyCnt => enemyCount;
-
     public Collider2D camStageCollider;
 
     public Transform playerSpawnPoint;
@@ -25,7 +22,6 @@ public class StageGround : MonoBehaviour
 
     private void OnEnable()
     {
-        Enemy.EnemyManager.Instance.enemyCount = enemyCount;
         for(int i = 0; i < plants.Length; i++)
         {
             plants[i].gameObject.SetActive(true);

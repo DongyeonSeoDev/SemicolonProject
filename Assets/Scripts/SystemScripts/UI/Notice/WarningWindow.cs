@@ -19,16 +19,12 @@ public class WarningWindow : MonoBehaviour
         cvsg.DOKill();
 
         cvsg.alpha = 0;
-        cvsg.interactable = false;
-        cvsg.blocksRaycasts = false;
+        //cvsg.interactable = false;
+        //cvsg.blocksRaycasts = false;
         transform.localScale = SVector3.zeroPointSeven;
 
         transform.DOScale(Vector3.one, 0.3f).SetUpdate(true);
-        cvsg.DOFade(1, 0.5f).SetUpdate(true).OnComplete(() =>
-        {
-            cvsg.interactable = true;
-            cvsg.blocksRaycasts = true;
-        });
+        cvsg.DOFade(1, 0.5f).SetUpdate(true);
     }
 
     public void Register(System.Action confirmAc, string warning, string confirmTx, string cancelTx)
@@ -52,6 +48,9 @@ public class WarningWindow : MonoBehaviour
 
     public void Cancel()
     {
+        transform.DOKill();
+        cvsg.DOKill();
+
         transform.DOScale(SVector3.zeroPointSeven, 0.3f).SetUpdate(true);
         cvsg.DOFade(0, 0.3f).SetUpdate(true).OnComplete(() => gameObject.SetActive(false));
     }

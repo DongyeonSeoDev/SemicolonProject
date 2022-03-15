@@ -15,6 +15,8 @@ public class ResolutionOption : MonoBehaviour
     public Dropdown resolutionDd;
     public Toggle fullScrTg;
 
+    public (int, int) MaxScrWH => (whResolutionList[whResolutionList.Count-1].first, whResolutionList[whResolutionList.Count - 1].second);
+
     private void Start()
     {
         Init();

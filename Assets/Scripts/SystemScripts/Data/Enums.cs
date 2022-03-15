@@ -78,6 +78,23 @@ public enum ApplyMatCompoType
     RAWIMAGE
 }
 
+public enum RandomRoomType
+{
+    MONSTER,
+    RECOVERY,
+    IMPRECATION
+}
+
+public enum AreaType
+{
+    START,
+    MONSTER,
+    CHEF,
+    PLANTS,
+    RANDOM,
+    BOSS
+}
+
 
 public enum EventKeyCheck
 {

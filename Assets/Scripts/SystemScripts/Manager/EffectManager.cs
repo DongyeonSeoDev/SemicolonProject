@@ -28,7 +28,10 @@ public class EffectManager : MonoSingleton<EffectManager>
     public GameObject inventoryBtnEffect;
     public GameObject statBtnEffect;
     public GameObject monColBtnEffect;
-    
+
+    public MulSpriteColorCtrl invenMSC;
+    public MulSpriteColorCtrl statMSC;
+    public MulSpriteColorCtrl mobMSC;
 
     [Space(20)]
     [Header("채집 성공/실패 이펙트")]
@@ -64,7 +67,7 @@ public class EffectManager : MonoSingleton<EffectManager>
         PoolManager.CreatePool(damageTextPair.first, damageTextPair.second, 4, "DamageTextEff");
 
         EventManager.StartListening("PlayerRespawn", Respawn);
-        //EventManager.StartListening("Drain", OnDrain); //나중에 이벤트 추가후에 주석 풀어야 함
+        EventManager.StartListening("TryDrain", TryDrain); 
 
         //hpFillEffectStartX = hpFillEffect.anchoredPosition.x;
         //hpFillEffectMaskObj.screenPoint = new Vector2(fillBackRect.anchoredPosition.x - fillBackWidth * 0.5f, fillBackRect.anchoredPosition.y);
@@ -110,12 +113,15 @@ public class EffectManager : MonoSingleton<EffectManager>
         {
             case UIType.INVENTORY:
                 inventoryBtnEffect.SetActive(on);
+                invenMSC.SetIntensity(on ? 0.4f : 0);
                 break;
             case UIType.STAT:
                 statBtnEffect.SetActive(on);
+                statMSC.SetIntensity(on ? 0.7f : 0);
                 break;
             case UIType.MONSTER_COLLECTION:
                 monColBtnEffect.SetActive(on);
+                mobMSC.SetIntensity(on ? 1f : 0);
                 break;
         }
     }
@@ -132,8 +138,8 @@ public class EffectManager : MonoSingleton<EffectManager>
 
         //tmp.transform.DOMoveY(2.5f, 0.8f).SetRelative();
         tmp.transform.DOMove(tmp.transform.position + Global.damageTextMove, 0.6f);
-        tmp.transform.DOScale(!critical ? SVector3.zeroPointSeven : Vector3.one, 0.8f).SetEase(damageTxtScaleCurve);
-        tmp.DOColor(Color.clear, 0.9f).SetEase(damageTxtScaleCurve).OnComplete(() => tmp.gameObject.SetActive(false));
+        //tmp.transform.DOScale(!critical ? SVector3.zeroPointSeven : Vector3.one, 0.8f).SetEase(damageTxtScaleCurve);
+        tmp.DOColor(Color.clear, 0.7f).SetEase(damageTxtScaleCurve).OnComplete(() => tmp.gameObject.SetActive(false));
     }
     public void OnDamaged(int damage, Vector2 pos, Vector3 scale, VertexGradient textColor)
     {
@@ -147,8 +153,8 @@ public class EffectManager : MonoSingleton<EffectManager>
 
         //tmp.transform.DOMoveY(2.5f, 0.8f).SetRelative();
         tmp.transform.DOMove(tmp.transform.position + Global.damageTextMove, 0.6f);
-        tmp.transform.DOScale(scale - SVector3.zeroPointThree, 0.8f).SetEase(damageTxtScaleCurve);
-        tmp.DOColor(Color.clear, 0.9f).SetEase(damageTxtScaleCurve).OnComplete(() => tmp.gameObject.SetActive(false));
+        //tmp.transform.DOScale(scale - SVector3.zeroPointThree, 0.8f).SetEase(damageTxtScaleCurve);
+        tmp.DOColor(Color.clear, 0.7f).SetEase(damageTxtScaleCurve).OnComplete(() => tmp.gameObject.SetActive(false));
     }
 
     public void OnWorldTextEffect(string msg, Vector2 pos, Vector3 scale, VertexGradient textColor)  //게임 속에서 어떤 이벤트에 대해 텍스트 효과를 잠깐 띄움
@@ -163,11 +169,11 @@ public class EffectManager : MonoSingleton<EffectManager>
 
         //tmp.transform.DOMoveY(2.5f, 0.8f).SetRelative();
         tmp.transform.DOMove(tmp.transform.position + Global.worldTxtMove, 0.75f);
-        tmp.transform.DOScale(SVector3.zeroPointSeven, 0.9f).SetEase(damageTxtScaleCurve);
-        tmp.DOColor(Color.clear, 1).SetEase(damageTxtScaleCurve).OnComplete(() => tmp.gameObject.SetActive(false));
+        //tmp.transform.DOScale(SVector3.zeroPointSeven, 0.9f).SetEase(damageTxtScaleCurve);
+        tmp.DOColor(Color.clear, 0.8f).SetEase(damageTxtScaleCurve).OnComplete(() => tmp.gameObject.SetActive(false));
     }
 
-    private void OnDrain(Vector2 mobPos, bool drainSuc)
+    private void TryDrain(Vector2 mobPos, bool drainSuc)
     {
         OnWorldTextEffect(drainSuc ? "흡수" : "흡수실패", mobPos, Vector3.one, drainSuc ? drainVG.normal : drainVG.cri);
     }

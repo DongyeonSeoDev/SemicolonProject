@@ -22,6 +22,12 @@ public class PlayerInput : MonoBehaviour
     {
         get { return mousePosition; }
     }
+    private Vector2 attackMousePosition = Vector2.zero;
+    public Vector2 AttackMousePosition
+    {
+        get { return attackMousePosition; }
+        set { attackMousePosition = value; }
+    }
     private bool isInteraction = false;
     public bool IsInterraction
     {

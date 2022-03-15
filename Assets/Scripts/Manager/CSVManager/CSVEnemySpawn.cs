@@ -7,7 +7,7 @@ public struct EnemySpawnData
 {
     public int enemyId;
     public Vector3 position;
-    public int stageId;
+    public string stageId;
 
     public static implicit operator EnemySpawnData(string data)
     {
@@ -30,14 +30,7 @@ public struct EnemySpawnData
         }
 
         enemySpawnData.enemyId = result;
-
-        if (!int.TryParse(datas[2], out result))
-        {
-            Debug.LogError("잘못된 변환 입니다.");
-            return default(EnemySpawnData);
-        }
-
-        enemySpawnData.stageId = result;
+        enemySpawnData.stageId = datas[2];
 
         datas = datas[1].Split(';');
 
@@ -83,15 +76,15 @@ public class CSVEnemySpawn : CSVManager
         }
     }
 
-    public List<List<EnemySpawnData>> enemySpawnDatas = new List<List<EnemySpawnData>>();
+    public Dictionary<string, List<EnemySpawnData>> enemySpawnDatas = new Dictionary<string, List<EnemySpawnData>>();
     private StringBuilder sb = new StringBuilder(128);
-    private int value;
+   // private int value;
 
     protected override string path { get => "Data/EnemySpawnData"; }
 
     protected override void HowToRead(string[] data)
     {
-        if (data.Length < 2)
+        if (data.Length < 2 || data[0].Contains("id"))
         {
             return;
         }
@@ -103,14 +96,15 @@ public class CSVEnemySpawn : CSVManager
 
         csvData.Add(data[0], sb.ToString().Substring(0, sb.Length - 1));
 
-        if (int.TryParse(data[3], out value))
+        data[3] = data[3].Trim();
+        if (enemySpawnDatas.ContainsKey(data[3]))
         {
-            while (enemySpawnDatas.Count <= value)
-            {
-                enemySpawnDatas.Add(new List<EnemySpawnData>());
-            }
-
-            enemySpawnDatas[value].Add(sb.ToString().Substring(0, sb.Length - 1));
+            enemySpawnDatas[data[3]].Add(sb.ToString().Substring(0, sb.Length - 1));
+        }
+        else
+        {
+            enemySpawnDatas.Add(data[3], new List<EnemySpawnData>());
+            enemySpawnDatas[data[3]].Add(sb.ToString().Substring(0, sb.Length - 1));
         }
 
         sb.Clear();

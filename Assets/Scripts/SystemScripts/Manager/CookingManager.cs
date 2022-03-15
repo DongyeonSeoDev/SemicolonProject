@@ -88,7 +88,7 @@ public class CookingManager : MonoSingleton<CookingManager>
 
         Global.AddAction(Global.JunkItem, x =>
         {
-            if (UIManager.Instance.gameUIList[(int)UIType.CHEF_FOODS_PANEL].gameObject.activeSelf) //요리사 대화 패널(만들 음식 리스트 패널)이 켜져있으면 재필터링&재정렬한다
+            if (Util.IsActiveGameUI(UIType.CHEF_FOODS_PANEL)) //요리사 대화 패널(만들 음식 리스트 패널)이 켜져있으면 재필터링&재정렬한다
             {
                 Util.DelayFunc(() =>
                 {
@@ -101,7 +101,7 @@ public class CookingManager : MonoSingleton<CookingManager>
 
         Global.AddAction("ItemUse", id =>
         {
-            if (UIManager.Instance.gameUIList[(int)UIType.CHEF_FOODS_PANEL].gameObject.activeSelf)
+            if (Util.IsActiveGameUI(UIType.CHEF_FOODS_PANEL))
             {
                 MakeFoodInfoUIReset();
                 CheckCannotMakeFoods();
