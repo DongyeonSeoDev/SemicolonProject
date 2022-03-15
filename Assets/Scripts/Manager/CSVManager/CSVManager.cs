@@ -44,7 +44,6 @@ public abstract class CSVManager
 
         foreach (string data in datas)
         {
-            Debug.Log(data);
             HowToRead(data.Split(','));
         }
     }

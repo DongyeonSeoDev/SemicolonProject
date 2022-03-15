@@ -7,7 +7,8 @@ namespace Enemy
     {
         private PlayerInput playerInput = null;
         private Stat playerStat = null;
-        private float lastForce = 0f;
+        private float lastSpeed = 0f;
+        private float speed = 0f;
         private int wallCheck = LayerMask.GetMask("WALL");
 
         private Rigidbody2D rigid;
@@ -18,22 +19,22 @@ namespace Enemy
             playerStat = SlimeGameManager.Instance.Player.PlayerStat;
 
             rigid = rb;
+
+            speed = playerStat.Speed * 0.5f;
         }
 
         public override void Execute()
         {
-            float force = 0;
-
-            if (playerInput.MoveVector * (playerStat.Speed) != Vector2.zero)
+            if (playerInput.MoveVector * speed != Vector2.zero)
             {
-                lastForce = force = playerStat.Speed;
+                lastSpeed = speed;
             }
             else
             {
-                lastForce = Mathf.Lerp(lastForce, 0f, Time.deltaTime * playerStat.Speed / 2f);
+                lastSpeed = Mathf.Lerp(lastSpeed, 0f, Time.deltaTime * speed / 2f);
             }
 
-            var ray = Physics2D.Raycast(rigid.transform.position, playerInput.MoveVector, lastForce / 10f, wallCheck);
+            var ray = Physics2D.Raycast(rigid.transform.position, playerInput.MoveVector, lastSpeed / 10f, wallCheck);
 
             if (ray.collider != null)
             {
@@ -42,7 +43,7 @@ namespace Enemy
             }
             else
             {
-                rigid.velocity = playerInput.LastMoveVector * lastForce;
+                rigid.velocity = playerInput.LastMoveVector * lastSpeed;
             }
         }
     }
@@ -330,7 +331,7 @@ namespace Enemy
         {
             EnemyPoolData bullet = EnemyPoolManager.Instance.GetPoolObject(Type.Bullet, transform.position);
 
-            bullet.GetComponent<EnemyBullet>().Init(enemyController, attackDamage, (playerInput.MousePosition - (Vector2)transform.position).normalized, enemy);
+            bullet.GetComponent<EnemyBullet>().Init(enemyController, attackDamage, (playerInput.AttackMousePosition - (Vector2)transform.position).normalized, enemy);
         }
     }
 
