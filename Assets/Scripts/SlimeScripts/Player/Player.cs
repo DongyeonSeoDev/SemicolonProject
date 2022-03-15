@@ -268,7 +268,7 @@ public class Player : MonoBehaviour
 
             if (PlayerEnemyUnderstandingRateManager.Instance.CheckMountObjIdContain(objId))
             {
-                PlayerEnemyUnderstandingRateManager.Instance.UpUnderStandingRate(objId, upUnderstandingRateValueWhenEnemyDead);
+                PlayerEnemyUnderstandingRateManager.Instance.UpUnderstandingRate(objId, upUnderstandingRateValueWhenEnemyDead);
             }
             else
             {
@@ -278,7 +278,7 @@ public class Player : MonoBehaviour
         else
         {
             Debug.Log("우오옷 동화율이 오른다앗");
-            PlayerEnemyUnderstandingRateManager.Instance.SetUnderstandingRate(SlimeGameManager.Instance.CurrentBodyId, upUnderstandingRateValueWhenEnemyDeadAfterBodyChanged);
+            PlayerEnemyUnderstandingRateManager.Instance.UpUnderstandingRate(SlimeGameManager.Instance.CurrentBodyId, upUnderstandingRateValueWhenEnemyDeadAfterBodyChanged);
         }
     }
     private void SetActiveFalse()

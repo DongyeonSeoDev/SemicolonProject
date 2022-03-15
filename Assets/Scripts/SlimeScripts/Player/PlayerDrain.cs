@@ -126,7 +126,7 @@ public class PlayerDrain : PlayerSkill
 
                     if (PlayerEnemyUnderstandingRateManager.Instance.CheckMountObjIdContain(objId))
                     {
-                        PlayerEnemyUnderstandingRateManager.Instance.UpUnderStandingRate(objId, item.Item2);
+                        PlayerEnemyUnderstandingRateManager.Instance.UpUnderstandingRate(objId, item.Item2);
                     }
                     else
                     {

@@ -96,8 +96,6 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
             drainProbabilityDict.Add(key, value);
         }
 
-        Debug.Log("aa" + drainProbabilityDict[key]);
-
         MonsterCollection.Instance.UpdateDrainProbability(key);
     }
     public float GetDrainProbabilityDict(string key)
@@ -198,7 +196,7 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
 
         if(mountedObjList.Contains(objId))
         {
-            UpUnderstandingRate(objId, upValue);
+            UpUnderstandingRateWithQueue(objId, upValue);
 
             return;
         }
@@ -211,12 +209,12 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
             UIManager.Instance.DoChangeBody(objId);
             //Debug.Log("장착 물어보는 창이 뜨네요");
 
-            UpUnderstandingRate(objId, upValue);
+            UpUnderstandingRateWithQueue(objId, upValue);
             SetMountingPercentageDict(objId, 0); // 장착을 했건 안했건 확률은 0이된다
         }
     }
 
-    private void UpUnderstandingRate(string objId, int upValue)
+    private void UpUnderstandingRateWithQueue(string objId, int upValue)
     {
         if (willUpUnderstandingRateDict.ContainsKey(objId))
         {
@@ -238,10 +236,10 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
         if(mountIt)
         {
             SetMountObj(objId);
-            UpUnderStandingRate(objId, upValue);
+            UpUnderstandingRate(objId, upValue);
         }
     }
-    public void UpUnderStandingRate(string objId, int upValue) // 이해도(동화율)을 올려줌
+    public void UpUnderstandingRate(string objId, int upValue) // 이해도(동화율)을 올려줌
     {
         SetUnderstandingRate(objId, GetUnderstandingRate(objId) + upValue);
 

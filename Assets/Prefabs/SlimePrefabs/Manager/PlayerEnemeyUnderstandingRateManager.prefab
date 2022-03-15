@@ -95,5 +95,4 @@ MonoBehaviour:
     dropItem: {fileID: 11400000, guid: 06dd51cfab1cb904b9bbbedef6545d02, type: 2}
     bodyExplanation: "\uC5B4\uCA4C\uBA74 \uB098\uC640 \uB2EE\uC558\uC744\uC9C0\uB3C4?"
   canMountObjNum: 2
-  minBodyChangeUnderstandingRate: 100
-  maxUnderstandingRate: 100
+  maxUnderstandingRate: 200
