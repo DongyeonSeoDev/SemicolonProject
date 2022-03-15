@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Stage1-9
   m_EditorClassIdentifier: 
   endStage: 0
+  stageBigNumber: 1
   stageNumber: 9
   stageName: "\uC9C0\uC5ED\uC774\uB984"
-  stageID: Stage1-9
   stage: {fileID: 1378282381469885354, guid: 701bfcf77d7c1c04bad1613e4d0cec0a, type: 3}
+  enemyCount: 0
+  areaType: 0

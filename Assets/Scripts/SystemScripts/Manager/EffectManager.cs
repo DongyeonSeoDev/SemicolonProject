@@ -28,7 +28,10 @@ public class EffectManager : MonoSingleton<EffectManager>
     public GameObject inventoryBtnEffect;
     public GameObject statBtnEffect;
     public GameObject monColBtnEffect;
-    
+
+    public MulSpriteColorCtrl invenMSC;
+    public MulSpriteColorCtrl statMSC;
+    public MulSpriteColorCtrl mobMSC;
 
     [Space(20)]
     [Header("채집 성공/실패 이펙트")]
@@ -110,12 +113,15 @@ public class EffectManager : MonoSingleton<EffectManager>
         {
             case UIType.INVENTORY:
                 inventoryBtnEffect.SetActive(on);
+                invenMSC.SetIntensity(on ? 0.4f : 0);
                 break;
             case UIType.STAT:
                 statBtnEffect.SetActive(on);
+                statMSC.SetIntensity(on ? 0.7f : 0);
                 break;
             case UIType.MONSTER_COLLECTION:
                 monColBtnEffect.SetActive(on);
+                mobMSC.SetIntensity(on ? 1f : 0);
                 break;
         }
     }

@@ -5,6 +5,14 @@ using System.Runtime.InteropServices;
 
 public static partial class Util
 {
+    public static Color SubColor(Color a, Color b)  //a - b   Color
+    {
+        float[] rgba = new float[4] {Mathf.Abs(a.r - b.r), Mathf.Abs(a.g - b.g), Mathf.Abs( a.b - b.b), Mathf.Abs( a.a - b.a)};
+        return new Color(rgba[0], rgba[1], rgba[2], rgba[3]);
+    }
+
+    public static float[] SubColorF(Color a, Color b) => new float[] { a.r - b.r, a.g - b.g, a.b - b.b, a.a - b.a };   //a - b   float[]
+
     public static Canvas WorldCvs => UIManager.Instance.gameCanvases[2];
 
     public static bool IsActiveGameUI(UIType type) => UIManager.Instance.gameUIList[(int)type].gameObject.activeSelf;

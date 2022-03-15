@@ -100,6 +100,8 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     [SerializeField] private ResolutionOption resolutionOption;
 
+    public Setting setting;
+
     //public Text statText;
     public Text[] statTexts;
 
@@ -120,6 +122,8 @@ public partial class UIManager : MonoSingleton<UIManager>
 
         noticeMsgGrd = noticeUIPair.first.GetComponent<NoticeMsg>().msgTmp.colorGradient;
         allCanvasScalers = canvasParent.GetComponentsInChildren<CanvasScaler>();
+        defaultTopCenterMsgVG = topCenterMsgTMP.colorGradient;
+        //topCenterMsgTMPCvsg = topCenterMsgTMP.GetComponent<CanvasGroup>();
 
         int i;
         for(i=0; i<gameCanvases.Length; i++)
@@ -131,6 +135,8 @@ public partial class UIManager : MonoSingleton<UIManager>
         {
             uiTweeningDic.Add((UIType)i, false);
         }
+
+        setting.InitSet();
     }
 
     private void CreatePool()
@@ -227,7 +233,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         EventManager.StartListening("GameClear", () => OnUIInteract(UIType.CLEAR, true));
         EventManager.StartListening("StageClear", () =>InsertNoticeQueue("Stage Clear", clearNoticeMsgVGrd, 90));
         EventManager.StartListening("ChangeBody", (str, dead) => { if(!dead) InsertNoticeQueue(MonsterCollection.Instance.GetMonsterInfo(str).bodyName + "(으)로 변신하였습니다"); });
-        EventManager.StartListening("StartNextStage", stageName => InsertNoticeQueue(stageName)); 
+        EventManager.StartListening("StartNextStage", stageName => InsertTopCenterNoticeQueue(stageName)); 
     }
 
     private void Respawn(Vector2 unusedValue) => OnUIInteract(UIType.DEATH, true);
@@ -745,6 +751,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         if (decrease)
         {
             EffectManager.Instance.OnDamagedUIEffect(rate);
+            Environment.Instance.OnDamaged();
             isStartDelayHPFillTimer = true;
             setDelayHPFillTime = Time.time + 0.5f;
         }

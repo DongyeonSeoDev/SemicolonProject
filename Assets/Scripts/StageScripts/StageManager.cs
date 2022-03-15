@@ -9,6 +9,7 @@ public class StageManager : MonoSingleton<StageManager>
     private StageGround currentStage = null;
     private StageDataSO currentStageData = null;
 
+    [SerializeField] private int MaxStage;
     [SerializeField] private string startStageID;
     [HideInInspector] public Vector2 respawnPos;
 
@@ -68,8 +69,25 @@ public class StageManager : MonoSingleton<StageManager>
         CinemachineCameraScript.Instance.SetCinemachineConfiner(currentStage.camStageCollider);
         GameManager.Instance.ResetDroppedItems();
 
-        if(!IsStageClear)
-           EventManager.TriggerEvent("SpawnEnemy", currentStageData.stageID);
+        switch(currentStageData.areaType)
+        {
+            case AreaType.START:
+                break;
+            case AreaType.MONSTER:
+                if (!IsStageClear)
+                    EventManager.TriggerEvent("SpawnEnemy", currentStageData.stageID);
+                break;
+            case AreaType.CHEF:
+                break;
+            case AreaType.PLANTS:
+                break;
+            case AreaType.RANDOM:
+                EnterRandomArea();
+                break;
+            case AreaType.BOSS:
+                //보스 전용 시스템 메시지 필요할듯
+                break;
+        }
     }
 
     public void StartNextStage(string stageName = "")
@@ -109,6 +127,25 @@ public class StageManager : MonoSingleton<StageManager>
         {
             Debug.Log("존재하지 않는 스테이지 아이디 : " + id);
             return null;
+        }
+    }
+
+    private void EnterRandomArea()
+    {
+        RandomRoomType room = (RandomRoomType)Random.Range(0, Global.EnumCount<RandomRoomType>());
+
+        switch(room)
+        {
+            case RandomRoomType.IMPRECATION:
+
+                break;
+            case RandomRoomType.MONSTER:
+                int targetStage = currentStageData.stageBigNumber + Mathf.Clamp(Random.Range(-1, 2), 1, MaxStage);
+                
+                break;
+            case RandomRoomType.RECOVERY:
+
+                break;
         }
     }
 }

@@ -65,28 +65,28 @@ public static class TweeningData
         if (active)
         {
             DOScale(fields,true);
-            Material mat = fields.self.GetComponent<Image>().material;
+            DissolveCtrl dc = fields.self.GetComponent<DissolveCtrl>();
             float t = 0f;
             float calc = Time.unscaledDeltaTime / 0.6f;
 
             Util.ExecuteFunc(() =>
             {
                 t += calc;
-                mat.SetFloat("_Fade", t);
-            }, 0, 0.6f, fields.self, null, () => mat.SetFloat("_Fade", 1), true);
+                dc.SetFade(t);
+            }, 0, 0.6f, fields.self, null, () => dc.SetFade(1), true);
         }
         else
         {
             DOScale(fields, false);
-            Material mat = fields.self.GetComponent<Image>().material;
+            DissolveCtrl dc = fields.self.GetComponent<DissolveCtrl>();
             float t = 1f;
             float calc = Time.unscaledDeltaTime / 0.4f;
 
             Util.ExecuteFunc(() =>
             {
                 t -= calc;
-                mat.SetFloat("_Fade", t);
-            }, 0, 0.4f, fields.self, null, () => mat.SetFloat("_Fade", 0), true);
+                dc.SetFade(t);
+            }, 0, 0.4f, fields.self, null, () => dc.SetFade(0), true);
         }
     }
 

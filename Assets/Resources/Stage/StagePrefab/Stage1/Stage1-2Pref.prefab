@@ -58,7 +58,7 @@ EdgeCollider2D:
   m_GameObject: {fileID: 1378282381469885354}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 99387a733fb54b64da99a36073c5c699, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -10071,7 +10071,7 @@ PrefabInstance:
     - target: {fileID: 7261487447096875063, guid: b9ff0b0188dca0e448ec2fd4d00024b3, type: 3}
       propertyPath: nextStageData
       value: 
-      objectReference: {fileID: 11400000, guid: cb725b1c67d669741bd0244f7aaea881, type: 2}
+      objectReference: {fileID: 11400000, guid: d06c40c91c5cdbf4c8f20b6b7e695fdb, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b9ff0b0188dca0e448ec2fd4d00024b3, type: 3}
 --- !u!4 &6041031814920311361 stripped
@@ -10225,7 +10225,7 @@ PrefabInstance:
     - target: {fileID: 7261487447096875063, guid: b9ff0b0188dca0e448ec2fd4d00024b3, type: 3}
       propertyPath: nextStageData
       value: 
-      objectReference: {fileID: 11400000, guid: d06c40c91c5cdbf4c8f20b6b7e695fdb, type: 2}
+      objectReference: {fileID: 11400000, guid: 9059aafb7ab1bd94ea2be40299f2dfe8, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b9ff0b0188dca0e448ec2fd4d00024b3, type: 3}
 --- !u!4 &1659494001217920396 stripped

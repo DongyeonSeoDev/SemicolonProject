@@ -16,6 +16,7 @@ public class DissolveCtrl : ShaderCtrl
 
     public void SetFade(float fade)
     {
+        base.InitSet();
         newMat.SetFloat("_Fade", fade);
     }
 }
