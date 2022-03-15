@@ -221,6 +221,22 @@ public static partial class ScriptHelper
             return a;
         }
     }
+    public static EternalStat Abs(this EternalStat a)
+    {
+        EternalStat result = a;
+
+        result.maxHp = a.maxHp.Abs();
+        result.minDamage = a.minDamage.Abs();
+        result.maxDamage = a.maxDamage.Abs();
+        result.defense = a.defense.Abs();
+        result.intellect = a.intellect.Abs();
+        result.speed = a.speed.Abs();
+        result.attackSpeed = a.attackSpeed.Abs();
+        result.criticalRate = a.criticalRate.Abs();
+        result.criticalDamage = a.criticalDamage.Abs();
+
+        return result;
+    }
     public static int Round(this float a)
     {
         float result = a;

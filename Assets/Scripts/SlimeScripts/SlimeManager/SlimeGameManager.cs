@@ -249,7 +249,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
             if (upNewBodyStat >= 1) // this code is "imsi" code that inserted "imsi" values.
             {
-                result = upStat * upNewBodyStat * upStatPercentage;// 10% 마다 upStatPercentage배씩 상승
+                result = (upStat * upNewBodyStat * upStatPercentage).Abs();// 10% 마다 upStatPercentage배씩 상승
             }
         }
         else
