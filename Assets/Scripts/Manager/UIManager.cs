@@ -163,6 +163,11 @@ public partial class UIManager : MonoSingleton<UIManager>
         screenHalf.first = Screen.width * 0.5f;
         screenHalf.second = Screen.height * 0.5f;
 
+        if(Screen.width > resolutionOption.MaxScrWH.Item1 || Screen.height > resolutionOption.MaxScrWH.Item2)
+        {
+            Screen.SetResolution(resolutionOption.MaxScrWH.Item1, resolutionOption.MaxScrWH.Item2, Screen.fullScreenMode);
+        }
+
         /*int i;
         for(i=0; i<allCanvasScalers.Length; i++)
         {
@@ -222,7 +227,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         EventManager.StartListening("GameClear", () => OnUIInteract(UIType.CLEAR, true));
         EventManager.StartListening("StageClear", () =>InsertNoticeQueue("Stage Clear", clearNoticeMsgVGrd, 90));
         EventManager.StartListening("ChangeBody", (str, dead) => { if(!dead) InsertNoticeQueue(MonsterCollection.Instance.GetMonsterInfo(str).bodyName + "(으)로 변신하였습니다"); });
-        //EventManager.StartListening("StartNextStage", stageName => );  스테이지 이름 띄우기
+        EventManager.StartListening("StartNextStage", stageName => InsertNoticeQueue(stageName)); 
     }
 
     private void Respawn(Vector2 unusedValue) => OnUIInteract(UIType.DEATH, true);
@@ -641,12 +646,19 @@ public partial class UIManager : MonoSingleton<UIManager>
         seq.Play();
     }
 
-    public void StartLoading()
+    public void StartLoadingIn()
     {
         loadingCvsg.alpha = 1;
         loadingCvsg.gameObject.SetActive(true);
 
         loadingCvsg.DOFade(0, 1).SetEase(Ease.OutQuad).SetUpdate(true).OnComplete(() => loadingCvsg.gameObject.SetActive(false));
+    }
+    public void StartLoadingOut()
+    {
+        loadingCvsg.alpha = 0;
+        loadingCvsg.gameObject.SetActive(true);
+
+        loadingCvsg.DOFade(1, 1).SetEase(Ease.OutQuad).SetUpdate(true);
     }
 
     #endregion

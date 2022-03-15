@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64e33b43e1e30554a86e99b006a1e50a, type: 3}
-  m_Name: Stage Data1-11
+  m_Name: Stage1-10
   m_EditorClassIdentifier: 
   endStage: 0
-  stageNumber: 11
+  stageNumber: 10
   stageName: "\uC9C0\uC5ED\uC774\uB984"
-  stageID: Stage1-11
-  stage: {fileID: 1378282381469885354, guid: 9663126a1f5566348a3f2102562085e6, type: 3}
+  stageID: Stage1-10
+  stage: {fileID: 1378282381469885354, guid: 42bac2d10a784034b8d8a456e51fce12, type: 3}

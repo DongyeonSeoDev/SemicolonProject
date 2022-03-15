@@ -25,7 +25,7 @@ namespace Enemy
         public StageCheck stageCheck;
         public int enemyCount;
 
-        public List<List<Enemy>> enemyList = new List<List<Enemy>>();
+        public Dictionary<string, List<Enemy>> enemyDictionary = new Dictionary<string, List<Enemy>>();
 
         public Transform player;
 
@@ -43,18 +43,18 @@ namespace Enemy
 
         public void PlayerDeadEvent()
         {
-            for (int i = 0; i < enemyList.Count; i++)
+            foreach(List<Enemy> enemyList in enemyDictionary.Values)
             {
-                for (int j = 0; j < enemyList[i].Count; j++)
+                for (int i = 0; i < enemyList.Count; i++)
                 {
-                    if (enemyList[i][j].gameObject.activeSelf)
+                    if (enemyList[i].gameObject.activeSelf)
                     {
-                        enemyList[i][j].gameObject.SetActive(false);
+                        enemyList[i].gameObject.SetActive(false);
                     }
                 }
             }
 
-            enemyList.Clear();
+            enemyDictionary.Clear();
         }
 
         public void EnemyDestroy()
@@ -63,10 +63,12 @@ namespace Enemy
 
             if (enemyCount == 0)
             {
-                if (stageCheck != null)
+                /*if (stageCheck != null)
                 {
                     stageCheck.StageClear();
-                }
+                }*/
+
+                StageManager.Instance.StageClear();
             }
         }
     }

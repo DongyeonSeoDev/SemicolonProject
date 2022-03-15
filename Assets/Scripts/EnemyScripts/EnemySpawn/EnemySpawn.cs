@@ -5,11 +5,11 @@ namespace Enemy
 {
     public class EnemySpawn : MonoSingleton<EnemySpawn>
     {
-        public List<List<Enemy>> enemyList;
+        public Dictionary<string, List<Enemy>> enemyDictionary = new Dictionary<string, List<Enemy>>();
 
         private void Start()
         {
-            enemyList = EnemyManager.Instance.enemyList;
+            enemyDictionary = EnemyManager.Instance.enemyDictionary;
 
             PlayerRespawnEvent();
 
@@ -19,52 +19,56 @@ namespace Enemy
 
             CSVEnemySpawn.Instance.GetData("");
             
-            for (int i = 0; i < 3; i++)
+            /*for (int i = 0; i < 3; i++)
             {
                 EventManager.TriggerEvent("SpawnEnemy", i);
-            }
+            }*/
         }
 
         private void PlayerRespawnEvent()
         {
             EnemyManager.Instance.PlayerDeadEvent();
 
-            for (int i = 0; i < 3; i++)
+           /* for (int i = 0; i < 3; i++)
             {
                 EventManager.TriggerEvent("SpawnEnemy", i);
-            }
+            }*/
         }
 
-        private void SpawnEnemy(int stageNumber)
+        private void SpawnEnemy(string stageId)
         {
-            if (CSVEnemySpawn.Instance.enemySpawnDatas.Count <= stageNumber)
+            if (!CSVEnemySpawn.Instance.enemySpawnDatas.ContainsKey(stageId))
             {
-                Debug.LogError("잘못된 stageNumber 입니다. SpawnEnemy 실행 실패");
+                //CSVEnemySpawn.Instance.enemySpawnDatas.Keys.ForEach(x => Debug.Log(x.Trim() == stageId.Trim()));
+                Debug.LogError("잘못된 stageId 입니다. SpawnEnemy 실행 실패 : " + stageId);
             }
 
-            for (int i = 0; i < CSVEnemySpawn.Instance.enemySpawnDatas[stageNumber].Count; i++)
+            for (int i = 0; i < CSVEnemySpawn.Instance.enemySpawnDatas[stageId].Count; i++)
             {
-                EnemyPoolData enemy = EnemyPoolManager.Instance.GetPoolObject((Type)CSVEnemySpawn.Instance.enemySpawnDatas[stageNumber][i].enemyId, CSVEnemySpawn.Instance.enemySpawnDatas[stageNumber][i].position);
+                EnemyPoolData enemy = EnemyPoolManager.Instance.GetPoolObject((Type)CSVEnemySpawn.Instance.enemySpawnDatas[stageId][i].enemyId, CSVEnemySpawn.Instance.enemySpawnDatas[stageId][i].position);
 
-                while (enemyList.Count <= stageNumber)
+                if (enemyDictionary.ContainsKey(stageId))
                 {
-                    enemyList.Add(new List<Enemy>());
+                    enemyDictionary[stageId].Add(enemy.GetComponent<Enemy>());
                 }
-
-                enemyList[stageNumber].Add(enemy.GetComponent<Enemy>());
+                else
+                {
+                    enemyDictionary.Add(stageId, new List<Enemy>());
+                    enemyDictionary[stageId].Add(enemy.GetComponent<Enemy>());
+                }
             }
         }
 
-        private void EnemyMove(int stageNumber)
+        private void EnemyMove(string stageId)
         {
-            if (enemyList.Count <= stageNumber)
+            if (!enemyDictionary.ContainsKey(stageId))
             {
-                Debug.LogError("잘못된 stageNumber 입니다. EnemyMove 실행 실패");
+                Debug.LogError("잘못된 stageId 입니다. EnemyMove 실행 실패 : " + stageId);
             }
 
-            for (int i = 0; i < enemyList[stageNumber].Count; i++)
+            for (int i = 0; i < enemyDictionary[stageId].Count; i++)
             {
-                enemyList[stageNumber][i].MoveEnemy();
+                enemyDictionary[stageId][i].MoveEnemy();
             }
         }
     }

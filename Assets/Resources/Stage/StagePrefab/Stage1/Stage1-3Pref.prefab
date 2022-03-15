@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 1378282381469885355}
   - component: {fileID: 112924586600170954}
   - component: {fileID: 1598099289191442443}
-  m_Layer: 0
-  m_Name: Stage1-5
-  m_TagString: Untagged
+  m_Layer: 6
+  m_Name: Stage1-3Pref
+  m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -86,7 +86,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 389c35a9edd912d479d233b3f83274af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyCount: 0
   camStageCollider: {fileID: 8648534772182156580}
   playerSpawnPoint: {fileID: 998791116210713733}
   autoInsertStageDoors: 0
@@ -9930,7 +9929,7 @@ GameObject:
   m_Layer: 0
   m_Name: SpawnPoint
   m_TagString: Untagged
-  m_Icon: {fileID: 1206586993520771344, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -10069,6 +10068,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7261487447096875063, guid: b9ff0b0188dca0e448ec2fd4d00024b3, type: 3}
+      propertyPath: nextStageData
+      value: 
+      objectReference: {fileID: 11400000, guid: 4ce3a2cc203d09942ae0404de747fa1a, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b9ff0b0188dca0e448ec2fd4d00024b3, type: 3}
 --- !u!4 &6041031814920311361 stripped
@@ -10219,6 +10222,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7261487447096875063, guid: b9ff0b0188dca0e448ec2fd4d00024b3, type: 3}
+      propertyPath: nextStageData
+      value: 
+      objectReference: {fileID: 11400000, guid: 6f7a2b0a0409cb646a361f2284e13a49, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b9ff0b0188dca0e448ec2fd4d00024b3, type: 3}
 --- !u!4 &1659494001217920396 stripped

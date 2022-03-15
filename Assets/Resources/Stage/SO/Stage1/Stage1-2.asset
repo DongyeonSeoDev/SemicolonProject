@@ -10,10 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64e33b43e1e30554a86e99b006a1e50a, type: 3}
-  m_Name: Stage Data1-9
+  m_Name: Stage1-2
   m_EditorClassIdentifier: 
   endStage: 0
-  stageNumber: 9
+  stageNumber: 2
   stageName: "\uC9C0\uC5ED\uC774\uB984"
-  stageID: Stage1-9
-  stage: {fileID: 1378282381469885354, guid: 701bfcf77d7c1c04bad1613e4d0cec0a, type: 3}
+  stageID: Stage1-2
+  stage: {fileID: 1378282381469885354, guid: c06f5a602c24907449fe7380e6ece02d, type: 3}
+  playerStartPosition: {x: -10, y: -4, z: 0}

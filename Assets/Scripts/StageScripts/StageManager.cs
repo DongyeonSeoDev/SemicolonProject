@@ -9,7 +9,6 @@ public class StageManager : MonoSingleton<StageManager>
     private StageGround currentStage = null;
     private StageDataSO currentStageData = null;
 
-    [SerializeField] private bool startStageClearState;
     [SerializeField] private string startStageID;
     [HideInInspector] public Vector2 respawnPos;
 
@@ -35,10 +34,10 @@ public class StageManager : MonoSingleton<StageManager>
 
     private void Start()
     {
-        //IsStageClear = startStageClearState;
         Util.DelayFunc(() => NextStage(startStageID), 0.2f);
         respawnPos = idToStageDataDict[startStageID].stage.GetComponent<StageGround>().playerSpawnPoint.position;
         EventManager.StartListening("PlayerRespawn", Respawn);
+        EventManager.StartListening("StartNextStage", stageName => StartNextStage(stageName));
     }
 
     public void NextStage(string id)
@@ -59,14 +58,24 @@ public class StageManager : MonoSingleton<StageManager>
             currentStage.gameObject.SetActive(true);
         }
 
-        IsStageClear = currentStage.EnemyCnt == 0;
+        IsStageClear = currentStageData.enemyCount == 0;
 
         if (IsStageClear) currentStage.OpenDoors();
         else currentStage.CloseDoor();
-        
+
+        Enemy.EnemyManager.Instance.enemyCount = currentStageData.enemyCount;
         SlimeGameManager.Instance.CurrentPlayerBody.transform.position = currentStage.playerSpawnPoint.position;
         CinemachineCameraScript.Instance.SetCinemachineConfiner(currentStage.camStageCollider);
         GameManager.Instance.ResetDroppedItems();
+
+        if(!IsStageClear)
+           EventManager.TriggerEvent("SpawnEnemy", currentStageData.stageID);
+    }
+
+    public void StartNextStage(string stageName = "")
+    {
+        if (!IsStageClear)
+            EventManager.TriggerEvent("EnemyMove", currentStageData.stageID);
     }
 
     public void StageClear()
@@ -87,5 +96,19 @@ public class StageManager : MonoSingleton<StageManager>
     private void Respawn(Vector2 unusedValue)
     {
         NextStage(startStageID);
+    }
+
+    public StageDataSO GetStageData(string id = "")
+    {
+        if (string.IsNullOrEmpty(id)) id = startStageID;
+        if (idToStageDataDict.ContainsKey(id))
+        {
+            return idToStageDataDict[id];
+        }
+        else
+        {
+            Debug.Log("존재하지 않는 스테이지 아이디 : " + id);
+            return null;
+        }
     }
 }

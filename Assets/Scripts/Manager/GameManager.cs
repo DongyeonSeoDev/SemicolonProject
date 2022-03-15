@@ -31,7 +31,7 @@ public partial class GameManager : MonoSingleton<GameManager>
     private void Awake()
     {
 #if !UNITY_EDITOR
-        Cursor.lockState = CursorLockMode.Confined;
+        Util.DelayFunc(() => Cursor.lockState = CursorLockMode.Confined, 5);
 #endif
         filePath = Global.saveFileName_1.PersistentDataPath();
         saveData = new SaveData();
@@ -257,7 +257,8 @@ public partial class GameManager : MonoSingleton<GameManager>
     public void RespawnPlayer()
     {
         //EventManager.TriggerEvent("PlayerRespawn", StageManager.Instance.respawnPos);   //나중에 스테이지 되면 이걸로
-        EventManager.TriggerEvent("PlayerRespawn", Vector2.zero); //임시용
+        //매개변수 임시용
+        UIManager.Instance.StartLoading(() => EventManager.TriggerEvent("PlayerRespawn", Vector2.zero), () => EventManager.TriggerEvent("StartNextStage",StageManager.Instance.GetStageData().stageName));
     }
 
     public void QuitGame()
