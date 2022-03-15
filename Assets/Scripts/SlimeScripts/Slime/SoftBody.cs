@@ -31,6 +31,12 @@ public class SoftBody : MonoBehaviour
         get { return downNotMiddlePoints; }
     }
 
+    private BodyPoint leftestDownNotMiddlePoint = new BodyPoint();
+    private float leftestDownNotMiddlePointDistance = 0f;
+
+    private BodyPoint rightestDownNotMiddlePoint = new BodyPoint();
+    private float rightestDownNotMiddlePointDistance = 0f;
+
     private readonly float radius = 0.2f; // 각 바디포인트 사이의 거리
 
     [Header("MiddlePoint와 다른 Point들 사이의 SpringJoint의 Frequency값")]
@@ -89,14 +95,54 @@ public class SoftBody : MonoBehaviour
         
         Transform bodyPointTrm = notMiddlePoints[i];
 
-        if (bodyPointTrm.position.y > transform.position.y)
+        if (bodyPointTrm.position.y >= transform.position.y)
         {
             upNotMiddlePoints.Add(bodyPoint);
         }
-        else if (bodyPointTrm.position.y < transform.position.y)
+        else
         {
-            bodyPoint.SetTrueisDownBodyPoint();
-            downNotMiddlePoints.Add(bodyPoint);
+            float distance = (bodyPointTrm.position.x - transform.position.x).Abs();
+
+            if (bodyPointTrm.position.x >= transform.position.x)
+            {                
+                if(rightestDownNotMiddlePointDistance < distance)
+                {
+                    if (rightestDownNotMiddlePoint != null)
+                    {
+                        rightestDownNotMiddlePoint.SetTrueisDownBodyPoint();
+                        downNotMiddlePoints.Add(rightestDownNotMiddlePoint);
+                    }
+
+                    rightestDownNotMiddlePoint = bodyPoint;
+                    rightestDownNotMiddlePointDistance = distance;
+                }
+                else
+                {
+                    bodyPoint.SetTrueisDownBodyPoint();
+                    downNotMiddlePoints.Add(bodyPoint);
+                }
+            }
+            else
+            {
+                if (leftestDownNotMiddlePointDistance < distance)
+                {
+                    if (leftestDownNotMiddlePoint != null)
+                    {
+                        leftestDownNotMiddlePoint.SetTrueisDownBodyPoint();
+                        downNotMiddlePoints.Add(leftestDownNotMiddlePoint);
+                    }
+
+                    leftestDownNotMiddlePoint = bodyPoint;
+                    leftestDownNotMiddlePointDistance = distance;
+                }
+                else
+                {
+                    bodyPoint.SetTrueisDownBodyPoint();
+                    downNotMiddlePoints.Add(bodyPoint);
+                }
+            }
+            //bodyPoint.SetTrueisDownBodyPoint();
+            //downNotMiddlePoints.Add(bodyPoint);
         }
     }
 
