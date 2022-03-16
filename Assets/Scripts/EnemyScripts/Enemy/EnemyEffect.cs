@@ -4,24 +4,29 @@ namespace Enemy
 {
     public class EnemyEffect : EnemyPoolData
     {
-        private ParticleSystem particle = null;
+        private SpriteRenderer spriteRenderer = null;
+        private Animator animator = null;
+        private readonly int hashAnimationStart = Animator.StringToHash("AnimationStart");
+        private bool isPlaying = false;
 
         private void Awake()
         {
-            particle = GetComponent<ParticleSystem>();
+            spriteRenderer = GetComponent<SpriteRenderer>();
+            animator = GetComponent<Animator>();
         }
 
         public void Play(Color color)
         {
-            ParticleSystem.MainModule main = particle.main;
-            main.startColor = color;
+            spriteRenderer.color = color;
+            animator.SetTrigger(hashAnimationStart);
 
-            particle.Play();
+            isPlaying = true;
 
             Util.DelayFunc(() =>
             {
+                isPlaying = false;
                 gameObject.SetActive(false);
-            }, 1f, this);
+            }, 0.7f, this);
         }
     }
 }
