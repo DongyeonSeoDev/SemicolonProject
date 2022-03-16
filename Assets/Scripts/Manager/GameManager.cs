@@ -30,9 +30,9 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     private void Awake()
     {
-#if !UNITY_EDITOR
+/*#if !UNITY_EDITOR
         Util.DelayFunc(() => Cursor.lockState = CursorLockMode.Confined, 5);
-#endif
+#endif*/
         filePath = Global.saveFileName_1.PersistentDataPath();
         saveData = new SaveData();
         KeyCodeToString.Init();
@@ -199,7 +199,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         }
     }
 
-    void PlayerRespawnEvent(Vector2 unusedValue)
+    void PlayerRespawnEvent()
     {
         ResetDroppedItems();
 
@@ -256,9 +256,8 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     public void RespawnPlayer()
     {
-        //EventManager.TriggerEvent("PlayerRespawn", StageManager.Instance.respawnPos);   //나중에 스테이지 되면 이걸로
-        //매개변수 임시용
-        UIManager.Instance.StartLoading(() => EventManager.TriggerEvent("PlayerRespawn", Vector2.zero), () => EventManager.TriggerEvent("StartNextStage",StageManager.Instance.GetStageData().stageName));
+        UIManager.Instance.OnUIInteract(UIType.DEATH, true);
+        UIManager.Instance.StartLoading(() => EventManager.TriggerEvent("PlayerRespawn"), () => EventManager.TriggerEvent("StartNextStage",StageManager.Instance.GetStageData().stageName));
     }
 
     public void QuitGame()

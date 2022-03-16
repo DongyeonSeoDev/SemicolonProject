@@ -17,32 +17,36 @@ MonoBehaviour:
     second:
     - skillType: 0
       skillName: "\uBAB8 \uC870\uAC01 \uB358\uC9C0\uAE30"
-      skillExplanation: "\uC2A4\uD0AC \uC124\uBA85"
+      skillExplanation: "\uBAB8\uC758 \uC77C\uBD80\uB97C \uC57D\uAC04 \uB5BC\uC5B4\uB0B4\uC11C
+        \uB358\uC9C4\uB2E4"
       skillSpr: {fileID: 21300000, guid: df907ac5977a0d543a06e726893e2c9e, type: 3}
     - skillType: 1
       skillName: "\uB3CC\uC9C4"
-      skillExplanation: "\uC2A4\uD0AC \uC124\uBA85 \uC124\uBA85 "
+      skillExplanation: "\uBE60\uB974\uAC8C \uC55E\uC73C\uB85C \uB3CC\uC9C4\uD55C\uB2E4"
       skillSpr: {fileID: 21300000, guid: 7188dd1aa5e8d6146bd03734a6c6566c, type: 3}
     - skillType: 2
       skillName: "\uD761\uC218"
-      skillExplanation: "\uC2A4\uD0AC \uC124\uBA85 \uC124\uBA85 \uC124\uBA85"
+      skillExplanation: "\uCCB4\uB825\uC774 \uC77C\uC815 \uC774\uD558\uC778 \uC8FC\uBCC0
+        \uBAAC\uC2A4\uD130\uB4E4\uC744 \uBE68\uC544\uB4E4\uC778"
       skillSpr: {fileID: 2032880742315017720, guid: 3162a4e034fb19d40ba8510c66b07948, type: 3}
   monsterSkillsList:
   - first: 0
     second:
     - skillType: 0
-      skillName: "\uBB54\uAC00 \uACF5\uACA9"
-      skillExplanation: "\uBB58 \uC5B4\uB5BB\uAC8C \uACF5\uACA9\uD568"
+      skillName: "\uCD09\uC218 \uD718\uB450\uB974\uAE30"
+      skillExplanation: "\uCD09\uC218\uB97C \uD718\uB458\uB7EC\uC11C \uC8FC\uBCC0\uC5D0
+        \uC9E7\uC740 \uBC94\uC704\uB85C \uD53C\uD574\uB97C \uC900"
       skillSpr: {fileID: 4048062247580793279, guid: 407549c50f6a9884caf01e20bde4d767, type: 3}
   - first: 1
     second:
     - skillType: 0
-      skillName: "\uBB54\uAC00 \uBC1C\uC0AC"
-      skillExplanation: "\uBB58 \uBC1C\uC0AC\uD558\uB294\uB370"
+      skillName: "\uCE68 \uBC49\uAE30"
+      skillExplanation: "\uCE68\uC744 \uBC1C\uC0AC\uD55C"
       skillSpr: {fileID: 21300000, guid: b0a769d6d4f10494ea66e966edd14dbb, type: 3}
   - first: 2
     second:
     - skillType: 0
-      skillName: "\uBAB0\uB77C"
-      skillExplanation: "\u3147\u3147\u3147\u3147\u3147\u3147\u3147\u3147"
+      skillName: "\uB3CC\uC9C4"
+      skillExplanation: "\uC57D\uAC04 \uBA48\uCDC4\uB2E4\uAC00 \uC55E\uC73C\uB85C
+        \uBE60\uB974\uAC8C \uB3CC\uC9C4\uD574\uC11C \uACF5\uACA9\uD55C\uB2E4"
       skillSpr: {fileID: -242015015181806508, guid: a9de3b96fa106fa43a0fe55cd1aabb17, type: 3}

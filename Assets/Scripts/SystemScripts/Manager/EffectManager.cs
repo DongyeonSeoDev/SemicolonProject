@@ -82,7 +82,7 @@ public class EffectManager : MonoSingleton<EffectManager>
         Global.AddAction(Global.MakeFood, unusedValue => OnTopRightBtnEffect(UIType.INVENTORY, true));
     }
 
-    private void Respawn(Vector2 unusedValue)
+    private void Respawn()
     {
         inventoryBtnEffect.SetActive(false);
         statBtnEffect.SetActive(false);
