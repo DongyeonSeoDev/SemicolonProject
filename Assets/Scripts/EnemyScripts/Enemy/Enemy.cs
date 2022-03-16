@@ -69,6 +69,15 @@ namespace Enemy
             enemyData.hpBarFillImage.fillAmount = (float)enemyData.hp / enemyData.maxHP;
             enemyData.enemyAnimator.SetTrigger(enemyData.hashReset);
             enemyData.enemyAnimator.SetBool(enemyData.hashIsDead, false);
+
+            if (enemyData.eEnemyController == EnemyController.AI)
+            {
+                sr.color = enemyData.normalColor;
+            }
+            else if (enemyData.eEnemyController == EnemyController.PLAYER)
+            {
+                sr.color = enemyData.playerNormalColor;
+            }
         }
 
         protected virtual void Update()

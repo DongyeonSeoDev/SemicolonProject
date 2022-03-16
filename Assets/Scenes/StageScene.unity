@@ -1081,7 +1081,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 6423039109439716282, guid: 0ae03078902df274991969f96e8c3e57, type: 3}
       propertyPath: poolList.Array.size
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 6423039109439716282, guid: 0ae03078902df274991969f96e8c3e57, type: 3}
       propertyPath: poolList.Array.data[4]
@@ -1090,7 +1090,11 @@ PrefabInstance:
     - target: {fileID: 6423039109439716282, guid: 0ae03078902df274991969f96e8c3e57, type: 3}
       propertyPath: poolList.Array.data[5]
       value: 
-      objectReference: {fileID: 3344258992875784220, guid: 08cbd22b52dc70c4493a457f0c54c095, type: 3}
+      objectReference: {fileID: -6883242640977400814, guid: 60d4b1afc08a5c84da29972d40cc9d29, type: 3}
+    - target: {fileID: 6423039109439716282, guid: 0ae03078902df274991969f96e8c3e57, type: 3}
+      propertyPath: poolList.Array.data[6]
+      value: 
+      objectReference: {fileID: 5654788913614455916, guid: f740e7f4da837c54e9e75b2f5a19a989, type: 3}
     - target: {fileID: 6423039109952031424, guid: 0ae03078902df274991969f96e8c3e57, type: 3}
       propertyPath: enemySpawnList.Array.size
       value: 11
@@ -25970,7 +25974,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ConfineMode: 0
   m_BoundingVolume: {fileID: 0}
-  m_BoundingShape2D: {fileID: 0}
+  m_BoundingShape2D: {fileID: 815715622}
   m_ConfineScreenEdges: 1
   m_Damping: 3
 --- !u!1 &1928761818
