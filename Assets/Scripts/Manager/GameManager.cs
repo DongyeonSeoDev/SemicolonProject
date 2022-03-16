@@ -30,9 +30,9 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     private void Awake()
     {
-#if !UNITY_EDITOR
+/*#if !UNITY_EDITOR
         Util.DelayFunc(() => Cursor.lockState = CursorLockMode.Confined, 5);
-#endif
+#endif*/
         filePath = Global.saveFileName_1.PersistentDataPath();
         saveData = new SaveData();
         KeyCodeToString.Init();

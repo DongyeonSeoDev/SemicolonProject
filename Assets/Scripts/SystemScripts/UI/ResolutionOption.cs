@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
@@ -20,6 +21,7 @@ public class ResolutionOption : MonoBehaviour
     private void Start()
     {
         Init();
+        StartCoroutine(CheckOverResolutionCo());
     }
 
      /*private void InsertResolution()
@@ -122,6 +124,33 @@ public class ResolutionOption : MonoBehaviour
         {
             screenMode = prevScrMode;
             fullScrTg.isOn = screenMode.Equals(FullScreenMode.FullScreenWindow);
+        }
+    }
+
+    public void OnResolutionUIUpdate()
+    {
+        fullScrTg.isOn = Screen.fullScreenMode.Equals(FullScreenMode.FullScreenWindow);
+        screenMode = Screen.fullScreenMode;
+        prevScrMode = screenMode;
+
+        resolutionDd.value = whResolutionList.Count - 1;
+        resolutionNum = resolutionDd.value;
+        prevResolNum = resolutionNum;
+    }
+
+    private IEnumerator CheckOverResolutionCo() //1초마다 지원하는 해상도를 넘었는지 체크하고 넘었다고 지원하는 해상도중 최대사이즈로 바꿔줌
+    {
+        Global.AddAction("ChangeResolution", OnResolutionUIUpdate);
+        WaitForSeconds ws = new WaitForSeconds(1);
+
+        while(true)
+        {
+            if (Screen.width > MaxScrWH.Item1 || Screen.height > MaxScrWH.Item2)
+            {
+                Screen.SetResolution(MaxScrWH.Item1, MaxScrWH.Item2, Screen.fullScreenMode);
+                Global.ActionTrigger("ChangeResolution");
+            }
+            yield return ws;
         }
     }
 }
