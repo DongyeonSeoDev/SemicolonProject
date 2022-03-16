@@ -10,6 +10,9 @@ public class PlayerShoot : PlayerSkill
     private GameObject projectile = null;
 
     [SerializeField]
+    private float shootPosOffset = 0f;
+
+    [SerializeField]
     private float projectileSpeed = 1f;
 
     [Header("총알을 발사할 때 마다 깎이는 에너지의 양")]
@@ -63,7 +66,7 @@ public class PlayerShoot : PlayerSkill
                 temp = Instantiate(projectile, SlimePoolManager.Instance.transform);
             }
 
-            temp.transform.position = transform.position;
+            temp.transform.position = (Vector2)transform.position + (direction * shootPosOffset);
             temp.GetComponent<PlayerProjectile>().OnSpawn(direction, projectileSpeed);
 
             SlimeGameManager.Instance.Player.UseEnergy(useEnergyAmount);
