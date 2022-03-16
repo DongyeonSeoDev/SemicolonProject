@@ -74,9 +74,9 @@ public partial class UIManager : MonoSingleton<UIManager>
                 {
                     Util.DelayFunc(() =>
                     {
-                        topCenterMsgTMP.DOColor(Color.clear, 0.5f).OnComplete(() => nus.endAction());
+                        topCenterMsgTMP.DOColor(Color.clear, 0.5f).OnComplete(() => nus.endAction()).SetUpdate(true);
                     }, nus.existTime, this, true);
-                });
+                }).SetUpdate(true);
                 //topCenterMsgTMPCvsg.DOFade();
             }
         }
