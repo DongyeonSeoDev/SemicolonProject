@@ -10068,6 +10068,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7261487447096875063, guid: b9ff0b0188dca0e448ec2fd4d00024b3, type: 3}
+      propertyPath: notExistMap
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7261487447096875063, guid: b9ff0b0188dca0e448ec2fd4d00024b3, type: 3}
+      propertyPath: nextStageData
+      value: 
+      objectReference: {fileID: 11400000, guid: 6f7a2b0a0409cb646a361f2284e13a49, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b9ff0b0188dca0e448ec2fd4d00024b3, type: 3}
 --- !u!4 &6041031814920311361 stripped
@@ -10140,7 +10148,7 @@ PrefabInstance:
     - target: {fileID: 8632448655464481713, guid: 913d8b5e292ca3f4b9cdf9e9ace1a6f4, type: 3}
       propertyPath: _itemData
       value: 
-      objectReference: {fileID: 11400000, guid: f4122a4ced4ee8349ae86eb5adef071a, type: 2}
+      objectReference: {fileID: 11400000, guid: 9fc9500b9b1a4b34aabf03d842ac24af, type: 2}
     - target: {fileID: 8702471488895736902, guid: 913d8b5e292ca3f4b9cdf9e9ace1a6f4, type: 3}
       propertyPath: m_Name
       value: PickItemSample
@@ -10218,6 +10226,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7261487447096875063, guid: b9ff0b0188dca0e448ec2fd4d00024b3, type: 3}
+      propertyPath: nextStageData
+      value: 
+      objectReference: {fileID: 11400000, guid: cb725b1c67d669741bd0244f7aaea881, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b9ff0b0188dca0e448ec2fd4d00024b3, type: 3}
 --- !u!4 &1659494001217920396 stripped

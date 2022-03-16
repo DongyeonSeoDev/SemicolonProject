@@ -70,9 +70,9 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         foreach (MonsterInfoSlot slot in mobIdToSlot.Values)
             slot.MarkAcqBody(false);
 
-        EventManager.StartListening("PlayerRespawn", unusedValue =>
+        EventManager.StartListening("PlayerRespawn", () =>
         {
-            unusedValue.x = 0; //매개변수 타입 알리는용
+            
             AllUpdateUnderstanding();
             AllUpdateDrainProbability();
 
@@ -129,7 +129,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         monsterImgNameEx.third.text = data.bodyExplanation;
 
         mobDrainProbAndAssimTmp.first.SetText("흡수확률: " + urmg.GetDrainProbabilityDict(id).ToString() + "%");
-        mobDrainProbAndAssimTmp.second.SetText("동화율: " + urmg.PlayerEnemyUnderStandingRateDic[id].ToString() + "%");
+        mobDrainProbAndAssimTmp.second.SetText("동화율: " + urmg.GetUnderstandingRate(id).ToString() + "%");
 
         ItemSO item = data.dropItem;
         mobDropItemImg.sprite = item.GetSprite();
@@ -146,7 +146,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         if (Util.IsActiveGameUI(UIType.MONSTERINFO_DETAIL))
         {
             mobDrainProbAndAssimTmp.first.SetText("흡수확률: " + urmg.GetDrainProbabilityDict(id).ToString() + "%");
-            mobDrainProbAndAssimTmp.second.SetText("동화율: " + urmg.PlayerEnemyUnderStandingRateDic[id].ToString() + "%");
+            mobDrainProbAndAssimTmp.second.SetText("동화율: " + urmg.GetUnderstandingRate(id).ToString() + "%");
         }
     }
 

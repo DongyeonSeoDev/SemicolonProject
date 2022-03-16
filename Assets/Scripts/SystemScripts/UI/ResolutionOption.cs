@@ -141,7 +141,7 @@ public class ResolutionOption : MonoBehaviour
     private IEnumerator CheckOverResolutionCo() //1초마다 지원하는 해상도를 넘었는지 체크하고 넘었다고 지원하는 해상도중 최대사이즈로 바꿔줌
     {
         Global.AddAction("ChangeResolution", OnResolutionUIUpdate);
-        WaitForSeconds ws = new WaitForSeconds(1);
+        WaitForSecondsRealtime wsr = new WaitForSecondsRealtime(1);
 
         while(true)
         {
@@ -150,7 +150,7 @@ public class ResolutionOption : MonoBehaviour
                 Screen.SetResolution(MaxScrWH.Item1, MaxScrWH.Item2, Screen.fullScreenMode);
                 Global.ActionTrigger("ChangeResolution");
             }
-            yield return ws;
+            yield return wsr;
         }
     }
 }

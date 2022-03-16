@@ -9,6 +9,8 @@ public class StageDoor : InteractionObj
 
     public StageDataSO nextStageData;
 
+    [SerializeField] private bool notExistMap;
+
     private void Awake()
     {
         spr = GetComponent<SpriteRenderer>();
@@ -18,6 +20,12 @@ public class StageDoor : InteractionObj
     {
         if(StageManager.Instance.IsStageClear)
         {
+            if(notExistMap)
+            {
+                UIManager.Instance.RequestSystemMsg("돌아가라~", 65, 1);
+                return;
+            }
+
             UIManager.Instance.StartLoading(() => StageManager.Instance.NextStage(nextStageData.stageID),()=> EventManager.TriggerEvent("StartNextStage", nextStageData.stageName)); 
         }
         else

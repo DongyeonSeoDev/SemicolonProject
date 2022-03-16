@@ -108,12 +108,12 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
         CheckSkillTimer();
     }
 
-    private void PlayerBodySpawn(Vector2 spawnPosition)
+    private void PlayerBodySpawn()
     {
         player.gameObject.SetActive(true);
         currentPlayerBody.SetActive(true);
 
-        currentPlayerBody.transform.position = spawnPosition;
+        //currentPlayerBody.transform.position = spawnPosition;
         pasteBodyAdditionalStat = new EternalStat();
 
         player.WhenRespawn();

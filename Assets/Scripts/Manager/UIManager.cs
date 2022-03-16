@@ -224,14 +224,13 @@ public partial class UIManager : MonoSingleton<UIManager>
         Global.AddAction("ChangeResolution", OnChangedResolution);
 
         EventManager.StartListening("PlayerDead", () => OnUIInteractSetActive(UIType.DEATH, true, true));
-        EventManager.StartListening("PlayerRespawn", Respawn);
         EventManager.StartListening("GameClear", () => OnUIInteract(UIType.CLEAR, true));
         EventManager.StartListening("StageClear", () =>InsertNoticeQueue("Stage Clear", clearNoticeMsgVGrd, 90));
         EventManager.StartListening("ChangeBody", (str, dead) => { if(!dead) InsertNoticeQueue(MonsterCollection.Instance.GetMonsterInfo(str).bodyName + "(으)로 변신하였습니다"); });
         EventManager.StartListening("StartNextStage", stageName => InsertTopCenterNoticeQueue(stageName)); 
     }
 
-    private void Respawn(Vector2 unusedValue) => OnUIInteract(UIType.DEATH, true);
+  
 
     private void Update()
     {
