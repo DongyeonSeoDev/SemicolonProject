@@ -28,5 +28,10 @@ namespace Enemy
             controller = enemyData.eEnemyController;
             damage = enemyData.attackDamage;
         }
+
+        public void AttackReset()
+        {
+            EventManager.TriggerEvent("AttackStart");
+        }
     }
 }

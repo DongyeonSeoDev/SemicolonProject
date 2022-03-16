@@ -43,6 +43,7 @@ namespace Enemy
             {
                 SlimeGameManager.Instance.Player.GetDamage(Random.Range(attackDamage - 5, attackDamage + 6));
 
+                EnemyPoolManager.Instance.GetPoolObject(Type.BulletEffect, transform.position).GetComponent<BulletEffect>().Play(angle);
                 gameObject.SetActive(false);
             }
             else if (eEnemyController == EnemyController.PLAYER)
@@ -57,11 +58,14 @@ namespace Enemy
 
                     enemy.GetDamage(damage.Item1, damage.Item2);
 
+                    EnemyPoolManager.Instance.GetPoolObject(Type.BulletEffect, transform.position).GetComponent<BulletEffect>().Play(angle);
                     gameObject.SetActive(false);
                 }
             }
-            else if (collision.CompareTag("Wall"))
+
+            if (collision.CompareTag("Wall"))
             {
+                EnemyPoolManager.Instance.GetPoolObject(Type.BulletEffect, transform.position).GetComponent<BulletEffect>().Play(angle);
                 gameObject.SetActive(false);
             }
         }
