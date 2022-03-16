@@ -60,7 +60,7 @@ public class PlayerShoot : PlayerSkill
             }
             else
             {
-                temp = Instantiate(projectile, transform);
+                temp = Instantiate(projectile, SlimePoolManager.Instance.transform);
             }
 
             temp.transform.position = transform.position;
