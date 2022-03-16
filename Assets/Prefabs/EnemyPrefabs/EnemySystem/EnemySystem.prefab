@@ -43,6 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b7134f6e8b606745971bb177553e15e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stageCheck: {fileID: 0}
+  enemyCount: 0
+  player: {fileID: 0}
 --- !u!1 &6423039109439716261
 GameObject:
   m_ObjectHideFlags: 0
@@ -91,6 +94,9 @@ MonoBehaviour:
   - {fileID: 3125673745071039423, guid: 40d4cc2072f77dd4796ef1df25797616, type: 3}
   - {fileID: 3750393452434606831, guid: 99878bdc48206b64d92b0711ec15cf97, type: 3}
   - {fileID: 3351713311786356777, guid: bd1420554775ff64abf2f4527d18fcce, type: 3}
+  - {fileID: 39800121126291201, guid: 5cd02f2595541bd499b9053078cfe146, type: 3}
+  - {fileID: -6883242640977400814, guid: 60d4b1afc08a5c84da29972d40cc9d29, type: 3}
+  - {fileID: 5654788913614455916, guid: f740e7f4da837c54e9e75b2f5a19a989, type: 3}
 --- !u!1 &6423039109790018455
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,9 +206,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7148d626f665e3d48a8883ef80a615e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemySpawnList:
-  - {fileID: 11400000, guid: 502ec818430c13948bb38433d989f088, type: 2}
-  - {fileID: 11400000, guid: e60a59c1a5867584e928e04561a873de, type: 2}
 --- !u!1 &7495011699029652106
 GameObject:
   m_ObjectHideFlags: 0
