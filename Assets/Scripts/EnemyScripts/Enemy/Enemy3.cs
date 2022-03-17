@@ -21,7 +21,6 @@ namespace Enemy
                 isAnimation = false,
                 isEndAttackAnimation = true,
                 isUseDelay = true,
-                isSeePlayerDistance = 20f,
                 isAttackPlayerDistance = 7f,
                 attackDelay = 2f,
                 chaseSpeed = 2f,
