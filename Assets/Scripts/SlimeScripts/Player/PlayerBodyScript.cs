@@ -4,9 +4,17 @@ using UnityEngine;
 
 public class PlayerBodyScript : MonoBehaviour
 {
+    private readonly string playerLayerName = "Player";
+
+    private SpriteRenderer spriteRenderer = null;
     private void Awake()
     {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
+    private void OnEnable()
+    {
         SlimeGameManager.Instance.CurrentPlayerBody = gameObject;
+        spriteRenderer.sortingLayerName = playerLayerName;
     }
     private void Start() 
     {

@@ -104,6 +104,11 @@ public class PlayerInput : MonoBehaviour
                 isDoSkill0 = true;
             }
 
+            if(Input.GetButtonUp("Shoot"))
+            {
+                isDoSkill0 = false;
+            }
+
             if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.DRAIN])) // q
             {
                 isDoSkill2 = true;
@@ -130,7 +135,7 @@ public class PlayerInput : MonoBehaviour
         {
             EventManager.TriggerEvent("StartSkill0"); // 기본공격
 
-            isDoSkill0 = false;
+            //isDoSkill0 = false;
         }
 
         if (isDoSkill1)

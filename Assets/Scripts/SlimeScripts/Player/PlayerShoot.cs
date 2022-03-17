@@ -77,7 +77,7 @@ public class PlayerShoot : PlayerSkill
             EventManager.TriggerEvent("PlayerShoot");
         }
 
-        playerInput.IsDoSkill0 = false;
+        //playerInput.IsDoSkill0 = false;
     }
     public override void WhenSkillDelayTimerZero()
     {

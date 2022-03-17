@@ -14,6 +14,13 @@ public class Player : MonoBehaviour
         set { playerStat = value; }
     }
 
+    [SerializeField]
+    private PlayerInput playerInput = new PlayerInput();
+    public PlayerInput PlayerInput
+    {
+        get { return playerInput; }
+    }
+
     private List<(GameObject, int)> drainList = new List<(GameObject, int)>();
     public List<(GameObject, int)> DrainList
     {
@@ -35,6 +42,13 @@ public class Player : MonoBehaviour
     public float EnergyRegenSpeed
     {
         get { return energyRegenSpeed; }
+    }
+    [Header("공격안할 때 에너지가 다시 차는 속도")]
+    [SerializeField]
+    private float energyRegenSpeedWhenNotAttack = 1.3f;
+    public float EnergyRegenSpeedWhenNotAttack
+    {
+        get { return energyRegenSpeedWhenNotAttack; }
     }
 
     private float currentEnergy = 0f; // 현재의 에너지
@@ -80,6 +94,7 @@ public class Player : MonoBehaviour
     private void Awake()
     {
         playerState = GetComponent<PlayerState>();
+        playerInput = GetComponent<PlayerInput>();
     }
     private void Start()
     {
@@ -121,7 +136,7 @@ public class Player : MonoBehaviour
     }
     private void UpEnergy()
     {
-        currentEnergy += Time.deltaTime * energyRegenSpeed;
+        currentEnergy += Time.deltaTime * (playerInput.IsDoSkill0 ? energyRegenSpeed : energyRegenSpeedWhenNotAttack);
 
         if (currentEnergy >= maxEnergy)
         {
