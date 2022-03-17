@@ -27,7 +27,9 @@ namespace Enemy
                 damageDelay = 0.4f,
                 chaseSpeed = 7f,
                 isSeePlayerDistance = 10f,
-                attackDelay = 2f
+                attackDelay = 2f,
+                minRunAwayTime = 2f,
+                maxRunAwayTime = 4f
             };
 
             enemyData.enemyMoveCommand = new EnemyRandomMoveCommand(enemyData, positionCheckData);

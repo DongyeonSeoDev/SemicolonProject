@@ -82,6 +82,9 @@ namespace Enemy
         public float rushForce = 50f;
         public float knockBackPower;
         public float stunTime;
+        public float minRunAwayTime;
+        public float maxRunAwayTime;
+        public float currentRunAwayTime;
 
         public bool isDamaged = false;
         public bool isAttack = false;
