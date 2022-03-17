@@ -58,6 +58,8 @@ namespace Enemy
             {
                 positionCheckData.position = (enemyData.PlayerObject.transform.position - enemyData.enemyObject.transform.position).normalized;
             }
+
+            EventManager.TriggerEvent("AttackStart");
         }
 
         public void EnemyAttack()

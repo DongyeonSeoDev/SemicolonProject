@@ -12,7 +12,8 @@ namespace Enemy
         Slime_03,
         Bullet = 100,
         EnemyLoot,
-        DeadEffect
+        DeadEffect,
+        BulletEffect
     }
 
     public class EnemyPoolManager : MonoBehaviour

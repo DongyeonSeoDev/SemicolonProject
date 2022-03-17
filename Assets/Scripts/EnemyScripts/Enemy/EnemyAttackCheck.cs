@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Enemy
@@ -9,6 +10,8 @@ namespace Enemy
         private Rigidbody2D enemyRigidbody;
         private PlayerStatusEffect playerStatusEffect;
         private EnemyPositionCheckData positionCheckData;
+
+        private List<GameObject> attackObject = new List<GameObject>();
 
         private EnemyController eEnemyController;
 
@@ -24,6 +27,8 @@ namespace Enemy
             {
                 playerStatusEffect = SlimeGameManager.Instance.CurrentPlayerBody.GetComponent<PlayerStatusEffect>();
             }
+
+            EventManager.StartListening("AttackStart", () => attackObject.Clear());
             
             AddEnemyController();
         }
@@ -90,6 +95,10 @@ namespace Enemy
 
                 Init();
             }
+            else if (attackObject.Find(x => x == collision.gameObject) != null)
+            {
+                return;
+            }
 
             if (isKnockBack && collision.CompareTag("Wall"))
             {
@@ -103,6 +112,7 @@ namespace Enemy
             if (eEnemyController == EnemyController.AI && collision.CompareTag("Player"))
             {
                 SlimeGameManager.Instance.Player.GetDamage(this.enemy.gameObject, UnityEngine.Random.Range(attackDamage - 5, attackDamage + 6));
+                attackObject.Add(collision.gameObject);
 
                 var enemy = collision.GetComponent<Enemy>();
 
@@ -143,6 +153,7 @@ namespace Enemy
                     damage = SlimeGameManager.Instance.Player.CriticalCheck(damage.Item1);
                     
                     enemy.GetDamage(damage.Item1, damage.Item2);
+                    attackObject.Add(collision.gameObject);
                 }
             }
         }

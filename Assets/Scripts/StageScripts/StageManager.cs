@@ -69,25 +69,27 @@ public class StageManager : MonoSingleton<StageManager>
         CinemachineCameraScript.Instance.SetCinemachineConfiner(currentStage.camStageCollider);
         GameManager.Instance.ResetDroppedItems();
 
-        switch(currentStageData.areaType)
-        {
-            case AreaType.START:
-                break;
-            case AreaType.MONSTER:
-                if (!IsStageClear)
-                    EventManager.TriggerEvent("SpawnEnemy", currentStageData.stageID);
-                break;
-            case AreaType.CHEF:
-                break;
-            case AreaType.PLANTS:
-                break;
-            case AreaType.RANDOM:
-                EnterRandomArea();
-                break;
-            case AreaType.BOSS:
-                //보스 전용 시스템 메시지 필요할듯
-                break;
-        }
+        if (!IsStageClear)
+            EventManager.TriggerEvent("SpawnEnemy", currentStageData.stageID);
+        /* switch(currentStageData.areaType)
+         {
+             case AreaType.START:
+                 break;
+             case AreaType.MONSTER:
+                 if (!IsStageClear)
+                     EventManager.TriggerEvent("SpawnEnemy", currentStageData.stageID);
+                 break;
+             case AreaType.CHEF:
+                 break;
+             case AreaType.PLANTS:
+                 break;
+             case AreaType.RANDOM:
+                 EnterRandomArea();
+                 break;
+             case AreaType.BOSS:
+                 //보스 전용 시스템 메시지 필요할듯
+                 break;
+         }*/
     }
 
     public void StartNextStage(string stageName = "")
@@ -111,7 +113,7 @@ public class StageManager : MonoSingleton<StageManager>
         }
     }
 
-    private void Respawn(Vector2 unusedValue)
+    private void Respawn()
     {
         NextStage(startStageID);
     }

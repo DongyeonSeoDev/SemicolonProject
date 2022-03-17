@@ -110,7 +110,7 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     private void Awake()
     {
-        StartLoading();
+        StartLoadingIn();
         InitData();
         CreatePool();
     }
@@ -169,11 +169,6 @@ public partial class UIManager : MonoSingleton<UIManager>
         screenHalf.first = Screen.width * 0.5f;
         screenHalf.second = Screen.height * 0.5f;
 
-        if(Screen.width > resolutionOption.MaxScrWH.Item1 || Screen.height > resolutionOption.MaxScrWH.Item2)
-        {
-            Screen.SetResolution(resolutionOption.MaxScrWH.Item1, resolutionOption.MaxScrWH.Item2, Screen.fullScreenMode);
-        }
-
         /*int i;
         for(i=0; i<allCanvasScalers.Length; i++)
         {
@@ -229,14 +224,13 @@ public partial class UIManager : MonoSingleton<UIManager>
         Global.AddAction("ChangeResolution", OnChangedResolution);
 
         EventManager.StartListening("PlayerDead", () => OnUIInteractSetActive(UIType.DEATH, true, true));
-        EventManager.StartListening("PlayerRespawn", Respawn);
         EventManager.StartListening("GameClear", () => OnUIInteract(UIType.CLEAR, true));
         EventManager.StartListening("StageClear", () =>InsertNoticeQueue("Stage Clear", clearNoticeMsgVGrd, 90));
         EventManager.StartListening("ChangeBody", (str, dead) => { if(!dead) InsertNoticeQueue(MonsterCollection.Instance.GetMonsterInfo(str).bodyName + "(으)로 변신하였습니다"); });
         EventManager.StartListening("StartNextStage", stageName => InsertTopCenterNoticeQueue(stageName)); 
     }
 
-    private void Respawn(Vector2 unusedValue) => OnUIInteract(UIType.DEATH, true);
+  
 
     private void Update()
     {
@@ -244,7 +238,6 @@ public partial class UIManager : MonoSingleton<UIManager>
         CursorInfo();
         Notice();
         DelayHPFill();
-        
     }
 
     private void UserInput()
@@ -657,7 +650,12 @@ public partial class UIManager : MonoSingleton<UIManager>
         loadingCvsg.alpha = 1;
         loadingCvsg.gameObject.SetActive(true);
 
-        loadingCvsg.DOFade(0, 1).SetEase(Ease.OutQuad).SetUpdate(true).OnComplete(() => loadingCvsg.gameObject.SetActive(false));
+        loadingCvsg.DOFade(0, 1).SetEase(Ease.OutQuad).SetUpdate(true).OnComplete(() =>
+        {
+            loadingCvsg.gameObject.SetActive(false);
+            EventManager.TriggerEvent("StartNextStage", StageManager.Instance.GetStageData().stageName);
+        });
+
     }
     public void StartLoadingOut()
     {
