@@ -98,7 +98,6 @@ public enum AreaType
 
 public enum EventKeyCheck
 {
-    VOID,
     OBJECT,
     MONO
 }

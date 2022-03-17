@@ -45,4 +45,24 @@ public static partial class Global
         if (string.IsNullOrEmpty(str)) str = "몬스터 이름";
         return str;
     }
+
+    public static string AreaTypeToString(AreaType type)
+    {
+        switch(type)
+        {
+            case AreaType.MONSTER:
+                return "몬스터 지역";
+            case AreaType.RANDOM:
+                return "랜덤 구역";
+            case AreaType.CHEF:
+                return "요리 구역";
+            case AreaType.PLANTS:
+                return "채집 지역";
+            case AreaType.BOSS:
+                return "보스 구역";
+            case AreaType.START:
+                return "시작 지역";
+        }
+        return string.Empty;
+    }
 }

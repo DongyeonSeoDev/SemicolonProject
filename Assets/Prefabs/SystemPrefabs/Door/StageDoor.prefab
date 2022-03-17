@@ -115,7 +115,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7261487446953573928
 Transform:
   m_ObjectHideFlags: 0
@@ -286,13 +286,13 @@ MonoBehaviour:
   isHidenItrMark: 0
   objName: 
   action: "\uC0C1\uD638\uC791\uC6A9"
-  uiOffset: {x: 0, y: -1, z: 0}
-  itrUIOffset: {x: 0, y: 1, z: 0}
+  uiOffset: {x: 0, y: -1.3, z: 0}
+  itrUIOffset: {x: 0, y: 1.1, z: 0}
   npcUI: {fileID: 0}
   itrUI: {fileID: 0}
   fsOut: {fileID: 7261487446772812253}
   nextStageData: {fileID: 0}
-  enemySpawnSOList: []
+  notExistMap: 0
 --- !u!1 &7261487448192597873
 GameObject:
   m_ObjectHideFlags: 0
