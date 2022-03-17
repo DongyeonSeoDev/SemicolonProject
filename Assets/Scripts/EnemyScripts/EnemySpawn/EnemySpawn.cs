@@ -57,6 +57,9 @@ namespace Enemy
                     enemyDictionary[stageId].Add(enemy.GetComponent<Enemy>());
                 }
             }
+
+            StageManager.Instance.SetMonsterStage();
+            EnemyManager.Instance.enemyCount = CSVEnemySpawn.Instance.enemySpawnDatas[stageId].Count;  //Set Enemy Count
         }
 
         private void EnemyMove(string stageId)

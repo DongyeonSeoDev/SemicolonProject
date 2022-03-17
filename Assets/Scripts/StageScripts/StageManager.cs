@@ -59,37 +59,41 @@ public class StageManager : MonoSingleton<StageManager>
             currentStage.gameObject.SetActive(true);
         }
 
-        IsStageClear = currentStageData.enemyCount == 0;
+        SlimeGameManager.Instance.CurrentPlayerBody.transform.position = currentStage.playerSpawnPoint.position; //Player Pos
+        CinemachineCameraScript.Instance.SetCinemachineConfiner(currentStage.camStageCollider);  //Cam Set
+        GameManager.Instance.ResetDroppedItems(); //Inactive Items
 
-        if (IsStageClear) currentStage.OpenDoors();
-        else currentStage.CloseDoor();
+        switch (currentStageData.areaType)
+        {
+            case AreaType.START:
+                SetClearStage();
+                break;
+            case AreaType.MONSTER:
+                EventManager.TriggerEvent("SpawnEnemy", currentStageData.stageID);
+                break;
+            case AreaType.CHEF:
+                SetClearStage();
+                break;
+            case AreaType.PLANTS:
+                break;
+            case AreaType.RANDOM:
+                EnterRandomArea();
+                break;
+            case AreaType.BOSS:
+                break;
+        }
+    }
 
-        Enemy.EnemyManager.Instance.enemyCount = currentStageData.enemyCount;
-        SlimeGameManager.Instance.CurrentPlayerBody.transform.position = currentStage.playerSpawnPoint.position;
-        CinemachineCameraScript.Instance.SetCinemachineConfiner(currentStage.camStageCollider);
-        GameManager.Instance.ResetDroppedItems();
+    public void SetMonsterStage()
+    {
+        IsStageClear = false;
+        currentStage.CloseDoor();
+    }
 
-        if (!IsStageClear)
-            EventManager.TriggerEvent("SpawnEnemy", currentStageData.stageID);
-        /* switch(currentStageData.areaType)
-         {
-             case AreaType.START:
-                 break;
-             case AreaType.MONSTER:
-                 if (!IsStageClear)
-                     EventManager.TriggerEvent("SpawnEnemy", currentStageData.stageID);
-                 break;
-             case AreaType.CHEF:
-                 break;
-             case AreaType.PLANTS:
-                 break;
-             case AreaType.RANDOM:
-                 EnterRandomArea();
-                 break;
-             case AreaType.BOSS:
-                 //보스 전용 시스템 메시지 필요할듯
-                 break;
-         }*/
+    public void SetClearStage()
+    {
+        IsStageClear = true;
+        currentStage.OpenDoors();
     }
 
     public void StartNextStage(string stageName = "")
