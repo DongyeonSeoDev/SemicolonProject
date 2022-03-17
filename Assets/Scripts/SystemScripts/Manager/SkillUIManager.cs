@@ -68,6 +68,8 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
 
             energeBarAndEff.first.SetActive(org);
             energeBarAndEff.second.SetActive(org); 
+
+            
         });
     }
 

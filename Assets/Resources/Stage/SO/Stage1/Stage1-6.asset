@@ -15,7 +15,6 @@ MonoBehaviour:
   endStage: 0
   stageBigNumber: 1
   stageNumber: 6
-  stageName: "\uC9C0\uC5ED\uC774\uB984"
+  stageName: "\uC9C0\uC5ED \uC774\uB984"
   stage: {fileID: 1378282381469885354, guid: 048b8924a2e3a944d915730d63912ad8, type: 3}
-  enemyCount: 10
-  areaType: 0
+  areaType: 1
