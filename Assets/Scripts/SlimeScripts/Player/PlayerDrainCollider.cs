@@ -42,8 +42,13 @@ public class PlayerDrainCollider : MonoBehaviour
             // Debug.Log(other.gameObject.layer);
             // Drain되는 오브젝트는 삭제처리
             Enemy.Enemy enemy = other.GetComponent<Enemy.Enemy>();
-            
-            float hpPercentage = enemy.hpBarFillImage.fillAmount * 100f; // 닿은 적의 현재 체력의 퍼센트를 구함
+
+            float hpPercentage = enemy.EnemyHpPercent();// 닿은 적의 현재 체력의 퍼센트를 구함
+
+            if (hpPercentage <= 0f)
+            {
+                return;
+            }
 
             // Debug.Log(hpPercentage);
 
