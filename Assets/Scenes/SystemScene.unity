@@ -61913,6 +61913,8 @@ MonoBehaviour:
       monsterInfoDic:
         keyList: []
         valueList: []
+  cursorTexture: {fileID: 0}
+  hotSpot: {x: 0, y: 0}
   foodBtnPrefab: {fileID: 1672161281525966289, guid: 2b0926d70e8fe07428ee3f25edaf7cad, type: 3}
   ingredientImgPrefab: {fileID: 1337827161481287395, guid: 3834c3dc18f89364281dd248b8ae58bc, type: 3}
   foodBtnParent: {fileID: 5576062235819023096}
