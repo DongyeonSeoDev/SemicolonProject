@@ -81,13 +81,6 @@ public static partial class Global
 
 public static partial class Global
 {
-    public static void AddAction(string key, Action action)
-    {
-        if (stringToActionDict.ContainsKey(key))
-            stringToActionDict[key].voidAction += action;
-        else
-            stringToActionDict.Add(key, new ActionGroup(action));
-    }
 
     public static void AddMonoAction(string key, Action<MonoBehaviour> action)
     {
@@ -104,11 +97,6 @@ public static partial class Global
             stringToActionDict.Add(key, new ActionGroup(action));
     }
 
-    public static void RemoveAction(string key, Action action)
-    {
-        if (stringToActionDict.ContainsKey(key))
-            stringToActionDict[key].voidAction -= action;
-    }
     public static void RemoveMonoAction(string key, Action<MonoBehaviour> action)
     {
         if (stringToActionDict.ContainsKey(key))
@@ -120,10 +108,6 @@ public static partial class Global
             stringToActionDict[key].objAction -= action;
     }
 
-    public static void ActionTrigger(string key)
-    {
-        stringToActionDict[key].ActionTrigger();
-    }
     public static void MonoActionTrigger(string key, MonoBehaviour mono)
     {
         stringToActionDict[key].ActionTrigger(mono);

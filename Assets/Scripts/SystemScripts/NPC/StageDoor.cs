@@ -14,6 +14,7 @@ public class StageDoor : InteractionObj
     private void Awake()
     {
         spr = GetComponent<SpriteRenderer>();
+        objName = Global.AreaTypeToString(nextStageData.areaType);
     }
 
     public override void Interaction()
@@ -57,6 +58,9 @@ public class StageDoor : InteractionObj
 
     public override void SetUI(bool on)
     {
-        //base.SetUI(on); 
+        if (StageManager.Instance.IsStageClear)
+        {
+            base.SetUI(on);
+        }
     }
 }

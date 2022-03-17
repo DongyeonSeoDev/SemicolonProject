@@ -157,17 +157,12 @@ public class CheckGameStringKeys
 
 public class ActionGroup
 {
-    public Action voidAction;
     public Action<MonoBehaviour> monoAction;
     public Action<object> objAction;
 
     public EventKeyCheck ekc;
 
-    public ActionGroup(Action voidAction)
-    {
-        this.voidAction = voidAction;
-        ekc = EventKeyCheck.VOID;
-    }
+   
     public ActionGroup(Action<MonoBehaviour> monoAction)
     {
         this.monoAction = monoAction;
@@ -179,10 +174,7 @@ public class ActionGroup
         ekc = EventKeyCheck.OBJECT;
     }
 
-    public void ActionTrigger()
-    {
-        voidAction?.Invoke();
-    }
+    
     public void ActionTrigger(MonoBehaviour mono)
     {
         monoAction?.Invoke(mono);

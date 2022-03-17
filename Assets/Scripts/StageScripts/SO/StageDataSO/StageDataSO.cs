@@ -12,8 +12,6 @@ public partial class StageDataSO : ScriptableObject
 
     public GameObject stage;  //스테이지 프리팹
 
-    public int enemyCount;  //적 수
-
     public AreaType areaType;  //구역 타입
 
     public string stageID => name;  //스테이지 아이디

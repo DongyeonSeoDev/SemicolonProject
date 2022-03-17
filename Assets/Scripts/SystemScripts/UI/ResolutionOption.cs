@@ -107,7 +107,7 @@ public class ResolutionOption : MonoBehaviour
     public void OnClickOKBtn()
     {
         Screen.SetResolution(whResolutionList[resolutionNum].first, whResolutionList[resolutionNum].second, screenMode);
-        Global.ActionTrigger("ChangeResolution");
+        EventManager.TriggerEvent("ChangeResolution");
         prevResolNum = resolutionNum;
         prevScrMode = screenMode;
     }
@@ -140,7 +140,7 @@ public class ResolutionOption : MonoBehaviour
 
     private IEnumerator CheckOverResolutionCo() //1초마다 지원하는 해상도를 넘었는지 체크하고 넘었다고 지원하는 해상도중 최대사이즈로 바꿔줌
     {
-        Global.AddAction("ChangeResolution", OnResolutionUIUpdate);
+        EventManager.StartListening("ChangeResolution", OnResolutionUIUpdate);
         WaitForSecondsRealtime wsr = new WaitForSecondsRealtime(1);
 
         while(true)
@@ -148,7 +148,7 @@ public class ResolutionOption : MonoBehaviour
             if (Screen.width > MaxScrWH.Item1 || Screen.height > MaxScrWH.Item2)
             {
                 Screen.SetResolution(MaxScrWH.Item1, MaxScrWH.Item2, Screen.fullScreenMode);
-                Global.ActionTrigger("ChangeResolution");
+                EventManager.TriggerEvent("ChangeResolution");
             }
             yield return wsr;
         }
