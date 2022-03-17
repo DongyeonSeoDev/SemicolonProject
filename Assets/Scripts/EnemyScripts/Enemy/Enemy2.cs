@@ -1,3 +1,5 @@
+// #define ENEMYDEBUG
+
 using UnityEngine;
 
 namespace Enemy
@@ -25,9 +27,8 @@ namespace Enemy
                 isRotate = true,
                 isUseAttacking = true,
                 damageDelay = 0.4f,
-                chaseSpeed = 7f,
-                isSeePlayerDistance = 10f,
-                attackDelay = 2f,
+                chaseSpeed = 10f,
+                attackDelay = 1.5f,
                 minRunAwayTime = 2f,
                 maxRunAwayTime = 4f
             };
@@ -60,5 +61,24 @@ namespace Enemy
                 enemyAttackCommand.Execute();
             }
         }
+
+#if ENEMYDEBUG
+
+        private void OnDrawGizmos()
+        {
+            if (Application.isPlaying)
+            {
+                Gizmos.color = Color.yellow;
+                Gizmos.DrawWireSphere(transform.position, enemyData.isMinAttackPlayerDistance);
+
+                Gizmos.color = Color.green;
+                Gizmos.DrawWireSphere(transform.position, enemyData.isMaxAttackPlayerDistance);
+
+                Gizmos.color = Color.blue;
+                Gizmos.DrawWireSphere(transform.position, enemyData.isRunAwayDistance);
+            }
+        }
+
+#endif
     }
 }

@@ -72,11 +72,10 @@ namespace Enemy
         public Color playerDeadEffectColor;
 
         public float chaseSpeed = 5f;
-        public float isSeePlayerDistance = 5f;
         public float isAttackPlayerDistance = 2f;
         public float isMinAttackPlayerDistance = 5f;
-        public float isRunAwayDistance = 7f;
-        public float isMaxAttackPlayerDistance = 8f;
+        public float isRunAwayDistance = 9f;
+        public float isMaxAttackPlayerDistance = 10f;
         public float attackDelay = 1f;
         public float damageDelay = 0.1f;
         public float rushForce = 50f;
@@ -84,7 +83,7 @@ namespace Enemy
         public float stunTime;
         public float minRunAwayTime;
         public float maxRunAwayTime;
-        public float currentRunAwayTime;
+        public float currentRunAwayTime = 1f;
 
         public bool isDamaged = false;
         public bool isAttack = false;
@@ -115,10 +114,16 @@ namespace Enemy
         public readonly int hashHit = Animator.StringToHash("Hit");
         public readonly int hashReset = Animator.StringToHash("Reset");
 
-        public bool IsSeePlayer() => Vector3.Distance(enemyObject.transform.position, PlayerObject.transform.position) <= isSeePlayerDistance;
-
         public bool IsAttackPlayer()
         {
+            if (currentRunAwayTime <= 0)
+            {
+                isRunAway = false;
+                currentRunAwayTime = 1f;
+
+                return true;
+            }
+
             if (isLongDistanceAttack)
             {
                 float distance = Vector3.Distance(enemyObject.transform.position, PlayerObject.transform.position);
@@ -148,12 +153,17 @@ namespace Enemy
                     {
                         isRunAway = false;
                     }
+                    else
+                    {
+                        currentRunAwayTime -= Time.deltaTime;
+                    }
 
                     return isRunAway;
                 }
                 else if (isMinAttackPlayerDistance > distance)
                 {
                     isRunAway = true;
+                    currentRunAwayTime = Random.Range(minRunAwayTime, maxRunAwayTime);
 
                     return true;
                 }
