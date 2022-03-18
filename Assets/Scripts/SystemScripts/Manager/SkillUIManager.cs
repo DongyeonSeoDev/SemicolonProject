@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class SkillUIManager : MonoSingleton<SkillUIManager>
 {
@@ -28,10 +29,34 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
     public Image energeFill;
     private Vector3 orgEnergeEffMaskScl;
 
+    [Space(15)]
+    //에너지바 일정 이하일 때 효과
+    //public CanvasGroup energeBarCvsg;
+    private bool isLowEnerge = false;
+    private float lowEnergeRate;
+    private ParticleSystem.MainModule energeBarEffMainModule;
+    private ParticleSystem.ColorOverLifetimeModule energePsCOLT;
+    private Color energeDefaultColor, energeImgDefaultColor;
+    private Gradient defaultEnergeGrad;
+
+    public float lowEnergeRatePercent = 10f;
+    public ParticleSystem energeParticleEff;
+    public Color lowEnergeColor;
+    public Gradient lowEnergeGrad;
+    
+
     private void Awake()
     {
         skillInfoUIArr = skillImgUIParent.GetComponentsInChildren<SkillInfoImage>();
         orgEnergeEffMaskScl = energeEffMask.localScale;
+
+        lowEnergeRate = lowEnergeRatePercent * 0.01f;
+        energeBarEffMainModule = energeParticleEff.main;
+        energePsCOLT = energeParticleEff.colorOverLifetime;
+
+        energeDefaultColor = energeBarEffMainModule.startColor.color;
+        energeImgDefaultColor = energeFill.color;
+        defaultEnergeGrad = energePsCOLT.color.gradient;
 
         monsterSkillsDic.Add(skillsSO.playerOriginBodySkills.first, skillsSO.playerOriginBodySkills.second);
         for(int i= 0; i < skillsSO.monsterSkillsList.Count; i++)
@@ -102,6 +127,26 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
             float rate = Global.CurrentPlayer.CurrentEnergy / Global.CurrentPlayer.MaxEnergy;
             energeFill.fillAmount = rate;
             energeEffMask.localScale = new Vector3(orgEnergeEffMaskScl.x * rate,orgEnergeEffMaskScl.y,orgEnergeEffMaskScl.z);
+
+            if(rate <= lowEnergeRate && !isLowEnerge)
+            {
+                isLowEnerge = true;
+                energeBarEffMainModule.startColor = lowEnergeColor;
+                energeFill.color = lowEnergeColor;
+                energePsCOLT.color = lowEnergeGrad;
+
+                //energeBarCvsg.DOFade(0.5f, 0.4f).SetLoops(-1, LoopType.Yoyo).SetUpdate(true);
+            }
+            else if(rate > lowEnergeRate && isLowEnerge)
+            {
+                isLowEnerge = false;
+                energeBarEffMainModule.startColor = energeDefaultColor;
+                energeFill.color = energeImgDefaultColor;
+                energePsCOLT.color = defaultEnergeGrad;
+
+                //energeBarCvsg.DOKill();
+                //energeBarCvsg.alpha = 1;
+            }
         }
     }
 }

@@ -24,6 +24,13 @@ public class EffectManager : MonoSingleton<EffectManager>
     private float hpFillEffectMaskCenterInitScale;
     //public ScreenToWorldPos hpFillEffectMaskObj;
 
+    [Space(15)]
+    //HP 일정 이하일 때 효과
+    private bool isWarningHP = false;
+    private float warningHPRate;
+    public float warningHPRatePercent = 15f;
+    public CanvasGroup hpBarCvsg;
+
     [Space(20)][Header("TopRight Btn Effects")]
     public GameObject inventoryBtnEffect;
     public GameObject statBtnEffect;
@@ -61,6 +68,7 @@ public class EffectManager : MonoSingleton<EffectManager>
         fillBackWidth = fillBackRect.rect.width;
         damagedHpUIEffectRect = damagedHpUIEffect.GetComponent<RectTransform>();
         hpFillEffectMaskCenterInitScale = hpFillEffectMaskCenter.localScale.x;
+        warningHPRate = warningHPRatePercent * 0.01f;
 
         PoolManager.CreatePool(pickupPlantEffects.first, transform, 2, "PickSuccessEff");
         PoolManager.CreatePool(pickupPlantEffects.second, transform, 2, "PickFailEff");
@@ -94,6 +102,12 @@ public class EffectManager : MonoSingleton<EffectManager>
         damagedHpUIEffect.Stop();
         damagedHpUIEffectRect.anchoredPosition = new Vector2(fillBackWidth * rate, damagedHpUIEffectRect.anchoredPosition.y);
         damagedHpUIEffect.Play();
+
+        if(rate <= warningHPRate && !isWarningHP)
+        {
+            isWarningHP = true;
+            DOTween.To(() => hpBarCvsg.alpha, x => hpBarCvsg.alpha = x, 0.5f, 0.5f).SetLoops(-1, LoopType.Yoyo).SetUpdate(true).SetId("WarningHPCvsg");
+        }
     }
     
     public void SetHPFillEffectScale(float rate)  //Mask Obj of HPFill Effect Scale change
@@ -101,6 +115,13 @@ public class EffectManager : MonoSingleton<EffectManager>
         hpFillEffectMaskCenter.transform.localScale = new Vector3(hpFillEffectMaskCenterInitScale * rate, hpFillEffectMaskCenterInitScale, hpFillEffectMaskCenterInitScale);
         //hpFillEffect.anchoredPosition = new Vector2(hpFillEffectStartX - fillBackWidth * (1f - rate), hpFillEffect.anchoredPosition.y);
         //if (rate == 0f) hpFillEffect.anchoredPosition = new Vector2(hpFillEffect.anchoredPosition.x - 50f, hpFillEffect.anchoredPosition.y);
+
+        if(rate > warningHPRate && isWarningHP)
+        {
+            DOTween.Kill("WarningHPCvsg");
+            hpBarCvsg.alpha = 1;
+            isWarningHP = false;
+        }
     }
 
     public void OnTopRightBtnEffect(UIType type, bool on) //Top Right Button Effects Active or Inactive
