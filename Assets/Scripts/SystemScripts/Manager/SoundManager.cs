@@ -16,6 +16,7 @@ public class SoundManager : MonoSingleton<SoundManager>
 
     [SerializeField]
     private float volume = 1f;
+    private float pitch = 1f;
     private bool pause = false;
 
     void Start()
@@ -41,8 +42,9 @@ public class SoundManager : MonoSingleton<SoundManager>
                     soundBox = soundBoxesDictForPooling[soundBoxId].Dequeue();
                     soundBox.gameObject.SetActive(true);
 
-                    soundBox.SetVolume(volume);
                     soundBox.SetPause(pause);
+                    soundBox.SetVolume(volume);
+                    soundBox.SetPitch(pitch);
 
                     return;
                 }
@@ -57,8 +59,9 @@ public class SoundManager : MonoSingleton<SoundManager>
 
             soundBox = Instantiate(soundBoxesDict[soundBoxId].gameObject, transform).GetComponent<SoundBox>();
 
-            soundBox.SetVolume(volume);
             soundBox.SetPause(pause);
+            soundBox.SetVolume(volume);
+            soundBox.SetPitch(pitch);
         }
         else
         {
@@ -79,5 +82,10 @@ public class SoundManager : MonoSingleton<SoundManager>
     {
         pause = p;
         EventManager.TriggerEvent("SoundPause", p);
+    }
+    public void SetPitch(float p)
+    {
+        pitch = p;
+        EventManager.TriggerEvent("SetPitch", p);
     }
 }
