@@ -30,7 +30,8 @@ namespace Enemy
                 chaseSpeed = 10f,
                 attackDelay = 1.5f,
                 minRunAwayTime = 2f,
-                maxRunAwayTime = 4f
+                maxRunAwayTime = 4f,
+                playerAnimationTime = 1.05f
             };
 
             enemyData.enemyMoveCommand = new EnemyRandomMoveCommand(enemyData, positionCheckData);

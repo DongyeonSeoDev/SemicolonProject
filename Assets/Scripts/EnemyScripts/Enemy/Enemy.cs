@@ -39,11 +39,8 @@ namespace Enemy
 
             if(enemyData.eEnemyController == EnemyController.PLAYER)
             {
-                EventManager.StartListening("StartSkill0", () => 
-                {
-                    enemyData.isAttack = true;
-                    playerInput.AttackMousePosition = playerInput.MousePosition;
-                });
+                EventManager.StartListening("StartSkill0", StartAttack);
+                EventManager.StartListening("Skill0DelayTimerZero", StopAttack);
             }
 
             playerInput = SlimeGameManager.Instance.Player.GetComponent<PlayerInput>();
@@ -52,12 +49,25 @@ namespace Enemy
         private void OnDestroy()
         {
             EventManager.StopListening("PlayerDead", EnemyDataReset);
+            EventManager.StopListening("PlayerDead", EnemyDataReset);
+            EventManager.StopListening("Skill0DelayTimerZero", StopAttack);
         }
 
         private void EnemyDataReset()
         {
             currentState = null;
             enemyData.enemyAnimator.enabled = false;
+        }
+
+        private void StartAttack()
+        {
+            enemyData.isAttack = true;
+            playerInput.AttackMousePosition = playerInput.MousePosition;
+        }
+
+        private void StopAttack()
+        {
+            enemyData.isPlayerAttacking = false;
         }
 
         protected virtual void OnEnable()
@@ -168,6 +178,11 @@ namespace Enemy
             EnemyManager.Instance.EnemyDestroy();
 
             EventManager.TriggerEvent("EnemyDead", enemyData.enemyType.ToString());
+        }
+
+        public bool EnemyIsDead()
+        {
+            return enemyData.hp <= 0;
         }
 
         public string GetEnemyId()

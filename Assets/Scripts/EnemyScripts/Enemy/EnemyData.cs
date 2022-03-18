@@ -84,6 +84,8 @@ namespace Enemy
         public float minRunAwayTime;
         public float maxRunAwayTime;
         public float currentRunAwayTime = 1f;
+        public float playerAnimationTime;
+        public float playerAnimationDelay = 1f;
 
         public bool isDamaged = false;
         public bool isAttack = false;
@@ -100,6 +102,7 @@ namespace Enemy
         public bool isUseDelay = false;
         public bool isAttacking = false;
         public bool isUseAttacking = false;
+        public bool isPlayerAttacking = false;
 
         public int attackDamage = 10;
         public int damagedValue;

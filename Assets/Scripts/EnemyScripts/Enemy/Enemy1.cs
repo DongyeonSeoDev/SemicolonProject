@@ -17,6 +17,7 @@ namespace Enemy
                 enemyRigidbody2D = rb,
                 hpBarFillImage = hpBarFillImage,
                 isEndAttackAnimation = true,
+                playerAnimationTime = 0.85f
             };
 
             enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(transform, enemyData.PlayerObject.transform, rb, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, false);
