@@ -11,6 +11,8 @@ public class StageDoor : InteractionObj
 
     [SerializeField] private bool notExistMap;
 
+    public DoorDirType dirType;
+
     private void Awake()
     {
         spr = GetComponent<SpriteRenderer>();
@@ -37,12 +39,12 @@ public class StageDoor : InteractionObj
 
     public void Open()
     {
-        spr.sprite = StageManager.Instance.openDoorSpr;
+        spr.sprite = StageManager.Instance.doorSprDic[dirType.ToString() + "Open"];
     }
 
     public void Close()
     {
-        spr.sprite = StageManager.Instance.closeDoorSpr;
+        spr.sprite = StageManager.Instance.doorSprDic[dirType.ToString() + "Close"];
     }
 
     public override void SetInteractionUI(bool on)
@@ -51,8 +53,8 @@ public class StageDoor : InteractionObj
         {
             base.SetInteractionUI(on);
 
-            fsOut.gameObject.SetActive(on);
-            //스테이지 정보도 띄워야 함. 
+            if(fsOut)
+               fsOut.gameObject.SetActive(on); 
         }
     }
 

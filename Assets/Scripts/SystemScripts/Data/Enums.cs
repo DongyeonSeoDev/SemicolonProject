@@ -95,6 +95,14 @@ public enum AreaType
     BOSS
 }
 
+public enum DoorDirType
+{
+    FRONT,
+    RIGHT,
+    LEFT
+    //BACK
+}
+
 
 public enum EventKeyCheck
 {

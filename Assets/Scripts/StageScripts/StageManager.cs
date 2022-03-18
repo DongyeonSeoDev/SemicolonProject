@@ -13,7 +13,10 @@ public class StageManager : MonoSingleton<StageManager>
     [SerializeField] private string startStageID;
     [HideInInspector] public Vector2 respawnPos;
 
-    public Sprite openDoorSpr, closeDoorSpr;
+    //public Sprite openDoorSpr, closeDoorSpr;
+    public Sprite[] doorSprites;
+    public Dictionary<string, Sprite> doorSprDic = new Dictionary<string, Sprite>();
+
     public Transform stageParent;
 
     public bool IsStageClear { get; set; }
@@ -30,6 +33,13 @@ public class StageManager : MonoSingleton<StageManager>
         foreach(StageDataSO data in Resources.LoadAll<StageDataSO>("Stage/SO/"))
         {
             idToStageDataDict.Add(data.stageID, data);
+        }
+
+        int cnt = Global.EnumCount<DoorDirType>();
+        for(int i=0; i<cnt; i++)
+        {
+            doorSprDic.Add(((DoorDirType)i).ToString() + "Close", doorSprites[i]);
+            doorSprDic.Add(((DoorDirType)i).ToString() + "Open", doorSprites[i + cnt]);
         }
     }
 
