@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
 using UnityEngine;
 
@@ -56,7 +55,7 @@ public struct EnemySpawnData
 
     public static implicit operator string(EnemySpawnData enemySpawnData)
     {
-        return enemySpawnData.enemyId.ToString() + ',' + enemySpawnData.position.x + ';' + enemySpawnData.position.y + ';' + enemySpawnData.position.z + ',' + enemySpawnData.stageId;
+        return enemySpawnData.enemyId.ToString().Trim() + ',' + enemySpawnData.position.x + ';' + enemySpawnData.position.y + ';' + enemySpawnData.position.z + ',' + enemySpawnData.stageId.Trim();
     }
 }
 
@@ -91,12 +90,12 @@ public class CSVEnemySpawn : CSVManager
 
         for (int i = 1; i < data.Length; i++)
         {
-            sb.Append(data[i] + ',');
+            sb.Append(data[i].Trim() + ',');
         }
 
-        csvData.Add(data[0], sb.ToString().Substring(0, sb.Length - 1));
-
+        csvData.Add(data[0].Trim(), sb.ToString().Substring(0, sb.Length - 1));
         data[3] = data[3].Trim();
+
         if (enemySpawnDatas.ContainsKey(data[3]))
         {
             enemySpawnDatas[data[3]].Add(sb.ToString().Substring(0, sb.Length - 1));

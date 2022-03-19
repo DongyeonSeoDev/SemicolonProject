@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using UnityEngine;
 
 public abstract class CSVManager
@@ -18,7 +16,7 @@ public abstract class CSVManager
             return;
         }
 
-        csvData.Add(data[0], data[1]);
+        csvData.Add(data[0].Trim(), data[1].Trim());
     }
 
     public string GetData(string key)

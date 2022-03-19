@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
 using UnityEngine;
 
@@ -44,7 +43,7 @@ public struct EnemyLootData
 
     public static implicit operator string(EnemyLootData data)
     {
-        return data.enemyId.ToString() + ',' + data.lootName + ',' + data.count;
+        return data.enemyId.ToString().Trim() + ',' + data.lootName.Trim() + ',' + data.count;
     }
 }
 
@@ -82,10 +81,11 @@ public class CSVEnemyLoot : CSVManager
 
         for (int i = 1; i < data.Length; i++)
         {
-            sb.Append(data[i] + ',');
+            sb.Append(data[i].Trim() + ',');
         }
 
-        csvData.Add(data[0], sb.ToString().Substring(0, sb.Length - 1));
+        csvData.Add(data[0].Trim(), sb.ToString().Substring(0, sb.Length - 1));
+        data[1] = data[1].Trim();
 
         if (int.TryParse(data[1], out value))
         {
@@ -107,7 +107,7 @@ public class CSVEnemyLoot : CSVManager
 
             for (int i = 0; i < items.Length; i++)
             {
-                itemDictionary.Add(items[i].name, items[i]);
+                itemDictionary.Add(items[i].name.Trim(), items[i]);
             }
         }
     }
