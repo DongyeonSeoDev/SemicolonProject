@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Enemy
 {
-    public class Enemy3 : Enemy
+    public class Enemy3 : Enemy // 세번째 적
     {
         private EnemyCommand enemyAttackCommand;
 
@@ -32,6 +32,7 @@ namespace Enemy
 
             enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(transform, enemyData.PlayerObject.transform, rb, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, false);
             enemyAttackCommand = new EnemyAddForceCommand(rb, enemyData.rushForce, positionCheckData);
+            enemyData.enemyObject.layer = LayerMask.NameToLayer("ENEMY");
 
             base.OnEnable();
         }

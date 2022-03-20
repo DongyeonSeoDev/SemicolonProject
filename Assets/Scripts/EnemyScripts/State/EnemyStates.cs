@@ -357,6 +357,8 @@ namespace Enemy
             enemyData.enemyAnimator.SetTrigger(enemyData.hashIsDie);
             currentTime = 0f;
 
+            enemyData.enemyObject.layer = LayerMask.NameToLayer("ENEMYDEAD");
+
             base.Start();
         }
 

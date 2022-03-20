@@ -35,6 +35,8 @@ namespace Enemy
             };
 
             enemyData.enemyMoveCommand = new EnemyRandomMoveCommand(enemyData, positionCheckData);
+            enemyData.enemyObject.layer = LayerMask.NameToLayer("ENEMY");
+
             base.OnEnable();
         }
 

@@ -21,6 +21,8 @@ namespace Enemy
             };
 
             enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(transform, enemyData.PlayerObject.transform, rb, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, false);
+            enemyData.enemyObject.layer = LayerMask.NameToLayer("ENEMY");
+
             base.OnEnable();
         }
 
