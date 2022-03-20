@@ -23,6 +23,7 @@ public class MonsterInfoSlot : MonoBehaviour
     private ItemSO dropItem;
 
     public MulSpriteColorCtrl msc;
+    public GameObject fullAssimEff;
 
     public void Init(ChangeBodyData data)
     {
@@ -44,6 +45,8 @@ public class MonsterInfoSlot : MonoBehaviour
         {
             understandingRateFill.fillAmount = 1;
             understandingOverRateFill.fillAmount = rate - 1f;
+
+            fullAssimEff.SetActive(rate >= PlayerEnemyUnderstandingRateManager.Instance.MaxUnderstandingRate);
         }
         else
         {
