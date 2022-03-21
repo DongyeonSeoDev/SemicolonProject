@@ -25,7 +25,7 @@ public class SoundManager : MonoSingleton<SoundManager>
             }
             else
             {
-
+                Debug.LogError("The SoundBoxId '" + x.SoundBoxId + "' is already used. \n Change SoundBoxId of " + x.name);
             }
         });
     }
