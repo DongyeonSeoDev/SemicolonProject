@@ -25,7 +25,7 @@ TagManager:
   - CHECKCOLLIDER
   - CAMERACOLLIDER
   - POSTPROCESSING
-  - 
+  - ENEMYDEAD
   - 
   - 
   - 

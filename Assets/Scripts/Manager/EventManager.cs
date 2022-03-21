@@ -6,6 +6,7 @@ public partial class EventManager
 {
     #region Dictionary 선언
     private static Dictionary<string, Action> eventDictionary = new Dictionary<string, Action>();
+    private static Dictionary<string, Action<bool>> bool_eventDictionary = new Dictionary<string, Action<bool>>();
     private static Dictionary<string, Action<int>> int_eventDictionary = new Dictionary<string, Action<int>>();
     private static Dictionary<string, Action<float>> float_eventDictionary = new Dictionary<string, Action<float>>();
     private static Dictionary<string, Action<float, float, float>> float_float_float_eventDictionary = new Dictionary<string, Action<float, float, float>>();
@@ -33,6 +34,20 @@ public partial class EventManager
         else
         {
             eventDictionary.Add(eventName, listener);
+        }
+    }
+    public static void StartListening(string eventName, Action<bool> listener)
+    {
+        Action<bool> thisEvent;
+
+        if (bool_eventDictionary.TryGetValue(eventName, out thisEvent)) // ���� �̸��� DIctionary�ִ��� üũ
+        {
+            thisEvent += listener;                   // ���� �̸����� �� ����
+            bool_eventDictionary[eventName] = thisEvent;
+        }
+        else
+        {
+            bool_eventDictionary.Add(eventName, listener);
         }
     }
     public static void StartListening(string eventName, Action<int> listener)
@@ -219,6 +234,20 @@ public partial class EventManager
             eventDictionary.Remove(eventName);
         }
     }
+    public static void StopListening(string eventName, Action<bool> listener)
+    {
+        Action<bool> thisEvent;
+
+        if (bool_eventDictionary.TryGetValue(eventName, out thisEvent))
+        {
+            thisEvent -= listener;
+            bool_eventDictionary[eventName] = thisEvent;
+        }
+        else
+        {
+            bool_eventDictionary.Remove(eventName);
+        }
+    }
     public static void StopListening(string eventName, Action<int> listener)
     {
         Action<int> thisEvent;
@@ -396,6 +425,19 @@ public partial class EventManager
         if (eventDictionary.TryGetValue(eventName, out thisEvent))
         {
             thisEvent?.Invoke();
+        }
+        else
+        {
+            Debug.LogWarning("The Linked ActionsNum is zero of The '" + eventName + "' Event but you tried 'TriggerEvent'");
+        }
+    }
+    public static void TriggerEvent(string eventName, bool bool_param)
+    {
+        Action<bool> thisEvent;
+
+        if (bool_eventDictionary.TryGetValue(eventName, out thisEvent))
+        {
+            thisEvent?.Invoke(bool_param);
         }
         else
         {

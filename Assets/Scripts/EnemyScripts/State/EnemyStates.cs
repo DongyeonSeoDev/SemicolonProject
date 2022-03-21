@@ -110,10 +110,11 @@ namespace Enemy
             {
                 if (SlimeGameManager.Instance.CurrentSkillDelayTimer[0] <= 0)
                 {
-                    SlimeGameManager.Instance.SetSkillDelay(0, 1f);
-                    SlimeGameManager.Instance.CurrentSkillDelayTimer[0] = SlimeGameManager.Instance.SkillDelays[0];
+                    SlimeGameManager.Instance.SetSkillDelay(0, enemyData.playerAnimationDelay);
+                    SlimeGameManager.Instance.CurrentSkillDelayTimer[0] = SlimeGameManager.Instance.SkillDelays[0] + enemyData.playerAnimationTime;
 
                     enemyData.enemyAnimator.SetTrigger(enemyData.hashAttack);
+                    enemyData.enemyAnimator.speed = 1.2f;
                 }
                 else
                 {
@@ -153,15 +154,17 @@ namespace Enemy
                     base.Update();
                 }
             }
-            else
+            else if (enemyData.eEnemyController == EnemyController.PLAYER)
             {
                 if (isNoAttack)
                 {
                     base.Update();
                 }
 
-                if (SlimeGameManager.Instance.CurrentSkillDelayTimer[0] <= 0)
+                if (SlimeGameManager.Instance.CurrentSkillDelayTimer[0] <= enemyData.playerAnimationDelay)
                 {
+                    enemyData.enemyAnimator.speed = 1.0f;
+                    
                     base.Update();
                 }
             }
@@ -172,6 +175,11 @@ namespace Enemy
                 {
                     enemyData.IsAttackDelay(enemyData.attackDelay - currentTime);
                 }
+                else if (enemyData.eEnemyController == EnemyController.PLAYER)
+                {
+                    enemyData.isAttack = false;
+                    enemyData.enemyAnimator.speed = 1.0f;
+                }
 
                 ChangeState(new EnemyGetDamagedState(enemyData));
             }
@@ -179,17 +187,17 @@ namespace Enemy
 
         protected override void End()
         {
+            if (enemyData.isEndAttackAnimation)
+            {
+                enemyData.enemyAnimator.SetTrigger(enemyData.hashEndAttack);
+            }
+
+            enemyData.enemyAnimator.ResetTrigger(enemyData.hashAttack);
+
             if (enemyData.eEnemyController == EnemyController.AI)
             {
-                if (enemyData.isEndAttackAnimation)
-                {
-                    enemyData.enemyAnimator.SetTrigger(enemyData.hashEndAttack);
-                }
-
-                enemyData.enemyAnimator.ResetTrigger(enemyData.hashAttack);
-
                 enemyData.isAttacking = false;
-            } 
+            }
         }
 
         private void SpriteFlipCheck()
@@ -348,6 +356,8 @@ namespace Enemy
             enemyData.enemyAnimator.ResetTrigger(enemyData.hashReset);
             enemyData.enemyAnimator.SetTrigger(enemyData.hashIsDie);
             currentTime = 0f;
+
+            enemyData.enemyObject.layer = LayerMask.NameToLayer("ENEMYDEAD");
 
             base.Start();
         }
