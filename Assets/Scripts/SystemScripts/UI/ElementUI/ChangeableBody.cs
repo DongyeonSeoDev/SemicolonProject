@@ -69,6 +69,13 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
 
     public void Register(string id)
     {
+        if(!string.IsNullOrEmpty(bodyID))
+        {
+            MonsterCollection.Instance.MarkAcqBodyFalse(bodyID);
+            MonsterCollection.Instance.UpdateUnderstanding(bodyID);
+            MonsterCollection.Instance.UpdateDrainProbability(bodyID);
+        }
+
         bodyID = id;
         bodyImg.sprite = Global.GetMonsterBodySprite(id);
         cvsg.alpha = 1;

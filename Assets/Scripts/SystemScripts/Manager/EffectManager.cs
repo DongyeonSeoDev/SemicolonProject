@@ -92,9 +92,9 @@ public class EffectManager : MonoSingleton<EffectManager>
 
     private void Respawn()
     {
-        inventoryBtnEffect.SetActive(false);
-        statBtnEffect.SetActive(false);
-        monColBtnEffect.SetActive(false);
+        OnTopRightBtnEffect(UIType.INVENTORY, false);
+        OnTopRightBtnEffect(UIType.STAT, false);
+        OnTopRightBtnEffect(UIType.MONSTER_COLLECTION, false);
     }
 
     public void OnDamagedUIEffect(float rate) //Damage Particle Effect of HP UI

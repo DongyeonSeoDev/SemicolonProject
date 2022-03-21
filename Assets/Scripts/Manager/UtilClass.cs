@@ -155,7 +155,7 @@ public static partial class Util
     private static IEnumerator DelayFuncCo(Action func, float delay, bool realTime)
     {
         if (!realTime)
-            yield return new WaitForSeconds(delay);
+            yield return new WaitForSeconds(delay * TimeManager.CurrentTimeScale);
         else
             yield return new WaitForSecondsRealtime(delay);
         func();

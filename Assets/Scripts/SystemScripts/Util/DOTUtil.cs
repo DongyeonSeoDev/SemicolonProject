@@ -124,7 +124,7 @@ public static class DOUtil
         onComplete?.Invoke();
     }
 
-    private static void ExecuteTweening(string key, IEnumerator tc, MonoBehaviour mono)
+    public static void ExecuteTweening(string key, IEnumerator tc, MonoBehaviour mono)
     {
         if (!tweeningDict.ContainsKey(key))
         {

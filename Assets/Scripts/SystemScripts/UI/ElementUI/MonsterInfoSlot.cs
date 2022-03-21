@@ -60,12 +60,6 @@ public class MonsterInfoSlot : MonoBehaviour
     public void UpdateDrainProbability(float prob)
     {
         drainProbabilityFill.fillAmount = Mathf.Clamp(prob/100f, 0, 1f);
-        
-        if(prob >= 1)
-        {
-            //뭔가 UI 이펙트 ㄱ
-        }
-       
     }
 
     public void MarkAcqBody(bool on) //변신 가능 텍스트 UI 띄우거나 없앰

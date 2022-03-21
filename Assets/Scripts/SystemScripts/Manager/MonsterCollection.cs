@@ -98,6 +98,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
     public void UpdateUnderstanding(string id)  //몹 동화율 정보 업뎃
     {
+        if (!mobIdToSlot.ContainsKey(id)) return;
+
         mobIdToSlot[id].UpdateAssimilationRate((float)urmg.GetUnderstandingRate(id) / 100);
     }
 
@@ -109,6 +111,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
     public void UpdateDrainProbability(string id) //몹 흡수 확률 정보 업뎃
     {
+        if (!mobIdToSlot.ContainsKey(id)) return;
+
         mobIdToSlot[id].UpdateDrainProbability(urmg.GetDrainProbabilityDict(id));
     }
     public void AllUpdateDrainProbability()

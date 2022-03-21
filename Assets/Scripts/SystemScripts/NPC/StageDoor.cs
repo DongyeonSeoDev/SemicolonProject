@@ -13,6 +13,8 @@ public class StageDoor : InteractionObj
 
     public DoorDirType dirType;
 
+    private bool isOpen; //문으로 입장할 수 있는 상태가 되어서 상호작용 키를 눌렀을 때 true로
+
     private void Awake()
     {
         spr = GetComponent<SpriteRenderer>();
@@ -29,7 +31,11 @@ public class StageDoor : InteractionObj
                 return;
             }
 
-            UIManager.Instance.StartLoading(() => StageManager.Instance.NextStage(nextStageData.stageID),()=> EventManager.TriggerEvent("StartNextStage", nextStageData.stageName)); 
+            if (!isOpen)
+            {
+                isOpen = true;
+                UIManager.Instance.StartLoading(() => StageManager.Instance.NextStage(nextStageData.stageID), () => EventManager.TriggerEvent("StartNextStage", nextStageData.stageName));
+            }
         }
         else
         {
@@ -40,6 +46,7 @@ public class StageDoor : InteractionObj
     public void Open()
     {
         spr.sprite = StageManager.Instance.doorSprDic[dirType.ToString() + "Open"];
+        isOpen = false;
     }
 
     public void Close()
