@@ -92,7 +92,8 @@ public enum AreaType
     CHEF,
     PLANTS,
     RANDOM,
-    BOSS
+    BOSS,
+    NONE
 }
 
 public enum DoorDirType

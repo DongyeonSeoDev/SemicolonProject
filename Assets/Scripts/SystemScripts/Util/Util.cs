@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using System;
 using System.Runtime.InteropServices;
 
@@ -68,6 +69,18 @@ public static partial class Util
         }
 
         end?.Invoke();
+    }
+
+    public static T Find<T>(this IEnumerable<T> list, Func<T,bool> action)
+    {
+        foreach (T item in list)
+        {
+            if(action(item))
+            {
+                return item;
+            }
+        }
+        return default(T);
     }
 
     public static T EnumParse<T>(string str) => (T)Enum.Parse(typeof(T), str);

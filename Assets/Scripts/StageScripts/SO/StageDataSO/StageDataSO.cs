@@ -4,6 +4,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Stage Data", menuName = "Scriptable Object/Stage Data", order = int.MaxValue)]
 public partial class StageDataSO : ScriptableObject
 {
+    public StageBundleDataSO stageBundle;
+
     public bool endStage; //마지막 스테이지인지
 
     public int stageBigNumber;  //스테이지 번호(큰 단위로 스테이지 당)    stageBigNumber - n

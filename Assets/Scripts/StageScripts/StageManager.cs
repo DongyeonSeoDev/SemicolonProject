@@ -5,6 +5,7 @@ public class StageManager : MonoSingleton<StageManager>
 {
     private Dictionary<string, StageGround> idToStageObjDict = new Dictionary<string, StageGround>();
     private Dictionary<string, StageDataSO> idToStageDataDict = new Dictionary<string, StageDataSO>();
+    private Dictionary<string, StageBundleDataSO> idToStageFloorDict = new Dictionary<string, StageBundleDataSO>();
 
     private StageGround currentStage = null;
     private StageDataSO currentStageData = null;
@@ -33,6 +34,11 @@ public class StageManager : MonoSingleton<StageManager>
         foreach(StageDataSO data in Resources.LoadAll<StageDataSO>("Stage/SO/"))
         {
             idToStageDataDict.Add(data.stageID, data);
+        }
+        foreach(StageBundleDataSO data in Resources.LoadAll<StageBundleDataSO>("Stage/SO/BundleSO"))
+        {
+            idToStageFloorDict.Add(data.id, data);
+            data.SetStageDic();
         }
 
         int cnt = Global.EnumCount<DoorDirType>();
@@ -85,11 +91,13 @@ public class StageManager : MonoSingleton<StageManager>
                 SetClearStage();
                 break;
             case AreaType.PLANTS:
+                //채집구역이면 무엇을 할까
                 break;
             case AreaType.RANDOM:
                 EnterRandomArea();
                 break;
             case AreaType.BOSS:
+                //보스구역이면 무엇을 할까
                 break;
         }
     }
@@ -119,7 +127,7 @@ public class StageManager : MonoSingleton<StageManager>
 
         EventManager.TriggerEvent("StageClear");
 
-        CinemachineCameraScript.Instance.SetCinemachineConfiner(CinemachineCameraScript.Instance.boundingCollider);
+        //CinemachineCameraScript.Instance.SetCinemachineConfiner(CinemachineCameraScript.Instance.boundingCollider);
 
         if (IsLastStage)
         {
@@ -153,14 +161,22 @@ public class StageManager : MonoSingleton<StageManager>
         switch(room)
         {
             case RandomRoomType.IMPRECATION:
-
+                //저주 구역
                 break;
-            case RandomRoomType.MONSTER:
-                int targetStage = currentStageData.stageBigNumber + Mathf.Clamp(Random.Range(-1, 2), 1, MaxStage);
-                
+            case RandomRoomType.MONSTER:  //몬스터 구역
+                int targetStage = Mathf.Clamp(currentStageData.stageBigNumber + Random.Range(-1, 2), 1, MaxStage); //현재 층에서 몇 층을 더할지 정함
+                StageBundleDataSO sbData = idToStageFloorDict.Values.Find(x=>x.stageBundleNumber == targetStage); //현재 층에서 -1 or 0 or 1층을 더한 층을 가져온다
+                StageDataSO sData = null; //해당 층에서의 스테이지 데이터를 담을 변수
+                AreaType type = AreaType.NONE; 
+                while(type!=AreaType.MONSTER)  //랜덤으로 정한 방이 몬스터 방이어야한다. (이건 나중에 기획에 따라 수정할 수도)
+                {
+                    sData = sbData.stages[Random.Range(0,sbData.stages.Count)];
+                    type = sData.areaType;
+                }
+                NextStage(sData.stageID);
                 break;
             case RandomRoomType.RECOVERY:
-
+                //회복 구역
                 break;
         }
     }

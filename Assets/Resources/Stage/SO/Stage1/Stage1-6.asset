@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64e33b43e1e30554a86e99b006a1e50a, type: 3}
   m_Name: Stage1-6
   m_EditorClassIdentifier: 
+  stageBundle: {fileID: 11400000, guid: ad81aacd5e610b7498e62e7a75a34db9, type: 2}
   endStage: 0
   stageBigNumber: 1
   stageNumber: 6

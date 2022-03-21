@@ -27,7 +27,7 @@ public class StageDoor : InteractionObj
         {
             if(notExistMap)
             {
-                UIManager.Instance.RequestSystemMsg("돌아가라~", 65, 1);
+                UIManager.Instance.RequestSystemMsg("좋은말 할 때 돌아가라~\n-양진욱-", 65, 1);
                 return;
             }
 
