@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class SoundManager : MonoSingleton<SoundManager>
 {
+    private List<SoundBox> soundBoxes = new List<SoundBox>();
     private Dictionary<string, SoundBox> soundBoxesDict = new Dictionary<string, SoundBox>();
     private Dictionary<string, Queue<SoundBox>> soundBoxesDictForPooling = new Dictionary<string, Queue<SoundBox>>();
 
@@ -16,8 +17,6 @@ public class SoundManager : MonoSingleton<SoundManager>
 
     private void Awake()
     {
-        List<SoundBox> soundBoxes = new List<SoundBox>();
-
         soundBoxes = Resources.LoadAll<SoundBox>(soundPrefabsPath).ToList();
         soundBoxes.ForEach(x => soundBoxesDict.Add(x.SoundBoxId, x));
     }
@@ -30,6 +29,7 @@ public class SoundManager : MonoSingleton<SoundManager>
     }
     public void PlaySoundBox(string soundBoxId)
     {
+        GameObject soundBoxObj = null;
         SoundBox soundBox = null;
 
         if (soundBoxesDict.ContainsKey(soundBoxId))
@@ -51,12 +51,12 @@ public class SoundManager : MonoSingleton<SoundManager>
             else
             {
                 Queue<SoundBox> queue = new Queue<SoundBox>();
-                queue.Enqueue(soundBoxesDict[soundBoxId]);
 
                 soundBoxesDictForPooling.Add(soundBoxId, queue);
             }
 
-            soundBox = Instantiate(soundBoxesDict[soundBoxId].gameObject, transform).GetComponent<SoundBox>();
+            soundBoxObj = Instantiate(soundBoxesDict[soundBoxId].gameObject, transform);
+            soundBox = soundBoxObj.GetComponent<SoundBox>();
 
             soundBox.SetPause(pause);
             soundBox.SetVolume(volume);

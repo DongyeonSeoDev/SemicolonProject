@@ -42,10 +42,10 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: fe7b079af481a413eb65860731002488, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 657ed399b484844c8aceb6a7489d6079, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
-  m_Pitch: 1
+  m_Volume: 0.5
+  m_Pitch: 2
   Loop: 0
   Mute: 0
   Spatialize: 0
@@ -143,4 +143,6 @@ MonoBehaviour:
   soundBoxId: Test
   audioSource: {fileID: 1753194670404615221}
   isBackgroundMusic: 0
-  playTime: 2
+  playTime: 0.5
+  defaultVolume: 0.5
+  defaultPitch: 2

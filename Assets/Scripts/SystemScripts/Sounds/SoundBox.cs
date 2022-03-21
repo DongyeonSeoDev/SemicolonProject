@@ -38,11 +38,20 @@ public class SoundBox : MonoBehaviour
 
     private float playTimer = 0f;
 
-
+    [SerializeField]
+    private float defaultVolume = 1f;
     private float volume = 1f;
     public float Volume
     {
         get { return volume; }
+    }
+
+    [SerializeField]
+    private float defaultPitch = 1f;
+    private float pitch = 1f;
+    public float Pitch
+    {
+        get { return pitch; }
     }
 
     private bool isPause = false;
@@ -51,11 +60,7 @@ public class SoundBox : MonoBehaviour
         get { return isPause; }
     }
 
-    private float pitch = 1f;
-    public float Pitch
-    {
-        get { return pitch; }
-    }
+
 
     private void Awake()
     {
@@ -66,6 +71,12 @@ public class SoundBox : MonoBehaviour
         EventManager.StartListening("SoundPause", (Action<bool>)SetPause);
         EventManager.StartListening("SetVolume", (Action <float>)SetVolume);
         EventManager.StartListening("SetPitch", (Action<float>)SetPitch);
+
+        volume = defaultVolume;
+        AudioSource.volume = volume;
+
+        pitch = defaultPitch;
+        AudioSource.pitch = pitch;
 
         if (AudioSource.clip != null)
         {
@@ -98,7 +109,7 @@ public class SoundBox : MonoBehaviour
 
     public void SetVolume(float v)
     {
-        volume = v;
+        volume = v * defaultVolume;
         AudioSource.volume = volume;
     }
 
@@ -116,8 +127,9 @@ public class SoundBox : MonoBehaviour
         AudioSource.UnPause();
     }
 
-    public void SetPitch(float pitch)
+    public void SetPitch(float p)
     {
+        pitch = p * defaultPitch;
         AudioSource.pitch = pitch;
     }
 }
