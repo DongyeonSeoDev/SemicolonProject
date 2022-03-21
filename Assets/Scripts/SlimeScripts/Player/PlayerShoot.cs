@@ -74,6 +74,8 @@ public class PlayerShoot : PlayerSkill
 
             canShoot = false;
 
+            SoundManager.Instance.PlaySoundBox("Test");
+
             EventManager.TriggerEvent("PlayerShoot");
         }
 

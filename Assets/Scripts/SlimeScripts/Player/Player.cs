@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     }
 
     [SerializeField]
-    private PlayerInput playerInput = new PlayerInput();
+    private PlayerInput playerInput = null;
     public PlayerInput PlayerInput
     {
         get { return playerInput; }

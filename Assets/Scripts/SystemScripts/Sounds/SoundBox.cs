@@ -15,6 +15,18 @@ public class SoundBox : MonoBehaviour
 
     [SerializeField]
     private AudioSource audioSource = null;
+    private AudioSource AudioSource
+    {
+        get
+        {
+            if(audioSource == null)
+            {
+                audioSource = GetComponent<AudioSource>();
+            }
+
+            return audioSource;
+        }
+    }
 
     [Header("이 값이 true면 아래의 playTime값은 무시된다.")]
     [SerializeField]
@@ -45,15 +57,19 @@ public class SoundBox : MonoBehaviour
         get { return pitch; }
     }
 
+    private void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
     private void OnEnable()
     {
         EventManager.StartListening("SoundPause", (Action<bool>)SetPause);
         EventManager.StartListening("SetVolume", (Action <float>)SetVolume);
         EventManager.StartListening("SetPitch", (Action<float>)SetPitch);
 
-        if (audioSource.clip != null)
+        if (AudioSource.clip != null)
         {
-            audioSource.Play();
+            AudioSource.Play();
 
             if (!isBackgroundMusic)
             {
@@ -83,7 +99,7 @@ public class SoundBox : MonoBehaviour
     public void SetVolume(float v)
     {
         volume = v;
-        audioSource.volume = volume;
+        AudioSource.volume = volume;
     }
 
     public void SetPause(bool pause)
@@ -92,16 +108,16 @@ public class SoundBox : MonoBehaviour
 
         if (pause)
         {
-            audioSource.Pause();
+            AudioSource.Pause();
 
             return;
         }
 
-        audioSource.UnPause();
+        AudioSource.UnPause();
     }
 
     public void SetPitch(float pitch)
     {
-        audioSource.pitch = pitch;
+        AudioSource.pitch = pitch;
     }
 }

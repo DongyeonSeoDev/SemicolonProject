@@ -4,25 +4,24 @@ using UnityEngine;
 
 public class SoundManager : MonoSingleton<SoundManager>
 {
-    [SerializeField]
-    private List<SoundBox> soundBoxes = new List<SoundBox>();
-    public List<SoundBox> SoundBoxes
-    {
-        get { return soundBoxes; }
-    }
-
     private Dictionary<string, SoundBox> soundBoxesDict = new Dictionary<string, SoundBox>();
     private Dictionary<string, Queue<SoundBox>> soundBoxesDictForPooling = new Dictionary<string, Queue<SoundBox>>();
+
+    private readonly string soundPrefabsPath = "Prefabs/SoundPrefabs";
 
     [SerializeField]
     private float volume = 1f;
     private float pitch = 1f;
     private bool pause = false;
 
-    void Start()
+    private void Awake()
     {
+        List<SoundBox> soundBoxes = new List<SoundBox>();
+
+        soundBoxes = Resources.LoadAll<SoundBox>(soundPrefabsPath).ToList();
         soundBoxes.ForEach(x => soundBoxesDict.Add(x.SoundBoxId, x));
     }
+        
     public void PlaySoundBox(SoundBox soundBox)
     {
         string soundBoxId = soundBox.SoundBoxId;
