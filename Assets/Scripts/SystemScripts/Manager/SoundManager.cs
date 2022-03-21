@@ -21,11 +21,11 @@ public class SoundManager : MonoSingleton<SoundManager>
         soundBoxes.ForEach(x => {
             if (soundBoxesDict.ContainsKey(x.SoundBoxId))
             {
-                soundBoxesDict.Add(x.SoundBoxId, x);
+                Debug.LogError("The SoundBoxId '" + x.SoundBoxId + "' is already used. \n Change SoundBoxId of " + x.name);
             }
             else
             {
-                Debug.LogError("The SoundBoxId '" + x.SoundBoxId + "' is already used. \n Change SoundBoxId of " + x.name);
+                soundBoxesDict.Add(x.SoundBoxId, x);
             }
         });
     }
