@@ -21,7 +21,7 @@ public class SoundManager : MonoSingleton<SoundManager>
         soundBoxes.ForEach(x => {
             if (soundBoxesDict.ContainsKey(x.SoundBoxId))
             {
-                Debug.LogError("The SoundBoxId '" + x.SoundBoxId + "' is already used. \n Change SoundBoxId of " + x.name);
+                Debug.LogError("The SoundBoxId '" + x.SoundBoxId + "' is already used. Change SoundBoxId of " + x.name);
             }
             else
             {

@@ -115,6 +115,8 @@ public class PlayerBodySlap : PlayerSkill
 
             currentBodySlapTime = Vector2.Distance(moveOriginPos, moveTargetPos) / bodySlapMoveSpeed;
 
+            SoundManager.Instance.PlaySoundBox("SlimeSkill1Start");
+
             EventManager.TriggerEvent("PlayerBodySlap", bodySlapTime);
 
             bodySlapTimer = 0f;
@@ -139,7 +141,10 @@ public class PlayerBodySlap : PlayerSkill
                 bodyStopBodySlapTimerStart = true;
                 stopBodySlapTimer = stopBodySlapTime;
             }
+
+            SoundManager.Instance.PlaySoundBox("SlimeSkill1Crash");
         }
+
     }
     private void StartBodySlap()
     {
