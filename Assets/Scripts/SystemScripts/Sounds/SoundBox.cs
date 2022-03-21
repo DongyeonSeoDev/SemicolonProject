@@ -11,6 +11,7 @@ public class SoundBox : MonoBehaviour
     public string SoundBoxId
     {
         get { return soundBoxId; }
+        set { soundBoxId = value; }
     }
 
     [SerializeField]

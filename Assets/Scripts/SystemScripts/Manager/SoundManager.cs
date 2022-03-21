@@ -18,7 +18,16 @@ public class SoundManager : MonoSingleton<SoundManager>
     private void Awake()
     {
         soundBoxes = Resources.LoadAll<SoundBox>(soundPrefabsPath).ToList();
-        soundBoxes.ForEach(x => soundBoxesDict.Add(x.SoundBoxId, x));
+        soundBoxes.ForEach(x => {
+            if (soundBoxesDict.ContainsKey(x.SoundBoxId))
+            {
+                soundBoxesDict.Add(x.SoundBoxId, x);
+            }
+            else
+            {
+
+            }
+        });
     }
         
     public void PlaySoundBox(SoundBox soundBox)

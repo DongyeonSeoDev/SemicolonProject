@@ -110,8 +110,8 @@ namespace Enemy
             {
                 if (SlimeGameManager.Instance.CurrentSkillDelayTimer[0] <= 0)
                 {
-                    SlimeGameManager.Instance.SetSkillDelay(0, enemyData.playerAnimationDelay);
-                    SlimeGameManager.Instance.CurrentSkillDelayTimer[0] = SlimeGameManager.Instance.SkillDelays[0] + enemyData.playerAnimationTime;
+                    SlimeGameManager.Instance.SetSkillDelay(0, enemyData.playerAnimationDelay + enemyData.playerAnimationTime);
+                    SlimeGameManager.Instance.CurrentSkillDelayTimer[0] = SlimeGameManager.Instance.SkillDelays[0];
 
                     enemyData.enemyAnimator.SetTrigger(enemyData.hashAttack);
                     enemyData.enemyAnimator.speed = 1.2f;
