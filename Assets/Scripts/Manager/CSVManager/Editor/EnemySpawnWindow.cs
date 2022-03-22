@@ -30,11 +30,11 @@ public class EnemySpawnWindow : EditorWindow
         GUILayout.Space(10);
 
         stageId = EditorGUILayout.TextField("StageID", stageId);
-        GUILayout.Space(10);
+        GUILayout.Space(15);
 
         GUILayout.BeginHorizontal();
 
-        if (GUILayout.Button("Save"))
+        if (GUILayout.Button("Add"))
         {
             Debug.Log(id + type + spawnPosition + stageId);
 
@@ -44,14 +44,14 @@ public class EnemySpawnWindow : EditorWindow
             stageId = null;
         }
 
-        if (GUILayout.Button("Load"))
-        {
-            GetWindow(typeof(EnemySpawnListWindow));
-        }
-
-        if (GUILayout.Button("Find"))
+        if (GUILayout.Button("Remove"))
         {
             Debug.Log(id + type + spawnPosition + stageId);
+        }
+
+        if (GUILayout.Button("List"))
+        {
+            GetWindow(typeof(EnemySpawnListWindow));
         }
 
         GUILayout.EndHorizontal();

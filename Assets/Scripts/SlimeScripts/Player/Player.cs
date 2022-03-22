@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    public string[] a;
+
     private PlayerState playerState = null;
 
     [SerializeField]
@@ -15,7 +17,7 @@ public class Player : MonoBehaviour
     }
 
     [SerializeField]
-    private PlayerInput playerInput = new PlayerInput();
+    private PlayerInput playerInput = null;
     public PlayerInput PlayerInput
     {
         get { return playerInput; }

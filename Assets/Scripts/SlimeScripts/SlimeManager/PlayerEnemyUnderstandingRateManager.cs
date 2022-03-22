@@ -18,7 +18,7 @@ public struct ChangeBodyData
 public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnderstandingRateManager>
 {
     private Dictionary<string, int> playerEnemyUnderStandingRateDict  = new Dictionary<string, int>();
-    [Obsolete("확그냥 죽여벌랑. GetUnderstandingRate나 SetUnderstandingRate를! 사용하라 맨이야.")]
+    [Obsolete("자~ 잠시 개입하겠어요. 이거 쓰지 말고, GetUnderstandingRate나 SetUnderstandingRate를! 사용하라 맨이야.")]
     public Dictionary<string, int> PlayerEnemyUnderStandingRateDic
     {
         get { return playerEnemyUnderStandingRateDict ; }

@@ -5,6 +5,9 @@ namespace Enemy
 {
     public class EnemySpawn : MonoSingleton<EnemySpawn>
     {
+#if UNITY_EDITOR
+        public List<EnemySpawnData> enemySpawnData = new List<EnemySpawnData>();
+#endif
         public Dictionary<string, List<Enemy>> enemyDictionary = new Dictionary<string, List<Enemy>>();
 
         private void Start()
