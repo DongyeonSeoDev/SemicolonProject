@@ -15,6 +15,14 @@ public class EnemySpawnWindow : EditorWindow
         GetWindow(typeof(EnemySpawnWindow));
     }
 
+    private void ResetText()
+    {
+        id = null;
+        type = default(Enemy.Type);
+        spawnPosition = default(Vector3);
+        stageId = null;
+    }
+
     private void OnGUI()
     {
         GUILayout.Space(10);
@@ -36,17 +44,12 @@ public class EnemySpawnWindow : EditorWindow
 
         if (GUILayout.Button("Add"))
         {
-            Debug.Log(id + type + spawnPosition + stageId);
-
-            id = null;
-            type = default(Enemy.Type);
-            spawnPosition = default(Vector3);
-            stageId = null;
+            ResetText();
         }
 
         if (GUILayout.Button("Remove"))
         {
-            Debug.Log(id + type + spawnPosition + stageId);
+            ResetText();
         }
 
         if (GUILayout.Button("List"))

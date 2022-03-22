@@ -2,6 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 using Enemy;
+using System.Collections.Generic;
 
 public class EnemySpawnListWindow : EditorWindow
 {
@@ -9,8 +10,12 @@ public class EnemySpawnListWindow : EditorWindow
     private SerializedObject serializedObject;
     private SerializedProperty serializedProperty;
     private Vector2 scrollPosition = Vector2.zero;
+    private string findText = "";
+    private string lastFindText = "";
     private int selectSortIndex = 0;
     private int lastSelectSortIndex = 0;
+
+    private List<EnemySpawnData> enemySpawnDataList = new List<EnemySpawnData>();
 
     private string[] sortName = new string[2] { "StageSort", "EnemySort" };
 
@@ -41,6 +46,32 @@ public class EnemySpawnListWindow : EditorWindow
         serializedObject.Update();
     }
 
+    private void FindText(string text)
+    {
+        enemySpawn.enemySpawnData.Clear();
+
+        if (string.IsNullOrEmpty(text))
+        {
+            for (int i = 0; i < enemySpawnDataList.Count; i++)
+            {
+                enemySpawn.enemySpawnData.Add(enemySpawnDataList[i]);
+            }
+        }
+        else
+        {
+            for (int i = 0; i < enemySpawnDataList.Count; i++)
+            {
+                if (enemySpawnDataList[i].name.Contains(text))
+                {
+                    enemySpawn.enemySpawnData.Add(enemySpawnDataList[i]);
+                }
+            }
+        }
+
+        serializedObject.ApplyModifiedProperties();
+        serializedObject.Update();
+    }
+
     private void OnEnable()
     {
         enemySpawn = FindObjectOfType<EnemySpawn>();
@@ -48,16 +79,17 @@ public class EnemySpawnListWindow : EditorWindow
         serializedProperty = serializedObject.FindProperty("enemySpawnData");
 
         CSVEnemySpawn.Instance.GetData("");
-        enemySpawn.enemySpawnData.Clear();
+        enemySpawnDataList.Clear();
 
         CSVEnemySpawn.Instance.enemySpawnDatas.Values.ForEach(datas =>
         {
             datas.ForEach(data =>
             {
-                enemySpawn.enemySpawnData.Add(data);
+                enemySpawnDataList.Add(data);
             });
         });
 
+        FindText(findText);
         Sort(selectSortIndex);
     }
 
@@ -72,6 +104,17 @@ public class EnemySpawnListWindow : EditorWindow
             lastSelectSortIndex = selectSortIndex;
 
             Sort(selectSortIndex);
+        }
+
+        EditorGUILayout.Space(2);
+
+        findText = EditorGUILayout.TextField("Find Text", findText);
+
+        if (findText != lastFindText)
+        {
+            lastFindText = findText;
+
+            FindText(findText);
         }
 
         EditorGUILayout.Space(5);

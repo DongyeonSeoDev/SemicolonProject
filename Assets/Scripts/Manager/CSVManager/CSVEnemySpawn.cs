@@ -52,7 +52,7 @@ public struct EnemySpawnData
         }
 
         enemySpawnData.position = new Vector3(positionArray[0], positionArray[1], positionArray[2]);
-        enemySpawnData.name = enemySpawnData.enemyId.ToString() + " " + enemySpawnData.stageId;
+        enemySpawnData.name = enemySpawnData.enemyId + " " + enemySpawnData.stageId + " " + enemySpawnData.position;
 
         return enemySpawnData;
     }
