@@ -21,7 +21,6 @@ public class StageDoor : InteractionObj
     private void Awake()
     {
         spr = GetComponent<SpriteRenderer>();
-        objName = Global.AreaTypeToString(nextStageData.areaType);
     }
 
     public override void Interaction()
@@ -52,6 +51,7 @@ public class StageDoor : InteractionObj
 
         spr.sprite = StageManager.Instance.doorSprDic[dirType.ToString() + "Open"];
         isOpen = false;
+        objName = Global.AreaTypeToString(nextStageData.areaType);
     }
 
     public void Close()
