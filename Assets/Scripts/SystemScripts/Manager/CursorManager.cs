@@ -18,6 +18,8 @@ public class CursorManager : MonoSingleton<CursorManager>
 
     private bool isOnEnemy = false;
     private bool mouseClick = false;
+
+    private bool changeCursor = false;
     private void Start()
     {
         OnGameStart();
@@ -25,17 +27,38 @@ public class CursorManager : MonoSingleton<CursorManager>
     private void Update()
     {
         cursorPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mouseClick = Input.GetMouseButton(0);
 
+        CheckClick();
         CheckOnEnemy();
+        SetCursor();
+    }
 
-        if (isOnEnemy)
+    private void SetCursor()
+    {
+        if (changeCursor)
         {
-            SetCursor(mouseClick ? "OnEnemyClickedCursor" : "OnEnemyCursor");
+            if (isOnEnemy)
+            {
+                SetCursor(mouseClick ? "OnEnemyClickedCursor" : "OnEnemyCursor");
+            }
+            else
+            {
+                SetCursor(mouseClick ? "DefaultClickedCursor" : "DefaultCursor");
+            }
+
+            changeCursor = false;
         }
-        else
+    }
+
+    private void CheckClick()
+    {
+        bool click = Input.GetMouseButton(0);
+
+        if (click != mouseClick)
         {
-            SetCursor(mouseClick ? "DefaultClickedCursor" : "DefaultCursor");
+            mouseClick = click;
+
+            changeCursor = true;
         }
     }
 
@@ -43,7 +66,12 @@ public class CursorManager : MonoSingleton<CursorManager>
     {
         RaycastHit2D hit = Physics2D.CircleCast(cursorPosition, 0.1f, Vector2.up, 0.1f, whatIsEnemy);
 
-        isOnEnemy = hit;
+        if (isOnEnemy != hit)
+        {
+            isOnEnemy = hit;
+
+            changeCursor = true;
+        }
     }
 
     private void OnGameStart()
