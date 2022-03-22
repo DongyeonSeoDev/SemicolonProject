@@ -137,6 +137,10 @@ PrefabInstance:
       propertyPath: maxBodyPointLocalPos
       value: 0.1
       objectReference: {fileID: 0}
+    - target: {fileID: 1014413151, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: skillDelay
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 804748403637607259, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.572
@@ -152,6 +156,14 @@ PrefabInstance:
     - target: {fileID: 3851220836599241427, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: m_LocalPosition.y
       value: -0.537
+      objectReference: {fileID: 0}
+    - target: {fileID: 3908897437071421488, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_Size.x
+      value: 4.963552
+      objectReference: {fileID: 0}
+    - target: {fileID: 3908897437071421488, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.30912423
       objectReference: {fileID: 0}
     - target: {fileID: 4327631336810169174, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: m_LocalPosition.x
