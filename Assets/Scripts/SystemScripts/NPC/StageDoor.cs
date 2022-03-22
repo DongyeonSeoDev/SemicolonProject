@@ -57,6 +57,8 @@ public class StageDoor : InteractionObj
 
     public void Close()
     {
+        if (isExitDoor || !gameObject.activeSelf) return;
+
         spr.sprite = StageManager.Instance.doorSprDic[dirType.ToString() + "Close"];
     }
 
@@ -68,7 +70,7 @@ public class StageDoor : InteractionObj
 
     public override void SetInteractionUI(bool on)
     {
-        if (StageManager.Instance.IsStageClear)
+        if (StageManager.Instance.IsStageClear && !isExitDoor)
         {
             base.SetInteractionUI(on);
 
@@ -79,7 +81,7 @@ public class StageDoor : InteractionObj
 
     public override void SetUI(bool on)
     {
-        if (StageManager.Instance.IsStageClear)
+        if (StageManager.Instance.IsStageClear && !isExitDoor)
         {
             base.SetUI(on);
         }

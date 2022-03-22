@@ -82,6 +82,7 @@ public static partial class Util
         }
         return default(T);
     }
+    
     public static List<T> FindAll<T>(this IEnumerable<T> list, Func<T, bool> action)
     {
         List<T> itemList = new List<T>();
@@ -93,6 +94,32 @@ public static partial class Util
             }
         }
         return itemList;
+    }
+
+    public static T FindRandom<T>(this IEnumerable<T> list, Func<T, bool> action)  //조건에 만족하는 요소중에 랜덤으로 가져옴
+    {
+        List<T> itemList = new List<T>();
+        foreach (T item in list)
+        {
+            if (action(item))
+            {
+                itemList.Add(item);
+            }
+        }
+
+        if (itemList.Count > 1)
+        {
+            return itemList[UnityEngine.Random.Range(0,itemList.Count)];
+        }
+        else if (itemList.Count == 1)
+        {
+            return itemList[0];
+        }
+        else
+        {
+            Debug.Log("아무 요소도 없음");
+            return default(T);
+        }
     }
 
     public static T EnumParse<T>(string str) => (T)Enum.Parse(typeof(T), str);

@@ -1280,11 +1280,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   camStageCollider: {fileID: 8648534772182156580}
-  playerSpawnPoint: {fileID: 998791116210713733}
+  playerSpawnPoint: {fileID: 0}
   autoInsertStageDoors: 0
   stageDoors:
   - {fileID: 7566667832906837267}
   - {fileID: 7698324513233151608}
+  - {fileID: 2903864314925138834}
+  - {fileID: 2111183138866665230}
   autoInsertPlants: 0
   plants: []
 --- !u!1 &3553275141150440558
@@ -13213,7 +13215,7 @@ TilemapCollider2D:
   m_GameObject: {fileID: 3597441155626782345}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: 99387a733fb54b64da99a36073c5c699, type: 2}
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
@@ -13855,7 +13857,7 @@ PrefabInstance:
     - target: {fileID: 8604531944747639586, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
       propertyPath: playerSpawnPos
       value: 
-      objectReference: {fileID: 998791116210713733}
+      objectReference: {fileID: 5694366917466002312}
     - target: {fileID: 8604531944747639587, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
       propertyPath: m_Name
       value: StageDoor_Front
@@ -14004,6 +14006,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8604531944747639599, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
   m_PrefabInstance: {fileID: 6856142204925436080}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2903864314925138834 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8604531944747639586, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
+  m_PrefabInstance: {fileID: 6856142204925436080}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b9e200c7d6f9e14ab3cc9a33c90f74e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7648552347636741164
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14034,7 +14047,7 @@ PrefabInstance:
     - target: {fileID: 8604531944747639586, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
       propertyPath: playerSpawnPos
       value: 
-      objectReference: {fileID: 5694366917466002312}
+      objectReference: {fileID: 998791116210713733}
     - target: {fileID: 8604531944747639587, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
       propertyPath: m_Name
       value: StageDoor_Front (3)
@@ -14090,3 +14103,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8604531944747639599, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
   m_PrefabInstance: {fileID: 7648552347636741164}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2111183138866665230 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8604531944747639586, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
+  m_PrefabInstance: {fileID: 7648552347636741164}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b9e200c7d6f9e14ab3cc9a33c90f74e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

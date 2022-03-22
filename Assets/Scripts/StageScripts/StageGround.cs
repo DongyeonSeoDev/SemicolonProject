@@ -44,18 +44,19 @@ public class StageGround : MonoBehaviour
         }
     }
 
-    public StageDoor GetDoor(DoorDirType type)
+    public StageDoor GetOpposeDoor(DoorDirType type)
     {
         for(int i=0; i<stageDoors.Length; i++)
         {
-            if (stageDoors[i].dirType == type)
+            DoorDirType target = Global.ReverseDoorDir(type);
+            if (stageDoors[i].dirType == target)
             {
-                gameObject.SetActive(false);
+                stageDoors[i].gameObject.SetActive(true);
                 stageDoors[i].Pass();
                 return stageDoors[i];
             }
         }
-        Debug.Log("해당 방향의 문이 해당 스테이지에 없음");
+        Debug.Log("해당 방향의 반대 방향의 문이 해당 스테이지에 없음");
         return null;
     }
 }

@@ -37,7 +37,7 @@ public class StageManager : MonoSingleton<StageManager>
 
     private void Awake()
     {
-        foreach(StageDataSO data in Resources.LoadAll<StageDataSO>("Stage/SO/"))
+        foreach (StageDataSO data in Resources.LoadAll<StageDataSO>("Stage/SO/"))
         {
             idToStageDataDict.Add(data.stageID, data);
         }
@@ -87,9 +87,9 @@ public class StageManager : MonoSingleton<StageManager>
         List<string> stageIDList = new List<string>();
         StageBundleDataSO bundle = idToStageFloorDict[FloorToFloorID(floor)];
 
-        foreach (StageDataSO key in bundle.stages)
+        foreach (StageDataSO data in bundle.stages)
         {
-            stageIDList.Add(key.stageID);
+            stageIDList.Add(data.stageID);
         }
         foreach(AreaType type in System.Enum.GetValues(typeof(AreaType)))
         {
@@ -132,22 +132,48 @@ public class StageManager : MonoSingleton<StageManager>
             currentStage.gameObject.SetActive(true);
         }
 
-        currentStage.stageDoors.ForEach(x => { x.gameObject.SetActive(false); x.IsExitDoor = false; });
-        SlimeGameManager.Instance.CurrentPlayerBody.transform.position = currentStage.playerSpawnPoint ? currentStage.playerSpawnPoint.position : currentStage.GetDoor(PassDir).playerSpawnPos.position; //Player Pos
+        currentStage.stageDoors.ForEach(x => 
+        { 
+            x.gameObject.SetActive(false);
+            x.IsExitDoor = false;
+        });
+
+        //Player Position
+        if(currentStage.playerSpawnPoint)
+        {
+            SlimeGameManager.Instance.CurrentPlayerBody.transform.position = currentStage.playerSpawnPoint.position;
+        }
+        else
+        {
+            SlimeGameManager.Instance.CurrentPlayerBody.transform.position = currentStage.GetOpposeDoor(PassDir).playerSpawnPos.position;
+        }
+        
         CinemachineCameraScript.Instance.SetCinemachineConfiner(currentStage.camStageCollider);  //Camera Move Range Set
         GameManager.Instance.ResetDroppedItems(); //Inactive Items
 
-        for(int i=0; i<currentStage.stageDoors.Length; i++)
+        int idx = 0;
+        for (int i = 0; i< currentStageData.stageFloor.randomStageList[currentStageNumber - 1].nextStageTypes.Length; i++)
         {
             if (currentStage.stageDoors[i].gameObject.activeSelf) continue;
 
-            currentStage.stageDoors[i].nextStageData = randomRoomDict[currentFloor][currentStageData.stageFloor.randomStageList[currentStageNumber].nextStageTypes[i]][0];
-            randomRoomDict[currentFloor][currentStageData.stageFloor.randomStageList[currentStageNumber].nextStageTypes[i]].RemoveAt(0);
+            try
+            {
+                currentStage.stageDoors[i].nextStageData = randomRoomDict[currentFloor][currentStageData.stageFloor.randomStageList[currentStageNumber - 1].nextStageTypes[idx]][0];
+                randomRoomDict[currentFloor][currentStageData.stageFloor.randomStageList[currentStageNumber - 1].nextStageTypes[idx]].RemoveAt(0);
+                ++idx;
+                currentStage.stageDoors[i].gameObject.SetActive(true);
+            }
+            catch(System.Exception e)
+            {
+                Debug.LogException(e);
+                Debug.Log($"스테이지를 불러오지 못함 {currentFloor} - {currentStageNumber} : i : {i}, idx: {idx}");
+            }
         }
 
         switch (currentStageData.areaType)
         {
             case AreaType.START:
+                currentStage.stageDoors.ForEach(x => x.gameObject.SetActive(true));
                 SetClearStage();
                 break;
             case AreaType.MONSTER:
@@ -160,6 +186,7 @@ public class StageManager : MonoSingleton<StageManager>
                 //채집구역이면 무엇을 할까
                 break;
             case AreaType.RANDOM:
+                --currentStageNumber;
                 EnterRandomArea();
                 break;
             case AreaType.BOSS:
@@ -235,8 +262,7 @@ public class StageManager : MonoSingleton<StageManager>
             case RandomRoomType.MONSTER:  //몬스터 구역
                 int targetStage = Mathf.Clamp(currentStageData.stageFloor.floor + Random.Range(-1, 2), 1, MaxStage); //현재 층에서 몇 층을 더할지 정함
                 StageBundleDataSO sbData = idToStageFloorDict.Values.Find(x=>x.floor == targetStage); //현재 층에서 -1 or 0 or 1층을 더한 층을 가져온다
-                List<StageDataSO> sDatas = sbData.stages.FindAll(stage=>stage.areaType==AreaType.MONSTER); //해당 층의 몬스터 스테이지들만 가져옴
-                NextStage(sDatas[Random.Range(0, sDatas.Count)].stageID);
+                NextStage(sbData.stages.FindRandom(stage => stage.areaType == AreaType.MONSTER).stageID); //뽑은 층에서 몬스터 지역들중에 랜덤으로 가져온다
                 break;
             case RandomRoomType.RECOVERY:
                 //회복 구역

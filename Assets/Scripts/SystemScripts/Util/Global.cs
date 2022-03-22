@@ -15,6 +15,8 @@ public static partial class Global
 
     public static Player CurrentPlayer => SlimeGameManager.Instance.Player;
 
+    public static Transform GetSlimePos => SlimeGameManager.Instance.CurrentPlayerBody.transform;
+
     public static Vector2 noticeMsgOriginRectPos = new Vector2(0, -229.61f);
     public static Vector3 damageTextMove = new Vector3(0, 0.8f, 0);
     public static Vector3 worldTxtMove = new Vector3(0, 0.6f, 0);
@@ -64,5 +66,21 @@ public static partial class Global
                 return "시작 지역";
         }
         return string.Empty;
+    }
+
+    public static DoorDirType ReverseDoorDir(DoorDirType type)
+    {
+        switch(type)
+        {
+            case DoorDirType.FRONT:
+                return DoorDirType.BACK;
+            case DoorDirType.BACK:
+                return DoorDirType.FRONT;
+            case DoorDirType.RIGHT:
+                return DoorDirType.LEFT;
+            case DoorDirType.LEFT:
+                return DoorDirType.RIGHT;
+        }
+        return DoorDirType.BACK;
     }
 }
