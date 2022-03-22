@@ -122,6 +122,7 @@ public class StageManager : MonoSingleton<StageManager>
 
     public void NextStage(string id)
     {
+        //현재 스테이지 옵젝을 꺼주고 다음 스테이지를 불러와서 켜주고 스테이지 번호를 1 증가시킴
         if (currentStage) currentStage.gameObject.SetActive(false);
 
         currentStageNumber++;
@@ -139,6 +140,7 @@ public class StageManager : MonoSingleton<StageManager>
             currentStage.gameObject.SetActive(true);
         }
 
+        //스테이지의 문을 초기화
         currentStage.stageDoors.ForEach(x => 
         { 
             x.gameObject.SetActive(false);
@@ -148,35 +150,41 @@ public class StageManager : MonoSingleton<StageManager>
         //Player Position
         if(currentStage.playerSpawnPoint)
         {
+            //주로 처음 게임 스타트 지점
             SlimeGameManager.Instance.CurrentPlayerBody.transform.position = currentStage.playerSpawnPoint.position;
         }
         else
         {
+            //다음 스테이지 가면 해당 방향에 맞게 담 스테이지의 문 근처에서 스폰이 되며 그 문은 지나간 상태의 스프라이트로 바꿈
             SlimeGameManager.Instance.CurrentPlayerBody.transform.position = currentStage.GetOpposeDoor(PassDir).playerSpawnPos.position;
         }
         
         CinemachineCameraScript.Instance.SetCinemachineConfiner(currentStage.camStageCollider);  //Camera Move Range Set
         GameManager.Instance.ResetDroppedItems(); //Inactive Items
 
+        //다음 스테이지 경우의 수만큼 문을 켜주고 문에 다음 스테이지 타입에 맞게 랜덤으로 다음 스테이지 설정
         int idx = 0;
-        for (int i = 0; i< currentStageData.stageFloor.randomStageList[currentStageNumber - 1].nextStageTypes.Length; i++)
+        int count = currentStageData.stageFloor.randomStageList[currentStageNumber - 1].nextStageTypes.Length;
+        currentStage.stageDoors.ForEach(door =>
         {
-            if (currentStage.stageDoors[i].gameObject.activeSelf) continue;
-
-            try
+            if(!door.gameObject.activeSelf && idx < count)
             {
-                currentStage.stageDoors[i].nextStageData = randomRoomDict[currentFloor][currentStageData.stageFloor.randomStageList[currentStageNumber - 1].nextStageTypes[idx]][0];
-                randomRoomDict[currentFloor][currentStageData.stageFloor.randomStageList[currentStageNumber - 1].nextStageTypes[idx]].RemoveAt(0);
-                ++idx;
-                currentStage.stageDoors[i].gameObject.SetActive(true);
+                try
+                {
+                    door.nextStageData = randomRoomDict[currentFloor][currentStageData.stageFloor.randomStageList[currentStageNumber - 1].nextStageTypes[idx]][0];
+                    randomRoomDict[currentFloor][currentStageData.stageFloor.randomStageList[currentStageNumber - 1].nextStageTypes[idx]].RemoveAt(0);
+                    ++idx;
+                    door.gameObject.SetActive(true);
+                }
+                catch (System.Exception e)
+                {
+                    Debug.LogException(e);
+                    Debug.Log($"스테이지를 불러오지 못함 {currentFloor} - {currentStageNumber} : idx: {idx}");
+                }
             }
-            catch(System.Exception e)
-            {
-                Debug.LogException(e);
-                Debug.Log($"스테이지를 불러오지 못함 {currentFloor} - {currentStageNumber} : i : {i}, idx: {idx}");
-            }
-        }
+        });
 
+        //해당 스테이지의 타입에 따라 무언가를 함
         switch (currentStageData.areaType)
         {
             case AreaType.START:
