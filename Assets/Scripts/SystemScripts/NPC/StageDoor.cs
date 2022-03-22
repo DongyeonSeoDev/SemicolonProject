@@ -9,7 +9,7 @@ public class StageDoor : InteractionObj
 
     public StageDataSO nextStageData;
 
-    [SerializeField] private bool notExistMap; //test
+    //[SerializeField] private bool notExistMap; //test
 
     public DoorDirType dirType; //door dir
     public Transform playerSpawnPos;
@@ -28,12 +28,11 @@ public class StageDoor : InteractionObj
     {
         if(StageManager.Instance.IsStageClear)
         {
-            if(notExistMap)
+            if(nextStageData.areaType != AreaType.MONSTER)
             {
                 UIManager.Instance.RequestSystemMsg("좋은말 할 때 돌아가라~\n-양진욱-", 65, 1);
                 return;
             }
-
             if (!isOpen && !isExitDoor)
             {
                 isOpen = true;

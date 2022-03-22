@@ -66,11 +66,18 @@ public class StageManager : MonoSingleton<StageManager>
 
     private void Start()
     {
-        InsertRandomMaps(currentFloor);
-        Util.DelayFunc(() => NextStage(startStageID), 0.2f);
+        Init();
+
         respawnPos = idToStageDataDict[startStageID].stage.GetComponent<StageGround>().playerSpawnPoint.position;
         EventManager.StartListening("PlayerRespawn", Respawn);
         EventManager.StartListening("StartNextStage", stageName => StartNextStage(stageName));
+    }
+
+    private void Init()
+    {
+        InsertRandomMaps(currentFloor);
+        Util.DelayFunc(() => NextStage(startStageID), 0.2f);
+        EventManager.TriggerEvent("StartBGM", startStageID);
     }
 
     private string FloorToFloorID(int floor)
