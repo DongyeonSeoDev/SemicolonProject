@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using Enemy;
+using Unity.Collections;
 
 [System.Serializable]
 public struct EnemySpawnData
@@ -52,7 +53,7 @@ public struct EnemySpawnData
         }
 
         enemySpawnData.position = new Vector3(positionArray[0], positionArray[1], positionArray[2]);
-        enemySpawnData.name = enemySpawnData.enemyId.ToString() + " " + enemySpawnData.stageId;
+        enemySpawnData.name = enemySpawnData.enemyId + " " + enemySpawnData.stageId + " " + enemySpawnData.position;
 
         return enemySpawnData;
     }
@@ -97,17 +98,40 @@ public class CSVEnemySpawn : CSVManager
             sb.Append(data[i].Trim() + ',');
         }
 
-        csvData.Add(data[0].Trim(), sb.ToString().Substring(0, sb.Length - 1));
         data[3] = data[3].Trim();
 
-        if (enemySpawnDatas.ContainsKey(data[3]))
+        EnemySpawnData spawnData = sb.ToString().Substring(0, sb.Length - 1);
+        bool isCheck = false;
+
+        foreach (var x in enemySpawnDatas.Values)
         {
-            enemySpawnDatas[data[3]].Add(sb.ToString().Substring(0, sb.Length - 1));
+            foreach (var y in x)
+            {
+                if (y.name == spawnData.name)
+                {
+                    isCheck = true;
+
+                    break;
+                }
+            }
+
+            if (isCheck)
+            {
+                break;
+            }
         }
-        else
+
+        if (!isCheck)
         {
-            enemySpawnDatas.Add(data[3], new List<EnemySpawnData>());
-            enemySpawnDatas[data[3]].Add(sb.ToString().Substring(0, sb.Length - 1));
+            if (enemySpawnDatas.ContainsKey(data[3]))
+            {
+                enemySpawnDatas[data[3]].Add(sb.ToString().Substring(0, sb.Length - 1));
+            }
+            else
+            {
+                enemySpawnDatas.Add(data[3], new List<EnemySpawnData>());
+                enemySpawnDatas[data[3]].Add(sb.ToString().Substring(0, sb.Length - 1));
+            }
         }
 
         sb.Clear();

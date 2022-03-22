@@ -29,7 +29,7 @@ namespace Enemy
             sr = GetComponent<SpriteRenderer>();
             rb = GetComponent<Rigidbody2D>();
 
-            CSVEnemyLoot.Instance.GetData("");
+            CSVEnemyLoot.Instance.GetData();
             enemyLootListSO = CSVEnemyLoot.Instance.lootData[(int)enemyDataSO.enemyType];
         }
 
