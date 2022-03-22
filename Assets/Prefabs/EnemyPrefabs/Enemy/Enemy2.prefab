@@ -69,7 +69,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1646225281
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 08b3ed7d22494164e8797729457d7bd1, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -151,7 +151,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1646225281
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: -5557907655521164248, guid: 9f4666dd2c43d6c4eabd7fca76affcec, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -240,7 +240,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1646225281
-  m_SortingLayer: 4
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: -284388638163825642, guid: 6bcc22196438ea542b9177f5fbaf5933, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -333,7 +333,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poolType: 2
   count: 6
-  enemyLootListSO: {fileID: 11400000, guid: 6f20300129ecc324b91a107166c8746f, type: 2}
   enemyDataSO: {fileID: 11400000, guid: 3ba44352f5ee2ad48b2b33a2e2052f51, type: 2}
   hpBarFillImage: {fileID: 2029326397634872474}
   hpBar: {fileID: 2029326398027098998}
@@ -352,6 +351,10 @@ PrefabInstance:
     - target: {fileID: 1559462951835451892, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1559462951835451895, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -1646225281
       objectReference: {fileID: 0}
     - target: {fileID: 1559462951835451896, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
       propertyPath: m_Pivot.x
