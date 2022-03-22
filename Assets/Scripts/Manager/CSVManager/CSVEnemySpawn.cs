@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using Enemy;
-using Unity.Collections;
 
 [System.Serializable]
 public struct EnemySpawnData
@@ -81,8 +80,8 @@ public class CSVEnemySpawn : CSVManager
     }
 
     public Dictionary<string, List<EnemySpawnData>> enemySpawnDatas = new Dictionary<string, List<EnemySpawnData>>();
+    public List<EnemySpawnData> enemySpawnData = new List<EnemySpawnData>();
     private StringBuilder sb = new StringBuilder(128);
-   // private int value;
 
     protected override string path { get => "Data/EnemySpawnData"; }
 
@@ -135,5 +134,15 @@ public class CSVEnemySpawn : CSVManager
         }
 
         sb.Clear();
+    }
+
+    protected override string HowToWrite()
+    {
+        for (int i = 0; i < enemySpawnData.Count; i++)
+        {
+            sb.Append(enemySpawnData[i] + '\n');
+        }
+
+        return sb.ToString();
     }
 }

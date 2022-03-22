@@ -16,6 +16,7 @@ public class EnemySpawnListWindow : EditorWindow
     private int lastSelectSortIndex = 0;
     private bool isReadonly = true;
     private bool isPlaying = false;
+    private bool isSave = true;
 
     private List<EnemySpawnData> enemySpawnDataList = new List<EnemySpawnData>();
     private List<EnemySpawnData> revertList = new List<EnemySpawnData>();
@@ -84,16 +85,31 @@ public class EnemySpawnListWindow : EditorWindow
 
     private void Save()
     {
+        isSave = true;
+
         SaveList();
+        SaveCSV();
         FindText(findText);
         Sort(selectSortIndex);
     }
 
+    private void SaveCSV()
+    {
+        CSVEnemySpawn enemySpawn = new CSVEnemySpawn();
+        enemySpawn.enemySpawnData = enemySpawnDataList;
+        enemySpawn.SetData();
+    }
+
     private void Revert()
     {
-        RevertList();
-        FindText(findText);
-        Sort(selectSortIndex);
+        if (RevertEvent())
+        {
+            isSave = true;
+
+            RevertList();
+            FindText(findText);
+            Sort(selectSortIndex);
+        }
     }
 
     private void SaveData()
@@ -110,6 +126,7 @@ public class EnemySpawnListWindow : EditorWindow
 
                 if (enemySpawnDataList.FindIndex(x => x.name == data.name) <= -1)
                 {
+                    isSave = false;
                     enemySpawnDataList[index] = data;
                 }
 
@@ -189,6 +206,8 @@ public class EnemySpawnListWindow : EditorWindow
         enemySpawn.enemySpawnData.Add(data);
         backUpList.Add(data);
 
+        isSave = false;
+
         Refresh();
         FindText(findText);
         Sort(selectSortIndex);
@@ -217,10 +236,25 @@ public class EnemySpawnListWindow : EditorWindow
             backUpList.RemoveAt(index);
         }
 
+        isSave = false;
+
         Refresh();
         FindText(findText);
         Sort(selectSortIndex);
     }
+
+    private void NotSaveEvent()
+    {
+        if (!isSave)
+        {
+            if (EditorUtility.DisplayDialog("WARNING! NOT SAVE!", "If you don't save, all the modified data will be lost. Save it now?", "SAVE", "NOT SAVE"))
+            {
+                Save();
+            }
+        }
+    }
+
+    private bool RevertEvent() => isSave ? true : EditorUtility.DisplayDialog("IS REVERT?", "All unsaved data will be revert.", "YES", "NO");
 
     private void OnEnable()
     {
@@ -305,6 +339,7 @@ public class EnemySpawnListWindow : EditorWindow
 
         if (GUILayout.Button("Reload"))
         {
+            NotSaveEvent();
             OnEnable();
         }
 
@@ -319,6 +354,11 @@ public class EnemySpawnListWindow : EditorWindow
         EditorGUILayout.EndScrollView();
         EditorGUIUtility.wideMode = false;
         EditorGUI.EndDisabledGroup();
+    }
+
+    private void OnDestroy()
+    {
+        NotSaveEvent();
     }
 }
 #endif
