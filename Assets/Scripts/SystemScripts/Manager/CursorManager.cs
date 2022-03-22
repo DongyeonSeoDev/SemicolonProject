@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CursorManager : MonoSingleton<CursorManager>
 {
@@ -39,7 +40,10 @@ public class CursorManager : MonoSingleton<CursorManager>
         {
             if (isOnEnemy)
             {
-                SetCursor(mouseClick ? "OnEnemyClickedCursor" : "OnEnemyCursor");
+                if (!EventSystem.current.IsPointerOverGameObject())
+                {
+                    SetCursor(mouseClick ? "OnEnemyClickedCursor" : "OnEnemyCursor");
+                }
             }
             else
             {
