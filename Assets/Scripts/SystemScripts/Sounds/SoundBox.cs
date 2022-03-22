@@ -71,13 +71,13 @@ public class SoundBox : MonoBehaviour
     }
     private void OnEnable()
     {
-        EventManager.StartListening("SoundStopAll", (Action)SoundStop);
+        EventManager.StartListening("StopSoundAll", (Action)SoundStop);
         EventManager.StartListening("SoundPauseAll", (Action<bool>)SetPause);
         EventManager.StartListening("SetVolumeAll", (Action<float>)SetVolume);
         EventManager.StartListening("SetPitchAll", (Action<float>)SetPitch);
 
-        EventManager.StartListening("SoundStop", (Action<string>)SoundStop);
-        EventManager.StartListening("SoundPause", (Action<string, bool>)SetPause);
+        EventManager.StartListening("StopSound", (Action<string>)SoundStop);
+        EventManager.StartListening("PuaseSound", (Action<string, bool>)SetPause);
         EventManager.StartListening("SetVolume", (Action<string, float>)SetVolume);
         EventManager.StartListening("SetPitch", (Action<string, float>)SetPitch);
 
