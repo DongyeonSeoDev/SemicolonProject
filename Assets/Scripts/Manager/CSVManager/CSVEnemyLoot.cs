@@ -84,7 +84,6 @@ public class CSVEnemyLoot : CSVManager
             sb.Append(data[i].Trim() + ',');
         }
 
-        csvData.Add(data[0].Trim(), sb.ToString().Substring(0, sb.Length - 1));
         data[1] = data[1].Trim();
 
         if (int.TryParse(data[1], out value))

@@ -16,12 +16,6 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     private List<Triple<string, int, int>> limitedBattleCntItems = new List<Triple<string, int, int>>(); //n교전 후에 사라지는 아이템들 리스트 (아이디, 현재 교전 수, 최대 교전 수(가 되면 사라짐))
 
-    private readonly string cursorFileName = "TestCursor";
-    [SerializeField]
-    private Texture2D cursorTexture;
-    [SerializeField]
-    private Vector2 hotSpot;
-
     #region prefab and parent
     public GameObject foodBtnPrefab, ingredientImgPrefab;
     public Transform foodBtnParent, ingredientImgParent;
@@ -36,13 +30,6 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     private void Awake()
     {
-#if !UNITY_EDITOR
-        Util.DelayFunc(() => Cursor.lockState = CursorLockMode.Confined, 5);
-        cursorTexture = Resources.Load<Texture2D>("System/SPrites/Cursor/" + cursorFileName);
-        Cursor.SetCursor(cursorTexture, hotSpot, CursorMode.ForceSoftware);
-#endif
-
-
         filePath = Global.saveFileName_1.PersistentDataPath();
         saveData = new SaveData();
         KeyCodeToString.Init();

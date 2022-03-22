@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public string[] a;
-
     private PlayerState playerState = null;
 
     [SerializeField]

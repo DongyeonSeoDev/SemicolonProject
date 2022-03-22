@@ -7,6 +7,8 @@ namespace Enemy
     {
 #if UNITY_EDITOR
         public List<EnemySpawnData> enemySpawnData = new List<EnemySpawnData>();
+        public Queue<EnemySpawnData> addSpawnDataQueue = new Queue<EnemySpawnData>();
+        public Queue<EnemySpawnData> removeSpawnDataQueue = new Queue<EnemySpawnData>();
 #endif
         public Dictionary<string, List<Enemy>> enemyDictionary = new Dictionary<string, List<Enemy>>();
 
@@ -20,22 +22,12 @@ namespace Enemy
             EventManager.StartListening("SpawnEnemy", SpawnEnemy);
             EventManager.StartListening("EnemyMove", EnemyMove);
 
-            CSVEnemySpawn.Instance.GetData("");
-            
-            /*for (int i = 0; i < 3; i++)
-            {
-                EventManager.TriggerEvent("SpawnEnemy", i);
-            }*/
+            CSVEnemySpawn.Instance.GetData();
         }
 
         private void PlayerRespawnEvent()
         {
             EnemyManager.Instance.PlayerDeadEvent();
-
-           /* for (int i = 0; i < 3; i++)
-            {
-                EventManager.TriggerEvent("SpawnEnemy", i);
-            }*/
         }
 
         private void SpawnEnemy(string stageId)
