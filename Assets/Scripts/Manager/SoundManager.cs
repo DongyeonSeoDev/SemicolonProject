@@ -57,8 +57,6 @@ public class SoundManager : MonoSingleton<SoundManager>
     /// <param id="soundBoxId"></param>
     public void ChangeBGMSoundBox(string soundBoxId)
     {
-        Debug.Log(soundBoxId);
-
         if (soundBoxesDict.ContainsKey(soundBoxId))
         {
             EventManager.TriggerEvent("StopSound", currentBGMSoundBoxId);

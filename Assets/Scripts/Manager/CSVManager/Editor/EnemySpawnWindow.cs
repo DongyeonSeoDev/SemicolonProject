@@ -8,6 +8,7 @@ public class EnemySpawnWindow : EditorWindow
     private Enemy.Type type;
     private Vector3 spawnPosition;
     private string stageId;
+    private bool isPlaying = false;
 
     [MenuItem("EnemyWindow/EnemySpawn")]
     public static void ShowEnemySpawnWindow()
@@ -23,6 +24,53 @@ public class EnemySpawnWindow : EditorWindow
     }
 
     private bool Check() => !(type == default(Enemy.Type) || string.IsNullOrEmpty(stageId));
+
+    private void Add()
+    {
+        if (Check())
+        {
+            EnemySpawnData data;
+
+            data.enemyId = type;
+            data.position = spawnPosition;
+            data.stageId = stageId;
+            data.name = data.enemyId + " " + data.stageId + " " + data.position;
+
+            enemySpawn.addSpawnDataQueue.Enqueue(data);
+        }
+
+        ResetText();
+
+        GetWindow(typeof(EnemySpawnListWindow));
+    }
+
+    private void Remove()
+    {
+        if (Check())
+        {
+            EnemySpawnData data;
+
+            data.enemyId = type;
+            data.position = spawnPosition;
+            data.stageId = stageId;
+            data.name = data.enemyId + " " + data.stageId + " " + data.position;
+
+            enemySpawn.removeSpawnDataQueue.Enqueue(data);
+        }
+
+        ResetText();
+
+        GetWindow(typeof(EnemySpawnListWindow));
+    }
+
+    private void Update()
+    {
+        if (Application.isPlaying != isPlaying)
+        {
+            isPlaying = Application.isPlaying;
+            OnEnable();
+        }
+    }
 
     private void OnEnable()
     {
@@ -48,45 +96,26 @@ public class EnemySpawnWindow : EditorWindow
 
         if (GUILayout.Button("Add"))
         {
-            if (Check())
-            {
-                EnemySpawnData data;
-
-                data.enemyId = type;
-                data.position = spawnPosition;
-                data.stageId = stageId;
-                data.name = data.enemyId + " " + data.stageId + " " + data.position;
-
-                enemySpawn.addSpawnDataQueue.Enqueue(data);
-            }
-
-            ResetText();
-
-            GetWindow(typeof(EnemySpawnListWindow));
+            Add();
         }
 
         if (GUILayout.Button("Remove"))
         {
-            if (Check())
-            {
-                EnemySpawnData data;
+            Remove();
+        }
 
-                data.enemyId = type;
-                data.position = spawnPosition;
-                data.stageId = stageId;
-                data.name = data.enemyId + " " + data.stageId + " " + data.position;
-
-                enemySpawn.removeSpawnDataQueue.Enqueue(data);
-            }
-
-            ResetText();
-
+        if (GUILayout.Button("Show"))
+        {
             GetWindow(typeof(EnemySpawnListWindow));
         }
 
-        if (GUILayout.Button("List"))
+        GUILayout.EndHorizontal();
+        GUILayout.Space(5);
+        GUILayout.BeginHorizontal();
+
+        if (GUILayout.Button("Reload"))
         {
-            GetWindow(typeof(EnemySpawnListWindow));
+            OnEnable();
         }
 
         GUILayout.EndHorizontal();

@@ -15,6 +15,7 @@ public class EnemySpawnListWindow : EditorWindow
     private int selectSortIndex = 0;
     private int lastSelectSortIndex = 0;
     private bool isReadonly = true;
+    private bool isPlaying = false;
 
     private List<EnemySpawnData> enemySpawnDataList = new List<EnemySpawnData>();
     private List<EnemySpawnData> revertList = new List<EnemySpawnData>();
@@ -270,6 +271,12 @@ public class EnemySpawnListWindow : EditorWindow
             RemoveData(enemySpawn.removeSpawnDataQueue.Dequeue());
         }
 
+        if (Application.isPlaying != isPlaying)
+        {
+            isPlaying = Application.isPlaying;
+            OnEnable();
+        }
+
         Refresh();
     }
 
@@ -294,6 +301,11 @@ public class EnemySpawnListWindow : EditorWindow
         if (GUILayout.Button("Revert"))
         {
             Revert();
+        }
+
+        if (GUILayout.Button("Reload"))
+        {
+            OnEnable();
         }
 
         EditorGUILayout.EndHorizontal();
