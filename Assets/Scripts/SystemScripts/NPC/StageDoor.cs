@@ -5,15 +5,18 @@ public class StageDoor : InteractionObj
 {
     private SpriteRenderer spr;
 
-    public FakeSpriteOutline fsOut;
+    //public FakeSpriteOutline fsOut;
 
     public StageDataSO nextStageData;
 
-    [SerializeField] private bool notExistMap;
+    [SerializeField] private bool notExistMap; //test
 
-    public DoorDirType dirType;
+    public DoorDirType dirType; //door dir
+    public Transform playerSpawnPos;
 
     private bool isOpen; //문으로 입장할 수 있는 상태가 되어서 상호작용 키를 눌렀을 때 true로
+    private bool isExitDoor; //이 문이 입구였는가
+    public bool IsExitDoor { set => isExitDoor = value; }
 
     private void Awake()
     {
@@ -31,9 +34,10 @@ public class StageDoor : InteractionObj
                 return;
             }
 
-            if (!isOpen)
+            if (!isOpen && !isExitDoor)
             {
                 isOpen = true;
+                StageManager.Instance.PassDir = dirType;
                 UIManager.Instance.StartLoading(() => StageManager.Instance.NextStage(nextStageData.stageID), () => EventManager.TriggerEvent("StartNextStage", nextStageData.stageName));
             }
         }
@@ -45,6 +49,8 @@ public class StageDoor : InteractionObj
 
     public void Open()
     {
+        if (isExitDoor || !gameObject.activeSelf) return;
+
         spr.sprite = StageManager.Instance.doorSprDic[dirType.ToString() + "Open"];
         isOpen = false;
     }
@@ -54,14 +60,20 @@ public class StageDoor : InteractionObj
         spr.sprite = StageManager.Instance.doorSprDic[dirType.ToString() + "Close"];
     }
 
+    public void Pass()
+    {
+        spr.sprite = StageManager.Instance.doorSprDic[dirType.ToString() + "Exit"];
+        isExitDoor = true;
+    }
+
     public override void SetInteractionUI(bool on)
     {
         if (StageManager.Instance.IsStageClear)
         {
             base.SetInteractionUI(on);
 
-            if(fsOut)
-               fsOut.gameObject.SetActive(on); 
+            /*if(fsOut)
+               fsOut.gameObject.SetActive(on); */
         }
     }
 

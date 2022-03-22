@@ -6,9 +6,15 @@ public class StageManager : MonoSingleton<StageManager>
     private Dictionary<string, StageGround> idToStageObjDict = new Dictionary<string, StageGround>();
     private Dictionary<string, StageDataSO> idToStageDataDict = new Dictionary<string, StageDataSO>();
     private Dictionary<string, StageBundleDataSO> idToStageFloorDict = new Dictionary<string, StageBundleDataSO>();
+    private Dictionary<int, Dictionary<AreaType, List<StageDataSO>>> randomRoomDict = new Dictionary<int, Dictionary<AreaType, List<StageDataSO>>>();
 
     private StageGround currentStage = null;
     private StageDataSO currentStageData = null;
+
+    private int currentFloor = 1;
+    private int currentStageNumber = 0;
+
+    public DoorDirType PassDir { get; set; } //전 스테이지에서 지나간 문 방향
 
     [SerializeField] private int MaxStage;
     [SerializeField] private string startStageID;
@@ -40,27 +46,78 @@ public class StageManager : MonoSingleton<StageManager>
             idToStageFloorDict.Add(data.id, data);
             data.SetStageDic();
         }
+        foreach(StageBundleDataSO data in idToStageFloorDict.Values)
+        {
+            randomRoomDict.Add(data.floor, new Dictionary<AreaType, List<StageDataSO>>());
+            for(int i=0; i<Global.EnumCount<AreaType>(); i++)
+            {
+                randomRoomDict[data.floor].Add((AreaType)i, new List<StageDataSO>());
+            }
+        }
 
         int cnt = Global.EnumCount<DoorDirType>();
         for(int i=0; i<cnt; i++)
         {
             doorSprDic.Add(((DoorDirType)i).ToString() + "Close", doorSprites[i]);
             doorSprDic.Add(((DoorDirType)i).ToString() + "Open", doorSprites[i + cnt]);
+            doorSprDic.Add(((DoorDirType)i).ToString() + "Exit", doorSprites[i + cnt * 2]);
         }
     }
 
     private void Start()
     {
+        InsertRandomMaps(currentFloor);
         Util.DelayFunc(() => NextStage(startStageID), 0.2f);
         respawnPos = idToStageDataDict[startStageID].stage.GetComponent<StageGround>().playerSpawnPoint.position;
         EventManager.StartListening("PlayerRespawn", Respawn);
         EventManager.StartListening("StartNextStage", stageName => StartNextStage(stageName));
     }
 
+    private string FloorToFloorID(int floor)
+    {
+        foreach(StageBundleDataSO data in idToStageFloorDict.Values)
+        {
+            if (data.floor == floor) return data.id;
+        }
+        return string.Empty;
+    }
+
+    private void InsertRandomMaps(int floor)
+    {
+        List<string> stageIDList = new List<string>();
+        StageBundleDataSO bundle = idToStageFloorDict[FloorToFloorID(floor)];
+
+        foreach (StageDataSO key in bundle.stages)
+        {
+            stageIDList.Add(key.stageID);
+        }
+        foreach(AreaType type in System.Enum.GetValues(typeof(AreaType)))
+        {
+            randomRoomDict[floor][type].Clear();
+        }
+
+        for (int i = 0; i < bundle.randomStageList.Count; i++)
+        {
+            for (int j = 0; j < bundle.randomStageList[i].nextStageTypes.Length; j++) //지금 한 방식대로라면 굳이 이렇게 할 필요 없지만 나중에 로직 바꿀 수도 있으니 일단 일케 함
+            {
+                int rand;
+                StageDataSO data;
+                do
+                {
+                    rand = Random.Range(0, stageIDList.Count);
+                    data = idToStageDataDict[stageIDList[rand]];
+                } while (data.areaType != bundle.randomStageList[i].nextStageTypes[j]);
+                randomRoomDict[floor][bundle.randomStageList[i].nextStageTypes[j]].Add(data);
+                stageIDList.RemoveAt(rand);
+            }
+        }
+    }
+
     public void NextStage(string id)
     {
         if (currentStage) currentStage.gameObject.SetActive(false);
 
+        currentStageNumber++;
         currentStageData = idToStageDataDict[id];
         IsLastStage = currentStageData.endStage;
         currentStage = null;
@@ -75,9 +132,18 @@ public class StageManager : MonoSingleton<StageManager>
             currentStage.gameObject.SetActive(true);
         }
 
-        SlimeGameManager.Instance.CurrentPlayerBody.transform.position = currentStage.playerSpawnPoint.position; //Player Pos
-        CinemachineCameraScript.Instance.SetCinemachineConfiner(currentStage.camStageCollider);  //Cam Set
+        currentStage.stageDoors.ForEach(x => { x.gameObject.SetActive(false); x.IsExitDoor = false; });
+        SlimeGameManager.Instance.CurrentPlayerBody.transform.position = currentStage.playerSpawnPoint ? currentStage.playerSpawnPoint.position : currentStage.GetDoor(PassDir).playerSpawnPos.position; //Player Pos
+        CinemachineCameraScript.Instance.SetCinemachineConfiner(currentStage.camStageCollider);  //Camera Move Range Set
         GameManager.Instance.ResetDroppedItems(); //Inactive Items
+
+        for(int i=0; i<currentStage.stageDoors.Length; i++)
+        {
+            if (currentStage.stageDoors[i].gameObject.activeSelf) continue;
+
+            currentStage.stageDoors[i].nextStageData = randomRoomDict[currentFloor][currentStageData.stageFloor.randomStageList[currentStageNumber].nextStageTypes[i]][0];
+            randomRoomDict[currentFloor][currentStageData.stageFloor.randomStageList[currentStageNumber].nextStageTypes[i]].RemoveAt(0);
+        }
 
         switch (currentStageData.areaType)
         {
@@ -138,6 +204,8 @@ public class StageManager : MonoSingleton<StageManager>
 
     private void Respawn()
     {
+        currentStageNumber = 0;
+        InsertRandomMaps(currentFloor);
         NextStage(startStageID);
     }
 

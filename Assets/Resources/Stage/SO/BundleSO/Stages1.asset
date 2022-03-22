@@ -36,3 +36,26 @@ MonoBehaviour:
   - {fileID: 11400000, guid: de89f082528c77b4194f3c2b98ff4c44, type: 2}
   - {fileID: 11400000, guid: a6118a698a6adee4497cfdeb19367951, type: 2}
   - {fileID: 11400000, guid: f6d4e31dacdfe524dbc4b81e017c9e40, type: 2}
+  randomStageList:
+  - stageNumber: 1
+    nextStageTypes: 01000000
+  - stageNumber: 2
+    nextStageTypes: 0400000001000000
+  - stageNumber: 3
+    nextStageTypes: 040000000200000003000000
+  - stageNumber: 4
+    nextStageTypes: 0400000001000000
+  - stageNumber: 5
+    nextStageTypes: 0400000001000000
+  - stageNumber: 6
+    nextStageTypes: 040000000200000003000000
+  - stageNumber: 7
+    nextStageTypes: 0400000001000000
+  - stageNumber: 8
+    nextStageTypes: 0400000001000000
+  - stageNumber: 9
+    nextStageTypes: 0200000003000000
+  - stageNumber: 10
+    nextStageTypes: 05000000
+  - stageNumber: 11
+    nextStageTypes: 00000000

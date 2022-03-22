@@ -43,4 +43,19 @@ public class StageGround : MonoBehaviour
             stageDoors[i].Close();
         }
     }
+
+    public StageDoor GetDoor(DoorDirType type)
+    {
+        for(int i=0; i<stageDoors.Length; i++)
+        {
+            if (stageDoors[i].dirType == type)
+            {
+                gameObject.SetActive(false);
+                stageDoors[i].Pass();
+                return stageDoors[i];
+            }
+        }
+        Debug.Log("해당 방향의 문이 해당 스테이지에 없음");
+        return null;
+    }
 }

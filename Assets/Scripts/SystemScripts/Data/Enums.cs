@@ -102,8 +102,8 @@ public enum DoorDirType
 {
     FRONT,
     RIGHT,
-    LEFT
-    //BACK
+    LEFT,
+    BACK
 }
 
 

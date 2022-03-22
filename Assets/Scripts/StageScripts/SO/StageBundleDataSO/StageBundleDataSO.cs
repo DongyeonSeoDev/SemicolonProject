@@ -9,6 +9,7 @@ public class StageBundleDataSO : ScriptableObject
     public int floor; 
     public string stageBundleName;
     public List<StageDataSO> stages;
+    public List<StageFork> randomStageList;
 
     private Dictionary<string, StageDataSO> stageDic;
     public void SetStageDic()

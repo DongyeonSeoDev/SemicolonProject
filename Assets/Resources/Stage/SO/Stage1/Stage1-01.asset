@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64e33b43e1e30554a86e99b006a1e50a, type: 3}
-  m_Name: Stage1-9
+  m_Name: Stage1-01
   m_EditorClassIdentifier: 
   stageFloor: {fileID: 11400000, guid: ad81aacd5e610b7498e62e7a75a34db9, type: 2}
   endStage: 0
-  stageNumber: 9
-  stageName: "\uC9C0\uC5ED\uC774\uB984"
-  stage: {fileID: 1378282381469885354, guid: 701bfcf77d7c1c04bad1613e4d0cec0a, type: 3}
-  areaType: 1
+  stageNumber: 1
+  stageName: "\uC2DC\uC791\uC9C0\uC5ED \uC774\uB984"
+  stage: {fileID: 1378282381469885354, guid: 232df147ebd807844840ab76702c1300, type: 3}
+  areaType: 0

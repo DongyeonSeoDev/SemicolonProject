@@ -5,6 +5,13 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
 
+[System.Serializable]
+public struct StageFork
+{
+    public int stageNumber;
+    public AreaType[] nextStageTypes;
+}
+
 [Serializable]
 public class IngredientCount
 {

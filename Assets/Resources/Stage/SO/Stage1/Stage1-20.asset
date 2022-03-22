@@ -16,5 +16,5 @@ MonoBehaviour:
   endStage: 0
   stageNumber: 20
   stageName: "\uC9C0\uC5ED\uC774\uB984"
-  stage: {fileID: 1378282381469885354, guid: 9663126a1f5566348a3f2102562085e6, type: 3}
+  stage: {fileID: 1378282381469885354, guid: e4041265d5d92d9478d2f7c11ac53938, type: 3}
   areaType: 3

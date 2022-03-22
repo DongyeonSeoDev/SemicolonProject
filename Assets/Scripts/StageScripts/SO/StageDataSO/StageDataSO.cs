@@ -8,7 +8,7 @@ public partial class StageDataSO : ScriptableObject
 
     public bool endStage; //마지막 스테이지인지
 
-    public int stageNumber;  //스테이지 번호(구역당)    n - stageNumber
+    //public int stageNumber;  //스테이지 번호(구역당)    n - stageNumber
     public string stageName;  //스테이지 이름 (지역 이름)
 
     public GameObject stage;  //스테이지 프리팹
