@@ -1,10 +1,13 @@
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
+using Enemy;
 
+[System.Serializable]
 public struct EnemySpawnData
 {
-    public int enemyId;
+    public string name;
+    public Type enemyId;
     public Vector3 position;
     public string stageId;
 
@@ -28,7 +31,7 @@ public struct EnemySpawnData
             return default(EnemySpawnData);
         }
 
-        enemySpawnData.enemyId = result;
+        enemySpawnData.enemyId = (Type)result;
         enemySpawnData.stageId = datas[2];
 
         datas = datas[1].Split(';');
@@ -49,6 +52,7 @@ public struct EnemySpawnData
         }
 
         enemySpawnData.position = new Vector3(positionArray[0], positionArray[1], positionArray[2]);
+        enemySpawnData.name = enemySpawnData.enemyId.ToString() + " " + enemySpawnData.stageId;
 
         return enemySpawnData;
     }
