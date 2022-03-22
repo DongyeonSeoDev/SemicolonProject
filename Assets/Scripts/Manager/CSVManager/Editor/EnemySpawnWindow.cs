@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemySpawnWindow : EditorWindow
 {
-    private string id;
+    private Enemy.EnemySpawn enemySpawn;
     private Enemy.Type type;
     private Vector3 spawnPosition;
     private string stageId;
@@ -17,18 +17,21 @@ public class EnemySpawnWindow : EditorWindow
 
     private void ResetText()
     {
-        id = null;
         type = default(Enemy.Type);
         spawnPosition = default(Vector3);
         stageId = null;
     }
 
+    private bool Check() => !(type == default(Enemy.Type) || string.IsNullOrEmpty(stageId));
+
+    private void OnEnable()
+    {
+        enemySpawn = FindObjectOfType<Enemy.EnemySpawn>();
+    }
+
     private void OnGUI()
     {
         GUILayout.Space(10);
-        id = EditorGUILayout.TextField("ID", id);
-        GUILayout.Space(10);
-
         type = (Enemy.Type)EditorGUILayout.EnumPopup("EnemyID", type);
         GUILayout.Space(10);
 
@@ -44,12 +47,40 @@ public class EnemySpawnWindow : EditorWindow
 
         if (GUILayout.Button("Add"))
         {
+            if (Check())
+            {
+                EnemySpawnData data;
+
+                data.enemyId = type;
+                data.position = spawnPosition;
+                data.stageId = stageId;
+                data.name = data.enemyId + " " + data.stageId + " " + data.position;
+
+                enemySpawn.addSpawnDataQueue.Enqueue(data);
+            }
+
             ResetText();
+
+            GetWindow(typeof(EnemySpawnListWindow));
         }
 
         if (GUILayout.Button("Remove"))
         {
+            if (Check())
+            {
+                EnemySpawnData data;
+
+                data.enemyId = type;
+                data.position = spawnPosition;
+                data.stageId = stageId;
+                data.name = data.enemyId + " " + data.stageId + " " + data.position;
+
+                enemySpawn.removeSpawnDataQueue.Enqueue(data);
+            }
+
             ResetText();
+
+            GetWindow(typeof(EnemySpawnListWindow));
         }
 
         if (GUILayout.Button("List"))

@@ -7,7 +7,6 @@ using Unity.Collections;
 [System.Serializable]
 public struct EnemySpawnData
 {
-    [ReadOnly]
     public string name;
     public Type enemyId;
     public Vector3 position;

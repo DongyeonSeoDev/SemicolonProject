@@ -177,6 +177,50 @@ public class EnemySpawnListWindow : EditorWindow
         }
     }
 
+    private void AddData(EnemySpawnData data)
+    {
+        if (enemySpawnDataList.FindIndex(x => x.name == data.name) > -1)
+        {
+            return;
+        }
+
+        enemySpawnDataList.Add(data);
+        enemySpawn.enemySpawnData.Add(data);
+        backUpList.Add(data);
+
+        Refresh();
+        FindText(findText);
+        Sort(selectSortIndex);
+    }
+
+    private void RemoveData(EnemySpawnData data)
+    {
+        int index = enemySpawnDataList.FindIndex(x => x.name == data.name);
+
+        if (index > -1)
+        {
+            enemySpawnDataList.RemoveAt(index);
+        }
+
+        index = enemySpawn.enemySpawnData.FindIndex(x => x.name == data.name);
+
+        if (index <= -1)
+        {
+            enemySpawnDataList.RemoveAt(index);
+        }
+
+        index = backUpList.FindIndex(x => x.name == data.name);
+
+        if (index <= -1)
+        {
+            backUpList.RemoveAt(index);
+        }
+
+        Refresh();
+        FindText(findText);
+        Sort(selectSortIndex);
+    }
+
     private void OnEnable()
     {
         enemySpawn = FindObjectOfType<EnemySpawn>();
@@ -214,6 +258,16 @@ public class EnemySpawnListWindow : EditorWindow
             lastFindText = findText;
 
             FindText(findText);
+        }
+
+        if (enemySpawn.addSpawnDataQueue.Count > 0)
+        {
+            AddData(enemySpawn.addSpawnDataQueue.Dequeue());
+        }
+
+        if (enemySpawn.removeSpawnDataQueue.Count > 0)
+        {
+            RemoveData(enemySpawn.removeSpawnDataQueue.Dequeue());
         }
 
         Refresh();
