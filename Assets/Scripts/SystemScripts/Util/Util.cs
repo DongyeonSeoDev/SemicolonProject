@@ -122,6 +122,43 @@ public static partial class Util
         }
     }
 
+    public static List<T> FindAllRandom<T>(this IEnumerable<T> list, Func<T, bool> action, int randomScale = 10)  //조건에 만족하는 요소들을 랜덤으로 가져옴
+    {
+        List<T> itemList = new List<T>();
+        foreach (T item in list)
+        {
+            if (action(item))
+            {
+                itemList.Add(item);
+            }
+        }
+
+        for(int i=0; i< randomScale; i++)
+        {
+            int ran1 = UnityEngine.Random.Range(0, itemList.Count);
+            int ran2 = UnityEngine.Random.Range(0, itemList.Count);
+            T temp = itemList[ran1];
+            itemList[ran1] = itemList[ran2];
+            itemList[ran2] = temp;
+        }
+
+        return itemList;
+    }
+
+    public static List<T> ToRandomList<T>(this IEnumerable<T> list, int randomScale = 10)  //리스트 섞음
+    {
+        List<T> itemList = list.ToList();
+        for (int i = 0; i < randomScale; i++)
+        {
+            int ran1 = UnityEngine.Random.Range(0, itemList.Count);
+            int ran2 = UnityEngine.Random.Range(0, itemList.Count);
+            T temp = itemList[ran1];
+            itemList[ran1] = itemList[ran2];
+            itemList[ran2] = temp;
+        }
+        return itemList;
+    }
+
     public static T EnumParse<T>(string str) => (T)Enum.Parse(typeof(T), str);
 
     public static void PrintStructSize(Type type)

@@ -29,10 +29,10 @@ public class StageManager : MonoSingleton<StageManager>
     public bool IsStageClear { get; set; }
     public bool IsLastStage { get; set; }
 
-    #region ValuableForEditor
+   /* #region ValuableForEditor
     [Header("Test")]
     public string stageSOFolderName;
-    #endregion
+    #endregion*/
 
 
     private void Awake()
@@ -165,7 +165,7 @@ public class StageManager : MonoSingleton<StageManager>
         //다음 스테이지 경우의 수만큼 문을 켜주고 문에 다음 스테이지 타입에 맞게 랜덤으로 다음 스테이지 설정
         int idx = 0;
         int count = currentStageData.stageFloor.randomStageList[currentStageNumber - 1].nextStageTypes.Length;
-        currentStage.stageDoors.ForEach(door =>
+        currentStage.stageDoors.ToRandomList(5).ForEach(door =>
         {
             if(!door.gameObject.activeSelf && idx < count)
             {
