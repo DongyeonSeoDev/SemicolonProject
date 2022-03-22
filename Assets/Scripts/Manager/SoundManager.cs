@@ -11,6 +11,9 @@ public class SoundManager : MonoSingleton<SoundManager>
     private readonly string soundPrefabsPath = "Prefabs/SoundPrefabs";
 
     [SerializeField]
+    private string currentBGMSoundBoxId = "NULL";
+
+    [SerializeField]
     private float volume = 1f;
     private float pitch = 1f;
     private bool pause = false;
@@ -18,10 +21,11 @@ public class SoundManager : MonoSingleton<SoundManager>
     private void Awake()
     {
         soundBoxes = Resources.LoadAll<SoundBox>(soundPrefabsPath).ToList();
+
         soundBoxes.ForEach(x => {
             if (soundBoxesDict.ContainsKey(x.SoundBoxId))
             {
-                Debug.LogError("The SoundBoxId '" + x.SoundBoxId + "' is already used. Change SoundBoxId of " + x.name);
+                Debug.LogError("The SoundBoxId '" + x.SoundBoxId + "' is already used. Change SoundBoxId of '" + x.name + "'");
             }
             else
             {
@@ -29,7 +33,43 @@ public class SoundManager : MonoSingleton<SoundManager>
             }
         });
     }
-        
+    private void Start()
+    {
+        EventManager.StartListening("StartBGM", ChangeBGMSoundBox);
+    }
+    private void OnEnable()
+    {
+        EventManager.StopListening("StartBGM", ChangeBGMSoundBox);
+    }
+    /// <summary>
+    /// 스테이지 BGM을 바꿈.
+    /// </summary>
+    /// <param SoundBox="soundBox"></param>
+    public void ChangeBGMSoundBox(SoundBox soundBox)
+    {
+        string soundBoxId = soundBox.SoundBoxId;
+
+        ChangeBGMSoundBox(soundBoxId);
+    }
+    /// <summary>
+    /// 스테이지 BGM을 바꿈.
+    /// </summary>
+    /// <param id="soundBoxId"></param>
+    public void ChangeBGMSoundBox(string soundBoxId)
+    {
+        if (soundBoxesDict.ContainsKey(soundBoxId))
+        {
+            EventManager.TriggerEvent("StopSound", currentBGMSoundBoxId);
+
+            PlaySoundBox(soundBoxId);
+
+            currentBGMSoundBoxId = soundBoxId;
+        }
+        else
+        {
+            Debug.LogWarning("The SoundBoxId '" + soundBoxId + "' is not Contain.");
+        }
+    }
     public void PlaySoundBox(SoundBox soundBox)
     {
         string soundBoxId = soundBox.SoundBoxId;
@@ -50,9 +90,9 @@ public class SoundManager : MonoSingleton<SoundManager>
                     soundBox = soundBoxesDictForPooling[soundBoxId].Dequeue();
                     soundBox.gameObject.SetActive(true);
 
-                    soundBox.SetPause(pause);
-                    soundBox.SetVolume(volume);
-                    soundBox.SetPitch(pitch);
+                    soundBox.SetPause(soundBoxId, pause);
+                    soundBox.SetVolume(soundBoxId, volume);
+                    soundBox.SetPitch(soundBoxId, pitch);
 
                     return;
                 }
@@ -67,9 +107,9 @@ public class SoundManager : MonoSingleton<SoundManager>
             soundBoxObj = Instantiate(soundBoxesDict[soundBoxId].gameObject, transform);
             soundBox = soundBoxObj.GetComponent<SoundBox>();
 
-            soundBox.SetPause(pause);
-            soundBox.SetVolume(volume);
-            soundBox.SetPitch(pitch);
+            soundBox.SetPause(soundBoxId, pause);
+            soundBox.SetVolume(soundBoxId, volume);
+            soundBox.SetPitch(soundBoxId, pitch);
         }
         else
         {
@@ -81,19 +121,23 @@ public class SoundManager : MonoSingleton<SoundManager>
         soundBoxesDictForPooling[soundBox.SoundBoxId].Enqueue(soundBox);
         soundBox.gameObject.SetActive(false);
     }
+    public void StopSounds()
+    {
+        EventManager.TriggerEvent("StopSoundAll");
+    }
     public void ChangeVolume(float v)
     {
         volume = v;
-        EventManager.TriggerEvent("SetVolume", volume);
+        EventManager.TriggerEvent("SetVolumeAll", volume);
     }
     public void PauseSounds(bool p)
     {
         pause = p;
-        EventManager.TriggerEvent("SoundPause", p);
+        EventManager.TriggerEvent("SoundPauseAll", p);
     }
     public void SetPitch(float p)
     {
         pitch = p;
-        EventManager.TriggerEvent("SetPitch", p);
+        EventManager.TriggerEvent("SetPitchAll", p);
     }
 }

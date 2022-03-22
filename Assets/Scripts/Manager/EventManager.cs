@@ -12,6 +12,7 @@ public partial class EventManager
     private static Dictionary<string, Action<float, float, float>> float_float_float_eventDictionary = new Dictionary<string, Action<float, float, float>>();
     private static Dictionary<string, Action<string>> str_eventDictionary = new Dictionary<string, Action<string>>();
     private static Dictionary<string, Action<string, bool>> str_bool_eventDictionary = new Dictionary<string, Action<string, bool>>();
+    private static Dictionary<string, Action<string, float>> str_float_eventDictionary = new Dictionary<string, Action<string, float>>();
     private static Dictionary<string, Action<string, int>> str_int_eventDictionary = new Dictionary<string, Action<string, int>>();
     private static Dictionary<string, Action<Vector2>> vec2_EventDictionary = new Dictionary<string, Action<Vector2>>();
     private static Dictionary<string, Action<Vector2, bool>> vec2_bool_EventDictionary = new Dictionary<string, Action<Vector2, bool>> ();
@@ -118,6 +119,21 @@ public partial class EventManager
         else
         {
             str_bool_eventDictionary.Add(eventName, listener);
+        }
+    }
+    
+    public static void StartListening(string eventName, Action<string, float> listener)
+    {
+        Action<string, float> thisEvent;
+
+        if (str_float_eventDictionary.TryGetValue(eventName, out thisEvent)) // ���� �̸��� DIctionary�ִ��� üũ
+        {
+            thisEvent += listener;                   // ���� �̸����� �� ����
+            str_float_eventDictionary[eventName] = thisEvent;
+        }
+        else
+        {
+            str_float_eventDictionary.Add(eventName, listener);
         }
     }
     public static void StartListening(string eventName, Action<string, int> listener)
@@ -318,6 +334,20 @@ public partial class EventManager
             str_bool_eventDictionary.Remove(eventName);
         }
     }
+    public static void StopListening(string eventName, Action<string, float> listener)
+    {
+        Action<string, float> thisEvent;
+
+        if (str_float_eventDictionary.TryGetValue(eventName, out thisEvent))
+        {
+            thisEvent -= listener;
+            str_float_eventDictionary[eventName] = thisEvent;
+        }
+        else
+        {
+            str_float_eventDictionary.Remove(eventName);
+        }
+    }
     public static void StopListening(string eventName, Action<string, int> listener)
     {
         Action<string, int> thisEvent;
@@ -503,6 +533,19 @@ public partial class EventManager
         if (str_bool_eventDictionary.TryGetValue(eventName, out thisEvent))
         {
             thisEvent?.Invoke(str_param, bool_param);
+        }
+        else
+        {
+            Debug.LogWarning("The Linked ActionsNum is zero of The '" + eventName + "' Event but you tried 'TriggerEvent'");
+        }
+    }
+    public static void TriggerEvent(string eventName, string str_param, float float_param)
+    {
+        Action<string, float> thisEvent;
+
+        if (str_float_eventDictionary.TryGetValue(eventName, out thisEvent))
+        {
+            thisEvent?.Invoke(str_param, float_param);
         }
         else
         {
