@@ -6,7 +6,7 @@ public class StageBundleDataSO : ScriptableObject
 {
     public string id => name;
 
-    public int stageBundleNumber; 
+    public int floor; 
     public string stageBundleName;
     public List<StageDataSO> stages;
 

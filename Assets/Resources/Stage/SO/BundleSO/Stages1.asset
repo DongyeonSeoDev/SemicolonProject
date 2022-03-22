@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8fc572729a461640971c522fdb99971, type: 3}
   m_Name: Stages1
   m_EditorClassIdentifier: 
-  stageBundleNumber: 1
-  stageBundleName: "\uC591\uC9C4\uC6B1 \uC9C0\uC5ED"
+  floor: 1
+  stageBundleName: "\uD558\uC218\uAD6C"
   stages:
   - {fileID: 11400000, guid: b5dcade26e02d6a4f9220c167de830bf, type: 2}
   - {fileID: 11400000, guid: 72429167179995d46b3afd90e6b40961, type: 2}
@@ -26,3 +26,13 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 6f2fe5a9c813b4647989a87ae006e53c, type: 2}
   - {fileID: 11400000, guid: 652844a9d06db1b46b4ad4d2b2668139, type: 2}
   - {fileID: 11400000, guid: e480329aac300fd4ca30a940575587e4, type: 2}
+  - {fileID: 11400000, guid: f2ff016fe4e6a874d9aebbbf9673473c, type: 2}
+  - {fileID: 11400000, guid: a2e1c339d4244794b800571b251e2ca9, type: 2}
+  - {fileID: 11400000, guid: 4c3e8b6b7f681b64c970fce94189cbdd, type: 2}
+  - {fileID: 11400000, guid: 513772a280c7fe946ab16add15d53dba, type: 2}
+  - {fileID: 11400000, guid: 4b7b6724b67435a4c9adde958648dc3c, type: 2}
+  - {fileID: 11400000, guid: 52f107ac4b27b17439bd17ba94962947, type: 2}
+  - {fileID: 11400000, guid: e4c2d1eb6410f6741bd3a48bc7e7f95c, type: 2}
+  - {fileID: 11400000, guid: de89f082528c77b4194f3c2b98ff4c44, type: 2}
+  - {fileID: 11400000, guid: a6118a698a6adee4497cfdeb19367951, type: 2}
+  - {fileID: 11400000, guid: f6d4e31dacdfe524dbc4b81e017c9e40, type: 2}

@@ -118,6 +118,7 @@ public class StageManager : MonoSingleton<StageManager>
     {
         if (!IsStageClear)
             EventManager.TriggerEvent("EnemyMove", currentStageData.stageID);
+        EventManager.TriggerEvent("StartBGM", currentStageData.stageID);
     }
 
     public void StageClear()
@@ -164,16 +165,10 @@ public class StageManager : MonoSingleton<StageManager>
                 //저주 구역
                 break;
             case RandomRoomType.MONSTER:  //몬스터 구역
-                int targetStage = Mathf.Clamp(currentStageData.stageBigNumber + Random.Range(-1, 2), 1, MaxStage); //현재 층에서 몇 층을 더할지 정함
-                StageBundleDataSO sbData = idToStageFloorDict.Values.Find(x=>x.stageBundleNumber == targetStage); //현재 층에서 -1 or 0 or 1층을 더한 층을 가져온다
-                StageDataSO sData = null; //해당 층에서의 스테이지 데이터를 담을 변수
-                AreaType type = AreaType.NONE; 
-                while(type!=AreaType.MONSTER)  //랜덤으로 정한 방이 몬스터 방이어야한다. (이건 나중에 기획에 따라 수정할 수도)
-                {
-                    sData = sbData.stages[Random.Range(0,sbData.stages.Count)];
-                    type = sData.areaType;
-                }
-                NextStage(sData.stageID);
+                int targetStage = Mathf.Clamp(currentStageData.stageFloor.floor + Random.Range(-1, 2), 1, MaxStage); //현재 층에서 몇 층을 더할지 정함
+                StageBundleDataSO sbData = idToStageFloorDict.Values.Find(x=>x.floor == targetStage); //현재 층에서 -1 or 0 or 1층을 더한 층을 가져온다
+                List<StageDataSO> sDatas = sbData.stages.FindAll(stage=>stage.areaType==AreaType.MONSTER); //해당 층의 몬스터 스테이지들만 가져옴
+                NextStage(sDatas[Random.Range(0, sDatas.Count)].stageID);
                 break;
             case RandomRoomType.RECOVERY:
                 //회복 구역

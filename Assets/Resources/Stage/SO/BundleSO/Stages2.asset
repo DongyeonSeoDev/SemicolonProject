@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f8fc572729a461640971c522fdb99971, type: 3}
   m_Name: Stages2
   m_EditorClassIdentifier: 
-  stageBundleNumber: 2
-  stageBundleName: "\uC11C\uB3D9\uC5F0 \uC9C0\uC5ED"
+  floor: 2
+  stageBundleName: "\uC5EC\uAE34 \uC5B4\uB51C\uAE4C"
   stages: []

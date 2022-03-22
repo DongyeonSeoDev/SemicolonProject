@@ -46,7 +46,13 @@ public static class TimeManager
         }
     }
 
-    //duration초 동안 timeScale을 scale로 만들고 duration초 다 지나면 endAction실행
+    /// <summary>
+    /// duration초 동안 timeScale을 scale로 만들고 duration초 다 지나면 endAction실행
+    /// </summary>
+    /// <param name="scale"></param>
+    /// <param name="duration"></param>
+    /// <param name="endAction"></param>
+    /// <param name="realTime"></param>
     public static void SetTimeScale(float scale, float duration, Action endAction = null, bool realTime = false)
     {
         currentTimeScale = scale;

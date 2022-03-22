@@ -93,6 +93,8 @@ public enum AreaType
     PLANTS,
     RANDOM,
     BOSS,
+    RECOVERY,
+    IMPRECATION,
     NONE
 }
 

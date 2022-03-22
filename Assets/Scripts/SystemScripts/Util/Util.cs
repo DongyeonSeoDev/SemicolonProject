@@ -82,6 +82,18 @@ public static partial class Util
         }
         return default(T);
     }
+    public static List<T> FindAll<T>(this IEnumerable<T> list, Func<T, bool> action)
+    {
+        List<T> itemList = new List<T>();
+        foreach (T item in list)
+        {
+            if (action(item))
+            {
+                itemList.Add(item);
+            }
+        }
+        return itemList;
+    }
 
     public static T EnumParse<T>(string str) => (T)Enum.Parse(typeof(T), str);
 
