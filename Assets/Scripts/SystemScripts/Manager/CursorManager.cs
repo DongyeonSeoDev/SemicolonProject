@@ -48,14 +48,14 @@ public class CursorManager : MonoSingleton<CursorManager>
 
     private void OnGameStart()
     {
-#if UNITY_EDITOR
-        SetCursor("DefaultCursor");
+#if !UNITY_EDITOR
+        Util.DelayFunc(() => Cursor.lockState = CursorLockMode.Confined, 5);
 #endif
+        SetCursor("DefaultCursor");
     }
 
     private void SetCursor(string cursorFileName)
     {
-        Util.DelayFunc(() => Cursor.lockState = CursorLockMode.Confined, 5);
         cursorTexture = Resources.Load<Texture2D>("System/Sprites/Cursor/" + cursorFileName);
         Cursor.SetCursor(cursorTexture, cursorOffset, CursorMode.ForceSoftware);
     }
