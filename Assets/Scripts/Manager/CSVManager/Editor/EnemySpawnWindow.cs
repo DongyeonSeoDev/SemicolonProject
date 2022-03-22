@@ -31,6 +31,7 @@ public class EnemySpawnWindow : EditorWindow
 
     private void OnGUI()
     {
+        EditorGUI.BeginDisabledGroup(Application.isPlaying);
         GUILayout.Space(10);
         type = (Enemy.Type)EditorGUILayout.EnumPopup("EnemyID", type);
         GUILayout.Space(10);
@@ -89,6 +90,7 @@ public class EnemySpawnWindow : EditorWindow
         }
 
         GUILayout.EndHorizontal();
+        EditorGUI.EndDisabledGroup();
     }
 }
 #endif

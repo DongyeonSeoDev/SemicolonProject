@@ -275,6 +275,7 @@ public class EnemySpawnListWindow : EditorWindow
 
     private void OnGUI()
     {
+        EditorGUI.BeginDisabledGroup(Application.isPlaying);
         EditorGUILayout.Space(5);
         selectSortIndex = EditorGUILayout.Popup("Sort", selectSortIndex, sortName);
         EditorGUILayout.Space(2);
@@ -305,6 +306,7 @@ public class EnemySpawnListWindow : EditorWindow
         EditorGUI.EndDisabledGroup();
         EditorGUILayout.EndScrollView();
         EditorGUIUtility.wideMode = false;
+        EditorGUI.EndDisabledGroup();
     }
 }
 #endif
