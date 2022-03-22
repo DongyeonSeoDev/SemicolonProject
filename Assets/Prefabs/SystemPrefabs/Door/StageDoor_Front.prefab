@@ -131,10 +131,9 @@ MonoBehaviour:
   itrUIOffset: {x: 0, y: 1.1, z: 0}
   npcUI: {fileID: 0}
   itrUI: {fileID: 0}
-  fsOut: {fileID: 0}
   nextStageData: {fileID: 0}
-  notExistMap: 0
   dirType: 0
+  playerSpawnPos: {fileID: 0}
 --- !u!1 &8604531946291383049
 GameObject:
   m_ObjectHideFlags: 0
@@ -182,7 +181,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 10
+  m_Radius: 13.94
 --- !u!114 &8604531946291383095
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -264,7 +264,7 @@ public class StageManager : MonoSingleton<StageManager>
         switch(room)
         {
             case RandomRoomType.IMPRECATION:
-                //저주 구역
+                UIManager.Instance.RequestSystemMsg("저주 구역인데 아직 ㄴㄴ"); 
                 break;
             case RandomRoomType.MONSTER:  //몬스터 구역
                 int targetStage = Mathf.Clamp(currentStageData.stageFloor.floor + Random.Range(-1, 2), 1, MaxStage); //현재 층에서 몇 층을 더할지 정함
@@ -272,7 +272,7 @@ public class StageManager : MonoSingleton<StageManager>
                 NextStage(sbData.stages.FindRandom(stage => stage.areaType == AreaType.MONSTER).stageID); //뽑은 층에서 몬스터 지역들중에 랜덤으로 가져온다
                 break;
             case RandomRoomType.RECOVERY:
-                //회복 구역
+                UIManager.Instance.RequestSystemMsg("회복 구역인데 아직 ㄴㄴ");
                 break;
         }
     }
