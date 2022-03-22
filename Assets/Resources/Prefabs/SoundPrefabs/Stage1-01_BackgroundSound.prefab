@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1753194670404615221}
   - component: {fileID: 1753194670404615220}
   m_Layer: 0
-  m_Name: Stage1-1_BackgroundSound
+  m_Name: Stage1-01_BackgroundSound
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0cc83990bb0e0f4bb9aaec369a4f7b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundBoxId: Stage1-1
+  soundBoxId: Stage1-01
   audioSource: {fileID: 1753194670404615221}
   isBackgroundMusic: 1
   playToEnd: 0

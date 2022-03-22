@@ -33,11 +33,11 @@ public class SoundManager : MonoSingleton<SoundManager>
             }
         });
     }
-    private void Start()
+    private void OnEnable()
     {
         EventManager.StartListening("StartBGM", ChangeBGMSoundBox);
     }
-    private void OnEnable()
+    private void OnDisable()
     {
         EventManager.StopListening("StartBGM", ChangeBGMSoundBox);
     }
@@ -57,6 +57,8 @@ public class SoundManager : MonoSingleton<SoundManager>
     /// <param id="soundBoxId"></param>
     public void ChangeBGMSoundBox(string soundBoxId)
     {
+        Debug.Log(soundBoxId);
+
         if (soundBoxesDict.ContainsKey(soundBoxId))
         {
             EventManager.TriggerEvent("StopSound", currentBGMSoundBoxId);
