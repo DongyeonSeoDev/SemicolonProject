@@ -34,13 +34,12 @@ namespace Enemy
         {
             if (!CSVEnemySpawn.Instance.enemySpawnDatas.ContainsKey(stageId))
             {
-                //CSVEnemySpawn.Instance.enemySpawnDatas.Keys.ForEach(x => Debug.Log(x.Trim() == stageId.Trim()));
                 Debug.LogError("잘못된 stageId 입니다. SpawnEnemy 실행 실패 : " + stageId);
             }
 
             for (int i = 0; i < CSVEnemySpawn.Instance.enemySpawnDatas[stageId].Count; i++)
             {
-                EnemyPoolData enemy = EnemyPoolManager.Instance.GetPoolObject((Type)CSVEnemySpawn.Instance.enemySpawnDatas[stageId][i].enemyId, CSVEnemySpawn.Instance.enemySpawnDatas[stageId][i].position);
+                EnemyPoolData enemy = EnemyPoolManager.Instance.GetPoolObject(CSVEnemySpawn.Instance.enemySpawnDatas[stageId][i].enemyId, CSVEnemySpawn.Instance.enemySpawnDatas[stageId][i].position);
 
                 if (enemyDictionary.ContainsKey(stageId))
                 {

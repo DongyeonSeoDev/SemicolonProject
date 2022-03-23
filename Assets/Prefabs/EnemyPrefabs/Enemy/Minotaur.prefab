@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8330951247388267125}
   - component: {fileID: 7449057657490005190}
   m_Layer: 0
-  m_Name: Boss1_Minotaur
+  m_Name: Minotaur
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
