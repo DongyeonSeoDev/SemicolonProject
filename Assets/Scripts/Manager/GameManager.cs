@@ -254,7 +254,7 @@ public partial class GameManager : MonoSingleton<GameManager>
     public void RespawnPlayer()
     {
         UIManager.Instance.OnUIInteract(UIType.DEATH, true);
-        UIManager.Instance.StartLoading(() => EventManager.TriggerEvent("PlayerRespawn"), () => EventManager.TriggerEvent("StartNextStage",StageManager.Instance.GetStageData().stageID));
+        UIManager.Instance.StartLoading(() => EventManager.TriggerEvent("PlayerRespawn"), () => EventManager.TriggerEvent("StartNextStage"));
     }
 
     public void QuitGame()

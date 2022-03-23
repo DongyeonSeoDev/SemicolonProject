@@ -17,7 +17,7 @@ public partial class StageDataSO : ScriptableObject
 
     public string stageID => name;  //스테이지 아이디
 
-    public string StageName => stageName ?? Global.AreaTypeToString(areaType);
+    public string StageName => string.IsNullOrEmpty( stageName) ? Global.AreaTypeToString(areaType) : stageName;
 
     public void SetPrefab()
     {

@@ -91,7 +91,7 @@ public class StageManager : MonoSingleton<StageManager>
     {
         EventManager.TriggerEvent("StartBGM", startStageID);
         EventManager.StartListening("PlayerRespawn", Respawn);
-        EventManager.StartListening("StartNextStage", stageID => StartNextStage(stageID));
+        EventManager.StartListening("StartNextStage", StartNextStage);
     }
 
     private string FloorToFloorID(int floor)
@@ -237,11 +237,12 @@ public class StageManager : MonoSingleton<StageManager>
         currentStage.OpenDoors();
     }
 
-    public void StartNextStage(string stageID = "")
+    public void StartNextStage()
     {
         if (!IsStageClear)
             EventManager.TriggerEvent("EnemyMove", currentStageData.stageID);
         EventManager.TriggerEvent("StartBGM", currentStageData.stageID);
+        UIManager.Instance.InsertTopCenterNoticeQueue(string.IsNullOrEmpty(currentStageData.stageName) ? Global.AreaTypeToString(currentArea) : currentStageData.stageName);
     }
 
     public void StageClear()

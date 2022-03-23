@@ -36,7 +36,7 @@ public class StageDoor : InteractionObj
             {
                 isOpen = true;
                 StageManager.Instance.PassDir = dirType;
-                UIManager.Instance.StartLoading(() => StageManager.Instance.NextStage(nextStageData.stageID), () => EventManager.TriggerEvent("StartNextStage", nextStageData.stageID));
+                UIManager.Instance.StartLoading(() => StageManager.Instance.NextStage(nextStageData.stageID), () => EventManager.TriggerEvent("StartNextStage"));
             }
         }
         else
