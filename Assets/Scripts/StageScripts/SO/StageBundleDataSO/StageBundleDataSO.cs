@@ -26,6 +26,7 @@ public class StageBundleDataSO : ScriptableObject
         {
             return stageDic[id];
         }
+        Debug.Log("해당 스테이지를 현재 층에서 못찾음 : " + id);
         return null;
     }
 }

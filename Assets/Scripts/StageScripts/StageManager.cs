@@ -13,6 +13,7 @@ public class StageManager : MonoSingleton<StageManager>
 
     private int currentFloor = 1;
     private int currentStageNumber = 0;
+    private AreaType currentArea;
 
     //private bool completeLoadNextMap; //다음 맵을 완전히 불러왔는지
 
@@ -29,7 +30,7 @@ public class StageManager : MonoSingleton<StageManager>
     public Transform stageParent;
 
     public bool IsStageClear { get; set; }
-    public bool IsLastStage { get; set; }
+    //public bool IsLastStage { get; set; } 
 
    /* #region ValuableForEditor
     [Header("Test")]
@@ -48,16 +49,18 @@ public class StageManager : MonoSingleton<StageManager>
             idToStageFloorDict.Add(data.id, data);
             data.SetStageDic();
         }
-        foreach(StageBundleDataSO data in idToStageFloorDict.Values)
+
+        int cnt = Global.EnumCount<AreaType>();
+        foreach (StageBundleDataSO data in idToStageFloorDict.Values)
         {
             randomRoomDict.Add(data.floor, new Dictionary<AreaType, List<StageDataSO>>());
-            for(int i=0; i<Global.EnumCount<AreaType>(); i++)
+            for(int i=0; i<cnt; i++)
             {
                 randomRoomDict[data.floor].Add((AreaType)i, new List<StageDataSO>());
             }
         }
 
-        int cnt = Global.EnumCount<DoorDirType>();
+        cnt = Global.EnumCount<DoorDirType>();
         for(int i=0; i<cnt; i++)
         {
             doorSprDic.Add(((DoorDirType)i).ToString() + "Close", doorSprites[i]);
@@ -74,17 +77,21 @@ public class StageManager : MonoSingleton<StageManager>
     private void Start()
     {
         Init();
-
-        respawnPos = idToStageDataDict[startStageID].stage.GetComponent<StageGround>().playerSpawnPoint.position;
-        EventManager.StartListening("PlayerRespawn", Respawn);
-        EventManager.StartListening("StartNextStage", stageID => StartNextStage(stageID));
+        DefineEvent();
     }
 
     private void Init()
     {
         InsertRandomMaps(currentFloor);
         Util.DelayFunc(() => NextStage(startStageID), 0.2f);
+        respawnPos = idToStageDataDict[startStageID].stage.GetComponent<StageGround>().playerSpawnPoint.position;
+    }
+
+    private void DefineEvent()
+    {
         EventManager.TriggerEvent("StartBGM", startStageID);
+        EventManager.StartListening("PlayerRespawn", Respawn);
+        EventManager.StartListening("StartNextStage", stageID => StartNextStage(stageID));
     }
 
     private string FloorToFloorID(int floor)
@@ -133,7 +140,8 @@ public class StageManager : MonoSingleton<StageManager>
         if (currentStage) currentStage.gameObject.SetActive(false);
 
         currentStageData = idToStageDataDict[id];
-        IsLastStage = currentStageData.endStage;
+        currentArea = currentStageData.areaType;
+        //IsLastStage = currentStageData.endStage;
         currentStage = null;
 
         if (!idToStageObjDict.TryGetValue(id, out currentStage))
@@ -194,7 +202,7 @@ public class StageManager : MonoSingleton<StageManager>
         switch (currentStageData.areaType)
         {
             case AreaType.START:
-                currentStage.stageDoors.ForEach(x => x.gameObject.SetActive(true));
+                currentStage.stageDoors.ForEach(x => { x.gameObject.SetActive(true); x.IsExitDoor = false; });
                 SetClearStage();
                 break;
             case AreaType.MONSTER:
@@ -204,7 +212,7 @@ public class StageManager : MonoSingleton<StageManager>
                 SetClearStage();
                 break;
             case AreaType.PLANTS:
-                //채집구역이면 무엇을 할까
+                SetClearStage();
                 break;
             case AreaType.RANDOM:
                 EnterRandomArea();
@@ -245,7 +253,11 @@ public class StageManager : MonoSingleton<StageManager>
 
         //CinemachineCameraScript.Instance.SetCinemachineConfiner(CinemachineCameraScript.Instance.boundingCollider);
 
-        if (IsLastStage)
+        /*if (IsLastStage)
+        {
+            EventManager.TriggerEvent("GameClear");
+        }*/
+        if(currentArea==AreaType.BOSS)
         {
             EventManager.TriggerEvent("GameClear");
         }
@@ -280,6 +292,7 @@ public class StageManager : MonoSingleton<StageManager>
         switch (room)
         {
             case RandomRoomType.IMPRECATION: //저주 구역
+                currentArea = AreaType.IMPRECATION;
                 EventManager.TriggerEvent(Global.EnterNextMap);
                 Environment.Instance.OnEnteredOrExitImprecationArea(true);
                 break;
@@ -290,6 +303,7 @@ public class StageManager : MonoSingleton<StageManager>
                 NextStage(sbData.stages.FindRandom(stage => stage.areaType == AreaType.MONSTER).stageID); //뽑은 층에서 몬스터 지역들중에 랜덤으로 가져온다
                 break;
             case RandomRoomType.RECOVERY:  //회복 구역
+                currentArea = AreaType.RECOVERY;
                 EventManager.TriggerEvent(Global.EnterNextMap);
                 Environment.Instance.OnEnteredOrExitRecoveryArea(true);
                 break;

@@ -66,6 +66,10 @@ public static partial class Global
                 return "焊胶 备开";
             case AreaType.START:
                 return "矫累 瘤开";
+            case AreaType.IMPRECATION:
+                return "历林 备开";
+            case AreaType.RECOVERY:
+                return "雀汗 备开";
         }
         return string.Empty;
     }
