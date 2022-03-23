@@ -30,8 +30,6 @@ public class SlimePoolManager : MonoSingleton<SlimePoolManager>
 
                 return (obj, true);
             }
-
-            return (null, false);
         }
 
         return (null, false);

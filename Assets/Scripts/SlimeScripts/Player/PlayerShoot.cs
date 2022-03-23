@@ -49,11 +49,12 @@ public class PlayerShoot : PlayerSkill
 
         if (canShoot && SlimeGameManager.Instance.Player.CheckEnergy(useEnergyAmount) && !playerState.BodySlapping)
         {
+            canShoot = false;
+
             GameObject temp = null;
+            bool findInDic = false;
 
             Vector2 direction = (playerInput.MousePosition - (Vector2)transform.position).normalized;
-
-            bool findInDic = false;
 
             (temp, findInDic) = slimePoolManager.Find(projectile);
 
@@ -71,8 +72,6 @@ public class PlayerShoot : PlayerSkill
 
             SlimeGameManager.Instance.Player.UseEnergy(useEnergyAmount);
             SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = SlimeGameManager.Instance.SkillDelays[skillIdx];
-
-            canShoot = false;
 
             SoundManager.Instance.PlaySoundBox("SlimeSkill0");
 
