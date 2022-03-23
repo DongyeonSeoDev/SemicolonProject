@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using UnityEngine.Experimental.Rendering.Universal;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -15,6 +16,7 @@ public class Environment : MonoSingleton<Environment>
     private Bloom bloom;
     private ChromaticAberration chromaticAberration;
     private Vignette vignette;
+    private LiftGammaGain LGG;
     #endregion
 
     public Color damagedColor;
@@ -33,6 +35,7 @@ public class Environment : MonoSingleton<Environment>
         mainVolume.profile.TryGet<Bloom>(out bloom);
         mainVolume.profile.TryGet<ChromaticAberration>(out chromaticAberration);
         mainVolume.profile.TryGet<Vignette>(out vignette);
+        mainVolume.profile.TryGet<LiftGammaGain>(out LGG);
     }
 
     private void DefineEvent()
@@ -62,11 +65,48 @@ public class Environment : MonoSingleton<Environment>
 
         if (enter)
         {
-            
-            EventManager.StartListening(Global.EnterNextMap, () => 
+            Action action = null;
+            action += ()=>
             {
                 OnEnteredOrExitRecoveryArea(false);
-            });
+                EventManager.StopListening(Global.EnterNextMap, action);
+            };
+
+            EventManager.StartListening(Global.EnterNextMap, action);
+        }
+    }
+
+    public void OnEnteredOrExitImprecationArea(bool enter)
+    {
+        LGG.active = enter;
+
+        if (enter)
+        {
+            IEnumerator chrCo = ChromAberRepeatCO();
+            StartCoroutine(chrCo);
+
+            Action action = null;
+            action += () =>
+            {
+                OnEnteredOrExitImprecationArea(false);
+                chromaticAberration.active = false;
+                StopCoroutine(chrCo);
+                EventManager.StopListening(Global.EnterNextMap, action);
+            };
+
+            EventManager.StartListening(Global.EnterNextMap, action);
+        }
+    }
+
+    private IEnumerator ChromAberRepeatCO()
+    {
+        bool up = true;
+        chromaticAberration.active = true;
+        while(true)
+        {
+            chromaticAberration.DOChromIntensity(up ? 0.2f : 0f, 0.5f, true);
+            yield return new WaitForSecondsRealtime(0.6f);
+            up = !up;
         }
     }
 }

@@ -275,12 +275,13 @@ public class StageManager : MonoSingleton<StageManager>
     private void EnterRandomArea()
     {
         RandomRoomType room = (RandomRoomType)Random.Range(0, Global.EnumCount<RandomRoomType>());
-
+        
         //랜덤맵일 때는 EventManager.TriggerEvent(Global.EnterNextMap)가 실행안되므로 저주나 회복일 땐 따로 부름. 몹 구역일 땐 어차피 NextStage로 호출함
         switch (room)
         {
             case RandomRoomType.IMPRECATION: //저주 구역
                 EventManager.TriggerEvent(Global.EnterNextMap);
+                Environment.Instance.OnEnteredOrExitImprecationArea(true);
                 break;
             case RandomRoomType.MONSTER:  //몬스터 구역
                 --currentStageNumber;

@@ -227,7 +227,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         EventManager.StartListening("GameClear", () => OnUIInteract(UIType.CLEAR, true));
         EventManager.StartListening("StageClear", () =>InsertNoticeQueue("Stage Clear", clearNoticeMsgVGrd, 90));
         EventManager.StartListening("ChangeBody", (str, dead) => { if(!dead) InsertNoticeQueue(MonsterCollection.Instance.GetMonsterInfo(str).bodyName + "(으)로 변신하였습니다"); });
-        EventManager.StartListening("StartNextStage", stageName => InsertTopCenterNoticeQueue(stageName)); 
+        EventManager.StartListening("StartNextStage", stageId => InsertTopCenterNoticeQueue(StageManager.Instance.GetStageData(stageId).stageName)); 
     }
 
   
@@ -653,7 +653,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         loadingCvsg.DOFade(0, 1).SetEase(Ease.OutQuad).SetUpdate(true).OnComplete(() =>
         {
             loadingCvsg.gameObject.SetActive(false);
-            EventManager.TriggerEvent("StartNextStage", StageManager.Instance.GetStageData().stageName);
+            EventManager.TriggerEvent("StartNextStage", StageManager.Instance.GetStageData().stageID);
         });
 
     }
