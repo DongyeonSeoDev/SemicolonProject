@@ -3,6 +3,8 @@ using System.Collections.Generic;
 
 public static partial class Global
 {
+    public const string EnterNextMap = "EnterNextMap"; //다음 맵 갈 때 이벤트 키
+
     public const string saveFileName_1 = "SaveFile1";
 
     public const string OriginBodyID = "origin";

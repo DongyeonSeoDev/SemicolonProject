@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageFloor: {fileID: 11400000, guid: ad81aacd5e610b7498e62e7a75a34db9, type: 2}
   endStage: 0
-  stageNumber: 8
   stageName: "\uC9C0\uC5ED\uC774\uB984"
-  stage: {fileID: 1378282381469885354, guid: 4bf14f7d1b9b3e6478adb88ab21b9d2b, type: 3}
+  stage: {fileID: 1378282381469885354, guid: d96b04011b68fd44bb5fa1100e40d4e6, type: 3}
   areaType: 4

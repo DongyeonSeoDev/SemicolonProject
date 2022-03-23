@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 112924586600170954}
   - component: {fileID: 1598099289191442443}
   m_Layer: 6
-  m_Name: Stage1-1Pref
+  m_Name: Stage1-01Pref
   m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

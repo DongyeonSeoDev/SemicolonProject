@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using System;
 
 public class Environment : MonoSingleton<Environment>
 {
@@ -51,5 +52,21 @@ public class Environment : MonoSingleton<Environment>
     {
         vignette.color.Override(damagedColor);
         vignette.DOVignetteIntensity(0.4f, 0.3f, false, () =>vignette.DOVignetteIntensity(0f, 0.3f, false));
+    }
+
+    public void OnEnteredOrExitRecoveryArea(bool enter)
+    {
+        mainLight.intensity = enter ? 1.5f : 1f;
+        bloom.intensity.value = enter ? 1.5f : 1f;
+        bloom.threshold.value = enter ? 0.8f : 1f;
+
+        if (enter)
+        {
+            
+            EventManager.StartListening(Global.EnterNextMap, () => 
+            {
+                OnEnteredOrExitRecoveryArea(false);
+            });
+        }
     }
 }

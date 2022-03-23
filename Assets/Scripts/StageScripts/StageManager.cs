@@ -14,6 +14,8 @@ public class StageManager : MonoSingleton<StageManager>
     private int currentFloor = 1;
     private int currentStageNumber = 0;
 
+    //private bool completeLoadNextMap; //다음 맵을 완전히 불러왔는지
+
     public DoorDirType PassDir { get; set; } //전 스테이지에서 지나간 문 방향
 
     [SerializeField] private int MaxStage;
@@ -62,6 +64,11 @@ public class StageManager : MonoSingleton<StageManager>
             doorSprDic.Add(((DoorDirType)i).ToString() + "Open", doorSprites[i + cnt]);
             doorSprDic.Add(((DoorDirType)i).ToString() + "Exit", doorSprites[i + cnt * 2]);
         }
+
+        EventManager.StartListening(Global.EnterNextMap, () =>
+        {
+            currentStageNumber++;
+        });
     }
 
     private void Start()
@@ -70,7 +77,7 @@ public class StageManager : MonoSingleton<StageManager>
 
         respawnPos = idToStageDataDict[startStageID].stage.GetComponent<StageGround>().playerSpawnPoint.position;
         EventManager.StartListening("PlayerRespawn", Respawn);
-        EventManager.StartListening("StartNextStage", stageName => StartNextStage(stageName));
+        EventManager.StartListening("StartNextStage", stageID => StartNextStage(stageID));
     }
 
     private void Init()
@@ -125,7 +132,6 @@ public class StageManager : MonoSingleton<StageManager>
         //현재 스테이지 옵젝을 꺼주고 다음 스테이지를 불러와서 켜주고 스테이지 번호를 1 증가시킴
         if (currentStage) currentStage.gameObject.SetActive(false);
 
-        currentStageNumber++;
         currentStageData = idToStageDataDict[id];
         IsLastStage = currentStageData.endStage;
         currentStage = null;
@@ -164,15 +170,15 @@ public class StageManager : MonoSingleton<StageManager>
 
         //다음 스테이지 경우의 수만큼 문을 켜주고 문에 다음 스테이지 타입에 맞게 랜덤으로 다음 스테이지 설정
         int idx = 0;
-        int count = currentStageData.stageFloor.randomStageList[currentStageNumber - 1].nextStageTypes.Length;
+        int count = currentStageData.stageFloor.randomStageList[currentStageNumber].nextStageTypes.Length;
         currentStage.stageDoors.ToRandomList(5).ForEach(door =>
         {
             if(!door.gameObject.activeSelf && idx < count)
             {
                 try
                 {
-                    door.nextStageData = randomRoomDict[currentFloor][currentStageData.stageFloor.randomStageList[currentStageNumber - 1].nextStageTypes[idx]][0];
-                    randomRoomDict[currentFloor][currentStageData.stageFloor.randomStageList[currentStageNumber - 1].nextStageTypes[idx]].RemoveAt(0);
+                    door.nextStageData = randomRoomDict[currentFloor][currentStageData.stageFloor.randomStageList[currentStageNumber].nextStageTypes[idx]][0];
+                    randomRoomDict[currentFloor][currentStageData.stageFloor.randomStageList[currentStageNumber].nextStageTypes[idx]].RemoveAt(0);
                     ++idx;
                     door.gameObject.SetActive(true);
                 }
@@ -201,13 +207,14 @@ public class StageManager : MonoSingleton<StageManager>
                 //채집구역이면 무엇을 할까
                 break;
             case AreaType.RANDOM:
-                --currentStageNumber;
                 EnterRandomArea();
-                break;
+                return;   //랜덤 맵이면 함수를 빠져나간다.
             case AreaType.BOSS:
                 //보스구역이면 무엇을 할까
                 break;
         }
+
+        EventManager.TriggerEvent(Global.EnterNextMap);
     }
 
     public void SetMonsterStage()
@@ -222,7 +229,7 @@ public class StageManager : MonoSingleton<StageManager>
         currentStage.OpenDoors();
     }
 
-    public void StartNextStage(string stageName = "")
+    public void StartNextStage(string stageID = "")
     {
         if (!IsStageClear)
             EventManager.TriggerEvent("EnemyMove", currentStageData.stageID);
@@ -269,18 +276,21 @@ public class StageManager : MonoSingleton<StageManager>
     {
         RandomRoomType room = (RandomRoomType)Random.Range(0, Global.EnumCount<RandomRoomType>());
 
-        switch(room)
+        //랜덤맵일 때는 EventManager.TriggerEvent(Global.EnterNextMap)가 실행안되므로 저주나 회복일 땐 따로 부름. 몹 구역일 땐 어차피 NextStage로 호출함
+        switch (room)
         {
-            case RandomRoomType.IMPRECATION:
-                UIManager.Instance.RequestSystemMsg("저주 구역인데 아직 ㄴㄴ"); 
+            case RandomRoomType.IMPRECATION: //저주 구역
+                EventManager.TriggerEvent(Global.EnterNextMap);
                 break;
             case RandomRoomType.MONSTER:  //몬스터 구역
+                --currentStageNumber;
                 int targetStage = Mathf.Clamp(currentStageData.stageFloor.floor + Random.Range(-1, 2), 1, MaxStage); //현재 층에서 몇 층을 더할지 정함
                 StageBundleDataSO sbData = idToStageFloorDict.Values.Find(x=>x.floor == targetStage); //현재 층에서 -1 or 0 or 1층을 더한 층을 가져온다
                 NextStage(sbData.stages.FindRandom(stage => stage.areaType == AreaType.MONSTER).stageID); //뽑은 층에서 몬스터 지역들중에 랜덤으로 가져온다
                 break;
-            case RandomRoomType.RECOVERY:
-                UIManager.Instance.RequestSystemMsg("회복 구역인데 아직 ㄴㄴ");
+            case RandomRoomType.RECOVERY:  //회복 구역
+                EventManager.TriggerEvent(Global.EnterNextMap);
+                Environment.Instance.OnEnteredOrExitRecoveryArea(true);
                 break;
         }
     }
