@@ -20,6 +20,16 @@ public class BossTestInspector : Editor
             }
         }
 
+        if (GUILayout.Button("Boss Move"))
+        {
+            var boss = FindObjectOfType<Enemy.Boss1SkeletonKing>();
+
+            if (Application.isPlaying && boss != null)
+            {
+                boss.GetComponent<Enemy.Boss1SkeletonKing>().Move();
+            }
+        }
+
         GUILayout.Space(5);
     }
 }
@@ -50,6 +60,22 @@ public class BossTestWindow : EditorWindow
             {
                 SlimeGameManager.Instance.CurrentPlayerBody.transform.position = FindObjectOfType<BossTest>().playerStartPosition;
                 EventManager.TriggerEvent("SpawnEnemy", "BossTest_01");
+            }
+        }
+
+        GUILayout.FlexibleSpace();
+        GUILayout.EndHorizontal();
+        GUILayout.Space(10);
+        GUILayout.BeginHorizontal();
+        GUILayout.FlexibleSpace();
+
+        if (GUILayout.Button("Boss Move", buttonLayout))
+        {
+            var boss = FindObjectOfType<Enemy.Boss1SkeletonKing>();
+
+            if (Application.isPlaying && boss != null)
+            {
+                boss.GetComponent<Enemy.Boss1SkeletonKing>().Move();
             }
         }
 
