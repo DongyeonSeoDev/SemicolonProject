@@ -12,9 +12,10 @@ namespace Enemy
 
         private float lastPositionX = 0f;
         private bool isMove = false;
+        private bool isAttack = false;
 
         private readonly int hashMove = Animator.StringToHash("move");
-        private readonly int hashIsAttack = Animator.StringToHash("isAttack");
+        private readonly int hashIsAttack = Animator.StringToHash("attack");
 
         private void Start()
         {
@@ -28,15 +29,25 @@ namespace Enemy
 
         private void Update()
         {
+            if (isAttack)
+            {
+                return;
+            }
+
             if (isMove)
             {
                 if (Vector2.Distance(transform.position, playerTransform.position) < 4f)
                 {
-                    animator.SetBool(hashIsAttack, true);
+                    animator.ResetTrigger(hashMove);
+                    animator.SetTrigger(hashIsAttack);
+
+                    isAttack = true;
                 }
                 else
                 {
-                    animator.SetBool(hashIsAttack, false);
+                    animator.ResetTrigger(hashIsAttack);
+                    animator.SetTrigger(hashMove);
+
                     command.Execute();
                 }
             }
@@ -57,6 +68,11 @@ namespace Enemy
         {
             isMove = true;
             animator.SetTrigger(hashMove);
+        }
+
+        public void AttackEnd()
+        {
+            isAttack = false;
         }
     }
 }
