@@ -202,6 +202,12 @@ public class EnemySpawnListWindow : EditorWindow
             return;
         }
 
+        if ((int)data.enemyId >= 100)
+        {
+            Debug.LogError("이것은 Enemy가 아닙니다. 만약 Enemy라면 값을 변경해주세요. 현재 Enemy < 100");
+            return;
+        }
+
         enemySpawnDataList.Add(data);
         enemySpawn.enemySpawnData.Add(data);
         backUpList.Add(data);

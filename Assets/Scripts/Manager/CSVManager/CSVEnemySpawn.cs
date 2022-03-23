@@ -1,20 +1,19 @@
 using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
-using Enemy;
+using System;
 
 [System.Serializable]
 public struct EnemySpawnData
 {
     public string name;
-    public Type enemyId;
+    public Enemy.Type enemyId;
     public Vector3 position;
     public string stageId;
 
     public static implicit operator EnemySpawnData(string data)
     {
         EnemySpawnData enemySpawnData = new EnemySpawnData();
-        int result = 0;
 
         float[] positionArray = new float[3];
         string[] datas = data.Split(',');
@@ -25,13 +24,21 @@ public struct EnemySpawnData
             return default(EnemySpawnData);
         }
 
-        if (!int.TryParse(datas[0], out result))
+        Enemy.Type type;
+
+        if (!Enum.TryParse<Enemy.Type>(datas[0], out type))
         {
             Debug.LogError("잘못된 변환 입니다.");
             return default(EnemySpawnData);
         }
 
-        enemySpawnData.enemyId = (Type)result;
+        if ((int)type >= 100)
+        {
+            Debug.LogError("이것은 Enemy가 아닙니다. 만약 Enemy라면 값을 변경해주세요. 현재 Enemy < 100");
+            return default(EnemySpawnData);
+        }
+
+        enemySpawnData.enemyId = type;
         enemySpawnData.stageId = datas[2];
 
         datas = datas[1].Split(';');
@@ -83,21 +90,30 @@ public class CSVEnemySpawn : CSVManager
     public List<EnemySpawnData> enemySpawnData = new List<EnemySpawnData>();
     private StringBuilder sb = new StringBuilder(128);
 
+    private readonly string firstData = "EnemyID,Position,StageID";
+
     protected override string path { get => "Data/EnemySpawnData"; }
 
     protected override void HowToRead(string[] data)
     {
-        if (data.Length < 2 || data[0].Contains("id"))
+        if (data.Length < 2)
         {
             return;
         }
 
-        for (int i = 1; i < data.Length; i++)
+        sb.Clear();
+
+        for (int i = 0; i < data.Length; i++)
         {
             sb.Append(data[i].Trim() + ',');
         }
 
-        data[3] = data[3].Trim();
+        if (sb.ToString().Substring(0, sb.Length - 1) == firstData)
+        {
+            return;
+        }
+
+        data[2] = data[2].Trim();
 
         EnemySpawnData spawnData = sb.ToString().Substring(0, sb.Length - 1);
         bool isCheck = false;
@@ -122,22 +138,23 @@ public class CSVEnemySpawn : CSVManager
 
         if (!isCheck)
         {
-            if (enemySpawnDatas.ContainsKey(data[3]))
+            if (enemySpawnDatas.ContainsKey(data[2]))
             {
-                enemySpawnDatas[data[3]].Add(sb.ToString().Substring(0, sb.Length - 1));
+                enemySpawnDatas[data[2]].Add(sb.ToString().Substring(0, sb.Length - 1));
             }
             else
             {
-                enemySpawnDatas.Add(data[3], new List<EnemySpawnData>());
-                enemySpawnDatas[data[3]].Add(sb.ToString().Substring(0, sb.Length - 1));
+                enemySpawnDatas.Add(data[2], new List<EnemySpawnData>());
+                enemySpawnDatas[data[2]].Add(sb.ToString().Substring(0, sb.Length - 1));
             }
         }
-
-        sb.Clear();
     }
 
     protected override string HowToWrite()
     {
+        sb.Clear();
+        sb.Append(firstData + '\n');
+
         for (int i = 0; i < enemySpawnData.Count; i++)
         {
             sb.Append(enemySpawnData[i] + '\n');
