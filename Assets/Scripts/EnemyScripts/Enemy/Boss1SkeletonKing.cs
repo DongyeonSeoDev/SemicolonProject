@@ -9,6 +9,7 @@ namespace Enemy
         private SpriteRenderer sr;
         private Transform playerTransform;
         private EnemyCommand command;
+        private EnemyCommand command2;
 
         private float lastPositionX = 0f;
         private bool isMove = false;
@@ -24,7 +25,8 @@ namespace Enemy
             sr = GetComponent<SpriteRenderer>();
 
             playerTransform = SlimeGameManager.Instance.CurrentPlayerBody.transform;
-            command = new EnemyFollowPlayerCommand(transform, playerTransform, rigid, 7f, 0f, false);
+            command = new EnemyFollowPlayerCommand(transform, playerTransform, rigid, 5f, 0f, false);
+            command2 = new EnemyFollowPlayerCommand(transform, playerTransform, rigid, 15f, 0f, false);
         }
 
         private void Update()
@@ -36,18 +38,16 @@ namespace Enemy
 
             if (isMove)
             {
-                if (Vector2.Distance(transform.position, playerTransform.position) < 4f)
+                if (Vector2.Distance(transform.position, playerTransform.position) < 5f)
                 {
                     animator.ResetTrigger(hashMove);
                     animator.SetTrigger(hashIsAttack);
 
+                    rigid.velocity = Vector2.zero;
                     isAttack = true;
                 }
                 else
                 {
-                    animator.ResetTrigger(hashIsAttack);
-                    animator.SetTrigger(hashMove);
-
                     command.Execute();
                 }
             }
@@ -72,7 +72,15 @@ namespace Enemy
 
         public void AttackEnd()
         {
+            animator.ResetTrigger(hashIsAttack);
+            animator.SetTrigger(hashMove);
+
             isAttack = false;
+        }
+
+        public void AttackMove()
+        {
+            command2.Execute();
         }
     }
 }

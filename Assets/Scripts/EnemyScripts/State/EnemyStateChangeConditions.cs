@@ -98,7 +98,6 @@ namespace Enemy
             }
             else if (enemyData.eEnemyController == EnemyController.PLAYER && enemyData.isAttack)
             {
-                enemyData.isPlayerAttacking = true;
                 enemyData.isAttack = false;
 
                 ChangeState(new EnemyAttackState(enemyData));

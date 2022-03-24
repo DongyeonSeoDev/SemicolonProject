@@ -177,7 +177,6 @@ namespace Enemy
                 }
                 else if (enemyData.eEnemyController == EnemyController.PLAYER)
                 {
-                    enemyData.isAttack = false;
                     enemyData.enemyAnimator.speed = 1.0f;
                 }
 
