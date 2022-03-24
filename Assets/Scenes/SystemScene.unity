@@ -42797,7 +42797,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44ec3ba82e9aeb64f8ae477f991b8fe8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MaxStage: 3
+  MaxStage: 1
   startStageID: Stage1-01
   respawnPos: {x: 0, y: 0}
   doorSprites:
@@ -42814,7 +42814,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: a6b9689ba35a80e479dc4227f2a4263b, type: 3}
   - {fileID: 21300000, guid: 29e532073944cb14aafeae26a9af34d6, type: 3}
   stageParent: {fileID: 3234085757420618211}
-  stageSOFolderName: Stage1
 --- !u!1 &3234085758811019306
 GameObject:
   m_ObjectHideFlags: 0
