@@ -17,6 +17,7 @@ public class Environment : MonoSingleton<Environment>
     private ChromaticAberration chromaticAberration;
     private Vignette vignette;
     private LiftGammaGain LGG;
+    private ColorAdjustments colorAdjustments;
     #endregion
 
     public Color damagedColor;
@@ -36,6 +37,7 @@ public class Environment : MonoSingleton<Environment>
         mainVolume.profile.TryGet<ChromaticAberration>(out chromaticAberration);
         mainVolume.profile.TryGet<Vignette>(out vignette);
         mainVolume.profile.TryGet<LiftGammaGain>(out LGG);
+        mainVolume.profile.TryGet<ColorAdjustments>(out colorAdjustments);
     }
 
     private void DefineEvent()
@@ -59,15 +61,21 @@ public class Environment : MonoSingleton<Environment>
 
     public void OnEnteredOrExitRecoveryArea(bool enter)
     {
+        bloom.active = enter;
         mainLight.intensity = enter ? 1.5f : 1f;
         bloom.intensity.value = enter ? 1.5f : 1f;
-        bloom.threshold.value = enter ? 0.8f : 1f;
+        //bloom.threshold.value = enter ? 0.8f : 1f;
+
+        colorAdjustments.active = enter;
+        //colorAdjustments.saturation.value = enter ? 40 : 0;
+        //colorAdjustments.postExposure.value = enter ? 2f : 0;
 
         if (enter)
         {
             Action action = null;
             action += ()=>
             {
+                
                 OnEnteredOrExitRecoveryArea(false);
                 EventManager.StopListening(Global.EnterNextMap, action);
             };

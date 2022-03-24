@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public static partial class Global
 {
@@ -89,4 +90,6 @@ public static partial class Global
         }
         return DoorDirType.BACK;
     }
+
+    public static T[] GetEnumArr<T>() => (T[])Enum.GetValues(typeof(T));
 }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System;
 
 public class StageManager : MonoSingleton<StageManager>
 {
@@ -84,7 +85,7 @@ public class StageManager : MonoSingleton<StageManager>
 
     private void Init()
     {
-        InsertRandomMaps(currentFloor);
+        InsertRandomMaps(currentFloor, true);
         Util.DelayFunc(() => NextStage(startStageID), 0.2f);
         respawnPos = idToStageDataDict[startStageID].stage.GetComponent<StageGround>().playerSpawnPoint.position;
     }
@@ -105,39 +106,58 @@ public class StageManager : MonoSingleton<StageManager>
         return string.Empty;
     }
 
-    private void InsertRandomMaps(int floor)
+    private void InsertRandomMaps(int floor, bool init)
     {
-        List<string> stageIDList = new List<string>();
-        StageBundleDataSO bundle = idToStageFloorDict[FloorToFloorID(floor)];
+        if (init)
+        {
+            //List<string> stageIDList = new List<string>();
+            StageBundleDataSO bundle = idToStageFloorDict[FloorToFloorID(floor)]; //층 정보 받음
 
-        foreach (StageDataSO data in bundle.stages)
-        {
-            stageIDList.Add(data.stageID);
-        }
-        foreach(AreaType type in System.Enum.GetValues(typeof(AreaType)))
-        {
-            randomRoomDict[floor][type].Clear();
-        }
 
-        for (int i = 0; i < bundle.randomStageList.Count; i++) //로직 바꿀거
-        {
-            for (int j = 0; j < bundle.randomStageList[i].nextStageTypes.Length; j++) //지금 한 방식대로라면 굳이 이렇게 할 필요 없지만 나중에 로직 바꿀 수도 있으니 일단 일케 함
+            /*foreach (StageDataSO data in bundle.stages)
             {
-                int rand;
-                StageDataSO data;
-                do
+                stageIDList.Add(data.stageID);
+            }*/
+            foreach (AreaType type in Enum.GetValues(typeof(AreaType)))  //기존 랜덤 맵 초기화
+            {
+                randomRoomDict[floor][type].Clear();
+            }
+
+            /*for (int i = 0; i < bundle.randomStageList.Count; i++) //로직 바꿀거
+            {
+                for (int j = 0; j < bundle.randomStageList[i].nextStageTypes.Length; j++) //지금 한 방식대로라면 굳이 이렇게 할 필요 없지만 나중에 로직 바꿀 수도 있으니 일단 일케 함
                 {
-                    rand = Random.Range(0, stageIDList.Count);
-                    data = idToStageDataDict[stageIDList[rand]];
-                } while (data.areaType != bundle.randomStageList[i].nextStageTypes[j]);
-                randomRoomDict[floor][bundle.randomStageList[i].nextStageTypes[j]].Add(data);
-                stageIDList.RemoveAt(rand);
+                    int rand;
+                    StageDataSO data;
+                    do
+                    {
+                        rand = Random.Range(0, stageIDList.Count);
+                        data = idToStageDataDict[stageIDList[rand]];
+                    } while (data.areaType != bundle.randomStageList[i].nextStageTypes[j]);
+                    randomRoomDict[floor][bundle.randomStageList[i].nextStageTypes[j]].Add(data);
+                    stageIDList.RemoveAt(rand);
+                }
+            }*/
+
+            Dictionary<AreaType, List<string>> areaDic = new Dictionary<AreaType, List<string>>();
+            for (int i = 0; i < Global.EnumCount<AreaType>(); i++) areaDic.Add((AreaType)i, new List<string>());
+            for (int i = 0; i < bundle.stages.Count; i++)
+            {
+                areaDic[bundle.stages[i].areaType].Add(bundle.stages[i].stageID);
+            }
+
+            foreach (AreaType key in areaDic.Keys)
+            {
+                for (int i = 0; i < areaDic[key].Count; i++)
+                {
+                    randomRoomDict[floor][key].Add(idToStageDataDict[areaDic[key][i]]);
+                }
             }
         }
 
-        for (int i = 0; i < bundle.randomStageList.Count; i++)
+        foreach (AreaType type in Enum.GetValues(typeof(AreaType)))
         {
-
+            randomRoomDict[floor][type] = randomRoomDict[floor][type].ToRandomList();
         }
     }
 
@@ -194,10 +214,11 @@ public class StageManager : MonoSingleton<StageManager>
                 {
                     door.nextStageData = randomRoomDict[currentFloor][currentStageData.stageFloor.randomStageList[currentStageNumber].nextStageTypes[idx]][0];
                     randomRoomDict[currentFloor][currentStageData.stageFloor.randomStageList[currentStageNumber].nextStageTypes[idx]].RemoveAt(0);
+                    randomRoomDict[currentFloor][currentStageData.stageFloor.randomStageList[currentStageNumber].nextStageTypes[idx]].Add(door.nextStageData);
                     ++idx;
                     door.gameObject.SetActive(true);
                 }
-                catch (System.Exception e)
+                catch (Exception e)
                 {
                     Debug.LogException(e);
                     Debug.Log($"스테이지를 불러오지 못함 {currentFloor} - {currentStageNumber} : idx: {idx}");
@@ -275,7 +296,7 @@ public class StageManager : MonoSingleton<StageManager>
     private void Respawn()
     {
         currentStageNumber = 0;
-        InsertRandomMaps(currentFloor);
+        InsertRandomMaps(currentFloor, false);
         NextStage(startStageID);
     }
 
@@ -295,7 +316,7 @@ public class StageManager : MonoSingleton<StageManager>
 
     private void EnterRandomArea()
     {
-        RandomRoomType room = (RandomRoomType)Random.Range(0, Global.EnumCount<RandomRoomType>());
+        RandomRoomType room = (RandomRoomType)UnityEngine.Random.Range(0, Global.EnumCount<RandomRoomType>());
         
         //랜덤맵일 때는 EventManager.TriggerEvent(Global.EnterNextMap)가 실행안되므로 저주나 회복일 땐 따로 부름. 몹 구역일 땐 어차피 NextStage로 호출함
         switch (room)
@@ -307,7 +328,7 @@ public class StageManager : MonoSingleton<StageManager>
                 break;
             case RandomRoomType.MONSTER:  //몬스터 구역
                 --currentStageNumber;
-                int targetStage = Mathf.Clamp(currentStageData.stageFloor.floor + Random.Range(-1, 2), 1, MaxStage); //현재 층에서 몇 층을 더할지 정함
+                int targetStage = Mathf.Clamp(currentStageData.stageFloor.floor + UnityEngine.Random.Range(-1, 2), 1, MaxStage); //현재 층에서 몇 층을 더할지 정함
                 StageBundleDataSO sbData = idToStageFloorDict.Values.Find(x=>x.floor == targetStage); //현재 층에서 -1 or 0 or 1층을 더한 층을 가져온다
                 NextStage(sbData.stages.FindRandom(stage => stage.areaType == AreaType.MONSTER).stageID); //뽑은 층에서 몬스터 지역들중에 랜덤으로 가져온다
                 break;

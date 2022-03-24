@@ -148,6 +148,8 @@ public static partial class Util
     public static List<T> ToRandomList<T>(this IEnumerable<T> list, int randomScale = 10)  //¸®½ºÆ® ¼¯À½
     {
         List<T> itemList = list.ToList();
+        if (itemList.Count < 2) return itemList;
+
         for (int i = 0; i < randomScale; i++)
         {
             int ran1 = UnityEngine.Random.Range(0, itemList.Count);

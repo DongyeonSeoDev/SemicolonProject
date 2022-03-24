@@ -100,7 +100,11 @@ public enum AreaType
 
 public enum StateAbnormality
 {
-    
+    Pain,
+    Scar,
+    Poverty,
+    Blind,
+    None
 }
 
 public enum DoorDirType

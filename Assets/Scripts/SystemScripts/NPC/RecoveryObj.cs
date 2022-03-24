@@ -19,7 +19,7 @@ public class RecoveryObj : InteractionObj
 
     void RecoveryPlayerHP(float value)
     {
-        ItemUseMng.IncreaseCurrentHP(SlimeGameManager.Instance.Player, value);
+        ItemUseMng.IncreaseCurrentHP(value);
     }
     void RemoveImprecation()
     {
