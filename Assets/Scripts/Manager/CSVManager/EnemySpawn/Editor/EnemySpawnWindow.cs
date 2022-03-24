@@ -42,6 +42,12 @@ public class EnemySpawnWindow : EditorWindow
             data.name = data.enemyId + " " + data.stageId + " " + data.position;
 
             enemySpawn.addSpawnDataQueue.Enqueue(data);
+
+            Debug.Log("Add(EnemySpawnWindow): 데이터가 큐에 추가되었습니다.");
+        }
+        else
+        {
+            Debug.LogWarning("Warning(EnemySpawnWindow): 빈 데이터가 있습니다.");
         }
 
         ResetText();
@@ -61,6 +67,12 @@ public class EnemySpawnWindow : EditorWindow
             data.name = data.enemyId + " " + data.stageId + " " + data.position;
 
             enemySpawn.removeSpawnDataQueue.Enqueue(data);
+
+            Debug.Log("Delete(EnemySpawnWindow): 데이터가 큐에 추가되었습니다.");
+        }
+        else
+        {
+            Debug.LogWarning("Warning(EnemySpawnWindow): 빈 데이터가 있습니다.");
         }
 
         ResetText();
@@ -79,6 +91,7 @@ public class EnemySpawnWindow : EditorWindow
 
     private void OnEnable()
     {
+        Debug.Log("Reload(EnemySpawnWindow): 데이터를 불러왔습니다.");
         enemySpawn = FindObjectOfType<Enemy.EnemySpawn>();
     }
 

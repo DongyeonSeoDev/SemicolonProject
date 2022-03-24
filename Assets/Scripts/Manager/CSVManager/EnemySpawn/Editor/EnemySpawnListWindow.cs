@@ -44,6 +44,13 @@ public class EnemySpawnListWindow : EditorWindow
 
                     return value == 0 ? x.enemyId.CompareTo(y.enemyId) : value;
                 });
+
+                enemySpawnDataList.Sort((x, y) =>
+                {
+                    int value = x.stageId.CompareTo(y.stageId);
+
+                    return value == 0 ? x.enemyId.CompareTo(y.enemyId) : value;
+                });
                 break;
             case 1:
                 enemySpawn.enemySpawnData.Sort((x, y) =>
@@ -53,6 +60,12 @@ public class EnemySpawnListWindow : EditorWindow
                     return value == 0 ? x.stageId.CompareTo(y.stageId) : value;
                 });
 
+                enemySpawnDataList.Sort((x, y) =>
+                {
+                    int value = x.enemyId.CompareTo(y.enemyId);
+
+                    return value == 0 ? x.stageId.CompareTo(y.stageId) : value;
+                });
                 break;
         }
     }

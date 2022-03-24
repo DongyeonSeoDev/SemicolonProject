@@ -27,12 +27,12 @@ public class StageDoor : InteractionObj
     {
         if(StageManager.Instance.IsStageClear)
         {
-            if(nextStageData.areaType != AreaType.MONSTER && nextStageData.areaType != AreaType.RANDOM)
+            if(nextStageData.areaType != AreaType.MONSTER && nextStageData.areaType != AreaType.RANDOM)  //Test
             {
-                UIManager.Instance.RequestSystemMsg("좋은말 할 때 돌아가라~\n-양진욱-", 65, 1);
+                UIManager.Instance.RequestSystemMsg("이곳을 지나가고 싶으면 양진욱을 뭉탱이로 처치하시오", 65, 1);
                 return;
             }
-            if (!isOpen && !isExitDoor)
+            if (!isOpen && !isExitDoor) //문을 열었거나 입구로 쓴 문이면 상호작용 아예 안되게
             {
                 isOpen = true;
                 StageManager.Instance.PassDir = dirType;
@@ -41,7 +41,10 @@ public class StageDoor : InteractionObj
         }
         else
         {
-            UIManager.Instance.RequestSystemMsg("몬스터가 남아있을 때는 다음 지역으로 입장할 수 없습니다.");
+            if (StageManager.Instance.CurrentAreaType == AreaType.MONSTER)
+                UIManager.Instance.RequestSystemMsg("몬스터가 남아있을 때는 다음 지역으로 입장할 수 없습니다.");
+            else
+                UIManager.Instance.RequestSystemMsg("아직은 지나갈 수 없습니다.");
         }
     }
 

@@ -567,9 +567,9 @@ public partial class UIManager : MonoSingleton<UIManager>
         Util.DelayFunc(() => t.gameObject.SetActive(false), 2f, this, true);
     }
 
-    public void RequestSelectionWindow(string message, List<Action> actions, List<string> btnTexts, bool timePause = true, bool activeWarning = true) //선택창을 띄움
+    public void RequestSelectionWindow(string message, List<Action> actions, List<string> btnTexts, bool activeWarning = true, Func<bool> condition = null) //선택창을 띄움
     {
-        if(timePause) TimeManager.TimePause();
+        TimeManager.TimePause();
 
         selWdStack.ForEach(x => x.Hide(true));
 
@@ -578,7 +578,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         
         SelectionWindow selWd = PoolManager.GetItem<SelectionWindow>("SelWindow");
         selWd.transform.SetAsLastSibling();
-        selWd.Set(message, actions, btnTexts, activeWarning);
+        selWd.Set(message, actions, btnTexts, activeWarning, condition);
         selWdStack.Push(selWd);
     }
 

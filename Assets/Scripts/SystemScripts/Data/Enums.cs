@@ -98,6 +98,11 @@ public enum AreaType
     NONE
 }
 
+public enum StateAbnormality
+{
+    
+}
+
 public enum DoorDirType
 {
     FRONT,

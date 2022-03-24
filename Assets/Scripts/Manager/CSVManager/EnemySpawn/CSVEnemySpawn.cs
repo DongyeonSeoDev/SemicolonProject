@@ -132,6 +132,7 @@ public class CSVEnemySpawn : CSVManager
 
             if (isCheck)
             {
+                Debug.LogError($"Error(CSVEnemySpawn): 중복인 이름({spawnData.name})은 불러올 수 없습니다.");
                 break;
             }
         }
