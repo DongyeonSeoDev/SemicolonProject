@@ -13,7 +13,7 @@ public class SelectionWindow : MonoBehaviour
     public Text msgText;
     public Transform selBtnParent;
 
-    public void Set(string msg, List<Action> clickEv, List<string> btnTexts, bool activeWarning)
+    public void Set(string msg, List<Action> clickEv, List<string> btnTexts, bool activeWarning, Func<bool> condition)
     {
         //ResetData();
         ActiveButtons(clickEv.Count);
@@ -42,6 +42,15 @@ public class SelectionWindow : MonoBehaviour
 
                 btnList[i].transform.SetParent(selBtnParent);  //트위닝이 다 끝나면 버튼들의 부모를 설정함
                 btnList[i].transform.localScale = Vector3.one;  //스케일 값이 다를 수 있으니 초기화시켜줌
+
+                if(condition == null)
+                {
+                    btnList[i].interactable = true;
+                }
+                else
+                {
+                    btnList[i].interactable = condition();
+                }
             }
         });
     }

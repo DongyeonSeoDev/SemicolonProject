@@ -46,7 +46,7 @@ public class MonsterInfoSlot : MonoBehaviour
             understandingRateFill.fillAmount = 1;
             understandingOverRateFill.fillAmount = rate - 1f;
 
-            fullAssimEff.SetActive(rate >= PlayerEnemyUnderstandingRateManager.Instance.MaxUnderstandingRate);
+            fullAssimEff.SetActive(rate >= PlayerEnemyUnderstandingRateManager.Instance.MaxUnderstandingRate); //나중에 풀링으로 ㄱ
         }
         else
         {
