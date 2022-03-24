@@ -101,14 +101,7 @@ public class PlayerInput : MonoBehaviour
 
             if (!EventSystem.current.IsPointerOverGameObject()) // mouse 0
             {
-                if(Input.GetMouseButtonDown(0))
-                {
-                    isDoSkill0 = true;
-                }
-                if(Input.GetMouseButtonUp(0))
-                {
-                    isDoSkill0 = false;
-                }
+                isDoSkill0 = Input.GetMouseButton(0);
             }
 
             //Debug.Log(isDoSkill0 == Input.GetButton("Shoot"));
