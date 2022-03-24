@@ -106,7 +106,6 @@ public class PlayerDrain : PlayerSkill
                     Enemy.Enemy enemy = item.Item1.GetComponent<Enemy.Enemy>();
                     string objId = enemy.GetEnemyId();
 
-
                     if (PlayerEnemyUnderstandingRateManager.Instance.CheckMountObjIdContain(objId))
                     {
                         PlayerEnemyUnderstandingRateManager.Instance.UpUnderstandingRate(objId, item.Item2);

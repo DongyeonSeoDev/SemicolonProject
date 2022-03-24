@@ -32,6 +32,10 @@ public class SoundBox : MonoBehaviour
     [Header("이 값이 true면 아래의 playTime관련 값들은 무시된다.")]
     [SerializeField]
     private bool isBackgroundMusic = false;
+    public bool IsBackgroundMusic
+    {
+        get { return isBackgroundMusic; }
+    }
 
     [Header("이 값이 true면 아래의 playTime값은 무시하고, 끝까지 재생한다.")]
     [SerializeField]
@@ -71,10 +75,10 @@ public class SoundBox : MonoBehaviour
     }
     private void OnEnable()
     {
-        EventManager.StartListening("StopSoundAll", (Action)SoundStop);
-        EventManager.StartListening("SoundPauseAll", (Action<bool>)SetPause);
-        EventManager.StartListening("SetVolumeAll", (Action<float>)SetVolume);
-        EventManager.StartListening("SetPitchAll", (Action<float>)SetPitch);
+        EventManager.StartListening(isBackgroundMusic ? "StopBGMAll" : "StopEffectSoundAll", (Action)SoundStop);
+        EventManager.StartListening(isBackgroundMusic ? "BGMPauseAll" : "EffectSoundPauseAll", (Action<bool>)SetPause);
+        EventManager.StartListening(isBackgroundMusic ? "SetBGMVolumeAll" : "SetEffectSoundVolumeAll", (Action<float>)SetVolume);
+        EventManager.StartListening(isBackgroundMusic ? "SetBGMPitchAll" : "SetEffectSoundsPitchAll", (Action<float>)SetPitch);
 
         EventManager.StartListening("StopSound", (Action<string>)SoundStop);
         EventManager.StartListening("PuaseSound", (Action<string, bool>)SetPause);
@@ -113,10 +117,10 @@ public class SoundBox : MonoBehaviour
     }
     private void OnDisable()
     {
-        EventManager.StopListening("SoundStopAll", (Action)SoundStop);
-        EventManager.StopListening("SoundPauseAll", (Action<bool>)SetPause);
-        EventManager.StopListening("SetVolumeAll", (Action<float>)SetVolume);
-        EventManager.StopListening("SetPitchAll", (Action<float>)SetPitch);
+        EventManager.StopListening(isBackgroundMusic ? "StopBGMAll" : "StopEffectSoundAll", (Action)SoundStop);
+        EventManager.StopListening(isBackgroundMusic ? "BGMPauseAll" : "EffectSoundPauseAll", (Action<bool>)SetPause);
+        EventManager.StopListening(isBackgroundMusic ? "SetBGMVolumeAll" : "SetEffectSoundVolumeAll", (Action<float>)SetVolume);
+        EventManager.StopListening(isBackgroundMusic ? "SetBGMPitchAll" : "SetEffectSoundsPitchAll", (Action<float>)SetPitch);
 
         EventManager.StopListening("SoundStop", (Action<string>)SoundStop);
         EventManager.StopListening("SoundPause", (Action<string, bool>)SetPause);

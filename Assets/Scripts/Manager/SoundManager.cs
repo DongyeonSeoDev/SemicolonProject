@@ -13,10 +13,70 @@ public class SoundManager : MonoSingleton<SoundManager>
     [SerializeField]
     private string currentBGMSoundBoxId = "NULL";
 
+    #region Volume, Pitch, Pause관련 변수들
+    [Range(0f, 1f)]
     [SerializeField]
-    private float volume = 1f;
-    private float pitch = 1f;
-    private bool pause = false;
+    private float masterVolume = 1f;
+    public float MasterVolume
+    {
+        get { return masterVolume; }
+        set { masterVolume = value; }
+    }
+
+    [Range(0f, 1f)]
+    [SerializeField]
+    private float bgmVolume = 1f;
+    public float BGMVolume
+    {
+        get { return bgmVolume; }
+        set { bgmVolume = value; }
+    }
+
+    [Range(0f, 1f)]
+    [SerializeField]
+    private float effectSoundVolume = 1f;
+    public float EffectSoundVolume
+    {
+        get { return effectSoundVolume; }
+        set { effectSoundVolume = value; }
+    }
+
+    private float bgmPitch = 1f;
+    public float BgmPitch
+    {
+        get { return bgmPitch; }
+    }
+
+    private float effectPitch = 1f;
+    public float EffectPitch
+    {
+        get { return effectPitch; }
+    }
+
+    private bool bgmPause = false;
+    public bool BgmPause
+    {
+        get { return bgmPause; }
+    }
+
+    private bool effectSoundsPause = false;
+    public bool EffectSoundsPause
+    {
+        get { return effectSoundsPause; }
+    }
+    #endregion
+
+    #region 타이머 관련 변수들
+    private float BGMVolumeTimer = 0f;
+    private float BGMVolumeTime = 0f;
+    private float BGMVolumeStart = 0f;
+    private float BGMVolumeTarget = 0f;
+
+    private float BGMPitchTimer = 0f;
+    private float BGMPitchTime= 0f;
+    private float BGMPitchStart = 0f;
+    private float BGMPitchTarget = 0f;
+    #endregion
 
     private void Awake()
     {
@@ -40,6 +100,15 @@ public class SoundManager : MonoSingleton<SoundManager>
     private void OnDisable()
     {
         EventManager.StopListening("StartBGM", ChangeBGMSoundBox);
+    }
+    //private void Start()
+    //{
+    //    //SetBGMPitchByLerp(1f, -0.3f, 1f);
+    //}
+    private void Update()
+    {
+        LerpBGMVolume();
+        LerpBGMPitch();
     }
     /// <summary>
     /// 스테이지 BGM을 바꿈.
@@ -90,9 +159,9 @@ public class SoundManager : MonoSingleton<SoundManager>
                     soundBox = soundBoxesDictForPooling[soundBoxId].Dequeue();
                     soundBox.gameObject.SetActive(true);
 
-                    soundBox.SetPause(soundBoxId, pause);
-                    soundBox.SetVolume(soundBoxId, volume);
-                    soundBox.SetPitch(soundBoxId, pitch);
+                    soundBox.SetPause(soundBoxId, soundBox.IsBackgroundMusic ? bgmPause : effectSoundsPause);
+                    soundBox.SetVolume(soundBoxId, soundBox.IsBackgroundMusic ? bgmVolume : effectSoundVolume);
+                    soundBox.SetPitch(soundBoxId, soundBox.IsBackgroundMusic ? bgmPitch : effectPitch);
 
                     return;
                 }
@@ -107,9 +176,9 @@ public class SoundManager : MonoSingleton<SoundManager>
             soundBoxObj = Instantiate(soundBoxesDict[soundBoxId].gameObject, transform);
             soundBox = soundBoxObj.GetComponent<SoundBox>();
 
-            soundBox.SetPause(soundBoxId, pause);
-            soundBox.SetVolume(soundBoxId, volume);
-            soundBox.SetPitch(soundBoxId, pitch);
+            soundBox.SetPause(soundBoxId, soundBox.IsBackgroundMusic ? bgmPause : effectSoundsPause);
+            soundBox.SetVolume(soundBoxId, soundBox.IsBackgroundMusic ? bgmVolume : effectSoundVolume);
+            soundBox.SetPitch(soundBoxId, soundBox.IsBackgroundMusic ? bgmPitch : effectPitch);
         }
         else
         {
@@ -121,23 +190,81 @@ public class SoundManager : MonoSingleton<SoundManager>
         soundBoxesDictForPooling[soundBox.SoundBoxId].Enqueue(soundBox);
         soundBox.gameObject.SetActive(false);
     }
-    public void StopSounds()
+
+    public void StopBGM()
     {
-        EventManager.TriggerEvent("StopSoundAll");
+        EventManager.TriggerEvent("StopBGMAll");
     }
-    public void ChangeVolume(float v)
+    public void StopEffectSounds()
     {
-        volume = v;
-        EventManager.TriggerEvent("SetVolumeAll", volume);
+        EventManager.TriggerEvent("StopEffectSoundAll");
     }
-    public void PauseSounds(bool p)
+
+    public void SetBGMVolume(float v)
     {
-        pause = p;
-        EventManager.TriggerEvent("SoundPauseAll", p);
+        bgmVolume = v;
+        EventManager.TriggerEvent("SetBGMVolumeAll", bgmVolume);
     }
-    public void SetPitch(float p)
+    public void SetEffectSoundVolume(float v)
     {
-        pitch = p;
-        EventManager.TriggerEvent("SetPitchAll", p);
+        effectSoundVolume = v;
+        EventManager.TriggerEvent("SetEffectSoundVolumeAll", effectSoundVolume);
+    }
+
+    public void SetBGMVolumeByLerp(float start, float target, float time)
+    {
+        BGMVolumeStart = start;
+        BGMVolumeTarget = target;
+        BGMVolumeTime = time;
+        BGMVolumeTimer = 0f;
+    }
+    private void LerpBGMVolume()
+    {
+        if (BGMVolumeTimer < BGMVolumeTime)
+        {
+            BGMVolumeTimer += Time.deltaTime;
+
+            bgmVolume = Mathf.Lerp(BGMVolumeStart, BGMPitchTime, BGMVolumeTimer / BGMVolumeTime);
+            SetBGMVolume(bgmVolume);
+        }
+    }
+    public void SetBGMPitchByLerp(float start, float target, float time)
+    {
+        BGMPitchStart = start;
+        BGMPitchTarget = target;
+        BGMPitchTime = time;
+        BGMPitchTimer = 0f;
+    }
+    private void LerpBGMPitch()
+    {
+        if(BGMPitchTimer < BGMPitchTime)
+        {
+            BGMPitchTimer += Time.deltaTime;
+
+            bgmPitch = Mathf.Lerp(BGMPitchStart, BGMPitchTarget, BGMPitchTimer / BGMPitchTime);
+            SetBGMPitch(bgmPitch);
+        }
+    }
+    
+    public void PauseBGM(bool p)
+    {
+        bgmPause = p;
+        EventManager.TriggerEvent("BGMPauseAll", p);
+    }
+    public void PauseEffectSounds(bool p)
+    {
+        effectSoundsPause = p;
+        EventManager.TriggerEvent("EffectSoundPauseAll", p);
+    }
+
+    public void SetBGMPitch(float p)
+    {
+        bgmPitch = p;
+        EventManager.TriggerEvent("SetBGMPitchAll", p);
+    }
+    public void SetEffectSoundsPitch(float p)
+    {
+        effectPitch = p;
+        EventManager.TriggerEvent("SetEffectSoundsPitchAll", p);
     }
 }
