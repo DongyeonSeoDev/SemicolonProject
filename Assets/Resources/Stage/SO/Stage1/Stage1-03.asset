@@ -13,8 +13,6 @@ MonoBehaviour:
   m_Name: Stage1-03
   m_EditorClassIdentifier: 
   stageFloor: {fileID: 11400000, guid: ad81aacd5e610b7498e62e7a75a34db9, type: 2}
-  endStage: 0
-  stageNumber: 3
-  stageName: "\uC9C0\uC5ED \uC774\uB984"
-  stage: {fileID: 1378282381469885354, guid: 95fb75bc0ca33a1408a57a496b90aaa7, type: 3}
+  stageName: 
+  stage: {fileID: 1378282381469885354, guid: c69bdead641f22040b92e34a5624c49f, type: 3}
   areaType: 4

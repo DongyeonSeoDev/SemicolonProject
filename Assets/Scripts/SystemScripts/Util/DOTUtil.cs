@@ -10,6 +10,7 @@ public static class DOUtil
 {
     private static Dictionary<string, IEnumerator> tweeningDict = new Dictionary<string, IEnumerator>();
 
+    #region DO
     public static CTween DOIntensity(this Light2D light, float endValue, float duration, bool setUpdate = false, Action onComplete = null)
     {
         string key = "DOT_Light2D_Intensity_" + light.name;
@@ -37,6 +38,17 @@ public static class DOUtil
         return t;
     }
 
+    public static CTween DOChromIntensity(this ChromaticAberration CA, float endValue, float duration, bool setUpdate = false, Action onComplete = null)
+    {
+        string key = "DOT_ChromaticAberration_Intensity_" + CA.name;
+        Action act = () => ExecuteTweening(key, DOChromIntensityCo(CA, endValue, duration, setUpdate, onComplete), Environment.Instance);
+        act();
+        CTween t = new CTween(key, act);
+        return t;
+    }
+    #endregion
+
+    #region DOCO
     static IEnumerator DOIntensityCo(Light2D light, float endValue, float duration, bool setUpdate, Action onComplete)
     {
         float vps = (endValue-light.intensity) / duration;
@@ -123,6 +135,33 @@ public static class DOUtil
         vig.intensity.value = endValue;
         onComplete?.Invoke();
     }
+
+    static IEnumerator DOChromIntensityCo(ChromaticAberration CA, float endValue, float duration, bool setUpdate, Action onComplete)
+    {
+        float vps = (endValue - CA.intensity.value) / duration;
+        float t = 0f;
+        if (setUpdate)
+        {
+            while (t < duration)
+            {
+                yield return null;
+                t += Time.unscaledDeltaTime;
+                CA.intensity.value += vps * Time.unscaledDeltaTime;
+            }
+        }
+        else
+        {
+            while (t < duration)
+            {
+                yield return null;
+                t += Time.deltaTime;
+                CA.intensity.value += vps * Time.deltaTime;
+            }
+        }
+        CA.intensity.value = endValue;
+        onComplete?.Invoke();
+    }
+    #endregion
 
     public static void ExecuteTweening(string key, IEnumerator tc, MonoBehaviour mono)
     {

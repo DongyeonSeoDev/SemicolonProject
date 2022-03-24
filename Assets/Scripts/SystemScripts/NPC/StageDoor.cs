@@ -27,7 +27,7 @@ public class StageDoor : InteractionObj
     {
         if(StageManager.Instance.IsStageClear)
         {
-            if(nextStageData.areaType != AreaType.MONSTER)
+            if(nextStageData.areaType != AreaType.MONSTER && nextStageData.areaType != AreaType.RANDOM)
             {
                 UIManager.Instance.RequestSystemMsg("좋은말 할 때 돌아가라~\n-양진욱-", 65, 1);
                 return;
@@ -36,7 +36,7 @@ public class StageDoor : InteractionObj
             {
                 isOpen = true;
                 StageManager.Instance.PassDir = dirType;
-                UIManager.Instance.StartLoading(() => StageManager.Instance.NextStage(nextStageData.stageID), () => EventManager.TriggerEvent("StartNextStage", nextStageData.stageName));
+                UIManager.Instance.StartLoading(() => StageManager.Instance.NextStage(nextStageData.stageID), () => EventManager.TriggerEvent("StartNextStage"));
             }
         }
         else

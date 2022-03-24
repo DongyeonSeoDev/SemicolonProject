@@ -1204,7 +1204,7 @@ GameObject:
   - component: {fileID: 112924586600170954}
   - component: {fileID: 1598099289191442443}
   m_Layer: 6
-  m_Name: Stage1-4Pref
+  m_Name: Stage1-03Pref
   m_TagString: Wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1249,7 +1249,7 @@ EdgeCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1378282381469885354}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Density: 1
   m_Material: {fileID: 6200000, guid: 99387a733fb54b64da99a36073c5c699, type: 2}
   m_IsTrigger: 0
