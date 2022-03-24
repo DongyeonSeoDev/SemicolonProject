@@ -64,6 +64,7 @@ public class CSVEnemyLoot : CSVManager
     }
 
     public List<List<EnemyLootData>> lootData = new List<List<EnemyLootData>>();
+    public List<string> readData = new List<string>();
     public Dictionary<string, ItemSO> itemDictionary = new Dictionary<string, ItemSO>();
 
     private StringBuilder sb = new StringBuilder(128);
@@ -96,6 +97,8 @@ public class CSVEnemyLoot : CSVManager
             lootData[value].Add(sb.ToString().Substring(0, sb.Length - 1));
         }
 
+        readData.Add(data[0] + ',' + sb.ToString());
+
         sb.Clear();
 
         if (!isReadItemData)
@@ -109,5 +112,15 @@ public class CSVEnemyLoot : CSVManager
                 itemDictionary.Add(items[i].name.Trim(), items[i]);
             }
         }
+    }
+
+    protected override string HowToWrite()
+    {
+        for (int i = 0; i < readData.Count; i++)
+        {
+            sb.Append(readData[i]);
+        }
+
+        return sb.ToString();
     }
 }

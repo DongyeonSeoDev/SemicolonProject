@@ -16,6 +16,11 @@ public class EnemySpawnWindow : EditorWindow
         GetWindow(typeof(EnemySpawnWindow));
     }
 
+    public void ShowEnemySpawnListWindow()
+    {
+        GetWindow(typeof(EnemySpawnListWindow));
+    }
+
     private void ResetText()
     {
         type = default(Enemy.Type);
@@ -41,7 +46,7 @@ public class EnemySpawnWindow : EditorWindow
 
         ResetText();
 
-        GetWindow(typeof(EnemySpawnListWindow));
+        ShowEnemySpawnListWindow();
     }
 
     private void Remove()
@@ -60,7 +65,7 @@ public class EnemySpawnWindow : EditorWindow
 
         ResetText();
 
-        GetWindow(typeof(EnemySpawnListWindow));
+        ShowEnemySpawnListWindow();
     }
 
     private void Update()
@@ -106,7 +111,7 @@ public class EnemySpawnWindow : EditorWindow
 
         if (GUILayout.Button("Show"))
         {
-            GetWindow(typeof(EnemySpawnListWindow));
+            ShowEnemySpawnListWindow();
         }
 
         GUILayout.EndHorizontal();
