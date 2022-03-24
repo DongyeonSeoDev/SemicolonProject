@@ -10,13 +10,18 @@ public class BossTestInspector : Editor
         base.OnInspectorGUI();
 
         GUILayout.Space(10);
+        EditorGUI.BeginDisabledGroup(!Application.isPlaying);
 
         if (GUILayout.Button("Boss Spawn"))
         {
-            if (Application.isPlaying && FindObjectOfType<Enemy.Boss1SkeletonKing>() == null)
+            if (FindObjectOfType<Enemy.Boss1SkeletonKing>() == null)
             {
                 SlimeGameManager.Instance.CurrentPlayerBody.transform.position = FindObjectOfType<BossTest>().playerStartPosition;
                 EventManager.TriggerEvent("SpawnEnemy", "BossTest_01");
+            }
+            else
+            {
+                Debug.LogWarning("WARNING(BossTestInspector): 보스가 이미 소환되어 있습니다.");
             }
         }
 
@@ -24,12 +29,17 @@ public class BossTestInspector : Editor
         {
             var boss = FindObjectOfType<Enemy.Boss1SkeletonKing>();
 
-            if (Application.isPlaying && boss != null)
+            if (boss != null)
             {
                 boss.GetComponent<Enemy.Boss1SkeletonKing>().Move();
             }
+            else
+            {
+                Debug.LogWarning("WARNING(BossTestInspector): 보스가 아직 소환되지 않았습니다.");
+            }
         }
 
+        EditorGUI.EndDisabledGroup();
         GUILayout.Space(5);
     }
 }
@@ -50,16 +60,21 @@ public class BossTestWindow : EditorWindow
 
     public void OnGUI()
     {
+        EditorGUI.BeginDisabledGroup(!Application.isPlaying);
         GUILayout.FlexibleSpace();
         GUILayout.BeginHorizontal();
         GUILayout.FlexibleSpace();
 
         if (GUILayout.Button("Boss Spawn", buttonLayout))
         {
-            if (Application.isPlaying && FindObjectOfType<Enemy.Boss1SkeletonKing>() == null)
+            if (FindObjectOfType<Enemy.Boss1SkeletonKing>() == null)
             {
                 SlimeGameManager.Instance.CurrentPlayerBody.transform.position = FindObjectOfType<BossTest>().playerStartPosition;
                 EventManager.TriggerEvent("SpawnEnemy", "BossTest_01");
+            }
+            else
+            {
+                Debug.LogWarning("WARNING(BossTestWindow): 보스가 이미 소환되어 있습니다.");
             }
         }
 
@@ -73,15 +88,20 @@ public class BossTestWindow : EditorWindow
         {
             var boss = FindObjectOfType<Enemy.Boss1SkeletonKing>();
 
-            if (Application.isPlaying && boss != null)
+            if (boss != null)
             {
                 boss.GetComponent<Enemy.Boss1SkeletonKing>().Move();
+            }
+            else
+            {
+                Debug.LogWarning("WARNING(BossTestWindow): 보스가 아직 소환되지 않았습니다.");
             }
         }
 
         GUILayout.FlexibleSpace();
         GUILayout.EndHorizontal();
         GUILayout.FlexibleSpace();
+        EditorGUI.EndDisabledGroup();
     }
 }
 #endif
