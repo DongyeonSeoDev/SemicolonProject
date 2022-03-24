@@ -156,7 +156,7 @@ public class Player : MonoBehaviour
 
         return true;
     }
-    public void GetDamage(int damage, bool critical = false)
+    public void GetDamage(int damage, bool critical = false, bool stateAbnormality = false)
     {
         if (!playerState.IsDead)
         {
@@ -171,14 +171,21 @@ public class Player : MonoBehaviour
 
             if (currentHp <= 0)
             {
-                playerState.IsDead = true;
+                if (stateAbnormality)
+                {
+                    currentHp = 1;
+                }
+                else
+                {
+                    playerState.IsDead = true;
+                }
             }
 
             EffectManager.Instance.OnDamaged(dm, critical, false, SlimeGameManager.Instance.CurrentPlayerBody.transform.position);
             UIManager.Instance.UpdatePlayerHPUI(true);
         }
     }
-    public void GetDamage(GameObject attacker, int damage, bool critical = false)
+    public void GetDamage(GameObject attacker, int damage, bool critical = false, bool stateAbnormality = false)
     {
         foreach(var item in drainList)
         {
@@ -201,7 +208,14 @@ public class Player : MonoBehaviour
 
             if (currentHp <= 0)
             {
-                playerState.IsDead = true;
+                if (stateAbnormality)
+                {
+                    currentHp = 1;
+                }
+                else
+                {
+                    playerState.IsDead = true;
+                }
             }
 
             EffectManager.Instance.OnDamaged(dm, critical, false, SlimeGameManager.Instance.CurrentPlayerBody.transform.position); 
