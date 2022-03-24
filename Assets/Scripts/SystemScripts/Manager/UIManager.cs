@@ -8,7 +8,7 @@ using DG.Tweening;
 
 public partial class UIManager : MonoSingleton<UIManager>
 {
-    //음... 이거 나중에 좀 많아진다싶으면 새 로직 써야겠다
+    
     private Queue<NoticeUISet> noticeQueue = new Queue<NoticeUISet>();
     private Queue<NoticeUISet> topCenterMsgQueue = new Queue<NoticeUISet>();
 

@@ -10,10 +10,12 @@ public class StageManager : MonoSingleton<StageManager>
 
     private StageGround currentStage = null;
     private StageDataSO currentStageData = null;
+    public StageDataSO CurrentStageData => currentStageData;
 
     private int currentFloor = 1;
     private int currentStageNumber = 0;
     private AreaType currentArea;
+    public AreaType CurrentAreaType => currentArea;
 
     //private bool completeLoadNextMap; //다음 맵을 완전히 불러왔는지
 
@@ -117,7 +119,7 @@ public class StageManager : MonoSingleton<StageManager>
             randomRoomDict[floor][type].Clear();
         }
 
-        for (int i = 0; i < bundle.randomStageList.Count; i++)
+        for (int i = 0; i < bundle.randomStageList.Count; i++) //로직 바꿀거
         {
             for (int j = 0; j < bundle.randomStageList[i].nextStageTypes.Length; j++) //지금 한 방식대로라면 굳이 이렇게 할 필요 없지만 나중에 로직 바꿀 수도 있으니 일단 일케 함
             {
@@ -131,6 +133,11 @@ public class StageManager : MonoSingleton<StageManager>
                 randomRoomDict[floor][bundle.randomStageList[i].nextStageTypes[j]].Add(data);
                 stageIDList.RemoveAt(rand);
             }
+        }
+
+        for (int i = 0; i < bundle.randomStageList.Count; i++)
+        {
+
         }
     }
 
@@ -215,6 +222,7 @@ public class StageManager : MonoSingleton<StageManager>
                 SetClearStage();
                 break;
             case AreaType.RANDOM:
+                IsStageClear = false;
                 EnterRandomArea();
                 return;   //랜덤 맵이면 함수를 빠져나간다.
             case AreaType.BOSS:
@@ -239,7 +247,7 @@ public class StageManager : MonoSingleton<StageManager>
 
     public void StartNextStage()
     {
-        if (!IsStageClear)
+        if (currentArea == AreaType.MONSTER)
             EventManager.TriggerEvent("EnemyMove", currentStageData.stageID);
         EventManager.TriggerEvent("StartBGM", currentStageData.stageID);
         UIManager.Instance.InsertTopCenterNoticeQueue(string.IsNullOrEmpty(currentStageData.stageName) ? Global.AreaTypeToString(currentArea) : currentStageData.stageName);
