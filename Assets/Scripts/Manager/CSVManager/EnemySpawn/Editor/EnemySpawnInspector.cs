@@ -49,7 +49,7 @@ public class EnemySpawnInspector : Editor
                 enemySpawn.addSpawnDataQueue.Enqueue(spawnData);
             }
 
-            EditorWindow.GetWindow(typeof(EnemySpawnWindow));
+            EditorWindow.GetWindow(typeof(EnemySpawnListWindow));
         }
 
         GUILayout.Space(5);

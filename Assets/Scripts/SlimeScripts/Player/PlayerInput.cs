@@ -105,7 +105,7 @@ public class PlayerInput : MonoBehaviour
                 {
                     isDoSkill0 = true;
                 }
-                else if(Input.GetMouseButtonUp(0))
+                if(Input.GetMouseButtonUp(0))
                 {
                     isDoSkill0 = false;
                 }
