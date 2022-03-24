@@ -8,6 +8,7 @@ TagManager:
   - NPC
   - Item
   - CameraLimit
+  - NotMoveZone
   layers:
   - Default
   - TransparentFX
@@ -26,7 +27,7 @@ TagManager:
   - CAMERACOLLIDER
   - POSTPROCESSING
   - ENEMYDEAD
-  - 
+  - NOTMOVEZONE
   - 
   - 
   - 
