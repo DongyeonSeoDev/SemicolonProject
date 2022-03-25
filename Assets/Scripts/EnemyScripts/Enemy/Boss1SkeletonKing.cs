@@ -4,6 +4,8 @@ namespace Enemy
 {
     public class Boss1SkeletonKing : EnemyPoolData
     {
+        public Transform movePivot;
+
         private Rigidbody2D rigid;
         private Animator animator;
         private SpriteRenderer sr;
@@ -25,8 +27,8 @@ namespace Enemy
             sr = GetComponent<SpriteRenderer>();
 
             playerTransform = SlimeGameManager.Instance.CurrentPlayerBody.transform;
-            command = new EnemyFollowPlayerCommand(transform, playerTransform, rigid, 5f, 0f, false);
-            command2 = new EnemyFollowPlayerCommand(transform, playerTransform, rigid, 15f, 0f, false);
+            command = new EnemyFollowPlayerCommand(movePivot, playerTransform, rigid, 5f, 0f, false);
+            command2 = new EnemyFollowPlayerCommand(movePivot, playerTransform, rigid, 15f, 0f, false);
         }
 
         private void Update()
