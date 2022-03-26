@@ -40,7 +40,7 @@ namespace Enemy
 
             if (isMove)
             {
-                if (Vector2.Distance(transform.position, playerTransform.position) < 5f)
+                if (Vector2.Distance(transform.position, playerTransform.position) < 3.5f)
                 {
                     animator.ResetTrigger(hashMove);
                     animator.SetTrigger(hashIsAttack);
