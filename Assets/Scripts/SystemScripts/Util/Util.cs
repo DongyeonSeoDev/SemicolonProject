@@ -170,6 +170,8 @@ public static partial class Util
 
     public static T EnumParse<T>(string str) => (T)Enum.Parse(typeof(T), str);
 
+    public static T StringToClass<T>(string str) where T : class => Activator.CreateInstance(Type.GetType(str)) as T;
+
     public static void PrintStructSize(Type type)
     {
         Debug.Log(type.ToString() + " Size : " + Marshal.SizeOf(type));

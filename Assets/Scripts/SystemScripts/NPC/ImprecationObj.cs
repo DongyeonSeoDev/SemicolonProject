@@ -7,8 +7,12 @@ public class ImprecationObj : InteractionObj
     private List<Action> imprecationActions = new List<Action>();
     public FakeSpriteOutline fsOut;
 
-    private void Awake()
+    private bool canInteract;
+
+    private void ResetActionList()
     {
+        imprecationActions.Clear();
+
         imprecationActions.Add(() => DecreasePlayerHp(40));
         imprecationActions.Add(OnStateAbnormal);
         imprecationActions.Add(RemoveRandomItem);
@@ -19,9 +23,28 @@ public class ImprecationObj : InteractionObj
         }
     }
 
+    private void OnEnable()
+    {
+        canInteract = true;
+    }
+    private void OnDisable()
+    {
+        canInteract = false;
+    }
+
     public override void Interaction()
     {
-        UIManager.Instance.RequestSelectionWindow("어떤 효과를 적용하시겠습니까?", imprecationActions, new List<string>() { "체력 40% 감소", "랜덤으로 저주 적용", "랜덤 아이템 손실" });
+        if (!canInteract)
+        {
+            UIManager.Instance.RequestSystemMsg("더 이상 저주 효과를 받을 수 없습니다.");
+            return;
+        }
+
+        ResetActionList();
+
+        UIManager.Instance.RequestSelectionWindow("어떤 효과를 적용하시겠습니까?", imprecationActions, new List<string>() { "체력 40% 감소", "랜덤으로 저주 적용", "랜덤 아이템 손실" }, true,
+            new List<Func<bool>>() {null, null, () => Inventory.Instance.ActiveSlotCount > 0});
+        canInteract = false;
     }
 
     void DecreasePlayerHp(float value)
@@ -31,7 +54,7 @@ public class ImprecationObj : InteractionObj
 
     void OnStateAbnormal()
     {
-        StateAbnormality state = Global.GetEnumArr<StateAbnormality>().ToList().ToRandomElement();
+        StateAbnormality state = (StateAbnormality)UnityEngine.Random.Range(0, Global.EnumCount<StateAbnormality>()-1);
         StateManager.Instance.StartStateAbnormality(state);
     }
 

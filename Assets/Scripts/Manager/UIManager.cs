@@ -567,7 +567,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         Util.DelayFunc(() => t.gameObject.SetActive(false), 2f, this, true);
     }
 
-    public void RequestSelectionWindow(string message, List<Action> actions, List<string> btnTexts, bool activeWarning = true, Func<bool> condition = null) //선택창을 띄움
+    public void RequestSelectionWindow(string message, List<Action> actions, List<string> btnTexts, bool activeWarning = true, List<Func<bool>> conditions = null) //선택창을 띄움
     {
         TimeManager.TimePause();
 
@@ -578,7 +578,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         
         SelectionWindow selWd = PoolManager.GetItem<SelectionWindow>("SelWindow");
         selWd.transform.SetAsLastSibling();
-        selWd.Set(message, actions, btnTexts, activeWarning, condition);
+        selWd.Set(message, actions, btnTexts, activeWarning, conditions);
         selWdStack.Push(selWd);
     }
 
@@ -594,6 +594,7 @@ public partial class UIManager : MonoSingleton<UIManager>
 
         mobSaveWindowActiveDic[id] = true;
 
+        //만약 전역변수로 List<Action>을 만들고 이걸로 전달을 하면 내부에서 DefaultSelectionAction을 더하면 전역에도 추가되므로 두번째부터는 DefaultSelectionAction을 두 번 이상 호출하게 되는 문제가 생긴다
         RequestSelectionWindow("<color=#7A98FF>" + MonsterCollection.Instance.mobIdToSlot[id].BodyData.bodyName + "</color>를(을) 변신 슬롯에 저장하시겠습니까?\n(거절하면 해당 몬스터의 흡수 확률은 0%로 돌아갑니다.)",
             new List<Action>() {() => CancelMonsterSaveChance(id) , () => SaveMonsterBody(id) }, new List<string>() {"거절", "저장"});
     }
@@ -638,7 +639,12 @@ public partial class UIManager : MonoSingleton<UIManager>
 
         Sequence seq = DOTween.Sequence();
         seq.SetUpdate(true);
-        seq.Append(loadingCvsg.DOFade(1, start).SetEase(Ease.OutQuad).OnComplete(()=>loadingAction?.Invoke()));
+        seq.Append(loadingCvsg.DOFade(1, start).SetEase(Ease.OutQuad).OnComplete(() =>
+        {
+            EventManager.TriggerEvent("Loading");
+            loadingAction?.Invoke();
+        }
+        ));
         seq.AppendInterval(middle);
         seq.Append(loadingCvsg.DOFade(0, end).SetEase(Ease.OutQuad));
         seq.OnComplete(() => loadingEndAction());

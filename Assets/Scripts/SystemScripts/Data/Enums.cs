@@ -104,7 +104,7 @@ public enum StateAbnormality
     Scar,
     Poverty,
     Blind,
-    None
+    None  // 얘는 무조건 마지막에 배치
 }
 
 public enum DoorDirType

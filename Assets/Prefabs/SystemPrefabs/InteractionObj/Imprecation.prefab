@@ -371,5 +371,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprMaskSprite: {fileID: 0}
-  thickness: 1.05
+  thickness: 1.1
   outlineColor: {r: 0.77071077, g: 0.18431371, b: 1, a: 1}

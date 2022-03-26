@@ -18,6 +18,18 @@ public class Inventory : MonoSingleton<Inventory>
     public bool IsDragging { get => dragImage.gameObject.activeSelf; }
     #endregion
 
+    public int ActiveSlotCount
+    {
+        get
+        {
+            int count = 0;
+            for(int i = 0; i < itemSlots.Count; i++)
+            {
+                if (itemSlots[i].ExistItem) count++;
+            }
+            return count;
+        }
+    }
 
     private void Awake()
     {
@@ -383,8 +395,8 @@ public class Inventory : MonoSingleton<Inventory>
     #region 기타 처리
     public void RemoveRandomItem()
     {
-        if(itemSlots.Count == 0) return;
-        ItemSlot slot = itemSlots[Random.Range(0,itemSlots.Count)];
+        //if (ActiveSlotCount == 0) return;  //안되는건 따로 클릭 안되게 할거
+        ItemSlot slot = itemSlots.FindAll(x => x.ExistItem).ToRandomElement();
         RemoveItem(slot.itemInfo.id, slot.Count);
     }
     #endregion

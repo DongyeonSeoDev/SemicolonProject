@@ -238,7 +238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprMaskSprite: {fileID: 0}
-  thickness: 1.05
+  thickness: 1.1
   outlineColor: {r: 0.2004805, g: 1, b: 0.18431371, a: 1}
 --- !u!1 &7812666719662560905
 GameObject:

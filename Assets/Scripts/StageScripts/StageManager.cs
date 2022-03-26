@@ -38,12 +38,13 @@ public class StageManager : MonoSingleton<StageManager>
     public Transform npcParent;
 
     public bool IsStageClear { get; set; }
+
     //public bool IsLastStage { get; set; } 
 
-   /* #region ValuableForEditor
-    [Header("Test")]
-    public string stageSOFolderName;
-    #endregion*/
+    /* #region ValuableForEditor
+     [Header("Test")]
+     public string stageSOFolderName;
+     #endregion*/
 
 
     private void Awake()
@@ -100,6 +101,11 @@ public class StageManager : MonoSingleton<StageManager>
 
     private void DefineEvent()
     {
+        EventManager.StartListening("Loading", () =>
+        {
+            PoolManager.PoolObjSetActiveFalse("RecoveryObjPrefObjPref1");
+            PoolManager.PoolObjSetActiveFalse("ImprecationObjPref1");
+        });
         EventManager.TriggerEvent("StartBGM", startStageID);
         EventManager.StartListening("PlayerRespawn", Respawn);
         EventManager.StartListening("StartNextStage", StartNextStage);
@@ -332,6 +338,7 @@ public class StageManager : MonoSingleton<StageManager>
                 currentArea = AreaType.IMPRECATION;
                 EventManager.TriggerEvent(Global.EnterNextMap);
                 Environment.Instance.OnEnteredOrExitImprecationArea(true);
+                PoolManager.GetItem("ImprecationObjPref1").transform.position = currentStage.objSpawnPos.position;
                 break;
             case RandomRoomType.MONSTER:  //몬스터 구역
                 --currentStageNumber;
@@ -343,6 +350,7 @@ public class StageManager : MonoSingleton<StageManager>
                 currentArea = AreaType.RECOVERY;
                 EventManager.TriggerEvent(Global.EnterNextMap);
                 Environment.Instance.OnEnteredOrExitRecoveryArea(true);
+                PoolManager.GetItem("RecoveryObjPrefObjPref1").transform.position = currentStage.objSpawnPos.position;
                 break;
         }
     }

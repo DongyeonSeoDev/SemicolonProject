@@ -4,21 +4,23 @@ using UnityEngine.UI;
 using System;
 using Water;
 using DG.Tweening;
+using TMPro;
 
 public class SelectionWindow : MonoBehaviour
 {
     private List<Button> btnList = new List<Button>();
     private CanvasGroup cvsg;
 
-    public Text msgText;
+    //public Text msgText;
+    public TextMeshProUGUI msgTmp;
     public Transform selBtnParent;
 
-    public void Set(string msg, List<Action> clickEv, List<string> btnTexts, bool activeWarning, Func<bool> condition)
+    public void Set(string msg, List<Action> clickEv, List<string> btnTexts, bool activeWarning, List<Func<bool>> conditions)
     {
         //ResetData();
         ActiveButtons(clickEv.Count);
 
-        msgText.text = msg;
+        msgTmp.text = msg;
 
         if (!cvsg) cvsg = GetComponent<CanvasGroup>();
         cvsg.alpha = 0;
@@ -32,24 +34,35 @@ public class SelectionWindow : MonoBehaviour
                 int si = i;  //안하면 AddListener에서 호출하는 함수에서 마지막 i 값으로 함
                 if (!activeWarning)
                 {
-                    btnList[i].onClick.AddListener(() => clickEv[si]());
+                    btnList[si].onClick.AddListener(() => clickEv[si]());
                 }
                 else
                 {
-                    btnList[i].onClick.AddListener(() => UIManager.Instance.RequestWarningWindow(() => clickEv[si](), "결정이 확실합니까?"));
+                    btnList[si].onClick.AddListener(() => UIManager.Instance.RequestWarningWindow(() => clickEv[si](), "결정이 확실합니까?"));
                 }
-                btnList[i].transform.GetChild(0).GetComponent<Text>().text = btnTexts[i];
+                btnList[si].transform.GetChild(0).GetComponent<Text>().text = btnTexts[si];
 
-                btnList[i].transform.SetParent(selBtnParent);  //트위닝이 다 끝나면 버튼들의 부모를 설정함
-                btnList[i].transform.localScale = Vector3.one;  //스케일 값이 다를 수 있으니 초기화시켜줌
+                btnList[si].transform.SetParent(selBtnParent);  //트위닝이 다 끝나면 버튼들의 부모를 설정함
+                btnList[si].transform.localScale = Vector3.one;  //스케일 값이 다를 수 있으니 초기화시켜줌
 
-                if(condition == null)
+                if(conditions == null)
                 {
-                    btnList[i].interactable = true;
+                    btnList[si].interactable = true;
+                    btnList[si].GetComponent<UIScale>().transitionEnable = true;
                 }
                 else
                 {
-                    btnList[i].interactable = condition();
+                    if (conditions[si] == null)
+                    {
+                        btnList[si].interactable = true;
+                        btnList[si].GetComponent<UIScale>().transitionEnable = true;
+                    }
+                    else
+                    {
+                        bool b = conditions[si]();
+                        btnList[si].interactable = b;
+                        btnList[si].GetComponent<UIScale>().transitionEnable = b;
+                    }
                 }
             }
         });

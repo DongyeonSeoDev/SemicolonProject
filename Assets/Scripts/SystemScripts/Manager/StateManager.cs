@@ -12,11 +12,13 @@ public class StateManager : SingletonClass<StateManager>
         {
             stateCountDict.Add(state, 0);
         }
+        stateCountDict.Remove(StateAbnormality.None);
     }
 
     public void StartStateAbnormality(StateAbnormality state, int count = 10001)
     {
         StateAbnormalityEffect ase = Activator.CreateInstance(Type.GetType(state.ToString())) as StateAbnormalityEffect;
+        
         if (count == 10001)
             ase.StartEffect();
         else
@@ -25,17 +27,21 @@ public class StateManager : SingletonClass<StateManager>
 
     public void RemoveStateAbnormality(StateAbnormality state, int count = 10001)
     {
+        StateAbnormalityEffect ase = Util.StringToClass<StateAbnormalityEffect>(state.ToString());
+
         if (count == 10001)
-            stateCountDict[state] = 0;
+            ase.StopEffect();
         else
-            stateCountDict[state] -= Mathf.Clamp(count, 0, stateCountDict[state]);
+            ase.AddDuration(-count);
     }
 
     public void RemoveAllStateAbnormality()
     {
-        foreach(StateAbnormality state in stateCountDict.Keys)
+        StateAbnormalityEffect ase;
+        for(int i = 0; i<Global.EnumCount<StateAbnormality>()-1; i++)
         {
-            stateCountDict[state] = 0;
+            ase = Util.StringToClass<StateAbnormalityEffect>(((StateAbnormality)i).ToString());
+            ase.StopEffect();
         }
     }
 }
