@@ -5,11 +5,17 @@ using UnityEngine;
 public class RecoveryObj : InteractionObj
 {
     private List<Action> recoveryActions = new List<Action>();
+    public FakeSpriteOutline fsOut;
 
     private void Awake()
     {
         recoveryActions.Add(() => RecoveryPlayerHP(30));
         recoveryActions.Add(RemoveImprecation);
+
+        for(int i = 0; i < recoveryActions.Count; i++)
+        {
+            recoveryActions[i] += () => StageManager.Instance.SetClearStage();
+        }
     }
 
     public override void Interaction()
@@ -23,6 +29,13 @@ public class RecoveryObj : InteractionObj
     }
     void RemoveImprecation()
     {
+        StateManager.Instance.RemoveAllStateAbnormality();
+        UIManager.Instance.RequestLeftBottomMsg("모든 저주가 해제되었습니다.");
+    }
 
+    public override void SetInteractionUI(bool on)
+    {
+        base.SetInteractionUI(on);
+        fsOut.gameObject.SetActive(on);
     }
 }

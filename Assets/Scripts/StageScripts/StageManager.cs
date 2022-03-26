@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using Water;
 
 public class StageManager : MonoSingleton<StageManager>
 {
@@ -30,7 +31,11 @@ public class StageManager : MonoSingleton<StageManager>
     public Sprite[] doorSprites;
     public Dictionary<string, Sprite> doorSprDic = new Dictionary<string, Sprite>();
 
+    public GameObject recoveryObjPref;
+    public GameObject imprecationObjPref;
+
     public Transform stageParent;
+    public Transform npcParent;
 
     public bool IsStageClear { get; set; }
     //public bool IsLastStage { get; set; } 
@@ -88,6 +93,9 @@ public class StageManager : MonoSingleton<StageManager>
         InsertRandomMaps(currentFloor, true);
         Util.DelayFunc(() => NextStage(startStageID), 0.2f);
         respawnPos = idToStageDataDict[startStageID].stage.GetComponent<StageGround>().playerSpawnPoint.position;
+
+        PoolManager.CreatePool(recoveryObjPref, npcParent, 1, "RecoveryObjPrefObjPref1");
+        PoolManager.CreatePool(imprecationObjPref, npcParent, 1, "ImprecationObjPref1");
     }
 
     private void DefineEvent()
@@ -317,7 +325,6 @@ public class StageManager : MonoSingleton<StageManager>
     private void EnterRandomArea()
     {
         RandomRoomType room = (RandomRoomType)UnityEngine.Random.Range(0, Global.EnumCount<RandomRoomType>());
-        
         //랜덤맵일 때는 EventManager.TriggerEvent(Global.EnterNextMap)가 실행안되므로 저주나 회복일 땐 따로 부름. 몹 구역일 땐 어차피 NextStage로 호출함
         switch (room)
         {

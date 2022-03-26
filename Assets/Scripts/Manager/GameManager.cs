@@ -33,6 +33,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         filePath = Global.saveFileName_1.PersistentDataPath();
         saveData = new SaveData();
         KeyCodeToString.Init();
+        StateManager.Instance.Init();
         
         Load();
         Init();

@@ -379,4 +379,13 @@ public class Inventory : MonoSingleton<Inventory>
         return -1;
     }
     #endregion
+
+    #region 기타 처리
+    public void RemoveRandomItem()
+    {
+        if(itemSlots.Count == 0) return;
+        ItemSlot slot = itemSlots[Random.Range(0,itemSlots.Count)];
+        RemoveItem(slot.itemInfo.id, slot.Count);
+    }
+    #endregion
 }

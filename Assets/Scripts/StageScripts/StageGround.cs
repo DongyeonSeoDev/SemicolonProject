@@ -6,6 +6,8 @@ public class StageGround : MonoBehaviour
 
     public Transform playerSpawnPoint;
 
+    public Transform objSpawnPos;
+
     [SerializeField] private bool autoInsertStageDoors;
     public StageDoor[] stageDoors;
 

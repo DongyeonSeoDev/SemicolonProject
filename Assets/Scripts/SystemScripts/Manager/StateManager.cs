@@ -1,24 +1,10 @@
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using System;
+using UnityEngine;
 
-public class StateManager 
+public class StateManager : SingletonClass<StateManager>
 {
-    private static StateManager instance;
-    public static StateManager Instance
-    {
-        get
-        {
-            if(instance == null)
-            {
-                instance = new StateManager();
-            }
-            return instance;
-        }
-    }
-
-    public Dictionary<StateAbnormality, int> stateCountDict = new Dictionary<StateAbnormality, int>();
+    public Dictionary<StateAbnormality, int> stateCountDict = new Dictionary<StateAbnormality, int>();  //해당 상태이상이 앞으로 효과가 몇 번 더 발동이 되는지 저장
 
     public void Init()
     {
@@ -28,86 +14,28 @@ public class StateManager
         }
     }
 
-    public void GetStateAbnormality(StateAbnormality state)
+    public void StartStateAbnormality(StateAbnormality state, int count = 10001)
     {
         StateAbnormalityEffect ase = Activator.CreateInstance(Type.GetType(state.ToString())) as StateAbnormalityEffect;
-        ase.StartEffect();
+        if (count == 10001)
+            ase.StartEffect();
+        else
+            ase.AddDuration(count);
     }
-}
 
-public abstract class StateAbnormalityEffect
-{
-
-    public virtual int Duration { get; set; }
-    public virtual StateAbnormality StateAbn { get; set; }
-
-    public virtual void StartEffect() 
+    public void RemoveStateAbnormality(StateAbnormality state, int count = 10001)
     {
-        StateManager.Instance.stateCountDict[StateAbn] += Duration;
+        if (count == 10001)
+            stateCountDict[state] = 0;
+        else
+            stateCountDict[state] -= Mathf.Clamp(count, 0, stateCountDict[state]);
     }
 
-    public abstract void OnEffected();
-}
-
-public class Pain : StateAbnormalityEffect
-{
-    public override int Duration => 5;
-    public override StateAbnormality StateAbn => StateAbnormality.Pain;
-
-    public override void StartEffect()
+    public void RemoveAllStateAbnormality()
     {
-        base.StartEffect();
+        foreach(StateAbnormality state in stateCountDict.Keys)
+        {
+            stateCountDict[state] = 0;
+        }
     }
-
-    public override void OnEffected()
-    {
-        
-    }
-}
-
-public class Scar : StateAbnormalityEffect
-{
-    public override int Duration => 4;
-    public override StateAbnormality StateAbn => StateAbnormality.Scar;
-    public override void StartEffect()
-    {
-        base.StartEffect();
-    }
-    public override void OnEffected()
-    {
-
-    }
-}
-
-public class Poverty : StateAbnormalityEffect
-{
-    public override int Duration => 6;
-    public override StateAbnormality StateAbn => StateAbnormality.Poverty;
-
-    public override void StartEffect()
-    {
-        base.StartEffect();
-    }
-    public override void OnEffected()
-    {
-       
-    }
-}
-
-public class Blind : StateAbnormalityEffect
-{
-    public override int Duration => 5;
-    public override StateAbnormality StateAbn => StateAbnormality.Blind;
-
-    public override void StartEffect()
-    {
-        base.StartEffect();
-    }
-
-    public override void OnEffected()
-    {
-        
-    }
-
-    
 }

@@ -161,6 +161,13 @@ public static partial class Util
         return itemList;
     }
 
+    public static T ToRandomElement<T>(this IEnumerable<T> list)
+    {
+        List<T> itemList = list.ToList();
+        if (itemList.Count < 2) return itemList[0];
+        return itemList[UnityEngine.Random.Range(0, itemList.Count)];
+    }
+
     public static T EnumParse<T>(string str) => (T)Enum.Parse(typeof(T), str);
 
     public static void PrintStructSize(Type type)
