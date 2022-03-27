@@ -134,6 +134,14 @@ public class NoticeUISet
     }
 }
 
+public class UIMsgQueue
+{
+    public Queue<NoticeUISet> noticeQueue = new Queue<NoticeUISet>();
+    public bool isNoticing = false;
+    public float noticeCheckElapsed;
+    public VertexGradient defaultNoticeMsgVG;
+}
+
 [Serializable]
 public class NPCInfo
 {

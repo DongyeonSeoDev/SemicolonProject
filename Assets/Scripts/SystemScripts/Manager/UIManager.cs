@@ -8,12 +8,9 @@ using DG.Tweening;
 
 public partial class UIManager : MonoSingleton<UIManager>
 {
-    
-    private Queue<NoticeUISet> noticeQueue = new Queue<NoticeUISet>();
-    private Queue<NoticeUISet> topCenterMsgQueue = new Queue<NoticeUISet>();
 
-    private bool isNoticing = false, isTCNoticing = false;
-    private float noticeCheckElapsed, topCenterNoticeCheckElapsed;
+    private UIMsgQueue rightMoveNoticeMsg = new UIMsgQueue();
+    private UIMsgQueue topCenterNoticeMsg = new UIMsgQueue();
 
     #region Canvas
     //public Canvas ordinaryCvs;
@@ -41,28 +38,28 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     private void Notice()
     {
-        if(noticeCheckElapsed < Time.time)
+        if(rightMoveNoticeMsg.noticeCheckElapsed < Time.time)
         {
-            noticeCheckElapsed = Time.time + 0.25f;
+            rightMoveNoticeMsg.noticeCheckElapsed = Time.time + 0.25f;
 
-            if(noticeQueue.Count > 0 && !isNoticing)
+            if(rightMoveNoticeMsg.noticeQueue.Count > 0 && !rightMoveNoticeMsg.isNoticing)
             {
-                isNoticing = true;
-                NoticeUISet nus = noticeQueue.Dequeue();
-                nus.endAction += () => isNoticing = false;
+                rightMoveNoticeMsg.isNoticing = true;
+                NoticeUISet nus = rightMoveNoticeMsg.noticeQueue.Dequeue();
+                nus.endAction += () => rightMoveNoticeMsg.isNoticing = false;
                 PoolManager.GetItem("NoticeMsg").GetComponent<NoticeMsg>().Set(nus);
             }
         }
 
-        if(topCenterNoticeCheckElapsed < Time.time)
+        if(topCenterNoticeMsg.noticeCheckElapsed < Time.time)
         {
-            topCenterNoticeCheckElapsed = Time.time + 0.1f;
+            topCenterNoticeMsg.noticeCheckElapsed = Time.time + 0.1f;
             
-            if(topCenterMsgQueue.Count > 0 && !isTCNoticing)
+            if(topCenterNoticeMsg.noticeQueue.Count > 0 && !topCenterNoticeMsg.isNoticing)
             {
-                isTCNoticing = true;
-                NoticeUISet nus = topCenterMsgQueue.Dequeue();
-                nus.endAction += () => isTCNoticing = false;
+                topCenterNoticeMsg.isNoticing = true;
+                NoticeUISet nus = topCenterNoticeMsg.noticeQueue.Dequeue();
+                nus.endAction += () => topCenterNoticeMsg.isNoticing = false;
 
                 //topCenterMsgTMPCvsg.alpha = 0;
                 topCenterMsgTMP.color = Color.clear;
@@ -83,14 +80,14 @@ public partial class UIManager : MonoSingleton<UIManager>
     }
 
     public void InsertNoticeQueue(string msg, float fontSize = 47, Action endAction = null)
-       => noticeQueue.Enqueue(new NoticeUISet(msg, fontSize, endAction));
+       => rightMoveNoticeMsg.noticeQueue.Enqueue(new NoticeUISet(msg, fontSize, endAction));
 
     public void InsertNoticeQueue(string msg,  VertexGradient vg, float fontSize = 47, Action endAction = null)
-       => noticeQueue.Enqueue(new NoticeUISet(msg, fontSize, vg, endAction));
+       => rightMoveNoticeMsg.noticeQueue.Enqueue(new NoticeUISet(msg, fontSize, vg, endAction));
 
     public void InsertTopCenterNoticeQueue(string msg, float fontSize = 65, Action endAction = null, float time = 3f)
-       => topCenterMsgQueue.Enqueue(new NoticeUISet(msg, fontSize, endAction));
+       => topCenterNoticeMsg.noticeQueue.Enqueue(new NoticeUISet(msg, fontSize, endAction));
 
     public void InsertTopCenterNoticeQueue(string msg, VertexGradient vg, float fontSize = 65, Action endAction = null, float time = 3f)
-       => topCenterMsgQueue.Enqueue(new NoticeUISet(msg, fontSize, vg, endAction));
+       => topCenterNoticeMsg.noticeQueue.Enqueue(new NoticeUISet(msg, fontSize, vg, endAction));
 }

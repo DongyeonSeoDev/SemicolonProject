@@ -56,10 +56,9 @@ public class Pain : StateAbnormalityEffect
             ItemUseMng.DecreaseCurrentHP(10);
             StateManager.Instance.stateCountDict[StateAbn]--;
         }
-        else
+        if(StateManager.Instance.stateCountDict[StateAbn] <= 0)
         {
-            StateManager.Instance.stateCountDict[StateAbn] = 0;
-            EventManager.StopListening("StartNextStage", OnEffected);
+            StopEffect();
         }
     }
 }

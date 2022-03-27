@@ -290,8 +290,7 @@ public class StageManager : MonoSingleton<StageManager>
 
     public void StageClear()
     {
-        IsStageClear = true;
-        currentStage.OpenDoors();
+        SetClearStage();
 
         EventManager.TriggerEvent("StageClear");
 

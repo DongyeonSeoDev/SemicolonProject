@@ -27,11 +27,6 @@ public class StageDoor : InteractionObj
     {
         if(StageManager.Instance.IsStageClear)
         {
-            if(nextStageData.areaType != AreaType.MONSTER && nextStageData.areaType != AreaType.RANDOM)  //Test
-            {
-                UIManager.Instance.RequestSystemMsg("이곳을 지나가고 싶으면 양진욱을 뭉탱이로 처치하시오", 65, 1);
-                return;
-            }
             if (!isOpen && !isExitDoor) //문을 열었거나 입구로 쓴 문이면 상호작용 아예 안되게
             {
                 isOpen = true;
