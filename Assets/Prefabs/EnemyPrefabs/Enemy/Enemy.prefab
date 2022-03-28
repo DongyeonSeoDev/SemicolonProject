@@ -106,6 +106,7 @@ GameObject:
   - component: {fileID: -5148051423267016269}
   - component: {fileID: 1748969661245656919}
   - component: {fileID: 3750393452434606831}
+  - component: {fileID: 9188459099727085732}
   m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
@@ -264,6 +265,18 @@ MonoBehaviour:
   hpBarFillImage: {fileID: 3039235269625805731}
   hpBar: {fileID: 3039235270466704463}
   enemyAttackCheck: {fileID: 1178821992}
+--- !u!114 &9188459099727085732
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1748969661245656920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6342c7c7fa59ec4487950d6002c0ad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &4578431473552020923
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -278,6 +291,10 @@ PrefabInstance:
     - target: {fileID: 1559462951835451892, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
       propertyPath: m_Layer
       value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1559462951835451894, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1559462951835451895, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
       propertyPath: m_SortingLayerID
