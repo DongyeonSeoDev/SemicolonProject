@@ -17,7 +17,7 @@ public static class ItemUseMng
     {
         value *= SlimeGameManager.Instance.Player.PlayerStat.MaxHp * 0.01f;
         int iValue = Mathf.FloorToInt(value);
-        //SlimeGameManager.Instance.Player.GetDamage(iValue, false, true);  //이거 머지하고 주석 풀어야 함
+        SlimeGameManager.Instance.Player.GetDamage(iValue, false, true);  //이거 머지하고 주석 풀어야 함
         UIManager.Instance.RequestLeftBottomMsg("저주로 인해서 HP " + iValue + "%만큼 잃었습니다.");
     }
 

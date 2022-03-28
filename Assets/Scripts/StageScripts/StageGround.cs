@@ -8,19 +8,25 @@ public class StageGround : MonoBehaviour
 
     public Transform objSpawnPos;
 
-    [SerializeField] private bool autoInsertStageDoors;
+    //[SerializeField] private bool autoInsertStageDoors;
     public StageDoor[] stageDoors;
 
-    [SerializeField] private bool autoInsertPlants;
+    //[SerializeField] private bool autoInsertPlants;
     public Pick[] plants;
 
-    private void Awake()
+  /*  private void Awake()
     {
-        if(autoInsertStageDoors)
+        AutoSetStageObjs();
+    }*/
+
+   /* [ContextMenu("AutoSetStageObjs")]
+    public void AutoSetStageObjs()
+    {
+        if (autoInsertStageDoors)
             stageDoors = GetComponentsInChildren<StageDoor>();
-        if(autoInsertPlants)    
+        if (autoInsertPlants)
             plants = GetComponentsInChildren<Pick>();
-    }
+    }*/
 
     private void OnEnable()
     {

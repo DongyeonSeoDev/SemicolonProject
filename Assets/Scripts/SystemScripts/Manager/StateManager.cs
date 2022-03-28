@@ -44,4 +44,9 @@ public class StateManager : SingletonClass<StateManager>
             ase.StopEffect();
         }
     }
+
+    public void OnStateAbnorEffect(StateAbnormality sa)
+    {
+        Util.StringToClass<StateAbnormalityEffect>(sa.ToString()).OnEffected();
+    }
 }

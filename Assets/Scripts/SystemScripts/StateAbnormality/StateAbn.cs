@@ -15,8 +15,12 @@ public abstract class StateAbnormalityEffect
 
     public virtual void StopEffect()
     {
+        bool alreadyImp = StateManager.Instance.stateCountDict[StateAbn] > 0;
+
         StateManager.Instance.stateCountDict[StateAbn] = 0;
-        UIManager.Instance.RequestLeftBottomMsg(Global.StateAbnorToString(StateAbn) + " 저주가 해제되었습니다.");
+
+        if(alreadyImp)
+           UIManager.Instance.RequestLeftBottomMsg(Global.StateAbnorToString(StateAbn) + " 저주가 해제되었습니다.");
     }
 
     public virtual void AddDuration(int value)
@@ -78,7 +82,14 @@ public class Scar : StateAbnormalityEffect
     }
     public override void OnEffected()
     {
-        //진욱이쪽에서 받는 데미지 20퍼 증가하는거 처리해야할듯
+        if (StateManager.Instance.stateCountDict[StateAbn] > 0)
+        {
+            StateManager.Instance.stateCountDict[StateAbn]--;
+        }
+        if (StateManager.Instance.stateCountDict[StateAbn] <= 0)
+        {
+            StopEffect();
+        }
     }
 }
 
