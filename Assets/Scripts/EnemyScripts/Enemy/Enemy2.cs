@@ -25,7 +25,6 @@ namespace Enemy
                 isAttackCommand = true,
                 isLongDistanceAttack = true,
                 isRotate = true,
-                isUseAttacking = true,
                 damageDelay = 0.4f,
                 chaseSpeed = 10f,
                 attackDelay = 1.5f,

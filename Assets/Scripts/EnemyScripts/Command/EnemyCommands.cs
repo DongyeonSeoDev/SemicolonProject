@@ -5,6 +5,7 @@ namespace Enemy
 {
     public class EnemyMovePlayerControllerCommand : EnemyCommand
     {
+        private EnemyData enemyData;
         private PlayerInput playerInput = null;
         private Stat playerStat = null;
         private float lastSpeed = 0f;
@@ -13,11 +14,12 @@ namespace Enemy
 
         private Rigidbody2D rigid;
 
-        public EnemyMovePlayerControllerCommand(Rigidbody2D rb)
+        public EnemyMovePlayerControllerCommand(EnemyData data, Rigidbody2D rb)
         {
             playerInput = SlimeGameManager.Instance.Player.GetComponent<PlayerInput>();
             playerStat = SlimeGameManager.Instance.Player.PlayerStat;
 
+            enemyData = data;
             rigid = rb;
 
             speed = playerStat.Speed * 0.5f;
@@ -45,6 +47,8 @@ namespace Enemy
             {
                 rigid.velocity = playerInput.LastMoveVector * lastSpeed;
             }
+
+            enemyData.moveVector = playerInput.MoveVector;
         }
     }
 
@@ -63,7 +67,7 @@ namespace Enemy
             this.enemyData = enemyData;
             this.positionCheckData = positionCheckData;
 
-            enemyRunAwayCommand = new EnemyFollowPlayerCommand(enemyData.enemyObject.transform, enemyData.PlayerObject.transform, enemyData.enemyRigidbody2D, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, true, positionCheckData);
+            enemyRunAwayCommand = new EnemyFollowPlayerCommand(enemyData, enemyData.enemyObject.transform, enemyData.PlayerObject.transform, enemyData.enemyRigidbody2D, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, true, positionCheckData);
 
             currentMoveTime = 0f;
         }
@@ -77,6 +81,7 @@ namespace Enemy
             else if (positionCheckData.isWall)
             {
                 targetPosition = positionCheckData.oppositeDirectionWall * 5f;
+                enemyData.moveVector = positionCheckData.oppositeDirectionWall;
                 enemyData.enemyRigidbody2D.velocity = targetPosition;
 
                 currentMoveTime = 2f;
@@ -91,6 +96,8 @@ namespace Enemy
 
                     targetPosition.y = Mathf.Sin(angle * Mathf.Deg2Rad);
                     targetPosition.x = Mathf.Cos(angle * Mathf.Deg2Rad);
+
+                    enemyData.moveVector = targetPosition;
 
                     targetPosition *= 5f;
 
@@ -114,6 +121,7 @@ namespace Enemy
 
     public class EnemyFollowPlayerCommand : EnemyCommand // 적 움직임
     {
+        private EnemyData enemyData;
         private Transform enemyObject;
         private Transform followObject;
         private Rigidbody2D rigid;
@@ -130,8 +138,9 @@ namespace Enemy
         private float angleChangeTime = 1f;
         private float addAngle = 0;
 
-        public EnemyFollowPlayerCommand(Transform enemyObject, Transform followObject, Rigidbody2D rigid, float followSpeed, float followDistance, bool isLongDistanceAttack, EnemyPositionCheckData positionCheckData = null)
+        public EnemyFollowPlayerCommand(EnemyData data, Transform enemyObject, Transform followObject, Rigidbody2D rigid, float followSpeed, float followDistance, bool isLongDistanceAttack, EnemyPositionCheckData positionCheckData = null)
         {
+            enemyData = data;
             this.enemyObject = enemyObject;
             this.followObject = followObject;
             this.rigid = rigid;
@@ -193,6 +202,7 @@ namespace Enemy
                     targetPosition.z = followObject.transform.position.z;
 
                     targetPosition = (targetPosition - enemyObject.position).normalized;
+                    enemyData.moveVector = targetPosition;
                     targetPosition *= followSpeed;
                 }
             }
@@ -200,6 +210,7 @@ namespace Enemy
             {
                 // 이동
                 targetPosition = (followObject.position - enemyObject.position).normalized;
+                enemyData.moveVector = targetPosition;
                 targetPosition *= followSpeed;
             }
 

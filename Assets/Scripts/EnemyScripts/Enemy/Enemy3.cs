@@ -30,7 +30,7 @@ namespace Enemy
                 playerAnimationTime = 1f
             };
 
-            enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(transform, enemyData.PlayerObject.transform, rb, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, false);
+            enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, transform, enemyData.PlayerObject.transform, rb, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, false);
             enemyAttackCommand = new EnemyAddForceCommand(rb, enemyData.rushForce, positionCheckData);
             enemyData.enemyObject.layer = LayerMask.NameToLayer("ENEMY");
 

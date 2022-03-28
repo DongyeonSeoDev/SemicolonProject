@@ -26,8 +26,6 @@ namespace Enemy
 
         public EnemyAttackCheck enemyAttackCheck; // 적 공격 확인 ( 근거리 적은 있고 원거리 적은 없음 )
 
-        private float lastPositionX; // 마지막 위치 확인
-
         private void Awake()
         {
             // GetComponent
@@ -83,7 +81,6 @@ namespace Enemy
             enemyData.enemyAnimator.enabled = true; // 애니메이션 실행
 
             // 마지막 위치, HP UI, 애니메이션, 죽음 확인 리셋
-            lastPositionX = transform.position.x + Mathf.Infinity;
             enemyData.hpBarFillImage.fillAmount = (float)enemyData.hp / enemyData.maxHP;
             enemyData.enemyAnimator.SetTrigger(enemyData.hashReset);
             enemyData.enemyAnimator.SetBool(enemyData.hashIsDead, false);
@@ -109,38 +106,6 @@ namespace Enemy
             {
                 currentState = currentState.Process();
             }
-
-            // 적 방향 확인 코드
-            if (!enemyData.isUseAttacking || !enemyData.isAttacking)
-            {
-                if (enemyData.eEnemyController == EnemyController.PLAYER)
-                {
-                    if (enemyData.isRotate)
-                    {
-                        if (playerInput.MoveVector.x < 0)
-                        {
-                            transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-                        }
-                        else if (playerInput.MoveVector.x > 0)
-                        {
-                            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-                        }
-                    }
-                    else
-                    {
-                        if (playerInput.MoveVector.x < 0)
-                        {
-                            sr.flipX = true;
-                        }
-                        else if (playerInput.MoveVector.x > 0)
-                        {
-                            sr.flipX = false;
-                        }
-                    }
-                }
-            }
-
-            lastPositionX = transform.position.x;
         }
 
         // 적 데미지 받는 코드

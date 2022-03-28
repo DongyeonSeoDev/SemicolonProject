@@ -63,11 +63,6 @@ namespace Enemy
 
             if (enemyCount == 0)
             {
-                /*if (stageCheck != null)
-                {
-                    stageCheck.StageClear();
-                }*/
-
                 StageManager.Instance.StageClear();
             }
         }

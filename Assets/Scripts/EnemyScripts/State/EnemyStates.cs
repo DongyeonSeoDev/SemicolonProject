@@ -13,7 +13,7 @@ namespace Enemy
 
         public EnemyMoveState(EnemyData enemyData) : base(eState.MOVE, enemyData)
         {
-            enemyMoveCommand = new EnemyMovePlayerControllerCommand(enemyData.enemyRigidbody2D);
+            enemyMoveCommand = new EnemyMovePlayerControllerCommand(enemyData, enemyData.enemyRigidbody2D);
         }
 
         protected override void Start()
@@ -30,6 +30,29 @@ namespace Enemy
         {
             enemyMoveCommand.Execute();
 
+            if (enemyData.isRotate)
+            {
+                if (enemyData.moveVector.x < 0)
+                {
+                    enemyData.enemyObject.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                }
+                else if (enemyData.moveVector.x > 0)
+                {
+                    enemyData.enemyObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                }
+            }
+            else
+            {
+                if (enemyData.moveVector.x < 0)
+                {
+                    enemyData.enemySpriteRenderer.flipX = true;
+                }
+                else if (enemyData.moveVector.x > 0)
+                {
+                    enemyData.enemySpriteRenderer.flipX = false;
+                }
+            }
+
             base.Update();
         }
 
@@ -44,8 +67,6 @@ namespace Enemy
 
     public partial class EnemyChaseState : EnemyState // 추격 상태
     {
-        private float lastPositionX;
-
         public EnemyChaseState(EnemyData enemyData) : base(eState.CHASE, enemyData)
         {
 
@@ -58,8 +79,6 @@ namespace Enemy
                 enemyData.enemyAnimator.SetTrigger(enemyData.hashMove);
             }
 
-            lastPositionX = enemyData.enemyObject.transform.position.x;
-
             base.Start();
         }
 
@@ -69,28 +88,26 @@ namespace Enemy
 
             if (enemyData.isRotate)
             {
-                if (lastPositionX > enemyData.enemyObject.transform.position.x)
+                if (enemyData.moveVector.x < 0)
                 {
                     enemyData.enemyObject.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
                 }
-                else if (lastPositionX < enemyData.enemyObject.transform.position.x)
+                else if (enemyData.moveVector.x > 0)
                 {
                     enemyData.enemyObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
                 }
             }
             else
             {
-                if (lastPositionX > enemyData.enemyObject.transform.position.x)
+                if (enemyData.moveVector.x < 0)
                 {
                     enemyData.enemySpriteRenderer.flipX = true;
                 }
-                else if (lastPositionX < enemyData.enemyObject.transform.position.x)
+                else if (enemyData.moveVector.x > 0)
                 {
                     enemyData.enemySpriteRenderer.flipX = false;
                 }
             }
-
-            lastPositionX = enemyData.enemyObject.transform.position.x;
 
             base.Update();
         }
@@ -121,8 +138,6 @@ namespace Enemy
 
             if (enemyData.eEnemyController == EnemyController.AI)
             {
-                enemyData.isAttacking = true;
-
                 if (enemyData.isUseDelay)
                 {
                     isDelay = enemyData.IsAttackDelay();
@@ -221,11 +236,6 @@ namespace Enemy
             }
 
             enemyData.enemyAnimator.ResetTrigger(enemyData.hashAttack);
-
-            if (enemyData.eEnemyController == EnemyController.AI)
-            {
-                enemyData.isAttacking = false;
-            }
         }
 
         private void SpriteFlipCheck()
