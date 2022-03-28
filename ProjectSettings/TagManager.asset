@@ -57,8 +57,11 @@ TagManager:
   - name: Item
     uniqueID: 2876059691
     locked: 0
-  - name: Player
+  - name: Object
     uniqueID: 2648742015
+    locked: 0
+  - name: Player
+    uniqueID: 3136262285
     locked: 0
   - name: Canvas
     uniqueID: 1072796663

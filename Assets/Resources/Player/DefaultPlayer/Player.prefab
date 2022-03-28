@@ -50,8 +50,8 @@ MonoBehaviour:
   playerStat:
     eternalStat:
       maxHp: 100
-      minDamage: 8
-      maxDamage: 12
+      minDamage: 482
+      maxDamage: 739
       defense: 2
       intellect: 0
       speed: 8
@@ -129,114 +129,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5427881869486345069}
     m_Modifications:
-    - target: {fileID: 1014413144, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
-      propertyPath: bodyPointMovePower
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1014413144, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
-      propertyPath: maxBodyPointLocalPos
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1014413151, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
-      propertyPath: skillDelay
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 804748403637607259, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1.572
-      objectReference: {fileID: 0}
-    - target: {fileID: 804748403637607259, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.44
-      objectReference: {fileID: 0}
-    - target: {fileID: 3851220836599241427, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.756
-      objectReference: {fileID: 0}
-    - target: {fileID: 3851220836599241427, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.537
-      objectReference: {fileID: 0}
-    - target: {fileID: 3908897437071421488, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
-      propertyPath: m_Size.x
-      value: 4.963552
-      objectReference: {fileID: 0}
-    - target: {fileID: 3908897437071421488, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
-      propertyPath: m_Offset.x
-      value: -0.30912423
-      objectReference: {fileID: 0}
-    - target: {fileID: 4327631336810169174, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.436
-      objectReference: {fileID: 0}
-    - target: {fileID: 4327631336810169174, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.46
-      objectReference: {fileID: 0}
-    - target: {fileID: 4331802093199943809, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
-      propertyPath: m_Points.Array.size
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4331802093199943809, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
-      propertyPath: m_Points.Array.data[9].x
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4457970834551369897, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.457
-      objectReference: {fileID: 0}
-    - target: {fileID: 4457970834551369897, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -0.57
-      objectReference: {fileID: 0}
-    - target: {fileID: 4791505076498265380, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
-      propertyPath: shootPosOffset
-      value: 0.3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5452748365009911102, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 1.302
-      objectReference: {fileID: 0}
-    - target: {fileID: 5452748365009911102, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.225
-      objectReference: {fileID: 0}
-    - target: {fileID: 5452748365560110710, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.03
-      objectReference: {fileID: 0}
-    - target: {fileID: 5452748365560110710, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 1.018
-      objectReference: {fileID: 0}
-    - target: {fileID: 5452748365791315108, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.848
-      objectReference: {fileID: 0}
-    - target: {fileID: 5452748365791315108, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.821
-      objectReference: {fileID: 0}
-    - target: {fileID: 5452748366344068690, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.78
-      objectReference: {fileID: 0}
-    - target: {fileID: 5452748366344068690, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.91
-      objectReference: {fileID: 0}
-    - target: {fileID: 5452748366477322726, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1.36
-      objectReference: {fileID: 0}
-    - target: {fileID: 5452748366477322726, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.31
-      objectReference: {fileID: 0}
-    - target: {fileID: 6491635181836223920, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6840160282341942530, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: m_Name
       value: Slime
@@ -285,15 +177,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7767920394982435845, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
-      propertyPath: m_StretchUV
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7767920394982435845, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
-      propertyPath: m_FillPixelPerUnit
-      value: 200
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 881361707385294761, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
 --- !u!4 &1566852740679476407 stripped
 Transform:

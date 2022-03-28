@@ -44,6 +44,8 @@ namespace Enemy
 
     public partial class EnemyChaseState : EnemyState // 추격 상태
     {
+        private float lastPositionX;
+
         public EnemyChaseState(EnemyData enemyData) : base(eState.CHASE, enemyData)
         {
 
@@ -56,12 +58,39 @@ namespace Enemy
                 enemyData.enemyAnimator.SetTrigger(enemyData.hashMove);
             }
 
+            lastPositionX = enemyData.enemyObject.transform.position.x;
+
             base.Start();
         }
 
         protected override void Update()
         {
             enemyData.enemyMoveCommand.Execute();
+
+            if (enemyData.isRotate)
+            {
+                if (lastPositionX > enemyData.enemyObject.transform.position.x)
+                {
+                    enemyData.enemyObject.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                }
+                else if (lastPositionX < enemyData.enemyObject.transform.position.x)
+                {
+                    enemyData.enemyObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                }
+            }
+            else
+            {
+                if (lastPositionX > enemyData.enemyObject.transform.position.x)
+                {
+                    enemyData.enemySpriteRenderer.flipX = true;
+                }
+                else if (lastPositionX < enemyData.enemyObject.transform.position.x)
+                {
+                    enemyData.enemySpriteRenderer.flipX = false;
+                }
+            }
+
+            lastPositionX = enemyData.enemyObject.transform.position.x;
 
             base.Update();
         }
@@ -177,7 +206,6 @@ namespace Enemy
                 }
                 else if (enemyData.eEnemyController == EnemyController.PLAYER)
                 {
-                    enemyData.isAttack = false;
                     enemyData.enemyAnimator.speed = 1.0f;
                 }
 
