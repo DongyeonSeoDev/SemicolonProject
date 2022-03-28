@@ -6,7 +6,7 @@ namespace Enemy
 {
     public class Enemy : EnemyPoolData // 적 관리 클래스
     {
-        public List<EnemyLootData> enemyLootListSO;
+        public List<EnemyLootData> enemyLootListSO = new List<EnemyLootData>();
         public EnemyDataSO enemyDataSO;
         public Image hpBarFillImage;
         public GameObject hpBar;
@@ -30,7 +30,11 @@ namespace Enemy
             rb = GetComponent<Rigidbody2D>();
 
             CSVEnemyLoot.Instance.GetData();
-            enemyLootListSO = CSVEnemyLoot.Instance.lootData[(int)enemyDataSO.enemyType];
+
+            if (CSVEnemyLoot.Instance.lootData.Count > (int)enemyDataSO.enemyType)
+            {
+                enemyLootListSO = CSVEnemyLoot.Instance.lootData[(int)enemyDataSO.enemyType];
+            }
         }
 
         private void Start()
@@ -40,7 +44,6 @@ namespace Enemy
             if(enemyData.eEnemyController == EnemyController.PLAYER)
             {
                 EventManager.StartListening("StartSkill0", StartAttack);
-                EventManager.StartListening("Skill0DelayTimerZero", StopAttack);
             }
 
             playerInput = SlimeGameManager.Instance.Player.GetComponent<PlayerInput>();
@@ -50,7 +53,6 @@ namespace Enemy
         {
             EventManager.StopListening("PlayerDead", EnemyDataReset);
             EventManager.StopListening("PlayerDead", EnemyDataReset);
-            EventManager.StopListening("Skill0DelayTimerZero", StopAttack);
         }
 
         private void EnemyDataReset()
@@ -63,11 +65,6 @@ namespace Enemy
         {
             enemyData.isAttack = true;
             playerInput.AttackMousePosition = playerInput.MousePosition;
-        }
-
-        private void StopAttack()
-        {
-            enemyData.isPlayerAttacking = false;
         }
 
         protected virtual void OnEnable()
@@ -99,32 +96,7 @@ namespace Enemy
 
             if (!enemyData.isUseAttacking || !enemyData.isAttacking)
             {
-                if (enemyData.eEnemyController == EnemyController.AI)
-                {
-                    if (enemyData.isRotate)
-                    {
-                        if (lastPositionX > transform.position.x)
-                        {
-                            transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-                        }
-                        else if (lastPositionX < transform.position.x)
-                        {
-                            transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-                        }
-                    }
-                    else
-                    {
-                        if (lastPositionX > transform.position.x)
-                        {
-                            sr.flipX = true;
-                        }
-                        else if (lastPositionX < transform.position.x)
-                        {
-                            sr.flipX = false;
-                        }
-                    }
-                }
-                else if (enemyData.eEnemyController == EnemyController.PLAYER)
+                if (enemyData.eEnemyController == EnemyController.PLAYER)
                 {
                     if (enemyData.isRotate)
                     {

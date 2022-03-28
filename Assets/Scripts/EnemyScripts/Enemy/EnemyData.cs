@@ -102,7 +102,6 @@ namespace Enemy
         public bool isUseDelay = false;
         public bool isAttacking = false;
         public bool isUseAttacking = false;
-        public bool isPlayerAttacking = false;
 
         public int attackDamage = 10;
         public int damagedValue;
