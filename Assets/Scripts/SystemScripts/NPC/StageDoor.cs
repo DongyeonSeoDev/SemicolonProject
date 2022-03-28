@@ -27,6 +27,12 @@ public class StageDoor : InteractionObj
     {
         if(StageManager.Instance.IsStageClear)
         {
+            if(nextStageData.areaType == AreaType.BOSS)
+            {
+                UIManager.Instance.RequestSystemMsg("아직 여긴 못 간다니까");
+                return;
+            }
+
             if (!isOpen && !isExitDoor) //문을 열었거나 입구로 쓴 문이면 상호작용 아예 안되게
             {
                 isOpen = true;
