@@ -661,12 +661,7 @@ public partial class UIManager : MonoSingleton<UIManager>
 
         Sequence seq = DOTween.Sequence();
         seq.SetUpdate(true);
-        seq.Append(loadingCvsg.DOFade(1, start).SetEase(Ease.OutQuad).OnComplete(() =>
-        {
-            EventManager.TriggerEvent("Loading");
-            loadingAction?.Invoke();
-        }
-        ));
+        seq.Append(loadingCvsg.DOFade(1, start).SetEase(Ease.OutQuad).OnComplete(() => loadingAction?.Invoke()));
         seq.AppendInterval(middle);
         seq.Append(loadingCvsg.DOFade(0, end).SetEase(Ease.OutQuad));
         seq.OnComplete(() => loadingEndAction());

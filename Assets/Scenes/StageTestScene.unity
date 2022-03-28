@@ -591,6 +591,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startStage: {fileID: 11400000, guid: 69c68dc8dae5ebf45b1ea8949797cc2e, type: 2}
+  nextStageCheck: {fileID: 0}
   uiObject: {fileID: 815626115}
   stageButton:
   - {fileID: 1858228680}

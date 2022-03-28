@@ -102,7 +102,7 @@ public class StageManager : MonoSingleton<StageManager>
 
     private void DefineEvent()
     {
-        EventManager.StartListening("Loading", () =>
+        EventManager.StartListening("LoadingMapObj", () =>
         {
             PoolManager.PoolObjSetActiveFalse("RecoveryObjPrefObjPref1");
             PoolManager.PoolObjSetActiveFalse("ImprecationObjPref1");
@@ -179,6 +179,8 @@ public class StageManager : MonoSingleton<StageManager>
 
     public void NextStage(string id)
     {
+        EventManager.TriggerEvent("LoadingMapObj");
+
         //현재 스테이지 옵젝을 꺼주고 다음 스테이지를 불러와서 켜주고 스테이지 번호를 1 증가시킴
         if (currentStage) currentStage.gameObject.SetActive(false);
 

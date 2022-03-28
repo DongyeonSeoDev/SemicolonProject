@@ -6,8 +6,7 @@ public class InvisibleOutWall : MonoBehaviour
     {
         if(collision.CompareLayer(Global.playerLayer))
         {
-            collision.transform.position = StageManager.Instance.MapCenterPoint;
-            Debug.Log(111111);
+            UIManager.Instance.StartLoading(() => collision.transform.position = StageManager.Instance.MapCenterPoint, null, 0.4f, 0.2f, 0.3f);
         }
     }
 }
