@@ -121,7 +121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whatIsWall:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 131136
   returnToOriginSpeed: 2
   moveToMiddleSpeed: 4
   moveToMiddleTime: 0.1
