@@ -158,13 +158,13 @@ public class SoftBody : MonoBehaviour
         notMiddleRelativeJoint2D = notMiddlePoints[i].gameObject.AddComponent<RelativeJoint2D>();
         notMiddleRelativeJoint2D.connectedBody = downPoint.GetComponent<Rigidbody2D>();
 
-        SpringJoint2D upNotMiddleSpringJoint2D = notMiddlePoints[i].gameObject.AddComponent<SpringJoint2D>();
-        upNotMiddleSpringJoint2D.connectedBody = upPoint.GetComponent<Rigidbody2D>();
-        upNotMiddleSpringJoint2D.frequency = pointToPointSpringJointFrequency;
+        //SpringJoint2D upNotMiddleSpringJoint2D = notMiddlePoints[i].gameObject.AddComponent<SpringJoint2D>(); // 없어도 별 이상 없다 판단되면 곧 사라질 코드들이에요~
+        //upNotMiddleSpringJoint2D.connectedBody = upPoint.GetComponent<Rigidbody2D>();
+        //upNotMiddleSpringJoint2D.frequency = pointToPointSpringJointFrequency;
 
-        SpringJoint2D downNotMiddleSpringJoint2D = notMiddlePoints[i].gameObject.AddComponent<SpringJoint2D>();
-        downNotMiddleSpringJoint2D.connectedBody = upPoint.GetComponent<Rigidbody2D>();
-        downNotMiddleSpringJoint2D.frequency = pointToPointSpringJointFrequency;
+        //SpringJoint2D downNotMiddleSpringJoint2D = notMiddlePoints[i].gameObject.AddComponent<SpringJoint2D>();
+        //downNotMiddleSpringJoint2D.connectedBody = upPoint.GetComponent<Rigidbody2D>();
+        //downNotMiddleSpringJoint2D.frequency = pointToPointSpringJointFrequency;
     }
 
     private void Update()

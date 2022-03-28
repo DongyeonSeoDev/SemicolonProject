@@ -24,37 +24,6 @@ public class PlayerMove : PlayerAction
 
         base.Awake();
     }
-    //private void Start()
-    //{
-    //    SetRigids();
-    //}
-
-    //private void SetRigids()
-    //{
-    //    float distance = 0f;
-    //    BodyPoint bodyPoint = null;
-
-    //    foreach(var r in childRigids)
-    //    {
-    //        bodyPoint = r.GetComponent<BodyPoint>();
-
-    //        if (bodyPoint == null)
-    //        {
-    //            continue;
-    //        }
-
-    //        distance = Vector2.Distance(r.position, rigid.position);
-
-    //        if (r.position.y > rigid.position.y)
-    //        {
-    //            upChildPoints.Add(bodyPoint);
-    //        }
-    //        else if (r.position.y < rigid.position.y)
-    //        {
-    //            downChildPoints.Add(bodyPoint);
-    //        }
-    //    }
-    //}
 
     private void FixedUpdate()
     {

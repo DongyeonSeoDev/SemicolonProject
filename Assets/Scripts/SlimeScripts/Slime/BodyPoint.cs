@@ -78,6 +78,7 @@ public class BodyPoint : MonoBehaviour
     {
         EventManager.StartListening("PlayerShoot", PlayerShoot);
         EventManager.StartListening("PlayerBodySlap", (Action<float>)PlayerBodySlap);
+        EventManager.StartListening("StartNextStage", StartNextStage);
     }
     private void OnDisable()
     {
@@ -91,6 +92,7 @@ public class BodyPoint : MonoBehaviour
     {
         EventManager.StopListening("PlayerShoot", PlayerShoot);
         EventManager.StopListening("PlayerBodySlap", (Action<float>)PlayerBodySlap);
+        EventManager.StopListening("StartNextStage", StartNextStage);
     }
 
     private void Update()
@@ -165,5 +167,10 @@ public class BodyPoint : MonoBehaviour
         transform.position = Vector2.Lerp(transform.position, middlePoint.transform.position, Time.deltaTime * moveToMiddleSpeed);
 
         CheckCrossWall();
+    }
+    private void StartNextStage()
+    {
+        isWall = false;
+        isCrossWall = false;
     }
 }

@@ -409,6 +409,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c872b1212dc70bb469dc62210b26664a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  whatIsCantMove:
+    serializedVersion: 2
+    m_Bits: 131136
   bodyPointMovePower: 0.5
   maxBodyPointLocalPos: 0.1
 --- !u!114 &1014413151
@@ -687,10 +690,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BodyPoint (17)
       objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875664, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 1531553962166875665, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
       propertyPath: m_RootOrder
       value: 8
@@ -734,50 +733,6 @@ PrefabInstance:
     - target: {fileID: 1531553962166875665, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875677, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Color.a
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875677, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_SortingLayer
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875677, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_SortingLayerID
-      value: -1646225281
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875678, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Distance
-      value: 1.77192
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875678, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_ConnectedRigidBody
-      value: 
-      objectReference: {fileID: 6840160282341942541}
-    - target: {fileID: 1531553962166875679, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Mass
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6770681210972784266, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: whatIsWall.m_Bits
-      value: 64
-      objectReference: {fileID: 0}
-    - target: {fileID: 6770681210972784266, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: returnToOriginSpeed
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7431946879305379577, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Distance
-      value: 3.6108863
-      objectReference: {fileID: 0}
-    - target: {fileID: 7431946879305379577, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_ConnectedRigidBody
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8391570041643423991, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Distance
-      value: 2.763063
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
@@ -1094,10 +1049,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: BodyPoint (15)
       objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875664, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 1531553962166875665, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
       propertyPath: m_RootOrder
       value: 7
@@ -1142,50 +1093,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875677, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Color.a
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875677, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_SortingLayer
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875677, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_SortingLayerID
-      value: -1646225281
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875678, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Distance
-      value: 1.77192
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875678, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_ConnectedRigidBody
-      value: 
-      objectReference: {fileID: 6840160282341942541}
-    - target: {fileID: 1531553962166875679, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Mass
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6770681210972784266, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: whatIsWall.m_Bits
-      value: 64
-      objectReference: {fileID: 0}
-    - target: {fileID: 6770681210972784266, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: returnToOriginSpeed
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7431946879305379577, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Distance
-      value: 3.6108863
-      objectReference: {fileID: 0}
-    - target: {fileID: 7431946879305379577, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_ConnectedRigidBody
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8391570041643423991, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Distance
-      value: 2.763063
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
 --- !u!4 &3851220836599241427 stripped
@@ -1203,10 +1110,6 @@ PrefabInstance:
     - target: {fileID: 1531553962166875664, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
       propertyPath: m_Name
       value: BodyPoint (13)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875664, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Layer
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1531553962166875665, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
       propertyPath: m_RootOrder
@@ -1252,50 +1155,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875677, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Color.a
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875677, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_SortingLayer
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875677, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_SortingLayerID
-      value: -1646225281
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875678, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Distance
-      value: 1.77192
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875678, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_ConnectedRigidBody
-      value: 
-      objectReference: {fileID: 6840160282341942541}
-    - target: {fileID: 1531553962166875679, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Mass
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6770681210972784266, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: whatIsWall.m_Bits
-      value: 64
-      objectReference: {fileID: 0}
-    - target: {fileID: 6770681210972784266, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: returnToOriginSpeed
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7431946879305379577, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Distance
-      value: 3.6108863
-      objectReference: {fileID: 0}
-    - target: {fileID: 7431946879305379577, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_ConnectedRigidBody
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8391570041643423991, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Distance
-      value: 2.763063
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
 --- !u!4 &4457970834551369897 stripped
@@ -1313,10 +1172,6 @@ PrefabInstance:
     - target: {fileID: 1531553962166875664, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
       propertyPath: m_Name
       value: BodyPoint (11)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875664, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Layer
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1531553962166875665, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
       propertyPath: m_RootOrder
@@ -1362,50 +1217,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875677, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Color.a
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875677, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_SortingLayer
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875677, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_SortingLayerID
-      value: -1646225281
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875678, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Distance
-      value: 1.77192
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875678, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_ConnectedRigidBody
-      value: 
-      objectReference: {fileID: 6840160282341942541}
-    - target: {fileID: 1531553962166875679, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Mass
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6770681210972784266, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: whatIsWall.m_Bits
-      value: 64
-      objectReference: {fileID: 0}
-    - target: {fileID: 6770681210972784266, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: returnToOriginSpeed
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7431946879305379577, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Distance
-      value: 3.6108863
-      objectReference: {fileID: 0}
-    - target: {fileID: 7431946879305379577, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_ConnectedRigidBody
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8391570041643423991, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Distance
-      value: 2.763063
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
 --- !u!4 &4327631336810169174 stripped
@@ -1423,10 +1234,6 @@ PrefabInstance:
     - target: {fileID: 1531553962166875664, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
       propertyPath: m_Name
       value: BodyPoint (1)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875664, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Layer
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1531553962166875665, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
       propertyPath: m_RootOrder
@@ -1472,57 +1279,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875677, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Color.a
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875677, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_SortingLayer
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875677, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_SortingLayerID
-      value: -1646225281
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875678, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Distance
-      value: 1.77192
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875678, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_ConnectedRigidBody
-      value: 
-      objectReference: {fileID: 6840160282341942541}
-    - target: {fileID: 1531553962166875679, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Mass
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6770681210972784266, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: whatIsWall.m_Bits
-      value: 64
-      objectReference: {fileID: 0}
-    - target: {fileID: 6770681210972784266, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: returnToOriginSpeed
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7431946879305379577, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Distance
-      value: 3.6108863
-      objectReference: {fileID: 0}
-    - target: {fileID: 7431946879305379577, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_ConnectedRigidBody
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8391570041643423991, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Distance
-      value: 2.763063
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
---- !u!50 &5452748366477322728 stripped
-Rigidbody2D:
-  m_CorrespondingSourceObject: {fileID: 1531553962166875679, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-  m_PrefabInstance: {fileID: 6840160281678880759}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5452748366477322726 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1531553962166875665, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
@@ -1538,10 +1296,6 @@ PrefabInstance:
     - target: {fileID: 1531553962166875664, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
       propertyPath: m_Name
       value: BodyPoint (3)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875664, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Layer
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1531553962166875665, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
       propertyPath: m_RootOrder
@@ -1587,50 +1341,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875677, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Color.a
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875677, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_SortingLayer
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875677, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_SortingLayerID
-      value: -1646225281
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875678, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Distance
-      value: 1.182286
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875678, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_ConnectedRigidBody
-      value: 
-      objectReference: {fileID: 6840160282341942541}
-    - target: {fileID: 1531553962166875679, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Mass
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6770681210972784266, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: whatIsWall.m_Bits
-      value: 64
-      objectReference: {fileID: 0}
-    - target: {fileID: 6770681210972784266, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: returnToOriginSpeed
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7431946879305379577, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Distance
-      value: 2.934706
-      objectReference: {fileID: 0}
-    - target: {fileID: 7431946879305379577, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_ConnectedRigidBody
-      value: 
-      objectReference: {fileID: 5452748366477322728}
-    - target: {fileID: 8391570041643423991, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Distance
-      value: 1.3562608
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
 --- !u!4 &5452748366344068690 stripped
@@ -1648,10 +1358,6 @@ PrefabInstance:
     - target: {fileID: 1531553962166875664, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
       propertyPath: m_Name
       value: BodyPoint (9)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875664, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Layer
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1531553962166875665, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
       propertyPath: m_RootOrder
@@ -1697,50 +1403,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875677, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Color.a
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875677, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_SortingLayer
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875677, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_SortingLayerID
-      value: -1646225281
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875678, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Distance
-      value: 1.1800423
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875678, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_ConnectedRigidBody
-      value: 
-      objectReference: {fileID: 6840160282341942541}
-    - target: {fileID: 1531553962166875679, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Mass
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6770681210972784266, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: whatIsWall.m_Bits
-      value: 64
-      objectReference: {fileID: 0}
-    - target: {fileID: 6770681210972784266, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: returnToOriginSpeed
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7431946879305379577, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Distance
-      value: 1.5840455
-      objectReference: {fileID: 0}
-    - target: {fileID: 7431946879305379577, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_ConnectedRigidBody
-      value: 
-      objectReference: {fileID: 5452748366477322728}
-    - target: {fileID: 8391570041643423991, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Distance
-      value: 1.21451
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
 --- !u!4 &5452748365009911102 stripped
@@ -1758,10 +1420,6 @@ PrefabInstance:
     - target: {fileID: 1531553962166875664, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
       propertyPath: m_Name
       value: BodyPoint (5)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875664, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Layer
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1531553962166875665, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
       propertyPath: m_RootOrder
@@ -1807,50 +1465,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875677, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Color.a
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875677, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_SortingLayer
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875677, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_SortingLayerID
-      value: -1646225281
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875678, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Distance
-      value: 1.1800423
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875678, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_ConnectedRigidBody
-      value: 
-      objectReference: {fileID: 6840160282341942541}
-    - target: {fileID: 1531553962166875679, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Mass
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6770681210972784266, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: whatIsWall.m_Bits
-      value: 64
-      objectReference: {fileID: 0}
-    - target: {fileID: 6770681210972784266, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: returnToOriginSpeed
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7431946879305379577, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Distance
-      value: 1.5840455
-      objectReference: {fileID: 0}
-    - target: {fileID: 7431946879305379577, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_ConnectedRigidBody
-      value: 
-      objectReference: {fileID: 5452748366477322728}
-    - target: {fileID: 8391570041643423991, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Distance
-      value: 1.21451
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
 --- !u!4 &5452748365560110710 stripped
@@ -1868,10 +1482,6 @@ PrefabInstance:
     - target: {fileID: 1531553962166875664, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
       propertyPath: m_Name
       value: BodyPoint (7)
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875664, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Layer
-      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1531553962166875665, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
       propertyPath: m_RootOrder
@@ -1916,50 +1526,6 @@ PrefabInstance:
     - target: {fileID: 1531553962166875665, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875677, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Color.a
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875677, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_SortingLayer
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875677, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_SortingLayerID
-      value: -1646225281
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875678, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Distance
-      value: 1.1800423
-      objectReference: {fileID: 0}
-    - target: {fileID: 1531553962166875678, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_ConnectedRigidBody
-      value: 
-      objectReference: {fileID: 6840160282341942541}
-    - target: {fileID: 1531553962166875679, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Mass
-      value: 0.1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6770681210972784266, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: whatIsWall.m_Bits
-      value: 64
-      objectReference: {fileID: 0}
-    - target: {fileID: 6770681210972784266, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: returnToOriginSpeed
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 7431946879305379577, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Distance
-      value: 1.5840455
-      objectReference: {fileID: 0}
-    - target: {fileID: 7431946879305379577, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_ConnectedRigidBody
-      value: 
-      objectReference: {fileID: 5452748366477322728}
-    - target: {fileID: 8391570041643423991, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
-      propertyPath: m_Distance
-      value: 1.21451
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
