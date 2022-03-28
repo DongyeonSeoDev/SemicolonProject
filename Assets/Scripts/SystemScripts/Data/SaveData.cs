@@ -49,9 +49,9 @@ public class Option
     //public bool isFullScreen = true;
     
     //º¼·ý
-    public float masterSound = 0.5f;
-    public float bgmSize = 0.6f;
-    public float soundEffectSize = 0.7f;
+    public float masterSound = -5f;
+    public float bgmSize = 0.8f;
+    public float soundEffectSize = 0.8f;
 }
 
 

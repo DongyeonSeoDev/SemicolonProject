@@ -38,6 +38,7 @@ public class StageManager : MonoSingleton<StageManager>
     public Transform npcParent;
 
     public bool IsStageClear { get; set; }
+    public Vector3 MapCenterPoint { get; private set; }
 
     //public bool IsLastStage { get; set; } 
 
@@ -105,6 +106,7 @@ public class StageManager : MonoSingleton<StageManager>
         {
             PoolManager.PoolObjSetActiveFalse("RecoveryObjPrefObjPref1");
             PoolManager.PoolObjSetActiveFalse("ImprecationObjPref1");
+            PoolManager.PoolObjSetActiveFalse("NormalPointLight2D");
         });
         EventManager.TriggerEvent("StartBGM", startStageID);
         EventManager.StartListening("PlayerRespawn", Respawn);
@@ -206,12 +208,14 @@ public class StageManager : MonoSingleton<StageManager>
         if(currentStage.playerSpawnPoint)
         {
             //주로 처음 게임 스타트 지점
-            SlimeGameManager.Instance.CurrentPlayerBody.transform.position = currentStage.playerSpawnPoint.position;
+            MapCenterPoint = currentStage.playerSpawnPoint.position;
+            SlimeGameManager.Instance.CurrentPlayerBody.transform.position = MapCenterPoint;
         }
         else
         {
             //다음 스테이지 가면 해당 방향에 맞게 담 스테이지의 문 근처에서 스폰이 되며 그 문은 지나간 상태의 스프라이트로 바꿈
-            SlimeGameManager.Instance.CurrentPlayerBody.transform.position = currentStage.GetOpposeDoor(PassDir).playerSpawnPos.position;
+            MapCenterPoint = currentStage.GetOpposeDoor(PassDir).playerSpawnPos.position;
+            SlimeGameManager.Instance.CurrentPlayerBody.transform.position = MapCenterPoint;
         }
         
         CinemachineCameraScript.Instance.SetCinemachineConfiner(currentStage.camStageCollider);  //Camera Move Range Set
@@ -350,6 +354,7 @@ public class StageManager : MonoSingleton<StageManager>
                 EventManager.TriggerEvent(Global.EnterNextMap);
                 Environment.Instance.OnEnteredOrExitRecoveryArea(true);
                 PoolManager.GetItem("RecoveryObjPrefObjPref1").transform.position = currentStage.objSpawnPos.position;
+                PoolManager.GetItem("NormalPointLight2D").transform.position = currentStage.objSpawnPos.position;
                 break;
         }
     }

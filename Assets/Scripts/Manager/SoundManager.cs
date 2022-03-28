@@ -14,14 +14,7 @@ public class SoundManager : MonoSingleton<SoundManager>
     private string currentBGMSoundBoxId = "NULL";
 
     #region Volume, Pitch, Pause관련 변수들
-    [Range(0f, 1f)]
-    [SerializeField]
-    private float masterVolume = 1f;
-    public float MasterVolume
-    {
-        get { return masterVolume; }
-        set { masterVolume = value; }
-    }
+   
 
     [Range(0f, 1f)]
     [SerializeField]
@@ -203,6 +196,7 @@ public class SoundManager : MonoSingleton<SoundManager>
     public void SetBGMVolume(float v)
     {
         bgmVolume = v;
+        BGMVolumeTimer = BGMVolumeTime;
         EventManager.TriggerEvent("SetBGMVolumeAll", bgmVolume);
     }
     public void SetEffectSoundVolume(float v)
@@ -260,6 +254,7 @@ public class SoundManager : MonoSingleton<SoundManager>
     public void SetBGMPitch(float p)
     {
         bgmPitch = p;
+        BGMPitchTimer = BGMPitchTime;
         EventManager.TriggerEvent("SetBGMPitchAll", p);
     }
     public void SetEffectSoundsPitch(float p)

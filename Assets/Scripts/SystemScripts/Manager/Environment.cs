@@ -4,6 +4,7 @@ using UnityEngine.Experimental.Rendering.Universal;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using System;
+using Water;
 
 public class Environment : MonoSingleton<Environment>
 {
@@ -11,6 +12,8 @@ public class Environment : MonoSingleton<Environment>
     public Volume mainVolume;
 
     public VolumeProfile defaultVolProfile, mainVolProfile;  //처음 상태의 기본 볼륨 프로필, 게임속에서 바뀌는 불륨 프로필
+
+    public GameObject pointLight2DPrefab;
 
     #region Post Processing Options
     private Bloom bloom;
@@ -26,9 +29,15 @@ public class Environment : MonoSingleton<Environment>
     private void Awake()
     {
         if (!mainLight) mainLight = FindObjectOfType<Light2D>();
+        CreatePool();
         SetVolume();
 
         DefineEvent();
+    }
+
+    private void CreatePool()
+    {
+        PoolManager.CreatePool(pointLight2DPrefab, transform, 2, "NormalPointLight2D");
     }
 
     private void SetVolume()

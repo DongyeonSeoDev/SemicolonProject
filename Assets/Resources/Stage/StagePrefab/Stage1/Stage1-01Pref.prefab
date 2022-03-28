@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1378282381469885332}
   - component: {fileID: 1378282381469885355}
-  - component: {fileID: 112924586600170954}
   - component: {fileID: 1598099289191442443}
   m_Layer: 6
   m_Name: Stage1-01Pref
@@ -37,6 +36,7 @@ Transform:
   - {fileID: 3797613347199539750}
   - {fileID: 5644488139118373319}
   - {fileID: 2192185027081183173}
+  - {fileID: 8331562827979367205}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -52,31 +52,6 @@ Grid:
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
---- !u!68 &112924586600170954
-EdgeCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1378282381469885354}
-  m_Enabled: 0
-  m_Density: 1
-  m_Material: {fileID: 6200000, guid: 99387a733fb54b64da99a36073c5c699, type: 2}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  m_EdgeRadius: 0.1
-  m_Points:
-  - {x: -12.965617, y: 16.118313}
-  - {x: 14.081181, y: 16.145592}
-  - {x: 14.027112, y: -5.9172983}
-  - {x: -12.966215, y: -5.9134474}
-  - {x: -13.05626, y: 16.347008}
-  m_AdjacentStartPoint: {x: 0, y: 0}
-  m_AdjacentEndPoint: {x: 0, y: 0}
-  m_UseAdjacentStartPoint: 0
-  m_UseAdjacentEndPoint: 0
 --- !u!114 &1598099289191442443
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,10 +66,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camStageCollider: {fileID: 8648534772182156580}
   playerSpawnPoint: {fileID: 2192185027081183173}
-  autoInsertStageDoors: 0
+  objSpawnPos: {fileID: 0}
   stageDoors:
   - {fileID: 5654240363682025687}
-  autoInsertPlants: 0
   plants: []
 --- !u!1 &1378282382014638738
 GameObject:
@@ -12312,6 +12286,62 @@ CompositeCollider2D:
       - {x: 14, y: 15.999971}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
+--- !u!1 &3435292629063395997
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8331562827979367205}
+  - component: {fileID: 8246606719357160698}
+  m_Layer: 18
+  m_Name: InvisibleOutWall
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8331562827979367205
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3435292629063395997}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1378282381469885332}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!68 &8246606719357160698
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3435292629063395997}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0.35
+  m_Points:
+  - {x: 19.409595, y: -9.376133}
+  - {x: -19.386505, y: -9.2965765}
+  - {x: -19.635366, y: 21.494677}
+  - {x: 19.231411, y: 21.283056}
+  - {x: 19.850027, y: -9.582176}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0
 --- !u!1 &3553275141150440558
 GameObject:
   m_ObjectHideFlags: 0

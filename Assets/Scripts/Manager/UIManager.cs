@@ -5,6 +5,7 @@ using DG.Tweening;
 using TMPro;
 using Water;
 using System;
+using UnityEngine.Audio;
 
 public partial class UIManager : MonoSingleton<UIManager>
 {
@@ -96,6 +97,11 @@ public partial class UIManager : MonoSingleton<UIManager>
     [HideInInspector] public string warningStr;
     #endregion
 
+    #region Sound
+    public Slider masterSoundSlider, BGMSlider, SFXSlider;
+    public AudioMixer masterAudioMixer;
+    #endregion
+
     [SerializeField] private CanvasGroup loadingCvsg;
 
     [SerializeField] private ResolutionOption resolutionOption;
@@ -108,6 +114,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     private GameManager gm;
     private SlimeGameManager sgm;
 
+    #region Init
     private void Awake()
     {
         InitData();
@@ -161,8 +168,17 @@ public partial class UIManager : MonoSingleton<UIManager>
         DefineAction();
 
         PlayerEnemyUnderstandingRateManager.Instance.ChangableBodyList.ForEach(x => mobSaveWindowActiveDic.Add(x.bodyId.ToString(), false));
+        Load();
 
         StartLoadingIn();
+    }
+
+    public void Load()
+    {
+        Option option = gm.savedData.option;
+        masterSoundSlider.value = option.masterSound;
+        BGMSlider.value = option.bgmSize;
+        SFXSlider.value = option.soundEffectSize;
     }
 
     public void OnChangedResolution()
@@ -230,8 +246,9 @@ public partial class UIManager : MonoSingleton<UIManager>
         EventManager.StartListening("ChangeBody", (str, dead) => { if(!dead) InsertNoticeQueue(MonsterCollection.Instance.GetMonsterInfo(str).bodyName + "(으)로 변신하였습니다"); });
     }
 
-  
+    #endregion
 
+    #region update
     private void Update()
     {
         UserInput();
@@ -274,6 +291,7 @@ public partial class UIManager : MonoSingleton<UIManager>
             OnUIInteract(UIType.CHANGEABLEMOBLIST);
         }*/
     }
+    #endregion
 
     #region UI (비)활성화 관련
     public void OnUIInteractBtnClick(int type) { OnUIInteract((UIType)type); }
@@ -586,8 +604,19 @@ public partial class UIManager : MonoSingleton<UIManager>
     {
         wnWd.Register(confirm, warning, verify, cancel);
     }
+
+    public void DefaultSelectionAction() //시스템 확인창에서 각 버튼마다 눌렸을 때의 실행함수에 이 함수를 더해줌
+    {
+        TimeManager.TimeResume();
+        selWdStack.Pop().Inactive();
+        if (IsSelecting)
+        {
+            selWdStack.Peek().Hide(false);
+        }
+    }
     #endregion
 
+    #region ETC
     public void DoChangeBody(string id)  //몸통 저장할지 창 띄움
     {
         if (mobSaveWindowActiveDic[id]) return;
@@ -606,15 +635,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         EventManager.TriggerEvent(isShow ? "TimePause" : "TimeResume");
     }
 
-    public void DefaultSelectionAction() //시스템 확인창에서 각 버튼마다 눌렸을 때의 실행함수에 이 함수를 더해줌
-    {
-        TimeManager.TimeResume();
-        selWdStack.Pop().Inactive();
-        if(IsSelecting)
-        {
-            selWdStack.Peek().Hide(false);
-        }
-    }
+    
 
     public void CancelMonsterSaveChance(string id)  //변신 가능한 몬스터 저장 거절
     {
@@ -628,6 +649,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         EventManager.TriggerEvent("PlayerBodySet", id, true);
         MonsterCollection.Instance.IDToSave = id;
     }
+    #endregion
 
     #region loading
 
@@ -773,5 +795,30 @@ public partial class UIManager : MonoSingleton<UIManager>
             }
         }
     }
+    #endregion
+
+    #region Sound
+
+    public void OnChangedMasterVolume()  // min : -40 , max : 0
+    {
+        float volume = masterSoundSlider.value;
+        gm.savedData.option.masterSound = volume;
+        masterAudioMixer.SetFloat("Master", volume != -40f ? volume : -80f);
+    }
+
+    public void OnChangedBGMVolume()  // min : -40 , max : 0
+    {
+        float volume = BGMSlider.value;
+        gm.savedData.option.bgmSize = volume;
+        SoundManager.Instance.SetBGMVolume(volume);
+    }
+
+    public void OnChangedSFXVolume()  // min : -40 , max : 0
+    {
+        float volume = SFXSlider.value;
+        gm.savedData.option.soundEffectSize = volume;
+        SoundManager.Instance.SetEffectSoundVolume(volume);
+    }
+
     #endregion
 }
