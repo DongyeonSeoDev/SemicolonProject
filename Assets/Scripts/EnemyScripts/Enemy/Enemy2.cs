@@ -58,7 +58,7 @@ namespace Enemy
             }
             else if (enemyData.eEnemyController == EnemyController.AI)
             {
-                enemyAttackCommand = new EnemyAttackCommand(enemyData.enemyObject.transform, enemyData.PlayerObject.transform, enemyData.eEnemyController, enemyData.attackDamage);
+                enemyAttackCommand = new EnemyAttackCommand(enemyData.enemyObject.transform, EnemyManager.Player.transform, enemyData.eEnemyController, enemyData.attackDamage);
 
                 enemyAttackCommand.Execute();
             }

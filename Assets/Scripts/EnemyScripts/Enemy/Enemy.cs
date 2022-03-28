@@ -82,8 +82,8 @@ namespace Enemy
 
             // 마지막 위치, HP UI, 애니메이션, 죽음 확인 리셋
             enemyData.hpBarFillImage.fillAmount = (float)enemyData.hp / enemyData.maxHP;
-            enemyData.enemyAnimator.SetTrigger(enemyData.hashReset);
-            enemyData.enemyAnimator.SetBool(enemyData.hashIsDead, false);
+            enemyData.enemyAnimator.SetTrigger(EnemyManager.hashReset);
+            enemyData.enemyAnimator.SetBool(EnemyManager.hashIsDead, false);
 
             // 첫 상태 넣기
             currentState = new EnemyIdleState(enemyData);
@@ -168,7 +168,7 @@ namespace Enemy
 
                 sr.color = enemyData.normalColor;
 
-                EnemyManager.Instance.player = GameObject.FindGameObjectWithTag("Player").transform;
+                EnemyManager.Player = GameObject.FindGameObjectWithTag("Player");
             }
             else if (eEnemyController == EnemyController.PLAYER)
             {
@@ -179,7 +179,7 @@ namespace Enemy
 
                 sr.color = enemyData.playerNormalColor;
 
-                EnemyManager.Instance.player = transform;
+                EnemyManager.Player = gameObject;
             }
 
             if (enemyAttackCheck != null)

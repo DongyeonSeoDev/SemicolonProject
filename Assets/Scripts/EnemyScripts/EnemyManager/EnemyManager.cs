@@ -1,9 +1,21 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace Enemy
 {
+    public enum EnemyController
+    {
+        AI,
+        PLAYER
+    }
+
+    public enum EnemyType
+    {
+        Slime_01,
+        Rat_02,
+        Slime_03
+    }
+
     public class EnemyManager : MonoBehaviour
     {
         private static EnemyManager instance;
@@ -27,7 +39,29 @@ namespace Enemy
 
         public Dictionary<string, List<Enemy>> enemyDictionary = new Dictionary<string, List<Enemy>>();
 
-        public Transform player;
+        private static GameObject player;
+        public static GameObject Player
+        {
+            get
+            {
+                if (player == null)
+                {
+                    player = GameObject.FindGameObjectWithTag("Player");
+                }
+
+                return player;
+            }
+
+            set => player = value;
+        }
+
+        public static readonly int hashIsDie = Animator.StringToHash("isDie");
+        public static readonly int hashIsDead = Animator.StringToHash("isDead");
+        public static readonly int hashMove = Animator.StringToHash("Move");
+        public static readonly int hashAttack = Animator.StringToHash("Attack");
+        public static readonly int hashEndAttack = Animator.StringToHash("EndAttack");
+        public static readonly int hashHit = Animator.StringToHash("Hit");
+        public static readonly int hashReset = Animator.StringToHash("Reset");
 
         private void Awake()
         {
@@ -41,7 +75,78 @@ namespace Enemy
             instance = this;
         }
 
-        public void PlayerDeadEvent()
+        public static bool IsAttackPlayer(EnemyData data)
+        {
+            if (data.currentRunAwayTime <= 0)
+            {
+                data.isRunAway = false;
+                data.currentRunAwayTime = 1f;
+
+                return true;
+            }
+
+            if (data.isLongDistanceAttack)
+            {
+                float distance = Vector3.Distance(data.enemyObject.transform.position, Player.transform.position);
+
+                if (data.isRunAway)
+                {
+                    return data.isRunAwayDistance <= distance && distance <= data.isMaxAttackPlayerDistance;
+                }
+
+                return data.isMinAttackPlayerDistance <= distance && distance <= data.isMaxAttackPlayerDistance;
+            }
+            else
+            {
+                return Vector3.Distance(data.enemyObject.transform.position, Player.transform.position) <= data.isAttackPlayerDistance;
+            }
+        }
+
+        public static bool IsRunAway(EnemyData data)
+        {
+            if (data.isLongDistanceAttack)
+            {
+                float distance = Vector3.Distance(data.enemyObject.transform.position, Player.transform.position);
+
+                if (data.isRunAway)
+                {
+                    if (data.isRunAwayDistance <= distance)
+                    {
+                        data.isRunAway = false;
+                    }
+                    else
+                    {
+                        data.currentRunAwayTime -= Time.deltaTime;
+                    }
+
+                    return data.isRunAway;
+                }
+                else if (data.isMinAttackPlayerDistance > distance)
+                {
+                    data.isRunAway = true;
+                    data.currentRunAwayTime = Random.Range(data.minRunAwayTime, data.maxRunAwayTime);
+
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public static bool IsAttackDelay(EnemyData data, float currentAttackDelay = 0)
+        {
+            if (currentAttackDelay <= 0 || data.isCurrentAttackTime)
+            {
+                return data.isCurrentAttackTime;
+            }
+
+            data.isCurrentAttackTime = true;
+            Util.DelayFunc(() => data.isCurrentAttackTime = false, currentAttackDelay);
+
+            return data.isCurrentAttackTime;
+        }
+
+        public void PlayerDeadEvent() // 함수 const 변수 여기로 옮기고, Player 버그 해결
         {
             foreach(List<Enemy> enemyList in enemyDictionary.Values)
             {

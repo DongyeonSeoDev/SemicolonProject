@@ -30,7 +30,7 @@ namespace Enemy
         protected override void StateChangeCondition()
         {
             if (AnyStateChangeState()) { }
-            else if (enemyData.IsAttackPlayer())
+            else if (EnemyManager.IsAttackPlayer(enemyData))
             {
                 ChangeState(new EnemyAttackState(enemyData));
             }
@@ -46,7 +46,7 @@ namespace Enemy
             {
                 ChangeState(new EnemyMoveState(enemyData));
             }
-            else if (enemyData.eEnemyController == EnemyController.AI && !enemyData.IsAttackPlayer())
+            else if (enemyData.eEnemyController == EnemyController.AI && !EnemyManager.IsAttackPlayer(enemyData))
             {
                 ChangeState(new EnemyChaseState(enemyData));
             }
@@ -64,7 +64,7 @@ namespace Enemy
             }
             else if (enemyData.eEnemyController == EnemyController.AI)
             {
-                if (enemyData.IsAttackPlayer())
+                if (EnemyManager.IsAttackPlayer(enemyData))
                 {
                     ChangeState(new EnemyAttackState(enemyData));
                 }
