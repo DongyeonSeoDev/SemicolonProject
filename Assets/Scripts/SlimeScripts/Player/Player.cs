@@ -301,8 +301,6 @@ public class Player : MonoBehaviour
     {
         if (SlimeGameManager.Instance.CurrentBodyId == "origin")
         {
-            //PlayerEnemyUnderstandingRateManager.Instance.CheckMountingEnemy(objId, upUnderstandingRateValueWhenEnemyDead);
-
             if (PlayerEnemyUnderstandingRateManager.Instance.CheckMountObjIdContain(objId))
             {
                 PlayerEnemyUnderstandingRateManager.Instance.UpUnderstandingRate(objId, upUnderstandingRateValueWhenEnemyDead);
@@ -310,7 +308,6 @@ public class Player : MonoBehaviour
             else
             {
                 PlayerEnemyUnderstandingRateManager.Instance.SetMountingPercentageDict(objId, PlayerEnemyUnderstandingRateManager.Instance.GetDrainProbabilityDict(objId) + upMountingPercentageValueWhenEnemyDead);
-                PlayerEnemyUnderstandingRateManager.Instance.CheckMountingEnemy(objId, upUnderstandingRateValueWhenEnemyDead);
             }
         }
         else
