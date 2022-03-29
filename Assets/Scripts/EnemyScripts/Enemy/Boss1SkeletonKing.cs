@@ -4,83 +4,35 @@ namespace Enemy
 {
     public class Boss1SkeletonKing : Enemy
     {
-    //    public Transform movePivot;
+        public Transform movePivot;
 
-    //    private Rigidbody2D rigid;
-    //    private Animator animator;
-    //    private SpriteRenderer sr;
-    //    private EnemyCommand command;
-    //    private EnemyCommand command2;
+        private EnemyCommand attackMoveCommand;
 
-    //    private float lastPositionX = 0f;
-    //    private bool isMove = false;
-    //    private bool isAttack = false;
+        protected override void Start()
+        {
+            attackMoveCommand = new EnemyFollowPlayerCommand(enemyData, movePivot, rb, 15f, 0f, false);
 
-    //    private readonly int hashMove = Animator.StringToHash("move");
-    //    private readonly int hashIsAttack = Animator.StringToHash("attack");
+            base.Start();
+        }
 
-    //    private void Start()
-    //    {
-    //        rigid = GetComponent<Rigidbody2D>();
-    //        animator = GetComponent<Animator>();
-    //        sr = GetComponent<SpriteRenderer>();
+        protected override void OnEnable()
+        {
+            base.OnEnable();
 
-    //        command = new EnemyFollowPlayerCommand(null, movePivot, rigid, 5f, 0f, false);
-    //        command2 = new EnemyFollowPlayerCommand(null, movePivot, rigid, 15f, 0f, false);
-    //    }
+            enemyData.attackDelay = 1.8f;
+            enemyData.isAttackPlayerDistance = 3.5f;
+            enemyData.attackPower = 30;
+            enemyData.maxHP = 500;
+            enemyData.hp = 500;
+            enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, movePivot, rb, 5f, 0f, false);
+        }
 
-    //    private void Update()
-    //    {
-    //        if (isAttack)
-    //        {
-    //            return;
-    //        }
+        public void AttackMove() // 애니메이션에서 실행
+        {
+            rb.velocity = Vector2.zero;
+            enemyAttackCheck.AttackObjectReset();
 
-    //        if (isMove)
-    //        {
-    //            if (Vector2.Distance(transform.position, EnemyManager.Player.transform.position) < 3.5f)
-    //            {
-    //                animator.ResetTrigger(hashMove);
-    //                animator.SetTrigger(hashIsAttack);
-
-    //                rigid.velocity = Vector2.zero;
-    //                isAttack = true;
-    //            }
-    //            else
-    //            {
-    //                command.Execute();
-    //            }
-    //        }
-
-    //        if (lastPositionX > transform.position.x)
-    //        {
-    //            sr.flipX = true;
-    //        }
-    //        else if (lastPositionX < transform.position.x)
-    //        {
-    //            sr.flipX = false;
-    //        }
-
-    //        lastPositionX = transform.position.x;
-    //    }
-
-    //    public void Move()
-    //    {
-    //        isMove = true;
-    //        animator.SetTrigger(hashMove);
-    //    }
-
-    //    public void AttackEnd()
-    //    {
-    //        animator.ResetTrigger(hashIsAttack);
-    //        animator.SetTrigger(hashMove);
-
-    //        isAttack = false;
-    //    }
-
-    //    public void AttackMove()
-    //    {
-    //        command2.Execute();
-    //    }
+            attackMoveCommand.Execute();
+        }
     }
 }

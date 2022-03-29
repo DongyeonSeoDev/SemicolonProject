@@ -319,7 +319,7 @@ namespace Enemy
         PlayerInput playerInput;
         Transform transform;
         Enemy enemy;
-
+        
         EnemyController enemyController;
 
         int attackDamage;

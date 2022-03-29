@@ -8,8 +8,8 @@ namespace Enemy
 
         protected override void OnEnable()
         {
-            enemyData.isAnimation = false;
-            enemyData.isEndAttackAnimation = true;
+            base.OnEnable();
+
             enemyData.isUseDelay = true;
             enemyData.isAttackPlayerDistance = 7f;
             enemyData.attackDelay = 2f;
@@ -20,8 +20,6 @@ namespace Enemy
             enemyData.playerAnimationTime = 1f;
             enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, false);
             enemyAttackCommand = new EnemyAddForceCommand(rb, enemyData.rushForce, positionCheckData);
-
-            base.OnEnable();
         }
 
         public void ReadyEnemyAttack() // 애니메이션에서 실행 - 적 공격 준비

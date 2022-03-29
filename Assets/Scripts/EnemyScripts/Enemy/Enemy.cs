@@ -43,7 +43,7 @@ namespace Enemy
             }
         }
 
-        private void Start()
+        protected virtual void Start()
         {
             // 이벤트 추가
 
@@ -92,9 +92,13 @@ namespace Enemy
             enemyData.enemyAnimator.enabled = true; // 애니메이션 실행
 
             // 마지막 위치, HP UI, 애니메이션, 죽음 확인 리셋
-            enemyData.hpBarFillImage.fillAmount = (float)enemyData.hp / enemyData.maxHP;
-            enemyData.enemyAnimator.SetTrigger(EnemyManager.hashReset);
-            enemyData.enemyAnimator.SetBool(EnemyManager.hashIsDead, false);
+            if (enemyData.hpBarFillImage != null)
+            {
+                enemyData.hpBarFillImage.fillAmount = (float)enemyData.hp / enemyData.maxHP;
+            }
+
+            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Reset, anim, TriggerType.SetTrigger);
+            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.IsDead, anim, false);
 
             enemyData.enemyObject.layer = LayerMask.NameToLayer("ENEMY"); // layer 리셋
 
@@ -168,7 +172,10 @@ namespace Enemy
                 gameObject.tag = "Untagged";
                 gameObject.layer = LayerMask.NameToLayer("ENEMY");
 
-                hpBar.SetActive(true);
+                if (hpBar != null)
+                {
+                    hpBar.SetActive(true);
+                }
 
                 sr.color = enemyData.normalColor;
 
@@ -179,7 +186,10 @@ namespace Enemy
                 gameObject.tag = "Player";
                 gameObject.layer = LayerMask.NameToLayer("PLAYER");
 
-                hpBar.SetActive(false);
+                if (hpBar != null)
+                {
+                    hpBar.SetActive(false);
+                }
 
                 sr.color = enemyData.playerNormalColor;
 

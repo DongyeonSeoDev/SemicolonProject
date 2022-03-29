@@ -13,6 +13,19 @@ MonoBehaviour:
   m_Name: Enemy2
   m_EditorClassIdentifier: 
   enemyType: 1
+  animationList:
+  - type: 1
+    animationName: Die
+  - type: 2
+    animationName: isDead
+  - type: 4
+    animationName: Move
+  - type: 5
+    animationName: Attack
+  - type: 3
+    animationName: Hit
+  - type: 0
+    animationName: Reset
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   damagedColor: {r: 1, g: 0.7058824, b: 0.7058824, a: 1}
   enemyDeadEffectColor: {r: 0.43921572, g: 0.6784314, b: 0.7176471, a: 1}

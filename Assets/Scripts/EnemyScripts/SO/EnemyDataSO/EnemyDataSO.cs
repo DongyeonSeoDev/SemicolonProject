@@ -1,10 +1,31 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Enemy
 {
+    public enum EnemyAnimationType
+    {
+        Reset,
+        Die,
+        IsDead,
+        Hit,
+        Move,
+        Attack,
+        AttackEnd
+    }
+
+    [System.Serializable]
+    public struct EnemyAnimation
+    {
+        public EnemyAnimationType type;
+        public string animationName;
+    }
+
     public partial class EnemyDataSO : ScriptableObject
     {
         public EnemyType enemyType;
+
+        public List<EnemyAnimation> animationList = new List<EnemyAnimation>();
 
         public Color normalColor;
         public Color damagedColor;

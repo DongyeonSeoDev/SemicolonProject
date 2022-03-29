@@ -18,11 +18,7 @@ namespace Enemy
 
         protected override void Start()
         {
-            if (enemyData.isAnimation)
-            {
-                enemyData.enemyAnimator.SetTrigger(EnemyManager.hashMove);
-            }
-
+            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Move, enemyData.enemyAnimator, TriggerType.SetTrigger);
             base.Start();
         }
 
@@ -58,10 +54,7 @@ namespace Enemy
 
         protected override void End()
         {
-            if (enemyData.isAnimation)
-            {
-                enemyData.enemyAnimator.ResetTrigger(EnemyManager.hashMove);
-            }
+            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Move, enemyData.enemyAnimator, TriggerType.ResetTrigger);
         }
     }
 
@@ -74,11 +67,7 @@ namespace Enemy
 
         protected override void Start()
         {
-            if (enemyData.isAnimation)
-            {
-                enemyData.enemyAnimator.SetTrigger(EnemyManager.hashMove);
-            }
-
+            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Move, enemyData.enemyAnimator, TriggerType.SetTrigger);
             base.Start();
         }
 
@@ -114,10 +103,7 @@ namespace Enemy
 
         protected override void End()
         {
-            if (enemyData.isAnimation)
-            {
-                enemyData.enemyAnimator.ResetTrigger(EnemyManager.hashMove);
-            }
+            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Move, enemyData.enemyAnimator, TriggerType.ResetTrigger);
         }
     }
 
@@ -131,10 +117,7 @@ namespace Enemy
 
         protected override void Start()
         {
-            if (enemyData.isEndAttackAnimation)
-            {
-                enemyData.enemyAnimator.ResetTrigger(EnemyManager.hashEndAttack);
-            }
+            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.AttackEnd, enemyData.enemyAnimator, TriggerType.ResetTrigger);
 
             if (enemyData.eEnemyController == EnemyController.AI)
             {
@@ -145,7 +128,7 @@ namespace Enemy
 
                 if (!isDelay)
                 {
-                    enemyData.enemyAnimator.SetTrigger(EnemyManager.hashAttack);
+                    EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Attack, enemyData.enemyAnimator, TriggerType.SetTrigger);
                 }
 
                 currentTime = 0f;
@@ -157,7 +140,7 @@ namespace Enemy
                     SlimeGameManager.Instance.SetSkillDelay(0, enemyData.playerAnimationDelay + enemyData.playerAnimationTime);
                     SlimeGameManager.Instance.CurrentSkillDelayTimer[0] = SlimeGameManager.Instance.SkillDelays[0];
 
-                    enemyData.enemyAnimator.SetTrigger(EnemyManager.hashAttack);
+                    EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Attack, enemyData.enemyAnimator, TriggerType.SetTrigger);
                     enemyData.enemyAnimator.speed = 1.2f;
                 }
                 else
@@ -184,7 +167,7 @@ namespace Enemy
 
                     if (!isDelay)
                     {
-                        enemyData.enemyAnimator.SetTrigger(EnemyManager.hashAttack);
+                        EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Attack, enemyData.enemyAnimator, TriggerType.SetTrigger);
                         SpriteFlipCheck();
                     }
                 }
@@ -230,12 +213,8 @@ namespace Enemy
 
         protected override void End()
         {
-            if (enemyData.isEndAttackAnimation)
-            {
-                enemyData.enemyAnimator.SetTrigger(EnemyManager.hashEndAttack);
-            }
-
-            enemyData.enemyAnimator.ResetTrigger(EnemyManager.hashAttack);
+            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.AttackEnd, enemyData.enemyAnimator, TriggerType.SetTrigger);
+            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Attack, enemyData.enemyAnimator, TriggerType.ResetTrigger);
         }
 
         private void SpriteFlipCheck()
@@ -326,15 +305,16 @@ namespace Enemy
             if (enemyData.eEnemyController == EnemyController.AI)
             {
                 enemyData.hp -= enemyData.damagedValue;
-                enemyData.hpBarFillImage.fillAmount = (float)enemyData.hp / enemyData.maxHP;
+
+                if (enemyData.hpBarFillImage != null)
+                {
+                    enemyData.hpBarFillImage.fillAmount = (float)enemyData.hp / enemyData.maxHP;
+                }
             }
 
             currentTime = 0f;
 
-            if (enemyData.isHitAnimation)
-            {
-                enemyData.enemyAnimator.SetTrigger(EnemyManager.hashHit);
-            }
+            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Hit, enemyData.enemyAnimator, TriggerType.SetTrigger);
 
             enemyCommand[0].Execute();
 
@@ -362,10 +342,7 @@ namespace Enemy
             {
                 enemyCommand[0].Execute();
 
-                if (enemyData.isHitAnimation)
-                {
-                    enemyData.enemyAnimator.ResetTrigger(EnemyManager.hashHit);
-                }
+                EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Hit, enemyData.enemyAnimator, TriggerType.ResetTrigger);
 
                 enemyData.isDamaged = false;
 
@@ -393,8 +370,9 @@ namespace Enemy
         {
             enemyData.enemyRigidbody2D.velocity = Vector2.zero;
 
-            enemyData.enemyAnimator.ResetTrigger(EnemyManager.hashReset);
-            enemyData.enemyAnimator.SetTrigger(EnemyManager.hashIsDie);
+            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Reset, enemyData.enemyAnimator, TriggerType.ResetTrigger);
+            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Die, enemyData.enemyAnimator, TriggerType.SetTrigger);
+
             currentTime = 0f;
 
             enemyData.enemyObject.layer = LayerMask.NameToLayer("ENEMYDEAD");
@@ -414,8 +392,8 @@ namespace Enemy
 
         protected override void End()
         {
-            enemyData.enemyAnimator.ResetTrigger(EnemyManager.hashIsDie);
-            enemyData.enemyAnimator.SetBool(EnemyManager.hashIsDead, true);
+            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Die, enemyData.enemyAnimator, TriggerType.ResetTrigger);
+            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.IsDead, enemyData.enemyAnimator, true);
 
             deadCommand.Execute();
         }

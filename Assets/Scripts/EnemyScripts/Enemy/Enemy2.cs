@@ -9,7 +9,8 @@ namespace Enemy
 
         protected override void OnEnable()
         {
-            enemyData.isHitAnimation = true;
+            base.OnEnable();
+
             enemyData.isAttackCommand = true;
             enemyData.isLongDistanceAttack = true;
             enemyData.isRotate = true;
@@ -24,8 +25,6 @@ namespace Enemy
             // 공격 Command 리셋
             enemyAttackPlayerCommand = new EnemyAttackPlayerCommand(transform, this, enemyData.eEnemyController, enemyData.attackPower);
             enemyAttackCommand = new EnemyAttackCommand(enemyData.enemyObject.transform, EnemyManager.Player.transform, enemyData.eEnemyController, enemyData.attackPower);
-
-            base.OnEnable();
         }
 
         public void EnemyAttack() // 애니메이션에서 실행 - 적 공격

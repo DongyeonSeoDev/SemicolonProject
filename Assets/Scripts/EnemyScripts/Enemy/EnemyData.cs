@@ -15,11 +15,14 @@ namespace Enemy
             playerNormalColor = enemyDataSO.playerNormalColor;
             playerDamagedColor = enemyDataSO.playerDamagedColor;
             playerDeadEffectColor = enemyDataSO.playerDeadEffectColor;
+
+            EnemyManager.SetEnemyAnimationDictionary(animationDictionary, enemyDataSO.animationList);
         }
 
         public EnemyController eEnemyController = EnemyController.AI;
         public EnemyType enemyType;
 
+        public Dictionary<EnemyAnimationType, int> animationDictionary = new Dictionary<EnemyAnimationType, int>();
         public List<EnemyLootData> enemyLootList;
 
         public GameObject enemyObject;
@@ -58,9 +61,6 @@ namespace Enemy
 
         public bool isDamaged = false;
         public bool isAttack = false;
-        public bool isAnimation = true;
-        public bool isHitAnimation = false;
-        public bool isEndAttackAnimation = false;
         public bool isAttackCommand = false;
         public bool isLongDistanceAttack = false;
         public bool isRunAway = false;
