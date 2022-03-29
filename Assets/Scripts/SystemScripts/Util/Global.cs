@@ -26,6 +26,7 @@ public static partial class Global
     
     private static string[] keyActionNameArr;
     private static string[] mobSpeciesKoArr;
+    private static Sprite[] speciesSpriteArr = new Sprite[EnumCount<EnemySpecies>()];
 
     public static string[] TextAssetsToStringArr(string path, char criteria = '\n') => Resources.Load<TextAsset>(path).text.Split(criteria);
 
@@ -48,6 +49,12 @@ public static partial class Global
         return mobSpeciesKoArr[(int)species];
     }
 
+    public static Sprite ToEnemySpeciesSprite(this EnemySpecies species)
+    {
+        if (speciesSpriteArr[(int)species] == null)
+            speciesSpriteArr[(int)species] = Resources.Load<Sprite>("System/Sprites/MobSpeciesIcon/" + species.ToString());
+        return speciesSpriteArr[(int)species];
+    }
 
     public static Sprite GetMonsterBodySprite(string id)
     {

@@ -35,9 +35,6 @@ public class InteractionNoticeUI : MonoBehaviour
         }
     }
 
-    //Å×½ºÆ® 
-    public Canvas cv => UIManager.Instance.gameCanvases[2];
-
     private void LateUpdate()
     {
         if (obj)

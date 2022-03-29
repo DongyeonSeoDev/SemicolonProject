@@ -26,7 +26,7 @@ public static partial class Util
     //anchor Áß¾Ó
     public static Vector3 ScreenToWorldPosForScreenSpace(Vector3 point, Canvas cvs)
     {
-        Vector3 scrPos = Util.WorldToScreenPoint(point);
+        Vector3 scrPos = WorldToScreenPoint(point);
         Vector2 localPos = Vector2.zero;
         RectTransformUtility.ScreenPointToLocalPointInRectangle(cvs.GetComponent<RectTransform>(), scrPos, MainCam, out localPos);
         return localPos;

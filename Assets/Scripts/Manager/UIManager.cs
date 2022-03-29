@@ -60,6 +60,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     public GameObject systemMsgPrefab, acquisitionTxtPrefab;
     public Transform systemMsgParent, acquisitionTxtParent;
 
+    public GameObject mobSpeciesIconPref;
     public GameObject npcNameUIPrefab; //NPC Name Text UI
     public Transform npcUICvsTrm;  //
     #endregion
@@ -155,6 +156,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         PoolManager.CreatePool(interactionMarkPair.first, interactionMarkPair.second, 2, "InteractionMark");
         PoolManager.CreatePool(selWindowPair.first, selWindowPair.second, 1, "SelWindow");
         PoolManager.CreatePool(selectionBtnPair.first, selectionBtnPair.second, 2, "SelBtn");
+        PoolManager.CreatePool(mobSpeciesIconPref, interactionMarkPair.second, 2, "MobSpeciesIcon");
     }
 
     private void OnEnable()

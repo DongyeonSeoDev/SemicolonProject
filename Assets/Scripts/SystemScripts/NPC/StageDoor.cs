@@ -1,5 +1,6 @@
 using UnityEngine.Experimental.Rendering.Universal;
 using UnityEngine;
+using Water;
 
 public class StageDoor : InteractionObj
 {
@@ -99,6 +100,8 @@ public class StageDoor : InteractionObj
         if (StageManager.Instance.IsStageClear && !isExitDoor)
         {
             base.SetInteractionUI(on);
+
+            PoolManager.GetItem<MobSpeciesIcon>("MobSpeciesIcon").Set(itrUI.GetComponent<RectTransform>(), nextStageData.enemySpeciesArea);
 
             /*if(fsOut)
                fsOut.gameObject.SetActive(on); */
