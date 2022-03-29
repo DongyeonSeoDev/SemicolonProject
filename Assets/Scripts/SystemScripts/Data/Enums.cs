@@ -115,6 +115,13 @@ public enum DoorDirType
     BACK
 }
 
+public enum EnemySpecies
+{
+    RAT,
+    SLIME,
+    NONE
+}
+
 
 public enum EventKeyCheck
 {

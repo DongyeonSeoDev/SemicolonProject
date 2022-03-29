@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using UnityEngine.Experimental.Rendering.Universal;
 using UnityEngine;
 
 public class StageDoor : InteractionObj
@@ -14,6 +14,8 @@ public class StageDoor : InteractionObj
     public DoorDirType dirType; //door dir
     public Transform playerSpawnPos;
 
+    public Light2D doorLight;
+
     private bool isOpen; //문으로 입장할 수 있는 상태가 되어서 상호작용 키를 눌렀을 때 true로
     private bool isExitDoor; //이 문이 입구였는가
     public bool IsExitDoor { set => isExitDoor = value; }
@@ -21,6 +23,24 @@ public class StageDoor : InteractionObj
     private void Awake()
     {
         spr = GetComponent<SpriteRenderer>();
+
+        float rz = 0f;
+        switch(dirType)
+        {
+            case DoorDirType.FRONT:
+                rz = -180f;
+                break;
+            case DoorDirType.RIGHT:
+                rz = 90f;
+                break;
+            case DoorDirType.LEFT:
+                rz = -90f;
+                break;
+            case DoorDirType.BACK:
+                rz = 0f;
+                break;
+        }
+        doorLight.transform.rotation = Quaternion.Euler(0, 0, rz);
     }
 
     public override void Interaction()
@@ -56,6 +76,7 @@ public class StageDoor : InteractionObj
         spr.sprite = StageManager.Instance.doorSprDic[dirType.ToString() + "Open"];
         isOpen = false;
         objName = Global.AreaTypeToString(nextStageData.areaType);
+        doorLight.gameObject.SetActive(true);
     }
 
     public void Close()
@@ -63,12 +84,14 @@ public class StageDoor : InteractionObj
         if (isExitDoor || !gameObject.activeSelf) return;
 
         spr.sprite = StageManager.Instance.doorSprDic[dirType.ToString() + "Close"];
+        doorLight.gameObject.SetActive(false);
     }
 
     public void Pass()
     {
         spr.sprite = StageManager.Instance.doorSprDic[dirType.ToString() + "Exit"];
         isExitDoor = true;
+        doorLight.gameObject.SetActive(false);
     }
 
     public override void SetInteractionUI(bool on)

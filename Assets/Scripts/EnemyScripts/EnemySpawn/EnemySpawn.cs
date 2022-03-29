@@ -52,7 +52,6 @@ namespace Enemy
                 }
             }
 
-            StageManager.Instance.SetMonsterStage();
             EnemyManager.Instance.enemyCount = CSVEnemySpawn.Instance.enemySpawnDatas[stageId].Count;  //Set Enemy Count
         }
 

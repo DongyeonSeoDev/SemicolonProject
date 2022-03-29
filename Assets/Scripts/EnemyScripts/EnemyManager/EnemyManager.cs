@@ -168,7 +168,7 @@ namespace Enemy
 
             if (enemyCount == 0)
             {
-                StageManager.Instance.StageClear();
+                StageManager.Instance.NextEnemy();
             }
         }
     }

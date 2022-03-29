@@ -5,14 +5,19 @@ using Water;
 
 public class StageManager : MonoSingleton<StageManager>
 {
+    #region dictionary
     private Dictionary<string, StageGround> idToStageObjDict = new Dictionary<string, StageGround>();
     private Dictionary<string, StageDataSO> idToStageDataDict = new Dictionary<string, StageDataSO>();
     private Dictionary<string, StageBundleDataSO> idToStageFloorDict = new Dictionary<string, StageBundleDataSO>();
     private Dictionary<int, Dictionary<AreaType, List<StageDataSO>>> randomRoomDict = new Dictionary<int, Dictionary<AreaType, List<StageDataSO>>>();
+    #endregion
 
+    #region current
     private StageGround currentStage = null;
     private StageDataSO currentStageData = null;
     public StageDataSO CurrentStageData => currentStageData;
+
+    private int currentStageMonsterBundleOrder = 1;
 
     private int currentFloor = 1;
     private int currentStageNumber = 0;
@@ -20,9 +25,9 @@ public class StageManager : MonoSingleton<StageManager>
     public AreaType CurrentAreaType => currentArea;
 
     //private bool completeLoadNextMap; //다음 맵을 완전히 불러왔는지
+    #endregion
 
-    public DoorDirType PassDir { get; set; } //전 스테이지에서 지나간 문 방향
-
+    #region Map Values
     [SerializeField] private int MaxStage;
     [SerializeField] private string startStageID;
     [HideInInspector] public Vector2 respawnPos;
@@ -30,15 +35,23 @@ public class StageManager : MonoSingleton<StageManager>
     //public Sprite openDoorSpr, closeDoorSpr;
     public Sprite[] doorSprites;
     public Dictionary<string, Sprite> doorSprDic = new Dictionary<string, Sprite>();
+    #endregion
 
+    #region obj
     public GameObject recoveryObjPref;
     public GameObject imprecationObjPref;
+    #endregion
 
+    #region parent
     public Transform stageParent;
     public Transform npcParent;
+    #endregion
 
+    public DoorDirType PassDir { get; set; } //전 스테이지에서 지나간 문 방향
     public bool IsStageClear { get; set; }
     public Vector3 MapCenterPoint { get; private set; }
+
+    private string CurrentMonstersOrderID => currentStageData.stageMonsterBundleCount < currentStageMonsterBundleOrder ? string.Empty : currentStageData.stageMonsterBundleID[currentStageMonsterBundleOrder - 1];
 
     //public bool IsLastStage { get; set; } 
 
@@ -53,6 +66,7 @@ public class StageManager : MonoSingleton<StageManager>
         foreach (StageDataSO data in Resources.LoadAll<StageDataSO>("Stage/SO/"))
         {
             idToStageDataDict.Add(data.stageID, data);
+            data.SetStageMonsterBundleID();
         }
         foreach(StageBundleDataSO data in Resources.LoadAll<StageBundleDataSO>("Stage/SO/BundleSO"))
         {
@@ -188,6 +202,7 @@ public class StageManager : MonoSingleton<StageManager>
         currentArea = currentStageData.areaType;
         //IsLastStage = currentStageData.endStage;
         currentStage = null;
+        currentStageMonsterBundleOrder = 1;
 
         if (!idToStageObjDict.TryGetValue(id, out currentStage))
         {
@@ -254,7 +269,7 @@ public class StageManager : MonoSingleton<StageManager>
                 SetClearStage();
                 break;
             case AreaType.MONSTER:
-                EventManager.TriggerEvent("SpawnEnemy", currentStageData.stageID);
+                //EventManager.TriggerEvent("SpawnEnemy", currentStageData.stageID);
                 break;
             case AreaType.CHEF:
                 SetClearStage();
@@ -280,6 +295,27 @@ public class StageManager : MonoSingleton<StageManager>
         currentStage.CloseDoor();
     }
 
+    public void NextEnemy()
+    {
+        if (currentArea == AreaType.MONSTER)
+        {
+            string id = CurrentMonstersOrderID;
+
+            if(string.IsNullOrEmpty(id))
+            {
+                StageClear();
+                return;
+            }
+
+            Util.DelayFunc(() =>
+            {
+                EventManager.TriggerEvent("SpawnEnemy", id);
+                EventManager.TriggerEvent("EnemyMove", id);
+            }, 2, this);
+            currentStageMonsterBundleOrder++;
+        }
+    }
+
     public void SetClearStage()
     {
         IsStageClear = true;
@@ -289,7 +325,10 @@ public class StageManager : MonoSingleton<StageManager>
     public void StartNextStage()
     {
         if (currentArea == AreaType.MONSTER)
-            EventManager.TriggerEvent("EnemyMove", currentStageData.stageID);
+        {
+            SetMonsterStage();
+            NextEnemy();
+        }
         EventManager.TriggerEvent("StartBGM", currentStageData.stageID);
         UIManager.Instance.InsertTopCenterNoticeQueue(string.IsNullOrEmpty(currentStageData.stageName) ? Global.AreaTypeToString(currentArea) : currentStageData.stageName);
     }

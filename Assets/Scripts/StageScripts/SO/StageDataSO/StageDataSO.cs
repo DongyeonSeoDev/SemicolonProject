@@ -11,9 +11,13 @@ public partial class StageDataSO : ScriptableObject
     //public int stageNumber;  //스테이지 번호(구역당)    n - stageNumber
     public string stageName;  //스테이지 이름 (지역 이름)
 
+    public int stageMonsterBundleCount;
+    [HideInInspector] public string[] stageMonsterBundleID;
+
     public GameObject stage;  //스테이지 프리팹
 
     public AreaType areaType;  //구역 타입
+    public EnemySpecies enemySpeciesArea = EnemySpecies.NONE;
 
     public string stageID => name;  //스테이지 아이디
 
@@ -25,5 +29,15 @@ public partial class StageDataSO : ScriptableObject
         if (go != null) stage = go;
     }
 
-    
+    public void SetStageMonsterBundleID()
+    {
+        if (stageMonsterBundleCount > 0)
+        {
+            stageMonsterBundleID = new string[stageMonsterBundleCount];
+            for (int i = 0; i < stageMonsterBundleCount; i++)
+            {
+                stageMonsterBundleID[i] = string.Concat(stageID, '-', i + 1);
+            }
+        }
+    }
 }
