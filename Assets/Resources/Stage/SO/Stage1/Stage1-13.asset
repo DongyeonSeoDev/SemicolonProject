@@ -14,5 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageFloor: {fileID: 11400000, guid: ad81aacd5e610b7498e62e7a75a34db9, type: 2}
   stageName: 
+  stageMonsterBundleCount: 0
+  stageMonsterBundleID: []
   stage: {fileID: 1378282381469885354, guid: 925b5b7e6aec3d64fb646a1e6d030764, type: 3}
   areaType: 2
+  enemySpeciesArea: 2

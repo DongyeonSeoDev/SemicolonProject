@@ -193,10 +193,13 @@ public class SoundManager : MonoSingleton<SoundManager>
         EventManager.TriggerEvent("StopEffectSoundAll");
     }
 
-    public void SetBGMVolume(float v)
+    public void SetBGMVolume(float v, bool isSetLerp = false)
     {
         bgmVolume = v;
-        BGMVolumeTimer = BGMVolumeTime;
+        if (!isSetLerp)
+        {
+            BGMVolumeTimer = BGMVolumeTime;
+        }
         EventManager.TriggerEvent("SetBGMVolumeAll", bgmVolume);
     }
     public void SetEffectSoundVolume(float v)
@@ -219,7 +222,7 @@ public class SoundManager : MonoSingleton<SoundManager>
             BGMVolumeTimer += Time.deltaTime;
 
             bgmVolume = Mathf.Lerp(BGMVolumeStart, BGMPitchTime, BGMVolumeTimer / BGMVolumeTime);
-            SetBGMVolume(bgmVolume);
+            SetBGMVolume(bgmVolume, true);
         }
     }
     public void SetBGMPitchByLerp(float start, float target, float time)
@@ -236,7 +239,7 @@ public class SoundManager : MonoSingleton<SoundManager>
             BGMPitchTimer += Time.deltaTime;
 
             bgmPitch = Mathf.Lerp(BGMPitchStart, BGMPitchTarget, BGMPitchTimer / BGMPitchTime);
-            SetBGMPitch(bgmPitch);
+            SetBGMPitch(bgmPitch, true);
         }
     }
     
@@ -251,10 +254,13 @@ public class SoundManager : MonoSingleton<SoundManager>
         EventManager.TriggerEvent("EffectSoundPauseAll", p);
     }
 
-    public void SetBGMPitch(float p)
+    public void SetBGMPitch(float p, bool isSetLerp = false)
     {
         bgmPitch = p;
-        BGMPitchTimer = BGMPitchTime;
+        if (!isSetLerp)
+        {
+            BGMPitchTimer = BGMPitchTime;
+        }
         EventManager.TriggerEvent("SetBGMPitchAll", p);
     }
     public void SetEffectSoundsPitch(float p)

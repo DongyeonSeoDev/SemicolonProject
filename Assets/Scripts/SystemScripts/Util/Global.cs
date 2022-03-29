@@ -25,6 +25,9 @@ public static partial class Global
     public static Vector3 worldTxtMove = new Vector3(0, 0.6f, 0);
     
     private static string[] keyActionNameArr;
+    private static string[] mobSpeciesKoArr;
+
+    public static string[] TextAssetsToStringArr(string path, char criteria = '\n') => Resources.Load<TextAsset>(path).text.Split(criteria);
 
     public static string ToKeyActionName(KeyAction keyAction)
     {
@@ -34,6 +37,15 @@ public static partial class Global
             keyActionNameArr = kta.text.Split('\n');
         }
         return keyActionNameArr[(int)keyAction];
+    }
+
+    public static string ToMonsterSpeciesStr(this EnemySpecies species)
+    {
+        if(mobSpeciesKoArr == null)
+        {
+            mobSpeciesKoArr = TextAssetsToStringArr("System/TextAssets/EnumToKo/species");
+        }
+        return mobSpeciesKoArr[(int)species];
     }
 
 

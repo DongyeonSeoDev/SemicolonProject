@@ -19,7 +19,7 @@ MonoBehaviour:
       skillName: "\uBAB8 \uC870\uAC01 \uB358\uC9C0\uAE30"
       skillExplanation: "\uBAB8\uC758 \uC77C\uBD80\uB97C \uC57D\uAC04 \uB5BC\uC5B4\uB0B4\uC11C
         \uB358\uC9C4\uB2E4"
-      skillSpr: {fileID: 21300000, guid: df907ac5977a0d543a06e726893e2c9e, type: 3}
+      skillSpr: {fileID: -6456084630374636216, guid: e9b0cb74dadb99940b66e5e1a8f9be9f, type: 3}
     - skillType: 1
       skillName: "\uB3CC\uC9C4"
       skillExplanation: "\uBE60\uB974\uAC8C \uC55E\uC73C\uB85C \uB3CC\uC9C4\uD55C\uB2E4"

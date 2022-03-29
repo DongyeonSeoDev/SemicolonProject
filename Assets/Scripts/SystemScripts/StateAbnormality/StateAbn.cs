@@ -43,8 +43,9 @@ public class Pain : StateAbnormalityEffect
     public override void StartEffect()
     {
         base.StartEffect();
-        EventManager.StopListening("StartNextStage", OnEffected);
-        EventManager.StartListening("StartNextStage", OnEffected);
+        //EventManager.StopListening("StartNextStage", OnEffected);
+        if(StateManager.Instance.stateCountDict[StateAbn] == Duration)
+           EventManager.StartListening("StartNextStage", OnEffected);
     }
 
     public override void StopEffect()
@@ -55,12 +56,18 @@ public class Pain : StateAbnormalityEffect
 
     public override void OnEffected()
     {
-        if (StateManager.Instance.stateCountDict[StateAbn] > 0)
+        if(StateManager.Instance.stateCountDict[StateAbn] <= 0)
         {
-            ItemUseMng.DecreaseCurrentHP(10);
+            Debug.Log("잘못된 상황 발생. 확인 필요.");
+            return;
+        }
+
+        ItemUseMng.DecreaseCurrentHP(10);
+        if (StateManager.Instance.stateCountDict[StateAbn] > 1)
+        {
             StateManager.Instance.stateCountDict[StateAbn]--;
         }
-        if(StateManager.Instance.stateCountDict[StateAbn] <= 0)
+        else
         {
             StopEffect();
         }
@@ -82,11 +89,11 @@ public class Scar : StateAbnormalityEffect
     }
     public override void OnEffected()
     {
-        if (StateManager.Instance.stateCountDict[StateAbn] > 0)
+        if (StateManager.Instance.stateCountDict[StateAbn] > 1)
         {
             StateManager.Instance.stateCountDict[StateAbn]--;
         }
-        if (StateManager.Instance.stateCountDict[StateAbn] <= 0)
+        else
         {
             StopEffect();
         }
