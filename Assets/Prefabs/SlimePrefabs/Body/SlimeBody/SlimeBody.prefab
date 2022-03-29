@@ -221,7 +221,7 @@ GameObject:
   - component: {fileID: 8968387448068834084}
   - component: {fileID: 176500872896431467}
   - component: {fileID: 4331802093199943809}
-  - component: {fileID: 7531912342510203400}
+  - component: {fileID: 4414483747632932661}
   m_Layer: 3
   m_Name: SlimeBody
   m_TagString: Player
@@ -347,6 +347,7 @@ MonoBehaviour:
   moveToMiddleSpeed: 1
   moveToMiddleTime: 1
   isMiddlePoint: 1
+  isUpPoint: 0
   triggerEdgeCollider2D: {fileID: 4331802093199943809}
 --- !u!114 &6030300000594730899
 MonoBehaviour:
@@ -528,7 +529,7 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
---- !u!61 &7531912342510203400
+--- !u!61 &4414483747632932661
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -541,7 +542,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.14373118, y: -0.54051733}
+  m_Offset: {x: -0.105804026, y: -0.44348}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -552,7 +553,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.769687, y: 0.2899065}
+  m_Size: {x: 1.9767665, y: 0.7597971}
   m_EdgeRadius: 0
 --- !u!1001 &252599340897420603
 PrefabInstance:
@@ -740,6 +741,10 @@ PrefabInstance:
     - target: {fileID: 1531553962166875665, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6770681210972784266, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
+      propertyPath: isUpPoint
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
@@ -1100,6 +1105,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6770681210972784266, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
+      propertyPath: isUpPoint
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
 --- !u!4 &3851220836599241427 stripped
@@ -1161,6 +1170,10 @@ PrefabInstance:
     - target: {fileID: 1531553962166875665, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6770681210972784266, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
+      propertyPath: isUpPoint
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
@@ -1224,6 +1237,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6770681210972784266, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
+      propertyPath: isUpPoint
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
 --- !u!4 &4327631336810169174 stripped
@@ -1285,6 +1302,10 @@ PrefabInstance:
     - target: {fileID: 1531553962166875665, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6770681210972784266, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
+      propertyPath: isUpPoint
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
@@ -1348,6 +1369,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6770681210972784266, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
+      propertyPath: isUpPoint
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
 --- !u!4 &5452748366344068690 stripped
@@ -1409,6 +1434,10 @@ PrefabInstance:
     - target: {fileID: 1531553962166875665, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6770681210972784266, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
+      propertyPath: isUpPoint
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
@@ -1472,6 +1501,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6770681210972784266, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
+      propertyPath: isUpPoint
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
 --- !u!4 &5452748365560110710 stripped
@@ -1533,6 +1566,10 @@ PrefabInstance:
     - target: {fileID: 1531553962166875665, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6770681210972784266, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}
+      propertyPath: isUpPoint
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 16c73286b68f25549911c5ecf27d7218, type: 3}

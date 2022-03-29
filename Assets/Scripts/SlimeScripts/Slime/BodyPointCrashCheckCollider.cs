@@ -6,11 +6,20 @@ public class BodyPointCrashCheckCollider : MonoBehaviour
 {
     [SerializeField]
     private BodyPoint bodyPoint = null; // Set this in Inspector
+    private CircleCollider2D col = null;
+    public CircleCollider2D Col
+    {
+        get { return col; }
+    }
 
 
     [SerializeField]
     private LayerMask whatIsWall;
 
+    private void Start()
+    {
+        col = GetComponent<CircleCollider2D>();
+    }
     private void OnEnable()
     {
         EventManager.StartListening("BodyPointCrash", BodyPointCrash);

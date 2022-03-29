@@ -50,8 +50,8 @@ MonoBehaviour:
   playerStat:
     eternalStat:
       maxHp: 100
-      minDamage: 482
-      maxDamage: 739
+      minDamage: 8
+      maxDamage: 12
       defense: 2
       intellect: 0
       speed: 8
@@ -129,6 +129,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5427881869486345069}
     m_Modifications:
+    - target: {fileID: 4414483747632932661, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_Size.y
+      value: 0.5058832
+      objectReference: {fileID: 0}
+    - target: {fileID: 4414483747632932661, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.57043695
+      objectReference: {fileID: 0}
     - target: {fileID: 6840160282341942530, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: m_Name
       value: Slime
