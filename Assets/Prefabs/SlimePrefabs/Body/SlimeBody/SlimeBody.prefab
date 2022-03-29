@@ -119,10 +119,10 @@ MonoBehaviour:
   matName: 
   bStartAutoInitSet: 1
   bStartAutoSetMatTex: 1
-  hdrColor: {r: 0, g: 0, b: 0, a: 0}
+  hdrColor: {r: 0.21568628, g: 0.85882354, b: 0.45896438, a: 0}
   speed: 0.2
   scale: 5
-  intensity: 1
+  intensity: 0.25
 --- !u!1 &6491635181836223920
 GameObject:
   m_ObjectHideFlags: 0
@@ -438,7 +438,7 @@ MonoBehaviour:
   skillDelay: 0.2
   skillIdx: 0
   projectile: {fileID: 8223448895546236962, guid: 6188b8fe7b7eef448a7491f9bdb9599e, type: 3}
-  shootPosOffset: 0.3
+  shootPosOffset: 0.6
   projectileSpeed: 15
   useEnergyAmount: 1
 --- !u!114 &3493340178899303131
