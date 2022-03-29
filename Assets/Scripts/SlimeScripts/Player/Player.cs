@@ -160,7 +160,12 @@ public class Player : MonoBehaviour
     {
         if (!playerState.IsDead)
         {
-            int dm = damage - playerStat.Defense;
+            int dm = damage;
+
+            if (!stateAbnormality)
+            {
+                dm = damage - playerStat.Defense;
+            }
 
             if (dm <= 0)
             {
@@ -197,7 +202,12 @@ public class Player : MonoBehaviour
         
         if (!playerState.IsDead)
         {
-            int dm = damage - playerStat.Defense;
+            int dm = damage;
+
+            if(!stateAbnormality)
+            {
+                dm = damage - playerStat.Defense;
+            }
 
             if (dm <= 0)
             {
