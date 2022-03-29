@@ -6,46 +6,28 @@ namespace Enemy
     {
         private EnemyCommand enemyAttackCommand;
 
-        private EnemyPositionCheckData positionCheckData = new EnemyPositionCheckData();
-
         protected override void OnEnable()
         {
-            enemyData = new EnemyData(enemyDataSO)
-            {
-                enemyObject = gameObject,
-                enemyLootList = enemyLootListSO,
-                enemyAnimator = anim,
-                enemySpriteRenderer = sr,
-                enemyRigidbody2D = rb,
-                hpBarFillImage = hpBarFillImage,
-                isAnimation = false,
-                isEndAttackAnimation = true,
-                isUseDelay = true,
-                isAttackPlayerDistance = 7f,
-                attackDelay = 2f,
-                chaseSpeed = 2f,
-                attackDamage = 20,
-                maxHP = 50,
-                hp = 50,
-                playerAnimationTime = 1f
-            };
-
+            enemyData.isAnimation = false;
+            enemyData.isEndAttackAnimation = true;
+            enemyData.isUseDelay = true;
+            enemyData.isAttackPlayerDistance = 7f;
+            enemyData.attackDelay = 2f;
+            enemyData.chaseSpeed = 2f;
+            enemyData.attackPower = 20;
+            enemyData.maxHP = 50;
+            enemyData.hp = 50;
+            enemyData.playerAnimationTime = 1f;
             enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, false);
             enemyAttackCommand = new EnemyAddForceCommand(rb, enemyData.rushForce, positionCheckData);
-            enemyData.enemyObject.layer = LayerMask.NameToLayer("ENEMY");
 
             base.OnEnable();
         }
 
-        public void InitData(out EnemyPositionCheckData positionData, out EnemyController controller, out int damage)
+        public void ReadyEnemyAttack() // 애니메이션에서 실행 - 적 공격 준비
         {
-            positionData = positionCheckData;
-            controller = enemyData.eEnemyController;
-            damage = enemyData.attackDamage;
-        }
+            enemyAttackCheck.AttackObjectReset();
 
-        public void ReadyEnemyAttack()
-        {
             if (positionCheckData.isWall)
             {
                 rb.velocity = positionCheckData.oppositeDirectionWall;
@@ -59,11 +41,9 @@ namespace Enemy
             {
                 positionCheckData.position = (EnemyManager.Player.transform.position - enemyData.enemyObject.transform.position).normalized;
             }
-
-            EventManager.TriggerEvent("AttackStart");
         }
 
-        public void EnemyAttack()
+        public void EnemyAttack() // 애니메이션에서 실행 - 적 공격
         {
             enemyAttackCommand.Execute();
         }

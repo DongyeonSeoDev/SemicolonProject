@@ -6,33 +6,16 @@ namespace Enemy
     {
         protected override void OnEnable()
         {
-            enemyData = new EnemyData(enemyDataSO)
-            {
-                enemyObject = gameObject,
-                enemyLootList = enemyLootListSO,
-                enemyAnimator = anim,
-                enemySpriteRenderer = sr,
-                enemyRigidbody2D = rb,
-                hpBarFillImage = hpBarFillImage,
-                isEndAttackAnimation = true,
-                playerAnimationTime = 0.85f
-            };
-
-            enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, false);
-            enemyData.enemyObject.layer = LayerMask.NameToLayer("ENEMY");
-
             base.OnEnable();
+
+            enemyData.isEndAttackAnimation = true;
+            enemyData.playerAnimationTime = 0.85f;
+            enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, false); // MoveCommand 추가
         }
 
-        public void InitData(out EnemyController controller, out int damage)
+        public void ReadyAttack() // 애니메이션에서 실행
         {
-            controller = enemyData.eEnemyController;
-            damage = enemyData.attackDamage;
-        }
-
-        public void AttackReset()
-        {
-            EventManager.TriggerEvent("AttackStart");
+            enemyAttackCheck.AttackObjectReset();
         }
     }
 }

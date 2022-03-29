@@ -70,7 +70,7 @@ namespace Enemy
         public bool isCurrentAttackTime = false;
         public bool isUseDelay = false;
 
-        public int attackDamage = 10;
+        public int attackPower = 10;
         public int damagedValue;
         public int maxHP = 30;
         public int hp = 30;

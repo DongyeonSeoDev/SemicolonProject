@@ -197,4 +197,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poolType: 50
   count: 1
-  movePivot: {fileID: 8275286282891348784}
+  enemyDataSO: {fileID: 11400000, guid: 4f1b72455347437428af09d0684e774b, type: 2}
+  hpBarFillImage: {fileID: 0}
+  hpBar: {fileID: 0}
+  enemyAttackCheck: {fileID: 0}

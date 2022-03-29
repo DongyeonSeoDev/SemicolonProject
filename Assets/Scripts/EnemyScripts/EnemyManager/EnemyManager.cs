@@ -13,7 +13,8 @@ namespace Enemy
     {
         Slime_01,
         Rat_02,
-        Slime_03
+        Slime_03,
+        Boss_SkeletonKing_04,
     }
 
     public class EnemyManager : MonoBehaviour

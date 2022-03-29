@@ -17,7 +17,7 @@ namespace Enemy
 
         private bool isAttackInit = false;
         private bool isKnockBack = false;
-        private int attackDamage = 0;
+        private int attackPower = 0;
 
         public Action<EnemyController> enemyControllerChange = null;
 
@@ -27,10 +27,13 @@ namespace Enemy
             {
                 playerStatusEffect = SlimeGameManager.Instance.CurrentPlayerBody.GetComponent<PlayerStatusEffect>();
             }
-
-            EventManager.StartListening("AttackStart", () => attackObject.Clear());
             
             AddEnemyController();
+        }
+
+        public void AttackObjectReset()
+        {
+            attackObject.Clear();
         }
 
         public void AddEnemyController()
@@ -55,27 +58,13 @@ namespace Enemy
 
         public void Init()
         {
-            Enemy1 enemy1 = GetComponentInParent<Enemy1>();
+            enemy = GetComponentInParent<Enemy>();
 
-            if (enemy1 != null)
-            {
-                enemy1.InitData(out eEnemyController, out attackDamage);
-
-                enemy = enemy1;
-
-                isKnockBack = false;
-            }
-            else
-            {
-                Enemy3 enemy3 = GetComponentInParent<Enemy3>();
-
-                enemy3.InitData(out positionCheckData, out eEnemyController, out attackDamage);
-
-                enemy = enemy3;
-                enemyRigidbody = enemy.GetComponent<Rigidbody2D>();
-
-                isKnockBack = true;
-            }
+            isKnockBack = enemy.IsKnockBack();
+            positionCheckData = enemy.positionCheckData;
+            eEnemyController = enemy.GetEnemyController();
+            attackPower = enemy.GetEnemyAttackPower();
+            enemyRigidbody = enemy.GetComponent<Rigidbody2D>();
 
             if (eEnemyController == EnemyController.PLAYER)
             {
@@ -111,7 +100,7 @@ namespace Enemy
 
             if (eEnemyController == EnemyController.AI && collision.CompareTag("Player"))
             {
-                SlimeGameManager.Instance.Player.GetDamage(this.enemy.gameObject, UnityEngine.Random.Range(attackDamage - 5, attackDamage + 6));
+                SlimeGameManager.Instance.Player.GetDamage(this.enemy.gameObject, UnityEngine.Random.Range(attackPower - 5, attackPower + 6));
                 attackObject.Add(collision.gameObject);
 
                 var enemy = collision.GetComponent<Enemy>();

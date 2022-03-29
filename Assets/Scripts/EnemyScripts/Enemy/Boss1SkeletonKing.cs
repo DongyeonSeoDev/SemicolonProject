@@ -2,85 +2,85 @@ using UnityEngine;
 
 namespace Enemy
 {
-    public class Boss1SkeletonKing : EnemyPoolData
+    public class Boss1SkeletonKing : Enemy
     {
-        public Transform movePivot;
+    //    public Transform movePivot;
 
-        private Rigidbody2D rigid;
-        private Animator animator;
-        private SpriteRenderer sr;
-        private EnemyCommand command;
-        private EnemyCommand command2;
+    //    private Rigidbody2D rigid;
+    //    private Animator animator;
+    //    private SpriteRenderer sr;
+    //    private EnemyCommand command;
+    //    private EnemyCommand command2;
 
-        private float lastPositionX = 0f;
-        private bool isMove = false;
-        private bool isAttack = false;
+    //    private float lastPositionX = 0f;
+    //    private bool isMove = false;
+    //    private bool isAttack = false;
 
-        private readonly int hashMove = Animator.StringToHash("move");
-        private readonly int hashIsAttack = Animator.StringToHash("attack");
+    //    private readonly int hashMove = Animator.StringToHash("move");
+    //    private readonly int hashIsAttack = Animator.StringToHash("attack");
 
-        private void Start()
-        {
-            rigid = GetComponent<Rigidbody2D>();
-            animator = GetComponent<Animator>();
-            sr = GetComponent<SpriteRenderer>();
+    //    private void Start()
+    //    {
+    //        rigid = GetComponent<Rigidbody2D>();
+    //        animator = GetComponent<Animator>();
+    //        sr = GetComponent<SpriteRenderer>();
 
-            command = new EnemyFollowPlayerCommand(null, movePivot, rigid, 5f, 0f, false);
-            command2 = new EnemyFollowPlayerCommand(null, movePivot, rigid, 15f, 0f, false);
-        }
+    //        command = new EnemyFollowPlayerCommand(null, movePivot, rigid, 5f, 0f, false);
+    //        command2 = new EnemyFollowPlayerCommand(null, movePivot, rigid, 15f, 0f, false);
+    //    }
 
-        private void Update()
-        {
-            if (isAttack)
-            {
-                return;
-            }
+    //    private void Update()
+    //    {
+    //        if (isAttack)
+    //        {
+    //            return;
+    //        }
 
-            if (isMove)
-            {
-                if (Vector2.Distance(transform.position, EnemyManager.Player.transform.position) < 3.5f)
-                {
-                    animator.ResetTrigger(hashMove);
-                    animator.SetTrigger(hashIsAttack);
+    //        if (isMove)
+    //        {
+    //            if (Vector2.Distance(transform.position, EnemyManager.Player.transform.position) < 3.5f)
+    //            {
+    //                animator.ResetTrigger(hashMove);
+    //                animator.SetTrigger(hashIsAttack);
 
-                    rigid.velocity = Vector2.zero;
-                    isAttack = true;
-                }
-                else
-                {
-                    command.Execute();
-                }
-            }
+    //                rigid.velocity = Vector2.zero;
+    //                isAttack = true;
+    //            }
+    //            else
+    //            {
+    //                command.Execute();
+    //            }
+    //        }
 
-            if (lastPositionX > transform.position.x)
-            {
-                sr.flipX = true;
-            }
-            else if (lastPositionX < transform.position.x)
-            {
-                sr.flipX = false;
-            }
+    //        if (lastPositionX > transform.position.x)
+    //        {
+    //            sr.flipX = true;
+    //        }
+    //        else if (lastPositionX < transform.position.x)
+    //        {
+    //            sr.flipX = false;
+    //        }
 
-            lastPositionX = transform.position.x;
-        }
+    //        lastPositionX = transform.position.x;
+    //    }
 
-        public void Move()
-        {
-            isMove = true;
-            animator.SetTrigger(hashMove);
-        }
+    //    public void Move()
+    //    {
+    //        isMove = true;
+    //        animator.SetTrigger(hashMove);
+    //    }
 
-        public void AttackEnd()
-        {
-            animator.ResetTrigger(hashIsAttack);
-            animator.SetTrigger(hashMove);
+    //    public void AttackEnd()
+    //    {
+    //        animator.ResetTrigger(hashIsAttack);
+    //        animator.SetTrigger(hashMove);
 
-            isAttack = false;
-        }
+    //        isAttack = false;
+    //    }
 
-        public void AttackMove()
-        {
-            command2.Execute();
-        }
+    //    public void AttackMove()
+    //    {
+    //        command2.Execute();
+    //    }
     }
 }
