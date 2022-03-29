@@ -55,7 +55,7 @@ public class ImprecationObj : InteractionObj
     void OnStateAbnormal()
     {
         StateAbnormality state = (StateAbnormality)UnityEngine.Random.Range(0, Global.EnumCount<StateAbnormality>()-1);
-        StateManager.Instance.StartStateAbnormality(StateAbnormality.Pain);
+        StateManager.Instance.StartStateAbnormality(state);
     }
 
     void RemoveRandomItem()

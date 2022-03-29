@@ -195,6 +195,7 @@ public class StageManager : MonoSingleton<StageManager>
 
     public void NextStage(string id)
     {
+        EventManager.TriggerEvent("ExitStage");
         EventManager.TriggerEvent("LoadingMapObj");
 
         //현재 스테이지 옵젝을 꺼주고 다음 스테이지를 불러와서 켜주고 스테이지 번호를 1 증가시킴
@@ -377,7 +378,7 @@ public class StageManager : MonoSingleton<StageManager>
     private void EnterRandomArea()
     {
         RandomRoomType room = (RandomRoomType)UnityEngine.Random.Range(0, Global.EnumCount<RandomRoomType>());
-        room = RandomRoomType.IMPRECATION;
+        
         //랜덤맵일 때는 EventManager.TriggerEvent(Global.EnterNextMap)가 실행안되므로 저주나 회복일 땐 따로 부름. 몹 구역일 땐 어차피 NextStage로 호출함
         switch (room)
         {
@@ -388,12 +389,14 @@ public class StageManager : MonoSingleton<StageManager>
                 SoundManager.Instance.SetBGMPitchByLerp(1, -0.7f, 1f);
                 PoolManager.GetItem("ImprecationObjPref1").transform.position = currentStage.objSpawnPos.position;
                 break;
+
             case RandomRoomType.MONSTER:  //몬스터 구역
                 --currentStageNumber;
                 int targetStage = Mathf.Clamp(currentStageData.stageFloor.floor + UnityEngine.Random.Range(-1, 2), 1, MaxStage); //현재 층에서 몇 층을 더할지 정함
                 StageBundleDataSO sbData = idToStageFloorDict.Values.Find(x=>x.floor == targetStage); //현재 층에서 -1 or 0 or 1층을 더한 층을 가져온다
                 NextStage(sbData.stages.FindRandom(stage => stage.areaType == AreaType.MONSTER).stageID); //뽑은 층에서 몬스터 지역들중에 랜덤으로 가져온다
                 break;
+
             case RandomRoomType.RECOVERY:  //회복 구역
                 currentArea = AreaType.RECOVERY;
                 EventManager.TriggerEvent(Global.EnterNextMap);

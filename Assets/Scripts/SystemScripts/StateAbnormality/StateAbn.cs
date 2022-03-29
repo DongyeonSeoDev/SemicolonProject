@@ -81,21 +81,31 @@ public class Scar : StateAbnormalityEffect
     public override void StartEffect()
     {
         base.StartEffect();
-        
+        EventManager.StartListening("StageClear", OnEffected);
     }
     public override void StopEffect()
     {
         base.StopEffect();
+        EventManager.StopListening("StageClear", OnEffected);
     }
     public override void OnEffected()
     {
-        if (StateManager.Instance.stateCountDict[StateAbn] > 1)
+        if (StageManager.Instance.CurrentAreaType == AreaType.MONSTER)
         {
-            StateManager.Instance.stateCountDict[StateAbn]--;
-        }
-        else
-        {
-            StopEffect();
+            if (StateManager.Instance.stateCountDict[StateAbn] <= 0)
+            {
+                Debug.Log("잘못된 상황 발생. 확인 필요.");
+                return;
+            }
+
+            if (StateManager.Instance.stateCountDict[StateAbn] > 1)
+            {
+                StateManager.Instance.stateCountDict[StateAbn]--;
+            }
+            else
+            {
+                StopEffect();
+            }
         }
     }
 }
@@ -127,14 +137,30 @@ public class Blind : StateAbnormalityEffect
     public override void StartEffect()
     {
         base.StartEffect();
+        if (StateManager.Instance.stateCountDict[StateAbn] == Duration)
+            EventManager.StartListening("StartNextStage", OnEffected);
     }
     public override void StopEffect()
     {
         base.StopEffect();
+        EventManager.StopListening("StartNextStage", OnEffected);
     }
     public override void OnEffected()
     {
-        //이건 기획 듣고 좀 봐야할듯
+        if (StateManager.Instance.stateCountDict[StateAbn] <= 0)
+        {
+            Debug.Log("잘못된 상황 발생. 확인 필요.");
+            return;
+        }
+
+        if (StateManager.Instance.stateCountDict[StateAbn] > 1)
+        {
+            StateManager.Instance.stateCountDict[StateAbn]--;
+        }
+        else
+        {
+            StopEffect();
+        }
     }
 
 

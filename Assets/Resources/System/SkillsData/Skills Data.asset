@@ -19,7 +19,7 @@ MonoBehaviour:
       skillName: "\uBAB8 \uC870\uAC01 \uB358\uC9C0\uAE30"
       skillExplanation: "\uBAB8\uC758 \uC77C\uBD80\uB97C \uC57D\uAC04 \uB5BC\uC5B4\uB0B4\uC11C
         \uB358\uC9C4\uB2E4"
-      skillSpr: {fileID: -6456084630374636216, guid: e9b0cb74dadb99940b66e5e1a8f9be9f, type: 3}
+      skillSpr: {fileID: 21300000, guid: b69e850b0596226488ce9dc9d818b9bf, type: 3}
     - skillType: 1
       skillName: "\uB3CC\uC9C4"
       skillExplanation: "\uBE60\uB974\uAC8C \uC55E\uC73C\uB85C \uB3CC\uC9C4\uD55C\uB2E4"
@@ -28,7 +28,7 @@ MonoBehaviour:
       skillName: "\uD761\uC218"
       skillExplanation: "\uCCB4\uB825\uC774 \uC77C\uC815 \uC774\uD558\uC778 \uC8FC\uBCC0
         \uBAAC\uC2A4\uD130\uB4E4\uC744 \uBE68\uC544\uB4E4\uC778"
-      skillSpr: {fileID: 2032880742315017720, guid: 3162a4e034fb19d40ba8510c66b07948, type: 3}
+      skillSpr: {fileID: 21300000, guid: 599f3f36d479b3d4081115ef6f600b2f, type: 3}
   monsterSkillsList:
   - first: 0
     second:

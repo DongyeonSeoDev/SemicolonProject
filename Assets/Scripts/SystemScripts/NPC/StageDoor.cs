@@ -75,7 +75,7 @@ public class StageDoor : InteractionObj
 
         spr.sprite = StageManager.Instance.doorSprDic[dirType.ToString() + "Open"];
         isOpen = false;
-        objName = Global.AreaTypeToString(nextStageData.areaType);
+        objName = StateManager.Instance.stateCountDict[StateAbnormality.Blind] > 0 ? "???" : Global.AreaTypeToString(nextStageData.areaType);
         doorLight.gameObject.SetActive(true);
     }
 
