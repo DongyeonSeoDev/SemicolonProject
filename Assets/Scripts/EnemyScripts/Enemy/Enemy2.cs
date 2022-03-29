@@ -25,7 +25,6 @@ namespace Enemy
                 isAttackCommand = true,
                 isLongDistanceAttack = true,
                 isRotate = true,
-                isUseAttacking = true,
                 damageDelay = 0.4f,
                 chaseSpeed = 10f,
                 attackDelay = 1.5f,
@@ -59,7 +58,7 @@ namespace Enemy
             }
             else if (enemyData.eEnemyController == EnemyController.AI)
             {
-                enemyAttackCommand = new EnemyAttackCommand(enemyData.enemyObject.transform, enemyData.PlayerObject.transform, enemyData.eEnemyController, enemyData.attackDamage);
+                enemyAttackCommand = new EnemyAttackCommand(enemyData.enemyObject.transform, EnemyManager.Player.transform, enemyData.eEnemyController, enemyData.attackDamage);
 
                 enemyAttackCommand.Execute();
             }

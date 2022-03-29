@@ -30,7 +30,7 @@ namespace Enemy
                 playerAnimationTime = 1f
             };
 
-            enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(transform, enemyData.PlayerObject.transform, rb, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, false);
+            enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, false);
             enemyAttackCommand = new EnemyAddForceCommand(rb, enemyData.rushForce, positionCheckData);
             enemyData.enemyObject.layer = LayerMask.NameToLayer("ENEMY");
 
@@ -57,7 +57,7 @@ namespace Enemy
             }
             else if (enemyData.eEnemyController == EnemyController.AI)
             {
-                positionCheckData.position = (enemyData.PlayerObject.transform.position - enemyData.enemyObject.transform.position).normalized;
+                positionCheckData.position = (EnemyManager.Player.transform.position - enemyData.enemyObject.transform.position).normalized;
             }
 
             EventManager.TriggerEvent("AttackStart");

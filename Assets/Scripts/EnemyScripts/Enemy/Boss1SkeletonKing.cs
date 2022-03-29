@@ -9,7 +9,6 @@ namespace Enemy
         private Rigidbody2D rigid;
         private Animator animator;
         private SpriteRenderer sr;
-        private Transform playerTransform;
         private EnemyCommand command;
         private EnemyCommand command2;
 
@@ -26,9 +25,8 @@ namespace Enemy
             animator = GetComponent<Animator>();
             sr = GetComponent<SpriteRenderer>();
 
-            playerTransform = SlimeGameManager.Instance.CurrentPlayerBody.transform;
-            command = new EnemyFollowPlayerCommand(movePivot, playerTransform, rigid, 5f, 0f, false);
-            command2 = new EnemyFollowPlayerCommand(movePivot, playerTransform, rigid, 15f, 0f, false);
+            command = new EnemyFollowPlayerCommand(null, movePivot, rigid, 5f, 0f, false);
+            command2 = new EnemyFollowPlayerCommand(null, movePivot, rigid, 15f, 0f, false);
         }
 
         private void Update()
@@ -40,7 +38,7 @@ namespace Enemy
 
             if (isMove)
             {
-                if (Vector2.Distance(transform.position, playerTransform.position) < 3.5f)
+                if (Vector2.Distance(transform.position, EnemyManager.Player.transform.position) < 3.5f)
                 {
                     animator.ResetTrigger(hashMove);
                     animator.SetTrigger(hashIsAttack);

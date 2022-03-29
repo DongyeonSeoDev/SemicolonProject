@@ -13,14 +13,14 @@ namespace Enemy
 
         public EnemyMoveState(EnemyData enemyData) : base(eState.MOVE, enemyData)
         {
-            enemyMoveCommand = new EnemyMovePlayerControllerCommand(enemyData.enemyRigidbody2D);
+            enemyMoveCommand = new EnemyMovePlayerControllerCommand(enemyData, enemyData.enemyRigidbody2D);
         }
 
         protected override void Start()
         {
             if (enemyData.isAnimation)
             {
-                enemyData.enemyAnimator.SetTrigger(enemyData.hashMove);
+                enemyData.enemyAnimator.SetTrigger(EnemyManager.hashMove);
             }
 
             base.Start();
@@ -30,6 +30,29 @@ namespace Enemy
         {
             enemyMoveCommand.Execute();
 
+            if (enemyData.isRotate)
+            {
+                if (enemyData.moveVector.x < 0)
+                {
+                    enemyData.enemyObject.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+                }
+                else if (enemyData.moveVector.x > 0)
+                {
+                    enemyData.enemyObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+                }
+            }
+            else
+            {
+                if (enemyData.moveVector.x < 0)
+                {
+                    enemyData.enemySpriteRenderer.flipX = true;
+                }
+                else if (enemyData.moveVector.x > 0)
+                {
+                    enemyData.enemySpriteRenderer.flipX = false;
+                }
+            }
+
             base.Update();
         }
 
@@ -37,15 +60,13 @@ namespace Enemy
         {
             if (enemyData.isAnimation)
             {
-                enemyData.enemyAnimator.ResetTrigger(enemyData.hashMove);
+                enemyData.enemyAnimator.ResetTrigger(EnemyManager.hashMove);
             }
         }
     }
 
     public partial class EnemyChaseState : EnemyState // 추격 상태
     {
-        private float lastPositionX;
-
         public EnemyChaseState(EnemyData enemyData) : base(eState.CHASE, enemyData)
         {
 
@@ -55,10 +76,8 @@ namespace Enemy
         {
             if (enemyData.isAnimation)
             {
-                enemyData.enemyAnimator.SetTrigger(enemyData.hashMove);
+                enemyData.enemyAnimator.SetTrigger(EnemyManager.hashMove);
             }
-
-            lastPositionX = enemyData.enemyObject.transform.position.x;
 
             base.Start();
         }
@@ -69,28 +88,26 @@ namespace Enemy
 
             if (enemyData.isRotate)
             {
-                if (lastPositionX > enemyData.enemyObject.transform.position.x)
+                if (enemyData.moveVector.x < 0)
                 {
                     enemyData.enemyObject.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
                 }
-                else if (lastPositionX < enemyData.enemyObject.transform.position.x)
+                else if (enemyData.moveVector.x > 0)
                 {
                     enemyData.enemyObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
                 }
             }
             else
             {
-                if (lastPositionX > enemyData.enemyObject.transform.position.x)
+                if (enemyData.moveVector.x < 0)
                 {
                     enemyData.enemySpriteRenderer.flipX = true;
                 }
-                else if (lastPositionX < enemyData.enemyObject.transform.position.x)
+                else if (enemyData.moveVector.x > 0)
                 {
                     enemyData.enemySpriteRenderer.flipX = false;
                 }
             }
-
-            lastPositionX = enemyData.enemyObject.transform.position.x;
 
             base.Update();
         }
@@ -99,7 +116,7 @@ namespace Enemy
         {
             if (enemyData.isAnimation)
             {
-                enemyData.enemyAnimator.ResetTrigger(enemyData.hashMove);
+                enemyData.enemyAnimator.ResetTrigger(EnemyManager.hashMove);
             }
         }
     }
@@ -116,21 +133,19 @@ namespace Enemy
         {
             if (enemyData.isEndAttackAnimation)
             {
-                enemyData.enemyAnimator.ResetTrigger(enemyData.hashEndAttack);
+                enemyData.enemyAnimator.ResetTrigger(EnemyManager.hashEndAttack);
             }
 
             if (enemyData.eEnemyController == EnemyController.AI)
             {
-                enemyData.isAttacking = true;
-
                 if (enemyData.isUseDelay)
                 {
-                    isDelay = enemyData.IsAttackDelay();
+                    isDelay = EnemyManager.IsAttackDelay(enemyData);
                 }
 
                 if (!isDelay)
                 {
-                    enemyData.enemyAnimator.SetTrigger(enemyData.hashAttack);
+                    enemyData.enemyAnimator.SetTrigger(EnemyManager.hashAttack);
                 }
 
                 currentTime = 0f;
@@ -142,7 +157,7 @@ namespace Enemy
                     SlimeGameManager.Instance.SetSkillDelay(0, enemyData.playerAnimationDelay + enemyData.playerAnimationTime);
                     SlimeGameManager.Instance.CurrentSkillDelayTimer[0] = SlimeGameManager.Instance.SkillDelays[0];
 
-                    enemyData.enemyAnimator.SetTrigger(enemyData.hashAttack);
+                    enemyData.enemyAnimator.SetTrigger(EnemyManager.hashAttack);
                     enemyData.enemyAnimator.speed = 1.2f;
                 }
                 else
@@ -165,11 +180,11 @@ namespace Enemy
                 }
                 else
                 {
-                    isDelay = enemyData.IsAttackDelay();
+                    isDelay = EnemyManager.IsAttackDelay(enemyData);
 
                     if (!isDelay)
                     {
-                        enemyData.enemyAnimator.SetTrigger(enemyData.hashAttack);
+                        enemyData.enemyAnimator.SetTrigger(EnemyManager.hashAttack);
                         SpriteFlipCheck();
                     }
                 }
@@ -202,7 +217,7 @@ namespace Enemy
             {
                 if (enemyData.eEnemyController == EnemyController.AI)
                 {
-                    enemyData.IsAttackDelay(enemyData.attackDelay - currentTime);
+                    EnemyManager.IsAttackDelay(enemyData, enemyData.attackDelay - currentTime);
                 }
                 else if (enemyData.eEnemyController == EnemyController.PLAYER)
                 {
@@ -217,15 +232,10 @@ namespace Enemy
         {
             if (enemyData.isEndAttackAnimation)
             {
-                enemyData.enemyAnimator.SetTrigger(enemyData.hashEndAttack);
+                enemyData.enemyAnimator.SetTrigger(EnemyManager.hashEndAttack);
             }
 
-            enemyData.enemyAnimator.ResetTrigger(enemyData.hashAttack);
-
-            if (enemyData.eEnemyController == EnemyController.AI)
-            {
-                enemyData.isAttacking = false;
-            }
+            enemyData.enemyAnimator.ResetTrigger(EnemyManager.hashAttack);
         }
 
         private void SpriteFlipCheck()
@@ -237,22 +247,22 @@ namespace Enemy
             {
                 if (enemyData.isRotate)
                 {
-                    if (enemyData.enemyObject.transform.position.x > enemyData.PlayerObject.transform.position.x)
+                    if (enemyData.enemyObject.transform.position.x > EnemyManager.Player.transform.position.x)
                     {
                         enemyData.enemyObject.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
                     }
-                    else if (enemyData.enemyObject.transform.position.x < enemyData.PlayerObject.transform.position.x)
+                    else if (enemyData.enemyObject.transform.position.x < EnemyManager.Player.transform.position.x)
                     {
                         enemyData.enemyObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
                     }
                 }
                 else
                 {
-                    if (enemyData.enemyObject.transform.position.x > enemyData.PlayerObject.transform.position.x)
+                    if (enemyData.enemyObject.transform.position.x > EnemyManager.Player.transform.position.x)
                     {
                         enemyData.enemySpriteRenderer.flipX = true;
                     }
-                    else if (enemyData.enemyObject.transform.position.x < enemyData.PlayerObject.transform.position.x)
+                    else if (enemyData.enemyObject.transform.position.x < EnemyManager.Player.transform.position.x)
                     {
                         enemyData.enemySpriteRenderer.flipX = false;
                     }
@@ -306,7 +316,7 @@ namespace Enemy
                 }
                 else
                 {
-                    enemyCommand[1] = new EnemyAddForceCommand(enemyData.enemyRigidbody2D, enemyData.knockBackPower, null, (enemyData.enemyObject.transform.position - enemyData.PlayerObject.transform.position).normalized);
+                    enemyCommand[1] = new EnemyAddForceCommand(enemyData.enemyRigidbody2D, enemyData.knockBackPower, null, (enemyData.enemyObject.transform.position - EnemyManager.Player.transform.position).normalized);
                 }
             }
         }
@@ -323,7 +333,7 @@ namespace Enemy
 
             if (enemyData.isHitAnimation)
             {
-                enemyData.enemyAnimator.SetTrigger(enemyData.hashHit);
+                enemyData.enemyAnimator.SetTrigger(EnemyManager.hashHit);
             }
 
             enemyCommand[0].Execute();
@@ -354,7 +364,7 @@ namespace Enemy
 
                 if (enemyData.isHitAnimation)
                 {
-                    enemyData.enemyAnimator.ResetTrigger(enemyData.hashHit);
+                    enemyData.enemyAnimator.ResetTrigger(EnemyManager.hashHit);
                 }
 
                 enemyData.isDamaged = false;
@@ -381,8 +391,10 @@ namespace Enemy
 
         protected override void Start()
         {
-            enemyData.enemyAnimator.ResetTrigger(enemyData.hashReset);
-            enemyData.enemyAnimator.SetTrigger(enemyData.hashIsDie);
+            enemyData.enemyRigidbody2D.velocity = Vector2.zero;
+
+            enemyData.enemyAnimator.ResetTrigger(EnemyManager.hashReset);
+            enemyData.enemyAnimator.SetTrigger(EnemyManager.hashIsDie);
             currentTime = 0f;
 
             enemyData.enemyObject.layer = LayerMask.NameToLayer("ENEMYDEAD");
@@ -402,8 +414,8 @@ namespace Enemy
 
         protected override void End()
         {
-            enemyData.enemyAnimator.ResetTrigger(enemyData.hashIsDie);
-            enemyData.enemyAnimator.SetBool(enemyData.hashIsDead, true);
+            enemyData.enemyAnimator.ResetTrigger(EnemyManager.hashIsDie);
+            enemyData.enemyAnimator.SetBool(EnemyManager.hashIsDead, true);
 
             deadCommand.Execute();
         }
