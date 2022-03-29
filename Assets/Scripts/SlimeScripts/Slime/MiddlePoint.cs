@@ -5,7 +5,7 @@ using UnityEngine;
 public class MiddlePoint : BodyPoint
 {
     [SerializeField]
-    private EdgeCollider2D edgeCollider2D = null;
+    private EdgeCollider2D triggerEdgeCollider2D = null;
 
     private Vector2[] notMiddlePointsPositions;
 
@@ -25,15 +25,13 @@ public class MiddlePoint : BodyPoint
     {
         notMiddlePointsPositions = new Vector2[softBody.NotMiddlePoints.Count + 1];
 
-        for(int i = 0; i < softBody.NotMiddlePoints.Count; i++)
+        for(int i = 0; i < notMiddlePointsPositions.Length; i++)
         {
-            notMiddlePointsPositions[i] = softBody.NotMiddlePoints[i].localPosition;
+            notMiddlePointsPositions[i.Limit(0, softBody.NotMiddlePoints.Count - 1)] = softBody.NotMiddlePoints[i.Limit(0, softBody.NotMiddlePoints.Count - 1)].localPosition;
         }
-
-        notMiddlePointsPositions[notMiddlePointsPositions.Length - 1] = notMiddlePointsPositions[0];
     }
     private void FixedUpdateEdgeCollider()
     {
-        edgeCollider2D.SetPoints(notMiddlePointsPositions.ToList());
+        triggerEdgeCollider2D.SetPoints(notMiddlePointsPositions.ToList());
     }
 }
