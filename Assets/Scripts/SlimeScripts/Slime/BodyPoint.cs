@@ -120,9 +120,9 @@ public class BodyPoint : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        CheckIsUpWall();
+        CheckWall();
     }
-    private void CheckIsUpWall()
+    private void CheckWall()
     {
         if (!isUpPoint)
         {
@@ -138,6 +138,7 @@ public class BodyPoint : MonoBehaviour
         hit = Physics2D.Raycast(ray.origin, ray.direction, bodyPointCrashCheckCollider.Col.radius, whatIsWall);
 
         isUpWall = hit;
+
     }
     private void MoveToOriginPos()
     {
