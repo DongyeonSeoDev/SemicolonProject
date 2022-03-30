@@ -9,12 +9,7 @@ namespace Enemy
 
     public partial class EnemyMoveState : EnemyState // 움직임 상태
     {
-        private EnemyCommand enemyMoveCommand;
-
-        public EnemyMoveState(EnemyData enemyData) : base(eState.MOVE, enemyData)
-        {
-            enemyMoveCommand = new EnemyMovePlayerControllerCommand(enemyData, enemyData.enemyRigidbody2D);
-        }
+        public EnemyMoveState(EnemyData enemyData) : base(eState.MOVE, enemyData) { }
 
         protected override void Start()
         {
@@ -24,29 +19,11 @@ namespace Enemy
 
         protected override void Update()
         {
-            enemyMoveCommand.Execute();
+            enemyData.playerControllerMove.Execute();
 
-            if (enemyData.isRotate)
+            if (enemyData.enemySpriteRotateCommand != null)
             {
-                if (enemyData.moveVector.x < 0)
-                {
-                    enemyData.enemyObject.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-                }
-                else if (enemyData.moveVector.x > 0)
-                {
-                    enemyData.enemyObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-                }
-            }
-            else
-            {
-                if (enemyData.moveVector.x < 0)
-                {
-                    enemyData.enemySpriteRenderer.flipX = true;
-                }
-                else if (enemyData.moveVector.x > 0)
-                {
-                    enemyData.enemySpriteRenderer.flipX = false;
-                }
+                enemyData.enemySpriteRotateCommand.Execute();
             }
 
             base.Update();
@@ -60,10 +37,7 @@ namespace Enemy
 
     public partial class EnemyChaseState : EnemyState // 추격 상태
     {
-        public EnemyChaseState(EnemyData enemyData) : base(eState.CHASE, enemyData)
-        {
-
-        }
+        public EnemyChaseState(EnemyData enemyData) : base(eState.CHASE, enemyData) { }
 
         protected override void Start()
         {
@@ -75,27 +49,9 @@ namespace Enemy
         {
             enemyData.enemyMoveCommand.Execute();
 
-            if (enemyData.isRotate)
+            if (enemyData.enemySpriteRotateCommand != null)
             {
-                if (enemyData.moveVector.x < 0)
-                {
-                    enemyData.enemyObject.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-                }
-                else if (enemyData.moveVector.x > 0)
-                {
-                    enemyData.enemyObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-                }
-            }
-            else
-            {
-                if (enemyData.moveVector.x < 0)
-                {
-                    enemyData.enemySpriteRenderer.flipX = true;
-                }
-                else if (enemyData.moveVector.x > 0)
-                {
-                    enemyData.enemySpriteRenderer.flipX = false;
-                }
+                enemyData.enemySpriteRotateCommand.Execute();
             }
 
             base.Update();
@@ -224,55 +180,16 @@ namespace Enemy
 
             if (enemyData.eEnemyController == EnemyController.AI)
             {
-                if (enemyData.isRotate)
-                {
-                    if (enemyData.enemyObject.transform.position.x > EnemyManager.Player.transform.position.x)
-                    {
-                        enemyData.enemyObject.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-                    }
-                    else if (enemyData.enemyObject.transform.position.x < EnemyManager.Player.transform.position.x)
-                    {
-                        enemyData.enemyObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-                    }
-                }
-                else
-                {
-                    if (enemyData.enemyObject.transform.position.x > EnemyManager.Player.transform.position.x)
-                    {
-                        enemyData.enemySpriteRenderer.flipX = true;
-                    }
-                    else if (enemyData.enemyObject.transform.position.x < EnemyManager.Player.transform.position.x)
-                    {
-                        enemyData.enemySpriteRenderer.flipX = false;
-                    }
-                }
+                enemyData.moveVector = EnemyManager.Player.transform.position;
             }
             else if (enemyData.eEnemyController == EnemyController.PLAYER)
             {
-                float mousePositionX = Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
+                enemyData.moveVector.x = Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
+            }
 
-                if (enemyData.isRotate)
-                {
-                    if (enemyData.enemyObject.transform.position.x > mousePositionX)
-                    {
-                        enemyData.enemyObject.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
-                    }
-                    else if (enemyData.enemyObject.transform.position.x < mousePositionX)
-                    {
-                        enemyData.enemyObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
-                    }
-                }
-                else
-                {
-                    if (enemyData.enemyObject.transform.position.x > mousePositionX)
-                    {
-                        enemyData.enemySpriteRenderer.flipX = true;
-                    }
-                    else if (enemyData.enemyObject.transform.position.x < mousePositionX)
-                    {
-                        enemyData.enemySpriteRenderer.flipX = false;
-                    }
-                }
+            if (enemyData.enemySpriteRotateCommand != null)
+            {
+                enemyData.enemySpriteRotateCommand.Execute();
             }
         }
     }

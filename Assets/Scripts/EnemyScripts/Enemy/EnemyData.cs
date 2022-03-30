@@ -17,6 +17,8 @@ namespace Enemy
             playerDeadEffectColor = enemyDataSO.playerDeadEffectColor;
 
             EnemyManager.SetEnemyAnimationDictionary(animationDictionary, enemyDataSO.animationList);
+
+            playerControllerMove = new EnemyMovePlayerControllerCommand(this, enemyRigidbody2D);
         }
 
         public EnemyController eEnemyController = EnemyController.AI;
@@ -30,7 +32,10 @@ namespace Enemy
         public SpriteRenderer enemySpriteRenderer;
         public Rigidbody2D enemyRigidbody2D;
         public Image hpBarFillImage;
+
         public EnemyCommand enemyMoveCommand;
+        public EnemyCommand enemySpriteRotateCommand;
+        public EnemyCommand playerControllerMove;
 
         public Vector2? knockBackDirection;
         public Vector2 moveVector;
@@ -65,7 +70,6 @@ namespace Enemy
         public bool isLongDistanceAttack = false;
         public bool isRunAway = false;
         public bool isEnemyMove = false;
-        public bool isRotate = false;
         public bool isKnockBack = false;
         public bool isCurrentAttackTime = false;
         public bool isUseDelay = false;

@@ -18,8 +18,10 @@ namespace Enemy
             enemyData.maxHP = 50;
             enemyData.hp = 50;
             enemyData.playerAnimationTime = 1f;
+
             enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, false);
             enemyAttackCommand = new EnemyAddForceCommand(rb, enemyData.rushForce, positionCheckData);
+            enemyData.enemySpriteRotateCommand = new EnemySpriteFlipCommand(enemyData);
         }
 
         public void ReadyEnemyAttack() // 애니메이션에서 실행 - 적 공격 준비

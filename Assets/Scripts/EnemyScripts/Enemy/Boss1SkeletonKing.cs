@@ -24,7 +24,9 @@ namespace Enemy
             enemyData.attackPower = 30;
             enemyData.maxHP = 500;
             enemyData.hp = 500;
+
             enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, movePivot, rb, 5f, 0f, false);
+            enemyData.enemySpriteRotateCommand = new EnemySpriteFlipCommand(enemyData);
         }
 
         public void AttackMove() // 애니메이션에서 실행

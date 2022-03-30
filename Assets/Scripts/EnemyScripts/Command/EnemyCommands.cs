@@ -377,4 +377,48 @@ namespace Enemy
             }
         }
     }
+
+    public class EnemySpriteFlipCommand : EnemyCommand
+    {
+        private EnemyData enemyData;
+
+        public EnemySpriteFlipCommand(EnemyData data)
+        {
+            enemyData = data;
+        }
+
+        public override void Execute()
+        {
+            if (enemyData.moveVector.x < 0)
+            {
+                enemyData.enemySpriteRenderer.flipX = true;
+            }
+            else if (enemyData.moveVector.x > 0)
+            {
+                enemyData.enemySpriteRenderer.flipX = false;
+            }
+        }
+    }
+
+    public class EnemySpriteRotateCommand : EnemyCommand
+    {
+        private EnemyData enemyData;
+
+        public EnemySpriteRotateCommand(EnemyData data)
+        {
+            enemyData = data;
+        }
+
+        public override void Execute()
+        {
+            if (enemyData.moveVector.x < 0)
+            {
+                enemyData.enemyObject.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+            }
+            else if (enemyData.moveVector.x > 0)
+            {
+                enemyData.enemyObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+            }
+        }
+    }
 }
