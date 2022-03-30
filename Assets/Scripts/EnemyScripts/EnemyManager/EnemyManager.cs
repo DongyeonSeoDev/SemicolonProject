@@ -13,7 +13,14 @@ namespace Enemy
     {
         Slime_01,
         Rat_02,
-        Slime_03
+        Slime_03,
+        Boss_SkeletonKing_04,
+    }
+
+    public enum TriggerType
+    {
+        SetTrigger,
+        ResetTrigger,
     }
 
     public class EnemyManager : MonoBehaviour
@@ -54,14 +61,6 @@ namespace Enemy
 
             set => player = value;
         }
-
-        public static readonly int hashIsDie = Animator.StringToHash("isDie");
-        public static readonly int hashIsDead = Animator.StringToHash("isDead");
-        public static readonly int hashMove = Animator.StringToHash("Move");
-        public static readonly int hashAttack = Animator.StringToHash("Attack");
-        public static readonly int hashEndAttack = Animator.StringToHash("EndAttack");
-        public static readonly int hashHit = Animator.StringToHash("Hit");
-        public static readonly int hashReset = Animator.StringToHash("Reset");
 
         private void Awake()
         {
@@ -144,6 +143,38 @@ namespace Enemy
             Util.DelayFunc(() => data.isCurrentAttackTime = false, currentAttackDelay);
 
             return data.isCurrentAttackTime;
+        }
+
+        public static void SetEnemyAnimationDictionary(Dictionary<EnemyAnimationType, int> enemyAnimationDictionary, List<EnemyAnimation> animationList)
+        {
+            for (int i = 0; i < animationList.Count; i++)
+            {
+                enemyAnimationDictionary.Add(animationList[i].type, Animator.StringToHash(animationList[i].animationName));
+            }
+        }
+
+        public static void AnimatorSet(Dictionary<EnemyAnimationType, int> enemyAnimationDictionary, EnemyAnimationType animationType, Animator animator, TriggerType setAnimationtype)
+        {
+            if (enemyAnimationDictionary.ContainsKey(animationType))
+            {
+                switch (setAnimationtype)
+                {
+                    case TriggerType.SetTrigger:
+                        animator.SetTrigger(enemyAnimationDictionary[animationType]);
+                        break;
+                    case TriggerType.ResetTrigger:
+                        animator.ResetTrigger(enemyAnimationDictionary[animationType]);
+                        break;
+                }
+            }
+        }
+
+        public static void AnimatorSet(Dictionary<EnemyAnimationType, int> enemyAnimationDictionary, EnemyAnimationType animationType, Animator animator, bool value)
+        {
+            if (enemyAnimationDictionary.ContainsKey(animationType))
+            {
+                animator.SetBool(enemyAnimationDictionary[animationType], value);
+            }
         }
 
         public void PlayerDeadEvent() // 함수 const 변수 여기로 옮기고, Player 버그 해결

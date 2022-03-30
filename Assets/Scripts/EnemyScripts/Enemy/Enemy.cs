@@ -12,7 +12,7 @@ namespace Enemy
         public Image hpBarFillImage; // 적 HP 바 채워진것 ( 없으면 UI 만들어야 함 ( Assets > Prefabs > EnemyPrefabs > EnemyUI 참고 ) )
         public GameObject hpBar; // 적 HP 바 오브젝트 ( hpBarFillImage의 부모 캔버스 오브젝트 )
 
-        protected EnemyData enemyData; // 자식 클래스에서 만들어야 함
+        protected EnemyData enemyData; // 적 데이터 
 
         // GetComponent로 가져옴
         protected SpriteRenderer sr; 
@@ -25,6 +25,7 @@ namespace Enemy
         private EnemyState currentState; // Enemy FSM 실행
 
         public EnemyAttackCheck enemyAttackCheck; // 적 공격 확인 ( 근거리 적은 있고 원거리 적은 없음 )
+        public EnemyPositionCheckData positionCheckData = new EnemyPositionCheckData(); // 벽과 적 위치 확인
 
         private void Awake()
         {
@@ -42,7 +43,7 @@ namespace Enemy
             }
         }
 
-        private void Start()
+        protected virtual void Start()
         {
             // 이벤트 추가
 
@@ -78,12 +79,28 @@ namespace Enemy
 
         protected virtual void OnEnable()
         {
+            enemyData = new EnemyData(enemyDataSO)
+            {
+                enemyObject = gameObject,
+                enemyLootList = enemyLootListSO,
+                enemyAnimator = anim,
+                enemySpriteRenderer = sr,
+                enemyRigidbody2D = rb,
+                hpBarFillImage = hpBarFillImage,
+            };
+
             enemyData.enemyAnimator.enabled = true; // 애니메이션 실행
 
             // 마지막 위치, HP UI, 애니메이션, 죽음 확인 리셋
-            enemyData.hpBarFillImage.fillAmount = (float)enemyData.hp / enemyData.maxHP;
-            enemyData.enemyAnimator.SetTrigger(EnemyManager.hashReset);
-            enemyData.enemyAnimator.SetBool(EnemyManager.hashIsDead, false);
+            if (enemyData.hpBarFillImage != null)
+            {
+                enemyData.hpBarFillImage.fillAmount = (float)enemyData.hp / enemyData.maxHP;
+            }
+
+            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Reset, anim, TriggerType.SetTrigger);
+            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.IsDead, anim, false);
+
+            enemyData.enemyObject.layer = LayerMask.NameToLayer("ENEMY"); // layer 리셋
 
             // 첫 상태 넣기
             currentState = new EnemyIdleState(enemyData);
@@ -105,6 +122,15 @@ namespace Enemy
             if (currentState != null)
             {
                 currentState = currentState.Process();
+            }
+        }
+
+        private void OnCollisionEnter2D(Collision2D collision)
+        {
+            if (collision.gameObject.CompareTag("Wall")) // 벽 확인
+            {
+                positionCheckData.isWall = true;
+                positionCheckData.oppositeDirectionWall = collision.contacts[0].normal;
             }
         }
 
@@ -136,24 +162,6 @@ namespace Enemy
             EventManager.TriggerEvent("EnemyDead", enemyData.enemyType.ToString());
         }
 
-        // 적 아이디를 가져옴
-        public string GetEnemyId()
-        {
-            return enemyData.enemyType.ToString();
-        }
-
-        // 적을 움직이는 상태로 바꿈
-        public void MoveEnemy()
-        {
-            enemyData.isEnemyMove = true;
-        }
-
-        // 적 체력 퍼센트를 가져옴
-        public float EnemyHpPercent()
-        {
-            return ((float)enemyData.hp / enemyData.maxHP) * 100f;
-        }
-
         // 적 컨트롤러를 다른것으로 바꿈
         public void EnemyControllerChange(EnemyController eEnemyController)
         {
@@ -164,7 +172,10 @@ namespace Enemy
                 gameObject.tag = "Untagged";
                 gameObject.layer = LayerMask.NameToLayer("ENEMY");
 
-                hpBar.SetActive(true);
+                if (hpBar != null)
+                {
+                    hpBar.SetActive(true);
+                }
 
                 sr.color = enemyData.normalColor;
 
@@ -175,7 +186,10 @@ namespace Enemy
                 gameObject.tag = "Player";
                 gameObject.layer = LayerMask.NameToLayer("PLAYER");
 
-                hpBar.SetActive(false);
+                if (hpBar != null)
+                {
+                    hpBar.SetActive(false);
+                }
 
                 sr.color = enemyData.playerNormalColor;
 
@@ -195,5 +209,14 @@ namespace Enemy
                 }
             }
         }
+
+        public void MoveEnemy() => enemyData.isEnemyMove = true; // 적을 움직이는 상태로 바꿈
+
+        public EnemyType GetEnemyType() => enemyData.enemyType; // 적 타입을 가져옴
+        public EnemyController GetEnemyController() => enemyData.eEnemyController;
+        public string GetEnemyId() => enemyData.enemyType.ToString(); // 적 아이디를 가져옴
+        public float EnemyHpPercent() => ((float)enemyData.hp / enemyData.maxHP) * 100f; // 적 체력 퍼센트를 가져옴
+        public int GetEnemyAttackPower() => enemyData.attackPower; // 적 공격력을 가져옴
+        public bool IsKnockBack() => enemyData.isKnockBack; // 적이 넉백 공격을 할 수 있는지를 가져옴
     }
 }

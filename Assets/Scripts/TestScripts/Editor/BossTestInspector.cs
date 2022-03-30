@@ -31,7 +31,7 @@ public class BossTestInspector : Editor
 
             if (boss != null)
             {
-                boss.GetComponent<Enemy.Boss1SkeletonKing>().Move();
+                EventManager.TriggerEvent("EnemyMove", "BossTest_01");
             }
             else
             {
@@ -90,7 +90,7 @@ public class BossTestWindow : EditorWindow
 
             if (boss != null)
             {
-                boss.GetComponent<Enemy.Boss1SkeletonKing>().Move();
+                EventManager.TriggerEvent("EnemyMove", "BossTest_01");
             }
             else
             {

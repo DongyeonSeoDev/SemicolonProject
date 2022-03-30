@@ -10,25 +10,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9dcf67616fbd998419e75a8a3f708bb3, type: 3}
-  m_Name: Enemy1
+  m_Name: Boss_SkeletonKing4
   m_EditorClassIdentifier: 
-  enemyType: 0
+  enemyType: 3
   animationList:
-  - type: 1
-    animationName: Die
-  - type: 2
-    animationName: IsDead
   - type: 4
-    animationName: Move
+    animationName: move
   - type: 5
-    animationName: Attack
+    animationName: attack
   - type: 6
-    animationName: EndAttack
-  - type: 0
-    animationName: Reset
-  normalColor: {r: 1, g: 0, b: 1, a: 1}
-  damagedColor: {r: 0, g: 1, b: 0, a: 1}
-  enemyDeadEffectColor: {r: 0.3764706, g: 0, b: 0.41568628, a: 1}
-  playerNormalColor: {r: 1, g: 1, b: 1, a: 1}
+    animationName: attackEnd
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
+  damagedColor: {r: 1, g: 0, b: 0, a: 1}
+  enemyDeadEffectColor: {r: 0.454902, g: 0.38823533, b: 0.5019608, a: 0}
+  playerNormalColor: {r: 0.5882353, g: 1, b: 0.5882353, a: 1}
   playerDamagedColor: {r: 1, g: 0, b: 0, a: 1}
-  playerDeadEffectColor: {r: 1, g: 1, b: 1, a: 1}
+  playerDeadEffectColor: {r: 0.5882353, g: 1, b: 0.5882353, a: 1}

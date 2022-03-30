@@ -15,11 +15,16 @@ namespace Enemy
             playerNormalColor = enemyDataSO.playerNormalColor;
             playerDamagedColor = enemyDataSO.playerDamagedColor;
             playerDeadEffectColor = enemyDataSO.playerDeadEffectColor;
+
+            EnemyManager.SetEnemyAnimationDictionary(animationDictionary, enemyDataSO.animationList);
+
+            playerControllerMove = new EnemyMovePlayerControllerCommand(this);
         }
 
         public EnemyController eEnemyController = EnemyController.AI;
         public EnemyType enemyType;
 
+        public Dictionary<EnemyAnimationType, int> animationDictionary = new Dictionary<EnemyAnimationType, int>();
         public List<EnemyLootData> enemyLootList;
 
         public GameObject enemyObject;
@@ -27,7 +32,10 @@ namespace Enemy
         public SpriteRenderer enemySpriteRenderer;
         public Rigidbody2D enemyRigidbody2D;
         public Image hpBarFillImage;
+
         public EnemyCommand enemyMoveCommand;
+        public EnemyCommand enemySpriteRotateCommand;
+        public EnemyCommand playerControllerMove;
 
         public Vector2? knockBackDirection;
         public Vector2 moveVector;
@@ -58,19 +66,16 @@ namespace Enemy
 
         public bool isDamaged = false;
         public bool isAttack = false;
-        public bool isAnimation = true;
-        public bool isHitAnimation = false;
-        public bool isEndAttackAnimation = false;
         public bool isAttackCommand = false;
         public bool isLongDistanceAttack = false;
         public bool isRunAway = false;
         public bool isEnemyMove = false;
-        public bool isRotate = false;
         public bool isKnockBack = false;
         public bool isCurrentAttackTime = false;
         public bool isUseDelay = false;
+        public bool isPlayerControllerMove = false;
 
-        public int attackDamage = 10;
+        public int attackPower = 10;
         public int damagedValue;
         public int maxHP = 30;
         public int hp = 30;
