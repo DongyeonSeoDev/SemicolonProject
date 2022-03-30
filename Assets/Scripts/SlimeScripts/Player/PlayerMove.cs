@@ -75,7 +75,10 @@ public class PlayerMove : PlayerAction
 
                 if (distance < maxBodyPointLocalPos)
                 {
-                    x.transform.localPosition = Vector2.Lerp(x.transform.localPosition, (Vector2)x.transform.localPosition + MoveVec * movePower, Time.fixedDeltaTime);
+                    if (!x.IsWall)
+                    {
+                        x.transform.localPosition = Vector2.Lerp(x.transform.localPosition, (Vector2)x.transform.localPosition + MoveVec * movePower, Time.fixedDeltaTime);
+                    }
                 }
             }
 
@@ -101,7 +104,10 @@ public class PlayerMove : PlayerAction
 
                 if (distance < maxBodyPointLocalPos)
                 {
-                    x.transform.localPosition = Vector2.Lerp(x.transform.localPosition, (Vector2)x.transform.localPosition - MoveVec * movePower, Time.fixedDeltaTime);
+                    if (!x.IsWall)
+                    {
+                        x.transform.localPosition = Vector2.Lerp(x.transform.localPosition, (Vector2)x.transform.localPosition - MoveVec * movePower, Time.fixedDeltaTime);
+                    }
                 }
             }
         }

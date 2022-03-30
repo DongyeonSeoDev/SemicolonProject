@@ -27,6 +27,23 @@ public class Player : MonoBehaviour
         get { return drainList; }
     }
 
+    private float getExtraDamagePercantage = 0f;
+    /// <summary>
+    /// 추가 데미지 퍼센테이지가 20%이면 이 변수에 20을 넣으면 된다.
+    /// </summary>
+    public float GetExtraDamagePercantage
+    {
+        get { return getExtraDamagePercantage; }
+        set { 
+            getExtraDamagePercantage = value;
+
+            if(getExtraDamagePercantage < 0f)
+            {
+                getExtraDamagePercantage = 0f;
+            }
+        }
+    }
+
     #region 에너지 관련 변수들
     [Header("최대 에너지")]
     [SerializeField]
@@ -160,7 +177,13 @@ public class Player : MonoBehaviour
     {
         if (!playerState.IsDead)
         {
-            int dm = damage - playerStat.Defense;
+            int dm = damage;
+
+            if (!stateAbnormality) // 효과데미지 아닐 때
+            {
+                dm = damage - playerStat.Defense;
+                dm += (int)(dm * getExtraDamagePercantage / 100f);
+            }
 
             if (dm <= 0)
             {
@@ -197,7 +220,13 @@ public class Player : MonoBehaviour
         
         if (!playerState.IsDead)
         {
-            int dm = damage - playerStat.Defense;
+            int dm = damage;
+
+            if (!stateAbnormality) // 효과데미지 아닐 때
+            {
+                dm = damage - playerStat.Defense;
+                dm += (int)(dm * (getExtraDamagePercantage / 100f));
+            }
 
             if (dm <= 0)
             {
@@ -291,8 +320,6 @@ public class Player : MonoBehaviour
     {
         if (SlimeGameManager.Instance.CurrentBodyId == "origin")
         {
-            //PlayerEnemyUnderstandingRateManager.Instance.CheckMountingEnemy(objId, upUnderstandingRateValueWhenEnemyDead);
-
             if (PlayerEnemyUnderstandingRateManager.Instance.CheckMountObjIdContain(objId))
             {
                 PlayerEnemyUnderstandingRateManager.Instance.UpUnderstandingRate(objId, upUnderstandingRateValueWhenEnemyDead);
@@ -300,7 +327,6 @@ public class Player : MonoBehaviour
             else
             {
                 PlayerEnemyUnderstandingRateManager.Instance.SetMountingPercentageDict(objId, PlayerEnemyUnderstandingRateManager.Instance.GetDrainProbabilityDict(objId) + upMountingPercentageValueWhenEnemyDead);
-                PlayerEnemyUnderstandingRateManager.Instance.CheckMountingEnemy(objId, upUnderstandingRateValueWhenEnemyDead);
             }
         }
         else

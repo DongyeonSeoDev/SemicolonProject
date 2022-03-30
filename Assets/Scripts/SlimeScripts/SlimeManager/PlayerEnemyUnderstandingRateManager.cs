@@ -179,6 +179,8 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
             MonsterCollection.Instance.AddSavedBody(objId, idx + 2);
             MonsterCollection.Instance.AddBody(objId, idx + 1);
         }
+
+        SetMountingPercentageDict(objId, 0);
     }
     public void UnSetMountObj(string objId)
     {

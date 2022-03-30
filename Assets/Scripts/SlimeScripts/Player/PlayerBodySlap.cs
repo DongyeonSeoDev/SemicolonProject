@@ -176,6 +176,10 @@ public class PlayerBodySlap : PlayerSkill
                 bodyStopBodySlapTimerStart = false;
             }
         }
+        else
+        {
+            bodyStopBodySlapTimerStart = false;
+        }
     }
     private void CheckStopBodySlapTime()
     {

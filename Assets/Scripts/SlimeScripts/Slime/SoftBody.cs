@@ -74,9 +74,9 @@ public class SoftBody : MonoBehaviour
 
                 Rigidbody2D itemRigid = item.GetComponent<Rigidbody2D>();
 
-                SpringJoint2D springJoint2D = points[0].gameObject.AddComponent<SpringJoint2D>(); // points[0]은 항상 MiddlePoint
-                springJoint2D.connectedBody = itemRigid;
-                springJoint2D.frequency = middleToOtherSpringJointFrequency;
+                //SpringJoint2D springJoint2D = points[0].gameObject.AddComponent<SpringJoint2D>(); // points[0]은 항상 MiddlePoint
+                //springJoint2D.connectedBody = itemRigid;
+                //springJoint2D.frequency = middleToOtherSpringJointFrequency;
 
                 DistanceJoint2D distanceJoint2D = points[0].gameObject.AddComponent<DistanceJoint2D>();
                 distanceJoint2D.connectedBody = itemRigid;

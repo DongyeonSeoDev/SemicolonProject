@@ -8,6 +8,7 @@ public class BodyPoint : MonoBehaviour
     private Rigidbody2D rigid = null;
 
     private MiddlePoint middlePoint = null;
+    private BodyPointCrashCheckCollider bodyPointCrashCheckCollider = null;
 
     [SerializeField]
     private LayerMask whatIsWall;
@@ -36,6 +37,14 @@ public class BodyPoint : MonoBehaviour
         get { return isWall; }
         set { isWall = value; }
     }
+
+    private bool isUpWall = false;
+    public bool IsUpWall
+    {
+        get { return isUpWall; }
+        set { isUpWall = value; }
+    }
+
     private bool isCrossWall = false;
     public bool IsCrossWall
     {
@@ -68,6 +77,8 @@ public class BodyPoint : MonoBehaviour
         {
             middlePoint = transform.parent.GetComponent<MiddlePoint>();
         }
+
+        bodyPointCrashCheckCollider = transform.GetComponentInChildren<BodyPointCrashCheckCollider>();
 
         if (isDownBodyPoint)
         {
@@ -105,10 +116,27 @@ public class BodyPoint : MonoBehaviour
             MoveToMiddleTimerCheck();
         }
     }
+    private void FixedUpdate()
+    {
+        CheckWall();
+    }
+    private void CheckWall()
+    {
+        Ray2D ray = new Ray2D();
+        RaycastHit2D hit = new RaycastHit2D();
 
+        ray.origin = transform.position;
+        ray.direction = transform.up;
+
+        hit = Physics2D.Raycast(ray.origin, ray.direction, bodyPointCrashCheckCollider.Col.radius, whatIsWall);
+
+        isUpWall = hit;
+
+    }
     private void MoveToOriginPos()
     {
-        if ((!isWall || isMove) && !isMiddlePoint && !isMoveToMiddle)
+        if (((!(isWall) || isMove)
+            && !(isMiddlePoint || isMoveToMiddle)) || isUpWall)
         {
             transform.localPosition = Vector2.Lerp(transform.localPosition, originLocalPosition, Time.deltaTime * returnToOriginSpeed);
         }
@@ -164,13 +192,17 @@ public class BodyPoint : MonoBehaviour
     }
     private void MoveToMiddle()
     {
-        transform.position = Vector2.Lerp(transform.position, middlePoint.transform.position, Time.deltaTime * moveToMiddleSpeed);
+        if (!isUpWall)
+        {
+            transform.position = Vector2.Lerp(transform.position, middlePoint.transform.position, Time.deltaTime * moveToMiddleSpeed);
+        }
 
         CheckCrossWall();
     }
     private void StartNextStage()
     {
         isWall = false;
+        isUpWall = false;
         isCrossWall = false;
     }
 }
