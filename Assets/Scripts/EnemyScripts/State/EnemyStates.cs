@@ -32,6 +32,7 @@ namespace Enemy
         protected override void End()
         {
             EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Move, enemyData.enemyAnimator, TriggerType.ResetTrigger);
+            enemyData.isPlayerControllerMove = false;
         }
     }
 
@@ -105,7 +106,11 @@ namespace Enemy
                 }
             }
 
-            SpriteFlipCheck();
+            if (!isNoAttack)
+            {
+                SpriteFlipCheck();
+            }
+
             base.Start();
         }
 

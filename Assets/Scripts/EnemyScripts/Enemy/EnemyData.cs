@@ -18,7 +18,7 @@ namespace Enemy
 
             EnemyManager.SetEnemyAnimationDictionary(animationDictionary, enemyDataSO.animationList);
 
-            playerControllerMove = new EnemyMovePlayerControllerCommand(this, enemyRigidbody2D);
+            playerControllerMove = new EnemyMovePlayerControllerCommand(this);
         }
 
         public EnemyController eEnemyController = EnemyController.AI;
@@ -73,6 +73,7 @@ namespace Enemy
         public bool isKnockBack = false;
         public bool isCurrentAttackTime = false;
         public bool isUseDelay = false;
+        public bool isPlayerControllerMove = false;
 
         public int attackPower = 10;
         public int damagedValue;

@@ -12,21 +12,23 @@ namespace Enemy
         private float speed = 0f;
         private int wallCheck = LayerMask.GetMask("WALL");
 
-        private Rigidbody2D rigid;
-
-        public EnemyMovePlayerControllerCommand(EnemyData data, Rigidbody2D rb)
+        public EnemyMovePlayerControllerCommand(EnemyData data)
         {
             playerInput = SlimeGameManager.Instance.Player.GetComponent<PlayerInput>();
             playerStat = SlimeGameManager.Instance.Player.PlayerStat;
 
             enemyData = data;
-            rigid = rb;
 
             speed = playerStat.Speed * 0.5f;
         }
 
         public override void Execute()
         {
+            if (!enemyData.isPlayerControllerMove)
+            {
+                lastSpeed = 0f;
+                enemyData.isPlayerControllerMove = true;
+            }
             if (playerInput.MoveVector * speed != Vector2.zero)
             {
                 lastSpeed = speed;
@@ -36,16 +38,16 @@ namespace Enemy
                 lastSpeed = Mathf.Lerp(lastSpeed, 0f, Time.deltaTime * speed / 2f);
             }
 
-            var ray = Physics2D.Raycast(rigid.transform.position, playerInput.MoveVector, lastSpeed / 10f, wallCheck);
+            var ray = Physics2D.Raycast(enemyData.enemyRigidbody2D.transform.position, playerInput.MoveVector, lastSpeed / 10f, wallCheck);
 
             if (ray.collider != null)
             {
-                float distance = Vector2.Distance(ray.point, rigid.transform.position) * 10f;
-                rigid.velocity = playerInput.MoveVector * distance;
+                float distance = Vector2.Distance(ray.point, enemyData.enemyRigidbody2D.transform.position) * 10f;
+                enemyData.enemyRigidbody2D.velocity = playerInput.MoveVector * distance;
             }
             else
             {
-                rigid.velocity = playerInput.LastMoveVector * lastSpeed;
+                enemyData.enemyRigidbody2D.velocity = playerInput.LastMoveVector * lastSpeed;
             }
 
             enemyData.moveVector = playerInput.MoveVector;
@@ -294,23 +296,22 @@ namespace Enemy
     public class EnemyAttackCommand : EnemyCommand // 적 공격
     {
         public Transform enemyTransform;
-        public Transform targetTransform;
-        public EnemyController eEnemyController;
         public int attackDamage;
 
-        public EnemyAttackCommand(Transform enemy, Transform target, EnemyController controller, int damage)
+        private Enemy enemy;
+
+        public EnemyAttackCommand(Enemy enemy, Transform enemyPosition, int damage)
         {
-            enemyTransform = enemy;
-            targetTransform = target;
-            eEnemyController = controller;
+            enemyTransform = enemyPosition;
             attackDamage = damage;
+            this.enemy = enemy;
         }
 
         public override void Execute()
         {
             EnemyPoolData bullet = EnemyPoolManager.Instance.GetPoolObject(Type.Bullet, enemyTransform.position);
 
-            bullet.GetComponent<EnemyBullet>().Init(eEnemyController, attackDamage, (targetTransform.position - enemyTransform.position).normalized);
+            bullet.GetComponent<EnemyBullet>().Init(enemy.GetEnemyController(), attackDamage, (EnemyManager.Player.transform.position - enemyTransform.position).normalized);
         }
     }
 
@@ -319,16 +320,13 @@ namespace Enemy
         PlayerInput playerInput;
         Transform transform;
         Enemy enemy;
-        
-        EnemyController enemyController;
 
         int attackDamage;
 
-        public EnemyAttackPlayerCommand(Transform transform, Enemy enemy, EnemyController controller, int attackDamage)
+        public EnemyAttackPlayerCommand(Transform transform, Enemy enemy, int attackDamage)
         {
             playerInput = SlimeGameManager.Instance.Player.GetComponent<PlayerInput>();
             this.transform = transform;
-            enemyController = controller;
             this.attackDamage = attackDamage;
             this.enemy = enemy;
         }
@@ -337,7 +335,7 @@ namespace Enemy
         {
             EnemyPoolData bullet = EnemyPoolManager.Instance.GetPoolObject(Type.Bullet, transform.position);
 
-            bullet.GetComponent<EnemyBullet>().Init(enemyController, attackDamage, (playerInput.AttackMousePosition - (Vector2)transform.position).normalized, enemy);
+            bullet.GetComponent<EnemyBullet>().Init(enemy.GetEnemyController(), attackDamage, (playerInput.AttackMousePosition - (Vector2)transform.position).normalized, enemy);
         }
     }
 
