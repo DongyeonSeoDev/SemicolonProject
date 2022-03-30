@@ -20,7 +20,7 @@ public class MobSpeciesIcon : MonoBehaviour
     {
         if(targetRectTrm)
         {
-            rectTr.anchoredPosition = targetRectTrm.anchoredPosition + new Vector2(-(targetRectTrm.rect.width * 0.5f) - 5f, 0);
+            rectTr.anchoredPosition = targetRectTrm.anchoredPosition + new Vector2(-(targetRectTrm.rect.width * 0.5f) - 15f, 0);  //상호작용키 바꾸면 상호작용 텍스트 길이가 달라질 수 있어서 new
         }
     }
 

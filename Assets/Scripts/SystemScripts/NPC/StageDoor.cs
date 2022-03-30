@@ -6,6 +6,8 @@ public class StageDoor : InteractionObj
 {
     private SpriteRenderer spr;
 
+    private MobSpeciesIcon icon;
+
     //public FakeSpriteOutline fsOut;
 
     public StageDataSO nextStageData;
@@ -20,6 +22,8 @@ public class StageDoor : InteractionObj
     private bool isOpen; //문으로 입장할 수 있는 상태가 되어서 상호작용 키를 눌렀을 때 true로
     private bool isExitDoor; //이 문이 입구였는가
     public bool IsExitDoor { set => isExitDoor = value; }
+
+    public bool IsBlindState => StateManager.Instance.stateCountDict[StateAbnormality.Blind] > 0;
 
     private void Awake()
     {
@@ -76,7 +80,7 @@ public class StageDoor : InteractionObj
 
         spr.sprite = StageManager.Instance.doorSprDic[dirType.ToString() + "Open"];
         isOpen = false;
-        objName = StateManager.Instance.stateCountDict[StateAbnormality.Blind] > 0 ? "???" : Global.AreaTypeToString(nextStageData.areaType);
+        objName = IsBlindState ? "???" : Global.AreaTypeToString(nextStageData.areaType);
         doorLight.gameObject.SetActive(true);
     }
 
@@ -101,8 +105,22 @@ public class StageDoor : InteractionObj
         {
             base.SetInteractionUI(on);
 
-            PoolManager.GetItem<MobSpeciesIcon>("MobSpeciesIcon").Set(itrUI.GetComponent<RectTransform>(), nextStageData.enemySpeciesArea);
-
+            if (nextStageData.areaType == AreaType.MONSTER && !IsBlindState)  //담 스테이지가 몬스터 맵이면 종족 아이콘 띄움
+            {
+                if (on)
+                {
+                    if (!icon)
+                    {
+                        icon = PoolManager.GetItem<MobSpeciesIcon>("MobSpeciesIcon");
+                        icon.Set(itrUI.GetComponent<RectTransform>(), nextStageData.enemySpeciesArea);
+                    }
+                }
+                else
+                {
+                    icon.gameObject.SetActive(false);
+                    icon = null;
+                }
+            }
             /*if(fsOut)
                fsOut.gameObject.SetActive(on); */
         }
