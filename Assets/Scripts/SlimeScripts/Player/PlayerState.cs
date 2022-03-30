@@ -48,6 +48,13 @@ public class PlayerState : MonoBehaviour
         set { bodySlapping = value; }
     }
 
+    private bool charging = false;
+    public bool Chargning
+    {
+        get { return charging; }
+        set { charging = value; }
+    }
+
     private bool isKnockBack = false;
     public bool IsKnockBack
     {
