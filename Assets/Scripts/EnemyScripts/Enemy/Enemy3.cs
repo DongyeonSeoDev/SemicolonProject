@@ -11,6 +11,7 @@ namespace Enemy
             base.OnEnable();
 
             enemyData.isUseDelay = true;
+            enemyData.isKnockBack = true;
             enemyData.isAttackPlayerDistance = 7f;
             enemyData.attackDelay = 2f;
             enemyData.chaseSpeed = 2f;
