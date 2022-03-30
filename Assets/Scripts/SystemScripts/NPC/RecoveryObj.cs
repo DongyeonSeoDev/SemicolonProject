@@ -37,6 +37,8 @@ public class RecoveryObj : InteractionObj
     private void OnDisable()
     {
         canInteract = false;
+
+        recoveryLight.gameObject.SetActive(false);
     }
 
     public override void Interaction()

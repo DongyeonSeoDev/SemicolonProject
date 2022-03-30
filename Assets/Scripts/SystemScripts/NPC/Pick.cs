@@ -63,7 +63,7 @@ public class Pick : InteractionObj
     {
         if(isEnemyStage && !StageManager.Instance.IsStageClear)
         {
-            UIManager.Instance.RequestSystemMsg("몬스터가 남아있을 때는 채집할 수 없습니다.");
+            UIManager.Instance.RequestSystemMsg("아직 채집할 수 없습니다.");
             return;
         }
 

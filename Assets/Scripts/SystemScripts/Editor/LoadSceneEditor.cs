@@ -42,6 +42,12 @@ public class LoadSceneEditor : EditorWindow
     {
         LoadScene("StageTestScene");
     }
+
+   /* [MenuItem("Load/Boss Test Scene")]
+    public static void LoadBossTest()
+    {
+        LoadScene("BossTestScene");
+    }*/
     #endregion
 
     private static void LoadScene(string sceneName)

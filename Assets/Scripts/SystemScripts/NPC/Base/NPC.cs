@@ -6,6 +6,8 @@ public abstract class NPC : InteractionObj
 
     public FakeSpriteOutline fsOut;
 
+    public string npcId => name;
+
     protected void Awake()
     {
         npcInfo.npcName = objName;

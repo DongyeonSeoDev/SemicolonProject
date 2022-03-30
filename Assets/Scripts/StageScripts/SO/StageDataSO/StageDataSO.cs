@@ -19,6 +19,8 @@ public partial class StageDataSO : ScriptableObject
     public AreaType areaType;  //구역 타입
     public EnemySpecies enemySpeciesArea = EnemySpecies.NONE;
 
+    public GameObject mapNPC;
+
     public string stageID => name;  //스테이지 아이디
 
     public string StageName => string.IsNullOrEmpty( stageName) ? Global.AreaTypeToString(areaType) : stageName;

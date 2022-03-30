@@ -10,6 +10,7 @@ public class StageManager : MonoSingleton<StageManager>
     private Dictionary<string, StageDataSO> idToStageDataDict = new Dictionary<string, StageDataSO>();
     private Dictionary<string, StageBundleDataSO> idToStageFloorDict = new Dictionary<string, StageBundleDataSO>();
     private Dictionary<int, Dictionary<AreaType, List<StageDataSO>>> randomRoomDict = new Dictionary<int, Dictionary<AreaType, List<StageDataSO>>>();
+    private Dictionary<string, NPC> npcDict = new Dictionary<string, NPC>();
     #endregion
 
     #region current
@@ -23,6 +24,8 @@ public class StageManager : MonoSingleton<StageManager>
     private int currentStageNumber = 0;
     private AreaType currentArea;
     public AreaType CurrentAreaType => currentArea;
+
+    private List<NPC> currentMapNPCList = new List<NPC>();
 
     //private bool completeLoadNextMap; //다음 맵을 완전히 불러왔는지
     #endregion
@@ -116,11 +119,21 @@ public class StageManager : MonoSingleton<StageManager>
 
     private void DefineEvent()
     {
-        EventManager.StartListening("LoadingMapObj", () =>
+        EventManager.StartListening("ExitCurrentMap", () =>
         {
-            PoolManager.PoolObjSetActiveFalse("RecoveryObjPrefObjPref1");
-            PoolManager.PoolObjSetActiveFalse("ImprecationObjPref1");
-            PoolManager.PoolObjSetActiveFalse("NormalPointLight2D");
+            switch(currentArea)
+            {
+                case AreaType.RECOVERY:
+                    PoolManager.PoolObjSetActiveFalse("RecoveryObjPrefObjPref1");
+                    break;
+                case AreaType.IMPRECATION:
+                    PoolManager.PoolObjSetActiveFalse("ImprecationObjPref1");
+                    break;
+                case AreaType.CHEF:
+                    currentMapNPCList.ForEach(x => x.gameObject.SetActive(false));
+                    currentMapNPCList.Clear();
+                    break;
+            }
 
             SoundManager.Instance.SetBGMPitch(1);
         });
@@ -196,7 +209,7 @@ public class StageManager : MonoSingleton<StageManager>
     public void NextStage(string id)
     {
         //EventManager.TriggerEvent("ExitStage");
-        EventManager.TriggerEvent("LoadingMapObj");
+        EventManager.TriggerEvent("ExitCurrentMap");
 
         //현재 스테이지 옵젝을 꺼주고 다음 스테이지를 불러와서 켜주고 스테이지 번호를 1 증가시킴
         if (currentStage) currentStage.gameObject.SetActive(false);
@@ -276,6 +289,7 @@ public class StageManager : MonoSingleton<StageManager>
                 break;
             case AreaType.CHEF:
                 SetClearStage();
+                ChefStage();
                 break;
             case AreaType.PLANTS:
                 SetClearStage();
@@ -404,5 +418,22 @@ public class StageManager : MonoSingleton<StageManager>
                 PoolManager.GetItem("RecoveryObjPrefObjPref1").transform.position = currentStage.objSpawnPos.position;
                 break;
         }
+    }
+
+    private NPC GetNPC(string id)
+    { 
+        if(npcDict.ContainsKey(id)) return npcDict[id];
+
+        NPC npc = Instantiate(Resources.Load<GameObject>("Prefabs/NPC/" + id), transform).GetComponent<NPC>();
+        npcDict.Add(npc.npcId, npc);
+        return npc;
+    }
+
+    private void ChefStage()
+    {
+        NPC npc = GetNPC(currentStageData.mapNPC.name);
+        npc.gameObject.SetActive(true);
+        npc.transform.position = currentStage.objSpawnPos.position;
+        currentMapNPCList.Add(npc);
     }
 }
