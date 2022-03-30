@@ -41,8 +41,22 @@ namespace Enemy
     {
         protected override void StateChangeCondition()
         {
-            if (AnyStateChangeState()) { }
-            else if (enemyData.eEnemyController == EnemyController.PLAYER)
+            if (AnyStateChangeState())
+            {
+                return;
+            }
+            else if (enemyData.eEnemyController == EnemyController.AI && enemyData.addAIAttackStateChangeCondition != null)
+            {
+                EnemyState state = enemyData.addAIAttackStateChangeCondition.Invoke();
+
+                if (state != null)
+                {
+                    ChangeState(state);
+                    return;
+                }
+            }
+            
+            if (enemyData.eEnemyController == EnemyController.PLAYER)
             {
                 ChangeState(new EnemyMoveState(enemyData));
             }

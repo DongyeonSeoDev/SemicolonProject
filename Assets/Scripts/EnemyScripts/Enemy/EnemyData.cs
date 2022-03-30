@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,6 +27,8 @@ namespace Enemy
 
         public Dictionary<EnemyAnimationType, int> animationDictionary = new Dictionary<EnemyAnimationType, int>();
         public List<EnemyLootData> enemyLootList;
+
+        public Func<EnemyState> addAIAttackStateChangeCondition = null;
 
         public GameObject enemyObject;
         public Animator enemyAnimator;
