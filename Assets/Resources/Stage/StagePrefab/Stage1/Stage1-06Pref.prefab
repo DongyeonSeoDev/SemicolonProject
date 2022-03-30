@@ -1313,6 +1313,36 @@ CompositeCollider2D:
       - {x: -12.99997, y: -6}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
+--- !u!1 &389268218762974719
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1792491333689914300}
+  m_Layer: 6
+  m_Name: ObjSpawnPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 7174288486110832750, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1792491333689914300
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 389268218762974719}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 5.65, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3846401459091614664}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &425038608009156996
 GameObject:
   m_ObjectHideFlags: 0
@@ -1591,7 +1621,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camStageCollider: {fileID: 8648534772182156580}
   playerSpawnPoint: {fileID: 0}
-  objSpawnPos: {fileID: 0}
+  objSpawnPos: {fileID: 1792491333689914300}
   stageDoors:
   - {fileID: 6006279996834213540}
   - {fileID: 784324883618641302}
@@ -1659,6 +1689,7 @@ Transform:
   - {fileID: 2517727465644722234}
   - {fileID: 5004406499585279998}
   - {fileID: 2313493629107678354}
+  - {fileID: 1792491333689914300}
   m_Father: {fileID: 1378282381469885332}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

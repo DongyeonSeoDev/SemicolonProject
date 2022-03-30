@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
-using UnityEngine;
+using Water;
+using UnityEngine.Experimental.Rendering.Universal;
 
 public class RecoveryObj : InteractionObj
 {
+    private Light2D recoveryLight;
     private List<Action> recoveryActions = new List<Action>();
     public FakeSpriteOutline fsOut;
 
@@ -18,13 +20,19 @@ public class RecoveryObj : InteractionObj
 
         for (int i = 0; i < recoveryActions.Count; i++)
         {
-            recoveryActions[i] += () => StageManager.Instance.SetClearStage();
+            recoveryActions[i] += () => 
+            {
+                StageManager.Instance.SetClearStage();
+                recoveryLight.DOIntensity(0, 1f, true, () => recoveryLight.gameObject.SetActive(false));
+            };
         }
     }
 
     private void OnEnable()
     {
         canInteract = true;
+
+        recoveryLight = PoolManager.GetItem<Light2D>("NormalPointLight2D");
     }
     private void OnDisable()
     {

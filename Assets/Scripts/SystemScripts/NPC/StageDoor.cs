@@ -17,6 +17,7 @@ public class StageDoor : InteractionObj
     public DoorDirType dirType; //door dir
     public Transform playerSpawnPos;
 
+    public GameObject detectorObj;
     public Light2D doorLight;
 
     private bool isOpen; //문으로 입장할 수 있는 상태가 되어서 상호작용 키를 눌렀을 때 true로
@@ -81,7 +82,11 @@ public class StageDoor : InteractionObj
         spr.sprite = StageManager.Instance.doorSprDic[dirType.ToString() + "Open"];
         isOpen = false;
         objName = IsBlindState ? "???" : Global.AreaTypeToString(nextStageData.areaType);
+
+        detectorObj.SetActive(true);
         doorLight.gameObject.SetActive(true);
+        doorLight.intensity = 0.15f;
+        doorLight.DOIntensity(0.75f, 0.5f);
     }
 
     public void Close()
@@ -90,6 +95,7 @@ public class StageDoor : InteractionObj
 
         spr.sprite = StageManager.Instance.doorSprDic[dirType.ToString() + "Close"];
         doorLight.gameObject.SetActive(false);
+        detectorObj.SetActive(false);
     }
 
     public void Pass()
@@ -97,6 +103,7 @@ public class StageDoor : InteractionObj
         spr.sprite = StageManager.Instance.doorSprDic[dirType.ToString() + "Exit"];
         isExitDoor = true;
         doorLight.gameObject.SetActive(false);
+        detectorObj.SetActive(false);
     }
 
     public override void SetInteractionUI(bool on)
@@ -117,8 +124,11 @@ public class StageDoor : InteractionObj
                 }
                 else
                 {
-                    icon.gameObject.SetActive(false);
-                    icon = null;
+                    if (icon)
+                    {
+                        icon.gameObject.SetActive(false);
+                        icon = null;
+                    }
                 }
             }
             /*if(fsOut)

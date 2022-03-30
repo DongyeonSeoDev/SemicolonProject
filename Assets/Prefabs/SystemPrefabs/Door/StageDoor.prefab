@@ -135,6 +135,7 @@ MonoBehaviour:
   nextStageData: {fileID: 0}
   dirType: 0
   playerSpawnPos: {fileID: 0}
+  detectorObj: {fileID: 8604531946291383049}
   doorLight: {fileID: 4343613564997166471}
 --- !u!1 &8604531946291383049
 GameObject:
@@ -153,7 +154,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8604531946291383048
 Transform:
   m_ObjectHideFlags: 0

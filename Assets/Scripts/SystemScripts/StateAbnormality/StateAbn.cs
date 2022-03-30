@@ -81,11 +81,13 @@ public class Scar : StateAbnormalityEffect
     public override void StartEffect()
     {
         base.StartEffect();
+        SlimeGameManager.Instance.Player.GetExtraDamagePercantage = 20;
         EventManager.StartListening("StageClear", OnEffected);
     }
     public override void StopEffect()
     {
         base.StopEffect();
+        SlimeGameManager.Instance.Player.GetExtraDamagePercantage = 0;
         EventManager.StopListening("StageClear", OnEffected);
     }
     public override void OnEffected()

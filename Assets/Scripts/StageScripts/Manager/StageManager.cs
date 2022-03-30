@@ -195,7 +195,7 @@ public class StageManager : MonoSingleton<StageManager>
 
     public void NextStage(string id)
     {
-        EventManager.TriggerEvent("ExitStage");
+        //EventManager.TriggerEvent("ExitStage");
         EventManager.TriggerEvent("LoadingMapObj");
 
         //현재 스테이지 옵젝을 꺼주고 다음 스테이지를 불러와서 켜주고 스테이지 번호를 1 증가시킴
@@ -402,7 +402,6 @@ public class StageManager : MonoSingleton<StageManager>
                 EventManager.TriggerEvent(Global.EnterNextMap);
                 Environment.Instance.OnEnteredOrExitRecoveryArea(true);
                 PoolManager.GetItem("RecoveryObjPrefObjPref1").transform.position = currentStage.objSpawnPos.position;
-                PoolManager.GetItem("NormalPointLight2D").transform.position = currentStage.objSpawnPos.position;
                 break;
         }
     }
