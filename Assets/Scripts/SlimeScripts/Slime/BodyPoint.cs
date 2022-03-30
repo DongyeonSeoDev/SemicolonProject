@@ -30,8 +30,6 @@ public class BodyPoint : MonoBehaviour
 
     [SerializeField]
     private bool isMiddlePoint = false;
-    [SerializeField]
-    private bool isUpPoint = false;
 
     private bool isWall = false;
     public bool IsWall
@@ -124,11 +122,6 @@ public class BodyPoint : MonoBehaviour
     }
     private void CheckWall()
     {
-        if (!isUpPoint)
-        {
-           return;
-        }
-
         Ray2D ray = new Ray2D();
         RaycastHit2D hit = new RaycastHit2D();
 
