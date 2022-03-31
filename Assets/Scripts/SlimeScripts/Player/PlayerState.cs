@@ -135,6 +135,7 @@ public class PlayerState : MonoBehaviour
     }
     private void PlayerReset()
     {
+        charging = false;
         bodySlapping = false;
         isKnockBack = false;
         isSturn = false;

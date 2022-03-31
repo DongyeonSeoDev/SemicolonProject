@@ -175,6 +175,11 @@ public class Player : MonoBehaviour
     }
     public void GetDamage(int damage, bool critical = false, bool stateAbnormality = false)
     {
+        if (playerState.BodySlapping && !stateAbnormality)
+        {
+            return;
+        }
+
         if (!playerState.IsDead)
         {
             int dm = damage;
@@ -210,6 +215,11 @@ public class Player : MonoBehaviour
     }
     public void GetDamage(GameObject attacker, int damage, bool critical = false, bool stateAbnormality = false)
     {
+        if(playerState.BodySlapping && !stateAbnormality)
+        {
+            return;
+        }
+
         foreach(var item in drainList)
         {
             if(item.Item1 == attacker)

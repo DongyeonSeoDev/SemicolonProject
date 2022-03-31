@@ -114,6 +114,11 @@ public class PlayerBodySlap : PlayerSkill
     {
         if (playerState.BodySlapping && bodySlapStart && !bodyStopBodySlapTimerStart) // 움직임
         {
+            if(currentBodySlapTime <= 0f)
+            {
+                currentBodySlapTime = bodySlapTime;
+            }
+
             transform.position = Vector2.Lerp(moveOriginPos, moveTargetPos, bodySlapTimer / currentBodySlapTime);
         }
     }

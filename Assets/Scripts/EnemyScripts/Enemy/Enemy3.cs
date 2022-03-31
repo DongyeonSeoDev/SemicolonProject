@@ -11,7 +11,7 @@ namespace Enemy
             base.OnEnable();
 
             enemyData.isUseDelay = true;
-            enemyData.isKnockBack = true;
+            enemyData.isUseKnockBack = true;
             enemyData.isAttackPlayerDistance = 7f;
             enemyData.attackDelay = 2f;
             enemyData.chaseSpeed = 2f;
@@ -21,7 +21,7 @@ namespace Enemy
             enemyData.playerAnimationTime = 1f;
 
             enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, false);
-            enemyAttackCommand = new EnemyAddForceCommand(rb, enemyData.rushForce, positionCheckData);
+            enemyAttackCommand = new EnemyAddForceCommand(rb, this, enemyData.rushForce, positionCheckData);
             enemyData.enemySpriteRotateCommand = new EnemySpriteFlipCommand(enemyData);
         }
 
