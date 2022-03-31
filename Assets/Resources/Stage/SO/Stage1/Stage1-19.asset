@@ -19,3 +19,4 @@ MonoBehaviour:
   stage: {fileID: 1378282381469885354, guid: fc61b5de09c5d8046aa60bcb1fc2c3d8, type: 3}
   areaType: 2
   enemySpeciesArea: 2
+  mapNPC: {fileID: 2234542626858057358, guid: eca11d4b5f5510148b75e1bb8597f135, type: 3}

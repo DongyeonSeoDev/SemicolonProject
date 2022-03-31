@@ -4782,7 +4782,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 1072796663
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 35
   m_RenderMode: 0
   m_SortMode: 0
@@ -5071,7 +5071,7 @@ MonoBehaviour:
   bStartAutoSetMatTex: 1
   hdrColor: {r: 0.27347806, g: 0.8679245, b: 0.5063636, a: 0}
   speed: -1
-  scale: 5
+  scale: 2.5
   intensity: 0.6
 --- !u!1 &2358478532142700609
 GameObject:

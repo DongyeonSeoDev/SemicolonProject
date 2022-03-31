@@ -6,7 +6,7 @@ public class StageDoor : InteractionObj
 {
     private SpriteRenderer spr;
 
-    private MobSpeciesIcon icon;
+    private WorldIcon icon;
 
     //public FakeSpriteOutline fsOut;
 
@@ -118,7 +118,7 @@ public class StageDoor : InteractionObj
                 {
                     if (!icon)
                     {
-                        icon = PoolManager.GetItem<MobSpeciesIcon>("MobSpeciesIcon");
+                        icon = PoolManager.GetItem<WorldIcon>("MobSpeciesIcon");
                         icon.Set(itrUI.GetComponent<RectTransform>(), nextStageData.enemySpeciesArea);
                     }
                 }

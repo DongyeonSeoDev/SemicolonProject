@@ -30,11 +30,14 @@ public partial class UIManager : MonoSingleton<UIManager>
     public TextMeshProUGUI topCenterMsgTMP;
     //private CanvasGroup topCenterMsgTMPCvsg;
 
+    #region VertexGradient
     [HideInInspector] public VertexGradient noticeMsgGrd;  // 상단 중앙 알림 메시지 기본 색상
 
     public VertexGradient clearNoticeMsgVGrd;  //클리어 알림 메시지 색상
+    public VertexGradient bossNoticeMsgVGrd;
 
     [HideInInspector] public VertexGradient defaultTopCenterMsgVG;  // 상단 중앙 알림 메시지 기본 색상
+    #endregion
 
     private void Notice()
     {

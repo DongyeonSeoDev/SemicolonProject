@@ -33,6 +33,7 @@ public class RecoveryObj : InteractionObj
         canInteract = true;
 
         recoveryLight = PoolManager.GetItem<Light2D>("NormalPointLight2D");
+        recoveryLight.transform.position = transform.position;
     }
     private void OnDisable()
     {

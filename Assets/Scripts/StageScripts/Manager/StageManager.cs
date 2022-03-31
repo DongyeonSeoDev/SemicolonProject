@@ -347,7 +347,16 @@ public class StageManager : MonoSingleton<StageManager>
             NextEnemy();
         }
         EventManager.TriggerEvent("StartBGM", currentStageData.stageID);
-        UIManager.Instance.InsertTopCenterNoticeQueue(string.IsNullOrEmpty(currentStageData.stageName) ? Global.AreaTypeToString(currentArea) : currentStageData.stageName);
+
+        string str = string.IsNullOrEmpty(currentStageData.stageName) ? Global.AreaTypeToString(currentArea) : currentStageData.stageName;
+        if (currentArea != AreaType.BOSS)
+        {
+            UIManager.Instance.InsertTopCenterNoticeQueue(str);
+        }
+        else
+        {
+            UIManager.Instance.InsertTopCenterNoticeQueue(str, UIManager.Instance.bossNoticeMsgVGrd);
+        }
     }
 
     public void StageClear()

@@ -90,3 +90,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speciesImg: {fileID: 2903625909526957216}
   targetRectTrm: {fileID: 0}
+  offset: {x: -15, y: 0}
