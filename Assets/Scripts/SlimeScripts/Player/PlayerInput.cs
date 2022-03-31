@@ -78,54 +78,82 @@ public class PlayerInput : MonoBehaviour
     {
         if (!(playerState.IsDead || playerState.IsSturn || playerState.IsKnockBack) && !isPause)
         {
+            if (!playerState.Chargning)
+            {
+                moveVector.x = Input.GetAxisRaw("Horizontal");
+                moveVector.y = Input.GetAxisRaw("Vertical");
+
+                moveVector = moveVector.normalized;
+
+                if (playerState.BodySlapping)
+                {
+                    moveVector = Vector2.zero;
+                }
+                else if (moveVector != Vector2.zero)
+                {
+                    lastMoveVector = moveVector;
+                }
+
+                if (!EventSystem.current.IsPointerOverGameObject()) // mouse 0
+                {
+                    isDoSkill0 = Input.GetMouseButton(0);
+
+                    if (Input.GetMouseButtonUp(0))
+                    {
+                        EventManager.TriggerEvent("SkillButtonUp0");
+                    }
+                }
+
+                //Debug.Log(isDoSkill0 == Input.GetButton("Shoot"));
+
+                if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.DRAIN])) // q
+                {
+                    isDoSkill2 = true;
+                }
+
+                if (Input.GetKeyUp(KeySetting.keyDict[KeyAction.DRAIN]))
+                {
+                    EventManager.TriggerEvent("SkillButtonUp2");
+                }
+
+                if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.INTERACTION])) // e
+                {
+                    isInteraction = true;
+                }
+            }
+            else
+            {
+                Reset();
+            }
+
             mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-            moveVector.x = Input.GetAxisRaw("Horizontal");
-            moveVector.y = Input.GetAxisRaw("Vertical");
-
-            moveVector = moveVector.normalized;
-
-            if(playerState.BodySlapping)
-            {
-                moveVector = Vector2.zero;
-            }
-            else if (moveVector != Vector2.zero)
-            {
-                lastMoveVector = moveVector;
-            }
 
             if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.SPECIALATTACK])) // left shift
             {
                 isDoSkill1 = true;
             }
 
-            if (!EventSystem.current.IsPointerOverGameObject()) // mouse 0
+            if(Input.GetKeyUp(KeySetting.keyDict[KeyAction.SPECIALATTACK]))
             {
-                isDoSkill0 = Input.GetMouseButton(0);
-            }
-
-            //Debug.Log(isDoSkill0 == Input.GetButton("Shoot"));
-
-            if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.DRAIN])) // q
-            {
-                isDoSkill2 = true;
-            }
-
-            if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.INTERACTION])) // e
-            {
-                isInteraction = true;
+                EventManager.TriggerEvent("SkillButtonUp1");
             }
         }
         else
         {
-            moveVector = Vector2.zero;
-
-            isDoSkill0 = false;
-            isDoSkill1 = false;
-            isDoSkill2 = false;
-            isInteraction = false;
+            Reset();
         }
     }
+
+    private void Reset()
+    {
+        moveVector = Vector2.zero;
+
+        isDoSkill0 = false;
+        isDoSkill1 = false;
+        isDoSkill2 = false;
+        isInteraction = false;
+    }
+
     private void FixedUpdate()
     {
         if (isDoSkill0)

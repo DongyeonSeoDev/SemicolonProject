@@ -16,6 +16,17 @@ public class PlayerBodySlap : PlayerSkill
     private Vector2 moveOriginPos = Vector2.zero;
     private Vector2 moveTargetPos = Vector2.zero;
 
+    [SerializeField]
+    private float maxChargingTime = 3f;
+    [SerializeField]
+    private float minMoveToMouseChargeTime = 0.1f; // currentChargingTimer 값이 이 값보다 높아야 마우스로 이동한다.
+    private float currentChargingTimer = 0f; // 이 타이머는 0에서 플레이어가 대쉬를 눌렀을 때 부터 올라간다. 이 값이 maxChargingTime과
+                                             // 같으면 풀차징으로 판정한다.
+
+    [Header("차징 타임에따라 오르는 돌진 거리의 값")]
+    [SerializeField]
+    private float targetPosFarPerCharge = 1f;
+
     [Header("BodySlap이 기본 데미지의 몇배의 데미지를 줄 것인가에 대한 값.")]
     [Header("예를 들어 이 값이 2 이고 기본 데미지가 4면 8의 BodySlap데미지가 들어감")]
     [SerializeField]
@@ -46,8 +57,19 @@ public class PlayerBodySlap : PlayerSkill
     private float stopBodySlapOffset = 3f;
 
     private bool canBodySlap = true;
+    private bool startCharging = false;
+
+    private bool maxCharging = true;
+    public bool MaxCharging
+    {
+        get { return maxCharging; }
+    }
+
     private bool bodySlapStart = false;
     private bool bodyStopBodySlapTimerStart = false;
+
+    [SerializeField]
+    private LineRenderer bodySlapLine = null;
 
     public override void Awake()
     {
@@ -84,7 +106,7 @@ public class PlayerBodySlap : PlayerSkill
         //{
         //    playerState.BodySlapping = false;
         //}
-
+        CheckChargeTime();
         CheckBodySlapTime();
         CheckStopBodySlapTime();
     }
@@ -99,29 +121,62 @@ public class PlayerBodySlap : PlayerSkill
     {
         base.DoSkill();
 
+        // currentChargingTimer 측정을 시작한다.
+
         if (canBodySlap)
         {
             canBodySlap = false;
-            playerState.BodySlapping = true;
-            bodySlapStart = true;
+
+            bodySlapLine.gameObject.SetActive(true);
+
+            playerState.Chargning = true;
 
             bodySlapMoveVec = playerInput.LastMoveVector;
-
             currentBodySlapTime = bodySlapTime;
 
-            moveOriginPos = transform.position;
-            moveTargetPos = moveOriginPos + bodySlapTime * bodySlapMoveSpeed * bodySlapMoveVec;
-            moveTargetPos = SlimeGameManager.Instance.PosCantCrossWall(canCrashLayer, moveOriginPos, moveTargetPos);
+            startCharging = true;
+            maxCharging = false;
 
-            currentBodySlapTime = Vector2.Distance(moveOriginPos, moveTargetPos) / bodySlapMoveSpeed;
+            currentChargingTimer = 0f;
 
-            SoundManager.Instance.PlaySoundBox("SlimeSkill1Start");
-
-            EventManager.TriggerEvent("PlayerBodySlap", bodySlapTime);
-
-            bodySlapTimer = 0f;
-            SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = SlimeGameManager.Instance.SkillDelays[skillIdx];
+            // StartBodySlap
+            //
         }
+    }
+
+    public override void SkillButtonUp()
+    {
+        base.SkillButtonUp();
+
+        if (startCharging)
+        {
+            DoBodySlap();
+        }
+    }
+    private void DoBodySlap()
+    {
+        bodySlapLine.gameObject.SetActive(false);
+
+        playerState.Chargning = false;
+        playerState.BodySlapping = true;
+        bodySlapStart = true;
+
+        startCharging = false;
+        maxCharging = false;
+
+        moveOriginPos = transform.position;
+
+        moveTargetPos = SlimeGameManager.Instance.PosCantCrossWall(canCrashLayer, moveOriginPos, moveTargetPos);
+
+        currentBodySlapTime = Vector2.Distance(moveOriginPos, moveTargetPos) / bodySlapMoveSpeed;
+
+        SoundManager.Instance.PlaySoundBox("SlimeSkill1Start");
+
+        EventManager.TriggerEvent("PlayerBodySlap", currentBodySlapTime);
+
+        bodySlapTimer = 0f;
+
+        SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = SlimeGameManager.Instance.SkillDelays[skillIdx];
     }
     private void BodyPointCrash(GameObject targetObject) // BodyPoint가 특정 오브젝트와 충돌했을 때 호출
     {
@@ -160,17 +215,49 @@ public class PlayerBodySlap : PlayerSkill
     {
         stopBodySlapTimer = 0f;
 
-        canBodySlap = false;
         bodySlapStart = false;
         playerState.BodySlapping = false;
     }
+    private void CheckChargeTime()
+    {
+        if(startCharging)
+        {
+            if (!maxCharging)
+            {
+                currentChargingTimer += Time.deltaTime;
+
+                if (currentChargingTimer > maxChargingTime)
+                {
+                    currentChargingTimer = maxChargingTime;
+                    maxCharging = true;
+                }
+            }
+
+            if (currentChargingTimer > minMoveToMouseChargeTime)
+            {
+                bodySlapMoveVec = (playerInput.MousePosition - (Vector2)transform.position).normalized;
+
+                moveTargetPos = (Vector2)transform.position + bodySlapTime * bodySlapMoveSpeed * bodySlapMoveVec +
+currentChargingTimer * targetPosFarPerCharge * bodySlapMoveVec;
+            }
+            else
+            {
+                moveTargetPos = (Vector2)transform.position + bodySlapTime * bodySlapMoveSpeed * bodySlapMoveVec;
+            }
+
+            Debug.DrawRay((Vector2)transform.position, moveTargetPos - (Vector2)transform.position, Color.red);
+
+            bodySlapLine.SetPosition(0, transform.position);
+            bodySlapLine.SetPosition(1, moveTargetPos);
+        }
+    }
     private void CheckBodySlapTime()
     {
-        if (bodySlapTimer < bodySlapTime)
+        if (bodySlapTimer < currentBodySlapTime)
         {
             bodySlapTimer += Time.deltaTime;
 
-            if (bodySlapTimer >= bodySlapTime)
+            if (bodySlapTimer >= currentBodySlapTime)
             {
                 stopBodySlapTimer = stopBodySlapTime;
                 bodyStopBodySlapTimerStart = false;

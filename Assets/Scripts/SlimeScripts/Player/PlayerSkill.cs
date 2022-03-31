@@ -20,11 +20,13 @@ public abstract class PlayerSkill : PlayerAction
         WhenChangeSkill();
 
         EventManager.StartListening("StartSkill" + skillIdx, DoSkill);
+        EventManager.StartListening("SkillButtonUp" + skillIdx, SkillButtonUp);
         EventManager.StartListening("Skill" + skillIdx + "DelayTimerZero", WhenSkillDelayTimerZero);
     }
     public virtual void OnDisable()
     {
         EventManager.StopListening("StartSkill" + skillIdx, DoSkill);
+        EventManager.StopListening("SkillButtonUp" + skillIdx, SkillButtonUp);
         EventManager.StopListening("Skill" + skillIdx + "DelayTimerZero", WhenSkillDelayTimerZero);
     }
 
@@ -35,6 +37,10 @@ public abstract class PlayerSkill : PlayerAction
     public virtual void DoSkill()
     {
         
+    }
+    public virtual void SkillButtonUp()
+    {
+
     }
     public virtual void WhenSkillDelayTimerZero()
     {

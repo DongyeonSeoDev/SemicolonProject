@@ -342,17 +342,18 @@ namespace Enemy
     public class EnemyAddForceCommand : EnemyCommand
     {
         private Rigidbody2D rigidboyd2D;
-        private float force;
         private EnemyPositionCheckData positionCheckData;
+        private Enemy enemy;
         Vector2? direction;
         private int wallCheck = LayerMask.GetMask("WALL");
+        private float force;
 
-        public EnemyAddForceCommand(Rigidbody2D rigid, float force, EnemyPositionCheckData positionData = null, Vector2? direction = null)
+        public EnemyAddForceCommand(Rigidbody2D rigid, float force, EnemyPositionCheckData positionData = null, Enemy enemy = null)
         {
             rigidboyd2D = rigid;
             this.force = force;
             positionCheckData = positionData;
-            this.direction = direction;
+            this.enemy = enemy;
         }
 
         public override void Execute()
@@ -361,6 +362,17 @@ namespace Enemy
             {
                 direction = positionCheckData.position;
             }
+            else
+            {
+                direction = enemy.GetKnockBackDirection();
+
+                if (direction == null)
+                {
+                    direction = rigidboyd2D.transform.position - EnemyManager.Player.transform.position;
+                }
+            }
+
+            direction = direction.Value.normalized;
 
             var ray = Physics2D.Raycast(rigidboyd2D.transform.position, direction.Value, force / 10f, wallCheck);
 
