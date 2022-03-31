@@ -2,12 +2,14 @@ using UnityEngine.Experimental.Rendering.Universal;
 using UnityEngine;
 using Water;
 
-public class StageDoor : InteractionObj
+public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
 {
     private SpriteRenderer spr;
 
     private WorldIcon icon;
 
+    [SerializeField] private int maxHp = 2;
+    private int hp;
     //public FakeSpriteOutline fsOut;
 
     public StageDataSO nextStageData;
@@ -22,6 +24,7 @@ public class StageDoor : InteractionObj
 
     private bool isOpen; //문으로 입장할 수 있는 상태가 되어서 상호작용 키를 눌렀을 때 true로
     private bool isExitDoor; //이 문이 입구였는가
+
     public bool IsExitDoor { set => isExitDoor = value; }
 
     public bool IsBlindState => StateManager.Instance.stateCountDict[StateAbnormality.Blind] > 0;
@@ -53,12 +56,6 @@ public class StageDoor : InteractionObj
     {
         if(StageManager.Instance.IsStageClear)
         {
-            if(nextStageData.areaType == AreaType.BOSS)
-            {
-                UIManager.Instance.RequestSystemMsg("아직 여긴 못 간다니까");
-                return;
-            }
-
             if (!isOpen && !isExitDoor) //문을 열었거나 입구로 쓴 문이면 상호작용 아예 안되게
             {
                 isOpen = true;
@@ -141,6 +138,22 @@ public class StageDoor : InteractionObj
         if (StageManager.Instance.IsStageClear && !isExitDoor)
         {
             base.SetUI(on);
+        }
+    }
+
+    private void OnEnable()
+    {
+        hp = maxHp;
+    }
+
+    public void GetDamage(int damage)
+    {
+        hp -= damage;
+
+        if(hp <= 0)
+        {
+            hp = 0;
+            Open();
         }
     }
 }
