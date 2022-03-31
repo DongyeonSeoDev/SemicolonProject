@@ -27,6 +27,11 @@ public class BodyPoint : MonoBehaviour
     {
         get { return originLocalPosition; }
     }
+    private Vector2 originPosition = Vector2.zero;
+    public Vector2 OriginPosition
+    {
+        get { return originPosition; }  
+    }
 
     [SerializeField]
     private bool isMiddlePoint = false;
@@ -72,6 +77,7 @@ public class BodyPoint : MonoBehaviour
     private void Start()
     {
         originLocalPosition = transform.localPosition;
+        originPosition = transform.position;
 
         if (!isMiddlePoint)
         {
@@ -87,7 +93,8 @@ public class BodyPoint : MonoBehaviour
     }
     private void OnEnable()
     {
-        EventManager.StartListening("PlayerShoot", PlayerShoot);
+        EventManager.StartListening("PlayerShoot", SetMoveToMiddleTimer);
+        EventManager.StartListening("PlayerCharging", SetMoveToMiddleTimer);
         EventManager.StartListening("PlayerBodySlap", (Action<float>)PlayerBodySlap);
         EventManager.StartListening("StartNextStage", StartNextStage);
     }
@@ -101,7 +108,8 @@ public class BodyPoint : MonoBehaviour
     }
     private void StopListenings()
     {
-        EventManager.StopListening("PlayerShoot", PlayerShoot);
+        EventManager.StopListening("PlayerShoot", SetMoveToMiddleTimer);
+        EventManager.StopListening("PlayerCharging", SetMoveToMiddleTimer);
         EventManager.StopListening("PlayerBodySlap", (Action<float>)PlayerBodySlap);
         EventManager.StopListening("StartNextStage", StartNextStage);
     }
@@ -162,7 +170,7 @@ public class BodyPoint : MonoBehaviour
             isCrossWall = false;
         }
     }
-    private void PlayerShoot()
+    private void SetMoveToMiddleTimer()
     {
         moveToMiddleTimer = moveToMiddleTime;
     }
@@ -192,9 +200,14 @@ public class BodyPoint : MonoBehaviour
     }
     private void MoveToMiddle()
     {
-        if (!isUpWall)
+        float distance = Vector2.Distance(transform.position, middlePoint.transform.position);
+
+        if (distance >= middlePoint.MinDisWithBodyPoints)
         {
-            transform.position = Vector2.Lerp(transform.position, middlePoint.transform.position, Time.deltaTime * moveToMiddleSpeed);
+            if (!isUpWall)
+            {
+                transform.position = Vector2.Lerp(transform.position, middlePoint.transform.position, Time.deltaTime * moveToMiddleSpeed);
+            }
         }
 
         CheckCrossWall();
