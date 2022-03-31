@@ -79,15 +79,26 @@ namespace Enemy
     {
         public bool AnyStateChangeState()
         {
-            if (enemyData.hp <= 0)
-            {
-                ChangeState(new EnemyDeadState(enemyData));
-            }
+            if (AlwaysCheckStateChangeCondition()) { }
             else if (enemyData.eEnemyController == EnemyController.PLAYER && enemyData.isAttack)
             {
                 enemyData.isAttack = false;
 
                 ChangeState(new EnemyAttackState(enemyData));
+            }
+            else
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool AlwaysCheckStateChangeCondition()
+        {
+            if (enemyData.hp <= 0)
+            {
+                ChangeState(new EnemyDeadState(enemyData));
             }
             else
             {

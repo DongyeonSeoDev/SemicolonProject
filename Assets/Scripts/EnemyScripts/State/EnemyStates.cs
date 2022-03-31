@@ -156,6 +156,8 @@ namespace Enemy
                     base.Update();
                 }
             }
+
+            AlwaysCheckStateChangeCondition();
         }
 
         protected override void End()
