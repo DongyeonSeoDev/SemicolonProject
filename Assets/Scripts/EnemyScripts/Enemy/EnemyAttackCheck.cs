@@ -60,7 +60,7 @@ namespace Enemy
         {
             enemy = GetComponentInParent<Enemy>();
 
-            isKnockBack = enemy.IsKnockBack();
+            isKnockBack = enemy.GetIsKnockBack();
             positionCheckData = enemy.positionCheckData;
             eEnemyController = enemy.GetEnemyController();
             attackPower = enemy.GetEnemyAttackPower();

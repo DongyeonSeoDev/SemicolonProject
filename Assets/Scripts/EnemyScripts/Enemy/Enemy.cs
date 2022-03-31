@@ -27,6 +27,11 @@ namespace Enemy
         public EnemyAttackCheck enemyAttackCheck; // 적 공격 확인 ( 근거리 적은 있고 원거리 적은 없음 )
         public EnemyPositionCheckData positionCheckData = new EnemyPositionCheckData(); // 벽과 적 위치 확인
 
+        EnemyCommand enemyDamagedCommand;
+        EnemyCommand enemyKnockBackCommand;
+
+        private float isDamageCurrentTime = 0f;
+
         private void Awake()
         {
             // GetComponent
@@ -47,7 +52,7 @@ namespace Enemy
         {
             // 이벤트 추가
 
-            EventManager.StartListening("PlayerDead", EnemyDataReset); 
+            EventManager.StartListening("PlayerDead", EnemyDataReset);
 
             if(enemyData.eEnemyController == EnemyController.PLAYER)
             {
@@ -91,6 +96,9 @@ namespace Enemy
 
             enemyData.enemyAnimator.enabled = true; // 애니메이션 실행
 
+            enemyDamagedCommand = new EnemyGetDamagedCommand(enemyData);
+            enemyKnockBackCommand = new EnemyAddForceCommand(enemyData.enemyRigidbody2D, enemyData.knockBackPower, null, this);
+
             // 마지막 위치, HP UI, 애니메이션, 죽음 확인 리셋
             if (enemyData.hpBarFillImage != null)
             {
@@ -122,6 +130,39 @@ namespace Enemy
             if (currentState != null)
             {
                 currentState = currentState.Process();
+            }
+
+            if (enemyData.isDamaged)
+            {
+                isDamageCurrentTime = enemyData.damageDelay;
+                enemyData.hp -= enemyData.damagedValue;
+
+                if (hpBarFillImage != null)
+                {
+                    hpBarFillImage.fillAmount = (float)enemyData.hp / enemyData.maxHP;
+                }
+
+                enemyDamagedCommand.Execute();
+
+                if (enemyData.isKnockBack)
+                {
+                    enemyKnockBackCommand.Execute();
+
+                    enemyData.isKnockBack = false;
+                }
+
+                enemyData.isDamaged = false;
+            }
+
+            if (isDamageCurrentTime > 0f)
+            {
+                isDamageCurrentTime -= Time.deltaTime;
+
+                if (isDamageCurrentTime <= 0)
+                {
+                    enemyDamagedCommand.Execute();
+                    isDamageCurrentTime = 0;
+                }
             }
         }
 
@@ -217,6 +258,7 @@ namespace Enemy
         public string GetEnemyId() => enemyData.enemyType.ToString(); // 적 아이디를 가져옴
         public float EnemyHpPercent() => ((float)enemyData.hp / enemyData.maxHP) * 100f; // 적 체력 퍼센트를 가져옴
         public int GetEnemyAttackPower() => enemyData.attackPower; // 적 공격력을 가져옴
-        public bool IsKnockBack() => enemyData.isKnockBack; // 적이 넉백 공격을 할 수 있는지를 가져옴
+        public bool GetIsKnockBack() => enemyData.isKnockBack; // 적이 넉백 공격을 할 수 있는지를 가져옴
+        public Vector2? GetKnockBackDirection() => enemyData.knockBackDirection; // 적이 넉백 공격을 할 수 있는지를 가져옴
     }
 }
