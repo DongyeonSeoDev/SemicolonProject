@@ -22,19 +22,20 @@ public class BodyPoint : MonoBehaviour
     private float moveToMiddleTime = 1f;
     private float moveToMiddleTimer = 0f;
 
+    [SerializeField]
+    private float moveToOriginTime = 1f;
+    private float moveToOriginTimer = 0f;
+
     private Vector2 originLocalPosition = Vector2.zero;
     public Vector2 OriginLocalPosition
     {
         get { return originLocalPosition; }
     }
-    private Vector2 originPosition = Vector2.zero;
-    public Vector2 OriginPosition
-    {
-        get { return originPosition; }  
-    }
 
     [SerializeField]
     private bool isMiddlePoint = false;
+
+    private bool isMoveToOriginASec = false;
 
     private bool isWall = false;
     public bool IsWall
@@ -77,7 +78,6 @@ public class BodyPoint : MonoBehaviour
     private void Start()
     {
         originLocalPosition = transform.localPosition;
-        originPosition = transform.position;
 
         if (!isMiddlePoint)
         {
@@ -122,6 +122,7 @@ public class BodyPoint : MonoBehaviour
         {
             CheckCrossWall();
             MoveToMiddleTimerCheck();
+            MoveToOriginASec();
         }
     }
     private void FixedUpdate()
@@ -147,6 +148,22 @@ public class BodyPoint : MonoBehaviour
             && !(isMiddlePoint || isMoveToMiddle)) || isUpWall)
         {
             transform.localPosition = Vector2.Lerp(transform.localPosition, originLocalPosition, Time.deltaTime * returnToOriginSpeed);
+        }
+    }
+    private void MoveToOriginASec()
+    {
+        if(moveToOriginTimer > 0f)
+        {
+            isMoveToOriginASec = true;
+            moveToOriginTimer -= Time.deltaTime;
+
+            transform.localPosition = Vector2.Lerp(transform.localPosition, originLocalPosition, Time.deltaTime * returnToOriginSpeed);
+
+            if(moveToOriginTimer <= 0f)
+            {
+                isMoveToOriginASec = false;
+                moveToOriginTimer = 0f;
+            }
         }
     }
     private void CheckCrossWall()
@@ -200,6 +217,11 @@ public class BodyPoint : MonoBehaviour
     }
     private void MoveToMiddle()
     {
+        if(isMoveToOriginASec)
+        {
+            return;
+        }
+
         float distance = Vector2.Distance(transform.position, middlePoint.transform.position);
 
         if (distance >= middlePoint.MinDisWithBodyPoints)
@@ -208,6 +230,10 @@ public class BodyPoint : MonoBehaviour
             {
                 transform.position = Vector2.Lerp(transform.position, middlePoint.transform.position, Time.deltaTime * moveToMiddleSpeed);
             }
+        }
+        else
+        {
+            moveToOriginTimer = moveToOriginTime;
         }
 
         CheckCrossWall();

@@ -125,6 +125,7 @@ MonoBehaviour:
   returnToOriginSpeed: 7
   moveToMiddleSpeed: 4
   moveToMiddleTime: 0.1
+  moveToOriginTime: 0.03
   isMiddlePoint: 0
 --- !u!114 &5248659302136541078
 MonoBehaviour:
