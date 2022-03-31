@@ -68,6 +68,9 @@ public class PlayerBodySlap : PlayerSkill
     private bool bodySlapStart = false;
     private bool bodyStopBodySlapTimerStart = false;
 
+    [SerializeField]
+    private LineRenderer bodySlapLine = null;
+
     public override void Awake()
     {
         base.Awake();
@@ -124,6 +127,8 @@ public class PlayerBodySlap : PlayerSkill
         {
             canBodySlap = false;
 
+            bodySlapLine.gameObject.SetActive(true);
+
             playerState.Chargning = true;
 
             bodySlapMoveVec = playerInput.LastMoveVector;
@@ -150,6 +155,8 @@ public class PlayerBodySlap : PlayerSkill
     }
     private void DoBodySlap()
     {
+        bodySlapLine.gameObject.SetActive(false);
+
         playerState.Chargning = false;
         playerState.BodySlapping = true;
         bodySlapStart = true;
@@ -232,13 +239,16 @@ public class PlayerBodySlap : PlayerSkill
 
                 moveTargetPos = (Vector2)transform.position + bodySlapTime * bodySlapMoveSpeed * bodySlapMoveVec +
 currentChargingTimer * targetPosFarPerCharge * bodySlapMoveVec;
-
-                Debug.DrawRay((Vector2)transform.position, moveTargetPos - (Vector2)transform.position, Color.red);
             }
             else
             {
                 moveTargetPos = (Vector2)transform.position + bodySlapTime * bodySlapMoveSpeed * bodySlapMoveVec;
             }
+
+            Debug.DrawRay((Vector2)transform.position, moveTargetPos - (Vector2)transform.position, Color.red);
+
+            bodySlapLine.SetPosition(0, transform.position);
+            bodySlapLine.SetPosition(1, moveTargetPos);
         }
     }
     private void CheckBodySlapTime()
