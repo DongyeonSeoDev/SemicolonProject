@@ -41,37 +41,28 @@ namespace Enemy
     {
         protected override void StateChangeCondition()
         {
-            if (AnyStateChangeState()) { }
-            else if (enemyData.eEnemyController == EnemyController.PLAYER)
+            if (AnyStateChangeState())
+            {
+                return;
+            }
+            else if (enemyData.eEnemyController == EnemyController.AI && enemyData.addAIAttackStateChangeCondition != null)
+            {
+                EnemyState state = enemyData.addAIAttackStateChangeCondition.Invoke();
+
+                if (state != null)
+                {
+                    ChangeState(state);
+                    return;
+                }
+            }
+            
+            if (enemyData.eEnemyController == EnemyController.PLAYER)
             {
                 ChangeState(new EnemyMoveState(enemyData));
             }
             else if (enemyData.eEnemyController == EnemyController.AI && !EnemyManager.IsAttackPlayer(enemyData))
             {
                 ChangeState(new EnemyChaseState(enemyData));
-            }
-        }
-    }
-
-    public partial class EnemyGetDamagedState : EnemyState // 데미지를 받았을때
-    {
-        protected override void StateChangeCondition()
-        {
-            if (AnyStateChangeState()) { }
-            else if (enemyData.eEnemyController == EnemyController.PLAYER)
-            {
-                ChangeState(new EnemyMoveState(enemyData));
-            }
-            else if (enemyData.eEnemyController == EnemyController.AI)
-            {
-                if (EnemyManager.IsAttackPlayer(enemyData))
-                {
-                    ChangeState(new EnemyAttackState(enemyData));
-                }
-                else
-                {
-                    ChangeState(new EnemyChaseState(enemyData));
-                }
             }
         }
     }
@@ -91,10 +82,6 @@ namespace Enemy
             if (enemyData.hp <= 0)
             {
                 ChangeState(new EnemyDeadState(enemyData));
-            }
-            else if (enemyData.isDamaged)
-            {
-                ChangeState(new EnemyGetDamagedState(enemyData));
             }
             else if (enemyData.eEnemyController == EnemyController.PLAYER && enemyData.isAttack)
             {

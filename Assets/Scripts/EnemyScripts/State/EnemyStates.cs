@@ -156,20 +156,6 @@ namespace Enemy
                     base.Update();
                 }
             }
-
-            if (enemyData.isDamaged)
-            {
-                if (enemyData.eEnemyController == EnemyController.AI)
-                {
-                    EnemyManager.IsAttackDelay(enemyData, enemyData.attackDelay - currentTime);
-                }
-                else if (enemyData.eEnemyController == EnemyController.PLAYER)
-                {
-                    enemyData.enemyAnimator.speed = 1.0f;
-                }
-
-                ChangeState(new EnemyGetDamagedState(enemyData));
-            }
         }
 
         protected override void End()
@@ -195,80 +181,6 @@ namespace Enemy
             if (enemyData.enemySpriteRotateCommand != null)
             {
                 enemyData.enemySpriteRotateCommand.Execute();
-            }
-        }
-    }
-
-    public partial class EnemyGetDamagedState : EnemyState // 공격을 받은 상태
-    {
-        private EnemyCommand[] enemyCommand = new EnemyCommand[2];
-
-        private float currentTime;
-
-        public EnemyGetDamagedState(EnemyData enemyData) : base(eState.GETDAMAGED, enemyData)
-        {
-            enemyCommand[0] = new EnemyGetDamagedCommand(enemyData);
-
-            if (enemyData.isKnockBack)
-            {
-                if (enemyData.knockBackDirection != null)
-                {
-                    enemyCommand[1] = new EnemyAddForceCommand(enemyData.enemyRigidbody2D, enemyData.knockBackPower, null, enemyData.knockBackDirection.Value.normalized);
-                }
-                else
-                {
-                    enemyCommand[1] = new EnemyAddForceCommand(enemyData.enemyRigidbody2D, enemyData.knockBackPower, null, (enemyData.enemyObject.transform.position - EnemyManager.Player.transform.position).normalized);
-                }
-            }
-        }
-
-        protected override void Start()
-        {
-            if (enemyData.eEnemyController == EnemyController.AI)
-            {
-                enemyData.hp -= enemyData.damagedValue;
-
-                if (enemyData.hpBarFillImage != null)
-                {
-                    enemyData.hpBarFillImage.fillAmount = (float)enemyData.hp / enemyData.maxHP;
-                }
-            }
-
-            currentTime = 0f;
-
-            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Hit, enemyData.enemyAnimator, TriggerType.SetTrigger);
-
-            enemyCommand[0].Execute();
-
-            if (enemyData.isKnockBack)
-            {
-                enemyCommand[1].Execute();
-                currentTime -= enemyData.stunTime;
-
-                enemyData.isKnockBack = false;
-            }
-
-            base.Start();
-        }
-
-        protected override void Update()
-        {
-            currentTime += Time.deltaTime;
-
-            if (enemyData.hp <= 0)
-            {
-                currentTime = enemyData.damageDelay;
-            }
-
-            if (currentTime >= enemyData.damageDelay)
-            {
-                enemyCommand[0].Execute();
-
-                EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Hit, enemyData.enemyAnimator, TriggerType.ResetTrigger);
-
-                enemyData.isDamaged = false;
-
-                base.Update();
             }
         }
     }
