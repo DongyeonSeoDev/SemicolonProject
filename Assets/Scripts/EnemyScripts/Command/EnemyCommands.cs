@@ -348,12 +348,13 @@ namespace Enemy
         private int wallCheck = LayerMask.GetMask("WALL");
         private float force;
 
-        public EnemyAddForceCommand(Rigidbody2D rigid, float force, EnemyPositionCheckData positionData = null, Enemy enemy = null)
+        public EnemyAddForceCommand(Rigidbody2D rigid, Enemy enemy, float rushAttack = 0f, EnemyPositionCheckData positionData = null)
         {
             rigidboyd2D = rigid;
-            this.force = force;
-            positionCheckData = positionData;
             this.enemy = enemy;
+            positionCheckData = positionData;
+
+            force = rushAttack == 0 ? enemy.GetEnemyAttackPower() : rushAttack;
         }
 
         public override void Execute()

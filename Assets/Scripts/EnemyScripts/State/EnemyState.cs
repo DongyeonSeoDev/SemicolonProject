@@ -4,7 +4,7 @@ namespace Enemy
     {
         public enum eState
         {
-            IDLE, MOVE, CHASE, ATTACK, GETDAMAGED, DEAD
+            IDLE, MOVE, CHASE, ATTACK, STUN, DEAD
         }
 
         public enum eEvent

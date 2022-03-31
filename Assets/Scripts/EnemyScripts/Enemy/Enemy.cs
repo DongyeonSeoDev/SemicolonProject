@@ -97,7 +97,7 @@ namespace Enemy
             enemyData.enemyAnimator.enabled = true; // 애니메이션 실행
 
             enemyDamagedCommand = new EnemyGetDamagedCommand(enemyData);
-            enemyKnockBackCommand = new EnemyAddForceCommand(enemyData.enemyRigidbody2D, enemyData.knockBackPower, null, this);
+            enemyKnockBackCommand = new EnemyAddForceCommand(enemyData.enemyRigidbody2D, this);
 
             // 마지막 위치, HP UI, 애니메이션, 죽음 확인 리셋
             if (enemyData.hpBarFillImage != null)
@@ -255,10 +255,11 @@ namespace Enemy
 
         public EnemyType GetEnemyType() => enemyData.enemyType; // 적 타입을 가져옴
         public EnemyController GetEnemyController() => enemyData.eEnemyController;
+        public Vector2? GetKnockBackDirection() => enemyData.knockBackDirection; // 적이 넉백 공격을 할 수 있는지를 가져옴
         public string GetEnemyId() => enemyData.enemyType.ToString(); // 적 아이디를 가져옴
         public float EnemyHpPercent() => ((float)enemyData.hp / enemyData.maxHP) * 100f; // 적 체력 퍼센트를 가져옴
+        public float GetKnockBackPower() => enemyData.knockBackPower; // 적이 넉백 공격을 할 수 있는지를 가져옴
         public int GetEnemyAttackPower() => enemyData.attackPower; // 적 공격력을 가져옴
-        public bool GetIsKnockBack() => enemyData.isKnockBack; // 적이 넉백 공격을 할 수 있는지를 가져옴
-        public Vector2? GetKnockBackDirection() => enemyData.knockBackDirection; // 적이 넉백 공격을 할 수 있는지를 가져옴
+        public bool GetIsKnockBack() => enemyData.isUseKnockBack; // 적이 넉백 공격을 할 수 있는지를 가져옴
     }
 }

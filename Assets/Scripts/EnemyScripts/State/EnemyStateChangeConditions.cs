@@ -67,6 +67,25 @@ namespace Enemy
         }
     }
 
+    public partial class EnemyStunStatus : EnemyState
+    {
+        protected override void StateChangeCondition()
+        {
+            if (AnyStateChangeState())
+            {
+                return;
+            }
+            else if (enemyData.eEnemyController == EnemyController.AI)
+            {
+                ChangeState(new EnemyChaseState(enemyData));
+            }
+            else if (enemyData.eEnemyController == EnemyController.PLAYER)
+            {
+                ChangeState(new EnemyMoveState(enemyData));
+            }
+        }
+    }
+
     public partial class EnemyDeadState : EnemyState // Á×¾úÀ»¶§
     {
         protected override void StateChangeCondition() 
@@ -79,15 +98,30 @@ namespace Enemy
     {
         public bool AnyStateChangeState()
         {
-            if (enemyData.hp <= 0)
-            {
-                ChangeState(new EnemyDeadState(enemyData));
-            }
+            if (AlwaysCheckStateChangeCondition()) { }
             else if (enemyData.eEnemyController == EnemyController.PLAYER && enemyData.isAttack)
             {
                 enemyData.isAttack = false;
 
                 ChangeState(new EnemyAttackState(enemyData));
+            }
+            else
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        public bool AlwaysCheckStateChangeCondition()
+        {
+            if (enemyData.hp <= 0)
+            {
+                ChangeState(new EnemyDeadState(enemyData));
+            }
+            else if (enemyData.stunTime > 0)
+            {
+                ChangeState(new EnemyStunStatus(enemyData));
             }
             else
             {
