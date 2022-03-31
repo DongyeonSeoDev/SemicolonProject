@@ -30,16 +30,23 @@ public class RecoveryObj : InteractionObj
 
     private void OnEnable()
     {
-        canInteract = true;
+        if (StageManager.Instance.CurrentAreaType == AreaType.RECOVERY)
+        {
+            canInteract = true;
 
-        recoveryLight = PoolManager.GetItem<Light2D>("NormalPointLight2D");
-        recoveryLight.transform.position = transform.position;
+            recoveryLight = PoolManager.GetItem<Light2D>("NormalPointLight2D");
+            recoveryLight.transform.position = StageManager.Instance.CurrentStageGround.objSpawnPos.position;
+            recoveryLight.intensity = 1;
+        }
     }
     private void OnDisable()
     {
-        canInteract = false;
+        if (StageManager.Instance.CurrentAreaType == AreaType.RECOVERY)
+        {
+            canInteract = false;
 
-        recoveryLight.gameObject.SetActive(false);
+            recoveryLight.gameObject.SetActive(false);
+        }
     }
 
     public override void Interaction()

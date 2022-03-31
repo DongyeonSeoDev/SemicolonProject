@@ -17,12 +17,13 @@ public class StageManager : MonoSingleton<StageManager>
     private StageGround currentStage = null;
     private StageDataSO currentStageData = null;
     public StageDataSO CurrentStageData => currentStageData;
+    public StageGround CurrentStageGround => currentStage;
 
     private int currentStageMonsterBundleOrder = 1;
 
     private int currentFloor = 1;
     private int currentStageNumber = 0;
-    private AreaType currentArea;
+    private AreaType currentArea = AreaType.NONE;
     public AreaType CurrentAreaType => currentArea;
 
     private List<NPC> currentMapNPCList = new List<NPC>();
@@ -56,6 +57,10 @@ public class StageManager : MonoSingleton<StageManager>
 
     private string CurrentMonstersOrderID => currentStageData.stageMonsterBundleCount < currentStageMonsterBundleOrder ? string.Empty : currentStageData.stageMonsterBundleID[currentStageMonsterBundleOrder - 1];
 
+    private Dictionary<int, List<RandomRoomType>> randomZoneTypeListDic = new Dictionary<int, List<RandomRoomType>>(); //랜덤 구역에서 나올 구역 타입들을 미리 넣어놓음
+    private List<RandomRoomType> randomZoneRestTypes = new List<RandomRoomType>(); //랜덤구역에서 나올 지역 타입들 현재 남은 것
+    private int prevRandRoomType = -1;  // 이전 랜덤 구역의 타입
+
     //public bool IsLastStage { get; set; } 
 
     /* #region ValuableForEditor
@@ -80,10 +85,31 @@ public class StageManager : MonoSingleton<StageManager>
         int cnt = Global.EnumCount<AreaType>();
         foreach (StageBundleDataSO data in idToStageFloorDict.Values)
         {
+            int i;
             randomRoomDict.Add(data.floor, new Dictionary<AreaType, List<StageDataSO>>());
-            for(int i=0; i<cnt; i++)
+            for(i=0; i<cnt; i++)
             {
                 randomRoomDict[data.floor].Add((AreaType)i, new List<StageDataSO>());
+            }
+
+            //랜덤 구역을 위한 리스트들
+            randomZoneTypeListDic.Add(data.floor, new List<RandomRoomType>());
+
+            int cnt2 = data.stages.FindAll(x => x.areaType == AreaType.RANDOM).Count;
+            int q = cnt2 / Global.EnumCount<RandomRoomType>();
+            int r = cnt2 % Global.EnumCount<RandomRoomType>();
+
+            for(i=0; i<Global.EnumCount<RandomRoomType>(); i++)
+            {
+                for (int j = 0; j < q; j++)
+                {
+                    randomZoneTypeListDic[data.floor].Add((RandomRoomType)i);
+                }
+            }
+
+            for(i = 0; i<r; i++)
+            {
+                randomZoneTypeListDic[data.floor].Add(RandomRoomType.MONSTER);
             }
         }
 
@@ -99,6 +125,8 @@ public class StageManager : MonoSingleton<StageManager>
         {
             currentStageNumber++;
         });
+
+        
     }
 
     private void Start()
@@ -198,12 +226,19 @@ public class StageManager : MonoSingleton<StageManager>
                     randomRoomDict[floor][key].Add(idToStageDataDict[areaDic[key][i]]);
                 }
             }
-        }
+        }  //end of init
 
         foreach (AreaType type in Enum.GetValues(typeof(AreaType)))
         {
             randomRoomDict[floor][type] = randomRoomDict[floor][type].ToRandomList();
         }
+
+        randomZoneRestTypes.Clear();
+        for(int i=0; i<randomZoneTypeListDic[currentFloor].Count; i++)
+        {
+            randomZoneRestTypes.Add(randomZoneTypeListDic[currentFloor][i]);
+        }
+        randomZoneRestTypes = randomZoneRestTypes.ToRandomList(15);
     }
 
     public void NextStage(string id)
@@ -242,15 +277,16 @@ public class StageManager : MonoSingleton<StageManager>
         {
             //주로 처음 게임 스타트 지점
             MapCenterPoint = currentStage.playerSpawnPoint.position;
-            SlimeGameManager.Instance.CurrentPlayerBody.transform.position = MapCenterPoint;
+            
         }
         else
         {
             //다음 스테이지 가면 해당 방향에 맞게 담 스테이지의 문 근처에서 스폰이 되며 그 문은 지나간 상태의 스프라이트로 바꿈
             MapCenterPoint = currentStage.GetOpposeDoor(PassDir).playerSpawnPos.position;
-            SlimeGameManager.Instance.CurrentPlayerBody.transform.position = MapCenterPoint;
+            
         }
-        
+
+        SlimeGameManager.Instance.CurrentPlayerBody.transform.position = MapCenterPoint;
         CinemachineCameraScript.Instance.SetCinemachineConfiner(currentStage.camStageCollider);  //Camera Move Range Set
         GameManager.Instance.ResetDroppedItems(); //Inactive Items
 
@@ -379,6 +415,7 @@ public class StageManager : MonoSingleton<StageManager>
 
     private void Respawn()
     {
+        prevRandRoomType = -1;
         currentStageNumber = 0;
         InsertRandomMaps(currentFloor, false);
         NextStage(startStageID);
@@ -400,9 +437,30 @@ public class StageManager : MonoSingleton<StageManager>
 
     private void EnterRandomArea()
     {
-        RandomRoomType room = (RandomRoomType)UnityEngine.Random.Range(0, Global.EnumCount<RandomRoomType>());
+        //RandomRoomType room = (RandomRoomType)UnityEngine.Random.Range(0, Global.EnumCount<RandomRoomType>());
         //room = RandomRoomType.IMPRECATION;
         //랜덤맵일 때는 EventManager.TriggerEvent(Global.EnterNextMap)가 실행안되므로 저주나 회복일 땐 따로 부름. 몹 구역일 땐 어차피 NextStage로 호출함
+
+        RandomRoomType room;
+        if (randomZoneRestTypes.Count > 0)
+        {
+            //이전과 겹치지 않게 해줌.
+            int rand;
+            bool oneType = IsRestRandomAreaOneType();
+            do
+            {
+                rand = UnityEngine.Random.Range(0, randomZoneRestTypes.Count);
+            } while ((int)randomZoneRestTypes[rand] == prevRandRoomType && !oneType);
+
+            room = randomZoneRestTypes[rand];
+            randomZoneRestTypes.RemoveAt(rand);
+            prevRandRoomType = (int)room;
+        }
+        else //혹시 모를 예외처리
+        {
+            room = (RandomRoomType)UnityEngine.Random.Range(0, Global.EnumCount<RandomRoomType>());
+        }
+
         switch (room)
         {
             case RandomRoomType.IMPRECATION: //저주 구역
@@ -414,7 +472,7 @@ public class StageManager : MonoSingleton<StageManager>
                 break;
 
             case RandomRoomType.MONSTER:  //몬스터 구역
-                --currentStageNumber;
+                //--currentStageNumber;
                 int targetStage = Mathf.Clamp(currentStageData.stageFloor.floor + UnityEngine.Random.Range(-1, 2), 1, MaxStage); //현재 층에서 몇 층을 더할지 정함
                 StageBundleDataSO sbData = idToStageFloorDict.Values.Find(x=>x.floor == targetStage); //현재 층에서 -1 or 0 or 1층을 더한 층을 가져온다
                 NextStage(sbData.stages.FindRandom(stage => stage.areaType == AreaType.MONSTER).stageID); //뽑은 층에서 몬스터 지역들중에 랜덤으로 가져온다
@@ -427,6 +485,18 @@ public class StageManager : MonoSingleton<StageManager>
                 PoolManager.GetItem("RecoveryObjPrefObjPref1").transform.position = currentStage.objSpawnPos.position;
                 break;
         }
+    }
+
+    private bool IsRestRandomAreaOneType() //남은 랜덤 구역 타입이 한 타입밖에 존재하지 않은지 체크
+    {
+        RandomRoomType type = randomZoneRestTypes[0];
+
+        for(int i=1; i<randomZoneRestTypes.Count; i++)
+        {
+            if (type != randomZoneRestTypes[i]) return false;
+        }
+
+        return true;
     }
 
     private NPC GetNPC(string id)

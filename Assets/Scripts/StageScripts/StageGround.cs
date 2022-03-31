@@ -54,9 +54,9 @@ public class StageGround : MonoBehaviour
 
     public StageDoor GetOpposeDoor(DoorDirType type)
     {
-        for(int i=0; i<stageDoors.Length; i++)
+        DoorDirType target = Global.ReverseDoorDir(type);
+        for (int i=0; i<stageDoors.Length; i++)
         {
-            DoorDirType target = Global.ReverseDoorDir(type);
             if (stageDoors[i].dirType == target)
             {
                 stageDoors[i].gameObject.SetActive(true);
