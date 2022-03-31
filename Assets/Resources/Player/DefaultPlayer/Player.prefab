@@ -130,6 +130,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 5427881869486345069}
     m_Modifications:
     - target: {fileID: 1014413151, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: bodySlapTime
+      value: 0.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 1014413151, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: targetPosFarPerCharge
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1014413151, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: minMoveToMouseChargeTime
       value: 0.2
       objectReference: {fileID: 0}

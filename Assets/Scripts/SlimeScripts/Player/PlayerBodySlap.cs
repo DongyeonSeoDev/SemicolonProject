@@ -127,6 +127,7 @@ public class PlayerBodySlap : PlayerSkill
             playerState.Chargning = true;
 
             bodySlapMoveVec = playerInput.LastMoveVector;
+            currentBodySlapTime = bodySlapTime;
 
             startCharging = true;
             maxCharging = false;
@@ -156,23 +157,15 @@ public class PlayerBodySlap : PlayerSkill
         startCharging = false;
         maxCharging = false;
 
-        currentBodySlapTime = bodySlapTime;
-
         moveOriginPos = transform.position;
 
-        if (currentChargingTimer > minMoveToMouseChargeTime)
-        {
-            bodySlapMoveVec = (playerInput.MousePosition - (Vector2)transform.position).normalized;
-        }
-
-        moveTargetPos = moveOriginPos + bodySlapTime * bodySlapMoveSpeed * bodySlapMoveVec;
         moveTargetPos = SlimeGameManager.Instance.PosCantCrossWall(canCrashLayer, moveOriginPos, moveTargetPos);
 
         currentBodySlapTime = Vector2.Distance(moveOriginPos, moveTargetPos) / bodySlapMoveSpeed;
 
         SoundManager.Instance.PlaySoundBox("SlimeSkill1Start");
 
-        EventManager.TriggerEvent("PlayerBodySlap", bodySlapTime);
+        EventManager.TriggerEvent("PlayerBodySlap", currentBodySlapTime);
 
         bodySlapTimer = 0f;
 
@@ -220,24 +213,41 @@ public class PlayerBodySlap : PlayerSkill
     }
     private void CheckChargeTime()
     {
-        if(startCharging && !maxCharging)
+        if(startCharging)
         {
-            currentChargingTimer += Time.deltaTime;
-
-            if (currentChargingTimer > maxChargingTime)
+            if (!maxCharging)
             {
-                currentChargingTimer = maxChargingTime;
-                maxCharging = true;
+                currentChargingTimer += Time.deltaTime;
+
+                if (currentChargingTimer > maxChargingTime)
+                {
+                    currentChargingTimer = maxChargingTime;
+                    maxCharging = true;
+                }
+            }
+
+            if (currentChargingTimer > minMoveToMouseChargeTime)
+            {
+                bodySlapMoveVec = (playerInput.MousePosition - (Vector2)transform.position).normalized;
+
+                moveTargetPos = (Vector2)transform.position + bodySlapTime * bodySlapMoveSpeed * bodySlapMoveVec +
+currentChargingTimer * targetPosFarPerCharge * bodySlapMoveVec;
+
+                Debug.DrawRay((Vector2)transform.position, moveTargetPos - (Vector2)transform.position, Color.red);
+            }
+            else
+            {
+                moveTargetPos = (Vector2)transform.position + bodySlapTime * bodySlapMoveSpeed * bodySlapMoveVec;
             }
         }
     }
     private void CheckBodySlapTime()
     {
-        if (bodySlapTimer < bodySlapTime)
+        if (bodySlapTimer < currentBodySlapTime)
         {
             bodySlapTimer += Time.deltaTime;
 
-            if (bodySlapTimer >= bodySlapTime)
+            if (bodySlapTimer >= currentBodySlapTime)
             {
                 stopBodySlapTimer = stopBodySlapTime;
                 bodyStopBodySlapTimerStart = false;

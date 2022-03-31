@@ -80,8 +80,6 @@ public class PlayerInput : MonoBehaviour
         {
             if (!playerState.Chargning)
             {
-                mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
                 moveVector.x = Input.GetAxisRaw("Horizontal");
                 moveVector.y = Input.GetAxisRaw("Vertical");
 
@@ -127,6 +125,8 @@ public class PlayerInput : MonoBehaviour
             {
                 Reset();
             }
+
+            mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
             if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.SPECIALATTACK])) // left shift
             {
