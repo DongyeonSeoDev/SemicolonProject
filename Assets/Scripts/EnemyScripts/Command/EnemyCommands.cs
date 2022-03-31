@@ -166,10 +166,7 @@ namespace Enemy
                     currentTime = 0.5f;
                     targetPosition = positionCheckData.oppositeDirectionWall * followSpeed;
 
-                    if (enemyData != null)
-                    {
-                        enemyData.moveVector = positionCheckData.oppositeDirectionWall;
-                    }
+                    enemyData.moveVector = positionCheckData.oppositeDirectionWall;
 
                     positionCheckData.isWall = false;
                 }
@@ -190,10 +187,7 @@ namespace Enemy
 
                     targetPosition = (targetPosition - enemyObject.position).normalized;
 
-                    if (enemyData != null)
-                    {
-                        enemyData.moveVector = targetPosition;
-                    }
+                    enemyData.moveVector = targetPosition;
 
                     targetPosition *= followSpeed;
                 }
@@ -203,10 +197,7 @@ namespace Enemy
                 // 이동
                 targetPosition = (EnemyManager.Player.transform.position - enemyObject.position).normalized;
 
-                if (enemyData != null)
-                {
-                    enemyData.moveVector = targetPosition;
-                }
+                enemyData.moveVector = targetPosition;
 
                 targetPosition *= followSpeed;
             }
