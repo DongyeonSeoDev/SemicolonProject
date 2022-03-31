@@ -60,7 +60,7 @@ namespace Enemy
         public float damageDelay = 0.1f;
         public float rushForce = 50f;
         public float knockBackPower;
-        public float stunTime;
+        public float stunTime = 0f;
         public float minRunAwayTime;
         public float maxRunAwayTime;
         public float currentRunAwayTime = 1f;
@@ -77,6 +77,7 @@ namespace Enemy
         public bool isCurrentAttackTime = false;
         public bool isUseDelay = false;
         public bool isPlayerControllerMove = false;
+        public bool isUseKnockBack;
 
         public int attackPower = 10;
         public int damagedValue;

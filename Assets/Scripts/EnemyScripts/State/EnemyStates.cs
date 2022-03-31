@@ -187,6 +187,34 @@ namespace Enemy
         }
     }
 
+    public partial class EnemyStunStatus : EnemyState
+    {
+        public EnemyStunStatus(EnemyData enemyData) : base(eState.DEAD, enemyData) { }
+
+        protected override void Start()
+        {
+            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Hit, enemyData.enemyAnimator, TriggerType.SetTrigger);
+
+            base.Start();
+        }
+
+        protected override void Update()
+        {
+            enemyData.stunTime -= Time.deltaTime;
+
+            if (enemyData.stunTime <= 0)
+            {
+                enemyData.stunTime = 0;
+
+                base.Update();
+            }
+
+            AlwaysCheckStateChangeCondition();
+        }
+
+        protected override void End() => EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Hit, enemyData.enemyAnimator, TriggerType.SetTrigger);
+    }
+
     public partial class EnemyDeadState : EnemyState // Á×¾úÀ»¶§
     {
         private EnemyCommand deadCommand;

@@ -16,7 +16,7 @@ namespace Enemy
         private EnemyController eEnemyController;
 
         private bool isAttackInit = false;
-        private bool isKnockBack = false;
+        private bool isUseKnockBack = false;
         private int attackPower = 0;
 
         public Action<EnemyController> enemyControllerChange = null;
@@ -60,7 +60,7 @@ namespace Enemy
         {
             enemy = GetComponentInParent<Enemy>();
 
-            isKnockBack = enemy.GetIsKnockBack();
+            isUseKnockBack = enemy.GetIsKnockBack();
             positionCheckData = enemy.positionCheckData;
             eEnemyController = enemy.GetEnemyController();
             attackPower = enemy.GetEnemyAttackPower();
@@ -89,7 +89,7 @@ namespace Enemy
                 return;
             }
 
-            if (isKnockBack && collision.CompareTag("Wall"))
+            if (isUseKnockBack && collision.CompareTag("Wall"))
             {
                 enemyRigidbody.velocity = Vector2.zero;
                 enemyRigidbody.angularVelocity = 0f;
@@ -105,7 +105,7 @@ namespace Enemy
 
                 var enemy = collision.GetComponent<Enemy>();
 
-                if (isKnockBack)
+                if (isUseKnockBack)
                 {
                     enemyRigidbody.velocity = Vector2.zero;
                     enemyRigidbody.angularVelocity = 0f;

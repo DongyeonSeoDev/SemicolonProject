@@ -177,7 +177,7 @@ namespace Enemy
             }
         }
 
-        public void PlayerDeadEvent() // 함수 const 변수 여기로 옮기고, Player 버그 해결
+        public void PlayerDeadEvent()
         {
             foreach(List<Enemy> enemyList in enemyDictionary.Values)
             {
