@@ -85,32 +85,14 @@ public class StageManager : MonoSingleton<StageManager>
         int cnt = Global.EnumCount<AreaType>();
         foreach (StageBundleDataSO data in idToStageFloorDict.Values)
         {
-            int i;
+            
             randomRoomDict.Add(data.floor, new Dictionary<AreaType, List<StageDataSO>>());
-            for(i=0; i<cnt; i++)
+            for(int i=0; i<cnt; i++)
             {
                 randomRoomDict[data.floor].Add((AreaType)i, new List<StageDataSO>());
             }
 
-            //랜덤 구역을 위한 리스트들
             randomZoneTypeListDic.Add(data.floor, new List<RandomRoomType>());
-
-            int cnt2 = data.stages.FindAll(x => x.areaType == AreaType.RANDOM).Count;
-            int q = cnt2 / Global.EnumCount<RandomRoomType>();
-            int r = cnt2 % Global.EnumCount<RandomRoomType>();
-
-            for(i=0; i<Global.EnumCount<RandomRoomType>(); i++)
-            {
-                for (int j = 0; j < q; j++)
-                {
-                    randomZoneTypeListDic[data.floor].Add((RandomRoomType)i);
-                }
-            }
-
-            for(i = 0; i<r; i++)
-            {
-                randomZoneTypeListDic[data.floor].Add(RandomRoomType.MONSTER);
-            }
         }
 
         cnt = Global.EnumCount<DoorDirType>();
@@ -138,6 +120,7 @@ public class StageManager : MonoSingleton<StageManager>
     private void Init()
     {
         InsertRandomMaps(currentFloor, true);
+        SetRandomAreaRandomIncounter();
         Util.DelayFunc(() => NextStage(startStageID), 0.2f);
         respawnPos = idToStageDataDict[startStageID].stage.GetComponent<StageGround>().playerSpawnPoint.position;
 
@@ -168,6 +151,99 @@ public class StageManager : MonoSingleton<StageManager>
         EventManager.TriggerEvent("StartBGM", startStageID);
         EventManager.StartListening("PlayerRespawn", Respawn);
         EventManager.StartListening("StartNextStage", StartNextStage);
+    }
+
+    private void SetRandomAreaRandomIncounter()
+    {
+        StageBundleDataSO data = idToStageFloorDict[FloorToFloorID(currentFloor)];
+        Dictionary<RandomRoomType, int> ranMapCnt = new Dictionary<RandomRoomType, int>();
+        List<RandomRoomType> tempList = new List<RandomRoomType>();
+
+        int cnt = data.stages.FindAll(x => x.areaType == AreaType.RANDOM).Count;
+        int rrCnt = Global.EnumCount<RandomRoomType>();
+
+        int q = cnt / rrCnt;
+        int r = cnt % rrCnt;
+
+        int i, count = 0;
+
+        randomZoneTypeListDic[currentFloor].Clear();
+
+        for (i = 0; i < rrCnt; i++)
+        {
+            for (int j = 0; j < q; j++)
+            {
+                tempList.Add((RandomRoomType)i);
+                count++;
+            }
+            ranMapCnt.Add((RandomRoomType)i, q);
+        }
+
+        //랜덤맵 / 랜덤타입이 나누어떨어지지 않으면 임의의 랜덤맵을 나머지만큼 집어넣는데 겹치지 않게 함
+        List<RandomRoomType> rList = new List<RandomRoomType>();
+        if (r > 0)
+        {
+            for (i = 0; i < r; i++)
+            {
+                RandomRoomType rr = (RandomRoomType)UnityEngine.Random.Range(0, rrCnt);
+                if (rList.Contains(rr))
+                {
+                    i--;
+                }
+                else
+                {
+                    rList.Add(rr);
+                }
+            }
+
+            for (i = 0; i < rList.Count; i++)
+            {
+                tempList.Add(rList[i]);
+            }
+        }
+
+        //남은 랜덤 방 수 간격이 rrCnt - 1미만으로 됐는지 체크
+        Func<(bool, RandomRoomType)> checkInterval = () =>
+        {
+            int min = int.MaxValue;
+            foreach(int i in ranMapCnt.Values)
+            {
+                if (i < min) min = i;
+            }
+
+            foreach (RandomRoomType r in ranMapCnt.Keys)
+            {
+                if (ranMapCnt[r] - min >= rrCnt - 1) return (false, r);
+            }
+            return (true, RandomRoomType.MONSTER); //두번째인자는 false일 때를 맞추기 위해서 그냥 한 거
+        };
+
+        int pre = -1;
+        for(;;)
+        {
+            (bool, RandomRoomType) res = checkInterval();
+
+            if (res.Item1)
+            {
+                int ran;
+                do
+                {
+                    ran = UnityEngine.Random.Range(0, rrCnt);
+                } while (pre == ran || ranMapCnt[(RandomRoomType)ran] == 0);
+
+                pre = ran;
+                randomZoneTypeListDic[currentFloor].Add((RandomRoomType)ran);
+            }
+            else
+            {
+                pre = (int)res.Item2;
+                randomZoneTypeListDic[currentFloor].Add(res.Item2);
+            }
+            ranMapCnt[(RandomRoomType)pre]--;
+          
+            if (--count == 0)
+                break;
+        }
     }
 
     private string FloorToFloorID(int floor)
@@ -233,12 +309,12 @@ public class StageManager : MonoSingleton<StageManager>
             randomRoomDict[floor][type] = randomRoomDict[floor][type].ToRandomList();
         }
 
-        randomZoneRestTypes.Clear();
+        /*randomZoneRestTypes.Clear();
         for(int i=0; i<randomZoneTypeListDic[currentFloor].Count; i++)
         {
             randomZoneRestTypes.Add(randomZoneTypeListDic[currentFloor][i]);
         }
-        randomZoneRestTypes = randomZoneRestTypes.ToRandomList(15);
+        randomZoneRestTypes = randomZoneRestTypes.ToRandomList(15);*/
     }
 
     public void NextStage(string id)
@@ -415,9 +491,10 @@ public class StageManager : MonoSingleton<StageManager>
 
     private void Respawn()
     {
-        prevRandRoomType = -1;
+        //prevRandRoomType = -1;
         currentStageNumber = 0;
         InsertRandomMaps(currentFloor, false);
+        SetRandomAreaRandomIncounter();
         NextStage(startStageID);
     }
 

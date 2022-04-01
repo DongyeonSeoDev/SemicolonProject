@@ -11,7 +11,7 @@ public class StageCheatWindow : EditorWindow
     private int recoveryHp;
     private StateAbnormality sa;
 
-    private string itemName;
+    private string itemId;
     private int itemCnt;
 
     [MenuItem("Cheat/Normal Cheat")]
@@ -104,8 +104,8 @@ public class StageCheatWindow : EditorWindow
         GUILayout.Space(20);
 
         EditorGUIUtility.wideMode = true;
-        
-        itemName = EditorGUILayout.TextField("Item Name", itemName);
+
+        itemId = EditorGUILayout.TextField("Item Id", itemId);
         itemCnt = EditorGUILayout.IntField("Item Count", itemCnt);
         
         
@@ -113,7 +113,7 @@ public class StageCheatWindow : EditorWindow
         GUILayout.BeginHorizontal();
         if (GUILayout.Button("Get Item"))
         {
-            Inventory.Instance.GetItem(new ItemInfo(itemName, itemCnt));
+            Inventory.Instance.GetItem(new ItemInfo(itemId, itemCnt));
         }
         if (GUILayout.Button("Show Items"))
         {
