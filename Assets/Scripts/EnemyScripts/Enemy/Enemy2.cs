@@ -13,7 +13,6 @@ namespace Enemy
 
             enemyData.isAttackCommand = true;
             enemyData.isLongDistanceAttack = true;
-            enemyData.damageDelay = 0.1f;
             enemyData.chaseSpeed = 10f;
             enemyData.attackDelay = 1.5f;
             enemyData.minRunAwayTime = 2f;

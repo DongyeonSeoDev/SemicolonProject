@@ -210,19 +210,16 @@ namespace Enemy
     {
         private EnemyData enemyData;
 
-        private bool isWorking = false;
-
         public EnemyGetDamagedCommand(EnemyData enemyData)
         {
             this.enemyData = enemyData;
-            isWorking = false;
         }
 
         public override void Execute()
         {
             if (enemyData.eEnemyController == EnemyController.AI)
             {
-                if (!isWorking) // 색깔 변경
+                if (enemyData.isDamaged) // 색깔 변경
                 {
                     enemyData.enemySpriteRenderer.color = enemyData.damagedColor;
                 }
@@ -233,7 +230,7 @@ namespace Enemy
             }
             else if (enemyData.eEnemyController == EnemyController.PLAYER)
             {
-                if (!isWorking) // 색깔 변경
+                if (enemyData.isDamaged) // 색깔 변경
                 {
                     enemyData.enemySpriteRenderer.color = enemyData.playerDamagedColor;
                 }
@@ -242,8 +239,6 @@ namespace Enemy
                     enemyData.enemySpriteRenderer.color = enemyData.playerNormalColor;
                 }
             }
-
-            isWorking = !isWorking;
         }
     }
 

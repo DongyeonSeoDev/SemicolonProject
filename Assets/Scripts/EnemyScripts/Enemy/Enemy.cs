@@ -95,6 +95,7 @@ namespace Enemy
             };
 
             enemyData.enemyAnimator.enabled = true; // 애니메이션 실행
+            isDamageCurrentTime = 0f;
 
             enemyDamagedCommand = new EnemyGetDamagedCommand(enemyData);
             enemyKnockBackCommand = new EnemyAddForceCommand(enemyData.enemyRigidbody2D, this);
