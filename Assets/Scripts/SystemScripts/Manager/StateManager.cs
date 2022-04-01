@@ -5,6 +5,19 @@ public class StateManager : SingletonClass<StateManager>
 {
     public Dictionary<StateAbnormality, int> stateCountDict = new Dictionary<StateAbnormality, int>();  //해당 상태이상이 앞으로 효과가 몇 번 더 발동이 되는지 저장
 
+    public bool IsPlayerFullHP => SlimeGameManager.Instance.Player.CurrentHp == SlimeGameManager.Instance.Player.PlayerStat.MaxHp;
+    public bool IsPlayerNoImpr
+    {
+        get
+        {
+            foreach(int cnt in stateCountDict.Values)
+            {
+                if (cnt > 0) return false;
+            }
+            return true;
+        }
+    }
+
     public void Init()
     {
         foreach(StateAbnormality state in Global.GetEnumArr<StateAbnormality>())

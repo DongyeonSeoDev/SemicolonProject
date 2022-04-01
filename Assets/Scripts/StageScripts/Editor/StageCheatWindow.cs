@@ -1,6 +1,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class StageCheatWindow : EditorWindow
 {
@@ -9,6 +10,9 @@ public class StageCheatWindow : EditorWindow
     private Stat playerStat = new Stat();
     private int recoveryHp;
     private StateAbnormality sa;
+
+    private string itemName;
+    private int itemCnt;
 
     [MenuItem("Cheat/Normal Cheat")]
     public static void ShowEnemySpawnWindow()
@@ -32,6 +36,8 @@ public class StageCheatWindow : EditorWindow
     private void OnEnable()
     {
         playerStat = SlimePlayer.PlayerStat;
+
+        
     }
 
     private void OnGUI()
@@ -96,6 +102,27 @@ public class StageCheatWindow : EditorWindow
         }
 
         GUILayout.Space(20);
+
+        EditorGUIUtility.wideMode = true;
+        
+        itemName = EditorGUILayout.TextField("Item Name", itemName);
+        itemCnt = EditorGUILayout.IntField("Item Count", itemCnt);
+        
+        
+        GUILayout.Space(5);
+        GUILayout.BeginHorizontal();
+        if (GUILayout.Button("Get Item"))
+        {
+            Inventory.Instance.GetItem(new ItemInfo(itemName, itemCnt));
+        }
+        if (GUILayout.Button("Show Items"))
+        {
+            foreach(ItemSO item in GameManager.Instance.ItemDataDic.Values)
+            {
+                Debug.Log(item.itemName + " : " + item.name);
+            }
+        }
+        GUILayout.EndHorizontal();
 
         EditorGUI.EndDisabledGroup();
     }

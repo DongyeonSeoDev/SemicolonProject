@@ -483,6 +483,11 @@ public class StageManager : MonoSingleton<StageManager>
                 EventManager.TriggerEvent(Global.EnterNextMap);
                 Environment.Instance.OnEnteredOrExitRecoveryArea(true);
                 PoolManager.GetItem("RecoveryObjPrefObjPref1").transform.position = currentStage.objSpawnPos.position;
+
+                if (StateManager.Instance.IsPlayerFullHP && StateManager.Instance.IsPlayerNoImpr)
+                {
+                    SetClearStage();
+                }
                 break;
         }
     }
