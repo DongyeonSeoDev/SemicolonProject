@@ -38,7 +38,11 @@ namespace Enemy
         public void AttackMove() // 애니메이션에서 실행
         {
             rb.velocity = Vector2.zero;
-            enemyAttackCheck.AttackObjectReset();
+
+            for (int i = 0; i < enemyAttackCheck.Length; i++)
+            {
+                enemyAttackCheck[i].AttackObjectReset();
+            }
 
             attackMoveCommand.Execute();
             enemyData.enemySpriteRotateCommand.Execute();
@@ -47,7 +51,11 @@ namespace Enemy
         public void RushAttack() // 애니메이션에서 실행
         {
             rb.velocity = Vector2.zero;
-            enemyAttackCheck.AttackObjectReset();
+
+            for (int i = 0; i < enemyAttackCheck.Length; i++)
+            {
+                enemyAttackCheck[i].AttackObjectReset();
+            }
 
             rushAttackCommand.Execute();
             enemyData.enemySpriteRotateCommand.Execute();

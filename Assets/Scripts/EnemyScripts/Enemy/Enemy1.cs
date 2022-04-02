@@ -15,7 +15,10 @@ namespace Enemy
 
         public void ReadyAttack() // 애니메이션에서 실행
         {
-            enemyAttackCheck.AttackObjectReset();
+            for (int i = 0; i < enemyAttackCheck.Length; i++)
+            {
+                enemyAttackCheck[i].AttackObjectReset();
+            }
         }
     }
 }

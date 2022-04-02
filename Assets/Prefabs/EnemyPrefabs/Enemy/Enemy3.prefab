@@ -173,7 +173,8 @@ MonoBehaviour:
   enemyDataSO: {fileID: 11400000, guid: 29c51128c62a5674796e69011469a424, type: 2}
   hpBarFillImage: {fileID: 6749001325751788167}
   hpBar: {fileID: 6749001325011307883}
-  enemyAttackCheck: {fileID: 1379758292269083093}
+  enemyAttackCheck:
+  - {fileID: 1379758292269083093}
 --- !u!114 &4040903921431046384
 MonoBehaviour:
   m_ObjectHideFlags: 0

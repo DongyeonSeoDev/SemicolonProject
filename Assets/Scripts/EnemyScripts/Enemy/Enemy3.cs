@@ -27,7 +27,10 @@ namespace Enemy
 
         public void ReadyEnemyAttack() // 애니메이션에서 실행 - 적 공격 준비
         {
-            enemyAttackCheck.AttackObjectReset();
+            for (int i = 0; i < enemyAttackCheck.Length; i++)
+            {
+                enemyAttackCheck[i].AttackObjectReset();
+            }
 
             if (positionCheckData.isWall)
             {
