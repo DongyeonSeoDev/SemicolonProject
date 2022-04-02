@@ -80,10 +80,10 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
                     case SkillType.ATTACK:
                         defaultSkill.Register(skillInfo);
                         break;
-                    case SkillType.SPECIALATTACK:
+                    case SkillType.SPECIALATTACK1:
                         specialSkill.Register(skillInfo);
                         break;
-                    case SkillType.DRAIN:
+                    case SkillType.SPECIALATTACK2:
                         drain.Register(skillInfo);
                         break;
                 }

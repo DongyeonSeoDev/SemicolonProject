@@ -279,7 +279,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotNumber: 0
-  slotKey: 14
+  slotKey: 15
   bodyID: origin
   bodyImg: {fileID: 1331222542303131239}
   coolTimeUIPair:

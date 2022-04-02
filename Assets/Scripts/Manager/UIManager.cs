@@ -269,7 +269,7 @@ public partial class UIManager : MonoSingleton<UIManager>
             }
             else
             {
-                OnUIInteract(UIType.QUIT);
+                OnUIInteract(UIType.SETTING);
             }
         }
         else if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.INVENTORY]))
@@ -280,13 +280,13 @@ public partial class UIManager : MonoSingleton<UIManager>
         {
             OnUIInteract(UIType.STAT);
         }
-        else if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.SETTING]))
-        {
-            OnUIInteract(UIType.SETTING);
-        }
         else if(Input.GetKeyDown(KeySetting.keyDict[KeyAction.MONSTER_COLLECTION]))
         {
             OnUIInteract(UIType.MONSTER_COLLECTION);
+        }
+        else if(Input.GetKeyDown(KeySetting.keyDict[KeyAction.QUIT]))
+        {
+            OnUIInteract(UIType.QUIT);
         }
         /*else if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.CHANGEABLEBODYS]))
         {

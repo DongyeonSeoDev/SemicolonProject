@@ -38,11 +38,11 @@ public class SkillInfoImage : MonoBehaviour
                 skillUICmd = new DefaultAttackUICommand(skillImgCoolTxtImgTriple.third, skillImgCoolTxtImgTriple.second);
                 skillName += "(기본공격)";
                 break;
-            case SkillType.SPECIALATTACK:
+            case SkillType.SPECIALATTACK1:
                 skillUICmd = new SpecialAttackUICommand(skillImgCoolTxtImgTriple.third, skillImgCoolTxtImgTriple.second);
                 skillName += "(특수공격1)";
                 break;
-            case SkillType.DRAIN:
+            case SkillType.SPECIALATTACK2:
                 skillUICmd = new DrainUICommand(skillImgCoolTxtImgTriple.third, skillImgCoolTxtImgTriple.second);
                 skillName += "(특수공격2)";
                 break;

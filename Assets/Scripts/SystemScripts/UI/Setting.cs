@@ -8,7 +8,9 @@ public class Setting : MonoBehaviour
     public Image[] childImgs;
 
     public Image viewportImg;
-    public Scrollbar scrollBar;
+
+    public RectTransform contentsRectTr;
+    private Vector3 startRectPos;
 
     public void InitSet()
     {
@@ -17,15 +19,15 @@ public class Setting : MonoBehaviour
         {
             childImgs[i].material = setting.material;
         }
-        
+
+        startRectPos = contentsRectTr.anchoredPosition;
     }
 
     public void SetChildImgs(bool isDissolve)  //material 적용된 상태에서는 Mask범위 밖에서도 보임. (Rect Mask 2D쓰면 안보이지만 바로 사라져서 어색함)
     {
-        if (!isDissolve)
+        if (isDissolve)
         {
-            scrollBar.value = 1;
-            
+            contentsRectTr.anchoredPosition = startRectPos;
         }
         viewportImg.raycastTarget = !isDissolve;
 

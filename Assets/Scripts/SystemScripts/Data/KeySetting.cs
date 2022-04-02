@@ -15,13 +15,14 @@ public static class KeySetting
         keyDict[KeyAction.MONSTER_COLLECTION] = KeyCode.C;
         //keyDict[KeyAction.CHANGEABLEBODYS] = KeyCode.H;
         keyDict[KeyAction.INTERACTION] = KeyCode.F;
+        keyDict[KeyAction.SPECIALATTACK1] = KeyCode.LeftShift;
+        keyDict[KeyAction.SPECIALATTACK2] = KeyCode.Q;
         keyDict[KeyAction.MANASTONE] = KeyCode.E;
-        keyDict[KeyAction.DRAIN] = KeyCode.Q;
-        keyDict[KeyAction.SPECIALATTACK] = KeyCode.LeftShift;
         keyDict[KeyAction.CHANGE_SLIME] = KeyCode.Alpha1;
         keyDict[KeyAction.CHANGE_MONSTER1] = KeyCode.Alpha2;
         keyDict[KeyAction.CHANGE_MONSTER2] = KeyCode.Alpha3;
-        keyDict[KeyAction.SETTING] = KeyCode.Tab;
+        //keyDict[KeyAction.SETTING] = KeyCode.Tab;
+        keyDict[KeyAction.QUIT] = KeyCode.F4;
     }
 
     public static void SetFixedKeySetting() //고정키 세팅
@@ -55,6 +56,7 @@ public static class KeyCodeToString
 
         keycodeToStringDic.Add(KeyCode.Mouse0, "Left Mouse");
         keycodeToStringDic.Add(KeyCode.Mouse1, "Right Mouse");
+        keycodeToStringDic.Add(KeyCode.Escape, "ESC");
         for (int i=0; i<10; ++i)
         {
             keycodeToStringDic.Add((KeyCode)(48 + i), i.ToString());

@@ -43,12 +43,13 @@ public enum KeyAction
     ESCAPE,
     //여기까지가 고정키
 
+    QUIT,
     INVENTORY,
     STAT,
     MONSTER_COLLECTION,
     INTERACTION,
-    SPECIALATTACK,
-    DRAIN,
+    SPECIALATTACK1,
+    SPECIALATTACK2,
     MANASTONE,
     SETTING,
     CHANGE_SLIME,
@@ -65,8 +66,8 @@ public enum KeyAction
 public enum SkillType
 {
     ATTACK,
-    SPECIALATTACK,
-    DRAIN,         //두번째 특수 스킬
+    SPECIALATTACK1,  //첫번째 특수 스킬
+    SPECIALATTACK2,         //두번째 특수 스킬
     MANASTONE,     //마석 스킬 (여기에 넣어야할진 아직 미정)
     NULL
 }
