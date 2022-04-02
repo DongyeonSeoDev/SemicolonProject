@@ -348,6 +348,7 @@ public partial class UIManager : MonoSingleton<UIManager>
                         return true;
                 }
                 normalPanelCanvasg.DOFade(!gameUIList[(int)UIType.SETTING].gameObject.activeSelf ? 0:1, 0.3f);
+                setting.SetChildImgs(true);
                 break;
             case UIType.MONSTERINFO_DETAIL:  //몹 드랍템 정보창이나 추가스탯 창 UI켜져있으면 몹 정보 자세히 보기 UI 상호작용 여닫기 X
                 if (gameUIList[(int)UIType.MONSTERINFO_DETAIL_ITEM].gameObject.activeSelf || gameUIList[(int)UIType.MONSTERINFO_DETAIL_STAT].gameObject.activeSelf)
@@ -435,6 +436,7 @@ public partial class UIManager : MonoSingleton<UIManager>
                 break;
             case UIType.SETTING:
                 TimeManager.TimePause();
+                setting.SetChildImgs(false);
                 break;
            
         }

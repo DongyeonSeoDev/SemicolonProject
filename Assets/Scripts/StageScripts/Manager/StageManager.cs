@@ -58,8 +58,8 @@ public class StageManager : MonoSingleton<StageManager>
     private string CurrentMonstersOrderID => currentStageData.stageMonsterBundleCount < currentStageMonsterBundleOrder ? string.Empty : currentStageData.stageMonsterBundleID[currentStageMonsterBundleOrder - 1];
 
     private Dictionary<int, List<RandomRoomType>> randomZoneTypeListDic = new Dictionary<int, List<RandomRoomType>>(); //랜덤 구역에서 나올 구역 타입들을 미리 넣어놓음
-    private List<RandomRoomType> randomZoneRestTypes = new List<RandomRoomType>(); //랜덤구역에서 나올 지역 타입들 현재 남은 것
-    private int prevRandRoomType = -1;  // 이전 랜덤 구역의 타입
+    private List<RandomRoomType> randomZoneRestTypes = new List<RandomRoomType>(); //랜덤구역에서 나올 지역 타입들 현재 남은 것 (테스트용 변수)
+    //private int prevRandRoomType = -1;  // 이전 랜덤 구역의 타입
 
     //public bool IsLastStage { get; set; } 
 
@@ -153,7 +153,7 @@ public class StageManager : MonoSingleton<StageManager>
         EventManager.StartListening("StartNextStage", StartNextStage);
     }
 
-    private void SetRandomAreaRandomIncounter()
+    private void SetRandomAreaRandomIncounter()  //일단 리펙토링 나중에 해야할 듯
     {
         StageBundleDataSO data = idToStageFloorDict[FloorToFloorID(currentFloor)];
         Dictionary<RandomRoomType, int> ranMapCnt = new Dictionary<RandomRoomType, int>();
@@ -244,6 +244,13 @@ public class StageManager : MonoSingleton<StageManager>
             if (--count == 0)
                 break;
         }
+
+        for(i=0; i<r; i++)
+        {
+            randomZoneTypeListDic[currentFloor].Insert(UnityEngine.Random.Range(0, randomZoneTypeListDic[currentFloor].Count), (RandomRoomType)UnityEngine.Random.Range(0, rrCnt));
+        }
+
+        randomZoneRestTypes = randomZoneTypeListDic[currentFloor];
     }
 
     private string FloorToFloorID(int floor)
@@ -518,8 +525,9 @@ public class StageManager : MonoSingleton<StageManager>
         //room = RandomRoomType.IMPRECATION;
         //랜덤맵일 때는 EventManager.TriggerEvent(Global.EnterNextMap)가 실행안되므로 저주나 회복일 땐 따로 부름. 몹 구역일 땐 어차피 NextStage로 호출함
 
-        RandomRoomType room;
-        if (randomZoneRestTypes.Count > 0)
+        RandomRoomType room = randomZoneTypeListDic[currentFloor][0];
+        randomZoneTypeListDic[currentFloor].RemoveAt(0);
+        /*if (randomZoneRestTypes.Count > 0)
         {
             //이전과 겹치지 않게 해줌.
             int rand;
@@ -536,7 +544,7 @@ public class StageManager : MonoSingleton<StageManager>
         else //혹시 모를 예외처리
         {
             room = (RandomRoomType)UnityEngine.Random.Range(0, Global.EnumCount<RandomRoomType>());
-        }
+        }*/
 
         switch (room)
         {
