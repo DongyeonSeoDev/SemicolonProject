@@ -14,7 +14,8 @@ namespace Enemy
         Bullet = 100,
         EnemyLoot,
         DeadEffect,
-        BulletEffect
+        BulletEffect,
+        Fire
     }
 
     public class EnemyPoolManager : MonoBehaviour
