@@ -88,7 +88,7 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
         EventManager.StopListening("PlayerDead", ResetDicts);
         EventManager.StopListening("PlayerBodySet", MountBody);
     }
-    public void SetMountingPercentageDict(string key, float value) 
+    public void SetDrainProbabilityDict(string key, float value) 
     {
         if (drainProbabilityDict.ContainsKey(key))
         {
@@ -112,6 +112,10 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
             Debug.LogWarning("The key '" + key + "' is not Contain.");
             return 0f;
         }
+    }
+    public void UpDrainProbabilityDict(string key, float upValue)
+    {
+        SetDrainProbabilityDict(key, GetDrainProbabilityDict(key) + upValue);
     }
     public void SetUnderstandingRate(string key, int value)
     {
@@ -182,7 +186,7 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
             MonsterCollection.Instance.AddBody(objId, idx + 1);
         }
 
-        SetMountingPercentageDict(objId, 0);
+        SetDrainProbabilityDict(objId, 0);
     }
     public void UnSetMountObj(string objId)
     {
@@ -215,7 +219,7 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
             //Debug.Log("장착 물어보는 창이 뜨네요");
 
             UpUnderstandingRateWithQueue(objId, upValue);
-            SetMountingPercentageDict(objId, 0); // 장착을 했건 안했건 확률은 0이된다
+            SetDrainProbabilityDict(objId, 0); // 장착을 했건 안했건 확률은 0이된다
         }
     }
 

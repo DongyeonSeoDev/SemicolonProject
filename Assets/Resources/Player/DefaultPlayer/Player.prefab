@@ -666,6 +666,10 @@ PrefabInstance:
       propertyPath: m_Spline.m_ControlPoints.Array.data[9].rightTangent.y
       value: -0.24419117
       objectReference: {fileID: 0}
+    - target: {fileID: 8250874604347546645, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_SortingLayer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 8848209750586064627, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.4
