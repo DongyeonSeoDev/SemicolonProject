@@ -5,6 +5,10 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     private PlayerState playerState = null;
+    public PlayerState PlayerState
+    {
+        get { return playerState; }
+    }
 
     [SerializeField]
     private Stat playerStat = new Stat();
@@ -21,8 +25,8 @@ public class Player : MonoBehaviour
         get { return playerInput; }
     }
 
-    private List<(GameObject, int)> drainList = new List<(GameObject, int)>();
-    public List<(GameObject, int)> DrainList
+    private List<GameObject> drainList = new List<GameObject>();
+    public List<GameObject> DrainList
     {
         get { return drainList; }
     }
@@ -223,7 +227,7 @@ public class Player : MonoBehaviour
 
         foreach(var item in drainList)
         {
-            if(item.Item1 == attacker)
+            if(item == attacker)
             {
                 return;
             }

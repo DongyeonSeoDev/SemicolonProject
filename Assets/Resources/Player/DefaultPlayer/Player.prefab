@@ -310,6 +310,10 @@ PrefabInstance:
       propertyPath: m_LocalAABB.m_Extent.y
       value: 1.7924452
       objectReference: {fileID: 0}
+    - target: {fileID: 3043055448176526620, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3851220836599241427, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.077

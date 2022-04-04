@@ -17,14 +17,19 @@ public class BodyPoint : MonoBehaviour
     private float returnToOriginSpeed = 2f;
     [SerializeField]
     private float moveToMiddleSpeed = 1f;
+    [SerializeField]
+    private float farByMiddleSpeed = 1f;
+
+    [SerializeField]
+    private float moveToOriginTime = 1f;
+    private float moveToOriginTimer = 0f;
 
     [SerializeField]
     private float moveToMiddleTime = 1f;
     private float moveToMiddleTimer = 0f;
 
-    [SerializeField]
-    private float moveToOriginTime = 1f;
-    private float moveToOriginTimer = 0f;
+    private float farByMiddleTime = 1f;
+    private float farByMiddleTimer = 0f;
 
     private Vector2 originLocalPosition = Vector2.zero;
     public Vector2 OriginLocalPosition
@@ -70,6 +75,14 @@ public class BodyPoint : MonoBehaviour
         get { return isMoveToMiddle; }
         set { isMoveToMiddle = value; }
     }
+
+    private bool isFarByMiddle = false;
+    public bool IsFarByMiddle
+    {
+        get { return isFarByMiddle; }
+        set { isFarByMiddle= value; }
+    }
+
     private bool isDownBodyPoint = false;
     private void Awake()
     {
@@ -93,14 +106,24 @@ public class BodyPoint : MonoBehaviour
     }
     private void OnEnable()
     {
-        EventManager.StartListening("PlayerShoot", SetMoveToMiddleTimer);
-        EventManager.StartListening("PlayerCharging", SetMoveToMiddleTimer);
-        EventManager.StartListening("PlayerBodySlap", (Action<float>)PlayerBodySlap);
         EventManager.StartListening("StartNextStage", StartNextStage);
+
+        if (!isMiddlePoint)
+        {
+            EventManager.StartListening("SetDrainTime", (Action<float>)PlayerDrain);
+            EventManager.StartListening("PlayerShoot", SetMoveToMiddleTimer);
+            EventManager.StartListening("PlayerCharging", SetMoveToMiddleTimer);
+            EventManager.StartListening("PlayerBodySlap", (Action<float>)PlayerBodySlap);
+        }
     }
     private void OnDisable()
     {
         StopListenings();
+
+        if(!isMiddlePoint)
+        {
+            EventManager.StopListening("SetDrainTime", (Action<float>)PlayerDrain);
+        }
     }
     public void SetTrueisDownBodyPoint()
     {
@@ -108,10 +131,14 @@ public class BodyPoint : MonoBehaviour
     }
     private void StopListenings()
     {
-        EventManager.StopListening("PlayerShoot", SetMoveToMiddleTimer);
-        EventManager.StopListening("PlayerCharging", SetMoveToMiddleTimer);
-        EventManager.StopListening("PlayerBodySlap", (Action<float>)PlayerBodySlap);
         EventManager.StopListening("StartNextStage", StartNextStage);
+
+        if (!isMiddlePoint)
+        {
+            EventManager.StopListening("PlayerShoot", SetMoveToMiddleTimer);
+            EventManager.StopListening("PlayerCharging", SetMoveToMiddleTimer);
+            EventManager.StopListening("PlayerBodySlap", (Action<float>)PlayerBodySlap);
+        }
     }
 
     private void Update()
@@ -122,6 +149,7 @@ public class BodyPoint : MonoBehaviour
         {
             CheckCrossWall();
             MoveToMiddleTimerCheck();
+            FarByMiddleTimerCheck();
             MoveToOriginASec();
         }
     }
@@ -145,7 +173,7 @@ public class BodyPoint : MonoBehaviour
     private void MoveToOriginPos()
     {
         if (((!(isWall) || isMove)
-            && !(isMiddlePoint || isMoveToMiddle)) || isUpWall)
+            && !(isMiddlePoint || isMoveToMiddle || isFarByMiddle)) || isUpWall)
         {
             transform.localPosition = Vector2.Lerp(transform.localPosition, originLocalPosition, Time.deltaTime * returnToOriginSpeed);
         }
@@ -195,6 +223,11 @@ public class BodyPoint : MonoBehaviour
     {
         moveToMiddleTimer = bodySlapTime;
     }
+    private void PlayerDrain(float drainTime)
+    {
+        farByMiddleTime = drainTime;
+        farByMiddleTimer = 0f;
+    }
     private void MoveToMiddleTimerCheck()
     {
         if (moveToMiddleTimer > 0f)
@@ -206,13 +239,13 @@ public class BodyPoint : MonoBehaviour
                 isMoveToMiddle = false;
 
                 moveToMiddleTimer = 0f;
-            }
-            else
-            {
-                isMoveToMiddle = true;
 
-                MoveToMiddle();
+                return;
             }
+           
+            isMoveToMiddle = true;
+
+            MoveToMiddle();
         }
     }
     private void MoveToMiddle()
@@ -234,6 +267,41 @@ public class BodyPoint : MonoBehaviour
         else
         {
             moveToOriginTimer = moveToOriginTime;
+        }
+
+        CheckCrossWall();
+    }
+    private void FarByMiddleTimerCheck()
+    {
+        if(farByMiddleTimer < farByMiddleTime)
+        {
+            farByMiddleTimer += Time.deltaTime;
+
+            if(farByMiddleTimer  >= farByMiddleTime)
+            {
+                isFarByMiddle = false;
+
+                farByMiddleTimer = farByMiddleTime;
+
+                return;
+            }
+
+            isFarByMiddle = true;
+
+            FarByMiddle();
+        }
+    }
+    private void FarByMiddle()
+    {
+        Vector3 dir = (transform.position - middlePoint.transform.position).normalized;
+        float distance = Vector2.Distance(transform.position, middlePoint.transform.position);
+
+        if(distance <= middlePoint.MaxDisWithBodyPoints)
+        {
+            if(!isUpWall)
+            {
+                transform.position = Vector2.Lerp(transform.position, transform.position + dir * farByMiddleSpeed  * farByMiddleTime, farByMiddleTimer / farByMiddleTime);
+            }
         }
 
         CheckCrossWall();

@@ -17,10 +17,17 @@ public class MiddlePoint : BodyPoint
     }
 
     [SerializeField]
-    private float minDisWithBodyPoints = 0.2f; // MiddlePoint는 이 값 미만으로 BodyPoint와 가까워 질 수 없다.
+    private float minDisWithBodyPoints = 0.2f; // MiddlePoint는 이 값 이하로 BodyPoint와 가까워 질 수 없다.
     public float MinDisWithBodyPoints
     {
         get { return minDisWithBodyPoints;}
+    }
+
+    [SerializeField]
+    private float maxDisWithBodyPoints = 5f; // MiddlePoint는 이 값 이상으로 BodyPoint와 멀어질 수 없다.
+    public float MaxDisWithBodyPoints
+    {
+        get { return maxDisWithBodyPoints;}
     }
 
     private void FixedUpdate()
