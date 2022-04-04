@@ -70,8 +70,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1646225281
-  m_SortingLayer: 5
+  m_SortingLayerID: 521365507
+  m_SortingLayer: 7
   m_SortingOrder: 2
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -347,9 +347,10 @@ MonoBehaviour:
   returnToOriginSpeed: 2
   moveToMiddleSpeed: 1
   moveToMiddleTime: 1
+  moveToOriginTime: 1
   isMiddlePoint: 1
-  isUpPoint: 0
   triggerEdgeCollider2D: {fileID: 4331802093199943809}
+  minDisWithBodyPoints: 0.2
 --- !u!114 &6030300000594730899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -418,12 +419,16 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   bodySlapMoveVec: {x: 0, y: 0}
+  maxChargingTime: 3
+  minMoveToMouseChargeTime: 0.1
+  targetPosFarPerCharge: 1
   damageMagnificationOfBodySlap: 2
   moveBackSpeed: 5
   bodySlapMoveSpeed: 50
   bodySlapTime: 0.15
   stopBodySlapTime: 0.5
   stopBodySlapOffset: 5
+  bodySlapLine: {fileID: 0}
 --- !u!114 &4791505076498265380
 MonoBehaviour:
   m_ObjectHideFlags: 0

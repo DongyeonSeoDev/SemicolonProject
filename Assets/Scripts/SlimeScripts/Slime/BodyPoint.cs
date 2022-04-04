@@ -22,6 +22,10 @@ public class BodyPoint : MonoBehaviour
     private float moveToMiddleTime = 1f;
     private float moveToMiddleTimer = 0f;
 
+    [SerializeField]
+    private float moveToOriginTime = 1f;
+    private float moveToOriginTimer = 0f;
+
     private Vector2 originLocalPosition = Vector2.zero;
     public Vector2 OriginLocalPosition
     {
@@ -30,6 +34,8 @@ public class BodyPoint : MonoBehaviour
 
     [SerializeField]
     private bool isMiddlePoint = false;
+
+    private bool isMoveToOriginASec = false;
 
     private bool isWall = false;
     public bool IsWall
@@ -87,7 +93,8 @@ public class BodyPoint : MonoBehaviour
     }
     private void OnEnable()
     {
-        EventManager.StartListening("PlayerShoot", PlayerShoot);
+        EventManager.StartListening("PlayerShoot", SetMoveToMiddleTimer);
+        EventManager.StartListening("PlayerCharging", SetMoveToMiddleTimer);
         EventManager.StartListening("PlayerBodySlap", (Action<float>)PlayerBodySlap);
         EventManager.StartListening("StartNextStage", StartNextStage);
     }
@@ -101,7 +108,8 @@ public class BodyPoint : MonoBehaviour
     }
     private void StopListenings()
     {
-        EventManager.StopListening("PlayerShoot", PlayerShoot);
+        EventManager.StopListening("PlayerShoot", SetMoveToMiddleTimer);
+        EventManager.StopListening("PlayerCharging", SetMoveToMiddleTimer);
         EventManager.StopListening("PlayerBodySlap", (Action<float>)PlayerBodySlap);
         EventManager.StopListening("StartNextStage", StartNextStage);
     }
@@ -114,6 +122,7 @@ public class BodyPoint : MonoBehaviour
         {
             CheckCrossWall();
             MoveToMiddleTimerCheck();
+            MoveToOriginASec();
         }
     }
     private void FixedUpdate()
@@ -141,6 +150,22 @@ public class BodyPoint : MonoBehaviour
             transform.localPosition = Vector2.Lerp(transform.localPosition, originLocalPosition, Time.deltaTime * returnToOriginSpeed);
         }
     }
+    private void MoveToOriginASec()
+    {
+        if(moveToOriginTimer > 0f)
+        {
+            isMoveToOriginASec = true;
+            moveToOriginTimer -= Time.deltaTime;
+
+            transform.localPosition = Vector2.Lerp(transform.localPosition, originLocalPosition, Time.deltaTime * returnToOriginSpeed);
+
+            if(moveToOriginTimer <= 0f)
+            {
+                isMoveToOriginASec = false;
+                moveToOriginTimer = 0f;
+            }
+        }
+    }
     private void CheckCrossWall()
     {
         Ray2D ray;
@@ -162,7 +187,7 @@ public class BodyPoint : MonoBehaviour
             isCrossWall = false;
         }
     }
-    private void PlayerShoot()
+    private void SetMoveToMiddleTimer()
     {
         moveToMiddleTimer = moveToMiddleTime;
     }
@@ -192,9 +217,23 @@ public class BodyPoint : MonoBehaviour
     }
     private void MoveToMiddle()
     {
-        if (!isUpWall)
+        if(isMoveToOriginASec)
         {
-            transform.position = Vector2.Lerp(transform.position, middlePoint.transform.position, Time.deltaTime * moveToMiddleSpeed);
+            return;
+        }
+
+        float distance = Vector2.Distance(transform.position, middlePoint.transform.position);
+
+        if (distance >= middlePoint.MinDisWithBodyPoints)
+        {
+            if (!isUpWall)
+            {
+                transform.position = Vector2.Lerp(transform.position, middlePoint.transform.position, Time.deltaTime * moveToMiddleSpeed);
+            }
+        }
+        else
+        {
+            moveToOriginTimer = moveToOriginTime;
         }
 
         CheckCrossWall();

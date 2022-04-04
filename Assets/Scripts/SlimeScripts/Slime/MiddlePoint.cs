@@ -16,6 +16,13 @@ public class MiddlePoint : BodyPoint
         set { softBody = value; }
     }
 
+    [SerializeField]
+    private float minDisWithBodyPoints = 0.2f; // MiddlePoint는 이 값 미만으로 BodyPoint와 가까워 질 수 없다.
+    public float MinDisWithBodyPoints
+    {
+        get { return minDisWithBodyPoints;}
+    }
+
     private void FixedUpdate()
     {
         FixedUpdatePointsPositions();

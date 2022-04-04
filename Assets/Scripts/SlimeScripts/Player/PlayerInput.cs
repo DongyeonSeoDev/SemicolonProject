@@ -117,13 +117,13 @@ public class PlayerInput : MonoBehaviour
 
                 //Debug.Log(isDoSkill0 == Input.GetButton("Shoot"));
 
-                if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.DRAIN])) // q
+                if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.SPECIALATTACK2])) // q
                 {
                     isDoSkill2 = true;
                     skill2ButtonDowned = true;
                 }
 
-                if (Input.GetKeyUp(KeySetting.keyDict[KeyAction.DRAIN]) || (skill2ButtonDowned && !Input.GetKey(KeySetting.keyDict[KeyAction.DRAIN])))
+                if (Input.GetKeyUp(KeySetting.keyDict[KeyAction.SPECIALATTACK2]) || (skill2ButtonDowned && !Input.GetKey(KeySetting.keyDict[KeyAction.SPECIALATTACK2])))
                 {
                     skill2ButtonDowned = false;
 
@@ -142,14 +142,14 @@ public class PlayerInput : MonoBehaviour
 
             mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.SPECIALATTACK])) // left shift
+            if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.SPECIALATTACK1])) // left shift
             {
                 skill1ButtonDowned = true;
 
                 isDoSkill1 = true;
             }
 
-            if(Input.GetKeyUp(KeySetting.keyDict[KeyAction.SPECIALATTACK]) || (skill1ButtonDowned && !Input.GetKey(KeySetting.keyDict[KeyAction.SPECIALATTACK])))
+            if(Input.GetKeyUp(KeySetting.keyDict[KeyAction.SPECIALATTACK1]) || (skill1ButtonDowned && !Input.GetKey(KeySetting.keyDict[KeyAction.SPECIALATTACK1])))
             {
                 skill1ButtonDowned = false;
 
