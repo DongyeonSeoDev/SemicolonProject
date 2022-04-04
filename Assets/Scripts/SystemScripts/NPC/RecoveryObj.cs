@@ -10,6 +10,7 @@ public class RecoveryObj : InteractionObj
     public FakeSpriteOutline fsOut;
 
     private bool canInteract;
+    private UnityEngine.Vector3 effOffset = new UnityEngine.Vector3(0,-0.3f);
 
     private void ResetActionList()
     {
@@ -20,13 +21,15 @@ public class RecoveryObj : InteractionObj
 
         for (int i = 0; i < recoveryActions.Count; i++)
         {
-            recoveryActions[i] += () => 
-            {
-                StageManager.Instance.SetClearStage();
-                EffectManager.Instance.CallFollowTargetGameEffect("RecoveryEff", SlimeGameManager.Instance.CurrentPlayerBody.transform, UnityEngine.Vector3.down, 3f);
-                recoveryLight.DOIntensity(0, 1f, true, () => recoveryLight.gameObject.SetActive(false));
-            };
+            recoveryActions[i] += DefaultFunc;
         }
+    }
+
+    private void DefaultFunc()
+    {
+        StageManager.Instance.SetClearStage();
+        EffectManager.Instance.CallFollowTargetGameEffect("RecoveryEff", SlimeGameManager.Instance.CurrentPlayerBody.transform, effOffset, 3f);
+        recoveryLight.DOIntensity(0, 1f, true, () => recoveryLight.gameObject.SetActive(false));
     }
 
     private void OnEnable()
