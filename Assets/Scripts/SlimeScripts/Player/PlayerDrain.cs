@@ -112,7 +112,7 @@ public class PlayerDrain : PlayerSkill
                     }
                     else
                     {
-                        PlayerEnemyUnderstandingRateManager.Instance.SetMountingPercentageDict(objId, PlayerEnemyUnderstandingRateManager.Instance.GetDrainProbabilityDict(objId) + upMountingPercentageValue);
+                        PlayerEnemyUnderstandingRateManager.Instance.UpDrainProbabilityDict(objId, upMountingPercentageValue);
                         PlayerEnemyUnderstandingRateManager.Instance.CheckMountingEnemy(objId, item.Item2);
                     }
 

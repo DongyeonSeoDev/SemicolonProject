@@ -238,6 +238,8 @@ public class PlayerBodySlap : PlayerSkill
                 }
             }
 
+            EventManager.TriggerEvent("PlayerCharging");
+
             if (currentChargingTimer > minMoveToMouseChargeTime)
             {
                 bodySlapMoveVec = (playerInput.MousePosition - (Vector2)transform.position).normalized;
@@ -249,8 +251,6 @@ currentChargingTimer * targetPosFarPerCharge * bodySlapMoveVec;
             {
                 moveTargetPos = (Vector2)transform.position + bodySlapTime * bodySlapMoveSpeed * bodySlapMoveVec;
             }
-
-            Debug.DrawRay((Vector2)transform.position, moveTargetPos - (Vector2)transform.position, Color.red);
 
             bodySlapLine.SetPosition(0, transform.position);
             bodySlapLine.SetPosition(1, moveTargetPos);

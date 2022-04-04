@@ -150,6 +150,7 @@ public class Player : MonoBehaviour
         EventManager.StopListening("EnemyDead", EnemyDead);
         EventManager.StopListening("PlayerSetActiveFalse", SetActiveFalse);
         EventManager.StopListening("GameClear", WhenGameClear);
+        int a = 0;
     }
     private void UpEnergy()
     {
@@ -336,7 +337,7 @@ public class Player : MonoBehaviour
             }
             else
             {
-                PlayerEnemyUnderstandingRateManager.Instance.SetMountingPercentageDict(objId, PlayerEnemyUnderstandingRateManager.Instance.GetDrainProbabilityDict(objId) + upMountingPercentageValueWhenEnemyDead);
+                PlayerEnemyUnderstandingRateManager.Instance.UpDrainProbabilityDict(objId, upMountingPercentageValueWhenEnemyDead);
             }
         }
         else
