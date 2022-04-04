@@ -24,7 +24,7 @@ namespace Enemy
 
         private EnemyState currentState; // Enemy FSM 실행
 
-        public EnemyAttackCheck enemyAttackCheck; // 적 공격 확인 ( 근거리 적은 있고 원거리 적은 없음 )
+        public EnemyAttackCheck[] enemyAttackCheck; // 적 공격 확인 ( 근거리 적은 있고 원거리 적은 없음 )
         public EnemyPositionCheckData positionCheckData = new EnemyPositionCheckData(); // 벽과 적 위치 확인
 
         EnemyCommand enemyDamagedCommand;
@@ -95,6 +95,7 @@ namespace Enemy
             };
 
             enemyData.enemyAnimator.enabled = true; // 애니메이션 실행
+            isDamageCurrentTime = 0f;
 
             enemyDamagedCommand = new EnemyGetDamagedCommand(enemyData);
             enemyKnockBackCommand = new EnemyAddForceCommand(enemyData.enemyRigidbody2D, this);
@@ -239,14 +240,17 @@ namespace Enemy
 
             if (enemyAttackCheck != null)
             {
-                if (enemyAttackCheck.enemyControllerChange != null)
+                for (int i = 0; i < enemyAttackCheck.Length; i++)
                 {
-                    enemyAttackCheck.enemyControllerChange(eEnemyController);
-                }
-                else
-                {
-                    enemyAttackCheck.AddEnemyController();
-                    enemyAttackCheck.enemyControllerChange(eEnemyController);
+                    if (enemyAttackCheck[i].enemyControllerChange != null)
+                    {
+                        enemyAttackCheck[i].enemyControllerChange(eEnemyController);
+                    }
+                    else
+                    {
+                        enemyAttackCheck[i].AddEnemyController();
+                        enemyAttackCheck[i].enemyControllerChange(eEnemyController);
+                    }
                 }
             }
         }

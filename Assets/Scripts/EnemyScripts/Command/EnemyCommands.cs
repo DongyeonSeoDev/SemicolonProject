@@ -166,10 +166,7 @@ namespace Enemy
                     currentTime = 0.5f;
                     targetPosition = positionCheckData.oppositeDirectionWall * followSpeed;
 
-                    if (enemyData != null)
-                    {
-                        enemyData.moveVector = positionCheckData.oppositeDirectionWall;
-                    }
+                    enemyData.moveVector = positionCheckData.oppositeDirectionWall;
 
                     positionCheckData.isWall = false;
                 }
@@ -190,10 +187,7 @@ namespace Enemy
 
                     targetPosition = (targetPosition - enemyObject.position).normalized;
 
-                    if (enemyData != null)
-                    {
-                        enemyData.moveVector = targetPosition;
-                    }
+                    enemyData.moveVector = targetPosition;
 
                     targetPosition *= followSpeed;
                 }
@@ -203,10 +197,7 @@ namespace Enemy
                 // 이동
                 targetPosition = (EnemyManager.Player.transform.position - enemyObject.position).normalized;
 
-                if (enemyData != null)
-                {
-                    enemyData.moveVector = targetPosition;
-                }
+                enemyData.moveVector = targetPosition;
 
                 targetPosition *= followSpeed;
             }
@@ -219,19 +210,16 @@ namespace Enemy
     {
         private EnemyData enemyData;
 
-        private bool isWorking = false;
-
         public EnemyGetDamagedCommand(EnemyData enemyData)
         {
             this.enemyData = enemyData;
-            isWorking = false;
         }
 
         public override void Execute()
         {
             if (enemyData.eEnemyController == EnemyController.AI)
             {
-                if (!isWorking) // 색깔 변경
+                if (enemyData.isDamaged) // 색깔 변경
                 {
                     enemyData.enemySpriteRenderer.color = enemyData.damagedColor;
                 }
@@ -242,7 +230,7 @@ namespace Enemy
             }
             else if (enemyData.eEnemyController == EnemyController.PLAYER)
             {
-                if (!isWorking) // 색깔 변경
+                if (enemyData.isDamaged) // 색깔 변경
                 {
                     enemyData.enemySpriteRenderer.color = enemyData.playerDamagedColor;
                 }
@@ -251,8 +239,6 @@ namespace Enemy
                     enemyData.enemySpriteRenderer.color = enemyData.playerNormalColor;
                 }
             }
-
-            isWorking = !isWorking;
         }
     }
 

@@ -138,7 +138,6 @@ namespace Enemy
                     currentTime = 0f;
 
                     SpriteFlipCheck();
-
                     base.Update();
                 }
             }
@@ -152,7 +151,8 @@ namespace Enemy
                 if (SlimeGameManager.Instance.CurrentSkillDelayTimer[0] <= enemyData.playerAnimationDelay)
                 {
                     enemyData.enemyAnimator.speed = 1.0f;
-                    
+
+                    SpriteFlipCheck();
                     base.Update();
                 }
             }
@@ -173,7 +173,7 @@ namespace Enemy
 
             if (enemyData.eEnemyController == EnemyController.AI)
             {
-                enemyData.moveVector = EnemyManager.Player.transform.position;
+                enemyData.moveVector = (EnemyManager.Player.transform.position - enemyData.enemyObject.transform.position).normalized;
             }
             else if (enemyData.eEnemyController == EnemyController.PLAYER)
             {
@@ -189,7 +189,7 @@ namespace Enemy
 
     public partial class EnemyStunStatus : EnemyState
     {
-        public EnemyStunStatus(EnemyData enemyData) : base(eState.DEAD, enemyData) { }
+        public EnemyStunStatus(EnemyData enemyData) : base(eState.STUN, enemyData) { }
 
         protected override void Start()
         {
@@ -212,7 +212,7 @@ namespace Enemy
             AlwaysCheckStateChangeCondition();
         }
 
-        protected override void End() => EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Hit, enemyData.enemyAnimator, TriggerType.SetTrigger);
+        protected override void End() => EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Hit, enemyData.enemyAnimator, TriggerType.ResetTrigger);
     }
 
     public partial class EnemyDeadState : EnemyState // Á×¾úÀ»¶§
