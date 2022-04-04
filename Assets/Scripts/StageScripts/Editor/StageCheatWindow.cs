@@ -7,6 +7,8 @@ public class StageCheatWindow : EditorWindow
 {
     public Player SlimePlayer => SlimeGameManager.Instance.Player;
 
+    private bool useClearStageKey = false;
+
     private Stat playerStat = new Stat();
     private int recoveryHp;
     private StateAbnormality sa;
@@ -52,9 +54,10 @@ public class StageCheatWindow : EditorWindow
         switch (toolbarIdx)
         {
             case 0:
-                
 
                 GUILayout.Label("[Stage Cheat]", EditorStyles.boldLabel);
+                useClearStageKey = GUILayout.Toggle(useClearStageKey, "스테이지 넘기기 단축키 사용 (F6)");
+                GUILayout.Label("(몬스터가 나오고 눌러)", EditorStyles.label);
                 GUILayout.BeginHorizontal();
                 if (GUILayout.Button("Current Stage Clear"))
                 {

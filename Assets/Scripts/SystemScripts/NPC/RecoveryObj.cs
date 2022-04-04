@@ -23,6 +23,7 @@ public class RecoveryObj : InteractionObj
             recoveryActions[i] += () => 
             {
                 StageManager.Instance.SetClearStage();
+                EffectManager.Instance.CallFollowTargetGameEffect("RecoveryEff", SlimeGameManager.Instance.CurrentPlayerBody.transform, UnityEngine.Vector3.down, 3f);
                 recoveryLight.DOIntensity(0, 1f, true, () => recoveryLight.gameObject.SetActive(false));
             };
         }

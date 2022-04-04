@@ -213,8 +213,14 @@ public class EffectManager : MonoSingleton<EffectManager>
         GameObject eff = PoolManager.GetItem(key);
         eff.transform.position = pos;
 
-        Util.DelayFunc(() => eff.gameObject.SetActive(false), duration);
+        Util.DelayFunc(() => eff.gameObject.SetActive(false), duration, this);
 
         return eff;
+    }
+
+    public void CallFollowTargetGameEffect(string key, Transform target, Vector3 offset, float duration)
+    {
+        GameObject eff = PoolManager.GetItem(key);
+        Util.ExecuteFunc(() => eff.transform.position = target.position + offset, 0, duration, this);
     }
 }

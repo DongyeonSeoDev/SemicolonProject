@@ -46609,6 +46609,9 @@ MonoBehaviour:
   - first: {fileID: 100004, guid: 7867af58a6ec48846ae807eb4022fbaa, type: 3}
     second: 1
     third: ImprecationEff
+  - first: {fileID: 100006, guid: 60bc526f4be1e044ab9e46340b82ffb3, type: 3}
+    second: 1
+    third: RecoveryEff
 --- !u!1 &7012253488758897419
 GameObject:
   m_ObjectHideFlags: 0
