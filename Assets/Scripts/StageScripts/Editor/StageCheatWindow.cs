@@ -138,6 +138,7 @@ public class StageCheatWindow : EditorWindow
                 break;
             case 1:
                 GUILayout.Label("[Saved Body Cheat]", EditorStyles.boldLabel);
+                GUILayout.Label("(이 기능은 게임 시작하고 몹 슬롯에 아무것도 없을 때만 가능. \n테스트만 하고 종료하자)", EditorStyles.label);
 
                 mobId = (Enemy.EnemyType)EditorGUILayout.EnumPopup("Monster Id", mobId);
                 if (GUILayout.Button("Save Body"))

@@ -47,13 +47,13 @@ public class StateManager : SingletonClass<StateManager>
             ase.AddDuration(-count);
     }
 
-    public void RemoveAllStateAbnormality()
+    public void RemoveAllStateAbnormality(bool showLog = true)
     {
         StateAbnormalityEffect ase;
         for(int i = 0; i<Global.EnumCount<StateAbnormality>()-1; i++)
         {
             ase = Util.StringToClass<StateAbnormalityEffect>(((StateAbnormality)i).ToString());
-            ase.StopEffect();
+            ase.StopEffect(showLog);
         }
     }
 

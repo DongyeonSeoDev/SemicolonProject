@@ -19,8 +19,14 @@ public class ImprecationObj : InteractionObj
 
         for (int i = 0; i < imprecationActions.Count; i++)
         {
-            imprecationActions[i] += () => StageManager.Instance.SetClearStage();
+            imprecationActions[i] += DefaultFunc;
         }
+    }
+
+    private void DefaultFunc()
+    {
+        StageManager.Instance.SetClearStage();
+        Util.DelayFunc(() => EffectManager.Instance.CallGameEffect("ImprecationEff", SlimeGameManager.Instance.CurrentPlayerBody.transform.position + Vector3.up, 2f), 0.5f);
     }
 
     private void OnEnable()

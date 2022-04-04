@@ -13,13 +13,13 @@ public abstract class StateAbnormalityEffect
         UIManager.Instance.RequestLeftBottomMsg(Global.StateAbnorToString(StateAbn) + " 저주에 걸렸습니다.");
     }
 
-    public virtual void StopEffect()
+    public virtual void StopEffect(bool showLog = true)
     {
         bool alreadyImp = StateManager.Instance.stateCountDict[StateAbn] > 0;
 
         StateManager.Instance.stateCountDict[StateAbn] = 0;
 
-        if(alreadyImp)
+        if(alreadyImp && showLog)
            UIManager.Instance.RequestLeftBottomMsg(Global.StateAbnorToString(StateAbn) + " 저주가 해제되었습니다.");
     }
 
@@ -48,9 +48,9 @@ public class Pain : StateAbnormalityEffect
            EventManager.StartListening("StartNextStage", OnEffected);
     }
 
-    public override void StopEffect()
+    public override void StopEffect(bool showLog = true)
     {
-        base.StopEffect();
+        base.StopEffect(showLog);
         EventManager.StopListening("StartNextStage", OnEffected);
     }
 
@@ -84,9 +84,9 @@ public class Scar : StateAbnormalityEffect
         SlimeGameManager.Instance.Player.GetExtraDamagePercantage = 20;
         EventManager.StartListening("StageClear", OnEffected);
     }
-    public override void StopEffect()
+    public override void StopEffect(bool showLog = true)
     {
-        base.StopEffect();
+        base.StopEffect(showLog);
         SlimeGameManager.Instance.Player.GetExtraDamagePercantage = 0;
         EventManager.StopListening("StageClear", OnEffected);
     }
@@ -121,9 +121,9 @@ public class Poverty : StateAbnormalityEffect
     {
         base.StartEffect();
     }
-    public override void StopEffect()
+    public override void StopEffect(bool showLog = true)
     {
-        base.StopEffect();
+        base.StopEffect(showLog);
     }
     public override void OnEffected()
     {
@@ -142,9 +142,9 @@ public class Blind : StateAbnormalityEffect
         if (StateManager.Instance.stateCountDict[StateAbn] == Duration)
             EventManager.StartListening("StartNextStage", OnEffected);
     }
-    public override void StopEffect()
+    public override void StopEffect(bool showLog = true)
     {
-        base.StopEffect();
+        base.StopEffect(showLog);
         EventManager.StopListening("StartNextStage", OnEffected);
     }
     public override void OnEffected()

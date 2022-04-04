@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Water;
 using TMPro;
 using DG.Tweening;
+using System;
 
 public class EffectManager : MonoSingleton<EffectManager>
 {
@@ -63,6 +64,9 @@ public class EffectManager : MonoSingleton<EffectManager>
     public AnimationCurve damageTxtScaleCurve;
     #endregion
 
+    [Header("게임 속 여러 이펙트 (풀링 적용)")]
+    public Triple<GameObject, int, string>[] gameEffects; //이펙트 프리팹과 개수, 아이디
+
     private void Awake()
     {
         fillBackWidth = fillBackRect.rect.width;
@@ -76,6 +80,11 @@ public class EffectManager : MonoSingleton<EffectManager>
 
         EventManager.StartListening("PlayerRespawn", Respawn);
         EventManager.StartListening("TryDrain", TryDrain); 
+
+        for(int i=0; i< gameEffects.Length; i++)
+        {
+            PoolManager.CreatePool(gameEffects[i].first, transform, gameEffects[i].second, gameEffects[i].third ?? gameEffects[i].first.name);
+        }
 
         //hpFillEffectStartX = hpFillEffect.anchoredPosition.x;
         //hpFillEffectMaskObj.screenPoint = new Vector2(fillBackRect.anchoredPosition.x - fillBackWidth * 0.5f, fillBackRect.anchoredPosition.y);
@@ -197,5 +206,15 @@ public class EffectManager : MonoSingleton<EffectManager>
     private void TryDrain(Vector2 mobPos, bool drainSuc)
     {
         OnWorldTextEffect(drainSuc ? "흡수" : "흡수실패", mobPos, Vector3.one, drainSuc ? drainVG.normal : drainVG.cri);
+    }
+
+    public GameObject CallGameEffect(string key, Vector3 pos, float duration)
+    {
+        GameObject eff = PoolManager.GetItem(key);
+        eff.transform.position = pos;
+
+        Util.DelayFunc(() => eff.gameObject.SetActive(false), duration);
+
+        return eff;
     }
 }

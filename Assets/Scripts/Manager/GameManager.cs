@@ -162,6 +162,7 @@ public partial class GameManager : MonoSingleton<GameManager>
     {
         PoolManager.PoolObjSetActiveFalse("ItemFollowEffect");
         PoolManager.PoolObjSetActiveFalse("EmptyObject");
+        StateManager.Instance.RemoveAllStateAbnormality(false);
     }
 
 #region Item

@@ -79,8 +79,12 @@ public partial class UIManager : MonoSingleton<UIManager>
     [Space(10)]
     public Pair<GameObject, Transform> selWindowPair;
     public Pair<GameObject, Transform> selectionBtnPair;
+    public GameObject iconSelBtn;
 
     public Dictionary<string, bool> mobSaveWindowActiveDic = new Dictionary<string, bool>(); //해당 아이디의 몬스터를 장착할지 물어보는 창이 떴는지 확인
+    public Dictionary<string, Triple<Sprite, string, string>> iconSelBtnDataDic = new Dictionary<string, Triple<Sprite, string, string>>(); //key : 버튼 스프라이트, 버튼에 뜰 텍스트, 마우스 오버시 뜰 설명
+
+    [SerializeField] private List<Triple<Sprite, string, string>> iconSelBtnDataList = new List<Triple<Sprite, string, string>>();
     #endregion
 
     #region CanvasGroup
@@ -142,6 +146,10 @@ public partial class UIManager : MonoSingleton<UIManager>
         {
             uiTweeningDic.Add((UIType)i, false);
         }
+        for(i=0; i<iconSelBtnDataList.Count; ++i)
+        {
+            iconSelBtnDataDic.Add(iconSelBtnDataList[i].first.name, new Triple<Sprite, string, string>(iconSelBtnDataList[i].first, iconSelBtnDataList[i].second, iconSelBtnDataList[i].third));
+        }
 
         setting.InitSet();
     }
@@ -157,6 +165,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         PoolManager.CreatePool(selWindowPair.first, selWindowPair.second, 1, "SelWindow");
         PoolManager.CreatePool(selectionBtnPair.first, selectionBtnPair.second, 2, "SelBtn");
         PoolManager.CreatePool(mobSpeciesIconPref, interactionMarkPair.second, 2, "MobSpeciesIcon");
+        PoolManager.CreatePool(iconSelBtn, selectionBtnPair.second, 3, "IconSelBtn");
     }
 
     private void OnEnable()
@@ -589,7 +598,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         Util.DelayFunc(() => t.gameObject.SetActive(false), 2f, this, true);
     }
 
-    public void RequestSelectionWindow(string message, List<Action> actions, List<string> btnTexts, bool activeWarning = true, List<Func<bool>> conditions = null) //선택창을 띄움
+    public void RequestSelectionWindow(string message, List<Action> actions, List<string> btnTexts, bool activeWarning = true, List<Func<bool>> conditions = null, bool useIcon = false) //선택창을 띄움
     {
         TimeManager.TimePause();
 
@@ -600,7 +609,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         
         SelectionWindow selWd = PoolManager.GetItem<SelectionWindow>("SelWindow");
         selWd.transform.SetAsLastSibling();
-        selWd.Set(message, actions, btnTexts, activeWarning, conditions);
+        selWd.Set(message, actions, btnTexts, activeWarning, conditions, useIcon);
         selWdStack.Push(selWd);
     }
 
