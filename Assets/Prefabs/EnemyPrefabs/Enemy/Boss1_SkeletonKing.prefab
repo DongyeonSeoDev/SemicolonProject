@@ -420,8 +420,8 @@ MonoBehaviour:
   movePivot: {fileID: 8275286282891348784}
   specialAttackTime: 6
   fireCount: 9
-  fireDistance: 1
-  fireSpawnTime: 0.2
+  fireDistance: 2
+  fireSpawnTime: 0.1
 --- !u!114 &5497031053508213442
 MonoBehaviour:
   m_ObjectHideFlags: 0

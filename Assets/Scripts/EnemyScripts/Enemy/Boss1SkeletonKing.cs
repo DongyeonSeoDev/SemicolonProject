@@ -24,6 +24,8 @@ namespace Enemy
 
         protected override void Awake()
         {
+            base.Awake();
+
             fireSpawnTimeSeconds = new WaitForSeconds(fireSpawnTime);
         }
 
@@ -93,12 +95,13 @@ namespace Enemy
         private IEnumerator SpecialAttack2() // 특수공격2 코루틴
         {
             List<Fire> fireList = new List<Fire>();
+            Vector3 playerPosition = EnemyManager.Player.transform.position;
 
             Fire.checkAttackObjectTogether.Clear();
 
             for (int i = 0; i < fireCount - 1; i++)
             {
-                Fire fire = EnemyPoolManager.Instance.GetPoolObject(Type.Fire, anglePosition((360 / (fireCount - 1)) * i)).GetComponent<Fire>();
+                Fire fire = EnemyPoolManager.Instance.GetPoolObject(Type.Fire, anglePosition(playerPosition, (360 / (fireCount - 1)) * i)).GetComponent<Fire>();
                 fire.Spawn(this, enemyData.eEnemyController, enemyData.attackPower, -1f, true);
 
                 fireList.Add(fire);
@@ -106,7 +109,7 @@ namespace Enemy
                 yield return fireSpawnTimeSeconds;
             }
 
-            Fire playerAttackFire = EnemyPoolManager.Instance.GetPoolObject(Type.Fire, EnemyManager.Player.transform.position).GetComponent<Fire>();
+            Fire playerAttackFire = EnemyPoolManager.Instance.GetPoolObject(Type.Fire, playerPosition).GetComponent<Fire>();
             playerAttackFire.Spawn(this, enemyData.eEnemyController, enemyData.attackPower, -1f, true);
 
             fireList.Add(playerAttackFire);
@@ -119,14 +122,14 @@ namespace Enemy
             }
         }
 
-        private Vector3 anglePosition(float angle) // 각도를 넣으면 플레이어 위치에서 각도만큼의 위치을 알려주는 함수
+        private Vector3 anglePosition(Vector3 startPosition, float angle) // 각도를 넣으면 플레이어 위치에서 각도만큼의 위치을 알려주는 함수
         {
             Vector3 position = Vector3.zero;
 
             position.x = Mathf.Sin(angle * Mathf.Deg2Rad) * fireDistance;
             position.y = Mathf.Cos(angle * Mathf.Deg2Rad) * fireDistance;
 
-            return EnemyManager.Player.transform.position + position;
+            return startPosition + position;
         }
 
         public void SpecialAttack2End() // 애니메이션에서 실행 - 특수공격2 종료
