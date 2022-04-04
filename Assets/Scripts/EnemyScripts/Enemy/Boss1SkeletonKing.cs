@@ -6,21 +6,28 @@ namespace Enemy
 {
     public class Boss1SkeletonKing : Enemy
     {
+        public List<float> specialAttack3HPPercent = new List<float>();
         public Transform movePivot;
         public float specialAttackTime = 6f;
         public int fireCount = 0;
         public float fireDistance = 0f;
         public float fireSpawnTime = 0f;
+        public Vector2 limitMinPosition;
+        public Vector2 limitMaxPosition;
 
         private EnemyCommand attackMoveCommand;
         private EnemyCommand rushAttackCommand;
         private WaitForSeconds fireSpawnTimeSeconds;
+        private WaitForSeconds fireSpawnTimeSeconds2 = new WaitForSeconds(0.2f);
 
+        private List<float> specialAttack3Check = new List<float>();
         private float currentTime = 0f;
+        private bool isAttack = false;
 
         private readonly int hashAttack1 = Animator.StringToHash("attack");
         private readonly int hashAttack2 = Animator.StringToHash("attack2");
         private readonly int hashSpecialAttack2 = Animator.StringToHash("specialAttack2");
+        private readonly int hashSpecialAttack3 = Animator.StringToHash("specialAttack3");
 
         protected override void Awake()
         {
@@ -52,13 +59,28 @@ namespace Enemy
             enemyData.attackTypeCheckCondition = SpecialAttackCheck;
             enemyData.addAIAttackStateChangeCondition = AttackStateChangeCondition;
             enemyData.addChangeAttackCondition = ChangeAttackCondition;
+
+            currentTime = 0f;
+            isAttack = false;
+
+            specialAttack3Check.Clear();
+
+            for (int i = 0; i < specialAttack3HPPercent.Count; i++)
+            {
+                specialAttack3Check.Add(specialAttack3HPPercent[i]);
+            }
+
+            specialAttack3Check.Sort((x, y) => y.CompareTo(x));
         }
 
         protected override void Update()
         {
             base.Update();
 
-            currentTime += Time.deltaTime;
+            if (!isAttack)
+            {
+                currentTime += Time.deltaTime;
+            }
         }
 
         public void AttackMove() // 애니메이션에서 실행 - 공격하면서 움직이는 코드
@@ -132,17 +154,52 @@ namespace Enemy
             return startPosition + position;
         }
 
-        public void SpecialAttack2End() // 애니메이션에서 실행 - 특수공격2 종료
+        public void SpecialAttack3Start() // 애니메이션에서 실행 - 특수공격3 시작
         {
-            currentTime = 0;
+            StartCoroutine(SpecialAttack3());
+        }
+
+        private IEnumerator SpecialAttack3() // 특수공격3 코루틴
+        {
+            for (int i = 0; i < 75; i++)
+            {
+                Fire fire = EnemyPoolManager.Instance.GetPoolObject(Type.Fire, RandomPosition()).GetComponent<Fire>();
+                fire.Spawn(this, enemyData.eEnemyController, enemyData.attackPower, 0.5f, true);
+
+                yield return fireSpawnTimeSeconds2;
+            }
+        }
+
+        public Vector2 RandomPosition()
+        {
+            Vector2 randomPosition = Vector2.zero;
+
+            randomPosition.x = Random.Range(limitMinPosition.x, limitMaxPosition.x);
+            randomPosition.y = Random.Range(limitMinPosition.y, limitMaxPosition.y);
+
+            return randomPosition;
+        }
+
+        public void SpecialAttackEnd() // 애니메이션에서 실행 - 특수공격2 종료
+        {
+            isAttack = false;
         }
 
         public void SpecialAttackCheck() // 이벤트 구독에 사용됨 - 특수공격 사용 확인
         {
-            if (currentTime >= specialAttackTime)
+            if (specialAttack3Check.Count > 0 && specialAttack3Check[0] >= EnemyHpPercent())
+            {
+                specialAttack3Check.RemoveAt(0);
+                enemyData.animationDictionary[EnemyAnimationType.Attack] = hashSpecialAttack3;
+                currentTime = 0;
+                enemyData.attackDelay = 15f;
+                isAttack = true;
+            }
+            else if (currentTime >= specialAttackTime)
             {
                 enemyData.animationDictionary[EnemyAnimationType.Attack] = hashSpecialAttack2;
-                currentTime = 0;
+                isAttack = true;
+                currentTime = 0f;
                 enemyData.attackDelay = 2.1f;
             }
             else
@@ -173,7 +230,7 @@ namespace Enemy
 
         public EnemyState ChangeAttackCondition() // 이벤트 구독에 사용됨 - 공격을 해야하는지 확인
         {
-            if (currentTime >= specialAttackTime)
+            if (currentTime >= specialAttackTime || (specialAttack3Check.Count > 0 && specialAttack3Check[0] >= EnemyHpPercent()))
             {
                 SpecialAttackCheck();
 
