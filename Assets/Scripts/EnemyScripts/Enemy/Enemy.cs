@@ -32,7 +32,7 @@ namespace Enemy
 
         private float isDamageCurrentTime = 0f;
 
-        private void Awake()
+        protected virtual void Awake()
         {
             // GetComponent
             anim = GetComponent<Animator>();

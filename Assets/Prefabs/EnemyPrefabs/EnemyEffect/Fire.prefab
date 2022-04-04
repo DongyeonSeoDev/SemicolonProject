@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 289007020356427788}
   - component: {fileID: 289007020356427791}
   - component: {fileID: 289007020356427790}
+  - component: {fileID: 1471248775025565455}
   - component: {fileID: -1058956710085688642}
   m_Layer: 0
   m_Name: Fire
@@ -103,6 +104,22 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!70 &1471248775025565455
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289007020356427793}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.0060302615, y: 1.8948293}
+  m_Size: {x: 1.8169607, y: 3.7896585}
+  m_Direction: 0
 --- !u!114 &-1058956710085688642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -116,4 +133,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolType: 104
-  count: 2
+  count: 10

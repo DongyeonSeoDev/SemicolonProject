@@ -32,7 +32,21 @@ namespace Enemy
             if (AnyStateChangeState()) { }
             else if (EnemyManager.IsAttackPlayer(enemyData))
             {
+                if (enemyData.attackTypeCheckCondition != null)
+                {
+                    enemyData.attackTypeCheckCondition();
+                }
+
                 ChangeState(new EnemyAttackState(enemyData));
+            }
+            else if (enemyData.addChangeAttackCondition != null)
+            {
+                EnemyState state = enemyData.addChangeAttackCondition.Invoke();
+
+                if (state != null)
+                {
+                    ChangeState(state);
+                }
             }
         }
     }
@@ -102,7 +116,6 @@ namespace Enemy
             else if (enemyData.eEnemyController == EnemyController.PLAYER && enemyData.isAttack)
             {
                 enemyData.isAttack = false;
-
                 ChangeState(new EnemyAttackState(enemyData));
             }
             else

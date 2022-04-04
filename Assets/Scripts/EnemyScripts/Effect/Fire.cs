@@ -6,11 +6,14 @@ namespace Enemy
 {
     public class Fire : EnemyPoolData
     {
+        public static List<GameObject> checkAttackObjectTogether = new List<GameObject>();
+
         private Animator animator;
         private Collider2D attackCollider;
         private Enemy enemyCheck;
         private EnemyController eEnemyController;
         private int attackDamage;
+        private bool checkTogether;
 
         private readonly int hashAttack = Animator.StringToHash("Attack");
         private readonly int hashReset = Animator.StringToHash("Reset");
@@ -23,12 +26,7 @@ namespace Enemy
             attackCollider = GetComponent<Collider2D>();
         }
 
-        private void Start()
-        {
-            Spawn(null, EnemyController.AI, 30, 3f); // Debug Code
-        }
-
-        public void Spawn(Enemy enemy, EnemyController controller, int damage, float attackTime)
+        public void Spawn(Enemy enemy, EnemyController controller, int damage, float attackTime, bool checkTogether)
         {
             animator.ResetTrigger(hashAttack);
             animator.SetTrigger(hashReset);
@@ -36,10 +34,17 @@ namespace Enemy
             enemyCheck = enemy;
             eEnemyController = controller;
             attackDamage = damage;
+            this.checkTogether = checkTogether;
 
-            AttackObjectReset();
+            if (!checkTogether)
+            {
+                AttackObjectReset();
+            }
 
-            Util.DelayFunc(Attack, attackTime);
+            if (attackTime > 0)
+            {
+                Util.DelayFunc(Attack, attackTime);
+            }
         }
 
         public void Attack()
@@ -60,16 +65,33 @@ namespace Enemy
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (attackObject.Find(x => x == collision.gameObject) != null)
+            if (checkTogether)
             {
-                return;
+                if (checkAttackObjectTogether.Find(x => x == collision.gameObject) != null)
+                {
+                    return;
+                }
+            }
+            else
+            {
+                if (attackObject.Find(x => x == collision.gameObject) != null)
+                {
+                    return;
+                }
             }
 
             if (eEnemyController == EnemyController.AI && collision.CompareTag("Player"))
             {
                 SlimeGameManager.Instance.Player.GetDamage(Random.Range(attackDamage - 5, attackDamage + 6));
 
-                attackObject.Add(collision.gameObject);
+                if (checkTogether)
+                {
+                    checkAttackObjectTogether.Add(collision.gameObject);
+                }
+                else
+                {
+                    attackObject.Add(collision.gameObject);
+                }
             }
             else if (eEnemyController == EnemyController.PLAYER)
             {
@@ -83,7 +105,14 @@ namespace Enemy
 
                     enemy.GetDamage(damage.Item1, damage.Item2);
 
-                    attackObject.Add(collision.gameObject);
+                    if (checkTogether)
+                    {
+                        checkAttackObjectTogether.Add(collision.gameObject);
+                    }
+                    else
+                    {
+                        attackObject.Add(collision.gameObject);
+                    }
                 }
             }
         }

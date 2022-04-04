@@ -153,7 +153,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2888050857522884143
 Transform:
   m_ObjectHideFlags: 0
@@ -418,6 +418,10 @@ MonoBehaviour:
   - {fileID: 7599915856301365159}
   - {fileID: 3884926912787647165}
   movePivot: {fileID: 8275286282891348784}
+  specialAttackTime: 6
+  fireCount: 9
+  fireDistance: 1
+  fireSpawnTime: 0.2
 --- !u!114 &5497031053508213442
 MonoBehaviour:
   m_ObjectHideFlags: 0

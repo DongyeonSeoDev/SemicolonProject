@@ -28,7 +28,9 @@ namespace Enemy
         public Dictionary<EnemyAnimationType, int> animationDictionary = new Dictionary<EnemyAnimationType, int>();
         public List<EnemyLootData> enemyLootList;
 
+        public Action attackTypeCheckCondition = null;
         public Func<EnemyState> addAIAttackStateChangeCondition = null;
+        public Func<EnemyState> addChangeAttackCondition = null;
 
         public GameObject enemyObject;
         public Animator enemyAnimator;
