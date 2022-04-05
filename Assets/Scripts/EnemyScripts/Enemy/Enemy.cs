@@ -64,7 +64,7 @@ namespace Enemy
             playerInput = SlimeGameManager.Instance.Player.GetComponent<PlayerInput>();
         }
 
-        private void OnDestroy() // 오브젝트 제거시 이벤트 제거
+        protected virtual void OnDestroy() // 오브젝트 제거시 이벤트 제거
         {
             EventManager.StopListening("PlayerDead", EnemyDataReset);
             EventManager.StopListening("StartSkill0", StartAttack);

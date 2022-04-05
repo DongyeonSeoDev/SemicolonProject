@@ -18,7 +18,7 @@ namespace Enemy
         private EnemyCommand attackMoveCommand;
         private EnemyCommand rushAttackCommand;
         private WaitForSeconds fireSpawnTimeSeconds;
-        private WaitForSeconds fireSpawnTimeSeconds2 = new WaitForSeconds(0.2f);
+        private WaitForSeconds fireSpawnTimeSeconds2 = new WaitForSeconds(0.1f);
 
         private List<float> specialAttack3Check = new List<float>();
         private float currentTime = 0f;
@@ -71,6 +71,15 @@ namespace Enemy
             }
 
             specialAttack3Check.Sort((x, y) => y.CompareTo(x));
+
+            EventManager.StartListening("PlayerDead", StopAttack);
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+
+            EventManager.StopListening("PlayerDead", StopAttack);
         }
 
         protected override void Update()
@@ -81,6 +90,11 @@ namespace Enemy
             {
                 currentTime += Time.deltaTime;
             }
+        }
+
+        public void StopAttack() // EventManager에서 실행 - 적 공격 정지
+        {
+            StopAllCoroutines();
         }
 
         public void AttackMove() // 애니메이션에서 실행 - 공격하면서 움직이는 코드
@@ -161,10 +175,12 @@ namespace Enemy
 
         private IEnumerator SpecialAttack3() // 특수공격3 코루틴
         {
-            for (int i = 0; i < 75; i++)
+            Debug.Log("실행");
+
+            for (int i = 0; i < 150; i++)
             {
                 Fire fire = EnemyPoolManager.Instance.GetPoolObject(Type.Fire, RandomPosition()).GetComponent<Fire>();
-                fire.Spawn(this, enemyData.eEnemyController, enemyData.attackPower, 0.5f, true);
+                fire.Spawn(this, enemyData.eEnemyController, enemyData.attackPower, 1f, false);
 
                 yield return fireSpawnTimeSeconds2;
             }

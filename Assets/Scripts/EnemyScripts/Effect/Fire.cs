@@ -26,6 +26,11 @@ namespace Enemy
             attackCollider = GetComponent<Collider2D>();
         }
 
+        private void Start()
+        {
+            EventManager.StartListening("PlayerSetActiveFalse", PlayerDeadEvent);
+        }
+
         public void Spawn(Enemy enemy, EnemyController controller, int damage, float attackTime, bool checkTogether)
         {
             animator.ResetTrigger(hashAttack);
@@ -61,6 +66,12 @@ namespace Enemy
         public void AttackObjectReset()
         {
             attackObject.Clear();
+        }
+
+        public void PlayerDeadEvent()
+        {
+            Debug.Log("1234");
+            gameObject.SetActive(false);
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
