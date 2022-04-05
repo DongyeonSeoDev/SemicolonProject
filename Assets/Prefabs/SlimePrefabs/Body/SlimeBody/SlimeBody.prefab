@@ -231,7 +231,7 @@ MonoBehaviour:
   isMiddlePoint: 1
   triggerEdgeCollider2D: {fileID: 4331802093199943809}
   minDisWithBodyPoints: 0.2
-  maxDisWithBodyPoints: 5
+  maxDisWithBodyPoints: 3
 --- !u!114 &6030300000594730899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,9 +300,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   bodySlapMoveVec: {x: 0, y: 0}
-  maxChargingTime: 3
-  minMoveToMouseChargeTime: 0.1
-  targetPosFarPerCharge: 1
+  maxChargingTime: 2
+  minMoveToMouseChargeTime: 0.2
+  targetPosFarPerCharge: 4
   damageMagnificationOfBodySlap: 2
   moveBackSpeed: 5
   bodySlapMoveSpeed: 50
