@@ -10,7 +10,7 @@ public class PlayerDrainCollider : MonoBehaviour
     private List<Enemy.Enemy> tryDrainList = new List<Enemy.Enemy>();
     private List<Enemy.Enemy> doDrainList = new List<Enemy.Enemy>();
 
-    private float drainTime = 0.5f;
+    private float drainTime = 3f;
     public float DrainTime
     {
         get { return drainTime; }
@@ -23,9 +23,17 @@ public class PlayerDrainCollider : MonoBehaviour
         get { return drainMoveSpeed; }
     }
 
+    [SerializeField]
+    private float failedDrainMoveSpeed = 1f;
+    public float FailedDrainMoveSpeed
+    {
+        get { return failedDrainMoveSpeed; }
+    }
+
     private float drainTimer = 0f;
 
     private Dictionary<GameObject, Vector2> drainMoveOriginPosDict = new Dictionary<GameObject, Vector2>();
+    private Dictionary<GameObject, Vector2> drainMoveTargetPosDict = new Dictionary<GameObject, Vector2>();
     private Dictionary<GameObject, float> drainMoveTimeDict = new Dictionary<GameObject, float>();
     private Dictionary<GameObject, float> drainMoveTimerDict = new Dictionary<GameObject, float>();
     private Dictionary<GameObject, int> paste_int_DrainMoveTimerDict = new Dictionary<GameObject, int>();
@@ -72,7 +80,7 @@ public class PlayerDrainCollider : MonoBehaviour
                 }
                 catch
                 {
-                    Debug.Log("bbbbbbb");
+                    
                 }
 
                 foreach(var item in removeList)
@@ -101,6 +109,7 @@ public class PlayerDrainCollider : MonoBehaviour
 
             enemy.GetDamage(1, false, false, 0, drainMoveUpdateTime);
 
+            Vector2 dir = (transform.position - other.transform.position).normalized;
             float hpPercentage = enemy.EnemyHpPercent();// 닿은    적의 현재 체력의 퍼센트를 구함
 
             if (hpPercentage <= 0f)
@@ -109,7 +118,7 @@ public class PlayerDrainCollider : MonoBehaviour
             }
 
             float distance = Vector2.Distance(transform.position, enemy.transform.position);
-
+            float drainMoveTime = 0f;
             // Debug.Log(hpPercentage);
 
             tryDrainList.Add(enemy);
@@ -117,15 +126,21 @@ public class PlayerDrainCollider : MonoBehaviour
             if (enemy != null && hpPercentage <= canDrainHpPercentage) // 흡수 성공
             {
                 // enemy.EnemyDestroy();
+                drainMoveTime = distance / drainMoveSpeed;
+
                 doDrainList.Add(enemy);
 
                 EventManager.TriggerEvent("TryDrain", other.transform.position, true);
-              
+
+                //drainTimer += drainMoveTime - drainTimer;
+                //drainTime = drainTimer;
+
                 Debug.Log("Do Drain");
             }
             else if(enemy != null) // 흡수 실패
             {
-                distance /= 4f;
+                //distance /= 3f;
+                //drainMoveTime = distance / failedDrainMoveSpeed;
 
                 EventManager.TriggerEvent("TryDrain", other.transform.position, false);
             }
@@ -133,14 +148,12 @@ public class PlayerDrainCollider : MonoBehaviour
             // 여기부턴 흡수 성공 혹은 실패한 오브젝트의 이동 관련 처리를 위한
             // 사전 준비작업
 
-            float drainMoveTime = distance / drainMoveSpeed;
-
-            drainTimer += drainMoveTime - drainTimer;
-            drainTime = drainTimer;
+            drainMoveTime = drainTimer;
 
             EventManager.TriggerEvent("SetDrainTime", drainTime);
 
             drainMoveOriginPosDict.Add(other.gameObject, other.transform.position);
+            drainMoveTargetPosDict.Add(other.gameObject, other.transform.position + (Vector3)(dir * distance));
             drainMoveTimeDict.Add(other.gameObject, drainMoveTime);
             drainMoveTimerDict.Add(other.gameObject, 0f);
         }
@@ -202,11 +215,11 @@ public class PlayerDrainCollider : MonoBehaviour
                 if (drainMoveTimerDict[key] % drainMoveUpdateTime <= 0.1f && updateObj)
                 {
                     item.GetDamage(1, false, false, 0, drainMoveUpdateTime);
-                    item.transform.position = Vector2.Lerp(drainMoveOriginPosDict[key], transform.position, drainMoveTimerDict[key] / drainMoveTimeDict[key]);
+                    item.transform.position = Vector2.Lerp(drainMoveOriginPosDict[key], drainMoveTargetPosDict[key], drainMoveTimerDict[key] / drainMoveTimeDict[key]);
                 }
                 else
                 {
-                    item.transform.position = Vector2.Lerp(drainMoveOriginPosDict[key], transform.position, paste_int_DrainMoveTimerDict[key] / drainMoveTimeDict[key]);
+                    item.transform.position = Vector2.Lerp(drainMoveOriginPosDict[key], drainMoveTargetPosDict[key], paste_int_DrainMoveTimerDict[key] / drainMoveTimeDict[key]);
                 }
             }
         }
@@ -225,6 +238,7 @@ public class PlayerDrainCollider : MonoBehaviour
     private void RemoveList(GameObject obj)
     {
         drainMoveOriginPosDict.Remove(obj);
+        drainMoveTargetPosDict.Remove(obj);
         drainMoveTimeDict.Remove(obj);
         drainMoveTimerDict.Remove(obj);
         paste_int_DrainMoveTimerDict.Remove(obj);

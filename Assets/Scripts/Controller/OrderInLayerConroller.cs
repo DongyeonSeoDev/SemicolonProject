@@ -14,15 +14,20 @@ public class OrderInLayerConroller : MonoBehaviour
 
     void Start()
     {
+        SetRenderer();
+
+        originSortingLayerName = spriteRenderer != null ?
+            spriteRenderer.sortingLayerName : spriteShapeRenderer.sortingLayerName;
+    }
+
+    private void SetRenderer()
+    {
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        if(spriteRenderer == null)
+        if (spriteRenderer == null)
         {
             spriteShapeRenderer = GetComponent<SpriteShapeRenderer>();
         }
-
-        originSortingLayerName = spriteRenderer != null ? 
-            spriteRenderer.sortingLayerName : spriteShapeRenderer.sortingLayerName;
     }
 
     void Update()
@@ -56,7 +61,7 @@ public class OrderInLayerConroller : MonoBehaviour
             }
             catch
             {
-
+                SetRenderer();
             }
 
             return;
@@ -71,7 +76,14 @@ public class OrderInLayerConroller : MonoBehaviour
 
         if (spriteRenderer == null)
         {
-            spriteShapeRenderer.sortingLayerName = originSortingLayerName;
+            try
+            {
+                spriteShapeRenderer.sortingLayerName = originSortingLayerName;
+            }
+            catch
+            {
+                SetRenderer();
+            }
 
             return;
         }
