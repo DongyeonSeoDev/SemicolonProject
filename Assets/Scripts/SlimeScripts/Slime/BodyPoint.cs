@@ -174,8 +174,13 @@ public class BodyPoint : MonoBehaviour
     private void MoveToOriginPos()
     {
         if (((!(isWall) || isMove)
-            && !(isMiddlePoint || isMoveToMiddle || isFarByMiddle)) || isUpWall)
+            && !(isMiddlePoint || isMoveToMiddle)) || isUpWall)
         {
+            if (isFarByMiddle)
+            {
+                return;
+            }
+
             transform.localPosition = Vector2.Lerp(transform.localPosition, originLocalPosition, Time.deltaTime * returnToOriginSpeed);
         }
     }
@@ -251,7 +256,7 @@ public class BodyPoint : MonoBehaviour
     }
     private void MoveToMiddle()
     {
-        if(isMoveToOriginASec)
+        if(isMoveToOriginASec || isFarByMiddle)
         {
             return;
         }
@@ -272,6 +277,10 @@ public class BodyPoint : MonoBehaviour
 
         CheckCrossWall();
     }
+    //private void PlayerMoveToMiddleByLerp(float timer, float time)
+    //{
+
+    //}
     private void FarByMiddleTimerCheck()
     {
         if(farByMiddleTimer < farByMiddleTime)
@@ -305,7 +314,7 @@ public class BodyPoint : MonoBehaviour
             }
         }
 
-        CheckCrossWall();
+        //CheckCrossWall();
     }
     private void StartNextStage()
     {
