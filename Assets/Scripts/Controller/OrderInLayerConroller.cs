@@ -7,7 +7,10 @@ public class OrderInLayerConroller : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer = null;
     private SpriteShapeRenderer spriteShapeRenderer = null;
+
+    private string originSortingLayerName = "";
     private readonly int offest = 20;
+    private bool setOrderInLayerAuto = true;
 
     void Start()
     {
@@ -17,13 +20,19 @@ public class OrderInLayerConroller : MonoBehaviour
         {
             spriteShapeRenderer = GetComponent<SpriteShapeRenderer>();
         }
+
+        originSortingLayerName = spriteRenderer != null ? 
+            spriteRenderer.sortingLayerName : spriteShapeRenderer.sortingLayerName;
     }
 
     void Update()
     {
-        SetOrderInLayer();
+        if (setOrderInLayerAuto)
+        {
+            SetOrderInLayerAuto();
+        }
     }
-    private void SetOrderInLayer()
+    private void SetOrderInLayerAuto()
     {
         if(spriteRenderer == null)
         {
@@ -33,5 +42,33 @@ public class OrderInLayerConroller : MonoBehaviour
         }
         
         spriteRenderer.sortingOrder = offest - (int)Mathf.Round(transform.position.y);
+    }
+    public void SetOrderInLayer(string sortingLayerName, int orderInLayer)
+    {
+        setOrderInLayerAuto = false;
+
+        if (spriteRenderer == null)
+        {
+            spriteShapeRenderer.sortingLayerName = sortingLayerName;
+            spriteShapeRenderer.sortingOrder = orderInLayer;
+
+            return;
+        }
+
+        spriteRenderer.sortingLayerName = sortingLayerName;
+        spriteRenderer.sortingOrder = orderInLayer;
+    }
+    public void StartSetOrderInLayerAuto()
+    {
+        setOrderInLayerAuto = true;
+
+        if (spriteRenderer == null)
+        {
+            spriteShapeRenderer.sortingLayerName = originSortingLayerName;
+
+            return;
+        }
+
+        spriteRenderer.sortingLayerName = originSortingLayerName;
     }
 }

@@ -25,6 +25,13 @@ public class Player : MonoBehaviour
         get { return playerInput; }
     }
 
+    [SerializeField]
+    private OrderInLayerConroller playerOrderInLayerController = null;
+    public OrderInLayerConroller PlayerOrderInLayerController
+    {
+        get { return playerOrderInLayerController;}
+    }
+
     private List<GameObject> drainList = new List<GameObject>();
     public List<GameObject> DrainList
     {
@@ -116,6 +123,7 @@ public class Player : MonoBehaviour
     {
         playerState = GetComponent<PlayerState>();
         playerInput = GetComponent<PlayerInput>();
+        playerOrderInLayerController = GetComponentInChildren<OrderInLayerConroller>();
     }
     private void Start()
     {
@@ -134,6 +142,7 @@ public class Player : MonoBehaviour
         EventManager.StartListening("EnemyDead", EnemyDead);
         EventManager.StartListening("PlayerSetActiveFalse", SetActiveFalse);
         EventManager.StartListening("GameClear", WhenGameClear);
+        EventManager.StartListening("ChangeBody", OnChangeBody);
 
         playerState.IsDead = false;
     }
@@ -154,7 +163,13 @@ public class Player : MonoBehaviour
         EventManager.StopListening("EnemyDead", EnemyDead);
         EventManager.StopListening("PlayerSetActiveFalse", SetActiveFalse);
         EventManager.StopListening("GameClear", WhenGameClear);
+        EventManager.StopListening("ChangeBody", OnChangeBody);
+      
         int a = 0;
+    }
+    private void OnChangeBody()
+    {
+        playerOrderInLayerController = GetComponentInChildren<OrderInLayerConroller>();
     }
     private void UpEnergy()
     {
@@ -181,6 +196,11 @@ public class Player : MonoBehaviour
     public void GetDamage(int damage, bool critical = false, bool stateAbnormality = false)
     {
         if (playerState.BodySlapping && !stateAbnormality)
+        {
+            return;
+        }
+
+        if(playerState.IsDrain && !stateAbnormality)
         {
             return;
         }
@@ -225,13 +245,18 @@ public class Player : MonoBehaviour
             return;
         }
 
-        foreach(var item in drainList)
+        if (playerState.IsDrain && !stateAbnormality)
         {
-            if(item == attacker)
-            {
-                return;
-            }
+            return;
         }
+
+        //foreach (var item in drainList)
+        //{
+        //    if(item == attacker)
+        //    {
+        //        return;
+        //    }
+        //}
         
         if (!playerState.IsDead)
         {

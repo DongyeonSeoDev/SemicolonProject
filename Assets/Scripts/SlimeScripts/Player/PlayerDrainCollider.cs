@@ -7,6 +7,7 @@ public class PlayerDrainCollider : MonoBehaviour
     [SerializeField]
     private LayerMask canDrainObjLayers;
 
+    private List<Enemy.Enemy> tryDrainList = new List<Enemy.Enemy>();
     private List<Enemy.Enemy> doDrainList = new List<Enemy.Enemy>();
 
     private float drainTime = 0.5f;
@@ -51,6 +52,7 @@ public class PlayerDrainCollider : MonoBehaviour
     {
         if (drainTimer > 0f)
         {
+            List<Enemy.Enemy> removeList = new List<Enemy.Enemy>();
             drainTimer -= Time.deltaTime;
 
             if (drainTimer <= 0f)
@@ -61,13 +63,20 @@ public class PlayerDrainCollider : MonoBehaviour
                     {
                         EventManager.TriggerEvent("OnDrain", item.gameObject, item.transform.position, 1); // 여기의 param은 임시 값
                         RemoveList(item.gameObject);
+                        removeList.Add(item);
                     }
                 }
                 catch
                 {
-
+                   
                 }
 
+                foreach(var item in removeList)
+                {
+                    doDrainList.Remove(item);
+                }
+
+                SlimeGameManager.Instance.Player.PlayerOrderInLayerController.StartSetOrderInLayerAuto();
                 SlimeGameManager.Instance.Player.PlayerState.IsDrain = false;
 
                 gameObject.SetActive(false);
@@ -81,14 +90,14 @@ public class PlayerDrainCollider : MonoBehaviour
         if (canDrainObjLayers.CompareGameObjectLayer(other.gameObject))
         {
             // Debug.Log(other.gameObject.layer);
-            // Drain되는 오브젝트는 삭제처리
+            //Drain되는 오브젝트는 삭제처리
 
             SlimeGameManager.Instance.Player.DrainList.Add(other.gameObject);
             Enemy.Enemy enemy = other.GetComponent<Enemy.Enemy>();
 
             enemy.GetDamage(1, false, false, 0, drainMoveUpdateTime);
 
-            float hpPercentage = enemy.EnemyHpPercent();// 닿은 적의 현재 체력의 퍼센트를 구함
+            float hpPercentage = enemy.EnemyHpPercent();// 닿은    적의 현재 체력의 퍼센트를 구함
 
             if (hpPercentage <= 0f)
             {
@@ -130,7 +139,7 @@ public class PlayerDrainCollider : MonoBehaviour
         // DoDrainList에서 빼주는 처리
         if(canDrainObjLayers.CompareGameObjectLayer(other.gameObject))
         {
-            RemoveList(other.gameObject);
+            //RemoveList(other.gameObject);
         }
     }
 
@@ -141,6 +150,8 @@ public class PlayerDrainCollider : MonoBehaviour
 
     private void CheckDrainMoveTime()
     {
+        List<Enemy.Enemy> removeList = new List<Enemy.Enemy> ();
+
         try
         {
             foreach (var item in doDrainList)
@@ -153,6 +164,7 @@ public class PlayerDrainCollider : MonoBehaviour
                 {
                     EventManager.TriggerEvent("OnDrain", key, key.transform.position, 1); // 여기의 param은 임시 값
                     RemoveList(key);
+                    removeList.Add(item);
 
                     continue;
                 }
@@ -187,11 +199,15 @@ public class PlayerDrainCollider : MonoBehaviour
         {
 
         }
+
+        foreach(var item in removeList)
+        {
+            doDrainList.Remove(item);
+        }
     }
 
     private void RemoveList(GameObject obj)
     {
-        doDrainList.Remove(obj.GetComponent<Enemy.Enemy>());
         drainMoveOriginPosDict.Remove(obj);
         drainMoveTimeDict.Remove(obj);
         drainMoveTimerDict.Remove(obj);
