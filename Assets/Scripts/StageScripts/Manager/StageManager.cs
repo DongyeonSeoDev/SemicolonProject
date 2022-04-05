@@ -126,6 +126,8 @@ public class StageManager : MonoSingleton<StageManager>
 
         PoolManager.CreatePool(recoveryObjPref, npcParent, 1, "RecoveryObjPrefObjPref1");
         PoolManager.CreatePool(imprecationObjPref, npcParent, 1, "ImprecationObjPref1");
+
+        
     }
 
     private void DefineEvent()

@@ -110,7 +110,7 @@ public static partial class Global
         return DoorDirType.BACK;
     }
 
-    public static string StateAbnorToString(StateAbnormality state)
+   /* public static string StateAbnorToString(StateAbnormality state)
     {
         switch(state)
         {
@@ -126,7 +126,7 @@ public static partial class Global
                 Debug.Log("아직 설정하지 않음 : " + state.ToString());
                 return string.Empty;
         }
-    }
+    }*/
 
     public static T[] GetEnumArr<T>() => (T[])Enum.GetValues(typeof(T));
 }

@@ -7,10 +7,16 @@ public class RecoveryObj : InteractionObj
 {
     private Light2D recoveryLight;
     private List<Action> recoveryActions = new List<Action>();
-    public FakeSpriteOutline fsOut;
+    //public FakeSpriteOutline fsOut;
+    private OutlineCtrl outlineCtrl;
 
     private bool canInteract;
     private UnityEngine.Vector3 effOffset = new UnityEngine.Vector3(0,-0.3f);
+
+    private void Awake()
+    {
+        outlineCtrl = GetComponent<OutlineCtrl>();
+    }
 
     private void ResetActionList()
     {
@@ -80,6 +86,7 @@ public class RecoveryObj : InteractionObj
     public override void SetInteractionUI(bool on)
     {
         base.SetInteractionUI(on);
-        fsOut.gameObject.SetActive(on);
+        outlineCtrl.SetIntensity(on?10:0);
+        //fsOut.gameObject.SetActive(on);
     }
 }

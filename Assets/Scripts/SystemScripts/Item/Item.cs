@@ -51,7 +51,7 @@ public class Item : MonoBehaviour
 
     public void FollowEffect()
     {
-        PoolManager.GetItem("ItemFollowEffect").GetComponent<ItemCloneEffect>().Set(spriteRenderer.sprite, SlimeGameManager.Instance.CurrentPlayerBody.transform, transform.position, itemSprTrm.rotation);
+        PoolManager.GetItem<ItemCloneEffect>("ItemFollowEffect").Set(spriteRenderer.sprite, SlimeGameManager.Instance.CurrentPlayerBody.transform, transform.position, Quaternion.identity);
     }
 
     protected virtual void Update()

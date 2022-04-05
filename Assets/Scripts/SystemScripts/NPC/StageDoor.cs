@@ -27,7 +27,7 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
 
     public bool IsExitDoor { set => isExitDoor = value; }
 
-    public bool IsBlindState => StateManager.Instance.stateCountDict[StateAbnormality.Blind] > 0;
+    public bool IsBlindState => StateManager.Instance.stateCountDict[StateAbnormality.Blind.ToString()] > 0;
 
     private void Awake()
     {
@@ -84,6 +84,7 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
         doorLight.gameObject.SetActive(true);
         doorLight.intensity = 0.15f;
         doorLight.DOIntensity(0.75f, 0.5f);
+        EffectManager.Instance.CallGameEffect("DoorDestEff", transform.position, 1.5f);
     }
 
     public void Close()

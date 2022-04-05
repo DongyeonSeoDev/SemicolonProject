@@ -252,6 +252,7 @@ GameObject:
   - component: {fileID: 8267936869618133127}
   - component: {fileID: 3606433815623585729}
   - component: {fileID: 609853350191863421}
+  - component: {fileID: 4045527274598629264}
   m_Layer: 8
   m_Name: Recovery
   m_TagString: NPC
@@ -372,4 +373,22 @@ MonoBehaviour:
   itrUIOffset: {x: 0, y: 1, z: 0}
   npcUI: {fileID: 0}
   itrUI: {fileID: 0}
-  fsOut: {fileID: 7372287641561070032}
+--- !u!114 &4045527274598629264
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7812666719662560905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a623bec4ac57ef43a978f5a1f0856fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cmpnt: 0
+  matName: 
+  bStartAutoInitSet: 1
+  bStartAutoSetMatTex: 1
+  outlineHDRColor: {r: 0.4442103, g: 0.9056604, b: 0.14012098, a: 0}
+  outlineThickness: 0.2
+  outlineIntensity: 0

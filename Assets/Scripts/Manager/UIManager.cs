@@ -107,6 +107,11 @@ public partial class UIManager : MonoSingleton<UIManager>
     public AudioMixer masterAudioMixer;
     #endregion
 
+    #region State
+    [SerializeField] private Triple<Image, TextMeshProUGUI, Text> stateInfoTriple;  //이미지, 이름, 설명
+    public VertexGradient buffVG, imprecVG;
+    #endregion
+
     [SerializeField] private CanvasGroup loadingCvsg;
 
     [SerializeField] private ResolutionOption resolutionOption;
@@ -387,6 +392,7 @@ public partial class UIManager : MonoSingleton<UIManager>
                     }
                 }
                 break;
+                
         }
         return false;
     }
@@ -803,6 +809,21 @@ public partial class UIManager : MonoSingleton<UIManager>
             }
         }
     }
+    #endregion
+
+    #region State
+    
+    public void StateInfoDetail(BuffStateDataSO data)
+    {
+        OnUIInteractSetActive(UIType.STATEINFO, true);
+
+        stateInfoTriple.first.sprite = data.sprite;
+        stateInfoTriple.second.SetText(data.stateName);
+        stateInfoTriple.third.text = data.explanation;
+
+        stateInfoTriple.second.colorGradient = !data.IsBuff ? imprecVG : buffVG;
+    }
+
     #endregion
 
     #region Sound

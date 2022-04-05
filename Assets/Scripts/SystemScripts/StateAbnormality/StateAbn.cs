@@ -4,31 +4,31 @@ using System;
 public abstract class StateAbnormalityEffect
 {
 
-    public virtual int Duration { get; set; }
+    public virtual int Duration => StateManager.Instance.GetBuffStateData(GetType().Name).duration;
     public virtual StateAbnormality StateAbn { get; set; }
 
     public virtual void StartEffect()
     {
-        StateManager.Instance.stateCountDict[StateAbn] += Duration;
-        UIManager.Instance.RequestLeftBottomMsg(Global.StateAbnorToString(StateAbn) + " 저주에 걸렸습니다.");
+        StateManager.Instance.stateCountDict[StateAbn.ToString()] += Duration;
+        UIManager.Instance.RequestLeftBottomMsg(StateManager.Instance.GetBuffStateData(StateAbn.ToString()).stateName + " 저주에 걸렸습니다.");
     }
 
     public virtual void StopEffect(bool showLog = true)
     {
-        bool alreadyImp = StateManager.Instance.stateCountDict[StateAbn] > 0;
+        bool alreadyImp = StateManager.Instance.stateCountDict[StateAbn.ToString()] > 0;
 
-        StateManager.Instance.stateCountDict[StateAbn] = 0;
+        StateManager.Instance.stateCountDict[StateAbn.ToString()] = 0;
 
         if(alreadyImp && showLog)
-           UIManager.Instance.RequestLeftBottomMsg(Global.StateAbnorToString(StateAbn) + " 저주가 해제되었습니다.");
+           UIManager.Instance.RequestLeftBottomMsg(StateManager.Instance.GetBuffStateData(StateAbn.ToString()).stateName + " 저주가 해제되었습니다.");
     }
 
     public virtual void AddDuration(int value)
     {
-        StateManager.Instance.stateCountDict[StateAbn] += value;
-        if(StateManager.Instance.stateCountDict[StateAbn]<0)
+        StateManager.Instance.stateCountDict[StateAbn.ToString()] += value;
+        if(StateManager.Instance.stateCountDict[StateAbn.ToString()] <0)
         {
-            StateManager.Instance.stateCountDict[StateAbn] = 0;
+            StateManager.Instance.stateCountDict[StateAbn.ToString()] = 0;
         }
     }
 
@@ -37,14 +37,14 @@ public abstract class StateAbnormalityEffect
 
 public class Pain : StateAbnormalityEffect
 {
-    public override int Duration => 5;
+    //public override int Duration => 5;
     public override StateAbnormality StateAbn => StateAbnormality.Pain;
 
     public override void StartEffect()
     {
         base.StartEffect();
         //EventManager.StopListening("StartNextStage", OnEffected);
-        if(StateManager.Instance.stateCountDict[StateAbn] == Duration)
+        if(StateManager.Instance.stateCountDict[StateAbn.ToString()] == Duration)
            EventManager.StartListening("StartNextStage", OnEffected);
     }
 
@@ -56,33 +56,37 @@ public class Pain : StateAbnormalityEffect
 
     public override void OnEffected()
     {
-        if(StateManager.Instance.stateCountDict[StateAbn] <= 0)
+        if(StateManager.Instance.stateCountDict[StateAbn.ToString()] <= 0)
         {
             Debug.Log("잘못된 상황 발생. 확인 필요.");
             return;
         }
 
         ItemUseMng.DecreaseCurrentHP(10);
-        if (StateManager.Instance.stateCountDict[StateAbn] > 1)
+        if (StateManager.Instance.stateCountDict[StateAbn.ToString()] > 1)
         {
-            StateManager.Instance.stateCountDict[StateAbn]--;
+            StateManager.Instance.stateCountDict[StateAbn.ToString()]--;
         }
         else
         {
             StopEffect();
         }
+
+        StateManager.Instance.UpdateBuffSlotUI(StateAbn.ToString());
     }
 }
 
 public class Scar : StateAbnormalityEffect
 {
-    public override int Duration => 4;
+    //public override int Duration => 4;
     public override StateAbnormality StateAbn => StateAbnormality.Scar;
     public override void StartEffect()
     {
         base.StartEffect();
         SlimeGameManager.Instance.Player.GetExtraDamagePercantage = 20;
-        EventManager.StartListening("StageClear", OnEffected);
+
+        if (StateManager.Instance.stateCountDict[StateAbn.ToString()] == Duration)
+            EventManager.StartListening("StageClear", OnEffected);
     }
     public override void StopEffect(bool showLog = true)
     {
@@ -94,27 +98,29 @@ public class Scar : StateAbnormalityEffect
     {
         if (StageManager.Instance.CurrentAreaType == AreaType.MONSTER)
         {
-            if (StateManager.Instance.stateCountDict[StateAbn] <= 0)
+            if (StateManager.Instance.stateCountDict[StateAbn.ToString()] <= 0)
             {
                 Debug.Log("잘못된 상황 발생. 확인 필요.");
                 return;
             }
 
-            if (StateManager.Instance.stateCountDict[StateAbn] > 1)
+            if (StateManager.Instance.stateCountDict[StateAbn.ToString()] > 1)
             {
-                StateManager.Instance.stateCountDict[StateAbn]--;
+                StateManager.Instance.stateCountDict[StateAbn.ToString()]--;
             }
             else
             {
                 StopEffect();
             }
         }
+
+        StateManager.Instance.UpdateBuffSlotUI(StateAbn.ToString());
     }
 }
 
 public class Poverty : StateAbnormalityEffect
 {
-    public override int Duration => 6;
+    //public override int Duration => 6;
     public override StateAbnormality StateAbn => StateAbnormality.Poverty;
 
     public override void StartEffect()
@@ -133,13 +139,13 @@ public class Poverty : StateAbnormalityEffect
 
 public class Blind : StateAbnormalityEffect
 {
-    public override int Duration => 5;
+    //public override int Duration => 5;
     public override StateAbnormality StateAbn => StateAbnormality.Blind;
 
     public override void StartEffect()
     {
         base.StartEffect();
-        if (StateManager.Instance.stateCountDict[StateAbn] == Duration)
+        if (StateManager.Instance.stateCountDict[StateAbn.ToString()] == Duration)
             EventManager.StartListening("StartNextStage", OnEffected);
     }
     public override void StopEffect(bool showLog = true)
@@ -149,20 +155,22 @@ public class Blind : StateAbnormalityEffect
     }
     public override void OnEffected()
     {
-        if (StateManager.Instance.stateCountDict[StateAbn] <= 0)
+        if (StateManager.Instance.stateCountDict[StateAbn.ToString()] <= 0)
         {
             Debug.Log("잘못된 상황 발생. 확인 필요.");
             return;
         }
 
-        if (StateManager.Instance.stateCountDict[StateAbn] > 1)
+        if (StateManager.Instance.stateCountDict[StateAbn.ToString()] > 1)
         {
-            StateManager.Instance.stateCountDict[StateAbn]--;
+            StateManager.Instance.stateCountDict[StateAbn.ToString()]--;
         }
         else
         {
             StopEffect();
         }
+
+        StateManager.Instance.UpdateBuffSlotUI(StateAbn.ToString());
     }
 
 
