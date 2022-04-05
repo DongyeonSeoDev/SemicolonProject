@@ -304,10 +304,10 @@ public class BodyPoint : MonoBehaviour
     }
     private void FarByMiddle()
     {
-        if (isWall)
-        {
-            return;
-        }
+        //if (isWall)
+        //{
+        //    return;
+        //}
 
         Vector3 dir = (transform.position - middlePoint.transform.position).normalized;
         float distance = Vector2.Distance(transform.position, middlePoint.transform.position);
