@@ -291,6 +291,7 @@ public class BodyPoint : MonoBehaviour
             {
                 isFarByMiddle = false;
 
+                moveToOriginTimer = moveToMiddleTime;
                 farByMiddleTimer = farByMiddleTime;
 
                 return;
