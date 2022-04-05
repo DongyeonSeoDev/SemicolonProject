@@ -23,6 +23,7 @@ namespace Enemy
         private List<float> specialAttack3Check = new List<float>();
         private float currentTime = 0f;
         private bool isAttack = false;
+        private bool isSpecialAttack3 = false;
 
         private readonly int hashAttack1 = Animator.StringToHash("attack");
         private readonly int hashAttack2 = Animator.StringToHash("attack2");
@@ -62,6 +63,7 @@ namespace Enemy
 
             currentTime = 0f;
             isAttack = false;
+            isSpecialAttack3 = false;
 
             specialAttack3Check.Clear();
 
@@ -175,7 +177,7 @@ namespace Enemy
 
         private IEnumerator SpecialAttack3() // 특수공격3 코루틴
         {
-            Debug.Log("실행");
+            isSpecialAttack3 = true;
 
             for (int i = 0; i < 150; i++)
             {
@@ -184,6 +186,9 @@ namespace Enemy
 
                 yield return fireSpawnTimeSeconds2;
             }
+
+            isSpecialAttack3 = false;
+            currentTime = 0f;
         }
 
         public Vector2 RandomPosition()
@@ -203,15 +208,15 @@ namespace Enemy
 
         public void SpecialAttackCheck() // 이벤트 구독에 사용됨 - 특수공격 사용 확인
         {
-            if (specialAttack3Check.Count > 0 && specialAttack3Check[0] >= EnemyHpPercent())
+            if (!isSpecialAttack3 && specialAttack3Check.Count > 0 && specialAttack3Check[0] >= EnemyHpPercent())
             {
                 specialAttack3Check.RemoveAt(0);
                 enemyData.animationDictionary[EnemyAnimationType.Attack] = hashSpecialAttack3;
                 currentTime = 0;
-                enemyData.attackDelay = 15f;
+                enemyData.attackDelay = 4f;
                 isAttack = true;
             }
-            else if (currentTime >= specialAttackTime)
+            else if (!isSpecialAttack3 && currentTime >= specialAttackTime)
             {
                 enemyData.animationDictionary[EnemyAnimationType.Attack] = hashSpecialAttack2;
                 isAttack = true;
@@ -246,7 +251,7 @@ namespace Enemy
 
         public EnemyState ChangeAttackCondition() // 이벤트 구독에 사용됨 - 공격을 해야하는지 확인
         {
-            if (currentTime >= specialAttackTime || (specialAttack3Check.Count > 0 && specialAttack3Check[0] >= EnemyHpPercent()))
+            if (!isSpecialAttack3 && (currentTime >= specialAttackTime || (specialAttack3Check.Count > 0 && specialAttack3Check[0] >= EnemyHpPercent())))
             {
                 SpecialAttackCheck();
 

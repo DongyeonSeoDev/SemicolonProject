@@ -70,7 +70,6 @@ namespace Enemy
 
         public void PlayerDeadEvent()
         {
-            Debug.Log("1234");
             gameObject.SetActive(false);
         }
 
