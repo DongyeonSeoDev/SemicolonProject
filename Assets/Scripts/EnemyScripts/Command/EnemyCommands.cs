@@ -19,7 +19,7 @@ namespace Enemy
 
             enemyData = data;
 
-            speed = playerStat.Speed * 0.5f;
+            speed = playerStat.Speed;
         }
 
         public override void Execute()
@@ -202,6 +202,33 @@ namespace Enemy
                 targetPosition *= followSpeed;
             }
 
+            rigid.velocity = targetPosition;
+        }
+    }
+
+    public class BossRushAttackCommand : EnemyCommand // 보스 돌진 공격
+    {
+        private EnemyData enemyData;
+        private Transform enemyObject;
+        private Rigidbody2D rigid;
+        private Vector3 targetPosition;
+        private float followSpeed;
+
+
+        public BossRushAttackCommand(EnemyData data, Transform enemyObject, Rigidbody2D rigid, float followSpeed)
+        {
+            enemyData = data;
+            this.enemyObject = enemyObject;
+            this.rigid = rigid;
+            this.followSpeed = followSpeed;
+        }
+
+        public override void Execute()
+        {
+            // 이동
+            targetPosition = (new Vector3(EnemyManager.Player.transform.position.x, enemyObject.position.y, EnemyManager.Player.transform.position.z) - enemyObject.position).normalized;
+            enemyData.moveVector = targetPosition;
+            targetPosition *= followSpeed;
             rigid.velocity = targetPosition;
         }
     }

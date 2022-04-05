@@ -10,6 +10,7 @@ namespace Enemy
         public Transform movePivot;
         public float specialAttackTime = 6f;
         public int fireCount = 0;
+        public float bossMoveSpeed = 0f;
         public float fireDistance = 0f;
         public float fireSpawnTime = 0f;
         public Vector2 limitMinPosition;
@@ -39,8 +40,9 @@ namespace Enemy
 
         protected override void Start()
         {
-            attackMoveCommand = new EnemyFollowPlayerCommand(enemyData, movePivot, rb, 15f, 0f, false);
-            rushAttackCommand = new EnemyFollowPlayerCommand(enemyData, movePivot, rb, 50f, 0f, false);
+            attackMoveCommand = new EnemyFollowPlayerCommand(enemyData, movePivot, rb, bossMoveSpeed, 0f, false);
+            rushAttackCommand = new BossRushAttackCommand(enemyData, movePivot, rb, 50f);
+
 
             base.Start();
         }
@@ -234,6 +236,7 @@ namespace Enemy
         {
             if (enemyData.animationDictionary[EnemyAnimationType.Attack] == hashAttack1)
             {
+
                 if (Random.Range(0, 10) < 6)
                 {
                     enemyData.animationDictionary[EnemyAnimationType.Attack] = hashAttack2;
