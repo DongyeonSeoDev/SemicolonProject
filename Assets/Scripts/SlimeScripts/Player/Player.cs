@@ -29,7 +29,14 @@ public class Player : MonoBehaviour
     private OrderInLayerConroller playerOrderInLayerController = null;
     public OrderInLayerConroller PlayerOrderInLayerController
     {
-        get { return playerOrderInLayerController;}
+        get {
+            if(playerOrderInLayerController == null)
+            {
+                playerOrderInLayerController = GetComponentInChildren<OrderInLayerConroller>();
+            }
+
+            return playerOrderInLayerController;
+        }
     }
 
     private List<GameObject> drainList = new List<GameObject>();
