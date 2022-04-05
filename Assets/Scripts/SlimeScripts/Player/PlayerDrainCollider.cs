@@ -59,21 +59,26 @@ public class PlayerDrainCollider : MonoBehaviour
             {
                 try
                 {
-                    foreach (var item in doDrainList)
+                    foreach (var item in tryDrainList)
                     {
-                        EventManager.TriggerEvent("OnDrain", item.gameObject, item.transform.position, 1); // 여기의 param은 임시 값
-                        RemoveList(item.gameObject);
                         removeList.Add(item);
+                        RemoveList(item.gameObject);
+
+                        if (doDrainList.Contains(item))
+                        {
+                            EventManager.TriggerEvent("OnDrain", item.gameObject, item.transform.position, 1); // 여기의 param은 임시 값
+                        }
                     }
                 }
                 catch
                 {
-                   
+                    Debug.Log("bbbbbbb");
                 }
 
                 foreach(var item in removeList)
                 {
                     doDrainList.Remove(item);
+                    tryDrainList.Remove(item);
                 }
 
                 SlimeGameManager.Instance.Player.PlayerOrderInLayerController.StartSetOrderInLayerAuto();
@@ -91,7 +96,6 @@ public class PlayerDrainCollider : MonoBehaviour
         {
             // Debug.Log(other.gameObject.layer);
             //Drain되는 오브젝트는 삭제처리
-
             SlimeGameManager.Instance.Player.DrainList.Add(other.gameObject);
             Enemy.Enemy enemy = other.GetComponent<Enemy.Enemy>();
 
@@ -104,34 +108,41 @@ public class PlayerDrainCollider : MonoBehaviour
                 return;
             }
 
+            float distance = Vector2.Distance(transform.position, enemy.transform.position);
 
             // Debug.Log(hpPercentage);
 
-            if (enemy != null && hpPercentage <= canDrainHpPercentage)
+            tryDrainList.Add(enemy);
+
+            if (enemy != null && hpPercentage <= canDrainHpPercentage) // 흡수 성공
             {
                 // enemy.EnemyDestroy();
-
-                float distance = Vector2.Distance(transform.position, enemy.transform.position);
-                float drainMoveTime = distance / drainMoveSpeed;
-
-                drainTimer += drainMoveTime - drainTimer;
-                drainTime = drainTimer;
-
-                EventManager.TriggerEvent("SetDrainTime", drainTime);
-
                 doDrainList.Add(enemy);
-                drainMoveOriginPosDict.Add(other.gameObject, other.transform.position);
-                drainMoveTimeDict.Add(other.gameObject, drainMoveTime);
-                drainMoveTimerDict.Add(other.gameObject, 0f);
 
                 EventManager.TriggerEvent("TryDrain", other.transform.position, true);
               
                 Debug.Log("Do Drain");
             }
-            else if(enemy != null)
+            else if(enemy != null) // 흡수 실패
             {
+                distance /= 4f;
+
                 EventManager.TriggerEvent("TryDrain", other.transform.position, false);
             }
+
+            // 여기부턴 흡수 성공 혹은 실패한 오브젝트의 이동 관련 처리를 위한
+            // 사전 준비작업
+
+            float drainMoveTime = distance / drainMoveSpeed;
+
+            drainTimer += drainMoveTime - drainTimer;
+            drainTime = drainTimer;
+
+            EventManager.TriggerEvent("SetDrainTime", drainTime);
+
+            drainMoveOriginPosDict.Add(other.gameObject, other.transform.position);
+            drainMoveTimeDict.Add(other.gameObject, drainMoveTime);
+            drainMoveTimerDict.Add(other.gameObject, 0f);
         }
     }
     private void OnTriggerExit2D(Collider2D other)
@@ -154,7 +165,7 @@ public class PlayerDrainCollider : MonoBehaviour
 
         try
         {
-            foreach (var item in doDrainList)
+            foreach (var item in tryDrainList)
             {
                 GameObject key = item.gameObject;
 
@@ -162,9 +173,13 @@ public class PlayerDrainCollider : MonoBehaviour
 
                 if (drainMoveTimerDict[key] >= drainMoveTimeDict[key])
                 {
-                    EventManager.TriggerEvent("OnDrain", key, key.transform.position, 1); // 여기의 param은 임시 값
-                    RemoveList(key);
                     removeList.Add(item);
+                    RemoveList(key);
+
+                    if (doDrainList.Contains(item))
+                    {
+                        EventManager.TriggerEvent("OnDrain", key, key.transform.position, 1); // 여기의 param은 임시 값
+                    }
 
                     continue;
                 }
@@ -203,6 +218,7 @@ public class PlayerDrainCollider : MonoBehaviour
         foreach(var item in removeList)
         {
             doDrainList.Remove(item);
+            tryDrainList.Remove(item);
         }
     }
 

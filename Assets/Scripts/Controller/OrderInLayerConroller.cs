@@ -49,8 +49,15 @@ public class OrderInLayerConroller : MonoBehaviour
 
         if (spriteRenderer == null)
         {
-            spriteShapeRenderer.sortingLayerName = sortingLayerName;
-            spriteShapeRenderer.sortingOrder = orderInLayer;
+            try
+            {
+                spriteShapeRenderer.sortingLayerName = sortingLayerName;
+                spriteShapeRenderer.sortingOrder = orderInLayer;
+            }
+            catch
+            {
+
+            }
 
             return;
         }

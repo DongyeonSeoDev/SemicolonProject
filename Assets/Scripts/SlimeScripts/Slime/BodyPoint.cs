@@ -91,6 +91,7 @@ public class BodyPoint : MonoBehaviour
     private void Start()
     {
         originLocalPosition = transform.localPosition;
+        farByMiddleTimer = farByMiddleTime;
 
         if (!isMiddlePoint)
         {
@@ -298,7 +299,7 @@ public class BodyPoint : MonoBehaviour
 
         if(distance <= middlePoint.MaxDisWithBodyPoints)
         {
-            if(!isUpWall)
+            //if(!isUpWall)
             {
                 transform.position = Vector2.Lerp(transform.position, transform.position + dir * farByMiddleSpeed  * farByMiddleTime, farByMiddleTimer / farByMiddleTime);
             }
