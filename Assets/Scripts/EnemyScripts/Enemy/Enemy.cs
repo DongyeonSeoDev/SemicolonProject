@@ -31,6 +31,7 @@ namespace Enemy
         EnemyCommand enemyKnockBackCommand;
 
         private float isDamageCurrentTime = 0f;
+        private bool isStop = false;
 
         protected virtual void Awake()
         {
@@ -51,8 +52,9 @@ namespace Enemy
         protected virtual void Start()
         {
             // 이벤트 추가
-
             EventManager.StartListening("PlayerDead", EnemyDataReset);
+            EventManager.StartListening("EnemyStart", EnemyStart);
+            EventManager.StartListening("EnemyStop", EnemyStop);
 
             if(enemyData.eEnemyController == EnemyController.PLAYER)
             {
@@ -68,6 +70,20 @@ namespace Enemy
         {
             EventManager.StopListening("PlayerDead", EnemyDataReset);
             EventManager.StopListening("StartSkill0", StartAttack);
+            EventManager.StopListening("EnemyStart", EnemyStart);
+            EventManager.StopListening("EnemyStop", EnemyStop);
+        }
+
+        private void EnemyStart()
+        {
+            isStop = false;
+            anim.speed = 1f;
+        }
+
+        private void EnemyStop()
+        {
+            isStop = true;
+            anim.speed = 0f;
         }
 
         private void EnemyDataReset() // (이벤트 용) 적 리셋
@@ -127,6 +143,11 @@ namespace Enemy
 
         protected virtual void Update()
         {
+            if (isStop)
+            {
+                return;
+            }
+
             // Enemy FSM
             if (currentState != null)
             {
