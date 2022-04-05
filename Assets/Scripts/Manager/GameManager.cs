@@ -26,6 +26,8 @@ public partial class GameManager : MonoSingleton<GameManager>
     public GameObject itemPrefab, itemCloneEffectPrefab;
     #endregion
 
+    public PickupCheck pickupCheckGame;
+
     [HideInInspector] public List<Item> droppedItemList = new List<Item>();
 
     public int InventoryItemCount
@@ -40,6 +42,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         
         Load();
         Init();
+        
     }
 
     #region Data

@@ -10,7 +10,7 @@ public class StageCheatWindow : EditorWindow
     //private bool useClearStageKey = false;
 
     private Stat playerStat = new Stat();
-    private int recoveryHp;
+    private int recoveryHp = 20;
     private StateAbnormality sa;
 
     private string itemId;
@@ -95,7 +95,7 @@ public class StageCheatWindow : EditorWindow
                 GUILayout.Space(20);
                 GUILayout.Label("[Status Cheat]", EditorStyles.boldLabel);
 
-                recoveryHp = EditorGUILayout.IntField("Heal Current Hp n%", 20);
+                recoveryHp = EditorGUILayout.IntField("Heal Current Hp n%", recoveryHp);
 
                 GUILayout.Space(7);
 

@@ -228,6 +228,6 @@ public class EffectManager : MonoSingleton<EffectManager>
     public void CallFollowTargetGameEffect(string key, Transform target, Vector3 offset, float duration)
     {
         GameObject eff = PoolManager.GetItem(key);
-        Util.ExecuteFunc(() => eff.transform.position = target.position + offset, 0, duration, this);
+        Util.ExecuteFunc(() => eff.transform.position = target.position + offset, 0, duration, this, null, ()=>eff.gameObject.SetActive(false));
     }
 }
