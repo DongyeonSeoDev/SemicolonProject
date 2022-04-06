@@ -28,8 +28,15 @@ public class BodyPoint : MonoBehaviour
     private float moveToMiddleTime = 1f;
     private float moveToMiddleTimer = 0f;
 
+    private bool isFarByPlayerByDrain = false;
+    //private float returnToPlayerPosUpdateTime = 0f;
+
+    private Vector2 farMaxPos = Vector2.zero;
+
     private float farByMiddleTime = 1f;
     private float farByMiddleTimer = 0f;
+
+   
 
     private Vector2 originLocalPosition = Vector2.zero;
     public Vector2 OriginLocalPosition
@@ -37,6 +44,7 @@ public class BodyPoint : MonoBehaviour
         get { return originLocalPosition; }
     }
 
+    #region 상태관련 변수들
     [SerializeField]
     private bool isMiddlePoint = false;
 
@@ -83,7 +91,10 @@ public class BodyPoint : MonoBehaviour
         set { isFarByMiddle= value; }
     }
 
+    private bool farByMiddleMax = false;
+
     private bool isDownBodyPoint = false;
+    #endregion
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -117,6 +128,7 @@ public class BodyPoint : MonoBehaviour
             EventManager.StartListening("PlayerBodySlap", (Action<float>)PlayerBodySlap);
         }
     }
+    
     private void OnDisable()
     {
         StopListenings();
@@ -229,11 +241,20 @@ public class BodyPoint : MonoBehaviour
     {
         moveToMiddleTimer = bodySlapTime;
     }
-    private void PlayerDrain(float drainTime)
+    private void PlayerDrain(float drainTime) // , float drainMoveUpdateTime
+    {
+        isFarByPlayerByDrain = true;
+
+        StartFarByMiddleTimer(drainTime);
+    }
+
+    private void StartFarByMiddleTimer(float drainTime)
     {
         farByMiddleTime = drainTime;
+        farByMiddleMax = false;
         farByMiddleTimer = 0f;
     }
+
     private void MoveToMiddleTimerCheck()
     {
         if (moveToMiddleTimer > 0f)
@@ -277,10 +298,6 @@ public class BodyPoint : MonoBehaviour
 
         CheckCrossWall();
     }
-    //private void PlayerMoveToMiddleByLerp(float timer, float time)
-    //{
-
-    //}
     private void FarByMiddleTimerCheck()
     {
         if(farByMiddleTimer < farByMiddleTime)
@@ -290,6 +307,8 @@ public class BodyPoint : MonoBehaviour
             if(farByMiddleTimer  >= farByMiddleTime)
             {
                 isFarByMiddle = false;
+                farByMiddleMax = false;
+                isFarByPlayerByDrain = false;
 
                 moveToOriginTimer = moveToMiddleTime;
                 farByMiddleTimer = farByMiddleTime;
@@ -299,28 +318,40 @@ public class BodyPoint : MonoBehaviour
 
             isFarByMiddle = true;
 
+            if (farByMiddleMax)
+            {
+                ReturnToMiddleWhenDrain();
+
+                return;
+            }
+
             FarByMiddle();
         }
     }
     private void FarByMiddle()
     {
-        //if (isWall)
-        //{
-        //    return;
-        //}
-
         Vector3 dir = (transform.position - middlePoint.transform.position).normalized;
         float distance = Vector2.Distance(transform.position, middlePoint.transform.position);
 
-        if(distance <= middlePoint.MaxDisWithBodyPoints)
+        if(distance < middlePoint.MaxDisWithBodyPoints)
         {
-            //if(!isUpWall)
+            transform.position = Vector2.Lerp(transform.position, transform.position + dir * farByMiddleSpeed  * farByMiddleTime, farByMiddleTimer / farByMiddleTime);
+        }
+        else if(isFarByPlayerByDrain)
+        {
+            farByMiddleMax = true;
+            farMaxPos = transform.position;
+        }
+    }
+    private void ReturnToMiddleWhenDrain()
+    {
+        if(farByMiddleMax && isFarByPlayerByDrain)
+        {
+            if(farByMiddleTimer % middlePoint.PlayerDrain.PlayerDrainCol.DrainMoveUpdateTIme <= 0.1f)
             {
-                transform.position = Vector2.Lerp(transform.position, transform.position + dir * farByMiddleSpeed  * farByMiddleTime, farByMiddleTimer / farByMiddleTime);
+                transform.position = Vector2.Lerp(farMaxPos, middlePoint.transform.position, farByMiddleTimer / farByMiddleTime);
             }
         }
-
-        //CheckCrossWall();
     }
     private void StartNextStage()
     {

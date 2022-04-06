@@ -41,6 +41,10 @@ public class PlayerDrainCollider : MonoBehaviour
     [Header("Drain되는 오브젝트들이 몇 초에 한 번씩 위치가 갱신되는가")]
     [SerializeField]
     private float drainMoveUpdateTime = 2f;
+    public float DrainMoveUpdateTIme
+    {
+        get { return drainMoveUpdateTime; }
+    }
 
     [Header("흡수하려는 적의 HP가 해당 변수 이하의 퍼센트가 되어야 흡수 가능")]
     [SerializeField]
@@ -152,10 +156,13 @@ public class PlayerDrainCollider : MonoBehaviour
 
             EventManager.TriggerEvent("SetDrainTime", drainTime);
 
-            drainMoveOriginPosDict.Add(other.gameObject, other.transform.position);
-            drainMoveTargetPosDict.Add(other.gameObject, other.transform.position + (Vector3)(dir * distance));
-            drainMoveTimeDict.Add(other.gameObject, drainMoveTime);
-            drainMoveTimerDict.Add(other.gameObject, 0f);
+            if (!drainMoveOriginPosDict.ContainsKey(other.gameObject))
+            {
+                drainMoveOriginPosDict.Add(other.gameObject, other.transform.position);
+                drainMoveTargetPosDict.Add(other.gameObject, other.transform.position + (Vector3)(dir * distance));
+                drainMoveTimeDict.Add(other.gameObject, drainMoveTime);
+                drainMoveTimerDict.Add(other.gameObject, 0f);
+            }
         }
     }
     private void OnTriggerExit2D(Collider2D other)

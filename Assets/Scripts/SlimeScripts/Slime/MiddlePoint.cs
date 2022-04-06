@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class MiddlePoint : BodyPoint
 {
+    private PlayerDrain playerDrain = null;
+    public PlayerDrain PlayerDrain
+    {
+        get { return playerDrain; }
+    }
     [SerializeField]
     private EdgeCollider2D triggerEdgeCollider2D = null;
 
@@ -30,6 +35,10 @@ public class MiddlePoint : BodyPoint
         get { return maxDisWithBodyPoints;}
     }
 
+    private void Start()
+    {
+        playerDrain = GetComponent<PlayerDrain>();
+    }
     private void FixedUpdate()
     {
         FixedUpdatePointsPositions();

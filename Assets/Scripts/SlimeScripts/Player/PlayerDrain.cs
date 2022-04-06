@@ -7,6 +7,10 @@ public class PlayerDrain : PlayerSkill
     [SerializeField]
     private GameObject drainCollider = null; // drain 체크에 사용될 Collider
     private PlayerDrainCollider playerDrainCol = null;
+    public PlayerDrainCollider PlayerDrainCol
+    {
+        get { return playerDrainCol; }
+    }
 
     //private List<(GameObject, int)> drainList = new List<(GameObject, int)>();
 

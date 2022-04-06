@@ -9,7 +9,7 @@ public partial class EventManager
     private static Dictionary<string, Action<bool>> bool_eventDictionary = new Dictionary<string, Action<bool>>();
     private static Dictionary<string, Action<int>> int_eventDictionary = new Dictionary<string, Action<int>>();
     private static Dictionary<string, Action<float>> float_eventDictionary = new Dictionary<string, Action<float>>();
-    private static Dictionary<string, Action<float, float, float>> float_float_float_eventDictionary = new Dictionary<string, Action<float, float, float>>();
+    private static Dictionary<string, Action<float, float>> float_float_eventDictionary = new Dictionary<string, Action<float, float>>();
     private static Dictionary<string, Action<string>> str_eventDictionary = new Dictionary<string, Action<string>>();
     private static Dictionary<string, Action<string, bool>> str_bool_eventDictionary = new Dictionary<string, Action<string, bool>>();
     private static Dictionary<string, Action<string, float>> str_float_eventDictionary = new Dictionary<string, Action<string, float>>();
@@ -79,18 +79,18 @@ public partial class EventManager
             float_eventDictionary.Add(eventName, listener);
         }
     }
-    public static void StartListening(string eventName, Action<float, float, float> listener)
+    public static void StartListening(string eventName, Action<float, float> listener)
     {
-        Action<float, float, float> thisEvent;
+        Action<float, float> thisEvent;
 
-        if (float_float_float_eventDictionary.TryGetValue(eventName, out thisEvent)) // ���� �̸��� DIctionary�ִ��� üũ
+        if (float_float_eventDictionary.TryGetValue(eventName, out thisEvent)) // ���� �̸��� DIctionary�ִ��� üũ
         {
             thisEvent += listener;                   // ���� �̸����� �� ����
-            float_float_float_eventDictionary[eventName] = thisEvent;
+            float_float_eventDictionary[eventName] = thisEvent;
         }
         else
         {
-            float_float_float_eventDictionary.Add(eventName, listener);
+            float_float_eventDictionary.Add(eventName, listener);
         }
     }
     public static void StartListening(string eventName, Action<string> listener)
@@ -292,18 +292,18 @@ public partial class EventManager
             float_eventDictionary.Remove(eventName);
         }
     }
-    public static void StopListening(string eventName, Action<float, float, float> listener)
+    public static void StopListening(string eventName, Action<float, float> listener)
     {
-        Action<float, float, float> thisEvent;
+        Action<float, float> thisEvent;
 
-        if (float_float_float_eventDictionary.TryGetValue(eventName, out thisEvent))
+        if (float_float_eventDictionary.TryGetValue(eventName, out thisEvent))
         {
             thisEvent -= listener;
-            float_float_float_eventDictionary[eventName] = thisEvent;
+            float_float_eventDictionary[eventName] = thisEvent;
         }
         else
         {
-            float_float_float_eventDictionary.Remove(eventName);
+            float_float_eventDictionary.Remove(eventName);
         }
     }
     public static void StopListening(string eventName, Action<string> listener)
@@ -500,13 +500,13 @@ public partial class EventManager
             Debug.LogWarning("The Linked ActionsNum is zero of The '" + eventName + "' Event but you tried 'TriggerEvent'");
         }
     }
-    public static void TriggerEvent(string eventName, float float_param1, float float_param2, float float_param3)
+    public static void TriggerEvent(string eventName, float float_param1, float float_param2)
     {
-        Action<float, float, float> thisEvent;
+        Action<float, float> thisEvent;
 
-        if (float_float_float_eventDictionary.TryGetValue(eventName, out thisEvent))
+        if (float_float_eventDictionary.TryGetValue(eventName, out thisEvent))
         {
-            thisEvent?.Invoke(float_param1, float_param2, float_param3);
+            thisEvent?.Invoke(float_param1, float_param2);
         }
         else
         {
