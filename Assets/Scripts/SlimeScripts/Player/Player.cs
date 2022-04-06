@@ -256,14 +256,6 @@ public class Player : MonoBehaviour
         {
             return;
         }
-
-        //foreach (var item in drainList)
-        //{
-        //    if(item == attacker)
-        //    {
-        //        return;
-        //    }
-        //}
         
         if (!playerState.IsDead)
         {

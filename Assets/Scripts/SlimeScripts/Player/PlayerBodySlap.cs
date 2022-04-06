@@ -38,10 +38,6 @@ public class PlayerBodySlap : PlayerSkill
     [SerializeField]
     private float bodySlapMoveSpeed = 2f;
 
-    // [SerializeField]
-    // private float bodySlapDelay = 5f;
-    // private float bodySlapDelayTimer = 0f;
-
     [SerializeField]
     private float bodySlapTime = 3f;
     private float currentBodySlapTime = 0f;
@@ -98,14 +94,6 @@ public class PlayerBodySlap : PlayerSkill
     {
         base.Update();
 
-        //if (playerState.BodySlapping && !bodySlapStart && canBodySlap)
-        //{
-        //    DoSkill();
-        //}
-        //else if (!canBodySlap)
-        //{
-        //    playerState.BodySlapping = false;
-        //}
         CheckChargeTime();
         CheckBodySlapTime();
         CheckStopBodySlapTime();
@@ -143,9 +131,6 @@ public class PlayerBodySlap : PlayerSkill
             maxCharging = false;
 
             currentChargingTimer = 0f;
-
-            // StartBodySlap
-            //
         }
     }
 
@@ -280,8 +265,6 @@ currentChargingTimer * targetPosFarPerCharge * bodySlapMoveVec;
             stopBodySlapTimer -= Time.deltaTime;
 
             rigid.AddForce(Vector2.Lerp(Vector2.zero, -rigid.velocity / stopBodySlapOffset, stopBodySlapTimer / stopBodySlapTime));
-
-            //childRigids.ForEach(x => x.AddForce(Vector2.Lerp(Vector2.zero, -x.velocity / stopBodySlapOffset, stopBodySlapTimer / stopBodySlapTime)));
 
             if (stopBodySlapTimer <= 0f)
             {

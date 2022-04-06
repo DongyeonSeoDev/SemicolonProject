@@ -36,8 +36,6 @@ public class BodyPoint : MonoBehaviour
     private float farByMiddleTime = 1f;
     private float farByMiddleTimer = 0f;
 
-   
-
     private Vector2 originLocalPosition = Vector2.zero;
     public Vector2 OriginLocalPosition
     {
@@ -241,7 +239,7 @@ public class BodyPoint : MonoBehaviour
     {
         moveToMiddleTimer = bodySlapTime;
     }
-    private void PlayerDrain(float drainTime) // , float drainMoveUpdateTime
+    private void PlayerDrain(float drainTime)
     {
         isFarByPlayerByDrain = true;
 

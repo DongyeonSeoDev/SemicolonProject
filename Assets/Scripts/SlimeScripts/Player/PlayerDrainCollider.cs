@@ -65,10 +65,6 @@ public class PlayerDrainCollider : MonoBehaviour
     {
         drainTimer = drainTime;
     }
-    private void Start()
-    {
-        //EventManager.StartListening("ssss", );
-    }
     void Update()
     {
         if (drainTimer > 0f)
@@ -171,14 +167,6 @@ public class PlayerDrainCollider : MonoBehaviour
                 drainMoveTimeDict.Add(other.gameObject, drainMoveTime);
                 drainMoveTimerDict.Add(other.gameObject, 0f);
             }
-        }
-    }
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        // DoDrainList에서 빼주는 처리
-        if(canDrainObjLayers.CompareGameObjectLayer(other.gameObject))
-        {
-            //RemoveList(other.gameObject);
         }
     }
 
