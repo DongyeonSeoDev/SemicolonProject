@@ -206,29 +206,58 @@ namespace Enemy
         }
     }
 
-    public class BossRushAttackCommand : EnemyCommand // 보스 돌진 공격
+    public class BossRushAttackCommand : EnemyCommand // 보스 X축과 Y축 돌진 공격
     {
         private EnemyData enemyData;
         private Transform enemyObject;
         private Rigidbody2D rigid;
         private Vector3 targetPosition;
         private float followSpeed;
+        private bool isXMove;
 
-
-        public BossRushAttackCommand(EnemyData data, Transform enemyObject, Rigidbody2D rigid, float followSpeed)
+        public BossRushAttackCommand(EnemyData data, Transform enemyObject, Rigidbody2D rigid, float followSpeed, bool isXMove)
         {
             enemyData = data;
             this.enemyObject = enemyObject;
             this.rigid = rigid;
             this.followSpeed = followSpeed;
+            this.isXMove = isXMove;
         }
 
         public override void Execute()
         {
             // 이동
-            targetPosition = (new Vector3(EnemyManager.Player.transform.position.x, enemyObject.position.y, EnemyManager.Player.transform.position.z) - enemyObject.position).normalized;
+            if (isXMove)
+            {
+                targetPosition = (new Vector3(EnemyManager.Player.transform.position.x, enemyObject.position.y, EnemyManager.Player.transform.position.z) - enemyObject.position).normalized;
+            }
+            else
+            {
+                targetPosition = (new Vector3(enemyObject.position.x, EnemyManager.Player.transform.position.y, EnemyManager.Player.transform.position.z) - enemyObject.position).normalized;
+            }
+
             enemyData.moveVector = targetPosition;
-            targetPosition *= followSpeed;
+
+            if (followSpeed < 0)
+            {
+                float distance;
+
+                if (isXMove)
+                {
+                    distance = Vector2.Distance(new Vector2(EnemyManager.Player.transform.position.x, enemyObject.position.y), enemyObject.transform.position);
+                }
+                else
+                {
+                    distance = Vector2.Distance(new Vector2(enemyObject.position.x, EnemyManager.Player.transform.position.y), enemyObject.transform.position);
+                }
+
+                targetPosition *= distance * 5.5f;
+            }
+            else
+            {
+                targetPosition *= followSpeed;
+            }
+
             rigid.velocity = targetPosition;
         }
     }

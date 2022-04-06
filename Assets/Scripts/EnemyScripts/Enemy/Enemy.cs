@@ -31,7 +31,7 @@ namespace Enemy
         EnemyCommand enemyKnockBackCommand;
 
         private float isDamageCurrentTime = 0f;
-        private bool isStop = false;
+        protected bool isStop = false;
 
         protected virtual void Awake()
         {

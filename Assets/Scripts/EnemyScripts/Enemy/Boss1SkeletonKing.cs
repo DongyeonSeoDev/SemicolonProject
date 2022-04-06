@@ -17,6 +17,7 @@ namespace Enemy
         public Vector2 limitMaxPosition;
 
         private EnemyCommand attackMoveCommand;
+        private EnemyCommand rushAttackReadyCommand;
         private EnemyCommand rushAttackCommand;
         private WaitForSeconds fireSpawnTimeSeconds;
         private WaitForSeconds fireSpawnTimeSeconds2 = new WaitForSeconds(0.1f);
@@ -41,9 +42,9 @@ namespace Enemy
         protected override void Start()
         {
             attackMoveCommand = new EnemyFollowPlayerCommand(enemyData, movePivot, rb, bossMoveSpeed, 0f, false);
-            rushAttackCommand = new BossRushAttackCommand(enemyData, movePivot, rb, 50f);
-
-
+            rushAttackReadyCommand = new BossRushAttackCommand(enemyData, movePivot, rb, -1f, false);
+            rushAttackCommand = new BossRushAttackCommand(enemyData, movePivot, rb, 50f, true);
+ 
             base.Start();
         }
 
@@ -90,6 +91,11 @@ namespace Enemy
         {
             base.Update();
 
+            if (isStop || !enemyData.isEnemyMove)
+            {
+                return;
+            }
+
             if (!isAttack)
             {
                 currentTime += Time.deltaTime;
@@ -99,6 +105,14 @@ namespace Enemy
         public void StopAttack() // EventManager에서 실행 - 적 공격 정지
         {
             StopAllCoroutines();
+        }
+
+        public void AttackReady() // 애니메이션에서 실행 - 공격하기전 이동
+        {
+            rb.velocity = Vector2.zero;
+
+            rushAttackReadyCommand.Execute();
+            enemyData.enemySpriteRotateCommand.Execute();
         }
 
         public void AttackMove() // 애니메이션에서 실행 - 공격하면서 움직이는 코드
@@ -141,7 +155,7 @@ namespace Enemy
 
             for (int i = 0; i < fireCount - 1; i++)
             {
-                Fire fire = EnemyPoolManager.Instance.GetPoolObject(Type.Fire, anglePosition(playerPosition, (360 / (fireCount - 1)) * i)).GetComponent<Fire>();
+                Fire fire = EnemyPoolManager.Instance.GetPoolObject(Type.Fire, AnglePosition(playerPosition, (360 / (fireCount - 1)) * i)).GetComponent<Fire>();
                 fire.Spawn(this, enemyData.eEnemyController, enemyData.attackPower, -1f, true);
 
                 fireList.Add(fire);
@@ -162,7 +176,7 @@ namespace Enemy
             }
         }
 
-        private Vector3 anglePosition(Vector3 startPosition, float angle) // 각도를 넣으면 플레이어 위치에서 각도만큼의 위치을 알려주는 함수
+        private Vector3 AnglePosition(Vector3 startPosition, float angle) // 각도를 넣으면 플레이어 위치에서 각도만큼의 위치을 알려주는 함수
         {
             Vector3 position = Vector3.zero;
 
