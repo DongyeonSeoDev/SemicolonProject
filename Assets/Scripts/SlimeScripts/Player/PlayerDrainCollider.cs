@@ -16,6 +16,15 @@ public class PlayerDrainCollider : MonoBehaviour
         get { return drainTime; }
     }
 
+    [Header("흡수되지 않을 적이 끌려올 때의 흡수되는 몹의 몇 %만큼 이동하는지 정하는 값")]
+    [Header("이 값이 20이면 흡수되는 오브젝트가 이동하는 값의 1/5(20%)만큼 이동한다.")]
+    [SerializeField]
+    private float drainDisLessPercentageWhenFailed = 20f;
+    public float DrainDisLessPercentageWhenFailed
+    {
+        get { return drainDisLessPercentageWhenFailed; }
+    }
+
     [SerializeField]
     private float drainMoveSpeed = 1f;
     public float DrainSpeed
@@ -129,30 +138,29 @@ public class PlayerDrainCollider : MonoBehaviour
 
             if (enemy != null && hpPercentage <= canDrainHpPercentage) // 흡수 성공
             {
-                // enemy.EnemyDestroy();
-                drainMoveTime = distance / drainMoveSpeed;
-
                 doDrainList.Add(enemy);
 
                 EventManager.TriggerEvent("TryDrain", other.transform.position, true);
-
-                //drainTimer += drainMoveTime - drainTimer;
-                //drainTime = drainTimer;
 
                 Debug.Log("Do Drain");
             }
             else if(enemy != null) // 흡수 실패
             {
-                //distance /= 3f;
-                //drainMoveTime = distance / failedDrainMoveSpeed;
+                distance *= drainDisLessPercentageWhenFailed / 100f;
 
                 EventManager.TriggerEvent("TryDrain", other.transform.position, false);
             }
 
+            drainMoveTime = distance / drainMoveSpeed;
+
+            if (drainMoveTime > drainTimer)
+            {
+                drainTimer = drainMoveTime;
+                drainTime = drainTimer;
+            }
+
             // 여기부턴 흡수 성공 혹은 실패한 오브젝트의 이동 관련 처리를 위한
             // 사전 준비작업
-
-            drainMoveTime = drainTimer;
 
             EventManager.TriggerEvent("SetDrainTime", drainTime);
 
