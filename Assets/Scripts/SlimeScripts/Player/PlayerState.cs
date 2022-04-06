@@ -146,5 +146,6 @@ public class PlayerState : MonoBehaviour
         bodySlapping = false;
         isKnockBack = false;
         isSturn = false;
+        isDrain = false;
     }
 }
