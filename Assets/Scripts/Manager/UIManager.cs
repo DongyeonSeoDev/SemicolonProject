@@ -112,6 +112,11 @@ public partial class UIManager : MonoSingleton<UIManager>
     public VertexGradient buffVG, imprecVG;
     #endregion
 
+    #region Confirm
+    [SerializeField] private Button confirmPanelYesBtn, confirmPanelNoBtn;
+    [SerializeField] private Text confirmPanelText;
+    #endregion
+
     [SerializeField] private CanvasGroup loadingCvsg;
 
     [SerializeField] private ResolutionOption resolutionOption;
@@ -120,6 +125,8 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     //public Text statText;
     public Text[] statTexts;
+
+    public GameUI CurrentReConfirmUI { get; set; }
 
     private GameManager gm;
     private SlimeGameManager sgm;
@@ -260,6 +267,10 @@ public partial class UIManager : MonoSingleton<UIManager>
         EventManager.StartListening("GameClear", () => OnUIInteract(UIType.CLEAR, true));
         EventManager.StartListening("StageClear", () =>InsertNoticeQueue("Clear", clearNoticeMsgVGrd, 90));
         EventManager.StartListening("ChangeBody", (str, dead) => { if(!dead) InsertNoticeQueue(MonsterCollection.Instance.GetMonsterInfo(str).bodyName + "(으)로 변신하였습니다"); });
+        EventManager.StartListening("PickupMiniGame", (Action<bool>)(start =>
+        {
+            normalPanelCanvasg.DOFade(start ? 0 : 1, 0.25f);
+        }));
     }
 
     #endregion
@@ -392,7 +403,12 @@ public partial class UIManager : MonoSingleton<UIManager>
                     }
                 }
                 break;
-                
+            case UIType.MINIGAME_PICKUP:
+                if (GameManager.Instance.pickupCheckGame.IsGameStart) return true; //미니게임 하고 있으면 상호작용 안함
+                break;
+            case UIType.UIOFFCONFIRM:
+                if (Util.IsActiveGameUI(UIType.UIOFFCONFIRM)) CurrentReConfirmUI.IsCloseable = false;
+                break;
         }
         return false;
     }
@@ -502,6 +518,26 @@ public partial class UIManager : MonoSingleton<UIManager>
             return true;
         RequestSystemMsg("개발중인 UI이거나 버그로 인해서 UI가 제대로 안나옴");
         return false;
+    }
+
+    public void SetReconfirmUI(string msg, Action confirm, Action cancel)
+    {
+        confirmPanelText.text = msg;
+        confirm += InactiveConfirmUI;
+        cancel += InactiveConfirmUI;
+
+        confirmPanelYesBtn.onClick.RemoveAllListeners();
+        confirmPanelNoBtn.onClick.RemoveAllListeners();
+
+        confirmPanelYesBtn.onClick.AddListener(()=>confirm());
+        confirmPanelNoBtn.onClick.AddListener(() => cancel());
+
+        OnUIInteractSetActive(UIType.UIOFFCONFIRM, true, true);
+    }
+
+    void InactiveConfirmUI()
+    {
+        OnUIInteractSetActive(UIType.UIOFFCONFIRM, false, true);
     }
     #endregion
 

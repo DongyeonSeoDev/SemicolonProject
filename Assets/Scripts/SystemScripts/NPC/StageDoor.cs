@@ -104,6 +104,11 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
         detectorObj.SetActive(false);
     }
 
+    public void DoorLightActive(bool on)
+    {
+        doorLight.gameObject.SetActive(on);
+    }
+
     public override void SetInteractionUI(bool on)
     {
         if (StageManager.Instance.IsStageClear && !isExitDoor)

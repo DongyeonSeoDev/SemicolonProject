@@ -153,6 +153,7 @@ public class StageManager : MonoSingleton<StageManager>
         EventManager.TriggerEvent("StartBGM", startStageID);
         EventManager.StartListening("PlayerRespawn", Respawn);
         EventManager.StartListening("StartNextStage", StartNextStage);
+        EventManager.StartListening("PickupMiniGame", (Action<bool>)(start => currentStage.StageLightActive(!start)));
     }
 
     private void SetRandomAreaRandomIncounter()  //일단 리펙토링 나중에 해야할 듯

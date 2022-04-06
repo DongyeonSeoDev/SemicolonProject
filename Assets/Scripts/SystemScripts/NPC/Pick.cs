@@ -15,6 +15,10 @@ public class Pick : InteractionObj
     //private OutlineCtrl sprOutline;
 
     public FakeSpriteOutline fsOut;
+
+    private int droppedCount = 1;
+    public int DroppedCount => droppedCount;
+
     //protected int droppedCount = 1;
     //public int DroppedCnt { get { return droppedCount; } }
 
@@ -73,7 +77,7 @@ public class Pick : InteractionObj
             return;
         }
 
-        GameManager.Instance.pickupCheckGame.CheckStart(this);
+        GameManager.Instance.pickupCheckGame.InteractPick(this);
 
         /*if (Random.Range(0f, 100f) < pickSuccessProbability)
         {
@@ -94,10 +98,11 @@ public class Pick : InteractionObj
         }*/
     }
 
-    public void PickResult(bool suc)
+    public void PickResult(bool suc, int count = 1)
     {
         CallEffect(suc ? "PickSuccessEff" : "PickFailEff");
 
+        droppedCount = count;
         if(suc)
         {
             EffectManager.Instance.OnWorldTextEffect("채집 성공", transform.position, Vector3.one, EffectManager.Instance.pickupPlantSucFaiVG.normal);

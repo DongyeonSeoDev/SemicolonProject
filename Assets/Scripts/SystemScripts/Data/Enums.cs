@@ -31,7 +31,9 @@ public enum UIType
     MONSTERINFO_DETAIL_ITEM,
     SKILLDETAIL,
     CHANGEABLEMOBLIST,
-    STATEINFO
+    STATEINFO,
+    MINIGAME_PICKUP,
+    UIOFFCONFIRM
 }
 
 public enum KeyAction
@@ -49,6 +51,7 @@ public enum KeyAction
     STAT,
     MONSTER_COLLECTION,
     INTERACTION,
+    EVENT,
     SPECIALATTACK1,
     SPECIALATTACK2,
     MANASTONE,
