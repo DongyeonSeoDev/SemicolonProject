@@ -7,8 +7,10 @@ public class StageCheatWindow : EditorWindow
 {
     public Player SlimePlayer => SlimeGameManager.Instance.Player;
 
+    //private bool useClearStageKey = false;
+
     private Stat playerStat = new Stat();
-    private int recoveryHp;
+    private int recoveryHp = 20;
     private StateAbnormality sa;
 
     private string itemId;
@@ -52,14 +54,22 @@ public class StageCheatWindow : EditorWindow
         switch (toolbarIdx)
         {
             case 0:
-                
 
                 GUILayout.Label("[Stage Cheat]", EditorStyles.boldLabel);
+                //useClearStageKey = GUILayout.Toggle(useClearStageKey, "스테이지 넘기기 단축키 사용 (F6)");
+
+                GUILayout.Label("(몬스터가 나오고 눌러)", EditorStyles.label);
                 GUILayout.BeginHorizontal();
                 if (GUILayout.Button("Current Stage Clear"))
                 {
                     CurrentStageClear();
                 }
+
+                /*if(useClearStageKey && Event.current.isKey && Event.current.keyCode == KeyCode.F6)
+                {
+                    CurrentStageClear();
+                    
+                }*/
                 /*if (GUILayout.Button("Current All monster Die"))
                 {
                     Enemy.EnemyManager.Instance.PlayerDeadEvent();
@@ -85,7 +95,7 @@ public class StageCheatWindow : EditorWindow
                 GUILayout.Space(20);
                 GUILayout.Label("[Status Cheat]", EditorStyles.boldLabel);
 
-                recoveryHp = EditorGUILayout.IntField("Heal Current Hp n%", 20);
+                recoveryHp = EditorGUILayout.IntField("Heal Current Hp n%", recoveryHp);
 
                 GUILayout.Space(7);
 
@@ -138,6 +148,7 @@ public class StageCheatWindow : EditorWindow
                 break;
             case 1:
                 GUILayout.Label("[Saved Body Cheat]", EditorStyles.boldLabel);
+                GUILayout.Label("(이 기능은 게임 시작하고 몹 슬롯에 아무것도 없을 때만 가능. \n테스트만 하고 종료하자)", EditorStyles.label);
 
                 mobId = (Enemy.EnemyType)EditorGUILayout.EnumPopup("Monster Id", mobId);
                 if (GUILayout.Button("Save Body"))

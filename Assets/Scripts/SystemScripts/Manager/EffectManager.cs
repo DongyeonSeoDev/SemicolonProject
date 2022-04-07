@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using Water;
 using TMPro;
 using DG.Tweening;
+using System;
 
 public class EffectManager : MonoSingleton<EffectManager>
 {
@@ -63,6 +64,9 @@ public class EffectManager : MonoSingleton<EffectManager>
     public AnimationCurve damageTxtScaleCurve;
     #endregion
 
+    [Header("게임 속 여러 이펙트 (풀링 적용)")]
+    public Triple<GameObject, int, string>[] gameEffects; //이펙트 프리팹과 개수, 아이디
+
     private void Awake()
     {
         fillBackWidth = fillBackRect.rect.width;
@@ -75,7 +79,18 @@ public class EffectManager : MonoSingleton<EffectManager>
         PoolManager.CreatePool(damageTextPair.first, damageTextPair.second, 4, "DamageTextEff");
 
         EventManager.StartListening("PlayerRespawn", Respawn);
-        EventManager.StartListening("TryDrain", TryDrain); 
+        EventManager.StartListening("TryDrain", TryDrain);
+        EventManager.StartListening("PlayerDead", () => CallFollowTargetGameEffect("PlayerDeathEff", SlimeGameManager.Instance.CurrentPlayerBody.transform, Vector3.zero, 2));
+        EventManager.StartListening("ChangeBody", (str, b) =>
+        {
+            if (string.IsNullOrEmpty(str) == b) { }  //타입을 알리기 위한 쓰이지않는 매개변수와 코드
+            CallFollowTargetGameEffect("BodyChangeEff", SlimeGameManager.Instance.CurrentPlayerBody.transform, Vector3.zero, 1);
+        });
+
+        for(int i=0; i< gameEffects.Length; i++)
+        {
+            PoolManager.CreatePool(gameEffects[i].first, transform, gameEffects[i].second, gameEffects[i].third ?? gameEffects[i].first.name);
+        }
 
         //hpFillEffectStartX = hpFillEffect.anchoredPosition.x;
         //hpFillEffectMaskObj.screenPoint = new Vector2(fillBackRect.anchoredPosition.x - fillBackWidth * 0.5f, fillBackRect.anchoredPosition.y);
@@ -95,6 +110,7 @@ public class EffectManager : MonoSingleton<EffectManager>
         OnTopRightBtnEffect(UIType.INVENTORY, false);
         OnTopRightBtnEffect(UIType.STAT, false);
         OnTopRightBtnEffect(UIType.MONSTER_COLLECTION, false);
+        PoolManager.PoolObjSetActiveFalse("PlayerDeathEff");
     }
 
     public void OnDamagedUIEffect(float rate) //Damage Particle Effect of HP UI
@@ -197,5 +213,21 @@ public class EffectManager : MonoSingleton<EffectManager>
     private void TryDrain(Vector2 mobPos, bool drainSuc)
     {
         OnWorldTextEffect(drainSuc ? "흡수" : "흡수실패", mobPos, Vector3.one, drainSuc ? drainVG.normal : drainVG.cri);
+    }
+
+    public GameObject CallGameEffect(string key, Vector3 pos, float duration)
+    {
+        GameObject eff = PoolManager.GetItem(key);
+        eff.transform.position = pos;
+
+        Util.DelayFunc(() => eff.gameObject.SetActive(false), duration, this);
+
+        return eff;
+    }
+
+    public void CallFollowTargetGameEffect(string key, Transform target, Vector3 offset, float duration)
+    {
+        GameObject eff = PoolManager.GetItem(key);
+        Util.ExecuteFunc(() => eff.transform.position = target.position + offset, 0, duration, this, null, ()=>eff.gameObject.SetActive(false));
     }
 }

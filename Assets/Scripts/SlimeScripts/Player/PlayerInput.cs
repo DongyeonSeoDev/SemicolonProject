@@ -80,7 +80,7 @@ public class PlayerInput : MonoBehaviour
 
     void Update()
     {
-        if (!(playerState.IsDead || playerState.IsSturn || playerState.IsKnockBack) && !isPause)
+        if (!(playerState.IsDead || playerState.IsSturn || playerState.IsKnockBack || playerState.IsDrain) && !isPause)
         {
             if (!playerState.Chargning)
             {

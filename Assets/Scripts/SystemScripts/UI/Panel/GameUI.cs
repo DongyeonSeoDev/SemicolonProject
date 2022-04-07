@@ -13,6 +13,9 @@ public class GameUI : MonoBehaviour
     public GameUI childGameUI;
     public Pair<bool, Transform> setLastSibling; //UI가 켜지면 제일 아래로 정렬할지, 옮길 Transform
 
+    [SerializeField] private bool isCloseReconfirmPair;
+    [SerializeField] private string closeReconfirmMsg;
+    public bool IsCloseable { get; set; }
 
     private GameUIFields gameUIFields;
     public GameUIFields UIFields { get { return gameUIFields; } }
@@ -24,6 +27,7 @@ public class GameUI : MonoBehaviour
     {
         rectTrm = GetComponent<RectTransform>();
         originPos = rectTrm.anchoredPosition;
+        IsCloseable = false;
         gameUIFields = new GameUIFields() 
         { childGameUI = childGameUI, cvsg = cvsg, originPos = originPos, rectTrm = rectTrm, _UItype = _UItype, transform = transform, self = this };
     }
@@ -120,6 +124,10 @@ public class GameUI : MonoBehaviour
                 TweeningData.DOQuaternion(gameUIFields, true);
                 break;
 
+            case UIType.MINIGAME_PICKUP:
+                GameManager.Instance.pickupCheckGame.CheckStart();
+                break;
+
             default:
                 //DOScale(true);
                 TweeningData.DOScale(gameUIFields, true);
@@ -129,6 +137,23 @@ public class GameUI : MonoBehaviour
 
     public virtual void InActiveTransition()
     {
+        if(isCloseReconfirmPair && !IsCloseable)
+        {
+            IsCloseable = true;
+            UIManager.Instance.CurrentReConfirmUI = this;
+            UIManager.Instance.activeUIQueue.Dequeue();
+            UIManager.Instance.SetReconfirmUI(closeReconfirmMsg, ()=> 
+            {
+                UIManager.Instance.activeUIQueue.Enqueue(false); 
+                InActiveTransition();
+                IsCloseable = false;
+            }, () =>
+            {
+                IsCloseable = false;
+            });
+            return;
+        }
+
         UIManager.Instance.uiTweeningDic[_UItype] = true;
         switch (_UItype)
         {
@@ -204,6 +229,10 @@ public class GameUI : MonoBehaviour
 
             case UIType.MONSTERINFO_DETAIL_ITEM:
                 TweeningData.DOQuaternion(gameUIFields, false);
+                break;
+
+            case UIType.MINIGAME_PICKUP:
+                GameManager.Instance.pickupCheckGame.Inactive();
                 break;
 
             default:

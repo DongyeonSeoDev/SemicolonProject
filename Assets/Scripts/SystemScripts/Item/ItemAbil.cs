@@ -80,7 +80,7 @@ public class Restorativeherb : ItemAbil
 {
     public override void Use()
     {
-        ItemUseMng.IncreaseCurrentHP( 40);
+        ItemUseMng.IncreaseCurrentHP(25);
     }
 }
 

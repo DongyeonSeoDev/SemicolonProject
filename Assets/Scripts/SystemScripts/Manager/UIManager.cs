@@ -39,7 +39,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     [HideInInspector] public VertexGradient defaultTopCenterMsgVG;  // 상단 중앙 알림 메시지 기본 색상
     #endregion
 
-    private void Notice()
+    public void Notice()
     {
         if(rightMoveNoticeMsg.noticeCheckElapsed < Time.time)
         {

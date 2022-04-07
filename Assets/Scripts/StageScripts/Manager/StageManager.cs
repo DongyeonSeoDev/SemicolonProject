@@ -126,6 +126,8 @@ public class StageManager : MonoSingleton<StageManager>
 
         PoolManager.CreatePool(recoveryObjPref, npcParent, 1, "RecoveryObjPrefObjPref1");
         PoolManager.CreatePool(imprecationObjPref, npcParent, 1, "ImprecationObjPref1");
+
+        
     }
 
     private void DefineEvent()
@@ -151,6 +153,7 @@ public class StageManager : MonoSingleton<StageManager>
         EventManager.TriggerEvent("StartBGM", startStageID);
         EventManager.StartListening("PlayerRespawn", Respawn);
         EventManager.StartListening("StartNextStage", StartNextStage);
+        EventManager.StartListening("PickupMiniGame", (Action<bool>)(start => currentStage.StageLightActive(!start)));
     }
 
     private void SetRandomAreaRandomIncounter()  //일단 리펙토링 나중에 해야할 듯

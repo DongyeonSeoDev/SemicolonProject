@@ -55,6 +55,13 @@ public class PlayerState : MonoBehaviour
         set { charging = value; }
     }
 
+    private bool isDrain = false;
+    public bool IsDrain
+    {
+        get { return isDrain; }
+        set { isDrain = value; }
+    }
+
     private bool isKnockBack = false;
     public bool IsKnockBack
     {
@@ -139,5 +146,6 @@ public class PlayerState : MonoBehaviour
         bodySlapping = false;
         isKnockBack = false;
         isSturn = false;
+        isDrain = false;
     }
 }

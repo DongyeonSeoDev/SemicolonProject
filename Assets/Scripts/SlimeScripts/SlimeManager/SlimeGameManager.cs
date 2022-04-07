@@ -193,8 +193,6 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             (GameObject, EternalStat) newBodyData = playerEnemyUnderstandingRateManager.ChangalbeBodyDict[bodyId];
             currentBodyId = bodyId;
 
-            newBodyData.Item2 += GetExtraUpStat(bodyId);
-
             newBody = Instantiate(newBodyData.Item1, player.transform);
 
             if (pasteBodyAdditionalStat != null && !isDead)
@@ -204,9 +202,9 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
                 pasteBodyAdditionalStat = new EternalStat();
             }
 
-            pasteBodyAdditionalStat = newBodyData.Item2;
+            pasteBodyAdditionalStat = newBodyData.Item2 + GetExtraUpStat(bodyId);
 
-            player.PlayerStat.additionalEternalStat += newBodyData.Item2;
+            player.PlayerStat.additionalEternalStat += pasteBodyAdditionalStat;
 
             //player.CurrentHp = (player.PlayerStat.MaxHp * hpPercentage).Round();
             player.CurrentHp = player.PlayerStat.MaxHp * hpPercentage;

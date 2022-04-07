@@ -13,12 +13,22 @@ public class SelectionWindow : MonoBehaviour
 
     //public Text msgText;
     public TextMeshProUGUI msgTmp;
-    public Transform selBtnParent;
+    public Transform selBtnParent, iconSelBtnParent;
 
-    public void Set(string msg, List<Action> clickEv, List<string> btnTexts, bool activeWarning, List<Func<bool>> conditions)
+    /// <summary>
+    /// 메시지, 순서대로 클릭했을 때의 반응, 순서대로 클릭 버튼에 띄울 텍스트, 경고창 띄울지, 각 버튼마다 눌리게 할 조건, 아이콘으로 표시할지
+    /// </summary>
+    /// <param name="msg"></param>
+    /// <param name="clickEv"></param>
+    /// <param name="btnTexts"></param>
+    /// <param name="activeWarning"></param>
+    /// <param name="conditions"></param>
+    public void Set(string msg, List<Action> clickEv, List<string> btnTexts, bool activeWarning, List<Func<bool>> conditions, bool useIcon)
     {
         //ResetData();
-        ActiveButtons(clickEv.Count);
+        Transform btnPar = !useIcon ? selBtnParent : iconSelBtnParent;
+
+        ActiveButtons(clickEv.Count, useIcon);
 
         msgTmp.text = msg;
 
@@ -40,9 +50,8 @@ public class SelectionWindow : MonoBehaviour
                 {
                     btnList[si].onClick.AddListener(() => UIManager.Instance.RequestWarningWindow(() => clickEv[si](), "결정이 확실합니까?"));
                 }
-                btnList[si].transform.GetChild(0).GetComponent<Text>().text = btnTexts[si];
 
-                btnList[si].transform.SetParent(selBtnParent);  //트위닝이 다 끝나면 버튼들의 부모를 설정함
+                btnList[si].transform.SetParent(btnPar);  //트위닝이 다 끝나면 버튼들의 부모를 설정함
                 btnList[si].transform.localScale = Vector3.one;  //스케일 값이 다를 수 있으니 초기화시켜줌
 
                 if(conditions == null)
@@ -64,6 +73,20 @@ public class SelectionWindow : MonoBehaviour
                         btnList[si].GetComponent<UIScale>().transitionEnable = b;
                     }
                 }
+
+                if(!useIcon)
+                {
+                    btnList[si].transform.GetChild(0).GetComponent<Text>().text = btnTexts[si];
+                }
+                else
+                {
+                    Triple<Sprite, string, string> data = UIManager.Instance.iconSelBtnDataDic[btnTexts[si]];
+
+                    btnList[si].GetComponent<Image>().sprite = data.first;
+                    btnList[si].transform.GetChild(0).GetComponent<Text>().text = data.second;
+                    btnList[si].GetComponent<NameInfoFollowingCursor>().explanation = data.third;
+                }
+                
             }
         });
     }
@@ -81,11 +104,13 @@ public class SelectionWindow : MonoBehaviour
         cvsg.interactable = !hide;
     }
 
-    private void ActiveButtons(int count)  //필요한 개수만큼 버튼 가져옴
+    private void ActiveButtons(int count, bool useIcon)  //필요한 개수만큼 버튼 가져옴
     {
-        for(int i = 0; i<count; i++)
+        string key = !useIcon ? "SelBtn" : "IconSelBtn";
+
+        for (int i = 0; i<count; i++)
         {
-            Button b = PoolManager.GetItem<Button>("SelBtn");
+            Button b = PoolManager.GetItem<Button>(key);
             b.onClick.RemoveAllListeners();
             btnList.Add(b);
         }

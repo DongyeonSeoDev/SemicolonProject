@@ -7,13 +7,24 @@ public class OrderInLayerConroller : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer = null;
     private SpriteShapeRenderer spriteShapeRenderer = null;
+
+    private string originSortingLayerName = "";
     private readonly int offest = 20;
+    private bool setOrderInLayerAuto = true;
 
     void Start()
     {
+        SetRenderer();
+
+        originSortingLayerName = spriteRenderer != null ?
+            spriteRenderer.sortingLayerName : spriteShapeRenderer.sortingLayerName;
+    }
+
+    private void SetRenderer()
+    {
         spriteRenderer = GetComponent<SpriteRenderer>();
 
-        if(spriteRenderer == null)
+        if (spriteRenderer == null)
         {
             spriteShapeRenderer = GetComponent<SpriteShapeRenderer>();
         }
@@ -21,9 +32,12 @@ public class OrderInLayerConroller : MonoBehaviour
 
     void Update()
     {
-        SetOrderInLayer();
+        if (setOrderInLayerAuto)
+        {
+            SetOrderInLayerAuto();
+        }
     }
-    private void SetOrderInLayer()
+    private void SetOrderInLayerAuto()
     {
         if(spriteRenderer == null)
         {
@@ -33,5 +47,47 @@ public class OrderInLayerConroller : MonoBehaviour
         }
         
         spriteRenderer.sortingOrder = offest - (int)Mathf.Round(transform.position.y);
+    }
+    public void SetOrderInLayer(string sortingLayerName, int orderInLayer)
+    {
+        setOrderInLayerAuto = false;
+
+        if (spriteRenderer == null)
+        {
+            try
+            {
+                spriteShapeRenderer.sortingLayerName = sortingLayerName;
+                spriteShapeRenderer.sortingOrder = orderInLayer;
+            }
+            catch
+            {
+                SetRenderer();
+            }
+
+            return;
+        }
+
+        spriteRenderer.sortingLayerName = sortingLayerName;
+        spriteRenderer.sortingOrder = orderInLayer;
+    }
+    public void StartSetOrderInLayerAuto()
+    {
+        setOrderInLayerAuto = true;
+
+        if (spriteRenderer == null)
+        {
+            try
+            {
+                spriteShapeRenderer.sortingLayerName = originSortingLayerName;
+            }
+            catch
+            {
+                SetRenderer();
+            }
+
+            return;
+        }
+
+        spriteRenderer.sortingLayerName = originSortingLayerName;
     }
 }
