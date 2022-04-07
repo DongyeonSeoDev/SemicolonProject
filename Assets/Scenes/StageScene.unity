@@ -182,14 +182,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5427881869486345105, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
-      propertyPath: playerStat.eternalStat.maxDamage
-      value: 739
-      objectReference: {fileID: 0}
-    - target: {fileID: 5427881869486345105, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
-      propertyPath: playerStat.eternalStat.minDamage
-      value: 482
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
 --- !u!1 &123391993
