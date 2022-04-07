@@ -255,12 +255,15 @@ public class Inventory : MonoSingleton<Inventory>
             {
                 if (slot.itemInfo == null) slot = FindSlot(id);
 
-                temp = slot.Count;
-                slot.UpdateCount(Mathf.Clamp(slot.Count - count, 0, slot.MaxCount-1));
-                count -= temp;
+                if (slot)
+                {
+                    temp = slot.Count;
+                    slot.UpdateCount(Mathf.Clamp(slot.Count - count, 0, slot.MaxCount - 1));
+                    count -= temp;
 
-                if(slot.Count == 0)
-                    slot.ResetData();
+                    if (slot.Count == 0)
+                        slot.ResetData();
+                }
             }
 
             UIManager.Instance.UpdateInventoryItemCount(id);

@@ -597,7 +597,7 @@ public class StageManager : MonoSingleton<StageManager>
         if(npcDict.ContainsKey(id)) return npcDict[id];
 
         NPC npc = Instantiate(Resources.Load<GameObject>("Prefabs/NPC/" + id), transform).GetComponent<NPC>();
-        npcDict.Add(npc.npcId, npc);
+        npcDict.Add(id, npc);
         return npc;
     }
 
