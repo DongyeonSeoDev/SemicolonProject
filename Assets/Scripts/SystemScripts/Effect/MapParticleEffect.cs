@@ -3,7 +3,9 @@ using System.Collections;
 
 public class MapParticleEffect : MonoBehaviour
 {
+
     public ParticleSystem mapEff;
+    public MapEffectType effectType;
 
     public bool playOnAwake;
     public float duration = 1f;
