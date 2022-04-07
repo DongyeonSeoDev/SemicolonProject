@@ -101,6 +101,8 @@ public class PlayerDrainCollider : MonoBehaviour
                 SlimeGameManager.Instance.Player.PlayerOrderInLayerController.StartSetOrderInLayerAuto();
                 SlimeGameManager.Instance.Player.PlayerState.IsDrain = false;
 
+                EventManager.TriggerEvent("EnemyStart");
+
                 gameObject.SetActive(false);
             }
         }
@@ -116,8 +118,6 @@ public class PlayerDrainCollider : MonoBehaviour
             SlimeGameManager.Instance.Player.DrainList.Add(other.gameObject);
             Enemy.Enemy enemy = other.GetComponent<Enemy.Enemy>();
 
-            enemy.GetDamage(1, false, false, 0, drainMoveUpdateTime);
-
             Vector2 dir = (transform.position - other.transform.position).normalized;
             float hpPercentage = enemy.EnemyHpPercent();// 닿은    적의 현재 체력의 퍼센트를 구함
 
@@ -128,7 +128,6 @@ public class PlayerDrainCollider : MonoBehaviour
 
             float distance = Vector2.Distance(transform.position, enemy.transform.position);
             float drainMoveTime = 0f;
-            // Debug.Log(hpPercentage);
 
             tryDrainList.Add(enemy);
 
@@ -143,6 +142,8 @@ public class PlayerDrainCollider : MonoBehaviour
             else if(enemy != null) // 흡수 실패
             {
                 distance *= drainDisLessPercentageWhenFailed / 100f;
+
+                Debug.Log(distance);
 
                 EventManager.TriggerEvent("TryDrain", other.transform.position, false);
             }
@@ -217,7 +218,6 @@ public class PlayerDrainCollider : MonoBehaviour
 
                 if (drainMoveTimerDict[key] % drainMoveUpdateTime <= 0.1f && updateObj)
                 {
-                    item.GetDamage(1, false, false, 0, drainMoveUpdateTime);
                     item.transform.position = Vector2.Lerp(drainMoveOriginPosDict[key], drainMoveTargetPosDict[key], drainMoveTimerDict[key] / drainMoveTimeDict[key]);
                 }
                 else

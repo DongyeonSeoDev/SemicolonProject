@@ -73,9 +73,10 @@ MonoBehaviour:
   canDrainObjLayers:
     serializedVersion: 2
     m_Bits: 128
+  drainDisLessPercentageWhenFailed: 30
   drainMoveSpeed: 1
   failedDrainMoveSpeed: 1
-  drainMoveUpdateTime: 2
+  drainMoveUpdateTime: 1
   canDrainHpPercentage: 70
 --- !u!1 &6840160282341942530
 GameObject:
