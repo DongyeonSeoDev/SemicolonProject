@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4767023596239494824
 Transform:
   m_ObjectHideFlags: 0
@@ -76,7 +76,7 @@ LineRenderer:
   - {x: 11.101285, y: 4.7457714, z: 0}
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.2
+    widthMultiplier: 2.5
     widthCurve:
       serializedVersion: 2
       m_Curve:
