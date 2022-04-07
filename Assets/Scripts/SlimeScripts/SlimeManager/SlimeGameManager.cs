@@ -342,14 +342,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
         if (hit)
         {
-            //if (crashableLayer.CompareGameObjectLayer(hit.collider.gameObject)) // 자~ 얘도 쓸모 없다 싶으면 바로 벤이란다!
-            //{
-            //    return hit.point;// - (targetPos - startPos).normalized * (Vector2.Distance(startPos, targetPos) / 10f);
-            //}
-            //else
-            {
-                return hit.point;
-            }
+            return hit.point;
         }
         else
         {
