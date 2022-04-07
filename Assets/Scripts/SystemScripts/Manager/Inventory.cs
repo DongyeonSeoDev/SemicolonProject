@@ -71,7 +71,7 @@ public class Inventory : MonoSingleton<Inventory>
         Global.AddMonoAction(Global.PickupPlant, item =>
         {
             Pick plant = item as Pick;
-            GetItem(new ItemInfo(plant.itemData.id,1));
+            GetItem(new ItemInfo(plant.itemData.id, plant.DroppedCount));
             plant.FollowEffect();
             plant.gameObject.SetActive(false);
         });

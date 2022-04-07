@@ -52,6 +52,11 @@ public class StageGround : MonoBehaviour
         }
     }
 
+    public void StageLightActive(bool on)
+    {
+        stageDoors.ForEach(x => x.DoorLightActive(on));
+    }
+
     public StageDoor GetOpposeDoor(DoorDirType type)
     {
         DoorDirType target = Global.ReverseDoorDir(type);

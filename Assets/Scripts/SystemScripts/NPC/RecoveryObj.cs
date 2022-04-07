@@ -7,9 +7,16 @@ public class RecoveryObj : InteractionObj
 {
     private Light2D recoveryLight;
     private List<Action> recoveryActions = new List<Action>();
-    public FakeSpriteOutline fsOut;
+    //public FakeSpriteOutline fsOut;
+    private OutlineCtrl outlineCtrl;
 
     private bool canInteract;
+    private UnityEngine.Vector3 effOffset = new UnityEngine.Vector3(0,-0.3f);
+
+    private void Awake()
+    {
+        outlineCtrl = GetComponent<OutlineCtrl>();
+    }
 
     private void ResetActionList()
     {
@@ -20,12 +27,15 @@ public class RecoveryObj : InteractionObj
 
         for (int i = 0; i < recoveryActions.Count; i++)
         {
-            recoveryActions[i] += () => 
-            {
-                StageManager.Instance.SetClearStage();
-                recoveryLight.DOIntensity(0, 1f, true, () => recoveryLight.gameObject.SetActive(false));
-            };
+            recoveryActions[i] += DefaultFunc;
         }
+    }
+
+    private void DefaultFunc()
+    {
+        StageManager.Instance.SetClearStage();
+        EffectManager.Instance.CallFollowTargetGameEffect("RecoveryEff", SlimeGameManager.Instance.CurrentPlayerBody.transform, effOffset, 3f);
+        recoveryLight.DOIntensity(0, 1f, true, () => recoveryLight.gameObject.SetActive(false));
     }
 
     private void OnEnable()
@@ -76,6 +86,7 @@ public class RecoveryObj : InteractionObj
     public override void SetInteractionUI(bool on)
     {
         base.SetInteractionUI(on);
-        fsOut.gameObject.SetActive(on);
+        outlineCtrl.SetIntensity(on?10:0);
+        //fsOut.gameObject.SetActive(on);
     }
 }

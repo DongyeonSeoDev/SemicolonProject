@@ -79,8 +79,12 @@ public partial class UIManager : MonoSingleton<UIManager>
     [Space(10)]
     public Pair<GameObject, Transform> selWindowPair;
     public Pair<GameObject, Transform> selectionBtnPair;
+    public GameObject iconSelBtn;
 
     public Dictionary<string, bool> mobSaveWindowActiveDic = new Dictionary<string, bool>(); //해당 아이디의 몬스터를 장착할지 물어보는 창이 떴는지 확인
+    public Dictionary<string, Triple<Sprite, string, string>> iconSelBtnDataDic = new Dictionary<string, Triple<Sprite, string, string>>(); //key : 버튼 스프라이트, 버튼에 뜰 텍스트, 마우스 오버시 뜰 설명
+
+    [SerializeField] private List<Triple<Sprite, string, string>> iconSelBtnDataList = new List<Triple<Sprite, string, string>>();
     #endregion
 
     #region CanvasGroup
@@ -103,6 +107,16 @@ public partial class UIManager : MonoSingleton<UIManager>
     public AudioMixer masterAudioMixer;
     #endregion
 
+    #region State
+    [SerializeField] private Triple<Image, TextMeshProUGUI, Text> stateInfoTriple;  //이미지, 이름, 설명
+    public VertexGradient buffVG, imprecVG;
+    #endregion
+
+    #region Confirm
+    [SerializeField] private Button confirmPanelYesBtn, confirmPanelNoBtn;
+    [SerializeField] private Text confirmPanelText;
+    #endregion
+
     [SerializeField] private CanvasGroup loadingCvsg;
 
     [SerializeField] private ResolutionOption resolutionOption;
@@ -111,6 +125,8 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     //public Text statText;
     public Text[] statTexts;
+
+    public GameUI CurrentReConfirmUI { get; set; }
 
     private GameManager gm;
     private SlimeGameManager sgm;
@@ -142,6 +158,10 @@ public partial class UIManager : MonoSingleton<UIManager>
         {
             uiTweeningDic.Add((UIType)i, false);
         }
+        for(i=0; i<iconSelBtnDataList.Count; ++i)
+        {
+            iconSelBtnDataDic.Add(iconSelBtnDataList[i].first.name, new Triple<Sprite, string, string>(iconSelBtnDataList[i].first, iconSelBtnDataList[i].second, iconSelBtnDataList[i].third));
+        }
 
         setting.InitSet();
     }
@@ -157,6 +177,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         PoolManager.CreatePool(selWindowPair.first, selWindowPair.second, 1, "SelWindow");
         PoolManager.CreatePool(selectionBtnPair.first, selectionBtnPair.second, 2, "SelBtn");
         PoolManager.CreatePool(mobSpeciesIconPref, interactionMarkPair.second, 2, "MobSpeciesIcon");
+        PoolManager.CreatePool(iconSelBtn, selectionBtnPair.second, 3, "IconSelBtn");
     }
 
     private void OnEnable()
@@ -246,6 +267,10 @@ public partial class UIManager : MonoSingleton<UIManager>
         EventManager.StartListening("GameClear", () => OnUIInteract(UIType.CLEAR, true));
         EventManager.StartListening("StageClear", () =>InsertNoticeQueue("Clear", clearNoticeMsgVGrd, 90));
         EventManager.StartListening("ChangeBody", (str, dead) => { if(!dead) InsertNoticeQueue(MonsterCollection.Instance.GetMonsterInfo(str).bodyName + "(으)로 변신하였습니다"); });
+        EventManager.StartListening("PickupMiniGame", (Action<bool>)(start =>
+        {
+            normalPanelCanvasg.DOFade(start ? 0 : 1, 0.25f);
+        }));
     }
 
     #endregion
@@ -378,6 +403,12 @@ public partial class UIManager : MonoSingleton<UIManager>
                     }
                 }
                 break;
+            case UIType.MINIGAME_PICKUP:
+                if (GameManager.Instance.pickupCheckGame.IsGameStart) return true; //미니게임 하고 있으면 상호작용 안함
+                break;
+            case UIType.UIOFFCONFIRM:
+                if (Util.IsActiveGameUI(UIType.UIOFFCONFIRM)) CurrentReConfirmUI.IsCloseable = false;
+                break;
         }
         return false;
     }
@@ -488,6 +519,26 @@ public partial class UIManager : MonoSingleton<UIManager>
         RequestSystemMsg("개발중인 UI이거나 버그로 인해서 UI가 제대로 안나옴");
         return false;
     }
+
+    public void SetReconfirmUI(string msg, Action confirm, Action cancel)
+    {
+        confirmPanelText.text = msg;
+        confirm += InactiveConfirmUI;
+        cancel += InactiveConfirmUI;
+
+        confirmPanelYesBtn.onClick.RemoveAllListeners();
+        confirmPanelNoBtn.onClick.RemoveAllListeners();
+
+        confirmPanelYesBtn.onClick.AddListener(()=>confirm());
+        confirmPanelNoBtn.onClick.AddListener(() => cancel());
+
+        OnUIInteractSetActive(UIType.UIOFFCONFIRM, true, true);
+    }
+
+    void InactiveConfirmUI()
+    {
+        OnUIInteractSetActive(UIType.UIOFFCONFIRM, false, true);
+    }
     #endregion
 
     #region UI Position
@@ -589,7 +640,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         Util.DelayFunc(() => t.gameObject.SetActive(false), 2f, this, true);
     }
 
-    public void RequestSelectionWindow(string message, List<Action> actions, List<string> btnTexts, bool activeWarning = true, List<Func<bool>> conditions = null) //선택창을 띄움
+    public void RequestSelectionWindow(string message, List<Action> actions, List<string> btnTexts, bool activeWarning = true, List<Func<bool>> conditions = null, bool useIcon = false) //선택창을 띄움
     {
         TimeManager.TimePause();
 
@@ -600,7 +651,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         
         SelectionWindow selWd = PoolManager.GetItem<SelectionWindow>("SelWindow");
         selWd.transform.SetAsLastSibling();
-        selWd.Set(message, actions, btnTexts, activeWarning, conditions);
+        selWd.Set(message, actions, btnTexts, activeWarning, conditions, useIcon);
         selWdStack.Push(selWd);
     }
 
@@ -794,6 +845,21 @@ public partial class UIManager : MonoSingleton<UIManager>
             }
         }
     }
+    #endregion
+
+    #region State
+    
+    public void StateInfoDetail(BuffStateDataSO data)
+    {
+        OnUIInteractSetActive(UIType.STATEINFO, true);
+
+        stateInfoTriple.first.sprite = data.sprite;
+        stateInfoTriple.second.SetText(data.stateName);
+        stateInfoTriple.third.text = data.explanation;
+
+        stateInfoTriple.second.colorGradient = !data.IsBuff ? imprecVG : buffVG;
+    }
+
     #endregion
 
     #region Sound

@@ -30,7 +30,10 @@ public enum UIType
     MONSTERINFO_DETAIL_STAT,
     MONSTERINFO_DETAIL_ITEM,
     SKILLDETAIL,
-    CHANGEABLEMOBLIST
+    CHANGEABLEMOBLIST,
+    STATEINFO,
+    MINIGAME_PICKUP,
+    UIOFFCONFIRM
 }
 
 public enum KeyAction
@@ -48,6 +51,7 @@ public enum KeyAction
     STAT,
     MONSTER_COLLECTION,
     INTERACTION,
+    EVENT,
     SPECIALATTACK1,
     SPECIALATTACK2,
     MANASTONE,
@@ -105,6 +109,11 @@ public enum StateAbnormality
     Scar,
     Poverty,
     Blind,
+    None  // 얘는 무조건 마지막에 배치
+}
+
+public enum BuffType
+{
     None  // 얘는 무조건 마지막에 배치
 }
 

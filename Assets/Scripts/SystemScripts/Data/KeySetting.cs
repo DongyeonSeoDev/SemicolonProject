@@ -15,6 +15,7 @@ public static class KeySetting
         keyDict[KeyAction.MONSTER_COLLECTION] = KeyCode.C;
         //keyDict[KeyAction.CHANGEABLEBODYS] = KeyCode.H;
         keyDict[KeyAction.INTERACTION] = KeyCode.F;
+        keyDict[KeyAction.EVENT] = KeyCode.Space;
         keyDict[KeyAction.SPECIALATTACK1] = KeyCode.LeftShift;
         keyDict[KeyAction.SPECIALATTACK2] = KeyCode.Q;
         keyDict[KeyAction.MANASTONE] = KeyCode.E;
