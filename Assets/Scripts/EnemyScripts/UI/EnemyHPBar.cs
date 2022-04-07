@@ -7,8 +7,6 @@ public class EnemyHPBar : MonoBehaviour
 
     private void Start()
     {
-        mainCam = Camera.main;
-
         canvas = GetComponent<Canvas>();
         canvas.worldCamera = mainCam;
     }

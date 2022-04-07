@@ -46,7 +46,6 @@ namespace Enemy
                 return;
             }
 
-
             if (EnemyManager.IsAttackPlayer(enemyData))
             {
                 if (enemyData.attackTypeCheckCondition != null)
@@ -54,7 +53,7 @@ namespace Enemy
                     enemyData.attackTypeCheckCondition();
                 }
 
-                ChangeState(new EnemyAttackState(enemyData));
+                ChangeState(new EnemyAIAttackState(enemyData));
             }
             else if (enemyData.addChangeAttackCondition != null)
             {
@@ -68,7 +67,7 @@ namespace Enemy
         }
     }
 
-    public partial class EnemyAttackState : EnemyState // 공격 상태
+    public partial class EnemyAIAttackState : EnemyState
     {
         protected override void StateChangeCondition()
         {
@@ -76,7 +75,8 @@ namespace Enemy
             {
                 return;
             }
-            else if (enemyData.eEnemyController == EnemyController.AI && enemyData.addAIAttackStateChangeCondition != null)
+            
+            if (enemyData.addAIAttackStateChangeCondition != null)
             {
                 EnemyState state = enemyData.addAIAttackStateChangeCondition.Invoke();
 
@@ -86,14 +86,34 @@ namespace Enemy
                     return;
                 }
             }
-            
-            if (enemyData.eEnemyController == EnemyController.PLAYER)
-            {
-                ChangeState(new EnemyMoveState(enemyData));
-            }
-            else if (enemyData.eEnemyController == EnemyController.AI && !EnemyManager.IsAttackPlayer(enemyData))
+
+            if (enemyData.eEnemyController == EnemyController.AI && !EnemyManager.IsAttackPlayer(enemyData))
             {
                 ChangeState(new EnemyChaseState(enemyData));
+            }
+        }
+    }
+
+    public partial class BossSpecialAttack1Status : EnemyState
+    {
+        protected override void StateChangeCondition()
+        {
+            if (AnyStateChangeState()) { }
+            else if(isEnd)
+            {
+                ChangeState(new EnemyChaseState(enemyData));
+            }
+        }
+    }
+
+    public partial class EnemyPlayerControllerAttackState : EnemyState
+    {
+        protected override void StateChangeCondition()
+        {
+            if (AnyStateChangeState()) { }
+            else
+            {
+                ChangeState(new EnemyMoveState(enemyData));
             }
         }
     }
@@ -133,7 +153,7 @@ namespace Enemy
             else if (enemyData.eEnemyController == EnemyController.PLAYER && enemyData.isAttack)
             {
                 enemyData.isAttack = false;
-                ChangeState(new EnemyAttackState(enemyData));
+                ChangeState(new EnemyPlayerControllerAttackState(enemyData));
             }
             else
             {

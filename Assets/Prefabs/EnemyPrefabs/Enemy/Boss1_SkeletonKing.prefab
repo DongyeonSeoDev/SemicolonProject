@@ -427,7 +427,7 @@ MonoBehaviour:
   bossMoveSpeed: 30
   fireDistance: 2
   fireSpawnTime: 0.1
-  specialAttack1MoveXPosition: -11.7
+  specialAttack1MoveXPosition: -11
   targetMoveSpeed: 5
   limitMinPosition: {x: -13, y: -6}
   limitMaxPosition: {x: 14, y: 16}

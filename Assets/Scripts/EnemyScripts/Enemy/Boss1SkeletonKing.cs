@@ -172,12 +172,12 @@ namespace Enemy
             enemyData.enemyChaseStateChangeCondition = SpecialAttack1ChangeCondition;
         }
 
-        private EnemyState SpecialAttack1ChangeCondition()
+        private EnemyState SpecialAttack1ChangeCondition() 
         { 
             if ((transform.position.x - specialAttack1MoveXPosition) <= 0.1f)
             {
-                gameObject.SetActive(false);
-                // return new EnemyAttackState(enemyData);
+                sr.enabled = false;
+                return new BossSpecialAttack1Status(enemyData, this);
             }
 
             return null;
@@ -301,13 +301,12 @@ namespace Enemy
         {
             if (enemyData.animationDictionary[EnemyAnimationType.Attack] == hashAttack1)
             {
-
                 if (Random.Range(0, 10) < 6)
                 {
                     enemyData.animationDictionary[EnemyAnimationType.Attack] = hashAttack2;
                     attackCount++;
 
-                    return new EnemyAttackState(enemyData);
+                    return new EnemyAIAttackState(enemyData);
                 }
 
                 return null;
@@ -327,7 +326,7 @@ namespace Enemy
             {
                 SpecialAttackCheck();
 
-                return new EnemyAttackState(enemyData);
+                return new EnemyAIAttackState(enemyData);
             }
 
             if (isSpecialAttack1)

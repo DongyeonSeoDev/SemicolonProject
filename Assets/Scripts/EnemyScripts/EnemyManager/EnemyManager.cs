@@ -177,6 +177,26 @@ namespace Enemy
             }
         }
 
+        public static void SpriteFlipCheck(EnemyData enemyData)
+        {
+            enemyData.enemyRigidbody2D.velocity = Vector2.zero;
+            enemyData.enemyRigidbody2D.angularVelocity = 0f;
+
+            if (enemyData.eEnemyController == EnemyController.AI)
+            {
+                enemyData.moveVector = (EnemyManager.Player.transform.position - enemyData.enemyObject.transform.position).normalized;
+            }
+            else if (enemyData.eEnemyController == EnemyController.PLAYER)
+            {
+                enemyData.moveVector.x = Util.MainCam.ScreenToWorldPoint(Input.mousePosition).x;
+            }
+
+            if (enemyData.enemySpriteRotateCommand != null)
+            {
+                enemyData.enemySpriteRotateCommand.Execute();
+            }
+        }
+
         public void PlayerDeadEvent()
         {
             foreach(List<Enemy> enemyList in enemyDictionary.Values)

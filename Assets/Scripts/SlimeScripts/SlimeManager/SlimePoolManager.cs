@@ -18,9 +18,14 @@ public class SlimePoolManager : MonoSingleton<SlimePoolManager>
 
         dictionary[key].Enqueue(targetObject);
     }
-    public (GameObject, bool) Find(GameObject targetObject)
+    public (GameObject, bool) Find(GameObject targetObject, bool callClone = true)
     {
-        string key = targetObject.name + "(Clone)";
+        string key = targetObject.name;
+
+        if(callClone)
+        {
+            key += "(Clone)";
+        }
 
         if (dictionary.ContainsKey(key))
         {
