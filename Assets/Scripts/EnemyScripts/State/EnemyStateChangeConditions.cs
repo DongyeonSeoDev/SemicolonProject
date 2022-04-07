@@ -94,6 +94,18 @@ namespace Enemy
         }
     }
 
+    public partial class BossSpecialAttack1Status : EnemyState
+    {
+        protected override void StateChangeCondition()
+        {
+            if (AnyStateChangeState()) { }
+            else if(isEnd)
+            {
+                ChangeState(new EnemyChaseState(enemyData));
+            }
+        }
+    }
+
     public partial class EnemyPlayerControllerAttackState : EnemyState
     {
         protected override void StateChangeCondition()

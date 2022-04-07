@@ -127,6 +127,46 @@ namespace Enemy
         }
     }
 
+    public partial class BossSpecialAttack1Status : EnemyState
+    {
+
+        private Boss1SkeletonKing boss = null;
+        private bool isEnd = false;
+        private bool isActive = false;
+        private bool isMove = false;
+
+        public BossSpecialAttack1Status(EnemyData enemyData, Boss1SkeletonKing boss) : base(eState.ATTACK, enemyData) => this.boss = boss;
+
+        protected override void Update()
+        {
+            if (!isActive)
+            {
+                isActive = true;
+
+                Util.DelayFunc(() =>
+                {
+                    enemyData.enemySpriteRenderer.enabled = true;
+                    enemyData.moveVector = (new Vector3(12f, enemyData.enemyObject.transform.position.y) - enemyData.enemyObject.transform.position).normalized;
+                    enemyData.enemySpriteRotateCommand.Execute();
+                    isMove = true;
+                }, 2f);
+            }
+
+            if (isMove)
+            {
+                enemyData.enemyRigidbody2D.velocity = enemyData.moveVector * 20f;
+
+                if (enemyData.enemyObject.transform.position.x >= 12f)
+                {
+                    isMove = false;
+                    enemyData.enemySpriteRenderer.enabled = false;
+                }
+            }
+
+            base.Update();
+        }
+    }
+
     public partial class EnemyPlayerControllerAttackState : EnemyState // 적으로 변신 후 공격 상태
     {
         private bool isNoAttack = false;

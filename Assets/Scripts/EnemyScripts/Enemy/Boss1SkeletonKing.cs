@@ -172,12 +172,12 @@ namespace Enemy
             enemyData.enemyChaseStateChangeCondition = SpecialAttack1ChangeCondition;
         }
 
-        private EnemyState SpecialAttack1ChangeCondition()
+        private EnemyState SpecialAttack1ChangeCondition() 
         { 
             if ((transform.position.x - specialAttack1MoveXPosition) <= 0.1f)
             {
-                gameObject.SetActive(false);
-                // return new EnemyAttackState(enemyData);
+                sr.enabled = false;
+                return new BossSpecialAttack1Status(enemyData, this);
             }
 
             return null;
