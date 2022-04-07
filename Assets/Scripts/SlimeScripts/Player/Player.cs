@@ -171,8 +171,6 @@ public class Player : MonoBehaviour
         EventManager.StopListening("PlayerSetActiveFalse", SetActiveFalse);
         EventManager.StopListening("GameClear", WhenGameClear);
         EventManager.StopListening("ChangeBody", OnChangeBody);
-      
-        int a = 0;
     }
     private void OnChangeBody()
     {
@@ -370,7 +368,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            Debug.Log("우오옷 동화율이 오른다앗");
+            //Debug.Log("우오옷 동화율이 오른다앗");
             PlayerEnemyUnderstandingRateManager.Instance.UpUnderstandingRate(SlimeGameManager.Instance.CurrentBodyId, upUnderstandingRateValueWhenEnemyDeadAfterBodyChanged);
         }
     }
