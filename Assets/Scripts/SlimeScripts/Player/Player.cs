@@ -171,8 +171,6 @@ public class Player : MonoBehaviour
         EventManager.StopListening("PlayerSetActiveFalse", SetActiveFalse);
         EventManager.StopListening("GameClear", WhenGameClear);
         EventManager.StopListening("ChangeBody", OnChangeBody);
-      
-        int a = 0;
     }
     private void OnChangeBody()
     {

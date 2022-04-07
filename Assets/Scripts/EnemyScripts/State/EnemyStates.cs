@@ -64,97 +64,57 @@ namespace Enemy
         }
     }
 
-    public partial class EnemyAttackState : EnemyState // 공격 상태
+    public partial class EnemyAIAttackState : EnemyState // 적 공격 상태
     {
         private float currentTime;
         private bool isDelay = false;
-        private bool isNoAttack = false;
 
-        public EnemyAttackState(EnemyData enemyData) : base(eState.ATTACK, enemyData) { }
+        public EnemyAIAttackState(EnemyData enemyData) : base(eState.ATTACK, enemyData) { }
 
         protected override void Start()
         {
             EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.AttackEnd, enemyData.enemyAnimator, TriggerType.ResetTrigger);
 
-            if (enemyData.eEnemyController == EnemyController.AI)
+            if (enemyData.isUseDelay) // 공격 쿨타임 확인
             {
-                if (enemyData.isUseDelay)
-                {
-                    isDelay = EnemyManager.IsAttackDelay(enemyData);
-                }
-
-                if (!isDelay)
-                {
-                    EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Attack, enemyData.enemyAnimator, TriggerType.SetTrigger);
-                }
-
-                currentTime = 0f;
-            }
-            else if (enemyData.eEnemyController == EnemyController.PLAYER)
-            {
-                if (SlimeGameManager.Instance.CurrentSkillDelayTimer[0] <= 0)
-                {
-                    SlimeGameManager.Instance.SetSkillDelay(0, enemyData.playerAnimationDelay + enemyData.playerAnimationTime);
-                    SlimeGameManager.Instance.CurrentSkillDelayTimer[0] = SlimeGameManager.Instance.SkillDelays[0];
-
-                    EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Attack, enemyData.enemyAnimator, TriggerType.SetTrigger);
-                    enemyData.enemyAnimator.speed = 1.2f;
-                }
-                else
-                {
-                    isNoAttack = true;
-                }
+                isDelay = EnemyManager.IsAttackDelay(enemyData);
             }
 
-            if (!isNoAttack)
+            if (!isDelay)
             {
-                SpriteFlipCheck();
+                EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Attack, enemyData.enemyAnimator, TriggerType.SetTrigger);
             }
+
+            EnemyManager.SpriteFlipCheck(enemyData);
+            currentTime = 0f;
 
             base.Start();
         }
 
         protected override void Update()
         {
-            if (enemyData.eEnemyController == EnemyController.AI)
+            if (!isDelay) // 공격 시간 확인
             {
+                currentTime += Time.deltaTime;
+            }
+            else
+            {
+                isDelay = EnemyManager.IsAttackDelay(enemyData);
+
                 if (!isDelay)
                 {
-                    currentTime += Time.deltaTime;
-                }
-                else
-                {
-                    isDelay = EnemyManager.IsAttackDelay(enemyData);
-
-                    if (!isDelay)
-                    {
-                        EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Attack, enemyData.enemyAnimator, TriggerType.SetTrigger);
-                        SpriteFlipCheck();
-                    }
-                }
-
-                if (currentTime >= enemyData.attackDelay)
-                {
-                    currentTime = 0f;
-
-                    SpriteFlipCheck();
-                    base.Update();
+                    EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Attack, enemyData.enemyAnimator, TriggerType.SetTrigger);
+                    EnemyManager.SpriteFlipCheck(enemyData);
                 }
             }
-            else if (enemyData.eEnemyController == EnemyController.PLAYER)
+
+            if (currentTime >= enemyData.attackDelay) // 공격 종료
             {
-                if (isNoAttack)
-                {
-                    base.Update();
-                }
+                currentTime = 0f;
 
-                if (SlimeGameManager.Instance.CurrentSkillDelayTimer[0] <= enemyData.playerAnimationDelay)
-                {
-                    enemyData.enemyAnimator.speed = 1.0f;
+                EnemyManager.SpriteFlipCheck(enemyData);
 
-                    SpriteFlipCheck();
-                    base.Update();
-                }
+                base.Update();
             }
 
             AlwaysCheckStateChangeCondition();
@@ -162,28 +122,61 @@ namespace Enemy
 
         protected override void End()
         {
-            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.AttackEnd, enemyData.enemyAnimator, TriggerType.SetTrigger);
             EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Attack, enemyData.enemyAnimator, TriggerType.ResetTrigger);
+            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.AttackEnd, enemyData.enemyAnimator, TriggerType.SetTrigger);
+        }
+    }
+
+    public partial class EnemyPlayerControllerAttackState : EnemyState // 적으로 변신 후 공격 상태
+    {
+        private bool isNoAttack = false;
+
+        public EnemyPlayerControllerAttackState(EnemyData enemyData) : base(eState.ATTACK, enemyData) { }
+
+        protected override void Start()
+        {
+            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.AttackEnd, enemyData.enemyAnimator, TriggerType.ResetTrigger);
+
+            if (SlimeGameManager.Instance.CurrentSkillDelayTimer[0] <= 0) // 공격 쿨타임 확인
+            {
+                SlimeGameManager.Instance.SetSkillDelay(0, enemyData.playerAnimationDelay + enemyData.playerAnimationTime);
+                SlimeGameManager.Instance.CurrentSkillDelayTimer[0] = SlimeGameManager.Instance.SkillDelays[0];
+
+                EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Attack, enemyData.enemyAnimator, TriggerType.SetTrigger);
+                enemyData.enemyAnimator.speed = 1.2f;
+
+                EnemyManager.SpriteFlipCheck(enemyData);
+            }
+            else
+            {
+                isNoAttack = true;
+            }
+
+            base.Start();
         }
 
-        private void SpriteFlipCheck()
+        protected override void Update()
         {
-            enemyData.enemyRigidbody2D.velocity = Vector2.zero;
-            enemyData.enemyRigidbody2D.angularVelocity = 0f;
-
-            if (enemyData.eEnemyController == EnemyController.AI)
+            if (isNoAttack)
             {
-                enemyData.moveVector = (EnemyManager.Player.transform.position - enemyData.enemyObject.transform.position).normalized;
-            }
-            else if (enemyData.eEnemyController == EnemyController.PLAYER)
-            {
-                enemyData.moveVector.x = Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
+                base.Update();
             }
 
-            if (enemyData.enemySpriteRotateCommand != null)
+            if (SlimeGameManager.Instance.CurrentSkillDelayTimer[0] <= enemyData.playerAnimationDelay) // 공격 종료
             {
-                enemyData.enemySpriteRotateCommand.Execute();
+                EnemyManager.SpriteFlipCheck(enemyData);
+                base.Update();
             }
+
+            AlwaysCheckStateChangeCondition();
+        }
+
+        protected override void End()
+        {
+            enemyData.enemyAnimator.speed = 1.0f;
+
+            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Attack, enemyData.enemyAnimator, TriggerType.ResetTrigger);
+            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.AttackEnd, enemyData.enemyAnimator, TriggerType.SetTrigger);
         }
     }
 

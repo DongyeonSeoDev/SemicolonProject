@@ -301,13 +301,12 @@ namespace Enemy
         {
             if (enemyData.animationDictionary[EnemyAnimationType.Attack] == hashAttack1)
             {
-
                 if (Random.Range(0, 10) < 6)
                 {
                     enemyData.animationDictionary[EnemyAnimationType.Attack] = hashAttack2;
                     attackCount++;
 
-                    return new EnemyAttackState(enemyData);
+                    return new EnemyAIAttackState(enemyData);
                 }
 
                 return null;
@@ -327,7 +326,7 @@ namespace Enemy
             {
                 SpecialAttackCheck();
 
-                return new EnemyAttackState(enemyData);
+                return new EnemyAIAttackState(enemyData);
             }
 
             if (isSpecialAttack1)
