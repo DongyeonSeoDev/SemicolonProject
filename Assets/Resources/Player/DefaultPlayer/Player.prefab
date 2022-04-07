@@ -264,6 +264,10 @@ PrefabInstance:
       propertyPath: bodySlapLine
       value: 
       objectReference: {fileID: 9050064724946708772}
+    - target: {fileID: 5860127214316570770, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: minDisWithBodyPoints
+      value: 0.35
+      objectReference: {fileID: 0}
     - target: {fileID: 6840160282341942530, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: m_Name
       value: Slime

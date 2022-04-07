@@ -32,13 +32,6 @@ public class PlayerDrainCollider : MonoBehaviour
         get { return drainMoveSpeed; }
     }
 
-    [SerializeField]
-    private float failedDrainMoveSpeed = 1f;
-    public float FailedDrainMoveSpeed
-    {
-        get { return failedDrainMoveSpeed; }
-    }
-
     private float drainTimer = 0f;
 
     private Dictionary<GameObject, Vector2> drainMoveOriginPosDict = new Dictionary<GameObject, Vector2>();
