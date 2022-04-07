@@ -166,7 +166,7 @@ namespace Enemy
 
                 enemyDamagedCommand.Execute();
 
-                if (enemyData.isKnockBack)
+                if (!enemyData.isNoKnockback && enemyData.isKnockBack)
                 {
                     enemyKnockBackCommand.Execute();
 

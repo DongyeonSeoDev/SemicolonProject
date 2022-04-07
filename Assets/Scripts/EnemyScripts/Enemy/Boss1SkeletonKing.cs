@@ -55,6 +55,8 @@ namespace Enemy
             enemyData.attackPower = 30;
             enemyData.maxHP = 500;
             enemyData.hp = 500;
+            enemyData.isNoKnockback = true;
+            enemyData.isNoStun = true;
 
             enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, movePivot, rb, 5f, 0f, false);
             enemySpecialAttackMoveCommand = new EnemyTargetMoveCommand(enemyData, targetMoveSpeed);

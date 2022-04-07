@@ -169,7 +169,7 @@ namespace Enemy
             {
                 ChangeState(new EnemyDeadState(enemyData));
             }
-            else if (enemyData.stunTime > 0 && stateName != eState.STUN)
+            else if (!enemyData.isNoStun && enemyData.stunTime > 0 && stateName != eState.STUN)
             {
                 ChangeState(new EnemyStunStatus(enemyData));
             }

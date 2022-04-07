@@ -81,6 +81,8 @@ namespace Enemy
         public bool isUseDelay = false;
         public bool isPlayerControllerMove = false;
         public bool isUseKnockBack;
+        public bool isNoKnockback = false;
+        public bool isNoStun = false;
 
         public int attackPower = 10;
         public int damagedValue;
