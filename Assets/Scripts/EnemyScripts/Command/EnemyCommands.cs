@@ -121,6 +121,23 @@ namespace Enemy
         }
     }
 
+    public class EnemyTargetMoveCommand : EnemyCommand
+    {
+        private EnemyData enemyData;
+        private float moveSpeed;
+
+        public EnemyTargetMoveCommand(EnemyData data, float speed)
+        {
+            enemyData = data;
+            moveSpeed = speed;
+        }
+
+        public override void Execute()
+        {
+            enemyData.enemyRigidbody2D.velocity = enemyData.moveVector * moveSpeed;
+        }
+    }
+
     public class EnemyFollowPlayerCommand : EnemyCommand // 적 움직임
     {
         private EnemyData enemyData;

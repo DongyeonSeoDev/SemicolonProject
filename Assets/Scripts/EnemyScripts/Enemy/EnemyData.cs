@@ -29,6 +29,7 @@ namespace Enemy
         public List<EnemyLootData> enemyLootList;
 
         public Action attackTypeCheckCondition = null;
+        public Func<EnemyState> enemyChaseStateChangeCondition = null;
         public Func<EnemyState> addAIAttackStateChangeCondition = null;
         public Func<EnemyState> addChangeAttackCondition = null;
 

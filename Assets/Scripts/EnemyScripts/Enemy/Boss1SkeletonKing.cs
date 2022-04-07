@@ -10,12 +10,17 @@ namespace Enemy
         public Transform movePivot;
         public float specialAttackTime = 6f;
         public int fireCount = 0;
+        public int maxAttackCount = 0;
         public float bossMoveSpeed = 0f;
         public float fireDistance = 0f;
         public float fireSpawnTime = 0f;
+        public float specialAttack1MoveXPosition = 0f;
+        public float targetMoveSpeed = 0f;
         public Vector2 limitMinPosition;
         public Vector2 limitMaxPosition;
 
+        private EnemyCommand enemyMoveCommand;
+        private EnemyCommand enemySpecialAttackMoveCommand;
         private EnemyCommand attackMoveCommand;
         private EnemyCommand rushAttackReadyCommand;
         private EnemyCommand rushAttackCommand;
@@ -23,8 +28,10 @@ namespace Enemy
         private WaitForSeconds fireSpawnTimeSeconds2 = new WaitForSeconds(0.1f);
 
         private List<float> specialAttack3Check = new List<float>();
+        private int attackCount = 0;
         private float currentTime = 0f;
         private bool isAttack = false;
+        private bool isSpecialAttack1 = false;
         private bool isSpecialAttack3 = false;
 
         private readonly int hashAttack1 = Animator.StringToHash("attack");
@@ -39,15 +46,6 @@ namespace Enemy
             fireSpawnTimeSeconds = new WaitForSeconds(fireSpawnTime);
         }
 
-        protected override void Start()
-        {
-            attackMoveCommand = new EnemyFollowPlayerCommand(enemyData, movePivot, rb, bossMoveSpeed, 0f, false);
-            rushAttackReadyCommand = new BossRushAttackCommand(enemyData, movePivot, rb, -1f, false);
-            rushAttackCommand = new BossRushAttackCommand(enemyData, movePivot, rb, 50f, true);
- 
-            base.Start();
-        }
-
         protected override void OnEnable()
         {
             base.OnEnable();
@@ -58,14 +56,22 @@ namespace Enemy
             enemyData.maxHP = 500;
             enemyData.hp = 500;
 
-            enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, movePivot, rb, 5f, 0f, false);
+            enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, movePivot, rb, 5f, 0f, false);
+            enemySpecialAttackMoveCommand = new EnemyTargetMoveCommand(enemyData, targetMoveSpeed);
+            attackMoveCommand = new EnemyFollowPlayerCommand(enemyData, movePivot, rb, bossMoveSpeed, 0f, false);
+            rushAttackReadyCommand = new BossRushAttackCommand(enemyData, movePivot, rb, -1f, false);
+            rushAttackCommand = new BossRushAttackCommand(enemyData, movePivot, rb, 50f, true);
+
+            enemyData.enemyMoveCommand = enemyMoveCommand;
             enemyData.enemySpriteRotateCommand = new EnemySpriteFlipCommand(enemyData);
             enemyData.attackTypeCheckCondition = SpecialAttackCheck;
             enemyData.addAIAttackStateChangeCondition = AttackStateChangeCondition;
             enemyData.addChangeAttackCondition = ChangeAttackCondition;
 
             currentTime = 0f;
+            attackCount = 0;
             isAttack = false;
+            isSpecialAttack1 = false;
             isSpecialAttack3 = false;
 
             specialAttack3Check.Clear();
@@ -96,6 +102,12 @@ namespace Enemy
                 return;
             }
 
+            if (attackCount >= maxAttackCount)
+            {
+                isSpecialAttack1 = true;
+                attackCount = 0;
+            }
+
             if (!isAttack)
             {
                 currentTime += Time.deltaTime;
@@ -110,6 +122,7 @@ namespace Enemy
         public void AttackReady() // 애니메이션에서 실행 - 공격하기전 이동
         {
             rb.velocity = Vector2.zero;
+            attackCount++;
 
             rushAttackReadyCommand.Execute();
             enemyData.enemySpriteRotateCommand.Execute();
@@ -118,6 +131,7 @@ namespace Enemy
         public void AttackMove() // 애니메이션에서 실행 - 공격하면서 움직이는 코드
         {
             rb.velocity = Vector2.zero;
+            attackCount++;
 
             for (int i = 0; i < enemyAttackCheck.Length; i++)
             {
@@ -139,6 +153,41 @@ namespace Enemy
 
             rushAttackCommand.Execute();
             enemyData.enemySpriteRotateCommand.Execute();
+
+            if (Random.Range(0, 10) < 2)
+            {
+                isSpecialAttack1 = true;
+                attackCount = attackCount - 3 < 0 ? 0 : attackCount - 3;
+            }
+        }
+
+        private void SpecialAttack1()
+        {
+            isSpecialAttack1 = false;
+            isAttack = true;
+
+            enemyData.moveVector = (new Vector3(specialAttack1MoveXPosition, transform.position.y, transform.position.z) - transform.position).normalized;
+
+            enemyData.enemyMoveCommand = enemySpecialAttackMoveCommand;
+            enemyData.enemyChaseStateChangeCondition = SpecialAttack1ChangeCondition;
+        }
+
+        private EnemyState SpecialAttack1ChangeCondition()
+        { 
+            if ((transform.position.x - specialAttack1MoveXPosition) <= 0.1f)
+            {
+                gameObject.SetActive(false);
+                // return new EnemyAttackState(enemyData);
+            }
+
+            return null;
+        }
+
+        private void SpecialAttack1End()
+        {
+            isAttack = false;
+            enemyData.enemyMoveCommand = enemyMoveCommand;
+            enemyData.enemyChaseStateChangeCondition = null;
         }
 
         public void SpecialAttack2Start() // 애니메이션에서 실행 - 특수공격2 시작
@@ -152,6 +201,7 @@ namespace Enemy
             Vector3 playerPosition = EnemyManager.Player.transform.position;
 
             Fire.checkAttackObjectTogether.Clear();
+            attackCount++;
 
             for (int i = 0; i < fireCount - 1; i++)
             {
@@ -194,6 +244,7 @@ namespace Enemy
         private IEnumerator SpecialAttack3() // 특수공격3 코루틴
         {
             isSpecialAttack3 = true;
+            attackCount++;
 
             for (int i = 0; i < 150; i++)
             {
@@ -254,6 +305,8 @@ namespace Enemy
                 if (Random.Range(0, 10) < 6)
                 {
                     enemyData.animationDictionary[EnemyAnimationType.Attack] = hashAttack2;
+                    attackCount++;
+
                     return new EnemyAttackState(enemyData);
                 }
 
@@ -262,6 +315,8 @@ namespace Enemy
             else
             {
                 enemyData.animationDictionary[EnemyAnimationType.Attack] = hashAttack1;
+                attackCount++;
+
                 return new EnemyChaseState(enemyData);
             }
         }
@@ -273,6 +328,13 @@ namespace Enemy
                 SpecialAttackCheck();
 
                 return new EnemyAttackState(enemyData);
+            }
+
+            if (isSpecialAttack1)
+            {
+                SpecialAttack1();
+
+                return new EnemyChaseState(enemyData);
             }
 
             return null;

@@ -423,9 +423,12 @@ MonoBehaviour:
   movePivot: {fileID: 8275286282891348784}
   specialAttackTime: 6
   fireCount: 9
+  maxAttackCount: 7
   bossMoveSpeed: 30
   fireDistance: 2
   fireSpawnTime: 0.1
+  specialAttack1MoveXPosition: -11.7
+  targetMoveSpeed: 5
   limitMinPosition: {x: -13, y: -6}
   limitMaxPosition: {x: 14, y: 16}
 --- !u!114 &5497031053508213442

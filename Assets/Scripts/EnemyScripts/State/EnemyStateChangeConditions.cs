@@ -29,8 +29,25 @@ namespace Enemy
     {
         protected override void StateChangeCondition()
         {
-            if (AnyStateChangeState()) { }
-            else if (EnemyManager.IsAttackPlayer(enemyData))
+            if (AnyStateChangeState())
+            {
+                return;
+            }
+
+            if (enemyData.enemyChaseStateChangeCondition != null)
+            {
+                EnemyState state = enemyData.enemyChaseStateChangeCondition.Invoke();
+
+                if (state != null)
+                {
+                    ChangeState(state);
+                }
+
+                return;
+            }
+
+
+            if (EnemyManager.IsAttackPlayer(enemyData))
             {
                 if (enemyData.attackTypeCheckCondition != null)
                 {
