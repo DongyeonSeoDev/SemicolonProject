@@ -1415,7 +1415,8 @@ MonoBehaviour:
   - {fileID: 7698324513233151608}
   - {fileID: 2903864314925138834}
   - {fileID: 2111183138866665230}
-  plants: []
+  plants:
+  - {fileID: 3133389912354758311}
 --- !u!1 &3553275141150440558
 GameObject:
   m_ObjectHideFlags: 0
@@ -27260,6 +27261,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 913d8b5e292ca3f4b9cdf9e9ace1a6f4, type: 3}
+--- !u!114 &3133389912354758311 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8632448655464481713, guid: 913d8b5e292ca3f4b9cdf9e9ace1a6f4, type: 3}
+  m_PrefabInstance: {fileID: 6679005196501179670}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d26a08ab189ceb34e9725d88e0992cda, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &7139777225889162742 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4586074380361857248, guid: 913d8b5e292ca3f4b9cdf9e9ace1a6f4, type: 3}

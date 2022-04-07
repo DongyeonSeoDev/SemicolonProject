@@ -80,11 +80,11 @@ public class EffectManager : MonoSingleton<EffectManager>
 
         EventManager.StartListening("PlayerRespawn", Respawn);
         EventManager.StartListening("TryDrain", TryDrain);
-        EventManager.StartListening("PlayerDead", () => CallFollowTargetGameEffect("PlayerDeathEff", SlimeGameManager.Instance.CurrentPlayerBody.transform, Vector3.zero, 2));
+        EventManager.StartListening("PlayerDead", () => CallFollowTargetGameEffect("PlayerDeathEff", GameManager.Instance.slimeFollowObj, Vector3.zero, 2));
         EventManager.StartListening("ChangeBody", (str, b) =>
         {
             if (string.IsNullOrEmpty(str) == b) { }  //타입을 알리기 위한 쓰이지않는 매개변수와 코드
-            CallFollowTargetGameEffect("BodyChangeEff", SlimeGameManager.Instance.CurrentPlayerBody.transform, Vector3.zero, 1);
+            CallFollowTargetGameEffect("BodyChangeEff", GameManager.Instance.slimeFollowObj, Vector3.zero, 1);
         });
 
         for(int i=0; i< gameEffects.Length; i++)
