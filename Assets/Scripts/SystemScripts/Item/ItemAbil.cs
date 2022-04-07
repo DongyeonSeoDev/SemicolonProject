@@ -9,7 +9,7 @@ public class ItemUseMng
         value *= PlayerObj.PlayerStat.MaxHp * 0.01f;
         int iValue = Mathf.CeilToInt(value);
         PlayerObj.GetHeal(iValue);
-        UIManager.Instance.InsertNoticeQueue("HP " + iValue + "% 회복");
+        UIManager.Instance.InsertNoticeQueue("HP " + iValue + " 회복");
         //EffectManager.Instance.OnTopRightBtnEffect(UIType.STAT, true);
     }
 

@@ -368,7 +368,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            Debug.Log("우오옷 동화율이 오른다앗");
+            //Debug.Log("우오옷 동화율이 오른다앗");
             PlayerEnemyUnderstandingRateManager.Instance.UpUnderstandingRate(SlimeGameManager.Instance.CurrentBodyId, upUnderstandingRateValueWhenEnemyDeadAfterBodyChanged);
         }
     }

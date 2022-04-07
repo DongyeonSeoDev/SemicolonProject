@@ -33,6 +33,8 @@ public partial class GameManager : MonoSingleton<GameManager>
     public int InventoryItemCount
     { get => savedData.userInfo.userItems.keyValueDic.Keys.Count; }
 
+    public Transform slimeFollowObj { get; private set; }
+
     private void Awake()
     {
         filePath = Global.saveFileName_1.PersistentDataPath();
@@ -159,12 +161,16 @@ public partial class GameManager : MonoSingleton<GameManager>
             checkGameStringKeys.poolKeyList = PoolManager.poolDic.Keys.ToList();
             Global.SetResordEventKey();
         }, 3f);
+
+        slimeFollowObj = PoolManager.GetItem("EmptyObject").transform;
+        slimeFollowObj.gameObject.AddComponent(typeof(SlimeFollowObj));
+        slimeFollowObj.name = typeof(SlimeFollowObj).Name;
     }
 
     void PlayerDead()
     {
         PoolManager.PoolObjSetActiveFalse("ItemFollowEffect");
-        PoolManager.PoolObjSetActiveFalse("EmptyObject");
+        //PoolManager.PoolObjSetActiveFalse("EmptyObject");
         StateManager.Instance.RemoveAllStateAbnormality(false);
     }
 

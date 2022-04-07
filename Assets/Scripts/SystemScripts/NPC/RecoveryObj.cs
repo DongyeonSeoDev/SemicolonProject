@@ -34,7 +34,7 @@ public class RecoveryObj : InteractionObj
     private void DefaultFunc()
     {
         StageManager.Instance.SetClearStage();
-        EffectManager.Instance.CallFollowTargetGameEffect("RecoveryEff", SlimeGameManager.Instance.CurrentPlayerBody.transform, effOffset, 3f);
+        EffectManager.Instance.CallFollowTargetGameEffect("RecoveryEff", GameManager.Instance.slimeFollowObj, effOffset, 3f);
         recoveryLight.DOIntensity(0, 1f, true, () => recoveryLight.gameObject.SetActive(false));
     }
 
@@ -46,7 +46,7 @@ public class RecoveryObj : InteractionObj
 
             recoveryLight = PoolManager.GetItem<Light2D>("NormalPointLight2D");
             recoveryLight.transform.position = StageManager.Instance.CurrentStageGround.objSpawnPos.position;
-            recoveryLight.intensity = 1;
+            recoveryLight.intensity = 0.4f;
         }
     }
     private void OnDisable()

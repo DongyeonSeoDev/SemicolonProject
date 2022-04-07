@@ -147,12 +147,28 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
         float hpPercentage = player.CurrentHp / player.PlayerStat.MaxHp;
 
+        //Destroy(currentPlayerBody);
+
+        Debug.Log(currentPlayerBody.name);
+        SlimePoolManager.Instance.AddObject(currentPlayerBody);
+        currentPlayerBody.SetActive(false);
+
+        bool found = false;
+
         #region 원래의 모습으로 변신
         if (bodyId == "origin")
         {
-            Destroy(currentPlayerBody);
+            (newBody, found) = SlimePoolManager.Instance.Find(originPlayerBody, false);
 
-            newBody = Instantiate(originPlayerBody, player.transform);
+            if (!found)
+            {
+                newBody = Instantiate(originPlayerBody, player.transform);
+            }
+            else
+            {
+                newBody.SetActive(true);
+            }
+
             currentBodyId = bodyId;
 
             if (pasteBodyAdditionalStat != null && !isDead)
@@ -188,12 +204,21 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
         #region 원래와는 다른 모습으로 변신
         if (playerEnemyUnderstandingRateManager.MountedObjList.Contains(bodyId))
         {
-            Destroy(currentPlayerBody);
-
             (GameObject, EternalStat) newBodyData = playerEnemyUnderstandingRateManager.ChangalbeBodyDict[bodyId];
             currentBodyId = bodyId;
 
-            newBody = Instantiate(newBodyData.Item1, player.transform);
+            (newBody, found) = SlimePoolManager.Instance.Find(newBodyData.Item1);
+
+            if (!found)
+            {
+                newBody = Instantiate(newBodyData.Item1, player.transform);
+            }
+            else
+            {
+                newBody.SetActive(true);
+            }
+
+            //newBody = Instantiate(newBodyData.Item1, player.transform);
 
             if (pasteBodyAdditionalStat != null && !isDead)
             {
@@ -317,14 +342,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
         if (hit)
         {
-            //if (crashableLayer.CompareGameObjectLayer(hit.collider.gameObject)) // 자~ 얘도 쓸모 없다 싶으면 바로 벤이란다!
-            //{
-            //    return hit.point;// - (targetPos - startPos).normalized * (Vector2.Distance(startPos, targetPos) / 10f);
-            //}
-            //else
-            {
-                return hit.point;
-            }
+            return hit.point;
         }
         else
         {

@@ -26,7 +26,7 @@ public class ImprecationObj : InteractionObj
     private void DefaultFunc()
     {
         StageManager.Instance.SetClearStage();
-        EffectManager.Instance.CallFollowTargetGameEffect("ImprecationEff", SlimeGameManager.Instance.CurrentPlayerBody.transform, Vector3.up, 2f);
+        EffectManager.Instance.CallFollowTargetGameEffect("ImprecationEff", GameManager.Instance.slimeFollowObj, Vector3.up, 2f);
     }
 
     private void OnEnable()
