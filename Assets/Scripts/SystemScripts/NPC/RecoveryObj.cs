@@ -46,7 +46,7 @@ public class RecoveryObj : InteractionObj
 
             recoveryLight = PoolManager.GetItem<Light2D>("NormalPointLight2D");
             recoveryLight.transform.position = StageManager.Instance.CurrentStageGround.objSpawnPos.position;
-            recoveryLight.intensity = 1;
+            recoveryLight.intensity = 0.4f;
         }
     }
     private void OnDisable()
