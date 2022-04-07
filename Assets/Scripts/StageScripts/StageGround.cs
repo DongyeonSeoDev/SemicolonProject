@@ -84,22 +84,18 @@ public class StageGround : MonoBehaviour
             for (int i = 0; i < imprecMapEffects.second.Count; i++)
             {
                 imprecMapEffects.second[i].gameObject.SetActive(active);
-            }
-
-            
+            }   
         }
 
-        if(recovMapEffects.first != null)
+        /*if(recovMapEffects.first != null)
         {
             active = StageManager.Instance.CurrentAreaType == AreaType.RECOVERY;
 
             for (int i = 0; i < recovMapEffects.second.Count; i++)
             {
                 recovMapEffects.second[i].gameObject.SetActive(active);
-            }
-
-            
-        }
+            }  
+        }*/
     }
 
     public StageDoor GetOpposeDoor(DoorDirType type)
