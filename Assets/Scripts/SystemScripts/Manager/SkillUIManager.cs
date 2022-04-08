@@ -91,10 +91,15 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
 
             bool org = str == Global.OriginBodyID;
 
-            energeBarAndEff.first.SetActive(org);
-            energeBarAndEff.second.SetActive(org); 
-
-            
+            if (org)
+            {
+                energeBarAndEff.first.SetActive(true);
+                energeBarAndEff.first.transform.DOScaleX(1, 0.3f);
+            }
+            else
+            {
+                energeBarAndEff.first.transform.DOScaleX(0, 0.3f).OnComplete(() => energeBarAndEff.first.SetActive(false));
+            }
         });
     }
 

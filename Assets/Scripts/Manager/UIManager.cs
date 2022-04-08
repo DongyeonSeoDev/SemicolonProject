@@ -313,6 +313,13 @@ public partial class UIManager : MonoSingleton<UIManager>
         {
             OnUIInteract(UIType.QUIT);
         }
+
+#if UNITY_EDITOR
+        else if(Input.GetKeyDown(ScreenShot.captureKeyCode))
+        {
+            ScreenShot.StartScreenShot();
+        }
+#endif
         /*else if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.CHANGEABLEBODYS]))
         {
             OnUIInteract(UIType.CHANGEABLEMOBLIST);

@@ -19,7 +19,9 @@ public class StageCheatWindow : EditorWindow
     private Enemy.EnemyType mobId;
 
     private int toolbarIdx;
-    private string[] toolbars = {"Useable", "Temporary"};
+    private string[] toolbars = {"Useable", "Util" ,"Temporary"};
+
+    private KeyCode keyCode = KeyCode.G;
 
     [MenuItem("Cheat/Normal Cheat")]
     public static void ShowEnemySpawnWindow()
@@ -146,7 +148,22 @@ public class StageCheatWindow : EditorWindow
 
                 GUILayout.Space(20);
                 break;
+
             case 1:
+
+                GUILayout.Label("[ScreenShot]", EditorStyles.boldLabel);
+                GUILayout.Label("(저장위치는 일단 Assets/ScreenShot)\n(아마 에디터에서만 스샷 가능)", EditorStyles.label);
+                GUILayout.Label("단축키 : " + ScreenShot.captureKeyCode.ToString(), EditorStyles.label);
+
+                GUILayout.Space(20);
+                keyCode = (KeyCode)EditorGUILayout.EnumPopup("스샷 단축키", keyCode);
+                if (GUILayout.Button("스샷 단축키 변경"))
+                {
+                    ScreenShot.captureKeyCode = keyCode;
+                }
+                break;
+
+            case 2:
                 GUILayout.Label("[Saved Body Cheat]", EditorStyles.boldLabel);
                 GUILayout.Label("(이 기능은 게임 시작하고 몹 슬롯에 아무것도 없을 때만 가능. \n테스트만 하고 종료하자)", EditorStyles.label);
 
@@ -156,7 +173,6 @@ public class StageCheatWindow : EditorWindow
                     PlayerEnemyUnderstandingRateManager.Instance.SetMountObj(mobId.ToString());
                 }
 
-                
                 break;
         }
 
