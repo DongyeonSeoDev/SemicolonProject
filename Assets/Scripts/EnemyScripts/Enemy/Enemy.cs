@@ -241,8 +241,6 @@ namespace Enemy
                 }
 
                 sr.color = enemyData.normalColor;
-
-                EnemyManager.Player = GameObject.FindGameObjectWithTag("Player");
             }
             else if (eEnemyController == EnemyController.PLAYER)
             {
@@ -255,8 +253,6 @@ namespace Enemy
                 }
 
                 sr.color = enemyData.playerNormalColor;
-
-                EnemyManager.Player = gameObject;
             }
 
             if (enemyAttackCheck != null)
