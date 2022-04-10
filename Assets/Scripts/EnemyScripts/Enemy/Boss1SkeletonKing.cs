@@ -16,6 +16,7 @@ namespace Enemy
         public float fireSpawnTime = 0f;
         public float specialAttack1MoveXPosition = 0f;
         public float targetMoveSpeed = 0f;
+        public float attackSpeedUpPercent = 0f;
         public Vector2 limitMinPosition;
         public Vector2 limitMaxPosition;
 
@@ -295,7 +296,15 @@ namespace Enemy
             else
             {
                 enemyData.animationDictionary[EnemyAnimationType.Attack] = hashAttack1;
-                enemyData.attackDelay = 1.8f;
+
+                if (EnemyHpPercent() <= attackSpeedUpPercent)
+                {
+                    enemyData.attackDelay = 1.3f;
+                }
+                else
+                {
+                    enemyData.attackDelay = 1.8f;
+                }
             }
         }
 
