@@ -35,8 +35,10 @@ namespace Enemy
         private bool isSpecialAttack1 = false;
         private bool isSpecialAttack3 = false;
 
+        private readonly int hashMove = Animator.StringToHash("move");
         private readonly int hashAttack1 = Animator.StringToHash("attack");
         private readonly int hashAttack2 = Animator.StringToHash("attack2");
+        private readonly int hashSpecialAttack1 = Animator.StringToHash("specialAttack1");
         private readonly int hashSpecialAttack2 = Animator.StringToHash("specialAttack2");
         private readonly int hashSpecialAttack3 = Animator.StringToHash("specialAttack3");
 
@@ -171,6 +173,7 @@ namespace Enemy
 
             enemyData.moveVector = (new Vector3(specialAttack1MoveXPosition, transform.position.y, transform.position.z) - transform.position).normalized;
 
+            enemyData.animationDictionary[EnemyAnimationType.Move] = hashSpecialAttack1;
             enemyData.enemyMoveCommand = enemySpecialAttackMoveCommand;
             enemyData.enemyChaseStateChangeCondition = SpecialAttack1ChangeCondition;
         }
@@ -189,6 +192,9 @@ namespace Enemy
         private void SpecialAttack1End()
         {
             isAttack = false;
+            currentTime = 0f;
+
+            enemyData.animationDictionary[EnemyAnimationType.Move] = hashMove;
             enemyData.enemyMoveCommand = enemyMoveCommand;
             enemyData.enemyChaseStateChangeCondition = null;
         }

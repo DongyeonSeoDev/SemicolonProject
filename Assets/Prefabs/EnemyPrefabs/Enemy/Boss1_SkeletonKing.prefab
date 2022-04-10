@@ -428,7 +428,7 @@ MonoBehaviour:
   fireDistance: 2
   fireSpawnTime: 0.1
   specialAttack1MoveXPosition: -11
-  targetMoveSpeed: 5
+  targetMoveSpeed: 15
   attackSpeedUpPercent: 40
   limitMinPosition: {x: -13, y: -6}
   limitMaxPosition: {x: 14, y: 16}
