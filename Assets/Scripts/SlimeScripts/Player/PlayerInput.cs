@@ -175,9 +175,9 @@ public class PlayerInput : MonoBehaviour
         isDoSkill0 = false;
         isDoSkill1 = false;
         isDoSkill2 = false;
-        skill0ButtonDowned = false;
-        skill1ButtonDowned = false;
-        skill2ButtonDowned = false;
+        //skill0ButtonDowned = false;
+        //skill1ButtonDowned = false;
+        //skill2ButtonDowned = false;
         isInteraction = false;
     }
 

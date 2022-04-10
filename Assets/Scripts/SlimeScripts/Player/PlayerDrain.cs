@@ -46,12 +46,14 @@ public class PlayerDrain : PlayerSkill
         base.OnEnable();
 
         EventManager.StartListening("OnDrain", OnDrain);
+        EventManager.StartListening("EnemySpawnAfter", EnemyStop);
     }
     public override void OnDisable()
     {
         base.OnDisable();
 
         EventManager.StopListening("OnDrain", OnDrain);
+        EventManager.StopListening("EnemySpawnAfter", EnemyStop);
     }
     public override void Update()
     {
@@ -74,7 +76,6 @@ public class PlayerDrain : PlayerSkill
 
             SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = SlimeGameManager.Instance.SkillDelays[skillIdx];
 
-            EventManager.TriggerEvent("EnemyStop");
             EventManager.TriggerEvent("SetDrainTime", playerDrainCol.DrainTime);
 
             drainCollider.SetActive(true);
@@ -82,7 +83,6 @@ public class PlayerDrain : PlayerSkill
             canDrain = false;
         }
     }
-   
     private void OnDrain(GameObject obj, Vector2 position, int upValue) // upValue는 이해도(동화율)이 얼마나 오를 것인가.
     {
         Enemy.Enemy enemy = obj.GetComponent<Enemy.Enemy>();
@@ -102,6 +102,15 @@ public class PlayerDrain : PlayerSkill
         {
             enemy.EnemyDestroy();
         }
+    }
+    private void EnemyStop()
+    {
+        Debug.Log("bbbbb");
 
+        if (player.PlayerState.IsDrain)
+        {
+            Debug.Log("aaaa");
+            EventManager.TriggerEvent("EnemyStop");
+        }
     }
 }
