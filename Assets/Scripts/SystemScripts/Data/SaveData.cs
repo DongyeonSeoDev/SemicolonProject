@@ -7,6 +7,7 @@ public class SaveData
 {
     public Option option = new Option();
     public UserInfo userInfo = new UserInfo();
+    public TutorialInfo tutorialInfo = new TutorialInfo();
 
     public void Save()
     {
@@ -22,11 +23,19 @@ public class SaveData
     }
 }
 
+[SerializeField]
+public class TutorialInfo
+{
+    public bool isEnded;
+
+    public string tutorialId;
+}
+
 [Serializable]
 public class UserInfo
 {
     //stage
-    public string currentStageID; //어느 스테이지까지 갔는지
+    public string currentStageID = "Stage1-01"; //어느 스테이지까지 갔는지
 
     //스탯 정보
     public int currentHp; //현재 HP
