@@ -8,6 +8,9 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     private GameManager gm;
     private UIManager um;
 
+    public Transform hpUI, energeBarUI;
+    public Transform[] skillUIArr;
+
     public bool IsTutorialStage { get; set; }
 
     private void Awake()
@@ -20,11 +23,25 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         gm = GameManager.Instance;
         um = UIManager.Instance;
 
-        if(!gm.savedData.tutorialInfo.isEnded)
+        bool active = gm.savedData.tutorialInfo.isEnded;
+        hpUI.gameObject.SetActive(active);
+        energeBarUI.gameObject.SetActive(active);
+        for (int i = 0; i < skillUIArr.Length; i++)
+        {
+            skillUIArr[i].gameObject.SetActive(active);
+        }
+
+        if (!gm.savedData.tutorialInfo.isEnded)
         {
             IsTutorialStage = true;
 
             
         }
+    }
+
+    public void UIOn(UIType type)
+    {
+        UIActiveData.Instance.uiActiveDic[type] = true;
+        UIManager.Instance.acqUIList.Find(x => x.uiType == type).GetComponent<AcquisitionUI>().OnUIVisible(true);
     }
 }

@@ -123,6 +123,8 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     public Setting setting;
 
+    public List<AcquisitionUI> acqUIList;
+
     //public Text statText;
     public Text[] statTexts;
 
@@ -140,6 +142,18 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     private void InitData()
     {
+        int i;
+
+        for(i=0; i<Global.EnumCount<UIType>(); i++)
+        {
+            UIActiveData.Instance.uiActiveDic.Add((UIType)i, true);
+        }
+        for(i=0; i<acqUIList.Count; i++)
+        {
+            UIActiveData.Instance.uiActiveDic[acqUIList[i].uiType] = false;
+        }
+        UIActiveData.Instance.uiActiveDic[UIType.QUIT] = false;
+
         cursorImgRectTrm = cursorInfoImg.GetComponent<RectTransform>();
         sw = cursorImgRectTrm.rect.width;
 
@@ -148,7 +162,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         defaultTopCenterMsgVG = topCenterMsgTMP.colorGradient;
         //topCenterMsgTMPCvsg = topCenterMsgTMP.GetComponent<CanvasGroup>();
 
-        int i;
+       
         for(i=0; i<gameCanvases.Length; i++)
         {
             gameCanvases[i].worldCamera = Util.MainCam;
@@ -334,6 +348,8 @@ public partial class UIManager : MonoSingleton<UIManager>
     {
         if (!CheckExistUI((int)type)) return;
 
+        if (!UIActiveData.Instance.uiActiveDic[type]) return;
+
         if (activeUIQueue.Count > 0 && !ignoreQueue) return;
         if (ExceptionHandler(type)) return;
 
@@ -352,6 +368,8 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     public void OnUIInteractSetActive(UIType type, bool isActive ,bool ignoreQueue = false) //UI열거나 닫음 (원하는 액티브 상태로 해주고 이미 그 상태면 캔슬)
     {
+        if (!UIActiveData.Instance.uiActiveDic[type]) return;
+
         GameUI ui = gameUIList[(int)type];
         if (ui.gameObject.activeSelf == isActive) return;
         if (uiTweeningDic[type]) return;

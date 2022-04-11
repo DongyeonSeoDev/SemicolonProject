@@ -120,6 +120,7 @@ public class StageManager : MonoSingleton<StageManager>
 
     private void Init()
     {
+        startStageID = GameManager.Instance.savedData.userInfo.currentStageID;
         InsertRandomMaps(currentFloor, true);
         SetRandomAreaRandomIncounter();
         Util.DelayFunc(() => NextStage(startStageID), 0.2f);

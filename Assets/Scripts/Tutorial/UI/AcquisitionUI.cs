@@ -14,10 +14,19 @@ public class AcquisitionUI : MonoBehaviour
         OnUIVisible(false);
     }
 
-    private void OnUIVisible(bool on)
+    public void OnUIVisible(bool on)
     {
+        this.on = on;
         cvsg.alpha = on ? 1 : 0;
         cvsg.interactable = on;
         cvsg.blocksRaycasts = on;
+    }
+
+    private void Start()
+    {
+        if(GameManager.Instance.savedData.tutorialInfo.isEnded)
+        {
+            UIActiveData.Instance.uiActiveDic[uiType] = true;
+        }
     }
 }
