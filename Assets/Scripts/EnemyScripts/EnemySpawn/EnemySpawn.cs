@@ -39,20 +39,33 @@ namespace Enemy
 
             for (int i = 0; i < CSVEnemySpawn.Instance.enemySpawnDatas[stageId].Count; i++)
             {
-                EnemyPoolData enemy = EnemyPoolManager.Instance.GetPoolObject(CSVEnemySpawn.Instance.enemySpawnDatas[stageId][i].enemyId, CSVEnemySpawn.Instance.enemySpawnDatas[stageId][i].position);
+                EnemyPoolData effect = EnemyPoolManager.Instance.GetPoolObject(Type.EnemySpawnEffect, CSVEnemySpawn.Instance.enemySpawnDatas[stageId][i].position);
 
-                if (enemyDictionary.ContainsKey(stageId))
-                {
-                    enemyDictionary[stageId].Add(enemy.GetComponent<Enemy>());
-                }
-                else
-                {
-                    enemyDictionary.Add(stageId, new List<Enemy>());
-                    enemyDictionary[stageId].Add(enemy.GetComponent<Enemy>());
-                }
+                effect.GetComponent<EnemySpawnEffect>().Play();
             }
 
-            EnemyManager.Instance.enemyCount = CSVEnemySpawn.Instance.enemySpawnDatas[stageId].Count;  //Set Enemy Count
+            Util.DelayFunc(() =>
+            {
+                for (int i = 0; i < CSVEnemySpawn.Instance.enemySpawnDatas[stageId].Count; i++)
+                {
+                    EnemyPoolData enemy = EnemyPoolManager.Instance.GetPoolObject(CSVEnemySpawn.Instance.enemySpawnDatas[stageId][i].enemyId, CSVEnemySpawn.Instance.enemySpawnDatas[stageId][i].position);
+
+                    if (enemyDictionary.ContainsKey(stageId))
+                    {
+                        enemyDictionary[stageId].Add(enemy.GetComponent<Enemy>());
+                    }
+                    else
+                    {
+                        enemyDictionary.Add(stageId, new List<Enemy>());
+                        enemyDictionary[stageId].Add(enemy.GetComponent<Enemy>());
+                    }
+                }
+
+                EnemyManager.Instance.enemyCount = CSVEnemySpawn.Instance.enemySpawnDatas[stageId].Count;  //Set Enemy Count
+
+                EventManager.TriggerEvent("EnemyMove", stageId);
+                EventManager.TriggerEvent("EnemySpawnAfter");
+            }, 4f);
         }
 
         private void EnemyMove(string stageId)

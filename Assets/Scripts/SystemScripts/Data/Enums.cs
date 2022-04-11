@@ -125,6 +125,12 @@ public enum DoorDirType
     BACK
 }
 
+public enum MapEffectType
+{
+    IMPRECATION1,
+    RECOVERY1
+}
+
 public enum EnemySpecies
 {
     RAT,

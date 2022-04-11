@@ -105,6 +105,7 @@ public class StageManager : MonoSingleton<StageManager>
 
         EventManager.StartListening(Global.EnterNextMap, () =>
         {
+            currentStage.SetMapEffects();
             currentStageNumber++;
         });
 
@@ -425,6 +426,7 @@ public class StageManager : MonoSingleton<StageManager>
                 break;
         }
 
+        
         EventManager.TriggerEvent(Global.EnterNextMap);
     }
 

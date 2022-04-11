@@ -51,11 +51,6 @@ namespace Enemy
 
         protected virtual void Start()
         {
-            // 이벤트 추가
-            EventManager.StartListening("PlayerDead", EnemyDataReset);
-            EventManager.StartListening("EnemyStart", EnemyStart);
-            EventManager.StartListening("EnemyStop", EnemyStop);
-
             if(enemyData.eEnemyController == EnemyController.PLAYER)
             {
                 EventManager.StartListening("StartSkill0", StartAttack);
@@ -66,7 +61,7 @@ namespace Enemy
             playerInput = SlimeGameManager.Instance.Player.GetComponent<PlayerInput>();
         }
 
-        protected virtual void OnDestroy() // 오브젝트 제거시 이벤트 제거
+        protected virtual void OnDisable() // 오브젝트 제거시 이벤트 제거
         {
             EventManager.StopListening("PlayerDead", EnemyDataReset);
             EventManager.StopListening("StartSkill0", StartAttack);
@@ -139,6 +134,11 @@ namespace Enemy
             {
                 sr.color = enemyData.playerNormalColor;
             }
+
+            // 이벤트 추가
+            EventManager.StartListening("PlayerDead", EnemyDataReset);
+            EventManager.StartListening("EnemyStart", EnemyStart);
+            EventManager.StartListening("EnemyStop", EnemyStop);
         }
 
         protected virtual void Update()

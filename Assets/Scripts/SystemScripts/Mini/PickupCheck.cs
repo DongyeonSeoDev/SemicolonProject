@@ -28,7 +28,7 @@ public class PickupCheck : MonoBehaviour
     public bool IsGameStart => isGameStart;
 
     private Vector3 tweeningMove = new Vector3(50, 0, 0);
-    private WaitForSecondsRealtime wsr = new WaitForSecondsRealtime(1f);
+    private WaitForSecondsRealtime wsr = new WaitForSecondsRealtime(0.4f);
 
     public Pick CurrentPick { get; private set; }
 
@@ -97,6 +97,7 @@ public class PickupCheck : MonoBehaviour
 
             if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.EVENT]))
             {
+                yield return wsr;
                 if (checkFill.fillAmount >= checkRange.first && checkFill.fillAmount <= checkRange.second)
                 {
                     
@@ -106,7 +107,7 @@ public class PickupCheck : MonoBehaviour
                 {
                     EndGame(false);
                 }
-                yield return wsr;
+                
                 break;
             }
 

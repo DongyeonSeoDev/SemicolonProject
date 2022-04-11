@@ -101,6 +101,7 @@ namespace Enemy
             if (AnyStateChangeState()) { }
             else if(isEnd)
             {
+                boss.SpecialAttack1End();
                 ChangeState(new EnemyChaseState(enemyData));
             }
         }
