@@ -152,6 +152,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
         Debug.Log(currentPlayerBody.name);
         SlimePoolManager.Instance.AddObject(currentPlayerBody);
         currentPlayerBody.SetActive(false);
+        currentPlayerBody.tag = "Untagged";
 
         bool found = false;
 
@@ -167,8 +168,10 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             else
             {
                 newBody.SetActive(true);
+                newBody.tag = "Player";
             }
 
+            Enemy.EnemyManager.Player = newBody;
             currentBodyId = bodyId;
 
             if (pasteBodyAdditionalStat != null && !isDead)
@@ -181,13 +184,6 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
                 pasteBodyAdditionalStat = new EternalStat();
 
                 SetCanBodyChangeFalse();
-            }
-
-            enemy = newBody.GetComponent<Enemy.Enemy>();
-
-            if (enemy)
-            {
-                enemy.EnemyControllerChange(Enemy.EnemyController.PLAYER);
             }
 
             newBody.transform.position = spawnPos;
@@ -217,6 +213,8 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             {
                 newBody.SetActive(true);
             }
+
+            Enemy.EnemyManager.Player = newBody;
 
             //newBody = Instantiate(newBodyData.Item1, player.transform);
 

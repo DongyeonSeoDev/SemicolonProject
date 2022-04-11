@@ -68,12 +68,18 @@ public class PlayerInput : MonoBehaviour
     }
     private void OnEnable()
     {
+        EventManager.StartListening("PlayerDead", PlayerReset); 
+        EventManager.StartListening("ChangeBody", PlayerReset);
+
         TimeManager.timePauseAction += TimePause;
         TimeManager.timeResumeAction += TimeResume;
         
     }
     private void OnDisable()
     {
+        EventManager.StopListening("PlayerDead", PlayerReset);
+        EventManager.StopListening("ChangeBody", PlayerReset);
+
         TimeManager.timePauseAction -= TimePause;
         TimeManager.timeResumeAction -= TimeResume;
     }
@@ -137,7 +143,7 @@ public class PlayerInput : MonoBehaviour
             }
             else
             {
-                Reset();
+                PlayerReset();
             }
 
             mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -158,17 +164,20 @@ public class PlayerInput : MonoBehaviour
         }
         else
         {
-            Reset();
+            PlayerReset();
         }
     }
 
-    private void Reset()
+    private void PlayerReset()
     {
         moveVector = Vector2.zero;
 
         isDoSkill0 = false;
         isDoSkill1 = false;
         isDoSkill2 = false;
+        skill0ButtonDowned = false;
+        skill1ButtonDowned = false;
+        skill2ButtonDowned = false;
         isInteraction = false;
     }
 

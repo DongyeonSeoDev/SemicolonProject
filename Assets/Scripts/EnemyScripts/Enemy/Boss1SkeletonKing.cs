@@ -16,6 +16,7 @@ namespace Enemy
         public float fireSpawnTime = 0f;
         public float specialAttack1MoveXPosition = 0f;
         public float targetMoveSpeed = 0f;
+        public float attackSpeedUpPercent = 0f;
         public Vector2 limitMinPosition;
         public Vector2 limitMaxPosition;
 
@@ -34,8 +35,10 @@ namespace Enemy
         private bool isSpecialAttack1 = false;
         private bool isSpecialAttack3 = false;
 
+        private readonly int hashMove = Animator.StringToHash("move");
         private readonly int hashAttack1 = Animator.StringToHash("attack");
         private readonly int hashAttack2 = Animator.StringToHash("attack2");
+        private readonly int hashSpecialAttack1 = Animator.StringToHash("specialAttack1");
         private readonly int hashSpecialAttack2 = Animator.StringToHash("specialAttack2");
         private readonly int hashSpecialAttack3 = Animator.StringToHash("specialAttack3");
 
@@ -55,6 +58,8 @@ namespace Enemy
             enemyData.attackPower = 30;
             enemyData.maxHP = 500;
             enemyData.hp = 500;
+            enemyData.isNoKnockback = true;
+            enemyData.isNoStun = true;
 
             enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, movePivot, rb, 5f, 0f, false);
             enemySpecialAttackMoveCommand = new EnemyTargetMoveCommand(enemyData, targetMoveSpeed);
@@ -86,10 +91,8 @@ namespace Enemy
             EventManager.StartListening("PlayerDead", StopAttack);
         }
 
-        protected override void OnDestroy()
+        private void OnDestroy()
         {
-            base.OnDestroy();
-
             EventManager.StopListening("PlayerDead", StopAttack);
         }
 
@@ -161,18 +164,24 @@ namespace Enemy
             }
         }
 
-        private void SpecialAttack1()
+        private void SpecialAttack1() // 특수 공격 실행
         {
             isSpecialAttack1 = false;
             isAttack = true;
 
             enemyData.moveVector = (new Vector3(specialAttack1MoveXPosition, transform.position.y, transform.position.z) - transform.position).normalized;
 
+            enemyData.animationDictionary[EnemyAnimationType.Move] = hashSpecialAttack1;
             enemyData.enemyMoveCommand = enemySpecialAttackMoveCommand;
             enemyData.enemyChaseStateChangeCondition = SpecialAttack1ChangeCondition;
+
+            for (int i = 0; i < enemyAttackCheck.Length; i++)
+            {
+                enemyAttackCheck[i].AttackObjectReset();
+            }
         }
 
-        private EnemyState SpecialAttack1ChangeCondition() 
+        private EnemyState SpecialAttack1ChangeCondition() // 특수 공격 1 발동 조건
         { 
             if ((transform.position.x - specialAttack1MoveXPosition) <= 0.1f)
             {
@@ -183,9 +192,11 @@ namespace Enemy
             return null;
         }
 
-        private void SpecialAttack1End()
+        public void SpecialAttack1End() // 특수 공격 1 종료
         {
             isAttack = false;
+
+            enemyData.animationDictionary[EnemyAnimationType.Move] = hashMove;
             enemyData.enemyMoveCommand = enemyMoveCommand;
             enemyData.enemyChaseStateChangeCondition = null;
         }
@@ -293,7 +304,15 @@ namespace Enemy
             else
             {
                 enemyData.animationDictionary[EnemyAnimationType.Attack] = hashAttack1;
-                enemyData.attackDelay = 1.8f;
+
+                if (EnemyHpPercent() <= attackSpeedUpPercent)
+                {
+                    enemyData.attackDelay = 1.3f;
+                }
+                else
+                {
+                    enemyData.attackDelay = 1.8f;
+                }
             }
         }
 
@@ -329,7 +348,7 @@ namespace Enemy
                 return new EnemyAIAttackState(enemyData);
             }
 
-            if (isSpecialAttack1)
+            if (!isSpecialAttack3 && isSpecialAttack1)
             {
                 SpecialAttack1();
 
