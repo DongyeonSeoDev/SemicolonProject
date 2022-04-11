@@ -91,10 +91,8 @@ namespace Enemy
             EventManager.StartListening("PlayerDead", StopAttack);
         }
 
-        protected override void OnDestroy()
+        private void OnDestroy()
         {
-            base.OnDestroy();
-
             EventManager.StopListening("PlayerDead", StopAttack);
         }
 
@@ -166,7 +164,7 @@ namespace Enemy
             }
         }
 
-        private void SpecialAttack1()
+        private void SpecialAttack1() // 특수 공격 실행
         {
             isSpecialAttack1 = false;
             isAttack = true;
@@ -176,9 +174,14 @@ namespace Enemy
             enemyData.animationDictionary[EnemyAnimationType.Move] = hashSpecialAttack1;
             enemyData.enemyMoveCommand = enemySpecialAttackMoveCommand;
             enemyData.enemyChaseStateChangeCondition = SpecialAttack1ChangeCondition;
+
+            for (int i = 0; i < enemyAttackCheck.Length; i++)
+            {
+                enemyAttackCheck[i].AttackObjectReset();
+            }
         }
 
-        private EnemyState SpecialAttack1ChangeCondition() 
+        private EnemyState SpecialAttack1ChangeCondition() // 특수 공격 1 발동 조건
         { 
             if ((transform.position.x - specialAttack1MoveXPosition) <= 0.1f)
             {
@@ -189,10 +192,9 @@ namespace Enemy
             return null;
         }
 
-        private void SpecialAttack1End()
+        public void SpecialAttack1End() // 특수 공격 1 종료
         {
             isAttack = false;
-            currentTime = 0f;
 
             enemyData.animationDictionary[EnemyAnimationType.Move] = hashMove;
             enemyData.enemyMoveCommand = enemyMoveCommand;
@@ -346,7 +348,7 @@ namespace Enemy
                 return new EnemyAIAttackState(enemyData);
             }
 
-            if (isSpecialAttack1)
+            if (!isSpecialAttack3 && isSpecialAttack1)
             {
                 SpecialAttack1();
 

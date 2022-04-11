@@ -64,6 +64,7 @@ namespace Enemy
                 EnemyManager.Instance.enemyCount = CSVEnemySpawn.Instance.enemySpawnDatas[stageId].Count;  //Set Enemy Count
 
                 EventManager.TriggerEvent("EnemyMove", stageId);
+                EventManager.TriggerEvent("EnemySpawnAfter");
             }, 4f);
         }
 
