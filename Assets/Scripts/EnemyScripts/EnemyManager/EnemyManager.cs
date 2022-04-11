@@ -41,7 +41,6 @@ namespace Enemy
             }
         }
 
-        public StageCheck stageCheck;
         public int enemyCount;
 
         public Dictionary<string, List<Enemy>> enemyDictionary = new Dictionary<string, List<Enemy>>();

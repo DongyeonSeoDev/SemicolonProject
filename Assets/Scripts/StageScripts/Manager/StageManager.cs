@@ -438,7 +438,7 @@ public class StageManager : MonoSingleton<StageManager>
 
     public void NextEnemy()
     {
-        if (currentArea == AreaType.MONSTER)
+        if (currentArea == AreaType.MONSTER || currentArea == AreaType.BOSS)
         {
             string id = CurrentMonstersOrderID;
 
@@ -451,7 +451,6 @@ public class StageManager : MonoSingleton<StageManager>
             Util.DelayFunc(() =>
             {
                 EventManager.TriggerEvent("SpawnEnemy", id);
-                EventManager.TriggerEvent("EnemyMove", id);
             }, 2, this);
             currentStageMonsterBundleOrder++;
         }
@@ -465,7 +464,7 @@ public class StageManager : MonoSingleton<StageManager>
 
     public void StartNextStage()
     {
-        if (currentArea == AreaType.MONSTER)
+        if (currentArea == AreaType.MONSTER || currentArea == AreaType.BOSS)
         {
             SetMonsterStage();
             NextEnemy();

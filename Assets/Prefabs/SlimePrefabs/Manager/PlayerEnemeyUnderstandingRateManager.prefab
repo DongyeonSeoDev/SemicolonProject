@@ -57,7 +57,7 @@ MonoBehaviour:
       attackSpeed: 0
       criticalRate: 0
       criticalDamage: 0
-    bodyImg: {fileID: -3615960448972296495, guid: 407549c50f6a9884caf01e20bde4d767, type: 3}
+    bodyImg: {fileID: 21300000, guid: d28dff12c2591a84c9cbea9bd1f40fa2, type: 3}
     dropItem: {fileID: 11400000, guid: 06dd51cfab1cb904b9bbbedef6545d02, type: 2}
     bodyExplanation: "\uC5B4\uB514\uC11C\uB098 \uBCFC \uC218 \uC788\uB294 \uC2AC\uB77C\uC784\uC73C\uB85C
       \uAC00\uAE4C\uC774 \uB2E4\uAC00\uAC00\uBA74 \uC704\uD5D8\uD560 \uAC83 \uAC19\uB2E4."
@@ -74,7 +74,7 @@ MonoBehaviour:
       attackSpeed: 0
       criticalRate: 0
       criticalDamage: 0
-    bodyImg: {fileID: 7943156567977182894, guid: 527d0ddf082e4724a861fc734336bee7, type: 3}
+    bodyImg: {fileID: 21300000, guid: dc4b2010e28bb6b4e946bacb9864068a, type: 3}
     dropItem: {fileID: 11400000, guid: ac78587e7a385054a9d1150a539d138b, type: 2}
     bodyExplanation: "\uC0DD\uC950\uC758 \uBAA8\uC591\uC744 \uD558\uACE0 \uC788\uC73C\uBA70
       \uC0DD\uAC01\uBCF4\uB2E4 \uAC81\uC774 \uB9CE\uC740 \uBAAC\uC2A4\uD130\uB2E4."
@@ -91,7 +91,7 @@ MonoBehaviour:
       attackSpeed: 0
       criticalRate: 0
       criticalDamage: 0
-    bodyImg: {fileID: 5557466569650181421, guid: a9de3b96fa106fa43a0fe55cd1aabb17, type: 3}
+    bodyImg: {fileID: 21300000, guid: 238a27f12e439d942aa76ea5098ad18d, type: 3}
     dropItem: {fileID: 11400000, guid: 06dd51cfab1cb904b9bbbedef6545d02, type: 2}
     bodyExplanation: "\uC5B4\uCA4C\uBA74 \uB098\uC640 \uB2EE\uC558\uC744\uC9C0\uB3C4?"
   canMountObjNum: 2
