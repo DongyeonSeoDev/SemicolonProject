@@ -226,34 +226,19 @@ namespace Enemy
         }
 
         // 적 컨트롤러를 다른것으로 바꿈
-        public void EnemyControllerChange(EnemyController eEnemyController)
+        public void ChangeToPlayerController()
         {
-            enemyData.eEnemyController = eEnemyController;
+            enemyData.eEnemyController = EnemyController.PLAYER;
 
-            if (eEnemyController == EnemyController.AI)
+            gameObject.tag = "Player";
+            gameObject.layer = LayerMask.NameToLayer("PLAYER");
+
+            if (hpBar != null)
             {
-                gameObject.tag = "Untagged";
-                gameObject.layer = LayerMask.NameToLayer("ENEMY");
-
-                if (hpBar != null)
-                {
-                    hpBar.SetActive(true);
-                }
-
-                sr.color = enemyData.normalColor;
+                hpBar.SetActive(false);
             }
-            else if (eEnemyController == EnemyController.PLAYER)
-            {
-                gameObject.tag = "Player";
-                gameObject.layer = LayerMask.NameToLayer("PLAYER");
 
-                if (hpBar != null)
-                {
-                    hpBar.SetActive(false);
-                }
-
-                sr.color = enemyData.playerNormalColor;
-            }
+            sr.color = enemyData.playerNormalColor;
 
             if (enemyAttackCheck != null)
             {
@@ -261,19 +246,18 @@ namespace Enemy
                 {
                     if (enemyAttackCheck[i].enemyControllerChange != null)
                     {
-                        enemyAttackCheck[i].enemyControllerChange(eEnemyController);
+                        enemyAttackCheck[i].enemyControllerChange(EnemyController.PLAYER);
                     }
                     else
                     {
                         enemyAttackCheck[i].AddEnemyController();
-                        enemyAttackCheck[i].enemyControllerChange(eEnemyController);
+                        enemyAttackCheck[i].enemyControllerChange(EnemyController.PLAYER);
                     }
                 }
             }
         }
 
         public void MoveEnemy() => enemyData.isEnemyMove = true; // 적을 움직이는 상태로 바꿈
-
         public EnemyType GetEnemyType() => enemyData.enemyType; // 적 타입을 가져옴
         public EnemyController GetEnemyController() => enemyData.eEnemyController;
         public Vector2? GetKnockBackDirection() => enemyData.knockBackDirection; // 적이 넉백 공격을 할 수 있는지를 가져옴

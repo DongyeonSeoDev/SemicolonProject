@@ -179,6 +179,8 @@ namespace Enemy
             {
                 enemyAttackCheck[i].AttackObjectReset();
             }
+
+            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.AttackEnd, enemyData.enemyAnimator, TriggerType.ResetTrigger);
         }
 
         private EnemyState SpecialAttack1ChangeCondition() // 특수 공격 1 발동 조건
