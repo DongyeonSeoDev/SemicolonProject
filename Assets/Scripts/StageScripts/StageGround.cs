@@ -16,7 +16,6 @@ public class StageGround : MonoBehaviour
     public Pick[] plants;
 
     public Pair<Transform, List<MapParticleEffect>> imprecMapEffects;
-    public Pair<Transform, List<MapParticleEffect>> recovMapEffects;
 
     /*  private void Awake()
       {
@@ -38,10 +37,7 @@ public class StageGround : MonoBehaviour
         {
             imprecMapEffects.second = imprecMapEffects.first.GetComponentsInChildren<MapParticleEffect>().FindAll(x => x.effectType == MapEffectType.IMPRECATION1);
         }
-        if(recovMapEffects.first)
-        {
-            recovMapEffects.second = recovMapEffects.first.GetComponentsInChildren<MapParticleEffect>().FindAll(x => x.effectType == MapEffectType.RECOVERY1);
-        }
+       
     }
 
     private void OnEnable()
@@ -87,15 +83,7 @@ public class StageGround : MonoBehaviour
             }   
         }
 
-        /*if(recovMapEffects.first != null)
-        {
-            active = StageManager.Instance.CurrentAreaType == AreaType.RECOVERY;
-
-            for (int i = 0; i < recovMapEffects.second.Count; i++)
-            {
-                recovMapEffects.second[i].gameObject.SetActive(active);
-            }  
-        }*/
+        
     }
 
     public StageDoor GetOpposeDoor(DoorDirType type)

@@ -103,6 +103,7 @@ public class Pick : InteractionObj
         CallEffect(suc ? "PickSuccessEff" : "PickFailEff");
 
         droppedCount = count;
+        
         if(suc)
         {
             EffectManager.Instance.OnWorldTextEffect("채집 성공", transform.position, Vector3.one, EffectManager.Instance.pickupPlantSucFaiVG.normal);

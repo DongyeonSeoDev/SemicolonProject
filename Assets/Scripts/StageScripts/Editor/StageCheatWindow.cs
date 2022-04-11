@@ -172,7 +172,6 @@ public class StageCheatWindow : EditorWindow
                 {
                     PlayerEnemyUnderstandingRateManager.Instance.SetMountObj(mobId.ToString());
                 }
-
                 break;
         }
 

@@ -256,7 +256,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         Global.AddMonoAction(Global.PickupPlant, item =>
         {
             Pick p = (Pick)item;
-            RequestLeftBottomMsg(string.Format("아이템을 획득하였습니다. ({0} +{1})", p.itemData.itemName, 1));
+            RequestLeftBottomMsg(string.Format("아이템을 획득하였습니다. ({0} +{1})", p.itemData.itemName, p.DroppedCount));
             UpdateInventoryItemCount(p.itemData.id);
         });
         //아이템 버림  

@@ -1419,9 +1419,6 @@ MonoBehaviour:
   imprecMapEffects:
     first: {fileID: 6055699711794977415}
     second: []
-  recovMapEffects:
-    first: {fileID: 6055699711794977415}
-    second: []
 --- !u!1 &2489057964767878757
 GameObject:
   m_ObjectHideFlags: 0
@@ -26782,8 +26779,6 @@ Transform:
   m_Children:
   - {fileID: 2625607903943826773}
   - {fileID: 3738754222050778611}
-  - {fileID: 7153685326379667515}
-  - {fileID: 6587309984448757183}
   m_Father: {fileID: 1378282381469885332}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -27177,68 +27172,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8604531944747639599, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
   m_PrefabInstance: {fileID: 2191920937927331377}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &5291979854233315994
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 6055699711794977415}
-    m_Modifications:
-    - target: {fileID: 3041650778978744993, guid: a18fd90d562ccfd4c8b78b47c38880c2, type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3041650778978744993, guid: a18fd90d562ccfd4c8b78b47c38880c2, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -10.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3041650778978744993, guid: a18fd90d562ccfd4c8b78b47c38880c2, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -3.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3041650778978744993, guid: a18fd90d562ccfd4c8b78b47c38880c2, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3041650778978744993, guid: a18fd90d562ccfd4c8b78b47c38880c2, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3041650778978744993, guid: a18fd90d562ccfd4c8b78b47c38880c2, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3041650778978744993, guid: a18fd90d562ccfd4c8b78b47c38880c2, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3041650778978744993, guid: a18fd90d562ccfd4c8b78b47c38880c2, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3041650778978744993, guid: a18fd90d562ccfd4c8b78b47c38880c2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3041650778978744993, guid: a18fd90d562ccfd4c8b78b47c38880c2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3041650778978744993, guid: a18fd90d562ccfd4c8b78b47c38880c2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3043996491184329275, guid: a18fd90d562ccfd4c8b78b47c38880c2, type: 3}
-      propertyPath: m_Name
-      value: CFX2_Wandering_Spirits
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: a18fd90d562ccfd4c8b78b47c38880c2, type: 3}
---- !u!4 &7153685326379667515 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3041650778978744993, guid: a18fd90d562ccfd4c8b78b47c38880c2, type: 3}
-  m_PrefabInstance: {fileID: 5291979854233315994}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5857468784190041228
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27475,11 +27408,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
---- !u!4 &2111183138866665219 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8604531944747639599, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
-  m_PrefabInstance: {fileID: 7648552347636741164}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2111183138866665230 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8604531944747639586, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
@@ -27491,6 +27419,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b9e200c7d6f9e14ab3cc9a33c90f74e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &2111183138866665219 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8604531944747639599, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
+  m_PrefabInstance: {fileID: 7648552347636741164}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7718755609366137973
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -27552,68 +27485,6 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 5723669608432734496, guid: 0d6bccb5b6c4a354880618b4add8e4f5, type: 3}
   m_PrefabInstance: {fileID: 7718755609366137973}
-  m_PrefabAsset: {fileID: 0}
---- !u!1001 &8168631161118181150
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 6055699711794977415}
-    m_Modifications:
-    - target: {fileID: 3041650778978744993, guid: a18fd90d562ccfd4c8b78b47c38880c2, type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3041650778978744993, guid: a18fd90d562ccfd4c8b78b47c38880c2, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 8.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3041650778978744993, guid: a18fd90d562ccfd4c8b78b47c38880c2, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 14.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3041650778978744993, guid: a18fd90d562ccfd4c8b78b47c38880c2, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3041650778978744993, guid: a18fd90d562ccfd4c8b78b47c38880c2, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3041650778978744993, guid: a18fd90d562ccfd4c8b78b47c38880c2, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3041650778978744993, guid: a18fd90d562ccfd4c8b78b47c38880c2, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3041650778978744993, guid: a18fd90d562ccfd4c8b78b47c38880c2, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3041650778978744993, guid: a18fd90d562ccfd4c8b78b47c38880c2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3041650778978744993, guid: a18fd90d562ccfd4c8b78b47c38880c2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3041650778978744993, guid: a18fd90d562ccfd4c8b78b47c38880c2, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3043996491184329275, guid: a18fd90d562ccfd4c8b78b47c38880c2, type: 3}
-      propertyPath: m_Name
-      value: CFX2_Wandering_Spirits
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: a18fd90d562ccfd4c8b78b47c38880c2, type: 3}
---- !u!4 &6587309984448757183 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3041650778978744993, guid: a18fd90d562ccfd4c8b78b47c38880c2, type: 3}
-  m_PrefabInstance: {fileID: 8168631161118181150}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8974607569817504979
 PrefabInstance:
