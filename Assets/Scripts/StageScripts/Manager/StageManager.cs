@@ -121,6 +121,7 @@ public class StageManager : MonoSingleton<StageManager>
     private void Init()
     {
         startStageID = GameManager.Instance.savedData.userInfo.currentStageID;
+        currentFloor = GetStageData(startStageID).stageFloor.floor;
         InsertRandomMaps(currentFloor, true);
         SetRandomAreaRandomIncounter();
         Util.DelayFunc(() => NextStage(startStageID), 0.2f);
@@ -147,6 +148,10 @@ public class StageManager : MonoSingleton<StageManager>
                 case AreaType.CHEF:
                     currentMapNPCList.ForEach(x => x.gameObject.SetActive(false));
                     currentMapNPCList.Clear();
+                    break;
+                case AreaType.BOSS:
+                    currentStageNumber = 0;
+                    currentFloor++;
                     break;
             }
 
@@ -439,22 +444,19 @@ public class StageManager : MonoSingleton<StageManager>
 
     public void NextEnemy()
     {
-        if (currentArea == AreaType.MONSTER || currentArea == AreaType.BOSS)
+        string id = CurrentMonstersOrderID;
+
+        if (string.IsNullOrEmpty(id))
         {
-            string id = CurrentMonstersOrderID;
-
-            if(string.IsNullOrEmpty(id))
-            {
-                StageClear();
-                return;
-            }
-
-            Util.DelayFunc(() =>
-            {
-                EventManager.TriggerEvent("SpawnEnemy", id);
-            }, 2, this);
-            currentStageMonsterBundleOrder++;
+            StageClear();
+            return;
         }
+
+        Util.DelayFunc(() =>
+        {
+            EventManager.TriggerEvent("SpawnEnemy", id);
+        }, 2, this);
+        currentStageMonsterBundleOrder++;
     }
 
     public void SetClearStage()

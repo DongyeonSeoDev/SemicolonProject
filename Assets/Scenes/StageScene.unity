@@ -1992,6 +1992,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7935931417652812614, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: mainLight
+      value: 
+      objectReference: {fileID: 123391994}
     - target: {fileID: 8439711538291071118, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
