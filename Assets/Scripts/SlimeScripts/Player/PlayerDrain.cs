@@ -77,6 +77,7 @@ public class PlayerDrain : PlayerSkill
             SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = SlimeGameManager.Instance.SkillDelays[skillIdx];
 
             EventManager.TriggerEvent("SetDrainTime", playerDrainCol.DrainTime);
+            EventManager.TriggerEvent("EnemyStop");
 
             drainCollider.SetActive(true);
 
@@ -105,11 +106,8 @@ public class PlayerDrain : PlayerSkill
     }
     private void EnemyStop()
     {
-        Debug.Log("bbbbb");
-
         if (player.PlayerState.IsDrain)
         {
-            Debug.Log("aaaa");
             EventManager.TriggerEvent("EnemyStop");
         }
     }

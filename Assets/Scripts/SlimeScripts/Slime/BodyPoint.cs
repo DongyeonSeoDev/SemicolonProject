@@ -347,6 +347,8 @@ public class BodyPoint : MonoBehaviour
         {
             if(farByMiddleTimer % middlePoint.PlayerDrain.PlayerDrainCol.DrainMoveUpdateTIme <= 0.1f)
             {
+                EventManager.TriggerEvent("SpawnAfterImageSoftBody");
+
                 transform.position = Vector2.Lerp(farMaxPos, middlePoint.transform.position, farByMiddleTimer / farByMiddleTime);
             }
         }

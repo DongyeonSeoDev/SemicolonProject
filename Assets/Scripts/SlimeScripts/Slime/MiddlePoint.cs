@@ -14,8 +14,8 @@ public class MiddlePoint : BodyPoint
 
     private Vector2[] notMiddlePointsPositions;
 
-    private SoftBody softBody = null;
-    public SoftBody SoftBody
+    private PCSoftBody softBody = null;
+    public PCSoftBody SoftBody
     {
         get { return softBody; }
         set { softBody = value; }
