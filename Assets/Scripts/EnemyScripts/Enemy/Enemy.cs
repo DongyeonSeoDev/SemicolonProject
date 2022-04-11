@@ -32,6 +32,7 @@ namespace Enemy
 
         private float isDamageCurrentTime = 0f;
         protected bool isStop = false;
+        private bool isAddPlayerEvent = false;
 
         protected virtual void Awake()
         {
@@ -49,36 +50,32 @@ namespace Enemy
             }
         }
 
-        protected virtual void Start()
-        {
-            if(enemyData.eEnemyController == EnemyController.PLAYER)
-            {
-                EventManager.StartListening("StartSkill0", StartAttack);
-            }
-
-            // SlimeGameManager
-
-            playerInput = SlimeGameManager.Instance.Player.GetComponent<PlayerInput>();
-        }
-
         protected virtual void OnDisable() // 오브젝트 제거시 이벤트 제거
         {
             EventManager.StopListening("PlayerDead", EnemyDataReset);
-            EventManager.StopListening("StartSkill0", StartAttack);
             EventManager.StopListening("EnemyStart", EnemyStart);
             EventManager.StopListening("EnemyStop", EnemyStop);
+            EventManager.StopListening("StartSkill0", StartAttack);
+
+            isAddPlayerEvent = false;
         }
 
         private void EnemyStart()
         {
-            isStop = false;
-            anim.speed = 1f;
+            if (enemyData.eEnemyController == EnemyController.AI)
+            {
+                isStop = false;
+                anim.speed = 1f;
+            }
         }
 
         private void EnemyStop()
         {
-            isStop = true;
-            anim.speed = 0f;
+            if (enemyData.eEnemyController == EnemyController.AI)
+            {
+                isStop = true;
+                anim.speed = 0f;
+            }
         }
 
         private void EnemyDataReset() // (이벤트 용) 적 리셋
@@ -89,8 +86,11 @@ namespace Enemy
 
         private void StartAttack() // (이벤트 용) 공격 시작했을때
         {
-            enemyData.isAttack = true;
-            playerInput.AttackMousePosition = playerInput.MousePosition;
+            if (enemyData.eEnemyController == EnemyController.PLAYER)
+            {
+                enemyData.isAttack = true;
+                playerInput.AttackMousePosition = playerInput.MousePosition;
+            }
         }
 
         protected virtual void OnEnable()
@@ -139,6 +139,10 @@ namespace Enemy
             EventManager.StartListening("PlayerDead", EnemyDataReset);
             EventManager.StartListening("EnemyStart", EnemyStart);
             EventManager.StartListening("EnemyStop", EnemyStop);
+
+            EnemyStart();
+
+            playerInput = SlimeGameManager.Instance.Player.GetComponent<PlayerInput>();
         }
 
         protected virtual void Update()
@@ -254,6 +258,13 @@ namespace Enemy
                         enemyAttackCheck[i].enemyControllerChange(EnemyController.PLAYER);
                     }
                 }
+            }
+
+            if (!isAddPlayerEvent)
+            {
+                EventManager.StartListening("StartSkill0", StartAttack);
+
+                isAddPlayerEvent = true;
             }
         }
 
