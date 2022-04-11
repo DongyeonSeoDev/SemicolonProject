@@ -20,7 +20,6 @@ namespace Enemy
 
             EventManager.StartListening("AfterPlayerRespawn", PlayerRespawnEvent);
             EventManager.StartListening("SpawnEnemy", SpawnEnemy);
-            EventManager.StartListening("EnemyMove", EnemyMove);
 
             CSVEnemySpawn.Instance.GetData();
         }
@@ -63,22 +62,13 @@ namespace Enemy
 
                 EnemyManager.Instance.enemyCount = CSVEnemySpawn.Instance.enemySpawnDatas[stageId].Count;  //Set Enemy Count
 
-                EventManager.TriggerEvent("EnemyMove", stageId);
+                for (int i = 0; i < enemyDictionary[stageId].Count; i++)
+                {
+                    enemyDictionary[stageId][i].MoveEnemy();
+                }
+
                 EventManager.TriggerEvent("EnemySpawnAfter");
             }, 4f);
-        }
-
-        private void EnemyMove(string stageId)
-        {
-            if (!enemyDictionary.ContainsKey(stageId))
-            {
-                Debug.LogError("잘못된 stageId 입니다. EnemyMove 실행 실패 : " + stageId);
-            }
-
-            for (int i = 0; i < enemyDictionary[stageId].Count; i++)
-            {
-                enemyDictionary[stageId][i].MoveEnemy();
-            }
         }
     }
 }
