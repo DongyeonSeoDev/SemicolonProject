@@ -2,13 +2,12 @@ using UnityEngine;
 
 public class EnemyHPBar : MonoBehaviour
 {
-    private Camera mainCam;
     private Canvas canvas;
 
     private void Start()
     {
         canvas = GetComponent<Canvas>();
-        canvas.worldCamera = mainCam;
+        canvas.worldCamera = Util.MainCam;
     }
 
     private void Update()

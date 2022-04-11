@@ -21,7 +21,8 @@ namespace Enemy
         public string animationName;
     }
 
-    public partial class EnemyDataSO : ScriptableObject
+    [CreateAssetMenu(fileName = "EnemyDataSO", menuName = "EnemySO/EnemyDataSO", order = int.MaxValue)]
+    public class EnemyDataSO : ScriptableObject
     {
         public EnemyType enemyType;
 
