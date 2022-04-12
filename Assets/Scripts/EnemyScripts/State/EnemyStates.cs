@@ -171,7 +171,7 @@ namespace Enemy
             {
                 enemyData.enemyRigidbody2D.velocity = enemyData.moveVector * 20f;
 
-                if ((moveCount % 2 == 0 && enemyData.enemyObject.transform.position.x >= 12f) || (moveCount % 2 == 1 && enemyData.enemyObject.transform.position.x <= boss.specialAttack1MoveXPosition))
+                if ((moveCount % 2 == 0 && enemyData.enemyObject.transform.position.x >= boss.limitMaxPosition.x) || (moveCount % 2 == 1 && enemyData.enemyObject.transform.position.x <= boss.limitMinPosition.x))
                 {
                     isMove = false;
                     enemyData.enemySpriteRenderer.enabled = false;
@@ -191,12 +191,12 @@ namespace Enemy
                         if (moveCount == 1)
                         {
                             // 왼쪽 이동
-                            enemyData.moveVector = (new Vector3(boss.specialAttack1MoveXPosition, enemyData.enemyObject.transform.position.y) - enemyData.enemyObject.transform.position).normalized;
+                            enemyData.moveVector = (new Vector3(boss.limitMinPosition.x, enemyData.enemyObject.transform.position.y) - enemyData.enemyObject.transform.position).normalized;
                         }
                         else if (moveCount == 2)
                         {
                             // 오른쪽 이동
-                            enemyData.moveVector = (new Vector3(12f, enemyData.enemyObject.transform.position.y) - enemyData.enemyObject.transform.position).normalized;
+                            enemyData.moveVector = (new Vector3(boss.limitMaxPosition.x, enemyData.enemyObject.transform.position.y) - enemyData.enemyObject.transform.position).normalized;
                         }
                         else
                         {

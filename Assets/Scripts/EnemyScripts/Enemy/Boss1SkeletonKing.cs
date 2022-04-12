@@ -14,7 +14,6 @@ namespace Enemy
         public float bossMoveSpeed = 0f;
         public float fireDistance = 0f;
         public float fireSpawnTime = 0f;
-        public float specialAttack1MoveXPosition = 0f;
         public float targetMoveSpeed = 0f;
         public float attackSpeedUpPercent = 0f;
         public Vector2 limitMinPosition;
@@ -169,7 +168,7 @@ namespace Enemy
             isSpecialAttack1 = false;
             isAttack = true;
 
-            enemyData.moveVector = (new Vector3(specialAttack1MoveXPosition, transform.position.y, transform.position.z) - transform.position).normalized;
+            enemyData.moveVector = (new Vector3(limitMinPosition.x, transform.position.y, transform.position.z) - transform.position).normalized;
 
             enemyData.animationDictionary[EnemyAnimationType.Move] = hashSpecialAttack1;
             enemyData.enemyMoveCommand = enemySpecialAttackMoveCommand;
@@ -183,7 +182,7 @@ namespace Enemy
 
         private EnemyState SpecialAttack1ChangeCondition() // 특수 공격 1 발동 조건
         { 
-            if ((transform.position.x - specialAttack1MoveXPosition) <= 0.1f)
+            if ((transform.position.x - limitMinPosition.x) <= 0.1f)
             {
                 sr.enabled = false;
                 return new BossSpecialAttack1Status(enemyData, this);
