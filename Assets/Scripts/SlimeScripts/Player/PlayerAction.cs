@@ -7,7 +7,7 @@ public abstract class PlayerAction : MonoBehaviour
     protected Player player = null;
     protected PlayerState playerState = null;
     protected PlayerInput playerInput = null;
-    protected SoftBody softBody = null;
+    protected PCSoftBody softBody = null;
 
     protected Rigidbody2D rigid = null;
     protected List<Rigidbody2D> childRigids = new List<Rigidbody2D>();
@@ -17,7 +17,7 @@ public abstract class PlayerAction : MonoBehaviour
         player = SlimeGameManager.Instance.Player;
         playerState = player.GetComponent<PlayerState>();
         playerInput = player.GetComponent<PlayerInput>();
-        softBody = GetComponent<SoftBody>();
+        softBody = GetComponent<PCSoftBody>();
 
         rigid = GetComponent<Rigidbody2D>();
 

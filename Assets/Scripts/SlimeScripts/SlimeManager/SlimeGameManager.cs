@@ -238,7 +238,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
             if (enemy)
             {
-                enemy.EnemyControllerChange(Enemy.EnemyController.PLAYER);
+                enemy.ChangeToPlayerController();
             }
 
             newBody.transform.position = spawnPos;

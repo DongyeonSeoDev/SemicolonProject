@@ -427,11 +427,10 @@ MonoBehaviour:
   bossMoveSpeed: 30
   fireDistance: 2
   fireSpawnTime: 0.1
-  specialAttack1MoveXPosition: -10
   targetMoveSpeed: 15
   attackSpeedUpPercent: 40
-  limitMinPosition: {x: -13, y: -6}
-  limitMaxPosition: {x: 14, y: 16}
+  limitMinPosition: {x: -10.5, y: -4}
+  limitMaxPosition: {x: 13.5, y: 14.5}
 --- !u!114 &5497031053508213442
 MonoBehaviour:
   m_ObjectHideFlags: 0
