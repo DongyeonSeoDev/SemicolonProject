@@ -7,8 +7,6 @@ public class PCSoftBody : SoftBody
     #region AfterImageSoftBody관련 변수들
     [SerializeField]
     private GameObject afterImageSoftBody = null;
-    [SerializeField]
-    private float fadeOutSpeed = 1f;
     #endregion
 
     #region Fields
@@ -82,8 +80,9 @@ public class PCSoftBody : SoftBody
             obj = Instantiate(afterImageSoftBody, SlimePoolManager.Instance.transform);
         }
 
+        obj.transform.position = transform.position;
         softBody = obj.GetComponent<AfterImageSoftBody>();
-        softBody.OnSpawn(notMiddlePoints, fadeOutSpeed);
+        softBody.OnSpawn(notMiddlePoints);
     }
 
     private void SetPoints()

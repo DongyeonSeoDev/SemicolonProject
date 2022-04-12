@@ -9,9 +9,12 @@ public class AfterImageSoftBody : SoftBody
     private SpriteShapeRenderer spriteShapeRenderer = null;
     private Material[] materials = null;
 
+    [Header("알파값은 적용 안됌")]
+    [SerializeField]
+    private Color afterImageColor = Color.white;
+
     [SerializeField]
     private float fadeOutSpeed = 1f;
-
     [SerializeField]
     private float startAlbedoPercentage = 50f;
 
@@ -44,10 +47,8 @@ public class AfterImageSoftBody : SoftBody
         FadeOut();
         UpdateVerticies();
     }
-    public void OnSpawn(List<Transform> pPList, float fOSpeed)
+    public void OnSpawn(List<Transform> pPList)
     {
-        fadeOutSpeed = fOSpeed;
-
         for (int i = 0; i < points.Count; i++)
         {
             points[i].position = pPList[i].position;
@@ -82,8 +83,8 @@ public class AfterImageSoftBody : SoftBody
     {
         for (int i = 0; i < materials.Length; i++)
         {
-            materials[i].color = new Vector4(materials[i].color.r, materials[i].color.g, materials[i].color.b,
-                Mathf.Lerp(0, albedoDatas[i].startAlbedo, albedoDatas[i].fadeOutTimer / albedoDatas[i].fadeOutTime));
+            materials[i].color = new Vector4( afterImageColor.r,  afterImageColor.g,
+                afterImageColor.b, Mathf.Lerp(0, albedoDatas[i].startAlbedo, albedoDatas[i].fadeOutTimer / albedoDatas[i].fadeOutTime));
         }
     }
     public override void UpdateVerticies()
