@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,45 +9,71 @@ public class AfterImageSoftBody : SoftBody
     private SpriteShapeRenderer spriteShapeRenderer = null;
     private Material[] materials = null;
 
-    private float fadeOutSpeed = 1f;
+    [Header("알파값은 적용 안됌")]
+    [SerializeField]
+    private Color afterImageColor = Color.white;
 
-    private float fadeOutTime = 0f;
-    private float fadeOutTimer = 0f;
+    [SerializeField]
+    private float fadeOutSpeed = 1f;
+    [SerializeField]
+    private float startAlbedoPercentage = 50f;
+
+    [Serializable]
+    private struct AlbedoDatas
+    {
+        public float originAlbedo;
+        public float startAlbedo;
+        public float fadeOutTime;
+        public float fadeOutTimer;
+    }
+
+    [SerializeField]
+    private AlbedoDatas[] albedoDatas;
 
     public void Awake()
     {
         spriteShapeRenderer = spriteShapeController.GetComponent<SpriteShapeRenderer>();
         materials = spriteShapeRenderer.materials;
-    }
+        albedoDatas = new AlbedoDatas[materials.Length];
 
+        for (int i = 0; i < albedoDatas.Length; i++)
+        {
+            albedoDatas[i].originAlbedo = materials[i].color.a;
+        }
+    }
     void Update()
     {
         CheckTimer();
         FadeOut();
         UpdateVerticies();
     }
-    public void OnSpawn(List<Transform> pPList, float fOSpeed)
+    public void OnSpawn(List<Transform> pPList)
     {
-        fadeOutSpeed = fOSpeed;
-
         for (int i = 0; i < points.Count; i++)
         {
             points[i].position = pPList[i].position;
         }
 
-        fadeOutTime = materials[0].color.a / fadeOutSpeed;
-        fadeOutTimer = fadeOutTime;
+        for(int i = 0; i < materials.Length; i++)
+        { 
+            albedoDatas[i].startAlbedo = albedoDatas[i].originAlbedo * (startAlbedoPercentage / 100f);
+            albedoDatas[i].fadeOutTime = albedoDatas[i].startAlbedo / fadeOutSpeed;
+            albedoDatas[i].fadeOutTimer = albedoDatas[i].fadeOutTime;
+        }
     }
     private void CheckTimer()
     {
-        if(fadeOutTimer > 0f)
+        for (int i = 0; i < materials.Length; i++)
         {
-            fadeOutTimer -= Time.deltaTime;
-
-            if(fadeOutTimer <= 0f)
+            if (albedoDatas[i].fadeOutTimer > 0f)
             {
-                fadeOutTimer = 0f;
-                
+                albedoDatas[i].fadeOutTimer -= Time.deltaTime;
+            }
+
+            if (albedoDatas[i].fadeOutTimer <= 0f)
+            {
+                albedoDatas[i].fadeOutTimer = 0f;
+
                 SlimePoolManager.Instance.AddObject(gameObject);
                 gameObject.SetActive(false);
             }
@@ -54,10 +81,10 @@ public class AfterImageSoftBody : SoftBody
     }
     private void FadeOut()
     {
-        foreach(var item in materials)
+        for (int i = 0; i < materials.Length; i++)
         {
-            item.color = new Vector4(item.color.r, item.color.g, item.color.b,
-                Mathf.Lerp(0, item.color.a, fadeOutTimer / fadeOutTime));
+            materials[i].color = new Vector4( afterImageColor.r,  afterImageColor.g,
+                afterImageColor.b, Mathf.Lerp(0, albedoDatas[i].startAlbedo, albedoDatas[i].fadeOutTimer / albedoDatas[i].fadeOutTime));
         }
     }
     public override void UpdateVerticies()

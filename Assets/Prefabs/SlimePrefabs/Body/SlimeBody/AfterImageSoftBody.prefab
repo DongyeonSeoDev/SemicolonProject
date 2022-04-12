@@ -118,6 +118,10 @@ MonoBehaviour:
   - {fileID: 7016383994246644890}
   - {fileID: 6847290624744064274}
   - {fileID: 8599208881868519509}
+  afterImageColor: {r: 0, g: 0.7169812, b: 0.00543167, a: 1}
+  fadeOutSpeed: 0.5
+  startAlbedoPercentage: 30
+  albedoDatas: []
 --- !u!1 &2270220327345658604
 GameObject:
   m_ObjectHideFlags: 0
