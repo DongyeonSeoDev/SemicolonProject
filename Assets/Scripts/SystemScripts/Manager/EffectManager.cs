@@ -1,11 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using Water;
 using TMPro;
 using DG.Tweening;
-using System;
+using UnityEngine.EventSystems;
 
 public class EffectManager : MonoSingleton<EffectManager>
 {
@@ -40,6 +38,11 @@ public class EffectManager : MonoSingleton<EffectManager>
     public MulSpriteColorCtrl invenMSC;
     public MulSpriteColorCtrl statMSC;
     public MulSpriteColorCtrl mobMSC;
+
+    #region touch effect
+    public string TouchEffKey { private get; set; }
+    public bool IsOnTouchEffect { private get; set; }
+    #endregion
 
     [Space(20)]
     [Header("채집 성공/실패 이펙트")]
@@ -101,11 +104,22 @@ public class EffectManager : MonoSingleton<EffectManager>
         Global.AddMonoAction(Global.AcquisitionItem, item => {
             ((Item)item).FollowEffect();
             OnTopRightBtnEffect(UIType.INVENTORY, true);
-        });
-        Global.AddAction(Global.MakeFood, unusedValue => OnTopRightBtnEffect(UIType.INVENTORY, true));
+        });  //아이템 획득시 UI이펙트
+        Global.AddAction(Global.MakeFood, unusedValue => OnTopRightBtnEffect(UIType.INVENTORY, true));  //음식 만들었을 시 UI이펙트
     }
 
-    private void Respawn()
+    private void Update()
+    {
+        if(IsOnTouchEffect)
+        {
+            if(Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+            {
+                SpawnEffect(PoolManager.GetItem(TouchEffKey), Util.MousePositionForScreenSpace, 1f, true);  //터치 이펙트
+            }
+        }
+    }
+
+    private void Respawn() 
     {
         OnTopRightBtnEffect(UIType.INVENTORY, false);
         OnTopRightBtnEffect(UIType.STAT, false);
@@ -210,12 +224,12 @@ public class EffectManager : MonoSingleton<EffectManager>
         tmp.DOColor(Color.clear, 0.8f).SetEase(damageTxtScaleCurve).OnComplete(() => tmp.gameObject.SetActive(false));
     }
 
-    private void TryDrain(Vector2 mobPos, bool drainSuc)
+    private void TryDrain(Vector2 mobPos, bool drainSuc) //흡수 실패 성공 텍스트 띄움
     {
         OnWorldTextEffect(drainSuc ? "흡수" : "흡수실패", mobPos, Vector3.one, drainSuc ? drainVG.normal : drainVG.cri);
     }
 
-    public GameObject CallGameEffect(string key, Vector3 pos, float duration)
+    public GameObject CallGameEffect(string key, Vector3 pos, float duration)  //이펙트 호출
     {
         GameObject eff = PoolManager.GetItem(key);
         eff.transform.position = pos;
@@ -225,9 +239,30 @@ public class EffectManager : MonoSingleton<EffectManager>
         return eff;
     }
 
-    public void CallFollowTargetGameEffect(string key, Transform target, Vector3 offset, float duration)
+    public void CallFollowTargetGameEffect(string key, Transform target, Vector3 offset, float duration)  //이펙트 호출 후 일정 시간 지나면 소멸
     {
         GameObject eff = PoolManager.GetItem(key);
         Util.ExecuteFunc(() => eff.transform.position = target.position + offset, 0, duration, this, null, ()=>eff.gameObject.SetActive(false));
+    }
+
+    public void SpawnEffect(GameObject eff, Vector3 pos, float limit = -1, bool unscaled = false)  //터치 이펙트 호출 후 일정 시간 지나면 소멸
+    {
+        eff.transform.position = pos;
+        if(limit>=0f)
+        {
+            Util.DelayFunc(() => eff.gameObject.SetActive(false), limit, this, unscaled);
+        }
+    }
+
+    public void OnTouchEffect(string key = "") //Set Touch effect
+    {
+        if (string.IsNullOrEmpty(key))
+        {
+            IsOnTouchEffect = false;
+            return;
+        }
+
+        IsOnTouchEffect = true;
+        TouchEffKey = key;
     }
 }

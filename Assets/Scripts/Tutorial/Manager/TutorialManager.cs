@@ -79,6 +79,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             playerFollowLight.pointLightOuterRadius = 0;
 
             tutorialPhases.Add(new StartPhase(playerFollowLight,2));
+            EffectManager.Instance.OnTouchEffect("TouchEffect1");
         }
 
         UIManager.Instance.StartLoadingIn();
