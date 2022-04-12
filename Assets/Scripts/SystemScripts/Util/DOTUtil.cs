@@ -46,6 +46,25 @@ public static class DOUtil
         CTween t = new CTween(key, act);
         return t;
     }
+
+    public static CTween DOInnerRadius(this Light2D light, float endValue, float duration, bool setUpdate = false, Action onComplete = null)
+    {
+        string key = "DOT_Light2D_InnerRadius_" + light.name;
+        Action act = () => ExecuteTweening(key, DOInnerRadiusCo(light, endValue, duration, setUpdate, onComplete), light);
+        act();
+        
+        return new CTween(key, act);
+    }
+
+    public static CTween DOOuterRadius(this Light2D light, float endValue, float duration, bool setUpdate = false, Action onComplete = null)
+    {
+        string key = "DOT_Light2D_OuterRadius_" + light.name;
+        Action act = () => ExecuteTweening(key, DOOuterRadiusCo(light, endValue, duration, setUpdate, onComplete), light);
+        act();
+
+        return new CTween(key, act);
+    }
+
     #endregion
 
     #region DOCO
@@ -161,8 +180,62 @@ public static class DOUtil
         CA.intensity.value = endValue;
         onComplete?.Invoke();
     }
+
+    static IEnumerator DOInnerRadiusCo(Light2D light, float endValue, float duration, bool setUpdate, Action onComplete)
+    {
+        float vps = (endValue - light.pointLightInnerRadius) / duration;
+        float t = 0f;
+        if (setUpdate)
+        {
+            while (t < duration)
+            {
+                yield return null;
+                t += Time.unscaledDeltaTime;
+                light.pointLightInnerRadius += vps * Time.unscaledDeltaTime;
+            }
+        }
+        else
+        {
+            while (t < duration)
+            {
+                yield return null;
+                t += Time.deltaTime;
+                light.pointLightInnerRadius += vps * Time.deltaTime;
+            }
+        }
+        light.pointLightInnerRadius = endValue;
+        onComplete?.Invoke();
+    }
+
+    static IEnumerator DOOuterRadiusCo(Light2D light, float endValue, float duration, bool setUpdate, Action onComplete)
+    {
+        float vps = (endValue - light.pointLightOuterRadius) / duration;
+        float t = 0f;
+        if (setUpdate)
+        {
+            while (t < duration)
+            {
+                yield return null;
+                t += Time.unscaledDeltaTime;
+                light.pointLightOuterRadius += vps * Time.unscaledDeltaTime;
+            }
+        }
+        else
+        {
+            while (t < duration)
+            {
+                yield return null;
+                t += Time.deltaTime;
+                light.pointLightOuterRadius += vps * Time.deltaTime;
+            }
+        }
+        light.pointLightOuterRadius = endValue;
+        onComplete?.Invoke();
+    }
+
     #endregion
 
+    #region Execute
     public static void ExecuteTweening(string key, IEnumerator tc, MonoBehaviour mono)
     {
         if (!tweeningDict.ContainsKey(key))
@@ -192,9 +265,12 @@ public static class DOUtil
         if (tweeningDict.ContainsKey(key))
         {
             mono.StopCoroutine(tweeningDict[key]);
-            tweeningDict[key] = null;
+            //IEnumerator temp = tweeningDict[key];
+            //tweeningDict[key] = null;
+            //tweeningDict[key] = temp;
         }
     }
+    #endregion
 }
 
 public class CTween

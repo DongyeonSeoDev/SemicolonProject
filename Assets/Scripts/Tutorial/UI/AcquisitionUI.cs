@@ -28,5 +28,6 @@ public class AcquisitionUI : MonoBehaviour
         {
             UIActiveData.Instance.uiActiveDic[uiType] = true;
         }
+        OnUIVisible(!TutorialManager.Instance.IsTutorialStage);
     }
 }

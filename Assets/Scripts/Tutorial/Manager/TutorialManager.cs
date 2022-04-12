@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Experimental.Rendering.Universal;
 using Water;
 using System.Text;
+using System;
 
 public class TutorialManager : MonoSingleton<TutorialManager> 
 {
@@ -18,7 +19,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     //튜토리얼 진행중인가
     public bool IsTutorialStage { get; set; }
-
+    //튜토리얼 진행시키는데 업데이트에서 처리해야할 데이터들
     private List<TutorialPhase> tutorialPhases = new List<TutorialPhase>();
 
     #region 1
@@ -31,7 +32,11 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     private void Awake()
     {
-      
+        EventManager.StartListening("Tuto_GainAllArrowKey", () =>
+        {
+            playerFollowLight.DOInnerRadius(15f, 2f, true);
+            playerFollowLight.DOOuterRadius(15f, 2f, true);
+        });
     }
 
     private void Start()
@@ -57,6 +62,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         playerFollowLight = PoolManager.GetItem<Light2D>("NormalPointLight2D");
         playerFollowLight.gameObject.SetActive(!active);
         playerFollowLight.gameObject.AddComponent<SlimeFollowObj>();
+        playerFollowLight.color = Color.white;
 
         playerFollowLight.GetFieldInfo<Light2D>("m_ApplyToSortingLayers").SetValue(playerFollowLight, new int[8]
         {
@@ -72,7 +78,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             playerFollowLight.pointLightInnerRadius = 0;
             playerFollowLight.pointLightOuterRadius = 0;
 
-            tutorialPhases.Add(new StartPhase(playerFollowLight));
+            tutorialPhases.Add(new StartPhase(playerFollowLight,2));
         }
 
         UIManager.Instance.StartLoadingIn();
