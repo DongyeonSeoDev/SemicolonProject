@@ -1954,7 +1954,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5950706611391763827, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: isTestMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5950706611391763837, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_IsActive

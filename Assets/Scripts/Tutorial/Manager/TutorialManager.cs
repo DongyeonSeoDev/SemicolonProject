@@ -99,7 +99,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     public void UIOn(UIType type)
     {
-        UIActiveData.Instance.uiActiveDic[type] = true;
+        GameManager.Instance.savedData.userInfo.uiActiveDic[type] = true;
         UIManager.Instance.acqUIList.Find(x => x.uiType == type).GetComponent<AcquisitionUI>().OnUIVisible(true);
     }
 

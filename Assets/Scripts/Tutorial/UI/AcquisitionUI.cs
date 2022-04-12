@@ -10,7 +10,7 @@ public class AcquisitionUI : MonoBehaviour
     private void Awake()
     {
         cvsg = GetComponent<CanvasGroup>();
-        //OnUIVisible(false);
+        
     }
 
     public void OnUIVisible(bool on)
@@ -23,16 +23,12 @@ public class AcquisitionUI : MonoBehaviour
 
     private void Start()
     {
-        UserInfo info = GameManager.Instance.savedData.userInfo;
-        bool active = info.uiActiveDic.keyValueDic.ContainsKey(uiType) && info.uiActiveDic[uiType];
-        OnUIVisible(active);
-        if(!active)
-        {
-            UIActiveData.Instance.uiActiveDic[uiType] = false;
-        }
-        if(TutorialManager.Instance.IsTestMode && !on)  //Test
+        OnUIVisible(GameManager.Instance.savedData.userInfo.uiActiveDic[uiType]);
+
+        if (TutorialManager.Instance.IsTestMode && !on)  //Test
         {
             OnUIVisible(true);
+            GameManager.Instance.savedData.userInfo.uiActiveDic[uiType] = true;
         }
     }
 }

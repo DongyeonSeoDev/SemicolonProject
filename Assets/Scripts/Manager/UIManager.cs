@@ -338,7 +338,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     {
         if (!CheckExistUI((int)type)) return;
 
-        if (!UIActiveData.Instance.uiActiveDic[type]) return;
+        if (!gm.savedData.userInfo.uiActiveDic[type]) return;
 
         if (activeUIQueue.Count > 0 && !ignoreQueue) return;
         if (ExceptionHandler(type)) return;
@@ -358,7 +358,7 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     public void OnUIInteractSetActive(UIType type, bool isActive ,bool ignoreQueue = false) //UI열거나 닫음 (원하는 액티브 상태로 해주고 이미 그 상태면 캔슬)
     {
-        if (!UIActiveData.Instance.uiActiveDic[type]) return;
+        if (!gm.savedData.userInfo.uiActiveDic[type]) return;
 
         GameUI ui = gameUIList[(int)type];
         if (ui.gameObject.activeSelf == isActive) return;

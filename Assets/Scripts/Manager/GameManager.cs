@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 using System;
 using System.Text;
@@ -38,10 +39,9 @@ public partial class GameManager : MonoSingleton<GameManager>
     private void Awake()
     {
         filePath = Global.saveFileName_1.PersistentDataPath();
-        saveData = new SaveData();
+        saveData = new SaveData();   
         KeyCodeToString.Init();
         StateManager.Instance.Init();
-        UIActiveData.Instance.Init();
         
         Load();
         Init();
@@ -54,7 +54,6 @@ public partial class GameManager : MonoSingleton<GameManager>
     {
         MonsterCollection.Instance.Save();
         KeyActionManager.Instance.SaveKey();
-        UIActiveData.Instance.Save();
         saveData.Save();
     }
 
@@ -96,12 +95,15 @@ public partial class GameManager : MonoSingleton<GameManager>
             }
 
             //활성화된 UI 정보 가져옴
-            if(saveData.userInfo.uiActiveDic.keyList.Count>0)
+            if(saveData.userInfo.uiActiveDic.keyList.Count==0)
             {
-                foreach(UIType type in saveData.userInfo.uiActiveDic.keyList)
+                foreach(UIType type in Enum.GetValues(typeof(UIType)))
                 {
-                    UIActiveData.Instance.uiActiveDic[type] = saveData.userInfo.uiActiveDic[type];
+                    saveData.userInfo.uiActiveDic[type] = true;
                 }
+                //따로 처리할 것들
+                saveData.userInfo.uiActiveDic[UIType.QUIT] = false;
+                StartCoroutine(SetUIActiveDicFalseUI());
             }
         }
         //슬라임에게 스탯 데이터 넣기
@@ -110,11 +112,22 @@ public partial class GameManager : MonoSingleton<GameManager>
         //몬스터 동화율 정보 불러오기 --> MonsterCollection 스크립트에서 처리
     }
 
+    private IEnumerator SetUIActiveDicFalseUI()
+    {
+        while (UIManager.Instance == null) yield return null;
+
+        for(int i=0; i<UIManager.Instance.acqUIList.Count; i++)
+        {
+            saveData.userInfo.uiActiveDic[UIManager.Instance.acqUIList[i].uiType] = false;
+        }
+    }
+
 #endregion
 
     private void Init()
     {
-        saveData.userInfo = new UserInfo();
+        //saveData.userInfo = new UserInfo();  //UserInfo클래스의 저장 정보를 날림
+        saveData.userInfo.userItems.ClearDic();
 
         List<Food> allFoods = new List<Food>(Resources.LoadAll<Food>(Global.foodDataPath));
         List<FoodButton> fbList = new List<FoodButton>();
