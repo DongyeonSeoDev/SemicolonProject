@@ -140,7 +140,7 @@ public class PlayerState : MonoBehaviour
             lastPlayerMovingPoint = State.MovingState.down;
         }
     }
-    private void PlayerReset()
+    public void PlayerReset()
     {
         charging = false;
         bodySlapping = false;

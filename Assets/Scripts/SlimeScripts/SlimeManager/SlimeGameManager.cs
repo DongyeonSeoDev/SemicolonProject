@@ -85,7 +85,6 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
     {
         get { return upStatPercentage; }
     }
-
     private void Awake()
     {
         playerEnemyUnderstandingRateManager = PlayerEnemyUnderstandingRateManager.Instance;
@@ -153,6 +152,8 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
         SlimePoolManager.Instance.AddObject(currentPlayerBody);
         currentPlayerBody.SetActive(false);
         currentPlayerBody.tag = "Untagged";
+
+        EventManager.TriggerEvent("EnemyStart");
 
         bool found = false;
 
