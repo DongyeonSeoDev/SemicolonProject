@@ -249,6 +249,14 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             EventManager.TriggerEvent("ChangeBody");
             EventManager.TriggerEvent("ChangeBody", bodyId, isDead);
 
+            for(int i = 0; i < currentSkillDelayTimer.Length; i++) // 스킬 갱신
+            {
+                if(currentSkillDelayTimer[0] <= 0f)
+                {
+                    EventManager.TriggerEvent("Skill" + i + "DelayTimerZero");
+                }
+            }
+
             SetCanBodyChangeFalse();
 
             // TODO: PlayerBody로서의 처리

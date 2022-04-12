@@ -25,7 +25,7 @@ namespace Enemy
         {
             if (SlimeGameManager.Instance.CurrentPlayerBody != null)
             {
-                playerStatusEffect = SlimeGameManager.Instance.CurrentPlayerBody.GetComponent<PlayerStatusEffect>();
+                playerStatusEffect = SlimeGameManager.Instance.Player.GetComponent<PlayerStatusEffect>();
             }
             
             AddEnemyController();
