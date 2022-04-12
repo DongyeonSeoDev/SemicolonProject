@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using System.Runtime.InteropServices;
+using System.Reflection;
 
 public static partial class Util
 {
@@ -169,11 +170,22 @@ public static partial class Util
     }
 
     public static T EnumParse<T>(string str) => (T)Enum.Parse(typeof(T), str);
+}
 
-    public static T StringToClass<T>(string str) where T : class => Activator.CreateInstance(Type.GetType(str)) as T;
-
-    public static void PrintStructSize(Type type)
+namespace Water
+{
+    public static class WDUtil
     {
-        Debug.Log(type.ToString() + " Size : " + Marshal.SizeOf(type));
+        public static T StringToClass<T>(string str) where T : class => Activator.CreateInstance(Type.GetType(str)) as T;
+
+        public static void PrintStructSize(Type type)
+        {
+            Debug.Log(type.ToString() + " Size : " + Marshal.SizeOf(type));
+        }
+
+        public static FieldInfo GetFieldInfo<T>(this T t, string fieldName)
+        => t.GetType().GetField(fieldName, BindingFlags.NonPublic | BindingFlags.Instance);
+
+        
     }
 }

@@ -1,7 +1,7 @@
 using UnityEditor;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
+using Water;
 
 public class StageCheatWindow : EditorWindow
 {
@@ -10,6 +10,7 @@ public class StageCheatWindow : EditorWindow
     //private bool useClearStageKey = false;
 
     private Stat playerStat = new Stat();
+    private float useEnergyAmount;
     private int recoveryHp = 20;
     private StateAbnormality sa;
 
@@ -94,6 +95,22 @@ public class StageCheatWindow : EditorWindow
                     SlimePlayer.PlayerStat = playerStat;
                 }
 
+                GUILayout.Space(10);
+
+                useEnergyAmount = EditorGUILayout.FloatField("Slime Attack Need Energe", useEnergyAmount);
+
+                GUILayout.Space(5);
+
+                GUILayout.Label("(슬라임 전용. 몸 바뀌면 다시 Apply 필요할 수도)", EditorStyles.label);
+                if (GUILayout.Button("Apply Player Attack Info"))
+                {
+                    PlayerShoot shoot = SlimeGameManager.Instance.CurrentPlayerBody.GetComponent<PlayerShoot>();
+                    if(shoot != null)
+                    {
+                        shoot.GetFieldInfo<PlayerShoot>("useEnergyAmount").SetValue(shoot, useEnergyAmount);
+                    }
+                }
+
                 GUILayout.Space(20);
                 GUILayout.Label("[Status Cheat]", EditorStyles.boldLabel);
 
@@ -161,6 +178,7 @@ public class StageCheatWindow : EditorWindow
                 {
                     ScreenShot.captureKeyCode = keyCode;
                 }
+
                 break;
 
             case 2:

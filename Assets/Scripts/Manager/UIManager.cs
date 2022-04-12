@@ -207,7 +207,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         PlayerEnemyUnderstandingRateManager.Instance.ChangableBodyList.ForEach(x => mobSaveWindowActiveDic.Add(x.bodyId.ToString(), false));
         Load();
 
-        StartLoadingIn();
+        
     }
 
     public void Load()

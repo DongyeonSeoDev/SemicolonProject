@@ -61,7 +61,7 @@ public class StateManager : SingletonClass<StateManager>
 
     public void RemoveStateAbnormality(StateAbnormality state, int count = 10001)
     {
-        StateAbnormalityEffect ase = Util.StringToClass<StateAbnormalityEffect>(state.ToString());
+        StateAbnormalityEffect ase = WDUtil.StringToClass<StateAbnormalityEffect>(state.ToString());
 
         if (count == 10001)
             ase.StopEffect();
@@ -76,7 +76,7 @@ public class StateManager : SingletonClass<StateManager>
         StateAbnormalityEffect ase;
         for(int i = 0; i<Global.EnumCount<StateAbnormality>()-1; i++)
         {
-            ase = Util.StringToClass<StateAbnormalityEffect>(((StateAbnormality)i).ToString());
+            ase = WDUtil.StringToClass<StateAbnormalityEffect>(((StateAbnormality)i).ToString());
             ase.StopEffect(showLog);
             RemoveBuffSlotUI(((StateAbnormality)i).ToString());
         }
@@ -84,7 +84,7 @@ public class StateManager : SingletonClass<StateManager>
 
     public void OnStateAbnorEffect(StateAbnormality sa)
     {
-        Util.StringToClass<StateAbnormalityEffect>(sa.ToString()).OnEffected();
+        WDUtil.StringToClass<StateAbnormalityEffect>(sa.ToString()).OnEffected();
     }
 
     public void CreateOrUpdateBuffSlotUI(string id)
