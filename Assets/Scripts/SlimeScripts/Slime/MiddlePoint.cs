@@ -14,8 +14,8 @@ public class MiddlePoint : BodyPoint
 
     private Vector2[] notMiddlePointsPositions;
 
-    private SoftBody softBody = null;
-    public SoftBody SoftBody
+    private PCSoftBody softBody = null;
+    public PCSoftBody SoftBody
     {
         get { return softBody; }
         set { softBody = value; }
@@ -33,6 +33,14 @@ public class MiddlePoint : BodyPoint
     public float MaxDisWithBodyPoints
     {
         get { return maxDisWithBodyPoints;}
+    }
+
+    [SerializeField]
+    private bool afterImageSoftBodySpawned = false;
+    public bool AfterImageSoftBodySpawned
+    {
+        get { return afterImageSoftBodySpawned;}
+        set { afterImageSoftBodySpawned = value; }  
     }
 
     private void Start()

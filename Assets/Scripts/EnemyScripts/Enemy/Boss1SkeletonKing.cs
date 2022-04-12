@@ -178,6 +178,8 @@ namespace Enemy
             {
                 enemyAttackCheck[i].AttackObjectReset();
             }
+
+            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.AttackEnd, enemyData.enemyAnimator, TriggerType.ResetTrigger);
         }
 
         private EnemyState SpecialAttack1ChangeCondition() // 특수 공격 1 발동 조건
@@ -212,7 +214,7 @@ namespace Enemy
 
             Fire.checkAttackObjectTogether.Clear();
             attackCount++;
-
+ 
             for (int i = 0; i < fireCount - 1; i++)
             {
                 Fire fire = EnemyPoolManager.Instance.GetPoolObject(Type.Fire, AnglePosition(playerPosition, (360 / (fireCount - 1)) * i)).GetComponent<Fire>();
@@ -322,7 +324,6 @@ namespace Enemy
                 if (Random.Range(0, 10) < 6)
                 {
                     enemyData.animationDictionary[EnemyAnimationType.Attack] = hashAttack2;
-                    attackCount++;
 
                     return new EnemyAIAttackState(enemyData);
                 }
@@ -332,7 +333,6 @@ namespace Enemy
             else
             {
                 enemyData.animationDictionary[EnemyAnimationType.Attack] = hashAttack1;
-                attackCount++;
 
                 return new EnemyChaseState(enemyData);
             }

@@ -89,8 +89,8 @@ GameObject:
   - component: {fileID: 6840160282341942543}
   - component: {fileID: 6840160282341942541}
   - component: {fileID: 5860127214316570770}
+  - component: {fileID: 6454873446792583868}
   - component: {fileID: 6030300000594730899}
-  - component: {fileID: 1014413143}
   - component: {fileID: 1014413144}
   - component: {fileID: 1014413151}
   - component: {fileID: 4791505076498265380}
@@ -231,6 +231,34 @@ MonoBehaviour:
   triggerEdgeCollider2D: {fileID: 4331802093199943809}
   minDisWithBodyPoints: 0.2
   maxDisWithBodyPoints: 3
+--- !u!114 &6454873446792583868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6840160282341942530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5154fa6ef576804c9bbe641f4fbe455, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spriteShapeController: {fileID: 7767920394982435845}
+  points:
+  - {fileID: 5452748366477322726}
+  - {fileID: 5452748366344068690}
+  - {fileID: 5452748365560110710}
+  - {fileID: 5452748365791315108}
+  - {fileID: 5452748365009911102}
+  - {fileID: 4327631336810169174}
+  - {fileID: 4457970834551369897}
+  - {fileID: 3851220836599241427}
+  - {fileID: 804748403637607259}
+  - {fileID: 2556912131583927836}
+  afterImageSoftBody: {fileID: 774721848010111819, guid: cc04d25ebd35541479e2047dbc0efcf2, type: 3}
+  fadeOutSpeed: 1
+  notMiddlePoints: []
+  middleToOtherSpringJointFrequency: 10
 --- !u!114 &6030300000594730899
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,23 +275,6 @@ MonoBehaviour:
   whatIsWall:
     serializedVersion: 2
     m_Bits: 131264
---- !u!114 &1014413143
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6840160282341942530}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b92befdf4b882bd488df1e945a54d778, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spriteShapeController: {fileID: 7767920394982435845}
-  points:
-  - {fileID: 6840160282341942531}
-  notMiddlePoints: []
-  middleToOtherSpringJointFrequency: 10
 --- !u!114 &1014413144
 MonoBehaviour:
   m_ObjectHideFlags: 0

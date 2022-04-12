@@ -32,6 +32,7 @@ namespace Enemy
 
         private float isDamageCurrentTime = 0f;
         protected bool isStop = false;
+        private bool isAddPlayerEvent = false;
 
         protected virtual void Awake()
         {
@@ -49,36 +50,32 @@ namespace Enemy
             }
         }
 
-        protected virtual void Start()
-        {
-            if(enemyData.eEnemyController == EnemyController.PLAYER)
-            {
-                EventManager.StartListening("StartSkill0", StartAttack);
-            }
-
-            // SlimeGameManager
-
-            playerInput = SlimeGameManager.Instance.Player.GetComponent<PlayerInput>();
-        }
-
         protected virtual void OnDisable() // 오브젝트 제거시 이벤트 제거
         {
             EventManager.StopListening("PlayerDead", EnemyDataReset);
-            EventManager.StopListening("StartSkill0", StartAttack);
             EventManager.StopListening("EnemyStart", EnemyStart);
             EventManager.StopListening("EnemyStop", EnemyStop);
+            EventManager.StopListening("StartSkill0", StartAttack);
+
+            isAddPlayerEvent = false;
         }
 
         private void EnemyStart()
         {
-            isStop = false;
-            anim.speed = 1f;
+            if (enemyData.eEnemyController == EnemyController.AI)
+            {
+                isStop = false;
+                anim.speed = 1f;
+            }
         }
 
         private void EnemyStop()
         {
-            isStop = true;
-            anim.speed = 0f;
+            if (enemyData.eEnemyController == EnemyController.AI)
+            {
+                isStop = true;
+                anim.speed = 0f;
+            }
         }
 
         private void EnemyDataReset() // (이벤트 용) 적 리셋
@@ -89,8 +86,11 @@ namespace Enemy
 
         private void StartAttack() // (이벤트 용) 공격 시작했을때
         {
-            enemyData.isAttack = true;
-            playerInput.AttackMousePosition = playerInput.MousePosition;
+            if (enemyData.eEnemyController == EnemyController.PLAYER)
+            {
+                enemyData.isAttack = true;
+                playerInput.AttackMousePosition = playerInput.MousePosition;
+            }
         }
 
         protected virtual void OnEnable()
@@ -139,6 +139,10 @@ namespace Enemy
             EventManager.StartListening("PlayerDead", EnemyDataReset);
             EventManager.StartListening("EnemyStart", EnemyStart);
             EventManager.StartListening("EnemyStop", EnemyStop);
+
+            EnemyStart();
+
+            playerInput = SlimeGameManager.Instance.Player.GetComponent<PlayerInput>();
         }
 
         protected virtual void Update()
@@ -226,34 +230,19 @@ namespace Enemy
         }
 
         // 적 컨트롤러를 다른것으로 바꿈
-        public void EnemyControllerChange(EnemyController eEnemyController)
+        public void ChangeToPlayerController()
         {
-            enemyData.eEnemyController = eEnemyController;
+            enemyData.eEnemyController = EnemyController.PLAYER;
 
-            if (eEnemyController == EnemyController.AI)
+            gameObject.tag = "Player";
+            gameObject.layer = LayerMask.NameToLayer("PLAYER");
+
+            if (hpBar != null)
             {
-                gameObject.tag = "Untagged";
-                gameObject.layer = LayerMask.NameToLayer("ENEMY");
-
-                if (hpBar != null)
-                {
-                    hpBar.SetActive(true);
-                }
-
-                sr.color = enemyData.normalColor;
+                hpBar.SetActive(false);
             }
-            else if (eEnemyController == EnemyController.PLAYER)
-            {
-                gameObject.tag = "Player";
-                gameObject.layer = LayerMask.NameToLayer("PLAYER");
 
-                if (hpBar != null)
-                {
-                    hpBar.SetActive(false);
-                }
-
-                sr.color = enemyData.playerNormalColor;
-            }
+            sr.color = enemyData.playerNormalColor;
 
             if (enemyAttackCheck != null)
             {
@@ -261,19 +250,25 @@ namespace Enemy
                 {
                     if (enemyAttackCheck[i].enemyControllerChange != null)
                     {
-                        enemyAttackCheck[i].enemyControllerChange(eEnemyController);
+                        enemyAttackCheck[i].enemyControllerChange(EnemyController.PLAYER);
                     }
                     else
                     {
                         enemyAttackCheck[i].AddEnemyController();
-                        enemyAttackCheck[i].enemyControllerChange(eEnemyController);
+                        enemyAttackCheck[i].enemyControllerChange(EnemyController.PLAYER);
                     }
                 }
+            }
+
+            if (!isAddPlayerEvent)
+            {
+                EventManager.StartListening("StartSkill0", StartAttack);
+
+                isAddPlayerEvent = true;
             }
         }
 
         public void MoveEnemy() => enemyData.isEnemyMove = true; // 적을 움직이는 상태로 바꿈
-
         public EnemyType GetEnemyType() => enemyData.enemyType; // 적 타입을 가져옴
         public EnemyController GetEnemyController() => enemyData.eEnemyController;
         public Vector2? GetKnockBackDirection() => enemyData.knockBackDirection; // 적이 넉백 공격을 할 수 있는지를 가져옴

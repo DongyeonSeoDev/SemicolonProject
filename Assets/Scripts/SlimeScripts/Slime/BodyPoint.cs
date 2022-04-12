@@ -343,12 +343,22 @@ public class BodyPoint : MonoBehaviour
     }
     private void ReturnToMiddleWhenDrain()
     {
-        if(farByMiddleMax && isFarByPlayerByDrain)
+        if (farByMiddleTimer % middlePoint.PlayerDrain.PlayerDrainCol.DrainMoveUpdateTIme <= 0.1f)
         {
-            if(farByMiddleTimer % middlePoint.PlayerDrain.PlayerDrainCol.DrainMoveUpdateTIme <= 0.1f)
+            if (!middlePoint.AfterImageSoftBodySpawned)
+            {
+                middlePoint.AfterImageSoftBodySpawned = true;
+                EventManager.TriggerEvent("SpawnAfterImageSoftBody");
+            }
+
+            if (farByMiddleMax && isFarByPlayerByDrain)
             {
                 transform.position = Vector2.Lerp(farMaxPos, middlePoint.transform.position, farByMiddleTimer / farByMiddleTime);
             }
+        }
+        else
+        {
+            middlePoint.AfterImageSoftBodySpawned = false;
         }
     }
     private void StartNextStage()
