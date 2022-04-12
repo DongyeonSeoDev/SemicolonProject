@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 public class PlayerInput : MonoBehaviour
 {
     private PlayerState playerState = null;
+    private InputTutorial inputTutorial = null;
 
     private Vector2 moveVector = Vector2.zero;
     public Vector2 MoveVector
@@ -60,6 +61,13 @@ public class PlayerInput : MonoBehaviour
     }
     private bool isPause = false;
 
+    private bool isPauseByTuto = false;
+    public bool IsPauseByTuto
+    {
+        get { return isPauseByTuto; }
+        set { isPauseByTuto = value; }
+    }
+
     private void Start()
     {
         playerState = GetComponent<PlayerState>();
@@ -73,7 +81,11 @@ public class PlayerInput : MonoBehaviour
 
         TimeManager.timePauseAction += TimePause;
         TimeManager.timeResumeAction += TimeResume;
-        
+
+        if(TutorialManager.Instance.IsTutorialStage)
+        {
+            inputTutorial = gameObject.AddComponent<InputTutorial>();
+        }
     }
     private void OnDisable()
     {
@@ -86,12 +98,34 @@ public class PlayerInput : MonoBehaviour
 
     void Update()
     {
-        if (!(playerState.IsDead || playerState.IsSturn || playerState.IsKnockBack || playerState.IsDrain) && !isPause)
+        if (!isPauseByTuto && !isPause && !(playerState.IsDead || playerState.IsSturn || playerState.IsKnockBack || playerState.IsDrain))
         {
             if (!playerState.Chargning)
             {
                 moveVector.x = Input.GetAxisRaw("Horizontal");
                 moveVector.y = Input.GetAxisRaw("Vertical");
+
+                if (inputTutorial != null)
+                {
+                    // ContainKeyüũ
+                    if ((moveVector.x > 0f && inputTutorial.InputTutoDataDict.ContainsKey(KeyAction.RIGHT) &&
+                        !inputTutorial.InputTutoDataDict[KeyAction.RIGHT].isClear) ||
+
+                        (moveVector.x < 0f && inputTutorial.InputTutoDataDict.ContainsKey(KeyAction.LEFT) && 
+                        !inputTutorial.InputTutoDataDict[KeyAction.LEFT].isClear))
+                    {
+                        moveVector.x = 0f;
+                    }
+                    // ContainKeyüũ
+                    if ((moveVector.y > 0f && inputTutorial.InputTutoDataDict.ContainsKey(KeyAction.UP) &&
+                        !inputTutorial.InputTutoDataDict[KeyAction.UP].isClear) ||
+
+                        (moveVector.y < 0f && inputTutorial.InputTutoDataDict.ContainsKey(KeyAction.DOWN) &&
+                        !inputTutorial.InputTutoDataDict[KeyAction.DOWN].isClear))
+                    {
+                        moveVector.y = 0f;
+                    }
+                }
 
                 moveVector = moveVector.normalized;
 
@@ -104,7 +138,9 @@ public class PlayerInput : MonoBehaviour
                     lastMoveVector = moveVector;
                 }
 
-                if (!EventSystem.current.IsPointerOverGameObject()) // mouse 0
+                if (!EventSystem.current.IsPointerOverGameObject() && 
+                    (inputTutorial == null || (!inputTutorial.InputTutoDataDict.ContainsKey(KeyAction.ATTACK) || 
+                    inputTutorial.InputTutoDataDict[KeyAction.ATTACK].isClear))) // mouse 0
                 {
                     isDoSkill0 = Input.GetMouseButton(0);
 
@@ -122,23 +158,33 @@ public class PlayerInput : MonoBehaviour
                 }
 
                 //Debug.Log(isDoSkill0 == Input.GetButton("Shoot"));
-
-                if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.SPECIALATTACK2])) // q
+                // ContainKeyüũ
+                if (inputTutorial == null || (!inputTutorial.InputTutoDataDict.ContainsKey(KeyAction.SPECIALATTACK2) || 
+                    inputTutorial.InputTutoDataDict[KeyAction.SPECIALATTACK2].isClear))
                 {
-                    isDoSkill2 = true;
-                    skill2ButtonDowned = true;
+                    if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.SPECIALATTACK2]))
+                    {
+                        isDoSkill2 = true;
+                        skill2ButtonDowned = true;
+                    }
+
+                    if (Input.GetKeyUp(KeySetting.keyDict[KeyAction.SPECIALATTACK2]) || (skill2ButtonDowned && !Input.GetKey(KeySetting.keyDict[KeyAction.SPECIALATTACK2])))
+                    {
+                        skill2ButtonDowned = false;
+
+                        EventManager.TriggerEvent("SkillButtonUp2");
+                    }
                 }
 
-                if (Input.GetKeyUp(KeySetting.keyDict[KeyAction.SPECIALATTACK2]) || (skill2ButtonDowned && !Input.GetKey(KeySetting.keyDict[KeyAction.SPECIALATTACK2])))
-                {
-                    skill2ButtonDowned = false;
 
-                    EventManager.TriggerEvent("SkillButtonUp2");
-                }
-
-                if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.INTERACTION])) // e
+                // ContainKeyüũ
+                if (inputTutorial == null || (!inputTutorial.InputTutoDataDict.ContainsKey(KeyAction.INTERACTION) ||
+                    inputTutorial.InputTutoDataDict[KeyAction.INTERACTION].isClear))
                 {
-                    isInteraction = true;
+                    if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.INTERACTION]))
+                    {
+                        isInteraction = true;
+                    }
                 }
             }
             else
@@ -147,19 +193,23 @@ public class PlayerInput : MonoBehaviour
             }
 
             mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-
-            if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.SPECIALATTACK1])) // left shift
+            // ContainKeyüũ
+            if (inputTutorial == null || (!inputTutorial.InputTutoDataDict.ContainsKey(KeyAction.SPECIALATTACK1) ||
+                    inputTutorial.InputTutoDataDict[KeyAction.SPECIALATTACK1].isClear))
             {
-                skill1ButtonDowned = true;
+                if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.SPECIALATTACK1])) // left shift
+                {
+                    skill1ButtonDowned = true;
 
-                isDoSkill1 = true;
-            }
+                    isDoSkill1 = true;
+                }
 
-            if(Input.GetKeyUp(KeySetting.keyDict[KeyAction.SPECIALATTACK1]) || (skill1ButtonDowned && !Input.GetKey(KeySetting.keyDict[KeyAction.SPECIALATTACK1])))
-            {
-                skill1ButtonDowned = false;
+                if (Input.GetKeyUp(KeySetting.keyDict[KeyAction.SPECIALATTACK1]) || (skill1ButtonDowned && !Input.GetKey(KeySetting.keyDict[KeyAction.SPECIALATTACK1])))
+                {
+                    skill1ButtonDowned = false;
 
-                EventManager.TriggerEvent("SkillButtonUp1");
+                    EventManager.TriggerEvent("SkillButtonUp1");
+                }
             }
         }
         else

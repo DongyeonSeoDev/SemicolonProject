@@ -31,7 +31,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     private void Awake()
     {
-      
+        IsTutorialStage = true;
     }
 
     private void Start()
