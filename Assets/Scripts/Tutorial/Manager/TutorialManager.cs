@@ -25,6 +25,10 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     private Light2D playerFollowLight;  //플레이어 따라다니는 라이트
     #endregion
 
+    [Header("Test")]
+    [SerializeField] private bool isTestMode = false;
+    public bool IsTestMode => isTestMode;
+
     private void Awake()
     {
       
@@ -36,6 +40,13 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         um = UIManager.Instance;
 
         bool active = gm.savedData.tutorialInfo.isEnded;
+
+        if (isTestMode)
+        {
+            UIManager.Instance.StartLoadingIn();
+            return;
+        }
+
         hpUI.gameObject.SetActive(active);
         energeBarUI.gameObject.SetActive(active);
         for (int i = 0; i < skillUIArr.Length; i++)

@@ -11,7 +11,7 @@ public class AcquisitionUI : MonoBehaviour
     private void Awake()
     {
         cvsg = GetComponent<CanvasGroup>();
-        OnUIVisible(false);
+        //OnUIVisible(false);
     }
 
     public void OnUIVisible(bool on)
@@ -24,7 +24,7 @@ public class AcquisitionUI : MonoBehaviour
 
     private void Start()
     {
-        if(GameManager.Instance.savedData.tutorialInfo.isEnded)
+        if(GameManager.Instance.savedData.tutorialInfo.isEnded || TutorialManager.Instance.IsTestMode)
         {
             UIActiveData.Instance.uiActiveDic[uiType] = true;
         }
