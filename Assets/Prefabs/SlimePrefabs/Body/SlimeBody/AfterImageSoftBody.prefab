@@ -118,6 +118,9 @@ MonoBehaviour:
   - {fileID: 7016383994246644890}
   - {fileID: 6847290624744064274}
   - {fileID: 8599208881868519509}
+  fadeOutSpeed: 0.1
+  startAlbedoPercentage: 35
+  albedoDatas: []
 --- !u!1 &2270220327345658604
 GameObject:
   m_ObjectHideFlags: 0

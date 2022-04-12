@@ -73,7 +73,11 @@ public class PCSoftBody : SoftBody
 
         (obj, found) = SlimePoolManager.Instance.Find(afterImageSoftBody);
 
-        if (!found)
+        if (found)
+        {
+            obj.SetActive(true);
+        }
+        else
         {
             obj = Instantiate(afterImageSoftBody, SlimePoolManager.Instance.transform);
         }

@@ -35,6 +35,14 @@ public class MiddlePoint : BodyPoint
         get { return maxDisWithBodyPoints;}
     }
 
+    [SerializeField]
+    private bool afterImageSoftBodySpawned = false;
+    public bool AfterImageSoftBodySpawned
+    {
+        get { return afterImageSoftBodySpawned;}
+        set { afterImageSoftBodySpawned = value; }  
+    }
+
     private void Start()
     {
         playerDrain = GetComponent<PlayerDrain>();
