@@ -18,15 +18,19 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
 
     public Pair<GameObject, Transform> keyInfoPair;
 
+    #region Head Text
     [SerializeField] private Text playerHeadTxt; //플레이어 머리 위에 뜨는 독백(?) 텍스트
+    private RectTransform phtRectTr;
     public Vector3 playerHeadTextOffset;
     private Vector3 playerHeadTextCurOffset;
     private float phtOffTime;
-    private bool twComp = false;
+    private bool twComp;  //사라지는 tween 적용중인가
+    #endregion
 
     private void Awake()
     {
         KeySetting.SetFixedKeySetting();
+        phtRectTr = playerHeadTxt.GetComponent<RectTransform>();
     }
 
     private void Start()
@@ -45,7 +49,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         SkillUIManager.Instance.UpdateSkillKeyCode();
         MonsterCollection.Instance.UpdateSavedBodyChangeKeyCodeTxt();
 
-        SetPlayerHeadText("TestMsg", 5f, 40);
+        Util.DelayFunc(() => SetPlayerHeadText("TestMsg", 5f), 5f);
     }
 
     private void Update()
@@ -186,7 +190,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
             Transform target = SlimeGameManager.Instance.CurrentPlayerBody.transform;  //변신 시 플레이어가 잠깐 사라져서 이렇게 받아서 함
             if (target)
             {
-                playerHeadTxt.transform.position = Util.ScreenToWorldPosForScreenSpace(target.position + playerHeadTextCurOffset, Util.WorldCvs);
+                phtRectTr.anchoredPosition = Util.ScreenToWorldPosForScreenSpace(target.position + playerHeadTextCurOffset, Util.WorldCvs);
             }
 
             if(!twComp && Time.time > phtOffTime)
@@ -199,23 +203,23 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
             {
                 playerHeadTextCurOffset.y += Time.deltaTime * (!twComp ? 3f : -3f);
             }*/
-            playerHeadTextCurOffset.y += Time.deltaTime * (!twComp ? 3f : -3f);
-            playerHeadTextCurOffset.y = Mathf.Clamp(playerHeadTextCurOffset.y, 0, playerHeadTextOffset.y);
+            playerHeadTextCurOffset.y += Time.deltaTime * (!twComp ? 1.7f : -1.7f);
+            playerHeadTextCurOffset.y = Mathf.Clamp(playerHeadTextCurOffset.y, 1, playerHeadTextOffset.y);
         }
     }
 
-    public void SetPlayerHeadText(string msg, float duration = -1f, int fontSize = 28)
+    public void SetPlayerHeadText(string msg, float duration = -1f, int fontSize = 22)
     {
         playerHeadTxt.DOKill();
-        playerHeadTxt.color = Color.black;
-        playerHeadTextCurOffset = Vector3.zero;
+        playerHeadTxt.color = Color.clear;
+        playerHeadTextCurOffset = Vector3.one;
         twComp = false;
 
         playerHeadTxt.text = msg;
         playerHeadTxt.fontSize = fontSize;
         playerHeadTxt.gameObject.SetActive(true);
 
-        playerHeadTxt.DOColor(Color.white, 0.4f);
+        playerHeadTxt.DOColor(Color.black, 0.4f);
 
         if(duration > 0f)
         {
