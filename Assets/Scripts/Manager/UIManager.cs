@@ -144,16 +144,6 @@ public partial class UIManager : MonoSingleton<UIManager>
     {
         int i;
 
-        for(i=0; i<Global.EnumCount<UIType>(); i++)
-        {
-            UIActiveData.Instance.uiActiveDic.Add((UIType)i, true);
-        }
-        for(i=0; i<acqUIList.Count; i++)
-        {
-            UIActiveData.Instance.uiActiveDic[acqUIList[i].uiType] = false;
-        }
-        UIActiveData.Instance.uiActiveDic[UIType.QUIT] = false;
-
         cursorImgRectTrm = cursorInfoImg.GetComponent<RectTransform>();
         sw = cursorImgRectTrm.rect.width;
 

@@ -46,7 +46,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
         bool active = gm.savedData.tutorialInfo.isEnded;
 
-        if (isTestMode)
+        if (isTestMode)  //Test
         {
             UIManager.Instance.StartLoadingIn();
             return;

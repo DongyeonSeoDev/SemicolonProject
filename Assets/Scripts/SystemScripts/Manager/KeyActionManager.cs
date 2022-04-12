@@ -49,7 +49,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         SkillUIManager.Instance.UpdateSkillKeyCode();
         MonsterCollection.Instance.UpdateSavedBodyChangeKeyCodeTxt();
 
-        Util.DelayFunc(() => SetPlayerHeadText("TestMsg", 5f), 5f);
+        
     }
 
     private void Update()
@@ -59,9 +59,10 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
             CancelKeySetting();
         }
         
+        
     }
 
-    private void LateUpdate()
+    private void FixedUpdate()
     {
         FollowPlayerHeadText();
     }
@@ -212,7 +213,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
     {
         playerHeadTxt.DOKill();
         playerHeadTxt.color = Color.clear;
-        playerHeadTextCurOffset = Vector3.one;
+        playerHeadTextCurOffset = new Vector2(0, 1);
         twComp = false;
 
         playerHeadTxt.text = msg;

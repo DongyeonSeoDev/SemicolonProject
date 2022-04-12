@@ -41,6 +41,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         saveData = new SaveData();
         KeyCodeToString.Init();
         StateManager.Instance.Init();
+        UIActiveData.Instance.Init();
         
         Load();
         Init();
@@ -53,6 +54,7 @@ public partial class GameManager : MonoSingleton<GameManager>
     {
         MonsterCollection.Instance.Save();
         KeyActionManager.Instance.SaveKey();
+        UIActiveData.Instance.Save();
         saveData.Save();
     }
 
@@ -90,6 +92,15 @@ public partial class GameManager : MonoSingleton<GameManager>
                 foreach (KeyAction key in saveData.option.keyInputDict.keyList)
                 {
                     KeySetting.keyDict[key] = saveData.option.keyInputDict[key];
+                }
+            }
+
+            //활성화된 UI 정보 가져옴
+            if(saveData.userInfo.uiActiveDic.keyList.Count>0)
+            {
+                foreach(UIType type in saveData.userInfo.uiActiveDic.keyList)
+                {
+                    UIActiveData.Instance.uiActiveDic[type] = saveData.userInfo.uiActiveDic[type];
                 }
             }
         }

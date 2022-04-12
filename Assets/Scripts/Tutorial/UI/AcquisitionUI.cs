@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class AcquisitionUI : MonoBehaviour
@@ -24,10 +23,16 @@ public class AcquisitionUI : MonoBehaviour
 
     private void Start()
     {
-        if(GameManager.Instance.savedData.tutorialInfo.isEnded || TutorialManager.Instance.IsTestMode)
+        UserInfo info = GameManager.Instance.savedData.userInfo;
+        bool active = info.uiActiveDic.keyValueDic.ContainsKey(uiType) && info.uiActiveDic[uiType];
+        OnUIVisible(active);
+        if(!active)
         {
-            UIActiveData.Instance.uiActiveDic[uiType] = true;
+            UIActiveData.Instance.uiActiveDic[uiType] = false;
         }
-        OnUIVisible(!TutorialManager.Instance.IsTutorialStage);
+        if(TutorialManager.Instance.IsTestMode && !on)  //Test
+        {
+            OnUIVisible(true);
+        }
     }
 }

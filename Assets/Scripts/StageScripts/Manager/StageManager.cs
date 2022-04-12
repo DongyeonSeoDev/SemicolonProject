@@ -417,6 +417,7 @@ public class StageManager : MonoSingleton<StageManager>
                 break;
             case AreaType.MONSTER:
                 //EventManager.TriggerEvent("SpawnEnemy", currentStageData.stageID);
+                SetMonsterStage();
                 break;
             case AreaType.CHEF:
                 SetClearStage();
@@ -430,6 +431,7 @@ public class StageManager : MonoSingleton<StageManager>
                 EnterRandomArea();
                 return;   //랜덤 맵이면 함수를 빠져나간다.
             case AreaType.BOSS:
+                SetMonsterStage();
                 //보스구역이면 무엇을 할까
                 break;
         }
@@ -471,7 +473,6 @@ public class StageManager : MonoSingleton<StageManager>
     {
         if (currentArea == AreaType.MONSTER || currentArea == AreaType.BOSS)
         {
-            SetMonsterStage();
             NextEnemy();
         }
         EventManager.TriggerEvent("StartBGM", currentStageData.stageID);
