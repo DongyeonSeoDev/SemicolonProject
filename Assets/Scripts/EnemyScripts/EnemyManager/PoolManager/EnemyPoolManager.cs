@@ -16,7 +16,9 @@ namespace Enemy
         DeadEffect,
         BulletEffect,
         Fire,
-        EnemySpawnEffect
+        EnemySpawnEffect,
+        EnemyRushAttackRange,
+        Boss1Clone
     }
 
     public class EnemyPoolManager : MonoBehaviour

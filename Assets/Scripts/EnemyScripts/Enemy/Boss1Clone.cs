@@ -12,5 +12,15 @@ namespace Enemy
         {
             rigid = GetComponent<Rigidbody2D>();
         }
+
+        private void Start()
+        {
+            EventManager.StartListening("PlayerSetActiveFalse", PlayerDeadEvent);
+        }
+
+        public void PlayerDeadEvent()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }

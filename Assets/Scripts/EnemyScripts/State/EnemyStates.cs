@@ -130,6 +130,8 @@ namespace Enemy
     public partial class BossSpecialAttack1Status : EnemyState
     {
         private Boss1SkeletonKing boss = null;
+        private Boss1Clone[] bossCloneArray = new Boss1Clone[2];
+        private RushAttackRange[] attackRangeArray = new RushAttackRange[3];
 
         private int moveCount = 0;
 
@@ -162,6 +164,14 @@ namespace Enemy
 
                     enemyData.enemySpriteRenderer.enabled = true;
                     enemyData.moveVector = (new Vector3(12f, enemyData.enemyObject.transform.position.y) - enemyData.enemyObject.transform.position).normalized;
+
+                    bossCloneArray[0] = (Boss1Clone)EnemyPoolManager.Instance.GetPoolObject(Type.Boss1Clone, new Vector2(boss.transform.position.x, boss.transform.position.y + 3f));
+                    bossCloneArray[1] = (Boss1Clone)EnemyPoolManager.Instance.GetPoolObject(Type.Boss1Clone, new Vector2(boss.transform.position.x, boss.transform.position.y - 3f));
+
+                    attackRangeArray[0] = (RushAttackRange)EnemyPoolManager.Instance.GetPoolObject(Type.EnemyRushAttackRange, new Vector2(0f, boss.transform.position.y));
+                    attackRangeArray[1] = (RushAttackRange)EnemyPoolManager.Instance.GetPoolObject(Type.EnemyRushAttackRange, new Vector2(0f, bossCloneArray[0].transform.position.y));
+                    attackRangeArray[2] = (RushAttackRange)EnemyPoolManager.Instance.GetPoolObject(Type.EnemyRushAttackRange, new Vector2(0f, bossCloneArray[1].transform.position.y));
+
                     enemyData.enemySpriteRotateCommand.Execute();
                     isMove = true;
                 }, 2f);
@@ -170,11 +180,20 @@ namespace Enemy
             if (isMove)
             {
                 enemyData.enemyRigidbody2D.velocity = enemyData.moveVector * 20f;
+                bossCloneArray[0].rigid.velocity = enemyData.moveVector * 20f;
+                bossCloneArray[1].rigid.velocity = enemyData.moveVector * 20f;
 
                 if ((moveCount % 2 == 0 && enemyData.enemyObject.transform.position.x >= boss.limitMaxPosition.x) || (moveCount % 2 == 1 && enemyData.enemyObject.transform.position.x <= boss.limitMinPosition.x))
                 {
                     isMove = false;
                     enemyData.enemySpriteRenderer.enabled = false;
+
+                    bossCloneArray[0].gameObject.SetActive(false);
+                    bossCloneArray[1].gameObject.SetActive(false);
+
+                    attackRangeArray[0].gameObject.SetActive(false);
+                    attackRangeArray[1].gameObject.SetActive(false);
+                    attackRangeArray[2].gameObject.SetActive(false);
                 }
 
                 if (!isMove)
@@ -192,11 +211,25 @@ namespace Enemy
                         {
                             // 왼쪽 이동
                             enemyData.moveVector = (new Vector3(boss.limitMinPosition.x, enemyData.enemyObject.transform.position.y) - enemyData.enemyObject.transform.position).normalized;
+
+                            bossCloneArray[0] = (Boss1Clone)EnemyPoolManager.Instance.GetPoolObject(Type.Boss1Clone, new Vector2(boss.transform.position.x, boss.transform.position.y + 3f));
+                            bossCloneArray[1] = (Boss1Clone)EnemyPoolManager.Instance.GetPoolObject(Type.Boss1Clone, new Vector2(boss.transform.position.x, boss.transform.position.y - 3f));
+
+                            attackRangeArray[0] = (RushAttackRange)EnemyPoolManager.Instance.GetPoolObject(Type.EnemyRushAttackRange, new Vector2(0f, boss.transform.position.y));
+                            attackRangeArray[1] = (RushAttackRange)EnemyPoolManager.Instance.GetPoolObject(Type.EnemyRushAttackRange, new Vector2(0f, bossCloneArray[0].transform.position.y));
+                            attackRangeArray[2] = (RushAttackRange)EnemyPoolManager.Instance.GetPoolObject(Type.EnemyRushAttackRange, new Vector2(0f, bossCloneArray[1].transform.position.y));
                         }
                         else if (moveCount == 2)
                         {
                             // 오른쪽 이동
                             enemyData.moveVector = (new Vector3(boss.limitMaxPosition.x, enemyData.enemyObject.transform.position.y) - enemyData.enemyObject.transform.position).normalized;
+
+                            bossCloneArray[0] = (Boss1Clone)EnemyPoolManager.Instance.GetPoolObject(Type.Boss1Clone, new Vector2(boss.transform.position.x, boss.transform.position.y + 3f));
+                            bossCloneArray[1] = (Boss1Clone)EnemyPoolManager.Instance.GetPoolObject(Type.Boss1Clone, new Vector2(boss.transform.position.x, boss.transform.position.y - 3f));
+
+                            attackRangeArray[0] = (RushAttackRange)EnemyPoolManager.Instance.GetPoolObject(Type.EnemyRushAttackRange, new Vector2(0f, boss.transform.position.y));
+                            attackRangeArray[1] = (RushAttackRange)EnemyPoolManager.Instance.GetPoolObject(Type.EnemyRushAttackRange, new Vector2(0f, bossCloneArray[0].transform.position.y));
+                            attackRangeArray[2] = (RushAttackRange)EnemyPoolManager.Instance.GetPoolObject(Type.EnemyRushAttackRange, new Vector2(0f, bossCloneArray[1].transform.position.y));
                         }
                         else
                         {
