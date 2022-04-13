@@ -19,7 +19,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     public Transform[] skillUIArr;
 
     //튜토리얼 진행중인가
-    public bool IsTutorialStage { get; set; }
+    public bool IsTutorialStage => !GameManager.Instance.savedData.tutorialInfo.isEnded;
     //튜토리얼 진행시키는데 업데이트에서 처리해야할 데이터들
     private List<TutorialPhase> tutorialPhases = new List<TutorialPhase>();
 
@@ -35,8 +35,12 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     {
         EventManager.StartListening("Tuto_GainAllArrowKey", () =>
         {
-            playerFollowLight.DOInnerRadius(15f, 2f, true);
-            playerFollowLight.DOOuterRadius(15f, 2f, true);
+            playerFollowLight.DOInnerRadius(20f, 1.5f, false);
+            playerFollowLight.DOOuterRadius(20f, 1.5f, false, () =>
+            {
+                playerFollowLight.gameObject.SetActive(false);
+                Environment.Instance.mainLight.intensity = 1;
+            });
         });
     }
 
@@ -74,7 +78,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
         if (!active)
         {
-            IsTutorialStage = true;
+            
 
             Environment.Instance.mainLight.intensity = 0;
             playerFollowLight.intensity = 1;

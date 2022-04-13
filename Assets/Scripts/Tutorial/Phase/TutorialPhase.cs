@@ -40,14 +40,18 @@ public class StartPhase : TutorialPhase
                     complete = true;
                     EffectManager.Instance.OnTouchEffect();
                     light.DOInnerRadius(2, 1.5f, true);
-                    light.DOOuterRadius(4, 1.8f, true, () => base.End());
+                    light.DOOuterRadius(4, 1.8f, true, () => End());
                 }
             }
         }
        
     }
 
-    
+    public override void End()
+    {
+        SlimeGameManager.Instance.Player.PlayerInput.IsPauseByTuto = false;
+        base.End();
+    }
 }
 
 public class SettingPhase : TutorialPhase

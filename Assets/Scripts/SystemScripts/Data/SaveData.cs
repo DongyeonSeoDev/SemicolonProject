@@ -28,7 +28,7 @@ public class SaveData
 [SerializeField]
 public class TutorialInfo
 {
-    public bool isEnded;
+    public bool isEnded = false;
 
     public string tutorialId;
 }
