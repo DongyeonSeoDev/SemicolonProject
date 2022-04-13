@@ -112,18 +112,19 @@ public class PlayerInput : MonoBehaviour
                         !inputTutorial.InputTutoDataDict[KeyAction.RIGHT].isClear) ||
 
                         (moveVector.x < 0f && inputTutorial.InputTutoDataDict.ContainsKey(KeyAction.LEFT) && 
-                        !inputTutorial.InputTutoDataDict[KeyAction.LEFT].isClear))
-                    {
-                        moveVector.x = 0f;
-                    }
-                    // ContainKeyüũ
-                    if ((moveVector.y > 0f && inputTutorial.InputTutoDataDict.ContainsKey(KeyAction.UP) &&
+                        !inputTutorial.InputTutoDataDict[KeyAction.LEFT].isClear) ||
+
+                            (moveVector.y > 0f && inputTutorial.InputTutoDataDict.ContainsKey(KeyAction.UP) &&
                         !inputTutorial.InputTutoDataDict[KeyAction.UP].isClear) ||
 
                         (moveVector.y < 0f && inputTutorial.InputTutoDataDict.ContainsKey(KeyAction.DOWN) &&
                         !inputTutorial.InputTutoDataDict[KeyAction.DOWN].isClear))
                     {
-                        moveVector.y = 0f;
+                        playerState.CantMove = true;
+                    }
+                    else
+                    {
+                        playerState.CantMove = false;
                     }
                 }
 

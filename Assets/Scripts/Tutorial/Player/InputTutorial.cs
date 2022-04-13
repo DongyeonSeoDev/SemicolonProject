@@ -83,12 +83,14 @@ public class InputTutorial : MonoBehaviour
 
         foreach (var item in inputTutoDatas)
         {
-            if (inputTutoDataDict.ContainsKey(item.key))
+            if (!inputTutoDataDict.ContainsKey(item.key))
             {
                 inputTutoDataDict.Add(item.key, item);
             }
             else
             {
+                Debug.LogWarning("중복되는 값이 있네용? 나중에 확인해보셔요. '" + item.key + "' <- 이게 중복되고있어용!");
+
                 inputTutoDataDict[item.key] = item;
             }
         }

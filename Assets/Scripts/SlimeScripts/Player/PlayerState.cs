@@ -69,7 +69,14 @@ public class PlayerState : MonoBehaviour
         set { isKnockBack = value; }
     }
 
-    private bool isSturn = false;
+    private bool cantMove = false; 
+    public bool CantMove
+    {
+        get { return cantMove; }
+        set { cantMove = value; }
+    }
+
+    private bool isSturn = false; // 외부(적, 장해물 등)에 의한 멈춤처리
     public bool IsSturn
     {
         get { return isSturn; }

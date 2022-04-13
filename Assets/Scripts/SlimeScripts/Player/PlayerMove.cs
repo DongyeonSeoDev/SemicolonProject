@@ -36,16 +36,19 @@ public class PlayerMove : PlayerAction
         {
             Vector2 moveVec = playerInput.MoveVector * (playerStat.Speed);
 
-            if(moveVec != Vector2.zero)
+            if (!playerState.CantMove)
             {
-                lastMoveVec = moveVec;
-            }
-            else
-            {
-                lastMoveVec = Vector2.Lerp(lastMoveVec, Vector2.zero, Time.fixedDeltaTime * playerStat.Speed / 2f); // 움직임이 멈췄을 때 갑자기 멈추는 것을 방지
-            }
+                if (moveVec != Vector2.zero)
+                {
+                    lastMoveVec = moveVec;
+                }
+                else
+                {
+                    lastMoveVec = Vector2.Lerp(lastMoveVec, Vector2.zero, Time.fixedDeltaTime * playerStat.Speed / 2f); // 움직임이 멈췄을 때 갑자기 멈추는 것을 방지
+                }
 
-            rigid.velocity = lastMoveVec;
+                rigid.velocity = lastMoveVec;
+            }
 
             // 여기부턴 슬라임 바디포인트들의 움직임 처리
 
