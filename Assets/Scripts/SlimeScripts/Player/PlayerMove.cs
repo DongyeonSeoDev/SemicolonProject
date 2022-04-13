@@ -34,82 +34,25 @@ public class PlayerMove : PlayerAction
     {
         if (!playerState.BodySlapping)
         {
-            Vector2 MoveVec = playerInput.MoveVector * (playerStat.Speed);
+            Vector2 moveVec = playerInput.MoveVector * (playerStat.Speed);
 
-            if(MoveVec != Vector2.zero)
+            if (!playerState.CantMove)
             {
-                lastMoveVec = MoveVec;
-            }
-            else
-            {
-                lastMoveVec = Vector2.Lerp(lastMoveVec, Vector2.zero, Time.fixedDeltaTime * playerStat.Speed / 2f); // 움직임이 멈췄을 때 갑자기 멈추는 것을 방지
-            }
+                if (moveVec != Vector2.zero)
+                {
+                    lastMoveVec = moveVec;
+                }
+                else
+                {
+                    lastMoveVec = Vector2.Lerp(lastMoveVec, Vector2.zero, Time.fixedDeltaTime * playerStat.Speed / 2f); // 움직임이 멈췄을 때 갑자기 멈추는 것을 방지
+                }
 
-            rigid.velocity = lastMoveVec;
+                rigid.velocity = lastMoveVec;
+            }
 
             // 여기부턴 슬라임 바디포인트들의 움직임 처리
 
-            float movePower = 0f;
-
-            float distance = 0f;
-
-            foreach(var x in softBody.UpNotMiddlePoints)
-            {
-                if(x.IsWall || x.IsCrossWall)
-                {
-                    continue;
-                }
-
-                movePower = GetMovePower(x.transform);
-
-                if (MoveVec != Vector2.zero)
-                {
-                    x.IsMove = true;
-                }
-                else
-                {
-                    x.IsMove = false;
-                }
-
-                distance = Vector2.Distance(x.transform.localPosition, x.OriginLocalPosition);
-
-                if (distance < maxBodyPointLocalPos)
-                {
-                    if (!x.IsWall)
-                    {
-                        x.transform.localPosition = Vector2.Lerp(x.transform.localPosition, (Vector2)x.transform.localPosition + MoveVec * movePower, Time.fixedDeltaTime);
-                    }
-                }
-            }
-
-            foreach(var x in softBody.DownNotMiddlePoints)
-            {
-                if (x.IsWall || x.IsCrossWall)
-                {
-                    continue;
-                }
-
-                movePower = GetMovePower(x.transform);
-
-                if (MoveVec != Vector2.zero)
-                {
-                    x.IsMove = true;
-                }
-                else
-                {
-                    x.IsMove = false;
-                }
-
-                distance = Vector2.Distance(x.transform.localPosition, x.OriginLocalPosition);
-
-                if (distance < maxBodyPointLocalPos)
-                {
-                    if (!x.IsWall)
-                    {
-                        x.transform.localPosition = Vector2.Lerp(x.transform.localPosition, (Vector2)x.transform.localPosition - MoveVec * movePower, Time.fixedDeltaTime);
-                    }
-                }
-            }
+            PlayerBodyPointMove(moveVec);
         }
         else
         {
@@ -123,5 +66,69 @@ public class PlayerMove : PlayerAction
         movePower = pos.localPosition.y;
 
         return movePower.Abs() * bodyPointMovePower;
+    }
+    public void PlayerBodyPointMove(Vector2 moveVec)
+    {
+        float movePower = 0f;
+
+        float distance = 0f;
+
+        foreach (var x in softBody.UpNotMiddlePoints)
+        {
+            if (x.IsWall || x.IsCrossWall)
+            {
+                continue;
+            }
+
+            movePower = GetMovePower(x.transform);
+
+            if (moveVec != Vector2.zero)
+            {
+                x.IsMove = true;
+            }
+            else
+            {
+                x.IsMove = false;
+            }
+
+            distance = Vector2.Distance(x.transform.localPosition, x.OriginLocalPosition);
+
+            if (distance < maxBodyPointLocalPos)
+            {
+                if (!x.IsWall)
+                {
+                    x.transform.localPosition = Vector2.Lerp(x.transform.localPosition, (Vector2)x.transform.localPosition + moveVec * movePower, Time.fixedDeltaTime);
+                }
+            }
+        }
+
+        foreach (var x in softBody.DownNotMiddlePoints)
+        {
+            if (x.IsWall || x.IsCrossWall)
+            {
+                continue;
+            }
+
+            movePower = GetMovePower(x.transform);
+
+            if (moveVec != Vector2.zero)
+            {
+                x.IsMove = true;
+            }
+            else
+            {
+                x.IsMove = false;
+            }
+
+            distance = Vector2.Distance(x.transform.localPosition, x.OriginLocalPosition);
+
+            if (distance < maxBodyPointLocalPos)
+            {
+                if (!x.IsWall)
+                {
+                    x.transform.localPosition = Vector2.Lerp(x.transform.localPosition, (Vector2)x.transform.localPosition - moveVec * movePower, Time.fixedDeltaTime);
+                }
+            }
+        }
     }
 }

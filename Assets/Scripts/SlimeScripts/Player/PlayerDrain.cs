@@ -52,6 +52,8 @@ public class PlayerDrain : PlayerSkill
     {
         base.OnDisable();
 
+        drainCollider.SetActive(false);
+
         EventManager.StopListening("OnDrain", OnDrain);
         EventManager.StopListening("EnemySpawnAfter", EnemyStop);
     }

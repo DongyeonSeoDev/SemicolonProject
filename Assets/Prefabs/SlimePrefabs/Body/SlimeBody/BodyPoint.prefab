@@ -124,8 +124,9 @@ MonoBehaviour:
     m_Bits: 131136
   returnToOriginSpeed: 7
   moveToMiddleSpeed: 4
-  moveToMiddleTime: 0.1
+  farByMiddleSpeed: 1
   moveToOriginTime: 0
+  moveToMiddleTime: 0.1
   isMiddlePoint: 0
 --- !u!114 &5248659302136541078
 MonoBehaviour:
@@ -152,7 +153,6 @@ GameObject:
   - component: {fileID: 7797320474043919608}
   - component: {fileID: 3014974466733136240}
   - component: {fileID: 8167755309513765778}
-  - component: {fileID: 8655562915457737014}
   - component: {fileID: 5662740552322970081}
   m_Layer: 12
   m_Name: BodyPointCrashCheckCollider
@@ -242,27 +242,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.15
---- !u!50 &8655562915457737014
-Rigidbody2D:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6073185137625978306}
-  m_BodyType: 0
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
-  m_AngularDrag: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 0
 --- !u!114 &5662740552322970081
 MonoBehaviour:
   m_ObjectHideFlags: 0

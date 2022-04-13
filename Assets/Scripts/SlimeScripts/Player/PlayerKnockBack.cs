@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerKnockBack : MonoBehaviour
 {
-    private PlayerMove playerMove = null;
-
     [SerializeField]
     private LayerMask whatIsCantCrossLayer;
 
@@ -15,10 +13,6 @@ public class PlayerKnockBack : MonoBehaviour
     private float knockBackTime = 0f;
     private float knocBackTimer = 0f;
 
-    private void Start()
-    {
-        playerMove = GetComponent<PlayerMove>();
-    }
     private void OnEnable()
     {
         EventManager.StartListening("PlayerKnockBack", OnKnockBack);
@@ -53,11 +47,16 @@ public class PlayerKnockBack : MonoBehaviour
     }
     private void DoKnockBack()
     {
-        transform.position = Vector2.Lerp(originPos, targetPos, knocBackTimer / knockBackTime);
+         SlimeGameManager.Instance.CurrentPlayerBody.transform.position = Vector2.Lerp(originPos, targetPos, knocBackTimer / knockBackTime);
     }
     private void OnKnockBack(Vector2 direction, float moveDistance, float moveTime)
     {
-        originPos = transform.position;
+        if(SlimeGameManager.Instance.Player.PlayerState.IsDrain)
+        {
+            return;
+        }
+
+        originPos = SlimeGameManager.Instance.CurrentPlayerBody.transform.position;
 
         targetPos = (direction * moveDistance) + originPos;
         targetPos = SlimeGameManager.Instance.PosCantCrossWall(whatIsCantCrossLayer, originPos, targetPos);
