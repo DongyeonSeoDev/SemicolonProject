@@ -6,6 +6,7 @@ public static class StoredData
     private static Dictionary<string, object> objDataDic = new Dictionary<string, object>();
     private static Dictionary<string, GameObject> gameObjectDataDic = new Dictionary<string, GameObject>();
 
+    #region object
     public static void SetObjectKey(string key, object data)
     {
         //objDataDic[key] = data;  //°Á ÀÌ·¸°Ô ¹Ù·Î ÇØµµ µÊ.
@@ -35,7 +36,9 @@ public static class StoredData
     }
 
     public static bool HasObjectKey(string key) => objDataDic.ContainsKey(key);
+    #endregion
 
+    #region GameObject
     public static void SetGameObjectKey(string key, GameObject data)
     {
         
@@ -64,4 +67,5 @@ public static class StoredData
     }
 
     public static bool HasGameObjectKey(string key) => gameObjectDataDic.ContainsKey(key);
+    #endregion
 }

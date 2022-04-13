@@ -10,7 +10,10 @@ public class StageCheatWindow : EditorWindow
     //private bool useClearStageKey = false;
 
     private Stat playerStat = new Stat();
-    private float useEnergyAmount;
+    private float useEnergyAmount = 1f;
+    private float upMountingPercentageValueWhenEnemyDead = 2f;
+    private int upUnderstandingRateValueWhenEnemyDead = 1;
+
     private int recoveryHp = 20;
     private StateAbnormality sa;
 
@@ -102,13 +105,32 @@ public class StageCheatWindow : EditorWindow
                 GUILayout.Space(5);
 
                 GUILayout.Label("(슬라임 전용. 몸 바뀌면 다시 Apply 필요할 수도)", EditorStyles.label);
-                if (GUILayout.Button("Apply Player Attack Info"))
+                if (GUILayout.Button("Apply Attack Need Energe"))
                 {
                     PlayerShoot shoot = SlimeGameManager.Instance.CurrentPlayerBody.GetComponent<PlayerShoot>();
                     if(shoot != null)
                     {
                         shoot.GetFieldInfo<PlayerShoot>("useEnergyAmount").SetValue(shoot, useEnergyAmount);
                     }
+                }
+
+                GUILayout.Space(20);
+                upMountingPercentageValueWhenEnemyDead = EditorGUILayout.FloatField("Drain Probability", upMountingPercentageValueWhenEnemyDead);
+                if (GUILayout.Button("Apply Drain Probability"))
+                {
+                    Debug.Log(SlimePlayer.UpMountingPercentageValueWhenEnemyDead);
+                    SlimePlayer.GetFieldInfo<Player>("upMountingPercentageValueWhenEnemyDead").SetValue(SlimePlayer, upMountingPercentageValueWhenEnemyDead);
+                    Debug.Log(SlimePlayer.UpMountingPercentageValueWhenEnemyDead);
+                }
+
+                GUILayout.Space(10);
+                upUnderstandingRateValueWhenEnemyDead = EditorGUILayout.IntField("Up Understanding Rate", upUnderstandingRateValueWhenEnemyDead);
+                GUILayout.Label("(적을 죽일 때 오르는 동화율의 값)", EditorStyles.label);
+                if (GUILayout.Button("Apply Understanding Rate"))
+                {                    
+                    Debug.Log(SlimePlayer.UpUnderstadingRateValueWhenEnemyDead);
+                    SlimePlayer.GetFieldInfo<Player>("upUnderstandingRateValueWhenEnemyDead").SetValue(SlimePlayer, upUnderstandingRateValueWhenEnemyDead);
+                    Debug.Log(SlimePlayer.UpUnderstadingRateValueWhenEnemyDead);
                 }
 
                 GUILayout.Space(20);
