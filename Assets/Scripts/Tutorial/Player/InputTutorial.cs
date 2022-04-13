@@ -27,22 +27,22 @@ public class InputTutoData
     }
     public void CheckTimer()
     {
-        if(timerStarted && pressTimer > 0)
+        if(timerStarted && pressTimer >= 0)
         {
             pressTimer -= Time.deltaTime;
 
-            if(pressTimer <= 0)
+            if(pressTimer < 0)
             {
                 isClear = true;
                 timerStarted = false;
-                pressTimer = 0f;
+                pressTimer = -1f;
             }
         }
     }
 }
 public class InputTutorial : MonoBehaviour
 {
-    public bool isTestMode = false;
+    public bool isTestMode = true;
 
     [SerializeField]
     private List<InputTutoData> inputTutoDatas = new List<InputTutoData>();
@@ -64,6 +64,11 @@ public class InputTutorial : MonoBehaviour
         inputTutoDatas.Add(new InputTutoData(KeyAction.DOWN, 3f));
         #endregion
 
+        #region 공격관련
+        inputTutoDatas.Add(new InputTutoData(KeyAction.ATTACK, 0f));
+        inputTutoDatas.Add(new InputTutoData(KeyAction.SPECIALATTACK1, 0f));
+        inputTutoDatas.Add(new InputTutoData(KeyAction.SPECIALATTACK2, 0f));
+        #endregion
     }
 
     void Start()
