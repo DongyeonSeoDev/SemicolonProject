@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
 using System;
+using FkTweening;
 
 public abstract class TutorialPhase
 {
@@ -54,6 +55,8 @@ public class SettingPhase : TutorialPhase
     private ParticleSystem dustParticle;
     private int pressCount = 10, currentCount = 0;
 
+    private float camShakeStr = 0.3f, camFreq = 0.7f;
+
     public SettingPhase(ParticleSystem effect, int pressCount, Action end)
     {
         dustParticle = effect;
@@ -67,7 +70,9 @@ public class SettingPhase : TutorialPhase
         {
             if(++currentCount < pressCount)
             {
-                
+                CinemachineCameraScript.Instance.Shake(camShakeStr, camFreq, 0.3f);
+                camShakeStr += 0.2f;
+                camFreq += 0.1f;
             }
             else
             {

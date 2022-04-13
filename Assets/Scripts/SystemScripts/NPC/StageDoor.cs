@@ -1,6 +1,7 @@
 using UnityEngine.Experimental.Rendering.Universal;
 using UnityEngine;
 using Water;
+using FkTweening;
 
 public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
 {

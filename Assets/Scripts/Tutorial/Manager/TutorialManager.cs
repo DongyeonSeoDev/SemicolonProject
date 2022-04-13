@@ -6,6 +6,7 @@ using UnityEngine.Experimental.Rendering.Universal;
 using Water;
 using System.Text;
 using System;
+using FkTweening;
 
 public class TutorialManager : MonoSingleton<TutorialManager> 
 {
@@ -106,6 +107,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     public void UIOn(UIType type)
     {
+        UIManager.Instance.PreventItrUI(0.4f);
         GameManager.Instance.savedData.userInfo.uiActiveDic[type] = true;
         UIManager.Instance.acqUIList.Find(x => x.uiType == type).GetComponent<AcquisitionUI>().OnUIVisible(true);
     }
