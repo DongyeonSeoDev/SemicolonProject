@@ -59,10 +59,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
             CancelKeySetting();
         }
         
-        if(Input.GetKeyDown(KeyCode.Return))
-        {
-            TutorialManager.Instance.UIOn(UIType.INVENTORY);
-        }
+        
     }
 
     private void FixedUpdate()

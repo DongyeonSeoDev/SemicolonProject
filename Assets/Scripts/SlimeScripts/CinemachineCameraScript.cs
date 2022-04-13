@@ -6,6 +6,8 @@ public class CinemachineCameraScript : MonoSingleton<CinemachineCameraScript>
     private CinemachineVirtualCamera cinemachine = null;
     private CinemachineConfiner cinemachineConfiner = null;
 
+    private CinemachineBasicMultiChannelPerlin noise;
+
     public Collider2D boundingCollider = null;
 
     void Start()
@@ -13,6 +15,7 @@ public class CinemachineCameraScript : MonoSingleton<CinemachineCameraScript>
         cinemachine = GetComponent<CinemachineVirtualCamera>();
         cinemachineConfiner = GetComponent<CinemachineConfiner>();
         boundingCollider = GameObject.FindGameObjectWithTag("CameraLimit").GetComponent<Collider2D>();
+        noise = cinemachine.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
         EventManager.StartListening("PlayerDead", () =>
         {
@@ -32,5 +35,10 @@ public class CinemachineCameraScript : MonoSingleton<CinemachineCameraScript>
     public void SetCinemachineConfiner(Collider2D collider)
     {
         cinemachineConfiner.m_BoundingShape2D = collider;
+    }
+
+    public void Shake()
+    {
+        
     }
 }

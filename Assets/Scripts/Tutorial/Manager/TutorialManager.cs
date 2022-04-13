@@ -48,10 +48,11 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
         if (isTestMode)  //Test
         {
-            UIManager.Instance.StartLoadingIn();
+            um.StartLoadingIn();
             return;
         }
 
+        //Init Etc UI Active
         hpUI.gameObject.SetActive(active);
         energeBarUI.gameObject.SetActive(active);
         for (int i = 0; i < skillUIArr.Length; i++)
@@ -59,6 +60,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             skillUIArr[i].gameObject.SetActive(active);
         }
 
+        //PlayerFollowLight Init Setting
         playerFollowLight = PoolManager.GetItem<Light2D>("NormalPointLight2D");
         playerFollowLight.gameObject.SetActive(!active);
         playerFollowLight.gameObject.AddComponent<SlimeFollowObj>();
@@ -82,7 +84,12 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             EffectManager.Instance.OnTouchEffect("TouchEffect1");
         }
 
-        UIManager.Instance.StartLoadingIn();
+        if(!active || !gm.savedData.userInfo.uiActiveDic[UIType.SETTING])
+        {
+            tutorialPhases.Add(new SettingPhase(null, 10, () => UIOn(UIType.SETTING)));
+        }
+
+        um.StartLoadingIn();
     }
 
     private void ShowTargetSortingLayers() //Test

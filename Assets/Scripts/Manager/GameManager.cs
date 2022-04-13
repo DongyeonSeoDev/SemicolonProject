@@ -101,13 +101,19 @@ public partial class GameManager : MonoSingleton<GameManager>
                 {
                     saveData.userInfo.uiActiveDic[type] = true;
                 }
-                //따로 처리할 것들
-                saveData.userInfo.uiActiveDic[UIType.QUIT] = false;
+               
                 StartCoroutine(SetUIActiveDicFalseUI());
             }
             else
             {
-                StoredData.SetObjectKey("SetUIAcqState", true);
+                if (!saveData.tutorialInfo.isEnded)
+                {
+                    StartCoroutine(SetUIActiveDicFalseUI());
+                }
+                else
+                {
+                    StoredData.SetObjectKey("SetUIAcqState", true);
+                }
             }
         }
         //슬라임에게 스탯 데이터 넣기
@@ -118,6 +124,9 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     private IEnumerator SetUIActiveDicFalseUI()
     {
+        //따로 처리할 것들
+        saveData.userInfo.uiActiveDic[UIType.QUIT] = false;
+
         while (UIManager.Instance == null) yield return null;
 
         for(int i=0; i<UIManager.Instance.acqUIList.Count; i++)
