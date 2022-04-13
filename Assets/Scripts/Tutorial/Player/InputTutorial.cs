@@ -53,6 +53,8 @@ public class InputTutorial : MonoBehaviour
         get { return inputTutoDataDict; }
     }
 
+    private bool moveKeyClearAll = false;
+
     private void Awake()
     {
         #region 이동관련
@@ -68,6 +70,9 @@ public class InputTutorial : MonoBehaviour
     {
         if (isTestMode)
         {
+            moveKeyClearAll = true;
+            EventManager.TriggerEvent("Tuto_GainAllArrowKey");
+
             for (int i = 0; i < inputTutoDatas.Count; i++)
             {
                 inputTutoDatas[i].isClear = true;
@@ -115,6 +120,41 @@ public class InputTutorial : MonoBehaviour
         CheckKey(KeyAction.SPECIALATTACK1);
         CheckKey(KeyAction.SPECIALATTACK2);
         #endregion
+
+        #region MoveKeyClearCheck
+
+        if (!moveKeyClearAll)
+        {
+            int mkClearNum = 0;
+
+            if (CheckClear(KeyAction.LEFT))
+            {
+                mkClearNum++;
+            }
+
+            if (CheckClear(KeyAction.RIGHT))
+            {
+                mkClearNum++;
+            }
+
+            if (CheckClear(KeyAction.UP))
+            {
+                mkClearNum++;
+            }
+
+            if (CheckClear(KeyAction.DOWN))
+            {
+                mkClearNum++;
+            }
+
+            if (mkClearNum >= 4)
+            {
+                moveKeyClearAll = true;
+                EventManager.TriggerEvent("Tuto_GainAllArrowKey");
+            }
+        }
+
+        #endregion
     }
     private void CheckFixedKey(KeyAction keyAction)
     {
@@ -147,6 +187,15 @@ public class InputTutorial : MonoBehaviour
                 inputTutoDataDict[keyAction].StartTimer();
             }
         }
+    }
+    public bool CheckClear(KeyAction keyAction)
+    {
+        if(inputTutoDataDict.ContainsKey(keyAction))
+        {
+            return inputTutoDataDict[keyAction].isClear;
+        }
+
+        return false;
     }
     private void SetTimerStartedFalse(KeyAction keyAction)
     {
