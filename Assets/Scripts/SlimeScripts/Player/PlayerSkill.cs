@@ -14,6 +14,13 @@ public abstract class PlayerSkill : PlayerAction
     public virtual void Update()
     {
         //CheckSkillDelay();
+
+        if(SlimeGameManager.Instance.SkillDelayTimerZero[skillIdx])
+        {
+            SlimeGameManager.Instance.SkillDelayTimerZero[skillIdx] = false;
+
+            WhenSkillDelayTimerZero();
+        }
     }
     public virtual void OnEnable()
     {
@@ -21,13 +28,11 @@ public abstract class PlayerSkill : PlayerAction
 
         EventManager.StartListening("StartSkill" + skillIdx, DoSkill);
         EventManager.StartListening("SkillButtonUp" + skillIdx, SkillButtonUp);
-        EventManager.StartListening("Skill" + skillIdx + "DelayTimerZero", WhenSkillDelayTimerZero);
     }
     public virtual void OnDisable()
     {
         EventManager.StopListening("StartSkill" + skillIdx, DoSkill);
         EventManager.StopListening("SkillButtonUp" + skillIdx, SkillButtonUp);
-        EventManager.StopListening("Skill" + skillIdx + "DelayTimerZero", WhenSkillDelayTimerZero);
     }
 
     public void WhenChangeSkill()
@@ -44,7 +49,7 @@ public abstract class PlayerSkill : PlayerAction
     }
     public virtual void WhenSkillDelayTimerZero()
     {
-
+        
     }
 
 }

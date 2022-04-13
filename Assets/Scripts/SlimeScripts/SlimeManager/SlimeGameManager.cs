@@ -75,6 +75,12 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
         get { return currentSkillDelayTimer; } 
     }
 
+    private bool[] skillDelayTimerZero = new bool[3] { false, false, false};
+    public bool[] SkillDelayTimerZero
+    {
+        get { return skillDelayTimerZero; }
+    }
+
     [Header("동화율 몇퍼당 변신시 능력치가 오를지를 정하는 변수")]
     [SerializeField]
     private int understadingRatePercentageWhenUpStat = 10;
@@ -250,13 +256,14 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             EventManager.TriggerEvent("ChangeBody");
             EventManager.TriggerEvent("ChangeBody", bodyId, isDead);
 
-            for(int i = 0; i < currentSkillDelayTimer.Length; i++) // 스킬 갱신
-            {
-                if(currentSkillDelayTimer[0] <= 0f)
-                {
-                    EventManager.TriggerEvent("Skill" + i + "DelayTimerZero");
-                }
-            }
+            //for(int i = 0; i < currentSkillDelayTimer.Length; i++) // 스킬 갱신
+            //{
+            //    if(currentSkillDelayTimer[i] <= 0f)
+            //    {
+            //        //EventManager.TriggerEvent("Skill" + i + "DelayTimerZero");
+            //        skillDelayTimerZero[i]
+            //    }
+            //}
 
             SetCanBodyChangeFalse();
 
@@ -320,7 +327,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
                 {
                     currentSkillDelayTimer[i] = 0f;
 
-                    EventManager.TriggerEvent("Skill" + i + "DelayTimerZero");
+                    skillDelayTimerZero[i] = true;
                 }
             }
         }

@@ -45,6 +45,7 @@ public class BodyPointCrashCheckCollider : MonoBehaviour
 
         EventManager.TriggerEvent("BodyPointCrash", other.gameObject);
     }
+
     private void OnTriggerExit2D(Collider2D other)
     {
         if (whatIsWall.CompareGameObjectLayer(other.gameObject))
