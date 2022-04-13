@@ -105,6 +105,10 @@ public partial class GameManager : MonoSingleton<GameManager>
                 saveData.userInfo.uiActiveDic[UIType.QUIT] = false;
                 StartCoroutine(SetUIActiveDicFalseUI());
             }
+            else
+            {
+                StoredData.SetObjectKey("SetUIAcqState", true);
+            }
         }
         //슬라임에게 스탯 데이터 넣기
         //옵션 설정 내용 넣기 
@@ -120,6 +124,8 @@ public partial class GameManager : MonoSingleton<GameManager>
         {
             saveData.userInfo.uiActiveDic[UIManager.Instance.acqUIList[i].uiType] = false;
         }
+
+        StoredData.SetObjectKey("SetUIAcqState", true);
     }
 
 #endregion

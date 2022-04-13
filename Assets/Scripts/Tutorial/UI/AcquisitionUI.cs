@@ -1,4 +1,4 @@
-
+using System.Collections;
 using UnityEngine;
 
 public class AcquisitionUI : MonoBehaviour
@@ -21,8 +21,10 @@ public class AcquisitionUI : MonoBehaviour
         cvsg.blocksRaycasts = on;
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
+        while (!StoredData.HasObjectKey("SetUIAcqState")) yield return null;
+
         OnUIVisible(GameManager.Instance.savedData.userInfo.uiActiveDic[uiType]);
 
         if (TutorialManager.Instance.IsTestMode && !on)  //Test
