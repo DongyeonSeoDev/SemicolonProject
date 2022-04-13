@@ -12,7 +12,7 @@ namespace Enemy
         private Collider2D attackCollider;
         private Enemy enemyCheck;
         private EnemyController eEnemyController;
-        private int attackDamage;
+        private int attackPower;
         private bool checkTogether;
 
         private readonly int hashAttack = Animator.StringToHash("Attack");
@@ -31,14 +31,14 @@ namespace Enemy
             EventManager.StartListening("PlayerSetActiveFalse", PlayerDeadEvent);
         }
 
-        public void Spawn(Enemy enemy, EnemyController controller, int damage, float attackTime, bool checkTogether)
+        public void Spawn(Enemy enemy, EnemyController controller, int power, float attackTime, bool checkTogether)
         {
             animator.ResetTrigger(hashAttack);
             animator.SetTrigger(hashReset);
 
             enemyCheck = enemy;
             eEnemyController = controller;
-            attackDamage = damage;
+            attackPower = power;
             this.checkTogether = checkTogether;
 
             if (!checkTogether)
@@ -92,7 +92,7 @@ namespace Enemy
 
             if (eEnemyController == EnemyController.AI && collision.CompareTag("Player"))
             {
-                SlimeGameManager.Instance.Player.GetDamage(Random.Range(attackDamage - 5, attackDamage + 6));
+                SlimeGameManager.Instance.Player.GetDamage(Random.Range(attackPower - 5, attackPower + 6));
 
                 if (checkTogether)
                 {
