@@ -4,7 +4,7 @@ using UnityEngine;
 public static class StoredData
 {
     private static Dictionary<string, object> objDataDic = new Dictionary<string, object>();
-    private static Dictionary<string, MonoBehaviour> monoDataDic = new Dictionary<string, MonoBehaviour>();
+    private static Dictionary<string, GameObject> gameObjectDataDic = new Dictionary<string, GameObject>();
 
     public static void SetObjectKey(string key, object data)
     {
@@ -16,7 +16,7 @@ public static class StoredData
             objDataDic[key] = data;
     }
 
-    public static object GetObjectKey(string key)
+    public static object GetObjectData(string key)
     {
         if(objDataDic.ContainsKey(key))
         {
@@ -36,32 +36,32 @@ public static class StoredData
 
     public static bool HasObjectKey(string key) => objDataDic.ContainsKey(key);
 
-    public static void SetMonoKey(string key, MonoBehaviour data)
+    public static void SetGameObjectKey(string key, GameObject data)
     {
         
-        if (!monoDataDic.ContainsKey(key))
-            monoDataDic.Add(key, data);
+        if (!gameObjectDataDic.ContainsKey(key))
+            gameObjectDataDic.Add(key, data);
         else
-            monoDataDic[key] = data;
+            gameObjectDataDic[key] = data;
     }
 
-    public static object GetMonoKey(string key)
+    public static GameObject GetGameObjectData(string key)
     {
-        if (monoDataDic.ContainsKey(key))
+        if (gameObjectDataDic.ContainsKey(key))
         {
-            return monoDataDic[key];
+            return gameObjectDataDic[key];
         }
         Debug.Log("키가 없다 : " + key);
         return null;
     }
 
-    public static void DeleteMonoKey(string key)
+    public static void DeleteGameObjectKey(string key)
     {
-        if (monoDataDic.ContainsKey(key))
+        if (gameObjectDataDic.ContainsKey(key))
         {
-            monoDataDic.Remove(key);
+            gameObjectDataDic.Remove(key);
         }
     }
 
-    public static bool HasMonoKey(string key) => monoDataDic.ContainsKey(key);
+    public static bool HasGameObjectKey(string key) => gameObjectDataDic.ContainsKey(key);
 }
