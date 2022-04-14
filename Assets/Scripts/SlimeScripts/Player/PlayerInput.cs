@@ -92,7 +92,7 @@ public class PlayerInput : MonoBehaviour
         playerState = GetComponent<PlayerState>();
 
         lastMoveVector = Vector2.left;
-        if (TutorialManager.Instance.IsTutorialStage)
+        if (TutorialManager.Instance.IsTutorialStage && !TutorialManager.Instance.IsTestMode)
         {
             inputTutorial = gameObject.AddComponent<InputTutorial>();
         }
