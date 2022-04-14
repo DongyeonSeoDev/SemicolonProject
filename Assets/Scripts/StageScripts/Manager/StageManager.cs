@@ -534,6 +534,17 @@ public class StageManager : MonoSingleton<StageManager>
         }
     }
 
+    public StageBundleDataSO GetStageBundleData(int floor)
+    {
+        string str = FloorToFloorID(floor);
+        if (!string.IsNullOrEmpty(str))
+        {
+            return idToStageFloorDict[str];
+        }
+        Debug.Log("잘못된 접근 : " + floor + "층");
+        return null;
+    }
+
     private void EnterRandomArea()
     {
         //RandomRoomType room = (RandomRoomType)UnityEngine.Random.Range(0, Global.EnumCount<RandomRoomType>());

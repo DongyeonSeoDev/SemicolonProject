@@ -9,6 +9,9 @@ public class StageCheatWindow : EditorWindow
 
     //private bool useClearStageKey = false;
 
+    //stage 관련
+    private int floor;
+
     //Player 관련
     private Stat playerStat = new Stat();
     private float useEnergyAmount = 1f;
@@ -61,6 +64,12 @@ public class StageCheatWindow : EditorWindow
         Enemy.EnemyManager.Instance.PlayerDeadEvent();
     }
 
+    private void ChangeNextStageToBoss()
+    {
+        StageDataSO data = StageManager.Instance.GetStageBundleData(floor).stages.Find(x => x.areaType == AreaType.BOSS);
+        StageManager.Instance.CurrentStageGround.stageDoors.ForEach(x => x.nextStageData = data);
+    }
+
     private void OnEnable()
     {
         playerStat = SlimePlayer.PlayerStat;
@@ -69,6 +78,7 @@ public class StageCheatWindow : EditorWindow
         upMountingPercentageValueWhenEnemyDead = 2f;
         upUnderstandingRateValueWhenEnemyDead = 1;
         bodyChangeTime = 10f;
+        floor = 1;
 
         skillDelays = SlimeGameManager.Instance.SkillDelays;
     } 
@@ -95,17 +105,28 @@ public class StageCheatWindow : EditorWindow
                 {
                     CurrentStageClear();
                 }
+                if (GUILayout.Button("Current All monster Die"))
+                {
+                    Enemy.EnemyManager.Instance.PlayerDeadEvent();
+                }
+
+                GUILayout.EndHorizontal();
+
+                GUILayout.Space(10);
+
+                //GUILayout.Label("(다음 스테이지 )", EditorStyles.boldLabel);
+                floor = EditorGUILayout.IntField("target floor", floor);  //몇 층 보스 꺼낼지 정하자
+                if (GUILayout.Button("Next Stage Is Boss"))  //담 스테이지는 보스 스테이지로 해줌
+                {
+                    ChangeNextStageToBoss();
+                }
 
                 /*if(useClearStageKey && Event.current.isKey && Event.current.keyCode == KeyCode.F6)
                 {
                     CurrentStageClear();
                     
                 }*/
-                /*if (GUILayout.Button("Current All monster Die"))
-                {
-                    Enemy.EnemyManager.Instance.PlayerDeadEvent();
-                }*/
-                GUILayout.EndHorizontal();
+                
 
                 GUILayout.Space(20);
                 GUILayout.Label("[Player Cheat]", EditorStyles.boldLabel);

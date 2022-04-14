@@ -16,7 +16,7 @@ MonoBehaviour:
   stageName: '    '
   stageMonsterBundleCount: 0
   stageMonsterBundleID: []
-  stage: {fileID: 0}
+  stage: {fileID: 1378282381469885354, guid: 5c427137ac12a7349a85870c30811f69, type: 3}
   areaType: 0
   enemySpeciesArea: 2
   mapNPC: {fileID: 0}
