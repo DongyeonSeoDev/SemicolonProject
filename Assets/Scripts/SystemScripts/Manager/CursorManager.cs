@@ -72,10 +72,10 @@ public class CursorManager : MonoSingleton<CursorManager>
 
         if (isOnEnemy != hit)
         {
-            isOnEnemy = hit;
-
             changeCursor = true;
         }
+
+        isOnEnemy = hit;
     }
 
     private void OnGameStart()
