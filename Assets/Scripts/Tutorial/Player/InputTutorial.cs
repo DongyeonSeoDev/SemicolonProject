@@ -23,6 +23,11 @@ public class InputTutoData
 
     public void StartTimer()
     {
+        if (SlimeGameManager.Instance.Player.PlayerInput.IsPauseByTuto)
+        {
+            return;
+        }
+
         KeyActionManager.Instance.SetPlayerHeadText("?", 0.5f);
 
         timerStarted = true;
