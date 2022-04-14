@@ -143,6 +143,7 @@ public partial class GameManager : MonoSingleton<GameManager>
     {
         //saveData.userInfo = new UserInfo();  //UserInfo클래스의 저장 정보를 날림
         saveData.userInfo.userItems.ClearDic();
+        saveData.userInfo.monsterInfoDic.ClearDic();
 
         List<Food> allFoods = new List<Food>(Resources.LoadAll<Food>(Global.foodDataPath));
         List<FoodButton> fbList = new List<FoodButton>();

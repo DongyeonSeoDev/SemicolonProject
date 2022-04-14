@@ -43,7 +43,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b7134f6e8b606745971bb177553e15e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stageCheck: {fileID: 0}
   enemyCount: 0
 --- !u!1 &6423039109439716261
 GameObject:
@@ -99,6 +98,8 @@ MonoBehaviour:
   - {fileID: 1725690301, guid: ed89bbd8246da2f489396f41f0f95a05, type: 3}
   - {fileID: -1058956710085688642, guid: 6265c77cb0dd7904394aeaa24f5d6772, type: 3}
   - {fileID: 4189673263508487539, guid: ed15c24a92b6dcb4894b2645506b22ce, type: 3}
+  - {fileID: 4312882165388711764, guid: a6dd86c8b81c6c644a5df0f3b7fce65a, type: 3}
+  - {fileID: 2973497803206335627, guid: 5deafdf93b2258943956bb10291bc11a, type: 3}
 --- !u!1 &6423039109790018455
 GameObject:
   m_ObjectHideFlags: 0

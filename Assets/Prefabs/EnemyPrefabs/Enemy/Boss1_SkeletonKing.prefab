@@ -429,8 +429,11 @@ MonoBehaviour:
   fireSpawnTime: 0.1
   targetMoveSpeed: 15
   attackSpeedUpPercent: 40
-  limitMinPosition: {x: -10.5, y: -4}
-  limitMaxPosition: {x: 13.5, y: 14.5}
+  limitMinPosition: {x: 0, y: 0}
+  limitMaxPosition: {x: 0, y: 0}
+  whatIsWall:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!114 &5497031053508213442
 MonoBehaviour:
   m_ObjectHideFlags: 0
