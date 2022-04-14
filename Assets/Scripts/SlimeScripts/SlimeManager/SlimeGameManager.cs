@@ -13,6 +13,10 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 {
     private CinemachineCameraScript cinemachineCameraScript = null;
     private PlayerEnemyUnderstandingRateManager playerEnemyUnderstandingRateManager = null;
+
+    /// <summary>
+    /// 이 코드는 사용하면 위험할 수 있다. Property인 Player를 사용하자
+    /// </summary>
     private Player player = null;
     public Player Player
     {
@@ -115,13 +119,13 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
     private void PlayerBodySpawn()
     {
-        player.gameObject.SetActive(true);
+        Player.gameObject.SetActive(true);
         currentPlayerBody.SetActive(true);
 
         //currentPlayerBody.transform.position = spawnPosition;
         pasteBodyAdditionalStat = new EternalStat();
 
-        player.WhenRespawn();
+        Player.WhenRespawn();
     }
     public void PlayerBodyDespawn()
     {
@@ -150,7 +154,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
         Vector2 spawnPos = currentPlayerBody.transform.position;
 
-        float hpPercentage = player.CurrentHp / player.PlayerStat.MaxHp;
+        float hpPercentage = Player.CurrentHp / Player.PlayerStat.MaxHp;
 
         //Destroy(currentPlayerBody);
 
@@ -170,7 +174,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
             if (!found)
             {
-                newBody = Instantiate(originPlayerBody, player.transform);
+                newBody = Instantiate(originPlayerBody, Player.transform);
             }
             else
             {
@@ -183,10 +187,10 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
             if (pasteBodyAdditionalStat != null && !isDead)
             {
-                player.PlayerStat.additionalEternalStat -= pasteBodyAdditionalStat;
+                Player.PlayerStat.additionalEternalStat -= pasteBodyAdditionalStat;
 
                 //player.CurrentHp = (player.PlayerStat.MaxHp * hpPercentage).Round();
-                player.CurrentHp = player.PlayerStat.MaxHp * hpPercentage;
+                Player.CurrentHp = Player.PlayerStat.MaxHp * hpPercentage;
 
                 pasteBodyAdditionalStat = new EternalStat();
 
@@ -214,7 +218,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
             if (!found)
             {
-                newBody = Instantiate(newBodyData.Item1, player.transform);
+                newBody = Instantiate(newBodyData.Item1, Player.transform);
             }
             else
             {
@@ -227,17 +231,17 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
             if (pasteBodyAdditionalStat != null && !isDead)
             {
-                player.PlayerStat.additionalEternalStat -= pasteBodyAdditionalStat;
+                Player.PlayerStat.additionalEternalStat -= pasteBodyAdditionalStat;
 
                 pasteBodyAdditionalStat = new EternalStat();
             }
 
             pasteBodyAdditionalStat = newBodyData.Item2 + GetExtraUpStat(bodyId);
 
-            player.PlayerStat.additionalEternalStat += pasteBodyAdditionalStat;
+            Player.PlayerStat.additionalEternalStat += pasteBodyAdditionalStat;
 
             //player.CurrentHp = (player.PlayerStat.MaxHp * hpPercentage).Round();
-            player.CurrentHp = player.PlayerStat.MaxHp * hpPercentage;
+            Player.CurrentHp = Player.PlayerStat.MaxHp * hpPercentage;
 
             newBody.AddComponent<PlayerBodyScript>();
 
@@ -305,7 +309,12 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
     private void CheckBodyTimer()
     {
-        if(bodyChangeTimer > 0f)
+        if (Player.PlayerState.IsDrain)
+        {
+            return;
+        }
+
+        if (bodyChangeTimer > 0f)
         {
             bodyChangeTimer -= Time.deltaTime;
 
@@ -317,6 +326,11 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
     }
     private void CheckSkillTimer()
     {
+        if(Player.PlayerState.IsDrain)
+        {
+            return;
+        }
+
         for(int i = 0; i < currentSkillDelayTimer.Length; i++)
         {
             if(currentSkillDelayTimer[i] > 0f)
@@ -338,7 +352,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
         {
             if (skillIdx == 0) // skillIdx가 0이면 그거슨 기본공격
             {
-                currentSkillDelay[skillIdx] = delayTime / player.PlayerStat.AttackSpeed;
+                currentSkillDelay[skillIdx] = delayTime / Player.PlayerStat.AttackSpeed;
             }
             else
             {

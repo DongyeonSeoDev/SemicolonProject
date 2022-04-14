@@ -178,6 +178,11 @@ public class Player : MonoBehaviour
     }
     private void UpEnergy()
     {
+        if(playerState.IsDrain)
+        {
+            return;
+        }
+
         currentEnergy += Time.deltaTime * (playerInput.IsDoSkill0 ? energyRegenSpeed : energyRegenSpeedWhenNotAttack);
 
         if (currentEnergy >= maxEnergy)

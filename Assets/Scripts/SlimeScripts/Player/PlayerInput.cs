@@ -96,10 +96,6 @@ public class PlayerInput : MonoBehaviour
         {
             inputTutorial = gameObject.AddComponent<InputTutorial>();
         }
-        else
-        {
-            EventManager.TriggerEvent("Tuto_GainAllArrowKey");
-        }
     }
 
     void Update()
