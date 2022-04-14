@@ -168,6 +168,11 @@ public class InputTutorial : MonoBehaviour
     }
     private void CheckStartTimer(KeyAction keyAction)
     {
+        if (CheckAnyTimerStarted())
+        {
+            return;
+        }
+
         if (inputTutoDataDict.ContainsKey(keyAction))
         {
             if (!(inputTutoDataDict[keyAction].isClear || inputTutoDataDict[keyAction].timerStarted))
@@ -175,6 +180,18 @@ public class InputTutorial : MonoBehaviour
                 inputTutoDataDict[keyAction].StartTimer();
             }
         }
+    }
+    public bool CheckAnyTimerStarted()
+    {
+        foreach(var item in inputTutoDataDict.Values)
+        {
+            if(item.timerStarted)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
     public bool CheckClear(KeyAction keyAction)
     {

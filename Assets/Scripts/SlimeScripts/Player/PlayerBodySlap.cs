@@ -156,6 +156,8 @@ public class PlayerBodySlap : PlayerSkill
 
         moveOriginPos = transform.position;
 
+        Debug.DrawRay(moveOriginPos, moveTargetPos, Color.red, 10f);
+
         moveTargetPos = SlimeGameManager.Instance.PosCantCrossWall(canCrashLayer, moveOriginPos, moveTargetPos);
 
         currentBodySlapTime = Vector2.Distance(moveOriginPos, moveTargetPos) / bodySlapMoveSpeed;

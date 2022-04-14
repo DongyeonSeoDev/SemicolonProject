@@ -40,6 +40,11 @@ public class BodyPointCrashCheckCollider : MonoBehaviour
     {
         if (whatIsWall.CompareGameObjectLayer(other.gameObject))
         {
+            if(bodyPoint.IsWall)
+            {
+                return;
+            }
+
             bodyPoint.IsWall = true;
         }
 
