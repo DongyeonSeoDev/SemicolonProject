@@ -16,8 +16,6 @@ namespace Enemy
         public float fireSpawnTime = 0f;
         public float targetMoveSpeed = 0f;
         public float attackSpeedUpPercent = 0f;
-        public Vector2 limitMinPosition;
-        public Vector2 limitMaxPosition;
 
         private EnemyCommand enemyMoveCommand;
         private EnemyCommand enemySpecialAttackMoveCommand;
@@ -26,6 +24,10 @@ namespace Enemy
         private EnemyCommand rushAttackCommand;
         private WaitForSeconds fireSpawnTimeSeconds;
         private WaitForSeconds fireSpawnTimeSeconds2 = new WaitForSeconds(0.1f);
+
+        public Vector2 limitMinPosition;
+        public Vector2 limitMaxPosition;
+        public LayerMask whatIsWall;
 
         private List<float> specialAttack3Check = new List<float>();
         private int attackCount = 0;
@@ -78,6 +80,13 @@ namespace Enemy
             isSpecialAttack1 = false;
             isSpecialAttack3 = false;
 
+            whatIsWall = LayerMask.GetMask("WALL");
+
+            limitMaxPosition.y = CheckPosition(Vector2.up).y - 3f;
+            limitMinPosition.y = CheckPosition(Vector2.down).y + 3f;
+            limitMaxPosition.x = CheckPosition(Vector2.right).x - 3f;
+            limitMinPosition.x = CheckPosition(Vector2.left).x + 3f;
+
             specialAttack3Check.Clear();
 
             for (int i = 0; i < specialAttack3HPPercent.Count; i++)
@@ -88,6 +97,18 @@ namespace Enemy
             specialAttack3Check.Sort((x, y) => y.CompareTo(x));
 
             EventManager.StartListening("PlayerDead", StopAttack);
+        }
+
+        private Vector2 CheckPosition(Vector2 direction)
+        {
+            RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 100, whatIsWall);
+
+            if (hit.collider == null)
+            {
+                return Vector2.zero;
+            }
+
+            return hit.point;
         }
 
         private void OnDestroy()
