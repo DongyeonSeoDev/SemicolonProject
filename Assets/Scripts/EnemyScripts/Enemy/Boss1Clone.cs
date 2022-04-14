@@ -5,14 +5,12 @@ namespace Enemy
     public class Boss1Clone : EnemyPoolData
     {
         private Rigidbody2D rigid;
-        private SpriteRenderer spriteRenderer;
 
         private Vector2 targetPosition = Vector2.zero;
 
         private void Awake()
         {
             rigid = GetComponent<Rigidbody2D>();
-            spriteRenderer = GetComponent<SpriteRenderer>();
         }
 
         private void Start()
@@ -24,11 +22,11 @@ namespace Enemy
         {
             if (targetPosition.x < 0)
             {
-                spriteRenderer.flipX = true;
+                transform.rotation = Quaternion.Euler(0f, 180f, 0f);
             }
             else if (targetPosition.x > 0)
             {
-                spriteRenderer.flipX = false;
+                transform.rotation = Quaternion.Euler(0f, 0f, 0f);
             }
         }
 

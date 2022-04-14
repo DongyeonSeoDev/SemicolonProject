@@ -69,7 +69,7 @@ namespace Enemy
             rushAttackCommand = new BossRushAttackCommand(enemyData, movePivot, rb, 50f, true);
 
             enemyData.enemyMoveCommand = enemyMoveCommand;
-            enemyData.enemySpriteRotateCommand = new EnemySpriteFlipCommand(enemyData);
+            enemyData.enemySpriteRotateCommand = new EnemySpriteRotateCommand(enemyData);
             enemyData.attackTypeCheckCondition = SpecialAttackCheck;
             enemyData.addAIAttackStateChangeCondition = AttackStateChangeCondition;
             enemyData.addChangeAttackCondition = ChangeAttackCondition;
