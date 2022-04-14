@@ -15,7 +15,7 @@ MonoBehaviour:
   imprecation: 1
   buff: 0
   duration: 4
-  sprite: {fileID: 21300000, guid: 988aad686dc1fec48bbc0dee20cead64, type: 3}
+  sprite: {fileID: 21300000, guid: e1b960d36af8a9e45a406b301080536d, type: 3}
   stateName: "\uC0C1\uCC98"
   explanation: "\uBC1B\uB294 \uB370\uBBF8\uC9C0\uAC00 20% \uC99D\uAC00\uD55C\uB2E4.\n\n[\uBAAC\uC2A4\uD130
     \uAD6C\uC5ED\uC5D0\uC11C 4\uAD50\uC804 \uB3D9\uC548 \uC9C0\uC18D]"
