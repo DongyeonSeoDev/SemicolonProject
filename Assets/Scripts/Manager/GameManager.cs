@@ -83,6 +83,9 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     private void SetData()
     {
+        if (!saveData.tutorialInfo.isEnded)
+            saveData = new SaveData();
+
         {   //키세팅 정보 불러옴
             KeySetting.SetDefaultKeySetting();
 

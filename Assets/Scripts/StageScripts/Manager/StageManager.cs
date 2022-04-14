@@ -412,7 +412,12 @@ public class StageManager : MonoSingleton<StageManager>
         switch (currentStageData.areaType)
         {
             case AreaType.START:
-                currentStage.stageDoors.ForEach(x => { x.gameObject.SetActive(true); x.IsExitDoor = false; });
+                if (currentStage.stageDoors.Length == 1)
+                {
+                    currentStage.stageDoors[0].gameObject.SetActive(true);
+                    currentStage.stageDoors[0].IsExitDoor = false;
+                }
+               
                 SetClearStage();
                 break;
             case AreaType.MONSTER:

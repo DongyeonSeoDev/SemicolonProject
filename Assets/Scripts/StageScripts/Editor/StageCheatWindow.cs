@@ -40,6 +40,8 @@ public class StageCheatWindow : EditorWindow
     //스샷 단축키
     private KeyCode keyCode = KeyCode.G;
 
+    private Vector2 scrollPos = Vector2.zero;
+
     [MenuItem("Cheat/Normal Cheat")]
     public static void ShowEnemySpawnWindow()
     {
@@ -73,14 +75,16 @@ public class StageCheatWindow : EditorWindow
 
     private void OnGUI()
     {
+        scrollPos = EditorGUILayout.BeginScrollView(scrollPos, true, true, GUILayout.MinWidth(200), GUILayout.MaxWidth(1000), GUILayout.ExpandWidth(true), GUILayout.MinHeight(200), GUILayout.MaxHeight(1000), GUILayout.ExpandHeight(true));
+
         toolbarIdx = GUILayout.Toolbar(toolbarIdx, toolbars);
         GUILayout.Space(10);
-        EditorGUI.BeginDisabledGroup(!Application.isPlaying);
+        
 
         switch (toolbarIdx)
         {
             case 0:
-
+                EditorGUI.BeginDisabledGroup(!Application.isPlaying);
                 GUILayout.Label("[Stage Cheat]", EditorStyles.boldLabel);
                 //useClearStageKey = GUILayout.Toggle(useClearStageKey, "스테이지 넘기기 단축키 사용 (F6)");
                 GUILayout.Label("(몬스터가 나오고 눌러)", EditorStyles.label);
@@ -235,10 +239,20 @@ public class StageCheatWindow : EditorWindow
                 GUILayout.EndHorizontal();
 
                 GUILayout.Space(20);
+                EditorGUI.EndDisabledGroup();
                 break;
 
             case 1:
 
+                
+                GUILayout.Label("[Page]", EditorStyles.boldLabel);
+                if (GUILayout.Button("Open Out GitHub Page"))
+                {
+                    Application.OpenURL("https://github.com/DongyeonSeoDev/SemicolonProject");
+                }
+
+                EditorGUI.BeginDisabledGroup(!Application.isPlaying);
+                GUILayout.Space(20);
                 GUILayout.Label("[ScreenShot]", EditorStyles.boldLabel);
                 GUILayout.Label("(저장위치는 일단 Assets/ScreenShot)\n(아마 에디터에서만 스샷 가능)", EditorStyles.label);
                 GUILayout.Label("단축키 : " + ScreenShot.captureKeyCode.ToString(), EditorStyles.label);
@@ -249,10 +263,12 @@ public class StageCheatWindow : EditorWindow
                 {
                     ScreenShot.captureKeyCode = keyCode;
                 }
+                EditorGUI.EndDisabledGroup();
 
                 break;
 
             case 2:
+                EditorGUI.BeginDisabledGroup(!Application.isPlaying);
                 GUILayout.Label("[Saved Body Cheat]", EditorStyles.boldLabel);
                 GUILayout.Label("(이 기능은 게임 시작하고 몹 슬롯에 아무것도 없을 때만 가능. \n테스트만 하고 종료하자)", EditorStyles.label);
 
@@ -261,10 +277,12 @@ public class StageCheatWindow : EditorWindow
                 {
                     PlayerEnemyUnderstandingRateManager.Instance.SetMountObj(mobId.ToString());
                 }
+                EditorGUI.EndDisabledGroup();
                 break;
         }
 
         EditorGUI.EndDisabledGroup();
 
+        GUILayout.EndScrollView();
     }
 }
