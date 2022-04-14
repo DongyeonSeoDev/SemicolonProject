@@ -61,6 +61,7 @@ public class PlayerInput : MonoBehaviour
     }
     private bool isPause = false;
 
+    [SerializeField]
     private bool isPauseByTuto = false;
     public bool IsPauseByTuto
     {
@@ -68,24 +69,13 @@ public class PlayerInput : MonoBehaviour
         set { isPauseByTuto = value; }
     }
 
-    private void Start()
-    {
-        playerState = GetComponent<PlayerState>();
-
-        lastMoveVector = Vector2.left;
-    }
     private void OnEnable()
     {
-        EventManager.StartListening("PlayerDead", PlayerReset); 
+        EventManager.StartListening("PlayerDead", PlayerReset);
         EventManager.StartListening("ChangeBody", PlayerReset);
 
         TimeManager.timePauseAction += TimePause;
         TimeManager.timeResumeAction += TimeResume;
-
-        if(TutorialManager.Instance.IsTutorialStage)
-        {
-            inputTutorial = gameObject.AddComponent<InputTutorial>();
-        }
     }
     private void OnDisable()
     {
@@ -94,6 +84,22 @@ public class PlayerInput : MonoBehaviour
 
         TimeManager.timePauseAction -= TimePause;
         TimeManager.timeResumeAction -= TimeResume;
+    }
+
+
+    private void Start()
+    {
+        playerState = GetComponent<PlayerState>();
+
+        lastMoveVector = Vector2.left;
+        if (TutorialManager.Instance.IsTutorialStage)
+        {
+            inputTutorial = gameObject.AddComponent<InputTutorial>();
+        }
+        else
+        {
+            EventManager.TriggerEvent("Tuto_GainAllArrowKey");
+        }
     }
 
     void Update()

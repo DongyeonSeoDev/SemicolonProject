@@ -22,6 +22,8 @@ public class InputTutoData
 
     public void StartTimer()
     {
+        KeyActionManager.Instance.SetPlayerHeadText("?", 0.5f);
+
         timerStarted = true;
         pressTimer = pressTime;
     }
@@ -42,7 +44,7 @@ public class InputTutoData
 }
 public class InputTutorial : MonoBehaviour
 {
-    public bool isTestMode = true;
+    public bool isTestMode = false;
 
     [SerializeField]
     private List<InputTutoData> inputTutoDatas = new List<InputTutoData>();
