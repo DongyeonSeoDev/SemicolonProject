@@ -68,7 +68,7 @@ namespace Enemy
                 }
 
                 EventManager.TriggerEvent("EnemySpawnAfter");
-            }, 4f);
+            }, 2.5f);
         }
     }
 }
