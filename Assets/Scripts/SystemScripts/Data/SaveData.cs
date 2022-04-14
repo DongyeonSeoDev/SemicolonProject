@@ -13,12 +13,14 @@ public class SaveData
     {
         userInfo.userItems.Save();
         userInfo.monsterInfoDic.Save();
+        userInfo.uiActiveDic.Save();
         option.keyInputDict.Save();
     }
     public void Load()
     {
         userInfo.userItems.Load();
         userInfo.monsterInfoDic.Load();
+        userInfo.uiActiveDic.Load();
         option.keyInputDict.Load();
     }
 }
@@ -26,7 +28,7 @@ public class SaveData
 [SerializeField]
 public class TutorialInfo
 {
-    public bool isEnded;
+    public bool isEnded = false;
 
     public string tutorialId;
 }
@@ -46,6 +48,8 @@ public class UserInfo
     public List<Triple<int, int, int>> limitedBattleCntItems = new List<Triple<int, int, int>>(); //n교전 후에 사라지는 아이템들 리스트 (아이디, 현재 교전 수, 최대 교전 수(가 되면 사라짐))
     public SaveDic<string, ItemInfo> userItems = new SaveDic<string, ItemInfo>(); //인벤토리 목록 
     public SaveDic<string, MonsterInfo> monsterInfoDic = new SaveDic<string, MonsterInfo>(); //몬스터 이해도(동화율), 흡수 확률 등의 정보
+
+    public SaveDic<UIType, bool> uiActiveDic = new SaveDic<UIType, bool>();
 }
 
 [Serializable]

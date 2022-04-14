@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class AcquisitionUI : MonoBehaviour
@@ -11,7 +10,7 @@ public class AcquisitionUI : MonoBehaviour
     private void Awake()
     {
         cvsg = GetComponent<CanvasGroup>();
-        //OnUIVisible(false);
+        
     }
 
     public void OnUIVisible(bool on)
@@ -22,11 +21,16 @@ public class AcquisitionUI : MonoBehaviour
         cvsg.blocksRaycasts = on;
     }
 
-    private void Start()
+    private IEnumerator Start()
     {
-        if(GameManager.Instance.savedData.tutorialInfo.isEnded || TutorialManager.Instance.IsTestMode)
+        while (!StoredData.HasObjectKey("SetUIAcqState")) yield return null;
+
+        OnUIVisible(GameManager.Instance.savedData.userInfo.uiActiveDic[uiType]);
+
+        if (TutorialManager.Instance.IsTestMode && !on)  //Test
         {
-            UIActiveData.Instance.uiActiveDic[uiType] = true;
+            OnUIVisible(true);
+            GameManager.Instance.savedData.userInfo.uiActiveDic[uiType] = true;
         }
     }
 }

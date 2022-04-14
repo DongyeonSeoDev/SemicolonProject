@@ -5,6 +5,8 @@ using UnityEngine.UI;
 using UnityEngine.Experimental.Rendering.Universal;
 using Water;
 using System.Text;
+using System;
+using FkTweening;
 
 public class TutorialManager : MonoSingleton<TutorialManager> 
 {
@@ -17,8 +19,8 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     public Transform[] skillUIArr;
 
     //튜토리얼 진행중인가
-    public bool IsTutorialStage { get; set; }
-
+    public bool IsTutorialStage => !GameManager.Instance.savedData.tutorialInfo.isEnded;
+    //튜토리얼 진행시키는데 업데이트에서 처리해야할 데이터들
     private List<TutorialPhase> tutorialPhases = new List<TutorialPhase>();
 
     #region 1
@@ -31,7 +33,15 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     private void Awake()
     {
-      
+        EventManager.StartListening("Tuto_GainAllArrowKey", () =>
+        {
+            playerFollowLight.DOInnerRadius(20f, 1.5f, false);
+            playerFollowLight.DOOuterRadius(20f, 1.5f, false, () =>
+            {
+                playerFollowLight.gameObject.SetActive(false);
+                Environment.Instance.mainLight.intensity = 1;
+            });
+        });
     }
 
     private void Start()
@@ -41,12 +51,13 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
         bool active = gm.savedData.tutorialInfo.isEnded;
 
-        if (isTestMode)
+        if (isTestMode)  //Test
         {
-            UIManager.Instance.StartLoadingIn();
+            um.StartLoadingIn();
             return;
         }
 
+        //Init Etc UI Active
         hpUI.gameObject.SetActive(active);
         energeBarUI.gameObject.SetActive(active);
         for (int i = 0; i < skillUIArr.Length; i++)
@@ -54,9 +65,11 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             skillUIArr[i].gameObject.SetActive(active);
         }
 
+        //PlayerFollowLight Init Setting
         playerFollowLight = PoolManager.GetItem<Light2D>("NormalPointLight2D");
         playerFollowLight.gameObject.SetActive(!active);
         playerFollowLight.gameObject.AddComponent<SlimeFollowObj>();
+        playerFollowLight.color = Color.white;
 
         playerFollowLight.GetFieldInfo<Light2D>("m_ApplyToSortingLayers").SetValue(playerFollowLight, new int[8]
         {
@@ -65,17 +78,23 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
         if (!active)
         {
-            IsTutorialStage = true;
+            
 
             Environment.Instance.mainLight.intensity = 0;
             playerFollowLight.intensity = 1;
             playerFollowLight.pointLightInnerRadius = 0;
             playerFollowLight.pointLightOuterRadius = 0;
 
-            tutorialPhases.Add(new StartPhase(playerFollowLight));
+            tutorialPhases.Add(new StartPhase(playerFollowLight,2));
+            EffectManager.Instance.OnTouchEffect("TouchEffect1");
         }
 
-        UIManager.Instance.StartLoadingIn();
+        if(!active || !gm.savedData.userInfo.uiActiveDic[UIType.SETTING])
+        {
+            tutorialPhases.Add(new SettingPhase(null, 10, () => UIOn(UIType.SETTING)));
+        }
+
+        um.StartLoadingIn();
     }
 
     private void ShowTargetSortingLayers() //Test
@@ -92,7 +111,8 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     public void UIOn(UIType type)
     {
-        UIActiveData.Instance.uiActiveDic[type] = true;
+        UIManager.Instance.PreventItrUI(0.4f);
+        GameManager.Instance.savedData.userInfo.uiActiveDic[type] = true;
         UIManager.Instance.acqUIList.Find(x => x.uiType == type).GetComponent<AcquisitionUI>().OnUIVisible(true);
     }
 

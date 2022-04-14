@@ -116,7 +116,7 @@ public class BodyPoint : MonoBehaviour
     }
     private void OnEnable()
     {
-        EventManager.StartListening("StartNextStage", StartNextStage);
+        EventManager.StartListening("StartNextStage", ResetWallBoolean);
 
         if (!isMiddlePoint)
         {
@@ -129,6 +129,7 @@ public class BodyPoint : MonoBehaviour
     
     private void OnDisable()
     {
+        ResetBodyPoint();
         StopListenings();
 
         if(!isMiddlePoint)
@@ -142,7 +143,7 @@ public class BodyPoint : MonoBehaviour
     }
     private void StopListenings()
     {
-        EventManager.StopListening("StartNextStage", StartNextStage);
+        EventManager.StopListening("StartNextStage", ResetWallBoolean);
 
         if (!isMiddlePoint)
         {
@@ -361,7 +362,24 @@ public class BodyPoint : MonoBehaviour
             middlePoint.AfterImageSoftBodySpawned = false;
         }
     }
-    private void StartNextStage()
+    private void ResetBodyPoint()
+    {
+        transform.localPosition = originLocalPosition;
+
+        ResetWallBoolean();
+
+        isFarByPlayerByDrain = false;
+        isMoveToOriginASec = false;
+        isMoveToMiddle = false;
+        isFarByMiddle = false;
+        farByMiddleMax = false;
+
+        moveToMiddleTimer = 0f;
+        moveToOriginTimer = 0f;
+
+        farByMiddleTimer = farByMiddleTime;
+    }
+    private void ResetWallBoolean()
     {
         isWall = false;
         isUpWall = false;

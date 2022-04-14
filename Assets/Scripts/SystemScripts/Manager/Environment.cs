@@ -5,10 +5,11 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 using System;
 using Water;
+using FkTweening;
 
 public class Environment : MonoSingleton<Environment>
 {
-    public Light2D mainLight;
+    public Light2D mainLight;  //default intensity : 1
     public Volume mainVolume;
 
     public VolumeProfile defaultVolProfile, mainVolProfile;  //처음 상태의 기본 볼륨 프로필, 게임속에서 바뀌는 불륨 프로필
@@ -51,8 +52,16 @@ public class Environment : MonoSingleton<Environment>
 
     private void DefineEvent()
     {
-        TimeManager.timePauseAction += ()=> mainLight.DOIntensity(0.7f, 0.5f, true);
-        TimeManager.timeResumeAction += () => mainLight.DOIntensity(1f, 0.5f, true);
+        TimeManager.timePauseAction += () =>
+        {
+            if (mainLight.intensity > 0f)
+                mainLight.DOIntensity(Mathf.Clamp(mainLight.intensity - 0.3f, 0f, 10f), 0.5f, true);
+        };
+        TimeManager.timeResumeAction += () =>
+        {
+            if (mainLight.intensity > 0f)
+                mainLight.DOIntensity(Mathf.Clamp(mainLight.intensity + 0.3f, 0f, 10f), 0.5f, true);
+        };
 
         EventManager.StartListening("ChangeBody", (str, b) =>
         {

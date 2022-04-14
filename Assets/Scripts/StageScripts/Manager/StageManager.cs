@@ -103,7 +103,7 @@ public class StageManager : MonoSingleton<StageManager>
             doorSprDic.Add(((DoorDirType)i).ToString() + "Exit", doorSprites[i + cnt * 2]);
         }
 
-        EventManager.StartListening(Global.EnterNextMap, () =>
+        EventManager.StartListening(Global.EnterNextMap, () =>  //해당 방을 입장했을 때, 마지막에 호출
         {
             currentStage.SetMapEffects();
             currentStageNumber++;
@@ -135,7 +135,7 @@ public class StageManager : MonoSingleton<StageManager>
 
     private void DefineEvent()
     {
-        EventManager.StartListening("ExitCurrentMap", () =>
+        EventManager.StartListening("ExitCurrentMap", () =>   //맵을 나갈 때 나가기 전의 처리
         {
             switch(currentArea)
             {
@@ -149,10 +149,7 @@ public class StageManager : MonoSingleton<StageManager>
                     currentMapNPCList.ForEach(x => x.gameObject.SetActive(false));
                     currentMapNPCList.Clear();
                     break;
-                case AreaType.BOSS:
-                    currentStageNumber = 0;
-                    currentFloor++;
-                    break;
+
             }
 
             SoundManager.Instance.SetBGMPitch(1);
@@ -161,6 +158,11 @@ public class StageManager : MonoSingleton<StageManager>
         EventManager.StartListening("PlayerRespawn", Respawn);
         EventManager.StartListening("StartNextStage", StartNextStage);
         EventManager.StartListening("PickupMiniGame", (Action<bool>)(start => currentStage.StageLightActive(!start)));
+        EventManager.StartListening("GameClear", () =>
+        {
+            currentStageNumber = 0;
+            currentFloor++;
+        });
     }
 
     private void SetRandomAreaRandomIncounter()  //일단 리펙토링 나중에 해야할 듯
@@ -406,7 +408,7 @@ public class StageManager : MonoSingleton<StageManager>
             }
         });
 
-        //해당 스테이지의 타입에 따라 무언가를 함
+        //해당 스테이지의 타입에 따라 무언가를 함  (해당 방을 입장했을 때)
         switch (currentStageData.areaType)
         {
             case AreaType.START:
@@ -415,6 +417,7 @@ public class StageManager : MonoSingleton<StageManager>
                 break;
             case AreaType.MONSTER:
                 //EventManager.TriggerEvent("SpawnEnemy", currentStageData.stageID);
+                SetMonsterStage();
                 break;
             case AreaType.CHEF:
                 SetClearStage();
@@ -428,12 +431,13 @@ public class StageManager : MonoSingleton<StageManager>
                 EnterRandomArea();
                 return;   //랜덤 맵이면 함수를 빠져나간다.
             case AreaType.BOSS:
+                SetMonsterStage();
                 //보스구역이면 무엇을 할까
                 break;
         }
 
         
-        EventManager.TriggerEvent(Global.EnterNextMap);
+        EventManager.TriggerEvent(Global.EnterNextMap);  //해당 방 입장 후에 필요한 이벤트들 처리
     }
 
     public void SetMonsterStage()
@@ -469,7 +473,6 @@ public class StageManager : MonoSingleton<StageManager>
     {
         if (currentArea == AreaType.MONSTER || currentArea == AreaType.BOSS)
         {
-            SetMonsterStage();
             NextEnemy();
         }
         EventManager.TriggerEvent("StartBGM", currentStageData.stageID);

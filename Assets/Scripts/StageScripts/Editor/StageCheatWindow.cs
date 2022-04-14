@@ -9,19 +9,35 @@ public class StageCheatWindow : EditorWindow
 
     //private bool useClearStageKey = false;
 
+    //Player 관련
     private Stat playerStat = new Stat();
-    private float useEnergyAmount;
+    private float useEnergyAmount = 1f;
+    private float upMountingPercentageValueWhenEnemyDead = 2f;
+    private int upUnderstandingRateValueWhenEnemyDead = 1;
+
+    //몸 교체 딜레이
+    private float bodyChangeTime = 10f;
+
+    //스킬 딜레이
+    private float[] skillDelays = new float[3];
+
+    //회복량
     private int recoveryHp = 20;
+    //저주 선택
     private StateAbnormality sa;
 
+    //아이템 관련
     private string itemId;
     private int itemCnt;
 
+    //몹 아이디
     private Enemy.EnemyType mobId;
 
+    //툴바 관련
     private int toolbarIdx;
-    private string[] toolbars = {"Useable", "Util" ,"Temporary"};
+    private string[] toolbars = { "Useable", "Util", "Temporary" };
 
+    //스샷 단축키
     private KeyCode keyCode = KeyCode.G;
 
     [MenuItem("Cheat/Normal Cheat")]
@@ -32,7 +48,7 @@ public class StageCheatWindow : EditorWindow
 
     private void CurrentStageClear()
     {
-        if(StageManager.Instance.IsStageClear)
+        if (StageManager.Instance.IsStageClear)
         {
             UIManager.Instance.RequestSystemMsg("이미 문 열려있다");
             return;
@@ -46,24 +62,32 @@ public class StageCheatWindow : EditorWindow
     private void OnEnable()
     {
         playerStat = SlimePlayer.PlayerStat;
-    }
+
+        useEnergyAmount = 1f;
+        upMountingPercentageValueWhenEnemyDead = 2f;
+        upUnderstandingRateValueWhenEnemyDead = 1;
+        bodyChangeTime = 10f;
+
+        skillDelays = SlimeGameManager.Instance.SkillDelays;
+    } 
 
     private void OnGUI()
     {
         toolbarIdx = GUILayout.Toolbar(toolbarIdx, toolbars);
-
         GUILayout.Space(10);
         EditorGUI.BeginDisabledGroup(!Application.isPlaying);
+
         switch (toolbarIdx)
         {
             case 0:
 
                 GUILayout.Label("[Stage Cheat]", EditorStyles.boldLabel);
                 //useClearStageKey = GUILayout.Toggle(useClearStageKey, "스테이지 넘기기 단축키 사용 (F6)");
-
                 GUILayout.Label("(몬스터가 나오고 눌러)", EditorStyles.label);
+
                 GUILayout.BeginHorizontal();
-                if (GUILayout.Button("Current Stage Clear"))
+
+                if (GUILayout.Button("Current Stage Clear"))  //스테이지 강제 클리어
                 {
                     CurrentStageClear();
                 }
@@ -82,6 +106,7 @@ public class StageCheatWindow : EditorWindow
                 GUILayout.Space(20);
                 GUILayout.Label("[Player Cheat]", EditorStyles.boldLabel);
 
+                //플레이어 스탯 정함
                 playerStat.eternalStat.maxHp = EditorGUILayout.FloatField("Max Hp", playerStat.eternalStat.maxHp);
                 playerStat.eternalStat.minDamage = EditorGUILayout.IntField("Min Damage", playerStat.eternalStat.minDamage);
                 playerStat.eternalStat.maxDamage = EditorGUILayout.IntField("Max Damage", playerStat.eternalStat.maxDamage);
@@ -90,19 +115,21 @@ public class StageCheatWindow : EditorWindow
 
                 GUILayout.Space(10);
 
-                if (GUILayout.Button("Apply Player Eternal Stat"))
+                if (GUILayout.Button("Apply Player Eternal Stat")) //플레이어 스탯 적용
                 {
                     SlimePlayer.PlayerStat = playerStat;
                 }
 
                 GUILayout.Space(10);
 
-                useEnergyAmount = EditorGUILayout.FloatField("Slime Attack Need Energe", useEnergyAmount);
+                useEnergyAmount = EditorGUILayout.FloatField("Slime Attack Need Energe", useEnergyAmount); //공격 에너지 소모량 정함
 
                 GUILayout.Space(5);
 
                 GUILayout.Label("(슬라임 전용. 몸 바뀌면 다시 Apply 필요할 수도)", EditorStyles.label);
-                if (GUILayout.Button("Apply Player Attack Info"))
+
+                //공격 에너지 소모량 적용
+                if (GUILayout.Button("Apply Attack Need Energe"))
                 {
                     PlayerShoot shoot = SlimeGameManager.Instance.CurrentPlayerBody.GetComponent<PlayerShoot>();
                     if(shoot != null)
@@ -112,13 +139,56 @@ public class StageCheatWindow : EditorWindow
                 }
 
                 GUILayout.Space(20);
+                //흡수확률 정함
+                upMountingPercentageValueWhenEnemyDead = EditorGUILayout.FloatField("Drain Probability", upMountingPercentageValueWhenEnemyDead);
+                if (GUILayout.Button("Apply Drain Probability")) //흡수확률 세팅
+                {             
+                    SlimePlayer.GetFieldInfo<Player>("upMountingPercentageValueWhenEnemyDead").SetValue(SlimePlayer, upMountingPercentageValueWhenEnemyDead);
+                }
+
+                GUILayout.Space(10);
+                //적을 죽일 때 오르는 동화율의 값 정함
+                upUnderstandingRateValueWhenEnemyDead = EditorGUILayout.IntField("Up Understanding Rate", upUnderstandingRateValueWhenEnemyDead);
+                GUILayout.Label("(적을 죽일 때 오르는 동화율의 값)", EditorStyles.label);
+                if (GUILayout.Button("Apply Understanding Rate"))  //적을 죽일 때 오르는 동화율의 값
+                {                    
+                    SlimePlayer.GetFieldInfo<Player>("upUnderstandingRateValueWhenEnemyDead").SetValue(SlimePlayer, upUnderstandingRateValueWhenEnemyDead);
+                }
+
+                GUILayout.Space(20);
+                GUILayout.Label("[Body Change Cheat]", EditorStyles.boldLabel);
+
+                bodyChangeTime = EditorGUILayout.FloatField("BodyChangeTime", bodyChangeTime);  //몸 교체 딜레이 정함
+                if (GUILayout.Button("Apply Body Change Time"))  //몸 교체 딜레이 적용
+                {
+                    SlimeGameManager.Instance.GetFieldInfo<SlimeGameManager>("bodyChangeTime").SetValue(SlimeGameManager.Instance, bodyChangeTime);
+                }
+
+                GUILayout.Space(20);
+                GUILayout.Label("[Skill Cheat]", EditorStyles.boldLabel);
+
+                //스킬 쿨탐 정함
+                skillDelays[0] = EditorGUILayout.FloatField("Default Attack Delay", skillDelays[0]);
+                skillDelays[1] = EditorGUILayout.FloatField("Special Attack1 Delay", skillDelays[1]);
+                skillDelays[2] = EditorGUILayout.FloatField("Special Attack2 Delay", skillDelays[2]);
+
+                if(GUILayout.Button("Apply Attack Delay"))  //스킬들의 쿨탐 적용
+                {
+                    for(int i=0; i<SlimeGameManager.Instance.SkillDelays.Length;i++)
+                    {
+                        SlimeGameManager.Instance.SkillDelays[i] = skillDelays[i];
+                    }
+                }
+
+                GUILayout.Space(20);
+
                 GUILayout.Label("[Status Cheat]", EditorStyles.boldLabel);
 
-                recoveryHp = EditorGUILayout.IntField("Heal Current Hp n%", recoveryHp);
+                recoveryHp = EditorGUILayout.IntField("Heal Current Hp n%", recoveryHp);  //회복량 세팅
 
                 GUILayout.Space(7);
 
-                if (GUILayout.Button("Player Heal"))
+                if (GUILayout.Button("Player Heal"))  //회복
                 {
                     SlimePlayer.GetHeal(recoveryHp);
                 }
@@ -126,8 +196,8 @@ public class StageCheatWindow : EditorWindow
                 GUILayout.Space(20);
 
                 GUILayout.BeginHorizontal();
-                sa = (StateAbnormality)EditorGUILayout.EnumPopup("Imprecation", sa);
-                if (GUILayout.Button("Get Imprecation"))
+                sa = (StateAbnormality)EditorGUILayout.EnumPopup("Imprecation", sa);  //저주 선택
+                if (GUILayout.Button("Get Imprecation"))  //저주 받기
                 {
                     if (sa != StateAbnormality.None)
                     {
@@ -136,7 +206,7 @@ public class StageCheatWindow : EditorWindow
                     }
                 }
                 GUILayout.EndHorizontal();
-                if (GUILayout.Button("Remove All Imprecation"))
+                if (GUILayout.Button("Remove All Imprecation"))  //저주 해제
                 {
                     StateManager.Instance.RemoveAllStateAbnormality();
                     UIManager.Instance.RequestSystemMsg("모든 저주 해제");
@@ -145,16 +215,17 @@ public class StageCheatWindow : EditorWindow
                 GUILayout.Space(20);
                 GUILayout.Label("[Inventory Cheat]", EditorStyles.boldLabel);
 
+                //아이템 선택
                 itemId = EditorGUILayout.TextField("Item Id", itemId);
                 itemCnt = EditorGUILayout.IntField("Item Count", itemCnt);
 
                 GUILayout.Space(5);
                 GUILayout.BeginHorizontal();
-                if (GUILayout.Button("Get Item"))
+                if (GUILayout.Button("Get Item"))  //선택한 아이템 획득
                 {
                     Inventory.Instance.GetItem(new ItemInfo(itemId, itemCnt));
                 }
-                if (GUILayout.Button("Show Items"))
+                if (GUILayout.Button("Show Items"))  //모든 아이템 정보를 띄움
                 {
                     foreach (ItemSO item in GameManager.Instance.ItemDataDic.Values)
                     {
