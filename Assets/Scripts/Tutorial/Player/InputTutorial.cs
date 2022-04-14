@@ -61,7 +61,7 @@ public class InputTutorial : MonoBehaviour
         get { return inputTutoDataDict; }
     }
 
-    private bool moveKeyClearAll = false;
+    private bool moveKeyClear = false;
 
     private void Awake()
     {
@@ -83,7 +83,7 @@ public class InputTutorial : MonoBehaviour
     {
         if (isTestMode)
         {
-            moveKeyClearAll = true;
+            moveKeyClear = true;
             EventManager.TriggerEvent("Tuto_GainAllArrowKey");
 
             for (int i = 0; i < inputTutoDatas.Count; i++)
@@ -114,10 +114,10 @@ public class InputTutorial : MonoBehaviour
         }
     }
 
-    
+
     void Update()
     {
-        foreach(var item in inputTutoDataDict)
+        foreach (var item in inputTutoDataDict)
         {
             item.Value.CheckTimer();
         }
@@ -136,37 +136,12 @@ public class InputTutorial : MonoBehaviour
 
         #region MoveKeyClearCheck
 
-        if (!moveKeyClearAll)
+        if ((CheckClear(KeyAction.LEFT) || CheckClear(KeyAction.RIGHT) || CheckClear(KeyAction.UP) || CheckClear(KeyAction.DOWN)) && !moveKeyClear)
         {
-            int mkClearNum = 0;
+            moveKeyClear = true;
 
-            if (CheckClear(KeyAction.LEFT))
-            {
-                mkClearNum++;
-            }
-
-            if (CheckClear(KeyAction.RIGHT))
-            {
-                mkClearNum++;
-            }
-
-            if (CheckClear(KeyAction.UP))
-            {
-                mkClearNum++;
-            }
-
-            if (CheckClear(KeyAction.DOWN))
-            {
-                mkClearNum++;
-            }
-
-            if (mkClearNum >= 4)
-            {
-                moveKeyClearAll = true;
-                EventManager.TriggerEvent("Tuto_GainAllArrowKey");
-            }
+            EventManager.TriggerEvent("Tuto_GainAllArrowKey");
         }
-
         #endregion
     }
     private void CheckFixedKey(KeyAction keyAction)
