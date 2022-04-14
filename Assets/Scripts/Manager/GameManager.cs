@@ -190,6 +190,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         PoolManager.CreatePool(itemPrefab, transform, 6, "Item");
         PoolManager.CreatePool(itemCloneEffectPrefab, transform, 6, "ItemFollowEffect");
         PoolManager.CreatePool(emptyPrefab, transform, 3, "EmptyObject");
+        PoolManager.CreatePool(UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/SystemPrefabs/Etc/PlayerFollowEmptyObj.prefab"),transform, 2, "PlayerFollowEmptyObj");
 
         //이벤트 정의
         EventManager.StartListening("PlayerDead", PlayerDead);

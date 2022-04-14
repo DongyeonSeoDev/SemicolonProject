@@ -92,7 +92,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
         if(!active || !gm.savedData.userInfo.uiActiveDic[UIType.SETTING])
         {
-            tutorialPhases.Add(new SettingPhase(null, 10, () => UIOn(UIType.SETTING)));
+            tutorialPhases.Add(new SettingPhase(10, () => UIOn(UIType.SETTING)));
         }
 
         um.StartLoadingIn();
@@ -114,7 +114,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     {
         UIManager.Instance.PreventItrUI(0.4f);
         GameManager.Instance.savedData.userInfo.uiActiveDic[type] = true;
-        UIManager.Instance.acqUIList.Find(x => x.uiType == type).GetComponent<AcquisitionUI>().OnUIVisible(true);
+        UIManager.Instance.acqUIList.Find(x => x.uiType == type).OnUIVisible(true);
     }
 
     private void Update()

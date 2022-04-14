@@ -41,6 +41,8 @@ namespace Water
                     poolDic[keys[i]].PoolSetActiveFalse();
             }
         }*/
+            
+        public static bool IsContainKey(string key) => poolDic.ContainsKey(key);
 
         public static void ClearPool(string key)
         {

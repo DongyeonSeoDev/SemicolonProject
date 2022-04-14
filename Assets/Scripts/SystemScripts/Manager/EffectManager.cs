@@ -48,6 +48,8 @@ public class EffectManager : MonoSingleton<EffectManager>
     [Header("채집 성공/실패 이펙트")]
     public Pair<GameObject, GameObject> pickupPlantEffects;  //채집 성공, 실패 이펙트
 
+    
+
     #region damage text effect related
     [Header("데미지 텍스트")]
     public Pair<GameObject, Transform> damageTextPair;

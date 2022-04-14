@@ -23,7 +23,7 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
 
     [SerializeField] CanvasGroup cvsg;
     private bool isCoolTime = false;
-    private float coolTimer;
+    private float CoolTimer => SlimeGameManager.Instance.BodyChangeTimer;
     //private float elapsed = 0f;
     private float CoolTime => SlimeGameManager.Instance.BodyChangeTime;
 
@@ -64,7 +64,7 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
     public void UpdateKeyCodeTxt()
     {
         keyCodeTxt.text = KeyCodeToString.GetString(KeySetting.keyDict[slotKey]);
-        Util.DelayFunc(() => customContentsSizeFilter.UpdateSize(), 0.2f);
+        Util.DelayFunc(() => customContentsSizeFilter.UpdateSize(), 0.1f);
     }
 
     public void Register(string id)
@@ -82,7 +82,7 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
 
         if(SlimeGameManager.Instance.BodyChangeTimer > 0)
         {
-            StartCoolTimeUI(SlimeGameManager.Instance.BodyChangeTimer);
+            StartCoolTimeUI();
         }
     }
 
@@ -103,14 +103,11 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
         cvsg.alpha = 0.4f;
     }
 
-    public void StartCoolTimeUI(float time = -1f)
+    public void StartCoolTimeUI()
     {
         if (string.IsNullOrEmpty(bodyID)) return;
 
-        if (time == -1f) time = CoolTime;
-
         //elapsed = 0f;
-        coolTimer = time;
         isCoolTime = true;
         coolTimeUIPair.second.gameObject.SetActive(true);
     }
@@ -123,11 +120,10 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
             //coolTimeUIPair.first.fillAmount = (CoolTime - elapsed) / CoolTime;
             //coolTimeUIPair.second.text = elapsed.ToString("0.0");
 
-            coolTimer -= Time.deltaTime;
-            coolTimeUIPair.first.fillAmount = coolTimer / CoolTime;
-            coolTimeUIPair.second.text = coolTimer.ToString("0.0");
+            coolTimeUIPair.first.fillAmount = CoolTimer / CoolTime;
+            coolTimeUIPair.second.text = CoolTimer.ToString("0.0");
 
-            if (coolTimer <= 0f)
+            if (CoolTimer <= 0f)
             {
                 isCoolTime = false;
                 coolTimeUIPair.second.gameObject.SetActive(false);
