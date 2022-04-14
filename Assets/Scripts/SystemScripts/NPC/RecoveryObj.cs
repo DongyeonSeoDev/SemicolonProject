@@ -48,6 +48,10 @@ public class RecoveryObj : InteractionObj
             recoveryLight = PoolManager.GetItem<Light2D>("NormalPointLight2D");
             recoveryLight.transform.position = StageManager.Instance.CurrentStageGround.objSpawnPos.position;
             recoveryLight.intensity = 0.4f;
+            recoveryLight.GetFieldInfo<Light2D>("m_ApplyToSortingLayers").SetValue(recoveryLight, new int[3]
+            {
+                0, -1221289887, -992757899
+            });
         }
     }
     private void OnDisable()

@@ -47,6 +47,7 @@ public enum KeyAction
     //여기까지가 고정키
 
     QUIT,
+    MENU,
     INVENTORY,
     STAT,
     MONSTER_COLLECTION,

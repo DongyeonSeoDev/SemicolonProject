@@ -81,11 +81,12 @@ public class Environment : MonoSingleton<Environment>
     public void OnEnteredOrExitRecoveryArea(bool enter)
     {
         bloom.active = enter;
-        mainLight.intensity = enter ? 1.2f : 1f;
-        bloom.intensity.value = enter ? 1.3f : 1f;
+        mainLight.intensity = enter ? 1.1f : 1f;
+        bloom.intensity.value = enter ? 1.17f : 1f;
         //bloom.threshold.value = enter ? 0.8f : 1f;
 
         colorAdjustments.active = enter;
+        colorAdjustments.saturation.value = 40;
         //colorAdjustments.saturation.value = enter ? 40 : 0;
         //colorAdjustments.postExposure.value = enter ? 2f : 0;
 

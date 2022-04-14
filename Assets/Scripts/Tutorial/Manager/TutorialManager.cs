@@ -46,6 +46,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     private void Start()
     {
+        
         gm = GameManager.Instance;
         um = UIManager.Instance;
 
@@ -134,5 +135,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                 }
             }
         }
+
+        
     }
 }
