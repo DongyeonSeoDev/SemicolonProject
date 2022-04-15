@@ -39,7 +39,8 @@ namespace Enemy
         private readonly int hashMove = Animator.StringToHash("move");
         private readonly int hashAttack1 = Animator.StringToHash("attack");
         private readonly int hashAttack2 = Animator.StringToHash("attack2");
-        private readonly int hashSpecialAttack1 = Animator.StringToHash("specialAttack1");
+        public readonly int hashSpecialAttack1 = Animator.StringToHash("specialAttack1");
+        public readonly int hashSpecialAttack1End = Animator.StringToHash("specialAttack1End");
         private readonly int hashSpecialAttack2 = Animator.StringToHash("specialAttack2");
         private readonly int hashSpecialAttack3 = Animator.StringToHash("specialAttack3");
 

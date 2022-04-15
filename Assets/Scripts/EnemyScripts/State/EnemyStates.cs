@@ -163,6 +163,9 @@ namespace Enemy
                 attackRangeArray[1] = (RushAttackRange)EnemyPoolManager.Instance.GetPoolObject(Type.EnemyRushAttackRange, new Vector2(0f, bossPositionArray[1].y));
                 attackRangeArray[2] = (RushAttackRange)EnemyPoolManager.Instance.GetPoolObject(Type.EnemyRushAttackRange, new Vector2(0f, bossPositionArray[2].y));
 
+                enemyData.enemyAnimator.ResetTrigger(boss.hashSpecialAttack1);
+                enemyData.enemyAnimator.SetTrigger(boss.hashSpecialAttack1End);
+
                 Util.DelayFunc(() =>
                 {
                     for (int i = 0; i < boss.enemyAttackCheck.Length; i++)
@@ -186,6 +189,9 @@ namespace Enemy
 
                     enemyData.enemySpriteRotateCommand.Execute();
                     isMove = true;
+
+                    enemyData.enemyAnimator.ResetTrigger(boss.hashSpecialAttack1End);
+                    enemyData.enemyAnimator.SetTrigger(boss.hashSpecialAttack1);
                 }, 2f);
             }
 
@@ -206,6 +212,9 @@ namespace Enemy
                     attackRangeArray[0].gameObject.SetActive(false);
                     attackRangeArray[1].gameObject.SetActive(false);
                     attackRangeArray[2].gameObject.SetActive(false);
+
+                    enemyData.enemyAnimator.ResetTrigger(boss.hashSpecialAttack1);
+                    enemyData.enemyAnimator.SetTrigger(boss.hashSpecialAttack1End);
                 }
 
                 if (!isMove)
@@ -247,6 +256,9 @@ namespace Enemy
                                 isMove = true;
                                 enemyData.enemySpriteRenderer.enabled = true;
                                 enemyData.enemySpriteRotateCommand.Execute();
+
+                                enemyData.enemyAnimator.ResetTrigger(boss.hashSpecialAttack1End);
+                                enemyData.enemyAnimator.SetTrigger(boss.hashSpecialAttack1);
                             }, 2f);
                         }
                         else if (moveCount == 2)
@@ -277,6 +289,9 @@ namespace Enemy
                                 isMove = true;
                                 enemyData.enemySpriteRenderer.enabled = true;
                                 enemyData.enemySpriteRotateCommand.Execute();
+
+                                enemyData.enemyAnimator.ResetTrigger(boss.hashSpecialAttack1End);
+                                enemyData.enemyAnimator.SetTrigger(boss.hashSpecialAttack1);
                             }, 2f);                            
                         }
                         else
@@ -286,6 +301,9 @@ namespace Enemy
                             isMove = true;
                             enemyData.enemySpriteRenderer.enabled = true;
                             enemyData.enemySpriteRotateCommand.Execute();
+
+                            enemyData.enemyAnimator.ResetTrigger(boss.hashSpecialAttack1End);
+                            enemyData.enemyAnimator.SetTrigger(boss.hashSpecialAttack1);
                         }
                     }, 2f);
                 }
