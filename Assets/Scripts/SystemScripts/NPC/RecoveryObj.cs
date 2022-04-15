@@ -74,7 +74,7 @@ public class RecoveryObj : InteractionObj
 
         ResetActionList();  
 
-        UIManager.Instance.RequestSelectionWindow("어떤 효과를 받으시겠습니까?", recoveryActions, new List<string>() { "체력 30% 회복", "저주 해제" });
+        UIManager.Instance.RequestSelectionWindow("어떤 효과를 받으시겠습니까?", recoveryActions, new List<string>() { "AscHp", "AntiBuffRm" }, true, null, true);
         canInteract = false;
     }
 

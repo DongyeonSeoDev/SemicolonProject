@@ -43,8 +43,13 @@ public class StateManager : SingletonClass<StateManager>
         stateCountDict.Remove(StateAbnormality.None.ToString());
 
         Transform slotPar = GameObject.Find("StateInfoImagesPanel").transform;
-        GameObject slotUI = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/SystemPrefabs/UI/Slot/StateInfoSlot.prefab");
+        GameObject slotUI = Util.LoadAssetPrefab("SystemPrefabs/UI/Slot/StateInfoSlot");
         PoolManager.CreatePool(slotUI, slotPar, 3, "StateSlot");
+
+        foreach(BuffStateDataSO data in Resources.LoadAll<BuffStateDataSO>("System/State/"))
+        {
+            idToStateDataDic.Add(data.Id, data);
+        }
     }
 
     public void StartStateAbnormality(StateAbnormality state, int count = 10001)

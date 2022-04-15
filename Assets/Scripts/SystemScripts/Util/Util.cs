@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System;
 using System.Runtime.InteropServices;
 using System.Reflection;
+using UnityEditor;
 
 public static partial class Util
 {
@@ -170,6 +171,8 @@ public static partial class Util
     }
 
     public static T EnumParse<T>(string str) => (T)Enum.Parse(typeof(T), str);
+
+    public static GameObject LoadAssetPrefab(string path) => AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/" + path + ".prefab");
 }
 
 namespace Water
