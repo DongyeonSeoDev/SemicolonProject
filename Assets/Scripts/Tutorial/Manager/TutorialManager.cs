@@ -67,20 +67,16 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         }
 
         //PlayerFollowLight Init Setting
-        playerFollowLight = PoolManager.GetItem<Light2D>("NormalPointLight2D");
+        playerFollowLight = StoredData.GetGameObjectData<Light2D>("Player Follow Light");
         playerFollowLight.gameObject.SetActive(!active);
-        playerFollowLight.gameObject.AddComponent<SlimeFollowObj>();
-        playerFollowLight.color = Color.white;
-
-        playerFollowLight.GetFieldInfo<Light2D>("m_ApplyToSortingLayers").SetValue(playerFollowLight, new int[8]
+      
+        /*playerFollowLight.GetFieldInfo<Light2D>("m_ApplyToSortingLayers").SetValue(playerFollowLight, new int[8]
         {
             0, -1221289887, 573196299, -992757899, -1418907605, -1646225281, -1158705011, 521365507
-        });
+        });*/
 
         if (!active)
         {
-            
-
             Environment.Instance.mainLight.intensity = 0;
             playerFollowLight.intensity = 1;
             playerFollowLight.pointLightInnerRadius = 0;

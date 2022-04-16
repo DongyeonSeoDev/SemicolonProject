@@ -35,6 +35,8 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
     {
         spr = GetComponent<SpriteRenderer>();
 
+        if (!playerSpawnPos) playerSpawnPos = transform.GetChild(2);
+
         float rz = 0f;
         switch(dirType)
         {

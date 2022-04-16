@@ -14,9 +14,8 @@ public partial class GameManager : MonoSingleton<GameManager>
     public SaveData savedData { get { return saveData; } }
 
     private Dictionary<string, ItemSO> itemDataDic = new Dictionary<string, ItemSO>();
-#if UNITY_EDITOR
     public Dictionary<string, ItemSO> ItemDataDic => itemDataDic;
-#endif
+
 
     private List<Triple<string, int, int>> limitedBattleCntItems = new List<Triple<string, int, int>>(); //n교전 후에 사라지는 아이템들 리스트 (아이디, 현재 교전 수, 최대 교전 수(가 되면 사라짐))
 

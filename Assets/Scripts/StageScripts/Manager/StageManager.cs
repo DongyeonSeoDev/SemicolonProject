@@ -579,7 +579,9 @@ public class StageManager : MonoSingleton<StageManager>
                 EventManager.TriggerEvent(Global.EnterNextMap);
                 Environment.Instance.OnEnteredOrExitImprecationArea(true);
                 SoundManager.Instance.SetBGMPitchByLerp(1, -0.7f, 1f);
-                PoolManager.GetItem("ImprecationObjPref1").transform.position = currentStage.objSpawnPos.position;
+                ImprecationObj io = PoolManager.GetItem<ImprecationObj>("ImprecationObjPref1");
+                io.transform.position = currentStage.objSpawnPos.position;
+                Util.DelayFunc(() => io.Interaction(), 2.3f);
                 break;
 
             case RandomRoomType.MONSTER:  //몬스터 구역
@@ -593,11 +595,16 @@ public class StageManager : MonoSingleton<StageManager>
                 currentArea = AreaType.RECOVERY;
                 EventManager.TriggerEvent(Global.EnterNextMap);
                 Environment.Instance.OnEnteredOrExitRecoveryArea(true);
-                PoolManager.GetItem("RecoveryObjPrefObjPref1").transform.position = currentStage.objSpawnPos.position;
-
+                RecoveryObj ro = PoolManager.GetItem<RecoveryObj>("RecoveryObjPrefObjPref1");
+                ro.transform.position = currentStage.objSpawnPos.position;
+                
                 if (StateManager.Instance.IsPlayerFullHP && StateManager.Instance.IsPlayerNoImpr)
                 {
                     SetClearStage();
+                }
+                else
+                {
+                    Util.DelayFunc(() => ro.Interaction(), 2.3f);
                 }
                 break;
         }
