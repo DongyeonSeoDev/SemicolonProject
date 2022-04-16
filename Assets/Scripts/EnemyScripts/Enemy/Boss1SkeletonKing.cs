@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Enemy
 {
@@ -29,6 +30,8 @@ namespace Enemy
         public Vector2 limitMaxPosition;
         public LayerMask whatIsWall;
 
+        private BossHPBar bossHPBar;
+
         private List<float> specialAttack3Check = new List<float>();
         private int attackCount = 0;
         private float currentTime = 0f;
@@ -53,6 +56,11 @@ namespace Enemy
 
         protected override void OnEnable()
         {
+            bossHPBar = FindObjectOfType<BossHPBar>();
+            bossHPBar.transform.GetChild(0).gameObject.SetActive(true);
+            hpBarFillImage = bossHPBar.transform.GetChild(0).GetChild(0).GetComponent<Image>();
+            hpBarFillImage.fillAmount = 1;
+
             base.OnEnable();
 
             enemyData.attackDelay = 1.8f;
@@ -98,6 +106,11 @@ namespace Enemy
             specialAttack3Check.Sort((x, y) => y.CompareTo(x));
 
             EventManager.StartListening("PlayerDead", StopAttack);
+        }
+
+        protected override void OnDisable()
+        {
+            bossHPBar.transform.GetChild(0).gameObject.SetActive(false);
         }
 
         private Vector2 CheckPosition(Vector2 direction)
