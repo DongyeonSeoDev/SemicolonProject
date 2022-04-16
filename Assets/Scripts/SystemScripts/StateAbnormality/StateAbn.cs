@@ -5,7 +5,7 @@ public abstract class StateAbnormalityEffect
 {
 
     public virtual int Duration => StateManager.Instance.GetBuffStateData(GetType().Name).duration;
-    public virtual StateAbnormality StateAbn { get; set; }
+    public abstract StateAbnormality StateAbn { get; }
 
     public virtual void StartEffect()
     {
@@ -44,8 +44,11 @@ public class Pain : StateAbnormalityEffect
     {
         base.StartEffect();
         //EventManager.StopListening("StartNextStage", OnEffected);
-        if(StateManager.Instance.stateCountDict[StateAbn.ToString()] == Duration)
-           EventManager.StartListening("StartNextStage", OnEffected);
+        if (StateManager.Instance.stateCountDict[StateAbn.ToString()] == Duration)
+        {
+            EventManager.StartListening("StartNextStage", OnEffected);
+            StateManager.Instance.stateStopDict[StateAbn.ToString()] = StopEffect;
+        }
     }
 
     public override void StopEffect(bool showLog = true)
@@ -86,7 +89,10 @@ public class Scar : StateAbnormalityEffect
         SlimeGameManager.Instance.Player.GetExtraDamagePercantage = 20;
 
         if (StateManager.Instance.stateCountDict[StateAbn.ToString()] == Duration)
+        {
             EventManager.StartListening("StageClear", OnEffected);
+            StateManager.Instance.stateStopDict[StateAbn.ToString()] = StopEffect;
+        }
     }
     public override void StopEffect(bool showLog = true)
     {
@@ -146,7 +152,10 @@ public class Blind : StateAbnormalityEffect
     {
         base.StartEffect();
         if (StateManager.Instance.stateCountDict[StateAbn.ToString()] == Duration)
+        {
             EventManager.StartListening("StartNextStage", OnEffected);
+            StateManager.Instance.stateStopDict[StateAbn.ToString()] = StopEffect;
+        }
     }
     public override void StopEffect(bool showLog = true)
     {

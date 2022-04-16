@@ -9,6 +9,8 @@ public class StateManager : SingletonClass<StateManager>
 
     public Dictionary<string, int> stateCountDict = new Dictionary<string, int>();  //해당 상태이상이 앞으로 효과가 몇 번 더 발동이 되는지 저장
 
+    public Dictionary<string, Action<bool>> stateStopDict = new Dictionary<string, Action<bool>>();
+
     private Dictionary<string, BuffSlot> buffSlotDic = new Dictionary<string, BuffSlot>();
 
 
@@ -39,6 +41,7 @@ public class StateManager : SingletonClass<StateManager>
         foreach(StateAbnormality state in Global.GetEnumArr<StateAbnormality>())
         {
             stateCountDict.Add(state.ToString(), 0);
+            stateStopDict.Add(state.ToString(), null);
         }
         stateCountDict.Remove(StateAbnormality.None.ToString());
 
@@ -69,7 +72,7 @@ public class StateManager : SingletonClass<StateManager>
         StateAbnormalityEffect ase = WDUtil.StringToClass<StateAbnormalityEffect>(state.ToString());
 
         if (count == 10001)
-            ase.StopEffect();
+            stateStopDict[state.ToString()]?.Invoke(true);
         else
             ase.AddDuration(-count);
 
@@ -78,12 +81,16 @@ public class StateManager : SingletonClass<StateManager>
 
     public void RemoveAllStateAbnormality(bool showLog = true)
     {
-        StateAbnormalityEffect ase;
-        for(int i = 0; i<Global.EnumCount<StateAbnormality>()-1; i++)
+        //StateAbnormalityEffect ase;
+        string key;
+
+        for (int i = 0; i<Global.EnumCount<StateAbnormality>()-1; i++)
         {
-            ase = WDUtil.StringToClass<StateAbnormalityEffect>(((StateAbnormality)i).ToString());
-            ase.StopEffect(showLog);
-            RemoveBuffSlotUI(((StateAbnormality)i).ToString());
+            key = ((StateAbnormality)i).ToString();
+            stateStopDict[key]?.Invoke(showLog);
+            RemoveBuffSlotUI(key);
+            //ase = WDUtil.StringToClass<StateAbnormalityEffect>(((StateAbnormality)i).ToString());
+            //ase.StopEffect(showLog);  //새로 만든 것을 스탑해서 그런지 이벤트에서 스탑 함수가 제거가 안됨
         }
     }
 
