@@ -1,5 +1,37 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1327131082744515522
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6138406999502565572}
+  m_Layer: 0
+  m_Name: SpawnPosGroup
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6138406999502565572
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1327131082744515522}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 2192185027081183173}
+  - {fileID: 5372891158435412934}
+  m_Father: {fileID: 1378282381469885332}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1378282381469885354
 GameObject:
   m_ObjectHideFlags: 0
@@ -35,7 +67,7 @@ Transform:
   - {fileID: 7529979473858482372}
   - {fileID: 3797613347199539750}
   - {fileID: 5644488139118373319}
-  - {fileID: 2192185027081183173}
+  - {fileID: 6138406999502565572}
   - {fileID: 8331562827979367205}
   - {fileID: 6669936914480764908}
   m_Father: {fileID: 0}
@@ -27700,8 +27732,38 @@ Transform:
   m_LocalPosition: {x: 0, y: 6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1378282381469885332}
-  m_RootOrder: 6
+  m_Father: {fileID: 6138406999502565572}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &7342802510856260423
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5372891158435412934}
+  m_Layer: 0
+  m_Name: SpawnPoint (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 2488908585195742037, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5372891158435412934
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7342802510856260423}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 18.5, y: 6, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6138406999502565572}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8060871406803007854
 GameObject:
@@ -29429,6 +29491,14 @@ PrefabInstance:
       propertyPath: dirType
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8604531944747639586, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
+      propertyPath: nextStageData
+      value: 
+      objectReference: {fileID: 11400000, guid: 6de2e9bb37208e148a5790be2fb70f8b, type: 2}
+    - target: {fileID: 8604531944747639586, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
+      propertyPath: playerSpawnPos
+      value: 
+      objectReference: {fileID: 5372891158435412934}
     - target: {fileID: 8604531944747639587, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
       propertyPath: m_Name
       value: StageDoor
