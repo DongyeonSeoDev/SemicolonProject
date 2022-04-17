@@ -69,7 +69,7 @@ public class SettingPhase : TutorialPhase
     {
         if (!PoolManager.IsContainKey("DustEffect1"))
         {
-            GameObject o = GameObject.Instantiate(UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/SystemPrefabs/Effect/FallDustEffect.prefab"));
+            GameObject o = Util.LoadAssetPrefab("SystemPrefabs/Effect/FallDustEffect"); 
             PoolManager.CreatePool(o, EffectManager.Instance.transform, 3, "DustEffect1");
         }
 
@@ -79,7 +79,7 @@ public class SettingPhase : TutorialPhase
     }
     public override void DoPhaseUpdate()
     {
-        if(Input.GetKeyDown(KeySetting.fixedKeyDict[KeyAction.ESCAPE]))
+        if(Input.GetKeyDown(KeySetting.fixedKeyDict[KeyAction.SETTING]))
         {
             if(++currentCount < pressCount)
             {

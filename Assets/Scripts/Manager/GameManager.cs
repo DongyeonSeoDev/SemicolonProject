@@ -9,6 +9,8 @@ using Water;
 public partial class GameManager : MonoSingleton<GameManager>
 {
     private string savedJson, filePath;
+    private string cryptoText;
+    private readonly string cryptoKey = "XHUooeUjJzMKdt";
 
     [SerializeField] private SaveData saveData;
     public SaveData savedData { get { return saveData; } }
@@ -44,6 +46,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         
         Load();
         Init();
+
         
     }
 
@@ -61,9 +64,10 @@ public partial class GameManager : MonoSingleton<GameManager>
         SaveData();
 
         savedJson = JsonUtility.ToJson(saveData);
-        byte[] bytes = Encoding.UTF8.GetBytes(savedJson);
-        string code = Convert.ToBase64String(bytes);
-        File.WriteAllText(filePath, code);
+        cryptoText = Crypto.Encrypt(savedJson, cryptoKey);
+        //byte[] bytes = Encoding.UTF8.GetBytes(savedJson);
+        //string code = Convert.ToBase64String(bytes);
+        File.WriteAllText(filePath, cryptoText);
     }
 
     public void Load()
@@ -71,8 +75,9 @@ public partial class GameManager : MonoSingleton<GameManager>
         if (File.Exists(filePath))
         {
             string code = File.ReadAllText(filePath);
-            byte[] bytes = Convert.FromBase64String(code);
-            savedJson = Encoding.UTF8.GetString(bytes);
+            savedJson = Crypto.Decrypt(code, cryptoKey);
+            //byte[] bytes = Convert.FromBase64String(code);
+            //savedJson = Encoding.UTF8.GetString(bytes);
             saveData = JsonUtility.FromJson<SaveData>(savedJson);
         }
 
@@ -83,8 +88,10 @@ public partial class GameManager : MonoSingleton<GameManager>
     private void SetData()
     {
         if (!saveData.tutorialInfo.isEnded)
+        {
             saveData = new SaveData();
-
+        }
+        
         {   //키세팅 정보 불러옴
             KeySetting.SetDefaultKeySetting();
 
@@ -96,27 +103,12 @@ public partial class GameManager : MonoSingleton<GameManager>
                 }
             }
 
-            //활성화된 UI 정보 가져옴
-            if(saveData.userInfo.uiActiveDic.keyList.Count==0)
+            if (!saveData.tutorialInfo.isEnded)
             {
-                foreach(UIType type in Enum.GetValues(typeof(UIType)))
-                {
-                    saveData.userInfo.uiActiveDic[type] = true;
-                }
-               
-                StartCoroutine(SetUIActiveDicFalseUI());
+                saveData.userInfo.uiActiveDic = KeySetting.InitKeyActionActive;
+                Debug.Log("Test2");
             }
-            else
-            {
-                if (!saveData.tutorialInfo.isEnded)
-                {
-                    StartCoroutine(SetUIActiveDicFalseUI());
-                }
-                else
-                {
-                    StoredData.SetObjectKey("SetUIAcqState", true);
-                }
-            }
+            Debug.Log(saveData.userInfo.uiActiveDic[KeyAction.SETTING]);
         }
         //슬라임에게 스탯 데이터 넣기
         //옵션 설정 내용 넣기 
@@ -124,7 +116,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         //몬스터 동화율 정보 불러오기 --> MonsterCollection 스크립트에서 처리
     }
 
-    private IEnumerator SetUIActiveDicFalseUI()
+   /* private IEnumerator SetUIActiveDicFalseUI()
     {
         //따로 처리할 것들
         saveData.userInfo.uiActiveDic[UIType.QUIT] = false;
@@ -137,7 +129,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         }
 
         StoredData.SetObjectKey("SetUIAcqState", true);
-    }
+    }*/
 
 #endregion
 

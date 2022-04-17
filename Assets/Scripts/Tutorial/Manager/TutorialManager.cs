@@ -3,9 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Experimental.Rendering.Universal;
-using Water;
-using System.Text;
-using System;
 using FkTweening;
 
 public class TutorialManager : MonoSingleton<TutorialManager> 
@@ -14,9 +11,10 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     private GameManager gm;
     private UIManager um;
 
-    //처음에 안보일 UI들
+    //처음에 안보일 UI들 (KeyAction으로 처리하지 않을 것들)
     public Transform hpUI, energeBarUI;
     public Transform[] skillUIArr;
+    public Transform changeableBodysUI;
 
     //튜토리얼 진행중인가
     public bool IsTutorialStage => !GameManager.Instance.savedData.tutorialInfo.isEnded;
@@ -61,6 +59,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         //Init Etc UI Active
         hpUI.gameObject.SetActive(active);
         energeBarUI.gameObject.SetActive(active);
+        changeableBodysUI.gameObject.SetActive(active);
         for (int i = 0; i < skillUIArr.Length; i++)
         {
             skillUIArr[i].gameObject.SetActive(active);
@@ -86,15 +85,15 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             EffectManager.Instance.OnTouchEffect("TouchEffect1");
         }
 
-        if(!active || !gm.savedData.userInfo.uiActiveDic[UIType.SETTING])
+        if(!gm.savedData.userInfo.uiActiveDic[KeyAction.SETTING])
         {
-            tutorialPhases.Add(new SettingPhase(10, () => UIOn(UIType.SETTING)));
+            tutorialPhases.Add(new SettingPhase(10, () => UIOn(KeyAction.SETTING)));
         }
 
         um.StartLoadingIn();
     }
 
-    private void ShowTargetSortingLayers() //Test
+    /*private void ShowTargetSortingLayers() //Test
     {
         int[] arr = (int[])playerFollowLight.GetFieldInfo<Light2D>("m_ApplyToSortingLayers").GetValue(playerFollowLight);
 
@@ -104,34 +103,34 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             sb.Append(r + ", ");
 
         Debug.Log(sb.ToString());
-    }
+    }*/
 
-    public void UIOn(UIType type)
+    public void UIOn(KeyAction type)
     {
-        UIManager.Instance.PreventItrUI(0.4f);
-        GameManager.Instance.savedData.userInfo.uiActiveDic[type] = true;
-        UIManager.Instance.acqUIList.Find(x => x.uiType == type).OnUIVisible(true);
+        um.PreventItrUI(0.4f);
+        gm.savedData.userInfo.uiActiveDic[type] = true;
+        um.acqUIList.Find(x => x.keyType == type).OnUIVisible(true);
     }
 
     private void Update()
     {
-        if(IsTutorialStage)
+        TutorialUpdate();
+    }
+
+    private void TutorialUpdate()
+    {
+        int i;
+        for (i = 0; i < tutorialPhases.Count; i++)
         {
-            int i;
-            for(i = 0; i < tutorialPhases.Count; i++)
+            tutorialPhases[i].DoPhaseUpdate();
+        }
+        for (i = 0; i < tutorialPhases.Count; i++)
+        {
+            if (tutorialPhases[i].IsEnded)
             {
-                tutorialPhases[i].DoPhaseUpdate();
-            }
-            for (i = 0; i < tutorialPhases.Count; i++)
-            {
-                if(tutorialPhases[i].IsEnded)
-                {
-                    tutorialPhases.RemoveAt(i);
-                    i--;
-                }
+                tutorialPhases.RemoveAt(i);
+                i--;
             }
         }
-
-        
     }
 }

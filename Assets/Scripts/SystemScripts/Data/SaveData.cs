@@ -25,7 +25,7 @@ public class SaveData
     }
 }
 
-[SerializeField]
+[Serializable]
 public class TutorialInfo
 {
     public bool isEnded = false;
@@ -49,7 +49,7 @@ public class UserInfo
     public SaveDic<string, ItemInfo> userItems = new SaveDic<string, ItemInfo>(); //인벤토리 목록 
     public SaveDic<string, MonsterInfo> monsterInfoDic = new SaveDic<string, MonsterInfo>(); //몬스터 이해도(동화율), 흡수 확률 등의 정보
 
-    public SaveDic<UIType, bool> uiActiveDic = new SaveDic<UIType, bool>();
+    public SaveDic<KeyAction, bool> uiActiveDic = new SaveDic<KeyAction, bool>();
 }
 
 [Serializable]

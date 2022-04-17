@@ -32,18 +32,20 @@ public class SkillInfoImage : MonoBehaviour
         string skillName = info.skillName;
         skillEx = info.skillExplanation;
 
+        skillUICmd = new SkillUICommand(skillImgCoolTxtImgTriple.third, skillImgCoolTxtImgTriple.second, (int)skillType);
+
         switch (skillType)
         {
             case SkillType.ATTACK:
-                skillUICmd = new DefaultAttackUICommand(skillImgCoolTxtImgTriple.third, skillImgCoolTxtImgTriple.second);
+                
                 skillName += "(기본공격)";
                 break;
             case SkillType.SPECIALATTACK1:
-                skillUICmd = new SpecialAttackUICommand(skillImgCoolTxtImgTriple.third, skillImgCoolTxtImgTriple.second);
+                
                 skillName += "(특수공격1)";
                 break;
             case SkillType.SPECIALATTACK2:
-                skillUICmd = new DrainUICommand(skillImgCoolTxtImgTriple.third, skillImgCoolTxtImgTriple.second);
+                
                 skillName += "(특수공격2)";
                 break;
         }
@@ -64,7 +66,7 @@ public class SkillInfoImage : MonoBehaviour
     public void UpdateKeyCode()
     {
         keyCodeTxt.text = KeyCodeToString.GetString(KeySetting.GetKeyCode(Util.EnumParse<KeyAction>(skillType.ToString())));
-        Util.DelayFunc(() => ccsf.UpdateSize(), 0.2f);
+        Util.DelayFunc(() => ccsf.UpdateSize(), 0.1f);
     }
 
     private void Update()
