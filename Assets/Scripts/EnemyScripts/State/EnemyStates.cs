@@ -131,14 +131,13 @@ namespace Enemy
     {
         private Boss1SkeletonKing boss = null;
         private Boss1Clone[] bossCloneArray = new Boss1Clone[2];
-        private Vector2[] bossPositionArray = new Vector2[3];
         private AttackBoss1Clone[] attackBoss1CloneArray = new AttackBoss1Clone[2];
         private RushAttackRange[] attackRangeArray = new RushAttackRange[3];
+        private Vector2[] bossPositionArray = new Vector2[3];
 
         private int moveCount = 0;
 
         private bool isEnd = false;
-        private bool isActive = false; 
         private bool isMove = false;
 
         public BossSpecialAttack1Status(EnemyData enemyData, Boss1SkeletonKing boss) : base(eState.ATTACK, enemyData) => this.boss = boss;
@@ -148,53 +147,49 @@ namespace Enemy
             moveCount = 0;
             isEnd = false;
 
+            //
+            BossSpecialAttack1Position(ref bossPositionArray);
+
+            attackRangeArray[0] = (RushAttackRange)EnemyPoolManager.Instance.GetPoolObject(Type.EnemyRushAttackRange, new Vector2(0f, bossPositionArray[0].y));
+            attackRangeArray[1] = (RushAttackRange)EnemyPoolManager.Instance.GetPoolObject(Type.EnemyRushAttackRange, new Vector2(0f, bossPositionArray[1].y));
+            attackRangeArray[2] = (RushAttackRange)EnemyPoolManager.Instance.GetPoolObject(Type.EnemyRushAttackRange, new Vector2(0f, bossPositionArray[2].y));
+
+            enemyData.enemyAnimator.ResetTrigger(boss.hashSpecialAttack1);
+            enemyData.enemyAnimator.SetTrigger(boss.hashSpecialAttack1End);
+
+            Util.DelayFunc(() =>
+            {
+                for (int i = 0; i < boss.enemyAttackCheck.Length; i++)
+                {
+                    boss.enemyAttackCheck[i].AttackObjectReset();
+                }
+
+                enemyData.enemySpriteRenderer.enabled = true;
+                enemyData.moveVector = Vector2.right;
+
+                boss.transform.position = bossPositionArray[0];
+                bossCloneArray[0] = (Boss1Clone)EnemyPoolManager.Instance.GetPoolObject(Type.Boss1Clone, bossPositionArray[1]);
+                bossCloneArray[1] = (Boss1Clone)EnemyPoolManager.Instance.GetPoolObject(Type.Boss1Clone, bossPositionArray[2]);
+                attackBoss1CloneArray[0] = bossCloneArray[0].GetComponentInChildren<AttackBoss1Clone>();
+                attackBoss1CloneArray[1] = bossCloneArray[1].GetComponentInChildren<AttackBoss1Clone>();
+
+                attackBoss1CloneArray[0].Init(enemyData.eEnemyController, enemyData.attackPower);
+                attackBoss1CloneArray[1].Init(enemyData.eEnemyController, enemyData.attackPower);
+                attackBoss1CloneArray[0].AttackObjectReset();
+                attackBoss1CloneArray[1].AttackObjectReset();
+
+                enemyData.enemySpriteRotateCommand.Execute();
+                isMove = true;
+
+                enemyData.enemyAnimator.ResetTrigger(boss.hashSpecialAttack1End);
+                enemyData.enemyAnimator.SetTrigger(boss.hashSpecialAttack1);
+            }, 2f);
+
             base.Start();
         }
 
         protected override void Update()
         {
-            if (!isActive)
-            {
-                isActive = true;
-
-                BossSpecialAttack1Position(ref bossPositionArray);
-
-                attackRangeArray[0] = (RushAttackRange)EnemyPoolManager.Instance.GetPoolObject(Type.EnemyRushAttackRange, new Vector2(0f, bossPositionArray[0].y));
-                attackRangeArray[1] = (RushAttackRange)EnemyPoolManager.Instance.GetPoolObject(Type.EnemyRushAttackRange, new Vector2(0f, bossPositionArray[1].y));
-                attackRangeArray[2] = (RushAttackRange)EnemyPoolManager.Instance.GetPoolObject(Type.EnemyRushAttackRange, new Vector2(0f, bossPositionArray[2].y));
-
-                enemyData.enemyAnimator.ResetTrigger(boss.hashSpecialAttack1);
-                enemyData.enemyAnimator.SetTrigger(boss.hashSpecialAttack1End);
-
-                Util.DelayFunc(() =>
-                {
-                    for (int i = 0; i < boss.enemyAttackCheck.Length; i++)
-                    {
-                        boss.enemyAttackCheck[i].AttackObjectReset();
-                    }
-
-                    enemyData.enemySpriteRenderer.enabled = true;
-                    enemyData.moveVector = Vector2.right;
-
-                    boss.transform.position = bossPositionArray[0];
-                    bossCloneArray[0] = (Boss1Clone)EnemyPoolManager.Instance.GetPoolObject(Type.Boss1Clone, bossPositionArray[1]);
-                    bossCloneArray[1] = (Boss1Clone)EnemyPoolManager.Instance.GetPoolObject(Type.Boss1Clone, bossPositionArray[2]);
-                    attackBoss1CloneArray[0] = bossCloneArray[0].GetComponentInChildren<AttackBoss1Clone>();
-                    attackBoss1CloneArray[1] = bossCloneArray[1].GetComponentInChildren<AttackBoss1Clone>();
-
-                    attackBoss1CloneArray[0].Init(enemyData.eEnemyController, enemyData.attackPower);
-                    attackBoss1CloneArray[1].Init(enemyData.eEnemyController, enemyData.attackPower);
-                    attackBoss1CloneArray[0].AttackObjectReset();
-                    attackBoss1CloneArray[1].AttackObjectReset();
-
-                    enemyData.enemySpriteRotateCommand.Execute();
-                    isMove = true;
-
-                    enemyData.enemyAnimator.ResetTrigger(boss.hashSpecialAttack1End);
-                    enemyData.enemyAnimator.SetTrigger(boss.hashSpecialAttack1);
-                }, 2f);
-            }
-
             if (isMove)
             {
                 enemyData.enemyRigidbody2D.velocity = enemyData.moveVector * 20f;
@@ -324,15 +319,33 @@ namespace Enemy
         {
             if (EnemyManager.Player.transform.position.y <= boss.limitMinPosition.y + 5f)
             {
-                positionArray[0] = new Vector2(boss.transform.position.x, EnemyManager.Player.transform.position.y);
-                positionArray[1] = new Vector2(boss.transform.position.x, EnemyManager.Player.transform.position.y + 5f);
-                positionArray[2] = new Vector2(boss.transform.position.x, EnemyManager.Player.transform.position.y + 10f);
+                if (EnemyManager.Player.transform.position.y <= boss.limitMinPosition.y)
+                {
+                    positionArray[0] = new Vector2(boss.transform.position.x, boss.limitMinPosition.y);
+                    positionArray[1] = new Vector2(boss.transform.position.x, boss.limitMinPosition.y + 5f);
+                    positionArray[2] = new Vector2(boss.transform.position.x, boss.limitMinPosition.y + 10f);
+                }
+                else
+                {
+                    positionArray[0] = new Vector2(boss.transform.position.x, EnemyManager.Player.transform.position.y);
+                    positionArray[1] = new Vector2(boss.transform.position.x, EnemyManager.Player.transform.position.y + 5f);
+                    positionArray[2] = new Vector2(boss.transform.position.x, EnemyManager.Player.transform.position.y + 10f);
+                }
             }
             else if (EnemyManager.Player.transform.position.y >= boss.limitMaxPosition.y - 5f)
             {
-                positionArray[0] = new Vector2(boss.transform.position.x, EnemyManager.Player.transform.position.y);
-                positionArray[1] = new Vector2(boss.transform.position.x, EnemyManager.Player.transform.position.y - 5f);
-                positionArray[2] = new Vector2(boss.transform.position.x, EnemyManager.Player.transform.position.y - 10f);
+                if (EnemyManager.Player.transform.position.y >= boss.limitMaxPosition.y)
+                {
+                    positionArray[0] = new Vector2(boss.transform.position.x, boss.limitMaxPosition.y);
+                    positionArray[1] = new Vector2(boss.transform.position.x, boss.limitMaxPosition.y - 5f);
+                    positionArray[2] = new Vector2(boss.transform.position.x, boss.limitMaxPosition.y - 10f);
+                }
+                else
+                {
+                    positionArray[0] = new Vector2(boss.transform.position.x, EnemyManager.Player.transform.position.y);
+                    positionArray[1] = new Vector2(boss.transform.position.x, EnemyManager.Player.transform.position.y - 5f);
+                    positionArray[2] = new Vector2(boss.transform.position.x, EnemyManager.Player.transform.position.y - 10f);
+                }
             }
             else
             {
