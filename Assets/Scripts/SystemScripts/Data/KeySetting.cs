@@ -10,6 +10,7 @@ public static class KeySetting
     {
         //순서대로 키세팅 UI에 표시됨
 
+        keyDict[KeyAction.MENU] = KeyCode.Tab;
         keyDict[KeyAction.INVENTORY] = KeyCode.I;
         keyDict[KeyAction.STAT] = KeyCode.T;
         keyDict[KeyAction.MONSTER_COLLECTION] = KeyCode.C;
@@ -33,7 +34,7 @@ public static class KeySetting
         fixedKeyDict[KeyAction.LEFT] = KeyCode.A;
         fixedKeyDict[KeyAction.RIGHT] = KeyCode.D;
         fixedKeyDict[KeyAction.ATTACK] = KeyCode.Mouse0;
-        fixedKeyDict[KeyAction.ESCAPE] = KeyCode.Escape;
+        fixedKeyDict[KeyAction.SETTING] = KeyCode.Escape;
     }
 
     public static KeyCode GetKeyCode(KeyAction k)
@@ -44,6 +45,21 @@ public static class KeySetting
         if (fixedKeyDict.TryGetValue(k, out code))
             return code;
         return KeyCode.None;
+    }
+
+    public static SaveDic<KeyAction, bool> InitKeyActionActive
+    {
+        get
+        {
+            SaveDic<KeyAction, bool> keyActive = new SaveDic<KeyAction, bool>();
+            keyActive[KeyAction.SETTING] = false;
+            keyActive[KeyAction.INVENTORY] = false;
+            keyActive[KeyAction.STAT] = false;
+            keyActive[KeyAction.MONSTER_COLLECTION] = false;
+            keyActive[KeyAction.QUIT] = false;
+            Debug.Log("Test3");
+            return keyActive;
+        }
     }
 }
 

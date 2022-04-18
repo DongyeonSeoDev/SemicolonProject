@@ -196,8 +196,6 @@ public partial class UIManager : MonoSingleton<UIManager>
 
         PlayerEnemyUnderstandingRateManager.Instance.ChangableBodyList.ForEach(x => mobSaveWindowActiveDic.Add(x.bodyId.ToString(), false));
         Load();
-
-        
     }
 
     public void Load()
@@ -288,9 +286,11 @@ public partial class UIManager : MonoSingleton<UIManager>
         DelayHPFill();
     }
 
+    private bool CheckInputAndActive(KeyAction key) => Input.GetKeyDown(KeySetting.keyDict[key]) && gm.savedData.userInfo.uiActiveDic[key];
+
     private void UserInput()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeySetting.fixedKeyDict[KeyAction.SETTING]))
         {
             if (activeUIList.Count > 0)
             {
@@ -298,22 +298,25 @@ public partial class UIManager : MonoSingleton<UIManager>
             }
             else
             {
-                OnUIInteract(UIType.SETTING);
+                if (gm.savedData.userInfo.uiActiveDic[KeyAction.SETTING])
+                {
+                    OnUIInteract(UIType.SETTING);
+                }
             }
         }
-        else if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.INVENTORY]))
+        else if (CheckInputAndActive(KeyAction.INVENTORY))
         {
             OnUIInteract(UIType.INVENTORY);
         }
-        else if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.STAT]))
+        else if (CheckInputAndActive(KeyAction.STAT))
         {
             OnUIInteract(UIType.STAT);
         }
-        else if(Input.GetKeyDown(KeySetting.keyDict[KeyAction.MONSTER_COLLECTION]))
+        else if(CheckInputAndActive(KeyAction.MONSTER_COLLECTION))
         {
             OnUIInteract(UIType.MONSTER_COLLECTION);
         }
-        else if(Input.GetKeyDown(KeySetting.keyDict[KeyAction.QUIT]))
+        else if(CheckInputAndActive(KeyAction.QUIT))
         {
             OnUIInteract(UIType.QUIT);
         }
@@ -338,7 +341,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     {
         if (!CheckExistUI((int)type)) return;
 
-        if (!gm.savedData.userInfo.uiActiveDic[type]) return;
+        //if (!gm.savedData.userInfo.uiActiveDic[type]) return;
 
         if (activeUIQueue.Count > 0 && !ignoreQueue) return;
         if (ExceptionHandler(type)) return;
@@ -358,7 +361,7 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     public void OnUIInteractSetActive(UIType type, bool isActive ,bool ignoreQueue = false) //UI열거나 닫음 (원하는 액티브 상태로 해주고 이미 그 상태면 캔슬)
     {
-        if (!gm.savedData.userInfo.uiActiveDic[type]) return;
+        //if (!gm.savedData.userInfo.uiActiveDic[type]) return;
 
         GameUI ui = gameUIList[(int)type];
         if (ui.gameObject.activeSelf == isActive) return;

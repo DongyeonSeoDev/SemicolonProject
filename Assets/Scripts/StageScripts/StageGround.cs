@@ -71,7 +71,7 @@ public class StageGround : MonoBehaviour
 
     public void SetMapEffects()  //나중에 리펙토링 필요할듯. 일단 임시로 ㄱ
     {
-        bool active;
+       /*bool active;
 
         if (imprecMapEffects.first != null)
         {
@@ -81,9 +81,7 @@ public class StageGround : MonoBehaviour
             {
                 imprecMapEffects.second[i].gameObject.SetActive(active);
             }   
-        }
-
-        
+        }*/
     }
 
     public StageDoor GetOpposeDoor(DoorDirType type)

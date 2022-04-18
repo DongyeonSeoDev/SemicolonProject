@@ -3,21 +3,22 @@ using System.Collections.Generic;
 using Water;
 using UnityEngine.Experimental.Rendering.Universal;
 using FkTweening;
+using UnityEngine;
 
 public class RecoveryObj : InteractionObj
 {
-    private Light2D recoveryLight;
+    [SerializeField] private Light2D recoveryLight;
     private List<Action> recoveryActions = new List<Action>();
     //public FakeSpriteOutline fsOut;
     private OutlineCtrl outlineCtrl;
 
     private bool canInteract;
-    private UnityEngine.Vector3 effOffset = new UnityEngine.Vector3(0,-0.3f);
+    private Vector3 effOffset = new Vector3(0,-0.3f);
 
-    private void Awake()
+   /* private void Awake()
     {
         outlineCtrl = GetComponent<OutlineCtrl>();
-    }
+    }*/
 
     private void ResetActionList()
     {
@@ -45,9 +46,14 @@ public class RecoveryObj : InteractionObj
         {
             canInteract = true;
 
-            recoveryLight = PoolManager.GetItem<Light2D>("NormalPointLight2D");
+            //recoveryLight = PoolManager.GetItem<Light2D>("NormalPointLight2D");
             recoveryLight.transform.position = StageManager.Instance.CurrentStageGround.objSpawnPos.position;
+            recoveryLight.gameObject.SetActive(true);
             recoveryLight.intensity = 0.4f;
+            /*recoveryLight.GetFieldInfo<Light2D>("m_ApplyToSortingLayers").SetValue(recoveryLight, new int[3]
+            {
+                0, -1221289887, -992757899
+            });*/
         }
     }
     private void OnDisable()
@@ -70,7 +76,7 @@ public class RecoveryObj : InteractionObj
 
         ResetActionList();  
 
-        UIManager.Instance.RequestSelectionWindow("어떤 효과를 받으시겠습니까?", recoveryActions, new List<string>() { "체력 30% 회복", "저주 해제" });
+        UIManager.Instance.RequestSelectionWindow("이곳은 회복구역입니다.\n어떤 효과를 받으시겠습니까?", recoveryActions, new List<string>() { "AscHp", "AntiBuffRm" }, true, null, true);
         canInteract = false;
     }
 
@@ -87,7 +93,7 @@ public class RecoveryObj : InteractionObj
     public override void SetInteractionUI(bool on)
     {
         base.SetInteractionUI(on);
-        outlineCtrl.SetIntensity(on?10:0);
+        //outlineCtrl.SetIntensity(on?10:0);
         //fsOut.gameObject.SetActive(on);
     }
 }

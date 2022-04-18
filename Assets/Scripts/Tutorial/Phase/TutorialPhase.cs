@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Experimental.Rendering.Universal;
 using System;
 using FkTweening;
+using Water;
 
 public abstract class TutorialPhase
 {
@@ -56,27 +57,54 @@ public class StartPhase : TutorialPhase
 
 public class SettingPhase : TutorialPhase
 {
-    private ParticleSystem dustParticle;
     private int pressCount = 10, currentCount = 0;
 
     private float camShakeStr = 0.3f, camFreq = 0.7f;
 
-    public SettingPhase(ParticleSystem effect, int pressCount, Action end)
+    private int maxCount = 3, offset = 3;
+
+    private Vector2 effSpawnPosOffset = new Vector2(0, 11f);
+
+    public SettingPhase(int pressCount, Action end)
     {
-        dustParticle = effect;
+        if (!PoolManager.IsContainKey("DustEffect1"))
+        {
+            GameObject o = Util.LoadAssetPrefab("SystemPrefabs/Effect/FallDustEffect"); 
+            PoolManager.CreatePool(o, EffectManager.Instance.transform, 3, "DustEffect1");
+        }
+
         this.pressCount = pressCount;
         endAction = end;
         IsEnded = false;
     }
     public override void DoPhaseUpdate()
     {
-        if(Input.GetKeyDown(KeySetting.fixedKeyDict[KeyAction.ESCAPE]))
+        if(Input.GetKeyDown(KeySetting.fixedKeyDict[KeyAction.SETTING]))
         {
             if(++currentCount < pressCount)
             {
+                //Camera Shake
                 CinemachineCameraScript.Instance.Shake(camShakeStr, camFreq, 0.3f);
                 camShakeStr += 0.2f;
                 camFreq += 0.1f;
+
+                //Dust Particle Effect
+                ParticleSystem ps = PoolManager.GetItem<ParticleSystem>("DustEffect1");
+                ParticleSystem.MainModule main = ps.main;
+                main.maxParticles = maxCount;
+                maxCount += offset;
+
+                SlimeFollowObj sfo = PoolManager.GetItem<SlimeFollowObj>("PlayerFollowEmptyObj");
+                sfo.offset = effSpawnPosOffset;
+                ps.gameObject.transform.SetParent(sfo.transform);
+                ps.gameObject.transform.localPosition = Vector2.zero;
+                ps.Play();
+                Util.DelayFunc(() =>
+                {
+                    ps.gameObject.transform.parent = null;
+                    sfo.gameObject.SetActive(false);
+                    ps.gameObject.SetActive(false);
+                },2f);          
             }
             else
             {

@@ -43,10 +43,11 @@ public enum KeyAction
     LEFT,
     RIGHT,
     ATTACK,
-    ESCAPE,
+    SETTING,
     //여기까지가 고정키
 
     QUIT,
+    MENU,
     INVENTORY,
     STAT,
     MONSTER_COLLECTION,
@@ -55,12 +56,11 @@ public enum KeyAction
     SPECIALATTACK1,
     SPECIALATTACK2,
     MANASTONE,
-    SETTING,
     CHANGE_SLIME,
     CHANGE_MONSTER1,
     CHANGE_MONSTER2,
 
-    NULL  //아무것도 없는 값
+    NONE  //아무것도 없는 값
 
 
 

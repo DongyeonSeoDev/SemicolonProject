@@ -7,17 +7,6 @@ using TMPro;
 
 public class CookingManager : MonoSingleton<CookingManager>
 {
-    #region 테스트 코드 (Test Code)
-    [Header("TEST")]
-
-    public ItemInfo testItemInfo;
-
-    public Chef testChef;
-
-    [SerializeField] private bool isTestMode = false;
-
-    #endregion
-
     private GameManager gm;
 
     private Dictionary<string, FoodButton> foodBtnDic = new Dictionary<string, FoodButton>();  
@@ -29,12 +18,12 @@ public class CookingManager : MonoSingleton<CookingManager>
     [SerializeField] private List<FoodButton> foodBtnList = new List<FoodButton>(); // (음식 제작 창에서) 음식 버튼 리스트
     [SerializeField] private List<IngredientImage> ingredientImages = new List<IngredientImage>(); //(음식 제작 창에서) 재료 정보 UI들
 
-    public List<FoodButton> FoodBtnList { get { return foodBtnList; } set { foodBtnList = value; } }
-    public List<IngredientImage> IngredientImages { get { return ingredientImages; } set { ingredientImages = value; } }
+    public List<FoodButton> FoodBtnList { get => foodBtnList;  set => foodBtnList = value; }
+    public List<IngredientImage> IngredientImages { get => ingredientImages; set => ingredientImages = value;  }
 
 
     private int makeFoodCount; //만드려는(선택한) 음식 개수
-    public int MakeFoodCount { get { return makeFoodCount; } }
+    public int MakeFoodCount => makeFoodCount;
 
     public TextMeshProUGUI NpcNameTxt; 
     public Image foodImg;  //만드려는(선택한) 음식 이미지
@@ -270,23 +259,5 @@ public class CookingManager : MonoSingleton<CookingManager>
         explanationTxt.text = data.explanation;
     }
 
-    /*private void Update()
-    {
-        Test(); //Test Code
-    }*/
-
-    void Test()  //Test Code
-    {
-        if (!isTestMode) return;
-
-        if (Input.GetKeyDown(KeyCode.LeftAlt))
-        {
-            gm.AddItem(testItemInfo);
-        }
-        else if (Input.GetKeyDown(KeyCode.LeftControl))
-        {
-            Global.MonoActionTrigger(Global.TalkWithChef, testChef);
-        }
-        
-    }
+   
 }

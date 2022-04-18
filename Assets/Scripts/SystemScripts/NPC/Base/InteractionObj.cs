@@ -3,7 +3,9 @@ using Water;
 
 public abstract class InteractionObj : MonoBehaviour
 {
-    [SerializeField] protected bool isHidenName, isHidenItrMark;  
+    [SerializeField] protected bool isHidenName, isHidenItrMark;
+    [SerializeField] protected bool notInteractable;
+
     [SerializeField] protected string objName;
     public string ObjName { get { return objName; } }
 

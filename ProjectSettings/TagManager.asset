@@ -10,6 +10,7 @@ TagManager:
   - CameraLimit
   - NotMoveZone
   - FxTemporaire
+  - SpawnPoint
   layers:
   - Default
   - TransparentFX

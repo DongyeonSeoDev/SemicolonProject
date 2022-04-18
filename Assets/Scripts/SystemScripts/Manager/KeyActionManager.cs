@@ -147,7 +147,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
             }
         }
 
-        return (KeyAction.NULL,-1);
+        return (KeyAction.NONE,-1);
     }
 
     public void ChangeUserCustomKey(int key, int id) //키셋 변경 버튼 클릭

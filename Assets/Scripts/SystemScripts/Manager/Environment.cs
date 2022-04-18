@@ -10,11 +10,13 @@ using FkTweening;
 public class Environment : MonoSingleton<Environment>
 {
     public Light2D mainLight;  //default intensity : 1
+    private Light2D playerFollowLight;
+
     public Volume mainVolume;
 
     public VolumeProfile defaultVolProfile, mainVolProfile;  //처음 상태의 기본 볼륨 프로필, 게임속에서 바뀌는 불륨 프로필
 
-    public GameObject pointLight2DPrefab;
+    public GameObject playerLight2D;
 
     #region Post Processing Options
     private Bloom bloom;
@@ -38,7 +40,11 @@ public class Environment : MonoSingleton<Environment>
 
     private void CreatePool()
     {
-        PoolManager.CreatePool(pointLight2DPrefab, transform, 2, "NormalPointLight2D");
+        playerFollowLight = Instantiate(playerLight2D, transform).GetComponent<Light2D>();
+        playerFollowLight.gameObject.SetActive(false);
+        StoredData.SetGameObjectKey("Player Follow Light", playerFollowLight.gameObject);
+
+        //PoolManager.CreatePool(pointLight2DPrefab, transform, 2, "NormalPointLight2D");
     }
 
     private void SetVolume()
@@ -81,11 +87,12 @@ public class Environment : MonoSingleton<Environment>
     public void OnEnteredOrExitRecoveryArea(bool enter)
     {
         bloom.active = enter;
-        mainLight.intensity = enter ? 1.2f : 1f;
-        bloom.intensity.value = enter ? 1.3f : 1f;
+        mainLight.intensity = enter ? 1.1f : 1f;
+        bloom.intensity.value = enter ? 1.17f : 1f;
         //bloom.threshold.value = enter ? 0.8f : 1f;
 
         colorAdjustments.active = enter;
+        colorAdjustments.saturation.value = 40;
         //colorAdjustments.saturation.value = enter ? 40 : 0;
         //colorAdjustments.postExposure.value = enter ? 2f : 0;
 

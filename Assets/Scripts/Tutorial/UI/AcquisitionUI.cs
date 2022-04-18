@@ -3,15 +3,11 @@ using UnityEngine;
 
 public class AcquisitionUI : MonoBehaviour
 {
-    public UIType uiType;
+    public KeyAction keyType;
     [HideInInspector] public bool on = false;
-    private CanvasGroup cvsg;
+    [SerializeField] private CanvasGroup cvsg;
 
-    private void Awake()
-    {
-        cvsg = GetComponent<CanvasGroup>();
-        
-    }
+    
 
     public void OnUIVisible(bool on)
     {
@@ -21,7 +17,7 @@ public class AcquisitionUI : MonoBehaviour
         cvsg.blocksRaycasts = on;
     }
 
-    private IEnumerator Start()
+    /*private IEnumerator Start()
     {
         while (!StoredData.HasObjectKey("SetUIAcqState")) yield return null;
 
@@ -32,5 +28,5 @@ public class AcquisitionUI : MonoBehaviour
             OnUIVisible(true);
             GameManager.Instance.savedData.userInfo.uiActiveDic[uiType] = true;
         }
-    }
+    }*/
 }

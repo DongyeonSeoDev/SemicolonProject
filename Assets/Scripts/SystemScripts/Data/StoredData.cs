@@ -58,6 +58,16 @@ public static class StoredData
         return null;
     }
 
+    public static T GetGameObjectData<T>(string key)
+    {
+        if (gameObjectDataDic.ContainsKey(key))
+        {
+            return gameObjectDataDic[key].GetComponent<T>();
+        }
+        Debug.Log("키가 없다 : " + key);
+        return default;
+    }
+
     public static void DeleteGameObjectKey(string key)
     {
         if (gameObjectDataDic.ContainsKey(key))

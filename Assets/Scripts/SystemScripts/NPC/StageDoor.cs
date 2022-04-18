@@ -23,7 +23,8 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
     public GameObject detectorObj;
     public Light2D doorLight;
 
-    private bool isOpen; //문으로 입장할 수 있는 상태가 되어서 상호작용 키를 눌렀을 때 true로
+    private bool isOpen = false;
+    private bool isEnter; //문으로 입장할 수 있는 상태가 되어서 상호작용 키를 눌렀을 때 true로
     private bool isExitDoor; //이 문이 입구였는가
 
     public bool IsExitDoor { set => isExitDoor = value; }
@@ -33,6 +34,8 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
     private void Awake()
     {
         spr = GetComponent<SpriteRenderer>();
+
+        if (!playerSpawnPos) playerSpawnPos = transform.GetChild(2);
 
         float rz = 0f;
         switch(dirType)
@@ -57,9 +60,9 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
     {
         if(StageManager.Instance.IsStageClear)
         {
-            if (!isOpen && !isExitDoor) //문을 열었거나 입구로 쓴 문이면 상호작용 아예 안되게
+            if (!isEnter && !isExitDoor) //문을 열었거나 입구로 쓴 문이면 상호작용 아예 안되게
             {
-                isOpen = true;
+                isEnter = true;
                 StageManager.Instance.PassDir = dirType;
                 UIManager.Instance.StartLoading(() => StageManager.Instance.NextStage(nextStageData.stageID), () => EventManager.TriggerEvent("StartNextStage"));
             }
@@ -75,10 +78,11 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
 
     public void Open()
     {
-        if (isExitDoor || !gameObject.activeSelf) return;
+        if (isExitDoor || !gameObject.activeSelf || isOpen) return;
 
+        isOpen = true;
         spr.sprite = StageManager.Instance.doorSprDic[dirType.ToString() + "Open"];
-        isOpen = false;
+        isEnter = false;
         objName = IsBlindState ? "???" : Global.AreaTypeToString(nextStageData.areaType);
 
         detectorObj.SetActive(true);
@@ -95,6 +99,7 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
         spr.sprite = StageManager.Instance.doorSprDic[dirType.ToString() + "Close"];
         doorLight.gameObject.SetActive(false);
         detectorObj.SetActive(false);
+        isOpen = false;
     }
 
     public void Pass()
