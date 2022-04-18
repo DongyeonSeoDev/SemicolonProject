@@ -53,6 +53,11 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         if (isTestMode)  //Test
         {
             um.StartLoadingIn();
+            gm.savedData.userInfo.uiActiveDic[KeyAction.SETTING] = true;
+            gm.savedData.userInfo.uiActiveDic[KeyAction.INVENTORY] = true;
+            gm.savedData.userInfo.uiActiveDic[KeyAction.STAT] = true;
+            gm.savedData.userInfo.uiActiveDic[KeyAction.MONSTER_COLLECTION] = true;
+            gm.savedData.userInfo.uiActiveDic[KeyAction.QUIT] = true;
             return;
         }
 

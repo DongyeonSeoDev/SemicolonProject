@@ -9,7 +9,7 @@ public class AcquisitionUI : MonoBehaviour
 
     
 
-    public void OnUIVisible(bool on)
+    public void OnUIVisible(bool on)  //나중에 게임 시작하고 나서 한 번 더 저장된 상태에 따라서 처리를 해야함
     {
         this.on = on;
         cvsg.alpha = on ? 1 : 0;

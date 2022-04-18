@@ -284,6 +284,11 @@ public partial class UIManager : MonoSingleton<UIManager>
         CursorInfo();
         Notice();
         DelayHPFill();
+
+        if (Input.GetKeyDown(KeyCode.F1))
+        {
+            InsertNoticeQueue("msg Test");
+        }
     }
 
     private bool CheckInputAndActive(KeyAction key) => Input.GetKeyDown(KeySetting.keyDict[key]) && gm.savedData.userInfo.uiActiveDic[key];
