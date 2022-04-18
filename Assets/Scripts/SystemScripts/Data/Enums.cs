@@ -33,7 +33,8 @@ public enum UIType
     CHANGEABLEMOBLIST,
     STATEINFO,
     MINIGAME_PICKUP,
-    UIOFFCONFIRM
+    UIOFFCONFIRM,
+    MENU
 }
 
 public enum KeyAction
