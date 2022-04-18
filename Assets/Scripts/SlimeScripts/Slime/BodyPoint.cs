@@ -376,7 +376,10 @@ public class BodyPoint : MonoBehaviour
 
     private void ResetBodyPoint()
     {
-        transform.localPosition = originLocalPosition;
+        if (!isMiddlePoint)
+        {
+            transform.localPosition = originLocalPosition;
+        }
 
         ResetWallBoolean();
 
