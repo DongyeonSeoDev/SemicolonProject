@@ -14,6 +14,9 @@ public class BodyPoint : MonoBehaviour
     private LayerMask whatIsWall;
 
     [SerializeField]
+    private SoundBox whenDrainBodyPointMoveSound = null;
+
+    [SerializeField]
     private float returnToOriginSpeed = 2f;
     [SerializeField]
     private float moveToMiddleSpeed = 1f;
@@ -312,6 +315,8 @@ public class BodyPoint : MonoBehaviour
                 moveToOriginTimer = moveToMiddleTime;
                 farByMiddleTimer = farByMiddleTime;
 
+                DrainEffect();
+
                 return;
             }
 
@@ -346,11 +351,7 @@ public class BodyPoint : MonoBehaviour
     {
         if (farByMiddleTimer % middlePoint.PlayerDrain.PlayerDrainCol.DrainMoveUpdateTIme <= 0.1f)
         {
-            if (!middlePoint.AfterImageSoftBodySpawned)
-            {
-                middlePoint.AfterImageSoftBodySpawned = true;
-                EventManager.TriggerEvent("SpawnAfterImageSoftBody");
-            }
+            DrainEffect();
 
             if (farByMiddleMax && isFarByPlayerByDrain)
             {
@@ -359,9 +360,20 @@ public class BodyPoint : MonoBehaviour
         }
         else
         {
-            middlePoint.AfterImageSoftBodySpawned = false;
+            middlePoint.DrainEffectSpawned = false;
         }
     }
+
+    private void DrainEffect()
+    {
+        if (!middlePoint.DrainEffectSpawned)
+        {
+            middlePoint.DrainEffectSpawned = true;
+            EventManager.TriggerEvent("SpawnAfterImageSoftBody");
+            SoundManager.Instance.PlaySoundBox(whenDrainBodyPointMoveSound);
+        }
+    }
+
     private void ResetBodyPoint()
     {
         transform.localPosition = originLocalPosition;

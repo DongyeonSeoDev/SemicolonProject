@@ -37,7 +37,7 @@ public class MiddlePoint : BodyPoint
 
     [SerializeField]
     private bool afterImageSoftBodySpawned = false;
-    public bool AfterImageSoftBodySpawned
+    public bool DrainEffectSpawned
     {
         get { return afterImageSoftBodySpawned;}
         set { afterImageSoftBodySpawned = value; }  

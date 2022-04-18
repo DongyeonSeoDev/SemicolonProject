@@ -43,6 +43,13 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
         set { currentPlayerBody = value; }
     }
 
+    private bool gameClear = false;
+    public bool GameClear
+    {
+        get { return gameClear; }
+        set { gameClear = value; }
+    }
+
     private string currentBodyId = "origin";
     public string CurrentBodyId
     {
@@ -104,19 +111,24 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
     private void Start()
     {
         EventManager.StartListening("PlayerRespawn", PlayerBodySpawn);
+        EventManager.StartListening("GameClear", WhenGameClear);
 
         cinemachineCameraScript = FindObjectOfType<CinemachineCameraScript>();
     }
     private void OnDisable()
     {
         EventManager.StopListening("PlayerRespawn", PlayerBodySpawn);
+        EventManager.StopListening("GameClear", WhenGameClear);
     }
     private void Update()
     {
         CheckBodyTimer();
         CheckSkillTimer();
     }
-
+    private void WhenGameClear()
+    {
+        gameClear = true;
+    }
     private void PlayerBodySpawn()
     {
         Player.gameObject.SetActive(true);
