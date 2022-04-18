@@ -152,7 +152,7 @@ namespace Enemy
         private Vector3 targetPosition;
         private float angle;
 
-        private float currentTime = 0f;
+        private float lastTime = 0f;
         private float angleChangeTime = 1f;
         private float addAngle = 0;
 
@@ -168,33 +168,27 @@ namespace Enemy
 
             this.positionCheckData = positionCheckData;
 
-            currentTime = 0;
+            lastTime = 0;
         }
 
         public override void Execute()
         {
             if (isLongDistanceAttack)
             {
-                // 이동
-                currentTime -= Time.deltaTime;
-
                 if (positionCheckData != null && positionCheckData.isWall)
                 {
-                    currentTime = 0.5f;
+                    lastTime = Time.time - 0.5f;
                     targetPosition = positionCheckData.oppositeDirectionWall * followSpeed;
-
-                    enemyData.moveVector = positionCheckData.oppositeDirectionWall;
-
                     positionCheckData.isWall = false;
                 }
-                else if (currentTime <= 0)
+                else if (lastTime + angleChangeTime <= Time.time)
                 {
                     targetPosition = enemyObject.transform.position - EnemyManager.Player.transform.position;
 
                     angle = Mathf.Atan2(targetPosition.x, targetPosition.y) * Mathf.Rad2Deg + 90f;
 
                     addAngle = Random.Range(-60f, 60f);
-                    currentTime = angleChangeTime;
+                    lastTime = Time.time;
 
                     angle = (angle + addAngle) % 360;
 
@@ -203,9 +197,6 @@ namespace Enemy
                     targetPosition.z = EnemyManager.Player.transform.position.z;
 
                     targetPosition = (targetPosition - enemyObject.position).normalized;
-
-                    enemyData.moveVector = targetPosition;
-
                     targetPosition *= followSpeed;
                 }
             }
@@ -213,12 +204,10 @@ namespace Enemy
             {
                 // 이동
                 targetPosition = (EnemyManager.Player.transform.position - enemyObject.position).normalized;
-
-                enemyData.moveVector = targetPosition;
-
                 targetPosition *= followSpeed;
             }
 
+            enemyData.moveVector = targetPosition;
             rigid.velocity = targetPosition;
         }
     }
