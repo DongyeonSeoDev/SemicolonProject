@@ -29,6 +29,7 @@ namespace Enemy
         private void Start()
         {
             EventManager.StartListening("PlayerSetActiveFalse", PlayerDeadEvent);
+            EventManager.StartListening("BossDead", PlayerDeadEvent);
         }
 
         public void Spawn(Enemy enemy, EnemyController controller, int power, float attackTime, bool checkTogether)

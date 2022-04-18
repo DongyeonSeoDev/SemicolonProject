@@ -106,11 +106,19 @@ namespace Enemy
             specialAttack3Check.Sort((x, y) => y.CompareTo(x));
 
             EventManager.StartListening("PlayerDead", StopAttack);
+            EventManager.StartListening("BossDead", StopAttack);
         }
 
         protected override void OnDisable()
         {
             bossHPBar.transform.GetChild(0).gameObject.SetActive(false);
+        }
+
+        public override void EnemyDestroy()
+        {
+            base.EnemyDestroy();
+
+            EventManager.TriggerEvent("BossDead");
         }
 
         private Vector2 CheckPosition(Vector2 direction)
@@ -128,6 +136,7 @@ namespace Enemy
         private void OnDestroy()
         {
             EventManager.StopListening("PlayerDead", StopAttack);
+            EventManager.StartListening("BossDead", StopAttack);
         }
 
         protected override void Update()

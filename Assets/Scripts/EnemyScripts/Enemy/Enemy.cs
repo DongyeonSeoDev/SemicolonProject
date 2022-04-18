@@ -220,7 +220,7 @@ namespace Enemy
         }
 
         // 적이 죽었을때 발동되는 코드
-        public void EnemyDestroy()
+        public virtual void EnemyDestroy()
         {
             gameObject.SetActive(false);
 
