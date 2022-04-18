@@ -464,7 +464,7 @@ public class StageManager : MonoSingleton<StageManager>
         Util.DelayFunc(() =>
         {
             EventManager.TriggerEvent("SpawnEnemy", id);
-        }, 1, this);
+        }, 1f, this);
         currentStageMonsterBundleOrder++;
     }
 

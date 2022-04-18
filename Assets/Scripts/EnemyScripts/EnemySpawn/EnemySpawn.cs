@@ -1,8 +1,17 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace Enemy
 {
+    [System.Serializable]
+    public struct EnemySpawnEffectPosition
+    {
+        public Type enemyType;
+        public Vector2 spawnPosition;
+        public Vector3 spawnScale;
+    }
+
     public class EnemySpawn : MonoSingleton<EnemySpawn>
     {
 #if UNITY_EDITOR
@@ -10,11 +19,19 @@ namespace Enemy
         public Queue<EnemySpawnData> addSpawnDataQueue = new Queue<EnemySpawnData>();
         public Queue<EnemySpawnData> removeSpawnDataQueue = new Queue<EnemySpawnData>();
 #endif
+
+        public List<EnemySpawnEffectPosition> effectPositionList = new List<EnemySpawnEffectPosition>();
+
         public Dictionary<string, List<Enemy>> enemyDictionary = new Dictionary<string, List<Enemy>>();
+
+         private Dictionary<Type, Vector2> enemySpawnEffectPositionDic = new Dictionary<Type, Vector2>();
+         private Dictionary<Type, Vector3> enemySpawnEffectScaleDic = new Dictionary<Type, Vector3>();
 
         private void Start()
         {
             enemyDictionary = EnemyManager.Instance.enemyDictionary;
+            enemySpawnEffectPositionDic = effectPositionList.ToDictionary(x => x.enemyType, x => x.spawnPosition);
+            enemySpawnEffectScaleDic = effectPositionList.ToDictionary(x => x.enemyType, x => x.spawnScale);
 
             PlayerRespawnEvent();
 
@@ -38,9 +55,15 @@ namespace Enemy
 
             for (int i = 0; i < CSVEnemySpawn.Instance.enemySpawnDatas[stageId].Count; i++)
             {
-                EnemyPoolData effect = EnemyPoolManager.Instance.GetPoolObject(Type.EnemySpawnEffect, CSVEnemySpawn.Instance.enemySpawnDatas[stageId][i].position);
+                EnemySpawnData data = CSVEnemySpawn.Instance.enemySpawnDatas[stageId][i];
 
-                effect.GetComponent<EnemySpawnEffect>().Play();
+                if (enemySpawnEffectPositionDic.ContainsKey(data.enemyId))
+                {
+                    EnemyPoolData effect = EnemyPoolManager.Instance.GetPoolObject(Type.EnemySpawnEffect, (Vector2)data.position + enemySpawnEffectPositionDic[data.enemyId]);
+                    effect.transform.localScale = enemySpawnEffectScaleDic[data.enemyId];
+
+                    effect.GetComponent<EnemySpawnEffect>().Play();
+                }
             }
 
             Util.DelayFunc(() =>
@@ -61,14 +84,16 @@ namespace Enemy
                 }
 
                 EnemyManager.Instance.enemyCount = CSVEnemySpawn.Instance.enemySpawnDatas[stageId].Count;  //Set Enemy Count
-
-                for (int i = 0; i < enemyDictionary[stageId].Count; i++)
-                {
-                    enemyDictionary[stageId][i].MoveEnemy();
-                }
-
                 EventManager.TriggerEvent("EnemySpawnAfter");
-            }, 4f);
+
+                Util.DelayFunc(() => 
+                {
+                    for (int i = 0; i < enemyDictionary[stageId].Count; i++)
+                    {
+                        enemyDictionary[stageId][i].MoveEnemy();
+                    }
+                }, 1f);
+            }, 2.5f);
         }
     }
 }
