@@ -117,6 +117,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         TutorialUpdate();
     }
 
+
     private void TutorialUpdate()
     {
         int i;

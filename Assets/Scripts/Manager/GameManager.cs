@@ -106,9 +106,8 @@ public partial class GameManager : MonoSingleton<GameManager>
             if (!saveData.tutorialInfo.isEnded)
             {
                 saveData.userInfo.uiActiveDic = KeySetting.InitKeyActionActive;
-                Debug.Log("Test2");
             }
-            Debug.Log(saveData.userInfo.uiActiveDic[KeyAction.SETTING]);
+            
         }
         //슬라임에게 스탯 데이터 넣기
         //옵션 설정 내용 넣기 
@@ -311,9 +310,9 @@ public partial class GameManager : MonoSingleton<GameManager>
         Application.Quit();
     }
 
+  
 
-
-#region OnApplication
+    #region OnApplication
     private void OnApplicationQuit()
     {
         Save();

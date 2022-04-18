@@ -57,7 +57,7 @@ public static class KeySetting
             keyActive[KeyAction.STAT] = false;
             keyActive[KeyAction.MONSTER_COLLECTION] = false;
             keyActive[KeyAction.QUIT] = false;
-            Debug.Log("Test3");
+            
             return keyActive;
         }
     }

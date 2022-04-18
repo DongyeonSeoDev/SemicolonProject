@@ -23,7 +23,7 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
     public GameObject detectorObj;
     public Light2D doorLight;
 
-    private bool isOpen = false;
+    private bool isOpen = false;  //이 문을 통해서 지나갈 수 있는 상태가 되었는가
     private bool isEnter; //문으로 입장할 수 있는 상태가 되어서 상호작용 키를 눌렀을 때 true로
     private bool isExitDoor; //이 문이 입구였는가
 
@@ -81,8 +81,8 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
         if (isExitDoor || !gameObject.activeSelf || isOpen) return;
 
         isOpen = true;
-        spr.sprite = StageManager.Instance.doorSprDic[dirType.ToString() + "Open"];
         isEnter = false;
+        spr.sprite = StageManager.Instance.doorSprDic[dirType.ToString() + "Open"];
         objName = IsBlindState ? "???" : Global.AreaTypeToString(nextStageData.areaType);
 
         detectorObj.SetActive(true);
@@ -156,6 +156,11 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
     private void OnEnable()
     {
         hp = maxHp;
+    }
+
+    private void OnDisable()
+    {
+        isOpen = false;
     }
 
     public void GetDamage(int damage)
