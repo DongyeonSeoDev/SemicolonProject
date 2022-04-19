@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Enemy
 {
@@ -57,10 +56,6 @@ namespace Enemy
         protected override void OnEnable()
         {
             bossHPBar = FindObjectOfType<BossHPBar>();
-            bossHPBar.transform.GetChild(0).gameObject.SetActive(true);
-            hpBarFillImage = bossHPBar.transform.GetChild(0).GetChild(0).GetComponent<Image>();
-            hpBarFillImage.fillAmount = 1;
-
             base.OnEnable();
 
             enemyData.attackDelay = 1.8f;
@@ -107,18 +102,34 @@ namespace Enemy
 
             EventManager.StartListening("PlayerDead", StopAttack);
             EventManager.StartListening("BossDead", StopAttack);
+            EventManager.StartListening("EnemySpawnAfter", ActiveHPBar);
         }
 
         protected override void OnDisable()
         {
-            bossHPBar.transform.GetChild(0).gameObject.SetActive(false);
+            base.OnDisable();
+
+            EventManager.StopListening("PlayerDead", StopAttack);
+            EventManager.StopListening("BossDead", StopAttack);
+            EventManager.StopListening("EnemySpawnAfter", ActiveHPBar);
         }
 
         public override void EnemyDestroy()
         {
-            base.EnemyDestroy();
-
             EventManager.TriggerEvent("BossDead");
+
+            base.EnemyDestroy();
+        }
+
+        private void ActiveHPBar()
+        {
+            bossHPBar.SetActiveHPBar(true);
+            // 트윈 하나 만들고 체력 점점 차는거 구현하기
+        }
+
+        protected override void SetHP()
+        {
+            bossHPBar.SetFill((float)enemyData.hp / enemyData.maxHP);
         }
 
         private Vector2 CheckPosition(Vector2 direction)
@@ -131,12 +142,6 @@ namespace Enemy
             }
 
             return hit.point;
-        }
-
-        private void OnDestroy()
-        {
-            EventManager.StopListening("PlayerDead", StopAttack);
-            EventManager.StartListening("BossDead", StopAttack);
         }
 
         protected override void Update()
@@ -163,6 +168,8 @@ namespace Enemy
         public void StopAttack() // EventManager에서 실행 - 적 공격 정지
         {
             StopAllCoroutines();
+
+            bossHPBar.SetActiveHPBar(false);
         }
 
         public void AttackReady() // 애니메이션에서 실행 - 공격하기전 이동

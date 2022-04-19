@@ -311,6 +311,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee15d7cc991dad041960b2004ada5015, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hpBarRectTransform: {fileID: 4680335053009425283}
+  fillHpBar: {fileID: 3672270168091823654}
+  setActiveMoveValue: {x: 0, y: 50}
+  hideColor: {r: 1, g: 1, b: 1, a: 0}
+  setActiveMoveTimeValue: 0.5
 --- !u!1 &6423039109439716261
 GameObject:
   m_ObjectHideFlags: 0
@@ -765,13 +770,14 @@ GameObject:
   - component: {fileID: 4680335053009425283}
   - component: {fileID: 1523225622663461887}
   - component: {fileID: 8954205035474281166}
+  - component: {fileID: 1490325110}
   m_Layer: 0
   m_Name: HPBackground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4680335053009425283
 RectTransform:
   m_ObjectHideFlags: 0
@@ -831,3 +837,15 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 2
+--- !u!225 &1490325110
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8214984185061587620}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0

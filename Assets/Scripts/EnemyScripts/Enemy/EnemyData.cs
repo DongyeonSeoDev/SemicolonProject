@@ -37,7 +37,6 @@ namespace Enemy
         public Animator enemyAnimator;
         public SpriteRenderer enemySpriteRenderer;
         public Rigidbody2D enemyRigidbody2D;
-        public Image hpBarFillImage;
 
         public EnemyCommand enemyMoveCommand;
         public EnemyCommand enemySpriteRotateCommand;
