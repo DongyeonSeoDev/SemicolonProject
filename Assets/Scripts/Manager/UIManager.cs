@@ -41,6 +41,8 @@ public partial class UIManager : MonoSingleton<UIManager>
     public Text itemAbilExplanation;
     public TextMeshProUGUI itemNameTmp;
     public Button itemUseBtn, itemJunkBtn;
+
+    public RectTransform selectedImg;
     #endregion
 
     #region CombinationFood
@@ -290,11 +292,6 @@ public partial class UIManager : MonoSingleton<UIManager>
         CursorInfo();
         Notice();
         DelayHPFill();
-
-        if (Input.GetKeyDown(KeyCode.F1))
-        {
-            InsertNoticeQueue("msg Test");
-        }
     }
 
     private bool CheckInputAndActive(KeyAction key) => Input.GetKeyDown(KeySetting.keyDict[key]) && gm.savedData.userInfo.uiActiveDic[key];
@@ -330,6 +327,13 @@ public partial class UIManager : MonoSingleton<UIManager>
         else if(CheckInputAndActive(KeyAction.QUIT))
         {
             OnUIInteract(UIType.QUIT);
+        }
+        else if(Input.GetKeyDown(KeyCode.E) && Util.IsActiveGameUI(UIType.ITEM_DETAIL))
+        {
+            if(selectedItemSlot)
+            {
+                OnClickItemUseBtn();
+            }
         }
 
 #if UNITY_EDITOR
@@ -437,8 +441,6 @@ public partial class UIManager : MonoSingleton<UIManager>
                     selectedMenuType = type;
                 }*/
             }
-
-            return false;
         }
 
         switch (type)
@@ -538,12 +540,14 @@ public partial class UIManager : MonoSingleton<UIManager>
                 return;
             case UIType.CHANGEABLEMOBLIST:
                 return;
+            case UIType.ITEM_DETAIL:
+                return;
         }
         if (add) activeUIList.Add(ui);
         else activeUIList.Remove(ui);
     }
 
-    private void ActiveSpecialProcess(UIType type) //UI 열릴 때의 특별한 처리
+    public void ActiveSpecialProcess(UIType type) //UI 열릴 때의 특별한 처리
     {
         switch (type)
         {
@@ -561,7 +565,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         }
     }
 
-    private void InActiveSpecialProcess(UIType type)//UI 닫힐 때의 특별한 처리
+    public void InActiveSpecialProcess(UIType type)//UI 닫힐 때의 특별한 처리
     {
         switch (type)
         {
@@ -575,9 +579,10 @@ public partial class UIManager : MonoSingleton<UIManager>
                 selectedItemId = string.Empty;
                 if (selectedItemSlot)
                 {
-                    selectedItemSlot.outline.DOKill();
-                    selectedItemSlot.outline.enabled = false;
+                    //selectedItemSlot.outline.DOKill();
+                    //selectedItemSlot.outline.enabled = false;
                     selectedItemSlot = null;
+                    selectedImg.gameObject.SetActive(false);
                 }
                 break;
             /*case UIType.SETTING:
@@ -681,11 +686,11 @@ public partial class UIManager : MonoSingleton<UIManager>
     {
         string itemID = slot.itemInfo.id;
 
-        if (selectedItemSlot)
+        /*if (selectedItemSlot)
         {
             selectedItemSlot.outline.DOKill();
             selectedItemSlot.outline.enabled = false;
-        }
+        }*/
         selectedItemSlot = slot;
 
         if (selectedItemId == itemID) return;
@@ -703,8 +708,16 @@ public partial class UIManager : MonoSingleton<UIManager>
 
         itemAbilExplanation.text = data.abilExplanation;
 
+        selectedImg.gameObject.SetActive(true);
+        selectedImg.transform.SetParent(slot.root.transform);
+        selectedImg.transform.localPosition = Vector3.zero;
+        selectedImg.transform.SetAsLastSibling();
+        selectedImg.transform.localScale = Vector3.one; //왜인지 옮길 수록 스케일이 작아져서 원래대로 되돌림
+
         //itemUseBtn.gameObject.SetActive(data.itemType != ItemType.ETC);
-        if (data.itemType == ItemType.ETC && ((Ingredient)data).isUseable) itemUseBtn.gameObject.SetActive(true);
+        //if (data.itemType == ItemType.ETC && ((Ingredient)data).isUseable) itemUseBtn.gameObject.SetActive(true);
+
+        
     }
 
     public void UpdateInventoryItemCount(string id)
@@ -877,13 +890,19 @@ public partial class UIManager : MonoSingleton<UIManager>
         OnUIInteractSetActive(UIType.PRODUCTION_PANEL, false, true);  //요리 제작창이 켜져있으면 꺼줌
     }
 
-    public void OnClickItemUseBtn()
+    public void OnClickItemUseBtn()  //아직 마석 장착에 대한 로직은 없음
     {
-        gm.GetItemData(selectedItemId).Use();
+        ItemSO data = gm.GetItemData(selectedItemId);
+        if ( (data.itemType == ItemType.ETC && !((Ingredient)data).isUseable)) return;
+
+        data.Use();
         Inventory.Instance.RemoveItem(selectedItemId, 1);
 
         if (selectedItemSlot.itemInfo == null)
+        {
             OnUIInteract(UIType.ITEM_DETAIL, true);
+            selectedImg.gameObject.SetActive(false);
+        }
 
         Global.ActionTrigger("ItemUse", selectedItemId);
     }

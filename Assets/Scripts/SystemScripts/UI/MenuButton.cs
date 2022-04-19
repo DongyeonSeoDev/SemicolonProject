@@ -21,8 +21,8 @@ public class MenuButton : UITransition
         {
             img = GetComponent<Image>();
         }
-        childImg = transform.GetChild(0).GetComponent<Image>(); 
-        originColor = Color.clear;
+        childImg = transform.GetChild(0).GetComponent<Image>();
+        originColor = Color.white.SetColorAlpha(0);
     }
 
     public void OnSelected(bool onClick)

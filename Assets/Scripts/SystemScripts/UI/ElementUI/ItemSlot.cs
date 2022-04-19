@@ -38,7 +38,7 @@ public class ItemSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     public Image itemImg;
     public Text itemCountTxt;
     public Button button;
-    public Outline outline;
+    //public Outline outline;
     public CanvasGroup cvsg;
 
     public NameInfoFollowingCursor nifc;
@@ -50,10 +50,10 @@ public class ItemSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         button.onClick.AddListener(() => 
         {
             UIManager.Instance.DetailItemSlot(this);
-            outline.enabled = true;
-            outline.DOColor(new Color(0,1,1,0.3f), 2.5f).SetLoops(-1,LoopType.Yoyo).SetUpdate(true);
+            //outline.enabled = true;
+            //outline.DOColor(new Color(0,1,1,0.3f), 2.5f).SetLoops(-1,LoopType.Yoyo).SetUpdate(true);
         });
-        Global.ItemSlotOutlineColor = outline.effectColor;
+       // Global.ItemSlotOutlineColor = outline.effectColor;
     }
 
     private void Start()

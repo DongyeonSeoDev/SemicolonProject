@@ -1,6 +1,6 @@
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.UI;
+using Water;
 
 //나중에 전체적으로 코드 리펙토링 필요함
 public class GameUI : MonoBehaviour
@@ -258,6 +258,20 @@ public class GameUI : MonoBehaviour
             default:
                 //DOScale(false);
                 TweeningData.DOScale(gameUIFields, false);
+                break;
+        }
+    }
+    
+    private void OnDisable()
+    {
+        switch(_UItype)
+        {
+            case UIType.INVENTORY:
+                UIManager.Instance.gameUIList[(int)UIType.ITEM_DETAIL].gameObject.SetActive(false);
+                UIManager.Instance.selectedImg.gameObject.SetActive(false);
+                break;
+            case UIType.ITEM_DETAIL:
+                UIManager.Instance.InActiveSpecialProcess(UIType.ITEM_DETAIL);
                 break;
         }
     }

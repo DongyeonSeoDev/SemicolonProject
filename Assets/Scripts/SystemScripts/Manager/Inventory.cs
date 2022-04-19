@@ -10,6 +10,8 @@ public class Inventory : MonoSingleton<Inventory>
     public Transform itemSlotParent;
     public GameObject itemSlotPrefab;
 
+   
+
     [SerializeField] private int maxItemSlotCount = 20;
 
     #region Drag
