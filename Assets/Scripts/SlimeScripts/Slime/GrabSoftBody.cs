@@ -102,8 +102,6 @@ public class GrabSoftBody : SoftBody
             return;
         }
 
-        Debug.Log(leftestLocalPos.x);
-
         points[0].transform.localPosition = new Vector2(leftestLocalPos.x, downestLocalPos.y);
         points[1].transform.localPosition = new Vector2(leftestLocalPos.x + gapAboutLefstestToRightest / 10f,
             downestLocalPos.y + gapAboutUpestToDownest / 4f);

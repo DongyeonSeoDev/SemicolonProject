@@ -918,6 +918,14 @@ PrefabInstance:
       propertyPath: m_LocalAABB.m_Extent.y
       value: 1.307464
       objectReference: {fileID: 0}
+    - target: {fileID: 79265675134852617, guid: 9b97e39c54eac0442be1f0fc9e71b478, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b97fe925bea18ce4881ac3ee5a6b21c5, type: 2}
+    - target: {fileID: 79265675134852617, guid: 9b97e39c54eac0442be1f0fc9e71b478, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 93f921ada5140ba4f91393270d7f0fb5, type: 2}
     - target: {fileID: 2719926800889116082, guid: 9b97e39c54eac0442be1f0fc9e71b478, type: 3}
       propertyPath: m_RootOrder
       value: 8
