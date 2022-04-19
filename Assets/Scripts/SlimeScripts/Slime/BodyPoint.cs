@@ -195,7 +195,14 @@ public class BodyPoint : MonoBehaviour
                 return;
             }
 
-            transform.localPosition = Vector2.Lerp(transform.localPosition, originLocalPosition, Time.deltaTime * returnToOriginSpeed);
+            if (Vector2.Distance(transform.localPosition, originLocalPosition) > 0.01f)
+            {
+                transform.localPosition = Vector2.Lerp(transform.localPosition, originLocalPosition, Time.deltaTime * returnToOriginSpeed);
+            }
+            else
+            {
+                transform.localPosition = originLocalPosition;
+            }
         }
     }
     private void MoveToOriginASec()
@@ -211,6 +218,8 @@ public class BodyPoint : MonoBehaviour
             {
                 isMoveToOriginASec = false;
                 moveToOriginTimer = 0f;
+
+                transform.localPosition = originLocalPosition;
             }
         }
     }
