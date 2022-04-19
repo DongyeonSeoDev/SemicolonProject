@@ -345,8 +345,9 @@ public class BodyPoint : MonoBehaviour
     {
         Vector3 dir = (transform.position - middlePoint.transform.position).normalized;
         float distance = Vector2.Distance(transform.position, middlePoint.transform.position);
+        //float distance = Vector2.Distance(transform.localPosition, originLocalPosition);
 
-        if(distance < middlePoint.MaxDisWithBodyPoints)
+        if (distance < middlePoint.MaxDisWithBodyPoints)
         {
             transform.position = Vector2.Lerp(transform.position, transform.position + dir * farByMiddleSpeed  * farByMiddleTime, farByMiddleTimer / farByMiddleTime);
         }
