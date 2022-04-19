@@ -230,7 +230,6 @@ namespace Enemy
         { 
             if ((transform.position.x - limitMinPosition.x) <= 0.1f)
             {
-                sr.enabled = false;
                 return new BossSpecialAttack1Status(enemyData, this);
             }
 

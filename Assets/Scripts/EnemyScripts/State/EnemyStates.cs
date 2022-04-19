@@ -135,13 +135,14 @@ namespace Enemy
         private RushAttackRange[] attackRangeArray;
         private Vector2[] bossPositionArray;
 
-        private int moveCount = 0;
+        private int moveCount = 3;
         private int enemyCount = 3;
 
         private float attackDistance = 5f;
 
         private bool isEnd = false;
         private bool isMove = false;
+        private bool isRightAttack = true;
 
         public BossSpecialAttack1Status(EnemyData enemyData, Boss1SkeletonKing boss) : base(eState.ATTACK, enemyData) => this.boss = boss;
 
@@ -154,33 +155,18 @@ namespace Enemy
             bossPositionArray = new Vector2[enemyCount];
 
             // 변수 초기화
-            moveCount = 0;
             isEnd = false;
-
-            // 애니메이션 설정
-            enemyData.enemyAnimator.ResetTrigger(boss.hashSpecialAttack1);
-            enemyData.enemyAnimator.SetTrigger(boss.hashSpecialAttack1End);
+            isRightAttack = true;
 
             BossSpecialAttack1Position();
             GetAttackRangePoolObject();
+            SetBossAttack(false);
 
             Util.DelayFunc(() =>
             {
                 AttackObjectReset();
-
-                // 보스 보이게 하고 움직이는 방향 설정
-                enemyData.enemySpriteRenderer.enabled = true;
-                enemyData.moveVector = Vector2.right;
-
+                SetBossAttack(true);
                 SetBossCloneData();
-
-                // 방향 바꾸고 공격 시작
-                enemyData.enemySpriteRotateCommand.Execute();
-                isMove = true;
-
-                // 애니메이션 설정
-                enemyData.enemyAnimator.ResetTrigger(boss.hashSpecialAttack1End);
-                enemyData.enemyAnimator.SetTrigger(boss.hashSpecialAttack1);
             }, 2f);
 
             base.Start();
@@ -200,11 +186,9 @@ namespace Enemy
                 }
 
                 // 끝에 도달했는지 확인
-                if ((moveCount % 2 == 0 && enemyData.enemyObject.transform.position.x >= boss.limitMaxPosition.x) || (moveCount % 2 == 1 && enemyData.enemyObject.transform.position.x <= boss.limitMinPosition.x))
+                if (isRightAttack ? enemyData.enemyObject.transform.position.x >= boss.limitMaxPosition.x : enemyData.enemyObject.transform.position.x <= boss.limitMinPosition.x)
                 {
-                    // 움직임 멈추고 보스를 숨김
-                    isMove = false;
-                    enemyData.enemySpriteRenderer.enabled = false;
+                    SetBossAttack(false);
 
                     // 보스 분신과 공격 범위를 제거
                     for (int i = 0; i < enemyCount - 1; i++)
@@ -214,74 +198,37 @@ namespace Enemy
                     }
 
                     attackRangeArray[enemyCount - 1].gameObject.SetActive(false);
-
-                    // 애니메이션 리셋
-                    enemyData.enemyAnimator.ResetTrigger(boss.hashSpecialAttack1);
-                    enemyData.enemyAnimator.SetTrigger(boss.hashSpecialAttack1End);
                 }
 
                 if (!isMove)
                 {
                     Util.DelayFunc(() =>
                     {
-                        // 움직임 횟수 추가
-                        moveCount++;
+                        // 움직임 횟수 감소
+                        moveCount--;
 
-                        AttackObjectReset();
+                        // 방향 변경
+                        isRightAttack = !isRightAttack;
 
-                        if (moveCount == 1)
+                        if (moveCount <= 0) // 종료
                         {
-                            BossSpecialAttack1Position();
-                            GetAttackRangePoolObject();
-
-                            Util.DelayFunc(() => 
-                            {
-                                // 왼쪽 이동
-                                enemyData.moveVector = Vector2.left;
-
-                                SetBossCloneData();
-
-                                // 움직임
-                                isMove = true;
-                                enemyData.enemySpriteRenderer.enabled = true;
-                                enemyData.enemySpriteRotateCommand.Execute();
-
-                                enemyData.enemyAnimator.ResetTrigger(boss.hashSpecialAttack1End);
-                                enemyData.enemyAnimator.SetTrigger(boss.hashSpecialAttack1);
-                            }, 2f);
-                        }
-                        else if (moveCount == 2)
-                        {
-                            BossSpecialAttack1Position();
-                            GetAttackRangePoolObject();
-
-                            Util.DelayFunc(() => 
-                            {
-                                // 오른쪽 이동
-                                enemyData.moveVector = Vector2.right;
-
-                                SetBossCloneData();
-
-                                // 움직임
-                                isMove = true;
-                                enemyData.enemySpriteRenderer.enabled = true;
-                                enemyData.enemySpriteRotateCommand.Execute();
-
-                                enemyData.enemyAnimator.ResetTrigger(boss.hashSpecialAttack1End);
-                                enemyData.enemyAnimator.SetTrigger(boss.hashSpecialAttack1);
-                            }, 2f);                            
-                        }
-                        else
-                        {
-                            // 종료
+                            SetBossAttack(true);
                             isEnd = true;
-                            isMove = true;
-                            enemyData.enemySpriteRenderer.enabled = true;
-                            enemyData.enemySpriteRotateCommand.Execute();
 
-                            enemyData.enemyAnimator.ResetTrigger(boss.hashSpecialAttack1End);
-                            enemyData.enemyAnimator.SetTrigger(boss.hashSpecialAttack1);
+                            base.Update();
+
+                            return;
                         }
+
+                        BossSpecialAttack1Position();
+                        GetAttackRangePoolObject();
+
+                        Util.DelayFunc(() =>
+                        {
+                            AttackObjectReset();
+                            SetBossAttack(true);
+                            SetBossCloneData();
+                        }, 2f);
                     }, 2f);
                 }
             }
@@ -342,7 +289,7 @@ namespace Enemy
         }
         
         /// <summary>
-        /// 공격 위치를 보여주는 오브젝트 풀을 사용해서 소환
+        /// 공격 위치를 보여주는 오브젝트를 풀링을 사용해서 소환
         /// </summary>
         private void GetAttackRangePoolObject()
         {
@@ -376,6 +323,24 @@ namespace Enemy
             for (int i = 0; i < boss.enemyAttackCheck.Length; i++)
             {
                 boss.enemyAttackCheck[i].AttackObjectReset();
+            }
+        }
+
+        /// <summary>
+        /// 보스 공격 설정
+        /// </summary>
+        private void SetBossAttack(bool isAttack)
+        {
+            isMove = isAttack;
+            enemyData.enemySpriteRenderer.enabled = isAttack;
+
+            enemyData.enemyAnimator.ResetTrigger(isAttack ? boss.hashSpecialAttack1End : boss.hashSpecialAttack1);
+            enemyData.enemyAnimator.SetTrigger(isAttack ? boss.hashSpecialAttack1 : boss.hashSpecialAttack1End);
+
+            if (isAttack)
+            {
+                enemyData.moveVector = isRightAttack ? Vector2.right : Vector2.left;
+                enemyData.enemySpriteRotateCommand.Execute();
             }
         }
     }
