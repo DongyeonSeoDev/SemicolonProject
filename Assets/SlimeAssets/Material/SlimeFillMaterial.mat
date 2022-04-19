@@ -39,7 +39,7 @@ Material:
     - REFRACTION: 1
     - _RefractionStrength: 0
     m_Colors:
-    - _Color: {r: 0.26367554, g: 0.6226415, b: 0.014684939, a: 0.78431374}
+    - _Color: {r: 0.26367554, g: 0.6226415, b: 0.014684939, a: 0.5882353}
     - _NormalsMovement: {r: 0, g: 0, b: 0, a: 0}
     - _WaterColorUnderwater: {r: 0.11349611, g: 0.5566038, b: 0.08664116, a: 0.72156864}
     - _WaveDirections: {r: 0.001, g: 0, b: 0, a: 0}

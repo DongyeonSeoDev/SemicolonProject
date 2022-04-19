@@ -69,7 +69,7 @@ public class PlayerDrain : PlayerSkill
         if (canDrain)
         {
             player.PlayerState.IsDrain = true;
-            player.PlayerOrderInLayerController.SetOrderInLayer("Player", 5);
+            player.PlayerOrderInLayerController.SetOrderInLayer("Object", 0);
 
             SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = SlimeGameManager.Instance.SkillDelays[skillIdx];
 

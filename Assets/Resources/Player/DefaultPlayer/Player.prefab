@@ -294,6 +294,14 @@ PrefabInstance:
       propertyPath: bodySlapLine
       value: 
       objectReference: {fileID: 8985080968744771313}
+    - target: {fileID: 315540450896467828, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_Size.x
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 315540450896467828, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: m_Size.y
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 804748403637607259, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.315
