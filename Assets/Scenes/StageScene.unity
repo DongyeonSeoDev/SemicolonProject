@@ -1724,6 +1724,14 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1106577497016472002, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1106577497016472002, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1200683675745839753, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1844,6 +1852,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1868862230406660676, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: transitionColor.a
+      value: 0.19607843
+      objectReference: {fileID: 0}
+    - target: {fileID: 1868862230406660676, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: transitionColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1868862230406660676, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: transitionColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1868862230406660676, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: transitionColor.r
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2360580810573813332, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1866,6 +1890,42 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2360580810573813332, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2381996421970669552, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: transitionColor.a
+      value: 0.19607843
+      objectReference: {fileID: 0}
+    - target: {fileID: 2381996421970669552, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: transitionColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2381996421970669552, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: transitionColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2381996421970669552, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: transitionColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2381996423064206914, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: transitionColor.a
+      value: 0.19607843
+      objectReference: {fileID: 0}
+    - target: {fileID: 2381996423064206914, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: transitionColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2381996423064206914, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: transitionColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2381996423064206914, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: transitionColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2390941079613911153, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2856426457551908811, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
@@ -1956,6 +2016,34 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4778635888897956856, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: transitionColor.a
+      value: 0.19607843
+      objectReference: {fileID: 0}
+    - target: {fileID: 4778635888897956856, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: transitionColor.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4778635888897956856, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: transitionColor.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4778635888897956856, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: transitionColor.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933791086857666317, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4933791086857666317, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5619909614560612146, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5950706611391763827, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: isTestMode
       value: 1
@@ -1963,6 +2051,10 @@ PrefabInstance:
     - target: {fileID: 5950706611391763837, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7214738904770714203, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7257250901399945710, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_SizeDelta.x
@@ -2084,7 +2176,11 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 600712851006048434, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+    - {fileID: 3510323138856674554, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+    - {fileID: 6046224809409433838, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+    - {fileID: 3510323137831826764, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
 --- !u!1 &1614698495
 GameObject:

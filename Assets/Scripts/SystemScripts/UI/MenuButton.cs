@@ -1,20 +1,69 @@
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
-public class MenuButton : MonoBehaviour
+public class MenuButton : UITransition
 {
-    private UIColor colorTr;
-    private Image img; 
+    public Color transitionColor;
+    private Color originColor;
+
+    private Image img;
+    private Image childImg;
+
+    public UIType uiType;
+
+    public bool Selected { get; private set; }
+
+    protected override void Awake()
+    {
+        base.Awake();
+        if (img == null)
+        {
+            img = GetComponent<Image>();
+        }
+        childImg = transform.GetChild(0).GetComponent<Image>(); 
+        originColor = Color.clear;
+    }
 
     public void OnSelected(bool onClick)
     {
-        if(colorTr == null)
+        if(img == null)
         {
-            colorTr = GetComponent<UIColor>();
             img = GetComponent<Image>();    
         }
 
-        colorTr.transitionEnable = !onClick;
-        img.color.SetColorAlpha(onClick ? 100 : 0);
+        if (!onClick)
+        {
+            UIManager.Instance.gameUIList[(int)uiType].gameObject.SetActive(false);
+            img.color = img.color.SetColorAlpha(0f);
+            childImg.transform.localScale = Vector3.one;
+        }
+        else
+        {
+            img.DOKill();
+            childImg.DOKill();
+            childImg.transform.localScale = SVector3.onePointTwo;
+            img.color = img.color.SetColorAlpha(100f);
+        }
+
+        transitionEnable = !onClick;
+        Selected = onClick;
+    }
+
+    public void OnClickBtn()
+    {
+        if (Selected) return;
+
+        //UIManager.Instance.OnUIInteract(uiType);
+        UIManager.Instance.OnClickMenuBtn(uiType);
+    }
+
+    public override void Transition(bool on)
+    {
+        if (transitionEnable)
+        {
+            img.DOColor(on ? transitionColor : originColor, 0.3f).SetUpdate(true);
+            childImg.transform.DOScale(on ? SVector3.onePointTwo : Vector3.one, 0.2f).SetUpdate(true);
+        }
     }
 }

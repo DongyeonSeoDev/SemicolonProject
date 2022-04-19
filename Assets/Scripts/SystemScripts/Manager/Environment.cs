@@ -61,12 +61,12 @@ public class Environment : MonoSingleton<Environment>
         TimeManager.timePauseAction += () =>
         {
             if (mainLight.intensity > 0f)
-                mainLight.DOIntensity(Mathf.Clamp(mainLight.intensity - 0.3f, 0f, 10f), 0.5f, true);
+                mainLight.DOIntensity(0.7f, 0.3f, true);
         };
         TimeManager.timeResumeAction += () =>
         {
             if (mainLight.intensity > 0f)
-                mainLight.DOIntensity(Mathf.Clamp(mainLight.intensity + 0.3f, 0f, 10f), 0.5f, true);
+                mainLight.DOIntensity(1f, 0.3f, true);
         };
 
         EventManager.StartListening("ChangeBody", (str, b) =>

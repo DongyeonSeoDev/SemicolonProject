@@ -58,9 +58,10 @@ public class GameUI : MonoBehaviour
                 break;
 
             case UIType.INVENTORY:
-                cvsg.alpha = 0f;
-                cvsg.DOFade(1, Global.fullAlphaTransitionTime04).SetUpdate(true).OnComplete(() => UpdateUIStack());
-                childGameUI.ActiveTransition();
+                //cvsg.alpha = 0f;
+                //cvsg.DOFade(1, Global.fullAlphaTransitionTime04).SetUpdate(true).OnComplete(() => UpdateUIStack());
+                //childGameUI.ActiveTransition();
+                MenuPanel(true);
                 break;
 
             case UIType.FOOD_DETAIL:
@@ -113,7 +114,16 @@ public class GameUI : MonoBehaviour
 
             case UIType.SETTING:
                 //DOFadeAndDissolve(true);
-                TweeningData.DOFadeAndDissolve(gameUIFields, true);
+                //TweeningData.DOFadeAndDissolve(gameUIFields, true);
+                MenuPanel(true);
+                break;
+
+            case UIType.STAT:
+                MenuPanel(true);
+                break;
+
+            case UIType.MONSTER_COLLECTION:
+                MenuPanel(true);
                 break;
 
             case UIType.MONSTERINFO_DETAIL_STAT:
@@ -168,8 +178,9 @@ public class GameUI : MonoBehaviour
                 break;
 
             case UIType.INVENTORY:
-                childGameUI.InActiveTransition();
-                cvsg.DOFade(0, Global.fullAlphaTransitionTime04).SetUpdate(true).OnComplete(() => UpdateUIStack(false));
+                MenuPanel(false);
+                //childGameUI.InActiveTransition();
+                //cvsg.DOFade(0, Global.fullAlphaTransitionTime04).SetUpdate(true).OnComplete(() => UpdateUIStack(false));
                 break;
 
             case UIType.FOOD_DETAIL:
@@ -198,8 +209,17 @@ public class GameUI : MonoBehaviour
                 break;
 
             case UIType.SETTING:
+                MenuPanel(false);
                 //DOFadeAndDissolve(false);
-                TweeningData.DOFadeAndDissolve(gameUIFields, false);
+                //TweeningData.DOFadeAndDissolve(gameUIFields, false);
+                break;
+
+            case UIType.MONSTER_COLLECTION:
+                MenuPanel(false);
+                break;
+
+            case UIType.STAT:
+                MenuPanel(false);
                 break;
 
             case UIType.KEYSETTING:
@@ -245,6 +265,22 @@ public class GameUI : MonoBehaviour
     public void UpdateUIStack(bool add = true)
     {
         UIManager.Instance.UpdateUIStack(this, add);
+    }
+
+    public void MenuPanel(bool on)
+    {
+        if(on)
+        {
+            rectTrm.anchoredPosition = originPos - new Vector3(100,0);
+            cvsg.alpha = 0.2f;
+
+            rectTrm.DOAnchorPos(originPos, 0.3f).SetUpdate(true);
+            cvsg.DOFade(1, 0.33f).SetUpdate(true).OnComplete(() => UpdateUIStack());
+        }
+        else
+        {
+            UpdateUIStack(false);
+        }
     }
 }
 

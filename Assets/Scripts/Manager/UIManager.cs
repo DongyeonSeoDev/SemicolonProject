@@ -125,8 +125,14 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     public List<AcquisitionUI> acqUIList;
 
+    #region 메뉴(인벤,스탯,도감,설정) 관련 변수들
+    public List<MenuButton> menuBtns;
+    private UIType selectedMenuType;
+
     //public Text statText;
     public Text[] statTexts;
+
+    #endregion
 
     public GameUI CurrentReConfirmUI { get; set; }
 
@@ -381,8 +387,60 @@ public partial class UIManager : MonoSingleton<UIManager>
         else ui.InActiveTransition();
     }
 
+    public void OnClickMenuBtn(UIType type) //메뉴에서 버튼 눌렀을 때
+    {
+        if (activeUIQueue.Count > 0) return;
+
+        MenuBtnSelectedMark(type);
+
+        activeUIQueue.Enqueue(false);
+
+        gameUIList[(int)type].ActiveTransition();
+
+    }
+
+    private void MenuBtnSelectedMark(UIType type)  //메뉴 버튼 안눌린 것들은 클릭 표시 없애고 눌린건 표시 생기게
+    { 
+        for(int i = 0; i<menuBtns.Count; i++)
+        {
+            if(menuBtns[i].Selected)
+            {
+                menuBtns[i].OnSelected(false);
+            }   
+        }
+
+        menuBtns.Find(x => x.uiType == type).OnSelected(true);
+    }
+
     private bool ExceptionHandler(UIType type) //UI여닫는 상호작용에 대한 예외처리. true를 리턴하면 상호작용 안함 
     {
+        if(gameUIList[(int)type].GetComponent<MenuPanel>() != null) //메뉴 UI중 하나와 상호작용할 때
+        {
+            if(!Util.IsActiveGameUI(UIType.MENU)) //메뉴창이 꺼져있으면
+            {
+                OnUIInteractSetActive(UIType.MENU, true, true);  //메뉴창을 띄움
+                MenuBtnSelectedMark(type);
+                selectedMenuType = type;
+            }
+            else
+            {
+                return true;
+                /*if(type == selectedMenuType)
+                {
+                    OnUIInteractSetActive(UIType.MENU, false, true);
+                    return true;
+                }
+                else
+                {
+                    OnUIInteractSetActive(selectedMenuType, false, true);
+                    MenuBtnSelectedMark(type);
+                    selectedMenuType = type;
+                }*/
+            }
+
+            return false;
+        }
+
         switch (type)
         {
             case UIType.KEYSETTING:
@@ -432,6 +490,12 @@ public partial class UIManager : MonoSingleton<UIManager>
             case UIType.UIOFFCONFIRM:
                 if (Util.IsActiveGameUI(UIType.UIOFFCONFIRM)) CurrentReConfirmUI.IsCloseable = false;
                 break;
+            case UIType.MENU:
+                if(!Util.IsActiveGameUI(UIType.MENU))
+                {
+                    TimeManager.TimePause();
+                }
+                break;
         }
         return false;
     }
@@ -465,6 +529,7 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     void FilterStackUI(GameUI ui, bool add) //activeUIList에 넣거나 빼지 않는 UI들
     {
+        if (ui.GetComponent<MenuPanel>() != null) return;
         switch (ui._UItype)
         {
             case UIType.CLEAR:
@@ -488,10 +553,10 @@ public partial class UIManager : MonoSingleton<UIManager>
             case UIType.MONSTER_COLLECTION:
                 EffectManager.Instance.OnTopRightBtnEffect(UIType.MONSTER_COLLECTION, false);
                 break;
-            case UIType.SETTING:
+            /*case UIType.SETTING:
                 TimeManager.TimePause();
                 setting.SetChildImgs(false);
-                break;
+                break;*/
            
         }
     }
@@ -515,9 +580,9 @@ public partial class UIManager : MonoSingleton<UIManager>
                     selectedItemSlot = null;
                 }
                 break;
-            case UIType.SETTING:
+            /*case UIType.SETTING:
                 TimeManager.TimeResume();
-                break;
+                break;*/
             case UIType.KEYSETTING:  //키세팅 창 닫히면 상호작용 표시, 스킬 슬롯, 몸 저장 슬롯 등 키코드가 나오는 UI들을 다시 업데이트함
                 itrNoticeList.ForEach(x => x.Set());
                 SkillUIManager.Instance.UpdateSkillKeyCode();
@@ -531,6 +596,9 @@ public partial class UIManager : MonoSingleton<UIManager>
                 break;
             case UIType.RESOLUTION:
                 resolutionOption.ExitResolutionPanel();
+                break;
+            case UIType.MENU:
+                TimeManager.TimeResume();
                 break;
         }
     }
@@ -702,7 +770,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         mobSaveWindowActiveDic[id] = true;
 
         //만약 전역변수로 List<Action>을 만들고 이걸로 전달을 하면 내부에서 DefaultSelectionAction을 더하면 전역에도 추가되므로 두번째부터는 DefaultSelectionAction을 두 번 이상 호출하게 되는 문제가 생긴다
-        RequestSelectionWindow("<color=#7A98FF>" + MonsterCollection.Instance.mobIdToSlot[id].BodyData.bodyName + "</color>를(을) 변신 슬롯에 저장하시겠습니까?\n(거절하면 해당 몬스터의 흡수 확률은 0%로 돌아갑니다.)",
+        RequestSelectionWindow("<color=#7A98FF>" + MonsterCollection.Instance.mobIdToSlot[id].BodyData.bodyName + "</color>를(을) 변신 슬롯에\n 저장하시겠습니까?\n(거절하면 해당 몬스터의 흡수 확률은\n 0%로 돌아갑니다.)",
             new List<Action>() {() => CancelMonsterSaveChance(id) , () => SaveMonsterBody(id) }, new List<string>() {"거절", "저장"});
     }
     
