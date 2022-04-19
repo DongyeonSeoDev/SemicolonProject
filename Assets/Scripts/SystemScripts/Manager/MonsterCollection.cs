@@ -16,7 +16,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     #region Detail View
     private string selectedDetailMobId;
 
-    public Triple<Image, Text, Text> monsterImgNameEx;
+    public Triple<Image, TextMeshProUGUI, Text> monsterImgNameEx;
+    public Pair<Image, Text> mobTypeImgText;
     public Pair<TextMeshProUGUI, TextMeshProUGUI> mobDrainProbAndAssimTmp;
 
     public Image mobDropItemImg;
@@ -139,6 +140,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         mobDropItemImg.sprite = item.GetSprite();
         mobDropItemImg.GetComponent<NameInfoFollowingCursor>().explanation = item.itemName;
 
+        
         if (UIManager.Instance.gameUIList[(int)UIType.MONSTERINFO_DETAIL_ITEM].gameObject.activeSelf)
             DetailItem();
         if (UIManager.Instance.gameUIList[(int)UIType.MONSTERINFO_DETAIL_STAT].gameObject.activeSelf)

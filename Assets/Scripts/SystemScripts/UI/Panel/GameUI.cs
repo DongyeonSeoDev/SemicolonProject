@@ -126,6 +126,10 @@ public class GameUI : MonoBehaviour
                 MenuPanel(true);
                 break;
 
+            case UIType.MONSTERINFO_DETAIL:
+                TweeningData.DOMove(gameUIFields, true);
+                break;
+
             case UIType.MONSTERINFO_DETAIL_STAT:
                 TweeningData.DOQuaternion(gameUIFields, true);
                 break;
@@ -216,6 +220,10 @@ public class GameUI : MonoBehaviour
 
             case UIType.MONSTER_COLLECTION:
                 MenuPanel(false);
+                break;
+
+            case UIType.MONSTERINFO_DETAIL:
+                TweeningData.DOMove(gameUIFields, false);
                 break;
 
             case UIType.STAT:
