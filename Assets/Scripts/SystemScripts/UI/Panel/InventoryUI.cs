@@ -18,7 +18,7 @@ public class InventoryUI : GameUI
         {
             if(rectMask.padding.y > 0)
             {
-                rectMask.padding = new Vector4(0, rectMask.padding.y - speed, rectMask.padding.z - speed, 0);
+                rectMask.padding = new Vector4(0, rectMask.padding.y - speed, rectMask.padding.z - speed, 0);   
             }
             else
             {

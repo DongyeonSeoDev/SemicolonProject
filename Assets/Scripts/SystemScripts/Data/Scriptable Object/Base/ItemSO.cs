@@ -20,6 +20,9 @@ public abstract class ItemSO : ScriptableObject
     [TextArea]
     public string explanation;
 
+    [TextArea]
+    public string abilExplanation;
+
     public virtual Sprite GetSprite()
     {
         return itemSprite;

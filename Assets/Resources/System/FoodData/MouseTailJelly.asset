@@ -15,14 +15,13 @@ MonoBehaviour:
   itemSprite: {fileID: 21300000, guid: 523f794a750fd084e878d990d124b8f0, type: 3}
   secondItemSprite: {fileID: 0}
   itemType: 1
-  id: 10
   maxCount: 5
   existBattleCount: -1
   itemName: "\uC950 \uAF2C\uB9AC \uC824\uB9AC"
   explanation: "\uCAC0\uB4DD\uCAC0\uB4DD\uD55C \uB9DB\uACFC \uAF2C\uB4E4\uAF2C\uB4E4\uD55C
     \uB9DB\uC758 \uC870\uD654\uAC00 \uC798 \uC774\uB8E8\uC5B4\uC838 \uC788\uC73C\uBA70
-    \uB9CE\uC740\n\uC2AC\uB77C\uC784\uB4E4\uC774 \uC990\uACA8\uBA39\uB294 \uAC04\uC2DD\uC774\uB2E4.\n\n<b>\uCD5C\uB300
-    \uCCB4\uB825 +5</b>"
+    \uB9CE\uC740\n\uC2AC\uB77C\uC784\uB4E4\uC774 \uC990\uACA8\uBA39\uB294 \uAC04\uC2DD\uC774\uB2E4."
+  abilExplanation: "\uCD5C\uB300 \uCCB4\uB825 +5"
   needIngredients:
   - ingredient: {fileID: 11400000, guid: 06dd51cfab1cb904b9bbbedef6545d02, type: 2}
     needCount: 1

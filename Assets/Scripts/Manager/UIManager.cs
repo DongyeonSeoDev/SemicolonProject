@@ -35,10 +35,10 @@ public partial class UIManager : MonoSingleton<UIManager>
     private string selectedItemId = String.Empty; //클릭한 아이템 슬롯의 아이템 아이디
     private ItemSlot selectedItemSlot; //클릭한 아이템 슬롯
 
-    [Space(20)]
     public Image itemImg, itemTypeImg;
     public Text itemExplanation;
     public Text itemCntTxt, itemTypeTxt;
+    public Text itemAbilExplanation;
     public TextMeshProUGUI itemNameTmp;
     public Button itemUseBtn, itemJunkBtn;
     #endregion
@@ -572,7 +572,7 @@ public partial class UIManager : MonoSingleton<UIManager>
                 CookingManager.Instance.detailID = string.Empty;  
                 break;
             case UIType.ITEM_DETAIL:  //아이템 선택표시 없애기
-                selectedItemId = String.Empty;
+                selectedItemId = string.Empty;
                 if (selectedItemSlot)
                 {
                     selectedItemSlot.outline.DOKill();
@@ -694,14 +694,16 @@ public partial class UIManager : MonoSingleton<UIManager>
 
         ItemSO data = gm.GetItemData(itemID);
 
-        itemImg.sprite = data.GetSprite();
+        //itemImg.sprite = data.GetSprite();
         itemTypeImg.sprite = Global.GetItemTypeSpr(data.itemType);
         itemNameTmp.text = data.itemName;
         itemExplanation.text = data.explanation;
-        itemCntTxt.text = string.Format("수량: {0}개", gm.GetItemCount(itemID));
+        //itemCntTxt.text = string.Format("수량: {0}개", gm.GetItemCount(itemID));
         itemTypeTxt.text = Global.GetItemTypeName(data.itemType);
 
-        itemUseBtn.gameObject.SetActive(data.itemType != ItemType.ETC);
+        itemAbilExplanation.text = data.abilExplanation;
+
+        //itemUseBtn.gameObject.SetActive(data.itemType != ItemType.ETC);
         if (data.itemType == ItemType.ETC && ((Ingredient)data).isUseable) itemUseBtn.gameObject.SetActive(true);
     }
 
@@ -709,7 +711,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     {
         if (selectedItemId == id)
         {
-            itemCntTxt.text = string.Format("수량: {0}개", gm.GetItemCount(id));
+            //itemCntTxt.text = string.Format("수량: {0}개", gm.GetItemCount(id));
         }
     }
     #endregion
@@ -839,7 +841,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     #region 인벤 버튼 (inventory button)
     public void OnClickRemoveItemBtn()  //아이템 버리기 버튼
     {
-        removeItemInfo.first.sprite = selectedItemSlot.itemImg.sprite;
+        //removeItemInfo.first.sprite = selectedItemSlot.itemImg.sprite;
         removeItemInfo.second.text = itemNameTmp.text;
         itemRemoveCntInput.text = "1";
         OnUIInteract(UIType.REMOVE_ITEM);

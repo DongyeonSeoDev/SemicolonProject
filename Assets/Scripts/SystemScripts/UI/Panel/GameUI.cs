@@ -60,7 +60,7 @@ public class GameUI : MonoBehaviour
             case UIType.INVENTORY:
                 //cvsg.alpha = 0f;
                 //cvsg.DOFade(1, Global.fullAlphaTransitionTime04).SetUpdate(true).OnComplete(() => UpdateUIStack());
-                //childGameUI.ActiveTransition();
+                childGameUI.ActiveTransition();
                 MenuPanel(true);
                 break;
 
@@ -179,7 +179,7 @@ public class GameUI : MonoBehaviour
 
             case UIType.INVENTORY:
                 MenuPanel(false);
-                //childGameUI.InActiveTransition();
+                childGameUI.InActiveTransition();
                 //cvsg.DOFade(0, Global.fullAlphaTransitionTime04).SetUpdate(true).OnComplete(() => UpdateUIStack(false));
                 break;
 

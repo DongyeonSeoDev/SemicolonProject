@@ -19,6 +19,6 @@ MonoBehaviour:
   existBattleCount: 4
   itemName: "\uD68C\uBCF5\uCD08"
   explanation: "\uD3C9\uBC94\uD55C \uAF43 \uAC19\uC9C0\uB9CC \uD53C\uB85C\uD68C\uBCF5\uC5D0
-    \uB3C4\uC6C0\uC774 \uB41C\uB2E4.(4\uAD50\uC804 \uD6C4 \uC18C\uBA78)\n\n<b>\uCCB4\uB825
-    +25%</b>"
+    \uB3C4\uC6C0\uC774 \uB41C\uB2E4. (4\uAD50\uC804 \uD6C4 \uC18C\uBA78)"
+  abilExplanation: "\uCCB4\uB825 +25%"
   isUseable: 1

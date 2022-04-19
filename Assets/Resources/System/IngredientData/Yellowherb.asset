@@ -19,6 +19,7 @@ MonoBehaviour:
   existBattleCount: 7
   itemName: "\uB178\uB780 \uD5C8\uBE0C"
   explanation: "\uD68C\uBCF5\uCD08\uC640 \uD568\uAED8 \uC12D\uCDE8 \uC2DC \uB354
-    \uD070 \uD6A8\uACFC\uB97C \uC5BB\uC744 \uC218 \uC788\uB2E4.(7\uAD50\uC804 \uD6C4
-    \uC18C\uBA78)\n\n<b>\uCCB4\uB825 +10%</b>"
+    \uD070 \uD6A8\uACFC\uB97C \uC5BB\uC744 \uC218 \uC788\uB2E4. (7\uAD50\uC804 \uD6C4
+    \uC18C\uBA78)"
+  abilExplanation: "\uCCB4\uB825 +10%"
   isUseable: 1
