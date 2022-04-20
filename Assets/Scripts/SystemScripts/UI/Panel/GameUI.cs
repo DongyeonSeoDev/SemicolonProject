@@ -131,11 +131,11 @@ public class GameUI : MonoBehaviour
                 break;
 
             case UIType.MONSTERINFO_DETAIL_STAT:
-                TweeningData.DOQuaternion(gameUIFields, true);
+                TweeningData.DOMove(gameUIFields, true);
                 break;
 
             case UIType.MONSTERINFO_DETAIL_ITEM:
-                TweeningData.DOQuaternion(gameUIFields, true);
+                TweeningData.DOMove(gameUIFields, true);
                 break;
 
             case UIType.MINIGAME_PICKUP:
@@ -252,11 +252,11 @@ public class GameUI : MonoBehaviour
                 break;
 
             case UIType.MONSTERINFO_DETAIL_STAT:
-                TweeningData.DOQuaternion(gameUIFields, false);
+                TweeningData.DOMove(gameUIFields, false);
                 break;
 
             case UIType.MONSTERINFO_DETAIL_ITEM:
-                TweeningData.DOQuaternion(gameUIFields, false);
+                TweeningData.DOMove(gameUIFields, false);
                 break;
 
             case UIType.MINIGAME_PICKUP:
@@ -270,6 +270,7 @@ public class GameUI : MonoBehaviour
         }
     }
     
+    //리펙토링 필요
     private void OnDisable()
     {
         switch(_UItype)
@@ -280,6 +281,14 @@ public class GameUI : MonoBehaviour
                 break;
             case UIType.ITEM_DETAIL:
                 UIManager.Instance.InActiveSpecialProcess(UIType.ITEM_DETAIL);
+                break;
+            case UIType.MONSTERINFO_DETAIL:
+                UIManager.Instance.InActiveSpecialProcess(UIType.MONSTERINFO_DETAIL);
+                break;
+            case UIType.MONSTER_COLLECTION:
+                UIManager.Instance.gameUIList[(int)UIType.MONSTERINFO_DETAIL].gameObject.SetActive(false);
+                UIManager.Instance.gameUIList[(int)UIType.MONSTERINFO_DETAIL_ITEM].gameObject.SetActive(false);
+                UIManager.Instance.gameUIList[(int)UIType.MONSTERINFO_DETAIL_STAT].gameObject.SetActive(false);
                 break;
         }
     }

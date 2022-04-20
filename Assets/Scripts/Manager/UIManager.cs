@@ -399,6 +399,7 @@ public partial class UIManager : MonoSingleton<UIManager>
 
         activeUIQueue.Enqueue(false);
 
+        ExceptionHandler(type);
         gameUIList[(int)type].ActiveTransition();
 
     }
@@ -418,7 +419,7 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     private bool ExceptionHandler(UIType type) //UI여닫는 상호작용에 대한 예외처리. true를 리턴하면 상호작용 안함 
     {
-        if(gameUIList[(int)type].GetComponent<MenuPanel>() != null) //메뉴 UI중 하나와 상호작용할 때
+        if (gameUIList[(int)type].GetComponent<MenuPanel>() != null) //메뉴 UI중 하나와 상호작용할 때
         {
             if(!Util.IsActiveGameUI(UIType.MENU)) //메뉴창이 꺼져있으면
             {
@@ -428,18 +429,10 @@ public partial class UIManager : MonoSingleton<UIManager>
             }
             else
             {
-                return true;
-                /*if(type == selectedMenuType)
+                for(int i = 0; i<menuBtns.Count; i++)
                 {
-                    OnUIInteractSetActive(UIType.MENU, false, true);
-                    return true;
+                    if (Util.IsActiveGameUI(menuBtns[i].uiType)) return true;
                 }
-                else
-                {
-                    OnUIInteractSetActive(selectedMenuType, false, true);
-                    MenuBtnSelectedMark(type);
-                    selectedMenuType = type;
-                }*/
             }
         }
 
@@ -493,6 +486,17 @@ public partial class UIManager : MonoSingleton<UIManager>
                 if (Util.IsActiveGameUI(UIType.UIOFFCONFIRM)) CurrentReConfirmUI.IsCloseable = false;
                 break;
             case UIType.MENU:
+                if(Util.IsActiveGameUI(UIType.MONSTERINFO_DETAIL_ITEM))
+                {
+                    OnUIInteract(UIType.MONSTERINFO_DETAIL_ITEM);
+                    return true;
+                }
+                else if(Util.IsActiveGameUI(UIType.MONSTERINFO_DETAIL_STAT))
+                {
+                    OnUIInteract(UIType.MONSTERINFO_DETAIL_STAT);
+                    return true;
+                }
+
                 if(!Util.IsActiveGameUI(UIType.MENU))
                 {
                     TimeManager.TimePause();
@@ -541,6 +545,12 @@ public partial class UIManager : MonoSingleton<UIManager>
             case UIType.CHANGEABLEMOBLIST:
                 return;
             case UIType.ITEM_DETAIL:
+                return;
+            case UIType.MONSTERINFO_DETAIL:
+                return;
+            case UIType.MONSTERINFO_DETAIL_ITEM:
+                return;
+            case UIType.MONSTERINFO_DETAIL_STAT:
                 return;
         }
         if (add) activeUIList.Add(ui);

@@ -26,6 +26,7 @@ public class ItemUseMng
         PlayerObj.PlayerStat.additionalEternalStat.maxHp += value;
         UIManager.Instance.UpdatePlayerHPUI();
         UIManager.Instance.InsertNoticeQueue("ÃÖ´ë HP " + value + " »ó½Â");
+        PlayerObj.GetHeal((int)value);
         EffectManager.Instance.OnTopRightBtnEffect(UIType.STAT, true);
     }
 
