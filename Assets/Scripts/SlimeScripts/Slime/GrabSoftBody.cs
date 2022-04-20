@@ -140,13 +140,22 @@ public class GrabSoftBody : SoftBody
                 spriteShapeController.spline.SetPosition(i, (_vertex - _towardsCenter * (radius + splineOffset)));
             }
 
-            Vector2 _lt = spriteShapeController.spline.GetLeftTangent(i);
+            //Vector2 _lt = spriteShapeController.spline.GetLeftTangent(i);
 
-            Vector2 _newRt = Vector2.Perpendicular(_towardsCenter) * _lt.magnitude;
-            Vector2 _newLt = -_newRt;
+            //Vector2 _newRt = Vector2.Perpendicular(_towardsCenter) * _lt.magnitude;
+            //Vector2 _newLt = -_newRt;
 
-            spriteShapeController.spline.SetRightTangent(i, _newRt);
-            spriteShapeController.spline.SetLeftTangent(i, _newLt);
+            ////spriteShapeController.spline.SetRightTangent(i, _newRt);
+            //spriteShapeController.spline.SetLeftTangent(i, _newLt);
+
+            spriteShapeController.spline.SetLeftTangent(i, GetTangentVec(i, true));
+            spriteShapeController.spline.SetRightTangent(i, GetTangentVec(i, false));
         }
+    }
+    private Vector2 GetTangentVec(int idx, bool isPaste)
+    {
+        return (isPaste ? spriteShapeController.spline.GetPosition((idx - 1).Limit(0, spriteShapeController.spline.GetPointCount() - 1))
+            : spriteShapeController.spline.GetPosition((idx + 1).Limit(0, spriteShapeController.spline.GetPointCount() - 1)))
+            - spriteShapeController.spline.GetPosition(idx);
     }
 }

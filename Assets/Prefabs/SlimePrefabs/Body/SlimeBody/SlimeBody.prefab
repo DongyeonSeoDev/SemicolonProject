@@ -73,6 +73,7 @@ MonoBehaviour:
   canDrainObjLayers:
     serializedVersion: 2
     m_Bits: 128
+  grabSoftBody: {fileID: 0}
   drainDisLessPercentageWhenFailed: 30
   drainMoveSpeed: 1
   drainMoveUpdateTime: 1
@@ -621,7 +622,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 79265675134852617, guid: 9b97e39c54eac0442be1f0fc9e71b478, type: 3}
       propertyPath: m_LocalAABB.m_Center.x
-      value: -0.08582616
+      value: -0.08884287
       objectReference: {fileID: 0}
     - target: {fileID: 79265675134852617, guid: 9b97e39c54eac0442be1f0fc9e71b478, type: 3}
       propertyPath: m_LocalAABB.m_Center.y
@@ -629,7 +630,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 79265675134852617, guid: 9b97e39c54eac0442be1f0fc9e71b478, type: 3}
       propertyPath: m_LocalAABB.m_Extent.x
-      value: 1.6963123
+      value: 1.699329
       objectReference: {fileID: 0}
     - target: {fileID: 79265675134852617, guid: 9b97e39c54eac0442be1f0fc9e71b478, type: 3}
       propertyPath: m_LocalAABB.m_Extent.y
@@ -841,11 +842,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8381510225919103737, guid: 9b97e39c54eac0442be1f0fc9e71b478, type: 3}
       propertyPath: m_Spline.m_ControlPoints.Array.data[0].leftTangent.x
-      value: 0.006896019
+      value: 0.05506921
       objectReference: {fileID: 0}
     - target: {fileID: 8381510225919103737, guid: 9b97e39c54eac0442be1f0fc9e71b478, type: 3}
       propertyPath: m_Spline.m_ControlPoints.Array.data[0].leftTangent.y
-      value: -0.03297901
+      value: -0.1810255
       objectReference: {fileID: 0}
     - target: {fileID: 8381510225919103737, guid: 9b97e39c54eac0442be1f0fc9e71b478, type: 3}
       propertyPath: m_Spline.m_ControlPoints.Array.data[10].m_CornerMode
@@ -929,11 +930,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8381510225919103737, guid: 9b97e39c54eac0442be1f0fc9e71b478, type: 3}
       propertyPath: m_Spline.m_ControlPoints.Array.data[0].rightTangent.x
-      value: -0.032178164
+      value: -0.04575491
       objectReference: {fileID: 0}
     - target: {fileID: 8381510225919103737, guid: 9b97e39c54eac0442be1f0fc9e71b478, type: 3}
       propertyPath: m_Spline.m_ControlPoints.Array.data[0].rightTangent.y
-      value: 0.15388775
+      value: 0.15040684
       objectReference: {fileID: 0}
     - target: {fileID: 8381510225919103737, guid: 9b97e39c54eac0442be1f0fc9e71b478, type: 3}
       propertyPath: m_Spline.m_ControlPoints.Array.data[10].leftTangent.x
