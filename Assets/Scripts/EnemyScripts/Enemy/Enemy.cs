@@ -116,7 +116,7 @@ namespace Enemy
             enemyDamagedCommand = new EnemyGetDamagedCommand(enemyData);
             enemyKnockBackCommand = new EnemyAddForceCommand(enemyData.enemyRigidbody2D, this);
 
-            SetHP();
+            SetHP(false);
 
             EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Reset, anim, TriggerType.SetTrigger);
             EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.IsDead, anim, false);
@@ -165,7 +165,7 @@ namespace Enemy
                 isDamageCurrentTime = enemyData.damageDelay;
                 enemyData.hp -= enemyData.damagedValue;
 
-                SetHP();
+                SetHP(true);
 
                 enemyDamagedCommand.Execute();
 
@@ -260,31 +260,39 @@ namespace Enemy
             }
         }
 
-        protected virtual void SetHP()
+        protected virtual void SetHP(bool isUseTween)
         {
             float fillValue = (float)enemyData.hp / enemyData.maxHP;
 
-            if (hpBarFillImage != null)
+            if (isUseTween)
             {
-                if (hpTween.IsActive())
+                if (hpBarFillImage != null)
                 {
-                    hpTween.Kill();
-                }
-
-                hpTween = hpBarFillImage.DOFillAmount(fillValue, hpTweenTime);
-            }
-
-            if (hpBarDamageFillImage != null)
-            {
-                Util.DelayFunc(() =>
-                {
-                    if (damageHPTween.IsActive())
+                    if (hpTween.IsActive())
                     {
-                        damageHPTween.Kill();
+                        hpTween.Kill();
                     }
 
-                    damageHPTween = hpBarDamageFillImage.DOFillAmount(fillValue, damageHPTweenTime);
-                }, hpTweenDelayTime);
+                    hpTween = hpBarFillImage.DOFillAmount(fillValue, hpTweenTime);
+                }
+
+                if (hpBarDamageFillImage != null)
+                {
+                    Util.DelayFunc(() =>
+                    {
+                        if (damageHPTween.IsActive())
+                        {
+                            damageHPTween.Kill();
+                        }
+
+                        damageHPTween = hpBarDamageFillImage.DOFillAmount(fillValue, damageHPTweenTime);
+                    }, hpTweenDelayTime);
+                }
+            }
+            else
+            {
+                hpBarFillImage.fillAmount = fillValue;
+                hpBarDamageFillImage.fillAmount = fillValue;
             }
         }
 

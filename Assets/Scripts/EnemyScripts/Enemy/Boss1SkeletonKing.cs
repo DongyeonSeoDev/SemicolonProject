@@ -129,7 +129,7 @@ namespace Enemy
             bossHPBar.SetActiveHPBar(true);
         }
 
-        protected override void SetHP()
+        protected override void SetHP(bool useTween)
         {
             if (bossHPBar != null)
             {

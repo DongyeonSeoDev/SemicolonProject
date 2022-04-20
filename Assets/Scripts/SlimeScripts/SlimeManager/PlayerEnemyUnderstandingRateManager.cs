@@ -109,7 +109,7 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
         }
         else
         {
-            Debug.LogWarning("The key '" + key + "' is not Contain.");
+            ////Debug.LogWarning("The key '" + key + "' is not Contain.");                                              
             return 0f;
         }
     }
