@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Enemy
 {
@@ -9,9 +8,10 @@ namespace Enemy
     {
         public List<float> specialAttack3HPPercent = new List<float>();
         public Transform movePivot;
-        public float specialAttackTime = 6f;
+
         public int fireCount = 0;
         public int maxAttackCount = 0;
+        public float specialAttackTime = 6f;
         public float bossMoveSpeed = 0f;
         public float fireDistance = 0f;
         public float fireSpawnTime = 0f;
@@ -56,12 +56,10 @@ namespace Enemy
 
         protected override void OnEnable()
         {
-            bossHPBar = FindObjectOfType<BossHPBar>();
-            bossHPBar.transform.GetChild(0).gameObject.SetActive(true);
-            hpBarFillImage = bossHPBar.transform.GetChild(0).GetChild(0).GetComponent<Image>();
-            hpBarFillImage.fillAmount = 1;
-
             base.OnEnable();
+
+            bossHPBar = FindObjectOfType<BossHPBar>();
+            bossHPBar.Init(enemyData);
 
             enemyData.attackDelay = 1.8f;
             enemyData.isAttackPlayerDistance = 3.5f;
@@ -106,11 +104,37 @@ namespace Enemy
             specialAttack3Check.Sort((x, y) => y.CompareTo(x));
 
             EventManager.StartListening("PlayerDead", StopAttack);
+            EventManager.StartListening("BossDead", StopAttack);
+            EventManager.StartListening("EnemySpawnAfter", ActiveHPBar);
         }
 
         protected override void OnDisable()
         {
-            bossHPBar.transform.GetChild(0).gameObject.SetActive(false);
+            base.OnDisable();
+
+            EventManager.StopListening("PlayerDead", StopAttack);
+            EventManager.StopListening("BossDead", StopAttack);
+            EventManager.StopListening("EnemySpawnAfter", ActiveHPBar);
+        }
+
+        public override void EnemyDestroy()
+        {
+            EventManager.TriggerEvent("BossDead");
+
+            base.EnemyDestroy();
+        }
+
+        private void ActiveHPBar()
+        {
+            bossHPBar.SetActiveHPBar(true);
+        }
+
+        protected override void SetHP()
+        {
+            if (bossHPBar != null)
+            {
+                bossHPBar.SetFill();
+            }
         }
 
         private Vector2 CheckPosition(Vector2 direction)
@@ -123,11 +147,6 @@ namespace Enemy
             }
 
             return hit.point;
-        }
-
-        private void OnDestroy()
-        {
-            EventManager.StopListening("PlayerDead", StopAttack);
         }
 
         protected override void Update()
@@ -154,6 +173,8 @@ namespace Enemy
         public void StopAttack() // EventManager에서 실행 - 적 공격 정지
         {
             StopAllCoroutines();
+
+            bossHPBar.SetActiveHPBar(false);
         }
 
         public void AttackReady() // 애니메이션에서 실행 - 공격하기전 이동
@@ -221,7 +242,6 @@ namespace Enemy
         { 
             if ((transform.position.x - limitMinPosition.x) <= 0.1f)
             {
-                sr.enabled = false;
                 return new BossSpecialAttack1Status(enemyData, this);
             }
 
