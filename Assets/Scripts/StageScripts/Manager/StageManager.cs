@@ -438,6 +438,7 @@ public class StageManager : MonoSingleton<StageManager>
             case AreaType.BOSS:
                 SetMonsterStage();
                 EventManager.TriggerEvent("BossSpawn", CurrentMonstersOrderID);
+                currentStageMonsterBundleOrder++;
                 break;
         }
 

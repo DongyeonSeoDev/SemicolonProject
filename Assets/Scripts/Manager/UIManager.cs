@@ -380,7 +380,7 @@ public partial class UIManager : MonoSingleton<UIManager>
 
         ExceptionHandler(type);
         gameUIList[(int)type].ActiveTransition();
-
+        selectedMenuType = type;
     }
 
     private void MenuBtnSelectedMark(UIType type)  //메뉴 버튼 안눌린 것들은 클릭 표시 없애고 눌린건 표시 생기게
@@ -394,6 +394,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         }
 
         menuBtns.Find(x => x.uiType == type).OnSelected(true);
+       
     }
 
     private bool ExceptionHandler(UIType type) //UI여닫는 상호작용에 대한 예외처리. true를 리턴하면 상호작용 안함 
@@ -408,9 +409,14 @@ public partial class UIManager : MonoSingleton<UIManager>
             }
             else
             {
-                for(int i = 0; i<menuBtns.Count; i++)
+                if(selectedMenuType == type)
                 {
-                    if (Util.IsActiveGameUI(menuBtns[i].uiType)) return true;
+                    OnUIInteract(UIType.MENU);
+                    return true;
+                }
+                else
+                {
+                    return true;
                 }
             }
         }
