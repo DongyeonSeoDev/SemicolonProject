@@ -4,13 +4,13 @@ public class EnemyHPBar : MonoBehaviour
 {
     private Canvas canvas;
 
-    private void Start()
+    protected virtual void Start()
     {
         canvas = GetComponent<Canvas>();
         canvas.worldCamera = Util.MainCam;
     }
 
-    private void Update()
+    protected virtual void Update()
     {
         if (transform.rotation != Quaternion.identity)
         {

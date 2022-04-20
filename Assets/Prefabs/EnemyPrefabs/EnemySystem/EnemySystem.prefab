@@ -388,11 +388,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hpBarRectTransform: {fileID: 4680335053009425283}
   fillHpBar: {fileID: 3672270168091823654}
+  damageHpBar: {fileID: 0}
   setActiveMoveValue: {x: 0, y: 50}
   setActiveMoveTimeValue: 0.5
   fillAmountDelayTime: 0.5
   fillAmountTime: 0.5
   fillTweenTime: 0.5
+  damageFillDelayTime: 0.3
+  damageFillTime: 0.2
 --- !u!1 &6423039109439716261
 GameObject:
   m_ObjectHideFlags: 0
@@ -923,7 +926,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8214984185061587620}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 0
   m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0

@@ -30,8 +30,10 @@ namespace Enemy
 
         private bool isSequencePlay = false;
 
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
+
             hpBarCanvasGroup = hpBarRectTransform.GetComponent<CanvasGroup>();
 
             activeTrueSequence = SetActiveSequence(true);
