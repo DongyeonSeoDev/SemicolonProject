@@ -15,6 +15,6 @@ public abstract class SoftBody : MonoBehaviour
     protected List<Transform> points = new List<Transform>();
     public virtual void UpdateVerticies()
     {
-       
+        
     }
 }

@@ -207,8 +207,18 @@ public class PCSoftBody : SoftBody
                 spriteShapeController.spline.SetPosition(i, (_vertex - _towardsCenter * (radius + splineOffset)));
             }
 
-            spriteShapeController.spline.SetLeftTangent(i, GetTangentVec(i, true));
-            spriteShapeController.spline.SetRightTangent(i, GetTangentVec(i, false));
+            spriteShapeController.spline.SetLeftTangent(i, GetTangentVec(i, true) / 4f);
+            spriteShapeController.spline.SetRightTangent(i, -GetTangentVec(i, true) / 4f);
+
+            spriteShapeController.spline.SetTangentMode(i, UnityEngine.U2D.ShapeTangentMode.Continuous);
+
+            //Vector2 _lt = spriteShapeController.spline.GetLeftTangent(i);
+
+            //Vector2 _newRt = Vector2.Perpendicular(_towardsCenter) * _lt.magnitude;
+            //Vector2 _newLt = -_newRt;
+
+            ////spriteShapeController.spline.SetRightTangent(i, _newRt);
+            //spriteShapeController.spline.SetLeftTangent(i, _newLt);
         }
     }
     private Vector2 GetTangentVec(int idx, bool isPaste)
@@ -216,6 +226,17 @@ public class PCSoftBody : SoftBody
         return (isPaste ? spriteShapeController.spline.GetPosition((idx - 1).Limit(0, spriteShapeController.spline.GetPointCount() - 1))
             : spriteShapeController.spline.GetPosition((idx + 1).Limit(0, spriteShapeController.spline.GetPointCount() - 1))) 
             - spriteShapeController.spline.GetPosition(idx); 
+    }
+    private void CheckPasteNext(int idx)
+    {
+        Vector2 curPos = spriteShapeController.spline.GetPosition(idx);
+        Vector2 pastePos = spriteShapeController.spline.GetPosition((idx - 1).Limit(0, spriteShapeController.spline.GetPointCount() - 1));
+        Vector2 nextPos = spriteShapeController.spline.GetPosition((idx + 1).Limit(0, spriteShapeController.spline.GetPointCount() + 1));
+
+        Vector2 cur_paste_gap = curPos - pastePos;
+        Vector2 cur_next_gap = curPos - nextPos;
+
+
     }
     #endregion
 }

@@ -140,16 +140,10 @@ public class GrabSoftBody : SoftBody
                 spriteShapeController.spline.SetPosition(i, (_vertex - _towardsCenter * (radius + splineOffset)));
             }
 
-            //Vector2 _lt = spriteShapeController.spline.GetLeftTangent(i);
+            spriteShapeController.spline.SetLeftTangent(i, GetTangentVec(i, true) / 4f);
+            spriteShapeController.spline.SetRightTangent(i, GetTangentVec(i, false) / 4f);
 
-            //Vector2 _newRt = Vector2.Perpendicular(_towardsCenter) * _lt.magnitude;
-            //Vector2 _newLt = -_newRt;
-
-            ////spriteShapeController.spline.SetRightTangent(i, _newRt);
-            //spriteShapeController.spline.SetLeftTangent(i, _newLt);
-
-            spriteShapeController.spline.SetLeftTangent(i, GetTangentVec(i, true));
-            spriteShapeController.spline.SetRightTangent(i, GetTangentVec(i, false));
+            spriteShapeController.spline.SetTangentMode(i, UnityEngine.U2D.ShapeTangentMode.Continuous);
         }
     }
     private Vector2 GetTangentVec(int idx, bool isPaste)
