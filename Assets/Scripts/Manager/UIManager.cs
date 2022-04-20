@@ -123,7 +123,7 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     [SerializeField] private ResolutionOption resolutionOption;
 
-    public Setting setting;
+    //public Setting setting;
 
     public List<AcquisitionUI> acqUIList;
 
@@ -175,7 +175,7 @@ public partial class UIManager : MonoSingleton<UIManager>
             iconSelBtnDataDic.Add(iconSelBtnDataList[i].first.name, new Triple<Sprite, string, string>(iconSelBtnDataList[i].first, iconSelBtnDataList[i].second, iconSelBtnDataList[i].third));
         }
 
-        setting.InitSet();
+        //setting.InitSet();
     }
 
     private void CreatePool()
@@ -218,23 +218,6 @@ public partial class UIManager : MonoSingleton<UIManager>
     {
         screenHalf.first = Screen.width * 0.5f;
         screenHalf.second = Screen.height * 0.5f;
-
-        /*int i;
-        for(i=0; i<allCanvasScalers.Length; i++)
-        {
-            allCanvasScalers[i].referenceResolution = new Vector2(Screen.width, Screen.height);
-        }*/
-
-       /* float fixedAspectRatio = 1080f / 1920f;
-        float currentAspectRatio = (float)Screen.width / Screen.height;
-
-        float mwh = currentAspectRatio > fixedAspectRatio ? 1 : 0;
-        if (currentAspectRatio == fixedAspectRatio) mwh = 0.5f;
-
-        for (i = 0; i < allCanvasScalers.Length; i++)
-        {
-            allCanvasScalers[i].matchWidthOrHeight = mwh;
-        }*/
     }
 
     private void DefineAction()
@@ -342,10 +325,6 @@ public partial class UIManager : MonoSingleton<UIManager>
             ScreenShot.StartScreenShot();
         }
 #endif
-        /*else if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.CHANGEABLEBODYS]))
-        {
-            OnUIInteract(UIType.CHANGEABLEMOBLIST);
-        }*/
     }
     #endregion
 
@@ -448,8 +427,8 @@ public partial class UIManager : MonoSingleton<UIManager>
                     if (gameMenuList[i].gameObject.activeSelf)     //설정 속의 메뉴 UI가 켜져있는 중에는 설정창 못 끄게
                         return true;
                 }
-                normalPanelCanvasg.DOFade(!gameUIList[(int)UIType.SETTING].gameObject.activeSelf ? 0:1, 0.3f);
-                setting.SetChildImgs(true);
+                //normalPanelCanvasg.DOFade(!gameUIList[(int)UIType.SETTING].gameObject.activeSelf ? 0:1, 0.3f);
+                //setting.SetChildImgs(true);
                 break;
             case UIType.MONSTERINFO_DETAIL:  //몹 드랍템 정보창이나 추가스탯 창 UI켜져있으면 몹 정보 자세히 보기 UI 상호작용 여닫기 X
                 if (gameUIList[(int)UIType.MONSTERINFO_DETAIL_ITEM].gameObject.activeSelf || gameUIList[(int)UIType.MONSTERINFO_DETAIL_STAT].gameObject.activeSelf)

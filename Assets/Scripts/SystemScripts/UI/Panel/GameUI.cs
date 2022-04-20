@@ -91,7 +91,7 @@ public class GameUI : MonoBehaviour
                 TweeningData.DOFade(gameUIFields, true);
                 break;
 
-            case UIType.KEYSETTING:
+           /* case UIType.KEYSETTING:
                 //DOMoveSequence(true);
                 TweeningData.DOMoveSequence(gameUIFields, true);
                 break;
@@ -110,7 +110,7 @@ public class GameUI : MonoBehaviour
 
             case UIType.CREDIT:
                 TweeningData.DOMoveSequence(gameUIFields, true);
-                break;
+                break;*/
 
             case UIType.SETTING:
                 //DOFadeAndDissolve(true);
@@ -230,7 +230,7 @@ public class GameUI : MonoBehaviour
                 MenuPanel(false);
                 break;
 
-            case UIType.KEYSETTING:
+            /*case UIType.KEYSETTING:
                 //DOMoveSequence(false);
                 TweeningData.DOMoveSequence(gameUIFields, false);
                 break;
@@ -249,7 +249,7 @@ public class GameUI : MonoBehaviour
 
             case UIType.CREDIT:
                 TweeningData.DOMoveSequence(gameUIFields, false);
-                break;
+                break;*/
 
             case UIType.MONSTERINFO_DETAIL_STAT:
                 TweeningData.DOMove(gameUIFields, false);

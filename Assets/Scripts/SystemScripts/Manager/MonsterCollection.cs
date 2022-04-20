@@ -18,7 +18,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
     public Triple<Image, TextMeshProUGUI, Text> monsterImgNameEx;
     public Pair<Image, Text> mobTypeImgText;
-    public Pair<TextMeshProUGUI, TextMeshProUGUI> mobDrainProbAndAssimTmp;
+    //public Pair<TextMeshProUGUI, TextMeshProUGUI> mobDrainProbAndAssimTmp;
+    public Pair<Text, Text> mobDrainProbAndAssimTmp;
 
     public Image mobDropItemImg;
 
@@ -133,8 +134,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         monsterImgNameEx.second.text = data.bodyName;
         monsterImgNameEx.third.text = data.bodyExplanation;
 
-        mobDrainProbAndAssimTmp.first.SetText("흡수확률: " + urmg.GetDrainProbabilityDict(id).ToString() + "%");
-        mobDrainProbAndAssimTmp.second.SetText("동화율: " + urmg.GetUnderstandingRate(id).ToString() + "%");
+        mobDrainProbAndAssimTmp.first.text="흡수확률: " + urmg.GetDrainProbabilityDict(id).ToString() + "%";
+        mobDrainProbAndAssimTmp.second.text="동화율: " + urmg.GetUnderstandingRate(id).ToString() + "%";
 
         ItemSO item = data.dropItem;
         mobDropItemImg.sprite = item.GetSprite();
@@ -151,8 +152,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     {
         if (Util.IsActiveGameUI(UIType.MONSTERINFO_DETAIL))
         {
-            mobDrainProbAndAssimTmp.first.SetText("흡수확률: " + urmg.GetDrainProbabilityDict(id).ToString() + "%");
-            mobDrainProbAndAssimTmp.second.SetText("동화율: " + urmg.GetUnderstandingRate(id).ToString() + "%");
+            mobDrainProbAndAssimTmp.first.text = ("흡수확률: " + urmg.GetDrainProbabilityDict(id).ToString() + "%");
+            mobDrainProbAndAssimTmp.second.text = ("동화율: " + urmg.GetUnderstandingRate(id).ToString() + "%");
         }
     }
 
