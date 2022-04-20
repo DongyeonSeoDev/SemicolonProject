@@ -37,6 +37,7 @@ namespace Enemy
 
             EventManager.StartListening("AfterPlayerRespawn", PlayerRespawnEvent);
             EventManager.StartListening("SpawnEnemy", SpawnEnemy);
+            EventManager.StartListening("BossSpawn", BossSpawn);
 
             CSVEnemySpawn.Instance.GetData();
         }
@@ -94,6 +95,11 @@ namespace Enemy
                     }
                 }, 1f);
             }, 2.5f);
+        }
+
+        private void BossSpawn(string stageId)
+        {
+            SpawnEnemy(stageId);
         }
     }
 }

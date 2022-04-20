@@ -8,9 +8,10 @@ namespace Enemy
     {
         public List<float> specialAttack3HPPercent = new List<float>();
         public Transform movePivot;
-        public float specialAttackTime = 6f;
+
         public int fireCount = 0;
         public int maxAttackCount = 0;
+        public float specialAttackTime = 6f;
         public float bossMoveSpeed = 0f;
         public float fireDistance = 0f;
         public float fireSpawnTime = 0f;
