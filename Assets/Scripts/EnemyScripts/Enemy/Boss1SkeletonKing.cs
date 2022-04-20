@@ -55,8 +55,10 @@ namespace Enemy
 
         protected override void OnEnable()
         {
-            bossHPBar = FindObjectOfType<BossHPBar>();
             base.OnEnable();
+
+            bossHPBar = FindObjectOfType<BossHPBar>();
+            bossHPBar.Init(enemyData);
 
             enemyData.attackDelay = 1.8f;
             enemyData.isAttackPlayerDistance = 3.5f;
@@ -124,12 +126,14 @@ namespace Enemy
         private void ActiveHPBar()
         {
             bossHPBar.SetActiveHPBar(true);
-            // 트윈 하나 만들고 체력 점점 차는거 구현하기
         }
 
         protected override void SetHP()
         {
-            bossHPBar.SetFill((float)enemyData.hp / enemyData.maxHP);
+            if (bossHPBar != null)
+            {
+                bossHPBar.SetFill();
+            }
         }
 
         private Vector2 CheckPosition(Vector2 direction)

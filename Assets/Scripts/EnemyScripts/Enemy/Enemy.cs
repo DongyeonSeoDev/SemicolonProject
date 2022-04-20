@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 namespace Enemy
 {
@@ -9,7 +10,8 @@ namespace Enemy
     {
         public List<EnemyLootData> enemyLootListSO = new List<EnemyLootData>(); // 적 전리품 리스트
         public EnemyDataSO enemyDataSO; // 적 데이터 관리 ( 없으면 Scriptable Object에서 만들어야 함 )
-        public Image hpBarFillImage; // 적 HP 바 채워진것 ( 없으면 UI 만들어야 함 ( Assets > Prefabs > EnemyPrefabs > EnemyUI 참고 ) )
+        public Image hpBarFillImage; // 적 HP 바 채워진것중 체력 확인용 ( 없으면 UI 만들어야 함 ( Assets > Prefabs > EnemyPrefabs > EnemyUI 참고 ) )
+        public Image hpBarDamageFillImage; // 적 HP 바 채워진것중 데미지 확인용
         public GameObject hpBar; // 적 HP 바 오브젝트 ( hpBarFillImage의 부모 캔버스 오브젝트 )
 
         protected EnemyData enemyData; // 적 데이터
@@ -26,6 +28,13 @@ namespace Enemy
 
         public EnemyAttackCheck[] enemyAttackCheck; // 적 공격 확인 ( 근거리 적은 있고 원거리 적은 없음 )
         public EnemyPositionCheckData positionCheckData = new EnemyPositionCheckData(); // 벽과 적 위치 확인
+
+        private Tween hpTween = null;
+        private Tween damageHPTween = null;
+
+        public float hpTweenTime = 0.1f;
+        public float hpTweenDelayTime = 0.3f;
+        public float damageHPTweenTime = 0.2f;
 
         EnemyCommand enemyDamagedCommand;
         EnemyCommand enemyKnockBackCommand;
@@ -253,9 +262,29 @@ namespace Enemy
 
         protected virtual void SetHP()
         {
+            float fillValue = (float)enemyData.hp / enemyData.maxHP;
+
             if (hpBarFillImage != null)
             {
-                hpBarFillImage.fillAmount = (float)enemyData.hp / enemyData.maxHP;
+                if (hpTween.IsActive())
+                {
+                    hpTween.Kill();
+                }
+
+                hpTween = hpBarFillImage.DOFillAmount(fillValue, hpTweenTime);
+            }
+
+            if (hpBarDamageFillImage != null)
+            {
+                Util.DelayFunc(() =>
+                {
+                    if (damageHPTween.IsActive())
+                    {
+                        damageHPTween.Kill();
+                    }
+
+                    damageHPTween = hpBarDamageFillImage.DOFillAmount(fillValue, damageHPTweenTime);
+                }, hpTweenDelayTime);
             }
         }
 
