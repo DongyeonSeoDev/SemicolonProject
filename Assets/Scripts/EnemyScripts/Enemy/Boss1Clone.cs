@@ -16,6 +16,7 @@ namespace Enemy
         private void Start()
         {
             EventManager.StartListening("PlayerSetActiveFalse", PlayerDeadEvent);
+            EventManager.StartListening("BossDead", PlayerDeadEvent);
         }
 
         private void Update()

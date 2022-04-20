@@ -31,6 +31,11 @@ public class PlayerStatusEffect : PlayerAction
     
     public void KnockBack(Vector2 direction, float speed, float knockBackTime) // knockBackTime은 knockBack되는 시간이다.
     {
+        if(playerState.IsDrain)
+        {
+            return;
+        }
+
         float moveDistance = speed * knockBackTime;
 
         playerState.IsKnockBack = true;
@@ -39,6 +44,11 @@ public class PlayerStatusEffect : PlayerAction
     }
     public void KnockBack(Vector2 direction, float speed, float knockBackTime, float sturnTime) // knockBackTime은 knockBack되는 시간이다.
     {
+        if (playerState.IsDrain)
+        {
+            return;
+        }
+
         float moveDistance = speed * knockBackTime;
 
         playerState.IsKnockBack = true;
@@ -53,6 +63,11 @@ public class PlayerStatusEffect : PlayerAction
     }
     public void Sturn(float sturnTime)
     {
+        if(playerState.IsDrain)
+        {
+            return;
+        }
+
         sturnTimer = sturnTime;
 
         playerState.IsSturn = true;

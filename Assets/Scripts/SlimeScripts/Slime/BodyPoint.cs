@@ -14,6 +14,9 @@ public class BodyPoint : MonoBehaviour
     private LayerMask whatIsWall;
 
     [SerializeField]
+    private SoundBox whenDrainBodyPointMoveSound = null;
+
+    [SerializeField]
     private float returnToOriginSpeed = 2f;
     [SerializeField]
     private float moveToMiddleSpeed = 1f;
@@ -192,7 +195,14 @@ public class BodyPoint : MonoBehaviour
                 return;
             }
 
-            transform.localPosition = Vector2.Lerp(transform.localPosition, originLocalPosition, Time.deltaTime * returnToOriginSpeed);
+            if (Vector2.Distance(transform.localPosition, originLocalPosition) > 0.01f)
+            {
+                transform.localPosition = Vector2.Lerp(transform.localPosition, originLocalPosition, Time.deltaTime * returnToOriginSpeed);
+            }
+            else
+            {
+                transform.localPosition = originLocalPosition;
+            }
         }
     }
     private void MoveToOriginASec()
@@ -208,6 +218,8 @@ public class BodyPoint : MonoBehaviour
             {
                 isMoveToOriginASec = false;
                 moveToOriginTimer = 0f;
+
+                transform.localPosition = originLocalPosition;
             }
         }
     }
@@ -312,6 +324,8 @@ public class BodyPoint : MonoBehaviour
                 moveToOriginTimer = moveToMiddleTime;
                 farByMiddleTimer = farByMiddleTime;
 
+                DrainEffect();
+
                 return;
             }
 
@@ -331,8 +345,9 @@ public class BodyPoint : MonoBehaviour
     {
         Vector3 dir = (transform.position - middlePoint.transform.position).normalized;
         float distance = Vector2.Distance(transform.position, middlePoint.transform.position);
+        //float distance = Vector2.Distance(transform.localPosition, originLocalPosition);
 
-        if(distance < middlePoint.MaxDisWithBodyPoints)
+        if (distance < middlePoint.MaxDisWithBodyPoints)
         {
             transform.position = Vector2.Lerp(transform.position, transform.position + dir * farByMiddleSpeed  * farByMiddleTime, farByMiddleTimer / farByMiddleTime);
         }
@@ -346,11 +361,7 @@ public class BodyPoint : MonoBehaviour
     {
         if (farByMiddleTimer % middlePoint.PlayerDrain.PlayerDrainCol.DrainMoveUpdateTIme <= 0.1f)
         {
-            if (!middlePoint.AfterImageSoftBodySpawned)
-            {
-                middlePoint.AfterImageSoftBodySpawned = true;
-                EventManager.TriggerEvent("SpawnAfterImageSoftBody");
-            }
+            DrainEffect();
 
             if (farByMiddleMax && isFarByPlayerByDrain)
             {
@@ -359,12 +370,26 @@ public class BodyPoint : MonoBehaviour
         }
         else
         {
-            middlePoint.AfterImageSoftBodySpawned = false;
+            middlePoint.DrainEffectSpawned = false;
         }
     }
+
+    private void DrainEffect()
+    {
+        if (!middlePoint.DrainEffectSpawned)
+        {
+            middlePoint.DrainEffectSpawned = true;
+            EventManager.TriggerEvent("SpawnAfterImageSoftBody");
+            SoundManager.Instance.PlaySoundBox(whenDrainBodyPointMoveSound);
+        }
+    }
+
     private void ResetBodyPoint()
     {
-        transform.localPosition = originLocalPosition;
+        if (!isMiddlePoint)
+        {
+            transform.localPosition = originLocalPosition;
+        }
 
         ResetWallBoolean();
 

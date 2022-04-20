@@ -12,11 +12,6 @@ public class PlayerDrain : PlayerSkill
         get { return playerDrainCol; }
     }
 
-    //private List<(GameObject, int)> drainList = new List<(GameObject, int)>();
-
-    //private Dictionary<GameObject, float> moveTimeDic = new Dictionary<GameObject, float>();
-    //private Dictionary<GameObject, float> moveTimerDic = new Dictionary<GameObject, float>();
-
     [Header("흡수를 했을 때의 장착 확률을 올려주는 수치")]
     [SerializeField]
     private float upMountingPercentageValue = 5f;
@@ -74,7 +69,7 @@ public class PlayerDrain : PlayerSkill
         if (canDrain)
         {
             player.PlayerState.IsDrain = true;
-            player.PlayerOrderInLayerController.SetOrderInLayer("Player", 5);
+            player.PlayerOrderInLayerController.SetOrderInLayer("Object", 0);
 
             SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = SlimeGameManager.Instance.SkillDelays[skillIdx];
 

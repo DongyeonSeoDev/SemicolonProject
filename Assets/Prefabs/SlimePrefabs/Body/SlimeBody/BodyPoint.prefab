@@ -122,6 +122,7 @@ MonoBehaviour:
   whatIsWall:
     serializedVersion: 2
     m_Bits: 131136
+  whenDrainBodyPointMoveSound: {fileID: 1753194670404615220, guid: 159eb6ed0c4301a4daf9cc71644c002b, type: 3}
   returnToOriginSpeed: 7
   moveToMiddleSpeed: 4
   farByMiddleSpeed: 1

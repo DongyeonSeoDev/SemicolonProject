@@ -7,7 +7,7 @@ public abstract class SoftBody : MonoBehaviour
 {
     #region Constants
     protected const float splineOffset = 0.5f;
-    protected readonly float radius = 0.2f; // 각 바디포인트 사이의 거리
+    protected readonly float radius = 0f; // 각 바디포인트 사이의 거리
     #endregion
     [SerializeField]
     protected SpriteShapeController spriteShapeController = null;
@@ -15,6 +15,6 @@ public abstract class SoftBody : MonoBehaviour
     protected List<Transform> points = new List<Transform>();
     public virtual void UpdateVerticies()
     {
-
+        
     }
 }

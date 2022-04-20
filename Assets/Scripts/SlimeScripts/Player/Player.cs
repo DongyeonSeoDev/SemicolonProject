@@ -205,12 +205,9 @@ public class Player : MonoBehaviour
     }
     public void GetDamage(int damage, bool critical = false, bool stateAbnormality = false)
     {
-        if (playerState.BodySlapping && !stateAbnormality)
-        {
-            return;
-        }
-
-        if(playerState.IsDrain && !stateAbnormality)
+        if ((playerState.BodySlapping && !stateAbnormality) ||
+            (playerState.IsDrain && !stateAbnormality) ||
+            SlimeGameManager.Instance.GameClear)
         {
             return;
         }
@@ -250,16 +247,13 @@ public class Player : MonoBehaviour
     }
     public void GetDamage(GameObject attacker, int damage, bool critical = false, bool stateAbnormality = false)
     {
-        if(playerState.BodySlapping && !stateAbnormality)
+        if ((playerState.BodySlapping && !stateAbnormality) ||
+            (playerState.IsDrain && !stateAbnormality) ||
+            SlimeGameManager.Instance.GameClear)
         {
             return;
         }
 
-        if (playerState.IsDrain && !stateAbnormality)
-        {
-            return;
-        }
-        
         if (!playerState.IsDead)
         {
             int dm = damage;

@@ -263,6 +263,7 @@ MonoBehaviour:
   count: 4
   enemyDataSO: {fileID: 11400000, guid: 786762c1c87c93a44a38cd24d2c534d1, type: 2}
   hpBarFillImage: {fileID: 3039235269625805731}
+  hpBarDamageFillImage: {fileID: 971941951908089360}
   hpBar: {fileID: 3039235270466704463}
   enemyAttackCheck:
   - {fileID: 1178821992}
@@ -289,17 +290,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: EnemyHP
       objectReference: {fileID: 0}
-    - target: {fileID: 1559462951835451892, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
     - target: {fileID: 1559462951835451894, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1559462951835451895, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
-      propertyPath: m_SortingLayerID
-      value: -1646225281
       objectReference: {fileID: 0}
     - target: {fileID: 1559462951835451896, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
       propertyPath: m_Pivot.x
@@ -385,14 +378,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1559462952085171734, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
-    - target: {fileID: 1559462952483071909, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
-      propertyPath: m_Layer
-      value: 7
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
 --- !u!1 &3039235270466704463 stripped
@@ -405,6 +390,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1559462951835451896, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
   m_PrefabInstance: {fileID: 4578431473552020923}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &971941951908089360 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3671791750608935851, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
+  m_PrefabInstance: {fileID: 4578431473552020923}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &3039235269625805731 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1559462952085171736, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}

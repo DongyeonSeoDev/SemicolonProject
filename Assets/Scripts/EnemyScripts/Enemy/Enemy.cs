@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 namespace Enemy
 {
@@ -9,10 +10,11 @@ namespace Enemy
     {
         public List<EnemyLootData> enemyLootListSO = new List<EnemyLootData>(); // 적 전리품 리스트
         public EnemyDataSO enemyDataSO; // 적 데이터 관리 ( 없으면 Scriptable Object에서 만들어야 함 )
-        public Image hpBarFillImage; // 적 HP 바 채워진것 ( 없으면 UI 만들어야 함 ( Assets > Prefabs > EnemyPrefabs > EnemyUI 참고 ) )
+        public Image hpBarFillImage; // 적 HP 바 채워진것중 체력 확인용 ( 없으면 UI 만들어야 함 ( Assets > Prefabs > EnemyPrefabs > EnemyUI 참고 ) )
+        public Image hpBarDamageFillImage; // 적 HP 바 채워진것중 데미지 확인용
         public GameObject hpBar; // 적 HP 바 오브젝트 ( hpBarFillImage의 부모 캔버스 오브젝트 )
 
-        protected EnemyData enemyData; // 적 데이터 
+        protected EnemyData enemyData; // 적 데이터
 
         // GetComponent로 가져옴
         protected SpriteRenderer sr; 
@@ -27,12 +29,18 @@ namespace Enemy
         public EnemyAttackCheck[] enemyAttackCheck; // 적 공격 확인 ( 근거리 적은 있고 원거리 적은 없음 )
         public EnemyPositionCheckData positionCheckData = new EnemyPositionCheckData(); // 벽과 적 위치 확인
 
+        private Tween hpTween = null;
+        private Tween damageHPTween = null;
+
+        public float hpTweenTime = 0.1f;
+        public float hpTweenDelayTime = 0.3f;
+        public float damageHPTweenTime = 0.2f;
+
         EnemyCommand enemyDamagedCommand;
         EnemyCommand enemyKnockBackCommand;
 
         private float isDamageCurrentTime = 0f;
         protected bool isStop = false;
-        private bool isAddPlayerEvent = false;
 
         protected virtual void Awake()
         {
@@ -56,8 +64,6 @@ namespace Enemy
             EventManager.StopListening("EnemyStart", EnemyStart);
             EventManager.StopListening("EnemyStop", EnemyStop);
             EventManager.StopListening("StartSkill0", StartAttack);
-
-            isAddPlayerEvent = false;
         }
 
         private void EnemyStart()
@@ -102,7 +108,6 @@ namespace Enemy
                 enemyAnimator = anim,
                 enemySpriteRenderer = sr,
                 enemyRigidbody2D = rb,
-                hpBarFillImage = hpBarFillImage,
             };
 
             enemyData.enemyAnimator.enabled = true; // 애니메이션 실행
@@ -111,11 +116,7 @@ namespace Enemy
             enemyDamagedCommand = new EnemyGetDamagedCommand(enemyData);
             enemyKnockBackCommand = new EnemyAddForceCommand(enemyData.enemyRigidbody2D, this);
 
-            // 마지막 위치, HP UI, 애니메이션, 죽음 확인 리셋
-            if (enemyData.hpBarFillImage != null)
-            {
-                enemyData.hpBarFillImage.fillAmount = (float)enemyData.hp / enemyData.maxHP;
-            }
+            SetHP();
 
             EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Reset, anim, TriggerType.SetTrigger);
             EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.IsDead, anim, false);
@@ -139,6 +140,7 @@ namespace Enemy
             EventManager.StartListening("PlayerDead", EnemyDataReset);
             EventManager.StartListening("EnemyStart", EnemyStart);
             EventManager.StartListening("EnemyStop", EnemyStop);
+            EventManager.StartListening("StartSkill0", StartAttack);
 
             EnemyStart();
 
@@ -163,10 +165,7 @@ namespace Enemy
                 isDamageCurrentTime = enemyData.damageDelay;
                 enemyData.hp -= enemyData.damagedValue;
 
-                if (hpBarFillImage != null)
-                {
-                    hpBarFillImage.fillAmount = (float)enemyData.hp / enemyData.maxHP;
-                }
+                SetHP();
 
                 enemyDamagedCommand.Execute();
 
@@ -220,7 +219,7 @@ namespace Enemy
         }
 
         // 적이 죽었을때 발동되는 코드
-        public void EnemyDestroy()
+        public virtual void EnemyDestroy()
         {
             gameObject.SetActive(false);
 
@@ -259,12 +258,33 @@ namespace Enemy
                     }
                 }
             }
+        }
 
-            if (!isAddPlayerEvent)
+        protected virtual void SetHP()
+        {
+            float fillValue = (float)enemyData.hp / enemyData.maxHP;
+
+            if (hpBarFillImage != null)
             {
-                EventManager.StartListening("StartSkill0", StartAttack);
+                if (hpTween.IsActive())
+                {
+                    hpTween.Kill();
+                }
 
-                isAddPlayerEvent = true;
+                hpTween = hpBarFillImage.DOFillAmount(fillValue, hpTweenTime);
+            }
+
+            if (hpBarDamageFillImage != null)
+            {
+                Util.DelayFunc(() =>
+                {
+                    if (damageHPTween.IsActive())
+                    {
+                        damageHPTween.Kill();
+                    }
+
+                    damageHPTween = hpBarDamageFillImage.DOFillAmount(fillValue, damageHPTweenTime);
+                }, hpTweenDelayTime);
             }
         }
 

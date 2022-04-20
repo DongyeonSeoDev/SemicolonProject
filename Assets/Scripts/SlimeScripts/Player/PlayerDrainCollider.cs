@@ -7,6 +7,9 @@ public class PlayerDrainCollider : MonoBehaviour
     [SerializeField]
     private LayerMask canDrainObjLayers;
 
+    [SerializeField]
+    private GameObject grabSoftBody = null;
+
     private List<Enemy.Enemy> tryDrainList = new List<Enemy.Enemy>();
     private List<Enemy.Enemy> doDrainList = new List<Enemy.Enemy>();
 
@@ -127,6 +130,7 @@ public class PlayerDrainCollider : MonoBehaviour
             if (enemy != null && hpPercentage <= canDrainHpPercentage) // 흡수 성공
             {
                 doDrainList.Add(enemy);
+                SpawnGrabObj(enemy.gameObject);
 
                 EventManager.TriggerEvent("TryDrain", other.transform.position, true);
 
@@ -162,6 +166,25 @@ public class PlayerDrainCollider : MonoBehaviour
                 drainMoveTimerDict.Add(other.gameObject, 0f);
             }
         }
+    }
+
+    private void SpawnGrabObj(GameObject obj)
+    {
+        GameObject grabObj = null;
+        bool spawned = false;
+
+        (grabObj, spawned) = SlimePoolManager.Instance.Find(grabSoftBody);
+
+        if(spawned)
+        {
+            grabObj.SetActive(true);
+        }
+        else
+        {
+            grabObj = Instantiate(grabSoftBody, SlimePoolManager.Instance.transform);
+        }
+
+        grabObj.GetComponent<GrabSoftBody>().OnSpawn(obj, Vector2.zero);
     }
 
     // Player.DoDrain의 역할을 대신하는 함수가 필요하다.
