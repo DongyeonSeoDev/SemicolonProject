@@ -103,7 +103,7 @@ public class GrabSoftBody : SoftBody
         }
 
         points[0].transform.localPosition = new Vector2(leftestLocalPos.x, downestLocalPos.y);
-        points[1].transform.localPosition = new Vector2(leftestLocalPos.x + gapAboutLefstestToRightest / 10f,
+        points[1].transform.localPosition = new Vector2(leftestLocalPos.x + gapAboutLefstestToRightest / 12f,
             downestLocalPos.y + gapAboutUpestToDownest / 4f);
         points[2].transform.localPosition = new Vector2(leftestLocalPos.x + gapAboutLefstestToRightest / 8f,
             downestLocalPos.y + gapAboutUpestToDownest / 2f);
@@ -114,7 +114,7 @@ public class GrabSoftBody : SoftBody
             downestLocalPos.y + gapAboutUpestToDownest / 3f);
         points[5].transform.localPosition = new Vector2(rightestLocalPos.x - gapAboutLefstestToRightest / 8f,
             downestLocalPos.y + gapAboutUpestToDownest / 2f);
-        points[6].transform.localPosition = new Vector2(rightestLocalPos.x - gapAboutLefstestToRightest / 10f,
+        points[6].transform.localPosition = new Vector2(rightestLocalPos.x - gapAboutLefstestToRightest / 12f,
             downestLocalPos.y + gapAboutUpestToDownest / 4f);
         points[7].transform.localPosition = new Vector2(rightestLocalPos.x, downestLocalPos.y);
     }
@@ -141,7 +141,7 @@ public class GrabSoftBody : SoftBody
             }
 
             spriteShapeController.spline.SetLeftTangent(i, GetTangentVec(i, true) / 4f);
-            spriteShapeController.spline.SetRightTangent(i, GetTangentVec(i, false) / 4f);
+            spriteShapeController.spline.SetRightTangent(i, -GetTangentVec(i, true) / 4f);
 
             spriteShapeController.spline.SetTangentMode(i, UnityEngine.U2D.ShapeTangentMode.Continuous);
         }

@@ -227,16 +227,19 @@ public class PCSoftBody : SoftBody
             : spriteShapeController.spline.GetPosition((idx + 1).Limit(0, spriteShapeController.spline.GetPointCount() - 1))) 
             - spriteShapeController.spline.GetPosition(idx); 
     }
-    private void CheckPasteNext(int idx)
-    {
-        Vector2 curPos = spriteShapeController.spline.GetPosition(idx);
-        Vector2 pastePos = spriteShapeController.spline.GetPosition((idx - 1).Limit(0, spriteShapeController.spline.GetPointCount() - 1));
-        Vector2 nextPos = spriteShapeController.spline.GetPosition((idx + 1).Limit(0, spriteShapeController.spline.GetPointCount() + 1));
+    //private void CheckPasteNext(int idx)
+    //{
+    //    Vector2 curPos = spriteShapeController.spline.GetPosition(idx);
+    //    Vector2 pastePos = spriteShapeController.spline.GetPosition((idx - 1).Limit(0, spriteShapeController.spline.GetPointCount() - 1));
+    //    Vector2 nextPos = spriteShapeController.spline.GetPosition((idx + 1).Limit(0, spriteShapeController.spline.GetPointCount() + 1));
 
-        Vector2 cur_paste_gap = curPos - pastePos;
-        Vector2 cur_next_gap = curPos - nextPos;
+    //    Vector2 cur_paste_gap = curPos - pastePos;
+    //    Vector2 cur_next_gap = curPos - nextPos;
 
+    //    if(cur_paste_gap.x < 0.1f)
+    //    {
 
-    }
+    //    }
+    //}
     #endregion
 }
