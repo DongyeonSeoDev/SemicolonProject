@@ -69,15 +69,6 @@ public class Player : MonoBehaviour
         }
     }
 
-    private float totalDamage = 0f;
-    /// <summary>
-    /// 지금까지 받은 총 데미지
-    /// </summary>
-    public float TotalDamage
-    {
-        get { return totalDamage; }
-    }
-
     #region 에너지 관련 변수들
     [Header("최대 에너지")]
     [SerializeField]
@@ -246,7 +237,7 @@ public class Player : MonoBehaviour
             }
 
             currentHp -= dm;
-            totalDamage += dm;
+            playerChoiceStatControl.TotalDamage += dm;
 
             SlimeGameManager.Instance.Player.PlayerChoiceStatControl.CheckEndurance();
 
@@ -291,7 +282,7 @@ public class Player : MonoBehaviour
             }
 
             currentHp -= dm;
-            totalDamage += dm;
+            playerChoiceStatControl.TotalDamage += dm;
 
             SlimeGameManager.Instance.Player.PlayerChoiceStatControl.CheckEndurance();
 
