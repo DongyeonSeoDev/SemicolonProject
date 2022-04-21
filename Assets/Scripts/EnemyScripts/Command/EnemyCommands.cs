@@ -330,7 +330,7 @@ namespace Enemy
                     }
                     else
                     {
-                        Debug.Log(enemyLootList[i].lootName);
+                        Debug.LogError(enemyLootList[i].lootName + "가 없습니다.");
                     }
                 }
             }

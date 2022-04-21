@@ -8,10 +8,11 @@ namespace Enemy
     {
         private void Start()
         {
-            EventManager.StartListening("PlayerSetActiveFalse", PlayerDeadEvent);
+            EventManager.StartListening("PlayerSetActiveFalse", EndEvent);
+            EventManager.StartListening("BossDead", EndEvent);
         }
 
-        public void PlayerDeadEvent()
+        public void EndEvent()
         {
             gameObject.SetActive(false);
         }

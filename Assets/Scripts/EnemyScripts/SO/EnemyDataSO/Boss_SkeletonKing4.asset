@@ -20,6 +20,12 @@ MonoBehaviour:
     animationName: attack
   - type: 6
     animationName: attackEnd
+  - type: 0
+    animationName: reset
+  - type: 1
+    animationName: dead
+  - type: 2
+    animationName: isDie
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   damagedColor: {r: 1, g: 0, b: 0, a: 1}
   enemyDeadEffectColor: {r: 0.454902, g: 0.38823533, b: 0.5019608, a: 0}
