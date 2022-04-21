@@ -462,10 +462,18 @@ public class StageManager : MonoSingleton<StageManager>
             return;
         }
 
-        Util.DelayFunc(() =>
+        if (currentArea != AreaType.BOSS)
+        {
+            Util.DelayFunc(() =>
+            {
+                EventManager.TriggerEvent("SpawnEnemy", id);
+            }, 1f, this);
+        }
+        else
         {
             EventManager.TriggerEvent("SpawnEnemy", id);
-        }, 1f, this);
+        }
+
         currentStageMonsterBundleOrder++;
     }
 
