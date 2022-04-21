@@ -69,10 +69,20 @@ public class PlayerInput : MonoBehaviour
         set { isPauseByTuto = value; }
     }
 
+    [SerializeField]
+    private bool isPauseByCutScene = false;
+    public bool IsPauseByCutScene
+    {
+        get { return isPauseByCutScene; }
+        set { isPauseByCutScene = value; }
+    }
+
     private void OnEnable()
     {
         EventManager.StartListening("PlayerDead", PlayerReset);
         EventManager.StartListening("ChangeBody", PlayerReset);
+        EventManager.StartListening("StartCutScene", PauseByCutScene);
+        EventManager.StartListening("EndCutScene", ResumeByCutScene);
 
         TimeManager.timePauseAction += TimePause;
         TimeManager.timeResumeAction += TimeResume;
@@ -81,6 +91,8 @@ public class PlayerInput : MonoBehaviour
     {
         EventManager.StopListening("PlayerDead", PlayerReset);
         EventManager.StopListening("ChangeBody", PlayerReset);
+        EventManager.StopListening("StartCutScene", PauseByCutScene);
+        EventManager.StopListening("EndCutScene", ResumeByCutScene);
 
         TimeManager.timePauseAction -= TimePause;
         TimeManager.timeResumeAction -= TimeResume;
@@ -100,7 +112,8 @@ public class PlayerInput : MonoBehaviour
 
     void Update()
     {
-        if (!isPauseByTuto && !isPause && !(playerState.IsDead || playerState.IsSturn || playerState.IsKnockBack || playerState.IsDrain))
+        if (!(isPauseByTuto || isPause || isPauseByCutScene) &&
+            !(playerState.IsDead || playerState.IsSturn || playerState.IsKnockBack || playerState.IsDrain))
         {
             if (!playerState.Chargning)
             {
@@ -265,5 +278,13 @@ public class PlayerInput : MonoBehaviour
     private void TimeResume()
     {
         isPause = false;
+    }
+    private void PauseByCutScene()
+    {
+        isPauseByCutScene = true;
+    }
+    private void ResumeByCutScene()
+    {
+        isPauseByCutScene = false;
     }
 }
