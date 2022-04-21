@@ -582,7 +582,7 @@ public class StageManager : MonoSingleton<StageManager>
                 SoundManager.Instance.SetBGMPitchByLerp(1, -0.7f, 1f);
                 ImprecationObj io = PoolManager.GetItem<ImprecationObj>("ImprecationObjPref1");
                 io.transform.position = currentStage.objSpawnPos.position;
-                Util.DelayFunc(() => io.Interaction(), 2.3f);
+                Util.DelayFunc(() => io.Interaction(), 4.5f);
                 break;
 
             case RandomRoomType.MONSTER:  //몬스터 구역
@@ -605,7 +605,7 @@ public class StageManager : MonoSingleton<StageManager>
                 }
                 else
                 {
-                    Util.DelayFunc(() => ro.Interaction(), 2.3f);
+                    Util.DelayFunc(() => ro.Interaction(), 4.5f);
                 }
                 break;
         }
