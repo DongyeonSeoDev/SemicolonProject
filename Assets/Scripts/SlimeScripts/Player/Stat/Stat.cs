@@ -100,18 +100,19 @@ public class EternalStat
 [Serializable]
 public class ChoiceStat
 {
-    public int overweight;
-    public int patience;
-    public int luck;
+    public int overweight; // 과체중
+    public int patience; // 인내력
+    public int endurance; // 맷집
+    public int luck; // 운
 
-    public float viscosity;
-    public float humidity;
+    public float viscosity; // 점성
+    public float humidity; // 습도
 
-    public float affinity;
-    public float dominion;
+    public float affinity; // 친밀도
+    public float dominion; // 지배력
 
-    public float marineLifeFitness;
-    public float landCreatureFitness;
+    public float marineLifeFitness; // 해양생물 적합력
+    public float landCreatureFitness; // 지상생물 적합력
 
     public float cookingAbility;
 }

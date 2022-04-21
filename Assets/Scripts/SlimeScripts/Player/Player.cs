@@ -26,6 +26,13 @@ public class Player : MonoBehaviour
     }
 
     [SerializeField]
+    private PlayerChoiceStatControl playerChoiceStatControl = null;
+    public PlayerChoiceStatControl PlayerChoiceStatControl
+    {
+        get { return playerChoiceStatControl; }
+    }
+
+    [SerializeField]
     private OrderInLayerConroller playerOrderInLayerController = null;
     public OrderInLayerConroller PlayerOrderInLayerController
     {
@@ -130,6 +137,8 @@ public class Player : MonoBehaviour
     {
         playerState = GetComponent<PlayerState>();
         playerInput = GetComponent<PlayerInput>();
+        playerChoiceStatControl = GetComponent<PlayerChoiceStatControl>();
+
         playerOrderInLayerController = GetComponentInChildren<OrderInLayerConroller>();
     }
     private void Start()
@@ -228,6 +237,9 @@ public class Player : MonoBehaviour
             }
 
             currentHp -= dm;
+            playerChoiceStatControl.TotalDamage += dm;
+
+            SlimeGameManager.Instance.Player.PlayerChoiceStatControl.CheckEndurance();
 
             if (currentHp <= 0)
             {
@@ -270,6 +282,9 @@ public class Player : MonoBehaviour
             }
 
             currentHp -= dm;
+            playerChoiceStatControl.TotalDamage += dm;
+
+            SlimeGameManager.Instance.Player.PlayerChoiceStatControl.CheckEndurance();
 
             if (currentHp <= 0)
             {
