@@ -17,16 +17,8 @@ public class AcquisitionUI : MonoBehaviour
         cvsg.blocksRaycasts = on;
     }
 
-    /*private IEnumerator Start()
+    private void Start()
     {
-        while (!StoredData.HasObjectKey("SetUIAcqState")) yield return null;
-
-        OnUIVisible(GameManager.Instance.savedData.userInfo.uiActiveDic[uiType]);
-
-        if (TutorialManager.Instance.IsTestMode && !on)  //Test
-        {
-            OnUIVisible(true);
-            GameManager.Instance.savedData.userInfo.uiActiveDic[uiType] = true;
-        }
-    }*/
+        OnUIVisible(GameManager.Instance.savedData.userInfo.uiActiveDic[keyType]);
+    }
 }

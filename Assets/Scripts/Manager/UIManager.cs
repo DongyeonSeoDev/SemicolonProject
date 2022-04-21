@@ -90,6 +90,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     #endregion
 
     #region CanvasGroup
+    //쉽게 구분하려고 배열로 안함
     [Space(10)]
     public CanvasGroup normalPanelCanvasg;
     public CanvasGroup priorNormalPanelCvsg;
@@ -97,6 +98,10 @@ public partial class UIManager : MonoSingleton<UIManager>
     public CanvasGroup worldUICvsg;
     public CanvasGroup ordinaryCvsg;
     public CanvasGroup msgCvsg;
+    public CanvasGroup menuCvsg;
+    [SerializeField] private CanvasGroup loadingCvsg;
+
+    private List<CanvasGroup> cvsgList = new List<CanvasGroup>();
     #endregion
 
     #region Warning Window UI
@@ -119,7 +124,6 @@ public partial class UIManager : MonoSingleton<UIManager>
     [SerializeField] private Text confirmPanelText;
     #endregion
 
-    [SerializeField] private CanvasGroup loadingCvsg;
 
     [SerializeField] private ResolutionOption resolutionOption;
 
@@ -174,6 +178,13 @@ public partial class UIManager : MonoSingleton<UIManager>
         {
             iconSelBtnDataDic.Add(iconSelBtnDataList[i].first.name, new Triple<Sprite, string, string>(iconSelBtnDataList[i].first, iconSelBtnDataList[i].second, iconSelBtnDataList[i].third));
         }
+
+        cvsgList.Add(msgCvsg);
+        cvsgList.Add(menuCvsg);
+        cvsgList.Add(worldUICvsg);
+        cvsgList.Add(ordinaryCvsg);
+        cvsgList.Add(priorNormalPanelCvsg);
+        cvsgList.Add(normalPanelCanvasg);
 
         //setting.InitSet();
     }
@@ -264,6 +275,8 @@ public partial class UIManager : MonoSingleton<UIManager>
         {
             normalPanelCanvasg.DOFade(start ? 0 : 1, 0.25f);
         }));
+        EventManager.StartListening("StartCutScene", () => SetUIAlpha(0f));
+        EventManager.StartListening("EndCutScene", () => SetUIAlpha(1f));
     }
 
     #endregion
@@ -277,7 +290,34 @@ public partial class UIManager : MonoSingleton<UIManager>
         DelayHPFill();
     }
 
-    private bool CheckInputAndActive(KeyAction key) => Input.GetKeyDown(KeySetting.keyDict[key]) && gm.savedData.userInfo.uiActiveDic[key];
+    private bool CheckInputAndActive(KeyAction key)
+    {
+
+        if(Input.GetKeyDown(KeySetting.keyDict[key]))
+        {
+            if(gm.savedData.userInfo.uiActiveDic[key])
+            {
+                return true;
+            }
+
+            KeyActionManager.Instance.SetPlayerHeadText("?", 0.5f);
+            return false;
+        }
+
+        return false;
+    }
+
+    private void SetUIAlpha(float a)
+    {
+        a = Mathf.Clamp(a, 0f, 1f);
+        bool alphaZero = a == 0f;
+        for(int i = 0; i<cvsgList.Count; i++)
+        {
+            cvsgList[i].alpha = a;
+            cvsgList[i].interactable = !alphaZero;
+            cvsgList[i].blocksRaycasts = !alphaZero;
+        }
+    }
 
     private void UserInput()
     {
@@ -292,6 +332,10 @@ public partial class UIManager : MonoSingleton<UIManager>
                 if (gm.savedData.userInfo.uiActiveDic[KeyAction.SETTING])
                 {
                     OnUIInteract(UIType.SETTING);
+                }
+                else
+                {
+                    KeyActionManager.Instance.SetPlayerHeadText("?", 0.5f);
                 }
             }
         }
