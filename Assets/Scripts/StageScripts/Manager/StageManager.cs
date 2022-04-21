@@ -437,8 +437,8 @@ public class StageManager : MonoSingleton<StageManager>
                 return;   //랜덤 맵이면 함수를 빠져나간다.
             case AreaType.BOSS:
                 SetMonsterStage();
-                EventManager.TriggerEvent("BossSpawn", CurrentMonstersOrderID);
-                currentStageMonsterBundleOrder++;
+                //EventManager.TriggerEvent("BossSpawn", CurrentMonstersOrderID);
+                //currentStageMonsterBundleOrder++;
                 break;
         }
 
@@ -462,10 +462,18 @@ public class StageManager : MonoSingleton<StageManager>
             return;
         }
 
-        Util.DelayFunc(() =>
+        if (currentArea != AreaType.BOSS)
+        {
+            Util.DelayFunc(() =>
+            {
+                EventManager.TriggerEvent("SpawnEnemy", id);
+            }, 1f, this);
+        }
+        else
         {
             EventManager.TriggerEvent("SpawnEnemy", id);
-        }, 1f, this);
+        }
+
         currentStageMonsterBundleOrder++;
     }
 
@@ -477,7 +485,7 @@ public class StageManager : MonoSingleton<StageManager>
 
     public void StartNextStage()
     {
-        if (currentArea == AreaType.MONSTER)
+        if (currentArea == AreaType.MONSTER || currentArea == AreaType.BOSS)
         {
             NextEnemy();
         }
@@ -582,7 +590,7 @@ public class StageManager : MonoSingleton<StageManager>
                 SoundManager.Instance.SetBGMPitchByLerp(1, -0.7f, 1f);
                 ImprecationObj io = PoolManager.GetItem<ImprecationObj>("ImprecationObjPref1");
                 io.transform.position = currentStage.objSpawnPos.position;
-                Util.DelayFunc(() => io.Interaction(), 2.3f);
+                Util.DelayFunc(() => io.Interaction(), 4.5f);
                 break;
 
             case RandomRoomType.MONSTER:  //몬스터 구역
@@ -605,7 +613,7 @@ public class StageManager : MonoSingleton<StageManager>
                 }
                 else
                 {
-                    Util.DelayFunc(() => ro.Interaction(), 2.3f);
+                    Util.DelayFunc(() => ro.Interaction(), 4.5f);
                 }
                 break;
         }

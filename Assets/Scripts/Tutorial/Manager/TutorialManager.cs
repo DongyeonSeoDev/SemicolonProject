@@ -92,7 +92,11 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
         if(!gm.savedData.userInfo.uiActiveDic[KeyAction.SETTING])
         {
-            tutorialPhases.Add(new SettingPhase(10, () => UIOn(KeyAction.SETTING)));
+            tutorialPhases.Add(new SettingPhase(10, () =>
+            {
+                UIOn(KeyAction.SETTING);
+                gm.savedData.userInfo.uiActiveDic[KeyAction.QUIT] = true;
+            }));
         }
 
         um.StartLoadingIn();
