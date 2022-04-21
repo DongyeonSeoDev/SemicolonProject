@@ -26,6 +26,13 @@ public class Player : MonoBehaviour
     }
 
     [SerializeField]
+    private PlayerChoiceStatControl playerChoiceStatControl = null;
+    public PlayerChoiceStatControl PlayerChoiceStatControl
+    {
+        get { return playerChoiceStatControl; }
+    }
+
+    [SerializeField]
     private OrderInLayerConroller playerOrderInLayerController = null;
     public OrderInLayerConroller PlayerOrderInLayerController
     {
@@ -60,6 +67,15 @@ public class Player : MonoBehaviour
                 getExtraDamagePercantage = 0f;
             }
         }
+    }
+
+    private float totalDamage = 0f;
+    /// <summary>
+    /// 지금까지 받은 총 데미지
+    /// </summary>
+    public float TotalDamage
+    {
+        get { return totalDamage; }
     }
 
     #region 에너지 관련 변수들
@@ -130,6 +146,8 @@ public class Player : MonoBehaviour
     {
         playerState = GetComponent<PlayerState>();
         playerInput = GetComponent<PlayerInput>();
+        playerChoiceStatControl = GetComponent<PlayerChoiceStatControl>();
+
         playerOrderInLayerController = GetComponentInChildren<OrderInLayerConroller>();
     }
     private void Start()
@@ -228,6 +246,9 @@ public class Player : MonoBehaviour
             }
 
             currentHp -= dm;
+            totalDamage += dm;
+
+            SlimeGameManager.Instance.Player.PlayerChoiceStatControl.CheckEndurance();
 
             if (currentHp <= 0)
             {
@@ -270,6 +291,9 @@ public class Player : MonoBehaviour
             }
 
             currentHp -= dm;
+            totalDamage += dm;
+
+            SlimeGameManager.Instance.Player.PlayerChoiceStatControl.CheckEndurance();
 
             if (currentHp <= 0)
             {
