@@ -107,7 +107,7 @@ public partial class GameManager : MonoSingleton<GameManager>
             {
                 saveData.userInfo.uiActiveDic = KeySetting.InitKeyActionActive;
             }
-            
+           
         }
         //슬라임에게 스탯 데이터 넣기
         //옵션 설정 내용 넣기 

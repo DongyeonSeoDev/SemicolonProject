@@ -105,7 +105,6 @@ namespace Enemy
 
             EventManager.StartListening("PlayerDead", StopAttack);
             EventManager.StartListening("BossDead", StopAttack);
-            EventManager.StartListening("EnemySpawnAfter", ActiveHPBar);
         }
 
         protected override void OnDisable()
@@ -114,12 +113,6 @@ namespace Enemy
 
             EventManager.StopListening("PlayerDead", StopAttack);
             EventManager.StopListening("BossDead", StopAttack);
-            EventManager.StopListening("EnemySpawnAfter", ActiveHPBar);
-        }
-
-        private void ActiveHPBar()
-        {
-            bossHPBar.SetActiveHPBar(true);
         }
 
         protected override void SetHP(bool useTween)
@@ -133,6 +126,24 @@ namespace Enemy
             {
                 EventManager.TriggerEvent("BossDead");
             }
+        }
+
+        public override void MoveEnemy()
+        {
+            EventManager.TriggerEvent("StartCutScene");
+
+            Debug.Log("컷씬 테스트 중입니다. 잠시만 기다려 주세요.");
+
+            Util.DelayFunc(() =>
+            {
+                bossHPBar.SetActiveHPBar(true);
+            }, 9f);
+
+            Util.DelayFunc(() =>
+            {
+                EventManager.TriggerEvent("EndCutScene");
+                base.MoveEnemy();
+            }, 10f);
         }
 
         private Vector2 CheckPosition(Vector2 direction)

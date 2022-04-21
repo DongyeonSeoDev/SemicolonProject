@@ -37,7 +37,6 @@ namespace Enemy
 
             EventManager.StartListening("AfterPlayerRespawn", PlayerRespawnEvent);
             EventManager.StartListening("SpawnEnemy", SpawnEnemy);
-            EventManager.StartListening("BossSpawn", BossSpawn);
 
             CSVEnemySpawn.Instance.GetData();
         }
@@ -49,14 +48,16 @@ namespace Enemy
 
         private void SpawnEnemy(string stageId)
         {
-            if (!CSVEnemySpawn.Instance.enemySpawnDatas.ContainsKey(stageId))
+            var spawnData = CSVEnemySpawn.Instance.enemySpawnDatas;
+
+            if (!spawnData.ContainsKey(stageId))
             {
                 Debug.LogError("잘못된 stageId 입니다. SpawnEnemy 실행 실패 : " + stageId);
             }
 
-            for (int i = 0; i < CSVEnemySpawn.Instance.enemySpawnDatas[stageId].Count; i++)
+            for (int i = 0; i < spawnData[stageId].Count; i++)
             {
-                EnemySpawnData data = CSVEnemySpawn.Instance.enemySpawnDatas[stageId][i];
+                EnemySpawnData data = spawnData[stageId][i];
 
                 if (enemySpawnEffectPositionDic.ContainsKey(data.enemyId))
                 {
@@ -67,39 +68,58 @@ namespace Enemy
                 }
             }
 
+            for (int i = 0; i < spawnData[stageId].Count; i++) // 보스 라면 대기 없이 바로 소환후 움직임
+            {
+                if (spawnData[stageId][i].enemyId == Type.Boss_SkeletonKing_50)
+                {
+                    Spawn(spawnData[stageId], stageId);
+                    Move(stageId);
+
+                    return;
+                }
+            }
+
             Util.DelayFunc(() =>
             {
-                for (int i = 0; i < CSVEnemySpawn.Instance.enemySpawnDatas[stageId].Count; i++)
-                {
-                    EnemyPoolData enemy = EnemyPoolManager.Instance.GetPoolObject(CSVEnemySpawn.Instance.enemySpawnDatas[stageId][i].enemyId, CSVEnemySpawn.Instance.enemySpawnDatas[stageId][i].position);
+                Spawn(spawnData[stageId], stageId);
 
-                    if (enemyDictionary.ContainsKey(stageId))
-                    {
-                        enemyDictionary[stageId].Add(enemy.GetComponent<Enemy>());
-                    }
-                    else
-                    {
-                        enemyDictionary.Add(stageId, new List<Enemy>());
-                        enemyDictionary[stageId].Add(enemy.GetComponent<Enemy>());
-                    }
-                }
-
-                EnemyManager.Instance.enemyCount = CSVEnemySpawn.Instance.enemySpawnDatas[stageId].Count;  //Set Enemy Count
+                EnemyManager.Instance.enemyCount = spawnData[stageId].Count;
                 EventManager.TriggerEvent("EnemySpawnAfter");
 
                 Util.DelayFunc(() => 
                 {
                     for (int i = 0; i < enemyDictionary[stageId].Count; i++)
                     {
-                        enemyDictionary[stageId][i].MoveEnemy();
+                        Move(stageId);
                     }
                 }, 1f);
             }, 2.5f);
         }
 
-        private void BossSpawn(string stageId)
+        private void Spawn(List<EnemySpawnData> spawnData, string stageId)
         {
-            SpawnEnemy(stageId);
+            for (int i = 0; i < spawnData.Count; i++)
+            {
+                EnemyPoolData enemy = EnemyPoolManager.Instance.GetPoolObject(spawnData[i].enemyId, spawnData[i].position);
+
+                if (enemyDictionary.ContainsKey(stageId))
+                {
+                    enemyDictionary[stageId].Add(enemy.GetComponent<Enemy>());
+                }
+                else
+                {
+                    enemyDictionary.Add(stageId, new List<Enemy>());
+                    enemyDictionary[stageId].Add(enemy.GetComponent<Enemy>());
+                }
+            }
+        }
+
+        private void Move(string stageId)
+        {
+            for (int i = 0; i < enemyDictionary[stageId].Count; i++)
+            {
+                enemyDictionary[stageId][i].MoveEnemy();
+            }
         }
     }
 }

@@ -388,7 +388,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hpBarRectTransform: {fileID: 4680335053009425283}
   fillHpBar: {fileID: 3672270168091823654}
-  damageHpBar: {fileID: 0}
+  damageHpBar: {fileID: 2644667816589147007}
   setActiveMoveValue: {x: 0, y: 50}
   setActiveMoveTimeValue: 0.5
   fillAmountDelayTime: 0.5
