@@ -399,6 +399,8 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     private bool ExceptionHandler(UIType type) //UI여닫는 상호작용에 대한 예외처리. true를 리턴하면 상호작용 안함 
     {
+        bool bValue = false;
+
         if (gameUIList[(int)type].GetComponent<MenuPanel>() != null) //메뉴 UI중 하나와 상호작용할 때
         {
             if(!Util.IsActiveGameUI(UIType.MENU)) //메뉴창이 꺼져있으면
@@ -416,7 +418,7 @@ public partial class UIManager : MonoSingleton<UIManager>
                 }
                 else
                 {
-                    return true;
+                    bValue = true;
                 }
             }
         }
@@ -488,7 +490,7 @@ public partial class UIManager : MonoSingleton<UIManager>
                 }
                 break;
         }
-        return false;
+        return bValue;
     }
 
     public void UpdateUIStack(GameUI ui, bool add = true) //열려있는 UI리스트 관리
