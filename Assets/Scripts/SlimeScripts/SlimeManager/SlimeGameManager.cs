@@ -58,6 +58,8 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
     }
 
     private EternalStat pasteBodyAdditionalStat = new EternalStat();
+    // pasteExtraStat
+    private Dictionary<string, EternalStat> currentExtraStatDict = new Dictionary<string, EternalStat>();// 
 
     private bool canBodyChange = true;
 
@@ -248,7 +250,31 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
                 pasteBodyAdditionalStat = new EternalStat();
             }
 
-            pasteBodyAdditionalStat = newBodyData.Item2 + GetExtraUpStat(bodyId);
+            pasteBodyAdditionalStat = newBodyData.Item2;
+
+            #region 변신한 몸체의 동화율에의한 슬라임 스탯 증가 처리
+
+            EternalStat extraStat = GetExtraUpStat(bodyId);
+
+            if (currentExtraStatDict.ContainsKey(bodyId))
+            {
+                if (currentExtraStatDict[bodyId] != extraStat)
+                {
+                    Player.PlayerStat.additionalEternalStat -= currentExtraStatDict[bodyId];
+
+                    currentExtraStatDict[bodyId] = extraStat;
+
+                    Player.PlayerStat.additionalEternalStat += currentExtraStatDict[bodyId];
+                }
+            }
+            else
+            {
+                currentExtraStatDict.Add(bodyId, extraStat);
+
+                Player.PlayerStat.additionalEternalStat += currentExtraStatDict[bodyId];
+            }
+
+            #endregion
 
             Player.PlayerStat.additionalEternalStat += pasteBodyAdditionalStat;
 
