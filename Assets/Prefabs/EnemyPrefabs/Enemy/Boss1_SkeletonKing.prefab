@@ -471,17 +471,21 @@ MonoBehaviour:
   count: 1
   enemyDataSO: {fileID: 11400000, guid: 4f1b72455347437428af09d0684e774b, type: 2}
   hpBarFillImage: {fileID: 0}
+  hpBarDamageFillImage: {fileID: 0}
   hpBar: {fileID: 0}
   enemyAttackCheck:
   - {fileID: 7599915856301365159}
   - {fileID: 3884926912787647165}
+  hpTweenTime: 0.1
+  hpTweenDelayTime: 0.3
+  damageHPTweenTime: 0.2
   specialAttack3HPPercent:
   - 60
   - 30
   movePivot: {fileID: 8275286282891348784}
-  specialAttackTime: 6
   fireCount: 9
   maxAttackCount: 7
+  specialAttackTime: 6
   bossMoveSpeed: 30
   fireDistance: 2
   fireSpawnTime: 0.1

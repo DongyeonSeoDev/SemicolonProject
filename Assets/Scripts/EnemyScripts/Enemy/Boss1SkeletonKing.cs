@@ -117,13 +117,6 @@ namespace Enemy
             EventManager.StopListening("EnemySpawnAfter", ActiveHPBar);
         }
 
-        public override void EnemyDestroy()
-        {
-            EventManager.TriggerEvent("BossDead");
-
-            base.EnemyDestroy();
-        }
-
         private void ActiveHPBar()
         {
             bossHPBar.SetActiveHPBar(true);
@@ -134,6 +127,11 @@ namespace Enemy
             if (bossHPBar != null)
             {
                 bossHPBar.SetFill();
+            }
+
+            if (enemyData.hp <= 0)
+            {
+                EventManager.TriggerEvent("BossDead");
             }
         }
 
