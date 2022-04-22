@@ -280,7 +280,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
             //player.CurrentHp = (player.PlayerStat.MaxHp * hpPercentage).Round();
             Player.CurrentHp = Player.PlayerStat.MaxHp * hpPercentage;
-
+ 
             newBody.AddComponent<PlayerBodyScript>();
 
             enemy = newBody.GetComponent<Enemy.Enemy>();
