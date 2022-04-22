@@ -101,7 +101,13 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
                 energeBarAndEff.first.transform.DOScaleX(0, 0.3f).OnComplete(() => energeBarAndEff.first.SetActive(false));
             }
         });
+
+        EventManager.StartListening("StartCutScene", () => SetActiveSlimeEnergeEffect(false));
+        EventManager.StartListening("EndCutScene", () => SetActiveSlimeEnergeEffect(true));
     }
+
+    void SetActiveSlimeEnergeEffect(bool active) => energeParticleEff.gameObject.SetActive(active);
+
 
     public void UpdateSkillKeyCode()
     {

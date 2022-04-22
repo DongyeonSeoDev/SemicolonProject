@@ -92,7 +92,10 @@ public class EffectManager : MonoSingleton<EffectManager>
             CallFollowTargetGameEffect("BodyChangeEff", GameManager.Instance.slimeFollowObj, Vector3.zero, 1);
         });
 
-        for(int i=0; i< gameEffects.Length; i++)
+        EventManager.StartListening("StartCutScene", () => hpFillEffect.gameObject.SetActive(false));
+        EventManager.StartListening("EndCutScene", () => hpFillEffect.gameObject.SetActive(true));
+
+        for (int i=0; i< gameEffects.Length; i++)
         {
             PoolManager.CreatePool(gameEffects[i].first, transform, gameEffects[i].second, gameEffects[i].third ?? gameEffects[i].first.name);
         }

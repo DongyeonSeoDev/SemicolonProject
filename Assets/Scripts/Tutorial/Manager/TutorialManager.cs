@@ -14,7 +14,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     //처음에 안보일 UI들 (KeyAction으로 처리하지 않을 것들)
     public Transform hpUI, energeBarUI;
     public Transform[] skillUIArr;
-    public Transform changeableBodysUI;
+    public Transform[] changeableBodysUIArr;
 
     //튜토리얼 진행중인가
     public bool IsTutorialStage => !GameManager.Instance.savedData.tutorialInfo.isEnded;
@@ -64,10 +64,11 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         //Init Etc UI Active
         hpUI.gameObject.SetActive(active);
         energeBarUI.gameObject.SetActive(active);
-        changeableBodysUI.gameObject.SetActive(active);
+        
         for (int i = 0; i < skillUIArr.Length; i++)
         {
             skillUIArr[i].gameObject.SetActive(active);
+            changeableBodysUIArr[i].gameObject.SetActive(active);
         }
 
         //PlayerFollowLight Init Setting
