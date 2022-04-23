@@ -84158,9 +84158,14 @@ PlayableDirector:
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
   m_InitialTime: 0
-  m_SceneBindings: []
+  m_SceneBindings:
+  - key: {fileID: 0}
+    value: {fileID: 0}
+  - key: {fileID: 0}
+    value: {fileID: 0}
   m_ExposedReferences:
-    m_References: []
+    m_References:
+    - 54c5a69ee3507474b906e132158e97c5: {fileID: 0}
 --- !u!4 &8992278161115749050
 Transform:
   m_ObjectHideFlags: 0
@@ -84185,6 +84190,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8992278161115749050}
   - component: {fileID: 8992278161115748997}
+  - component: {fileID: 8992278161115749052}
   m_Layer: 0
   m_Name: Director
   m_TagString: Untagged
@@ -84192,6 +84198,36 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &8992278161115749052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8992278161115749051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: b95ac18d068e42d4dafb3a393883bcec, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 8992278161115749051}
+          m_TargetAssemblyTypeName: 
+          m_MethodName: 
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: 
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &8992278162483316746
 GameObject:
   m_ObjectHideFlags: 0
@@ -84221,6 +84257,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec845ee32a8a8f74faa2ec90725f0935, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeLineAssets:
+  - {fileID: 11400000, guid: 76a1a3b41af8d764c859e153e36ded97, type: 2}
   pd: {fileID: 8992278161115748997}
 --- !u!4 &8992278162483316757
 Transform:

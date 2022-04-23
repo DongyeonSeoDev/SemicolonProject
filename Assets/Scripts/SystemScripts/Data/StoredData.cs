@@ -10,7 +10,7 @@ public static class StoredData
     public static void SetObjectKey(string key, object data)
     {
         //objDataDic[key] = data;  //∞¡ ¿Ã∑∏∞‘ πŸ∑Œ «ÿµµ µ .
-
+        
         if(!objDataDic.ContainsKey(key))
             objDataDic.Add(key, data);
         else
