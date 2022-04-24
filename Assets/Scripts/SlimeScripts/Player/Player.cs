@@ -235,9 +235,12 @@ public class Player : MonoBehaviour
             {
                 dm = 0;
             }
+            else
+            {
+                playerChoiceStatControl.TotalDamage += dm;
+            }
 
             currentHp -= dm;
-            playerChoiceStatControl.TotalDamage += dm;
 
             SlimeGameManager.Instance.Player.PlayerChoiceStatControl.CheckEndurance();
 
@@ -280,9 +283,12 @@ public class Player : MonoBehaviour
             {
                 dm = 0;
             }
+            else
+            {
+                playerChoiceStatControl.TotalDamage += dm;
+            }
 
             currentHp -= dm;
-            playerChoiceStatControl.TotalDamage += dm;
 
             SlimeGameManager.Instance.Player.PlayerChoiceStatControl.CheckEndurance();
 
