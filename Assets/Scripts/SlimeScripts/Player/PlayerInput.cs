@@ -113,7 +113,7 @@ public class PlayerInput : MonoBehaviour
     void Update()
     {
         if (!(isPauseByTuto || isPause || isPauseByCutScene) &&
-            !(playerState.IsDead || playerState.IsSturn || playerState.IsKnockBack || playerState.IsDrain))
+            !(playerState.IsDead || playerState.IsStun || playerState.IsKnockBack || playerState.IsDrain))
         {
             if (!playerState.Chargning)
             {

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerDrainCollider : MonoBehaviour
+public class TutorialDrainCollider : MonoBehaviour
 {
     [SerializeField]
     private LayerMask canDrainObjLayers;
@@ -10,8 +10,8 @@ public class PlayerDrainCollider : MonoBehaviour
     [SerializeField]
     private GameObject grabSoftBody = null;
 
-    private List<Enemy.Enemy> tryDrainList = new List<Enemy.Enemy>();
-    private List<Enemy.Enemy> doDrainList = new List<Enemy.Enemy>();
+    private List<TutorialEnemy> tryDrainList = new List<TutorialEnemy>();
+    private List<TutorialEnemy> doDrainList = new List<TutorialEnemy>();
 
     private float drainTime = 3f;
     public float DrainTime
@@ -65,7 +65,7 @@ public class PlayerDrainCollider : MonoBehaviour
     {
         if (drainTimer > 0f)
         {
-            List<Enemy.Enemy> removeList = new List<Enemy.Enemy>();
+            List<TutorialEnemy> removeList = new List<TutorialEnemy>();
             drainTimer -= Time.deltaTime;
 
             if (drainTimer <= 0f)
@@ -115,10 +115,11 @@ public class PlayerDrainCollider : MonoBehaviour
             //Drain되는 오브젝트는 삭제처리
             SlimeGameManager.Instance.Player.DrainList.Add(other.gameObject);
 
-            Enemy.Enemy enemy = other.GetComponent<Enemy.Enemy>();
+            TutorialEnemy enemy = other.GetComponent<TutorialEnemy>();
 
             Vector2 dir = (transform.position - other.transform.position).normalized;
-            float hpPercentage = enemy.EnemyHpPercent();// 닿은    적의 현재 체력의 퍼센트를 구함
+            //float hpPercentage = enemy.EnemyHpPercent();// 닿은    적의 현재 체력의 퍼센트를 구함
+            float hpPercentage = 0f;
 
             if (hpPercentage <= 0f)
             {
@@ -197,7 +198,7 @@ public class PlayerDrainCollider : MonoBehaviour
 
     private void CheckDrainMoveTime()
     {
-        List<Enemy.Enemy> removeList = new List<Enemy.Enemy> ();
+        List<TutorialEnemy> removeList = new List<TutorialEnemy> ();
 
         try
         {
