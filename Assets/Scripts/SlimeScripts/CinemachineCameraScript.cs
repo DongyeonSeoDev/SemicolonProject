@@ -27,16 +27,6 @@ public class CinemachineCameraScript : MonoSingleton<CinemachineCameraScript>
 
         SetCinemachineFollow(SlimeGameManager.Instance.CurrentPlayerBody.transform);
         SetCinemachineConfiner(boundingCollider);
-
-        EventManager.StartListening("StartCutScene", () =>
-        {
-            SetCamera(false);
-        });
-
-        EventManager.StartListening("EndCutScene", () =>
-        {
-            SetCamera(true);
-        });
     }
 
     public void SetCinemachineFollow(Transform target)
@@ -61,10 +51,5 @@ public class CinemachineCameraScript : MonoSingleton<CinemachineCameraScript>
         yield return new WaitForSeconds(duration);
         cinemachineNoise.m_AmplitudeGain = 0;
         cinemachineNoise.m_FrequencyGain = 0;
-    }
-
-    private void SetCamera(bool isActive)
-    {
-        cinemachine.enabled = isActive;
     }
 }

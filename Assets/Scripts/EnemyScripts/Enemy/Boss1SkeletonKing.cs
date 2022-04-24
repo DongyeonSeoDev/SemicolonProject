@@ -138,13 +138,13 @@ namespace Enemy
             Util.DelayFunc(() =>
             {
                 bossHPBar.SetActiveHPBar(true);
-            }, 2f);
+            }, 5f);
 
             Util.DelayFunc(() =>
             {
                 EventManager.TriggerEvent("EndCutScene");
                 base.MoveEnemy();
-            }, 3f);
+            }, 6f);
         }
 
         private Vector2 CheckPosition(Vector2 direction)
