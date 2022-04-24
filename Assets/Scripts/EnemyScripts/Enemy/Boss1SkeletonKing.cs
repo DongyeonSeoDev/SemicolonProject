@@ -137,14 +137,24 @@ namespace Enemy
 
             Util.DelayFunc(() =>
             {
-                bossHPBar.SetActiveHPBar(true);
+                bossHPBar.SetActiveBossName(true);
+            }, 3f);
+
+            Util.DelayFunc(() =>
+            {
+                bossHPBar.SetActiveBossName(false);
             }, 5f);
+
+            Util.DelayFunc(() =>
+            {
+                bossHPBar.SetActiveHPBar(true);
+            }, 6f);
 
             Util.DelayFunc(() =>
             {
                 EventManager.TriggerEvent("EndCutScene");
                 base.MoveEnemy();
-            }, 6f);
+            }, 7f);
         }
 
         private Vector2 CheckPosition(Vector2 direction)
