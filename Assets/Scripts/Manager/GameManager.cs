@@ -199,6 +199,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         slimeFollowObj = PoolManager.GetItem("EmptyObject").transform;
         slimeFollowObj.gameObject.AddComponent(typeof(SlimeFollowObj));
         slimeFollowObj.name = typeof(SlimeFollowObj).Name;
+        StoredData.SetGameObjectKey("Slime Follow Obj", slimeFollowObj.gameObject);
     }
 
     void PlayerDead()

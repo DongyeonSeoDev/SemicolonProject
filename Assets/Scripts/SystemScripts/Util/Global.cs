@@ -16,6 +16,8 @@ public static partial class Global
 
     public const string PickupPlant = "PickupPlant";
 
+    public const string TAResSysDefaultPath = "System/TextAssets/";
+
     public static Player CurrentPlayer => SlimeGameManager.Instance.Player;
 
     public static Transform GetSlimePos => SlimeGameManager.Instance.CurrentPlayerBody.transform;
@@ -34,7 +36,7 @@ public static partial class Global
     {
         if(keyActionNameArr==null)
         {
-            TextAsset kta = Resources.Load<TextAsset>("System/TextAssets/Key/KeyActionName-ko");
+            TextAsset kta = Resources.Load<TextAsset>(TAResSysDefaultPath+"KeyActionName-ko");
             keyActionNameArr = kta.text.Split('\n');
         }
         return keyActionNameArr[(int)keyAction];
@@ -44,7 +46,7 @@ public static partial class Global
     {
         if(mobSpeciesKoArr == null)
         {
-            mobSpeciesKoArr = TextAssetsToStringArr("System/TextAssets/EnumToKo/species");
+            mobSpeciesKoArr = TextAssetsToStringArr(TAResSysDefaultPath + "species");
         }
         return mobSpeciesKoArr[(int)species];
     }
@@ -72,26 +74,12 @@ public static partial class Global
 
     public static string AreaTypeToString(AreaType type)
     {
-        switch(type)
+        string k = "AreaType"; 
+        if(!TypeToTextAsset.HasKey(k))
         {
-            case AreaType.MONSTER:
-                return "阁胶磐 瘤开";
-            case AreaType.RANDOM:
-                return "罚待 备开";
-            case AreaType.CHEF:
-                return "夸府 备开";
-            case AreaType.PLANTS:
-                return "盲笼 瘤开";
-            case AreaType.BOSS:
-                return "焊胶 备开";
-            case AreaType.START:
-                return "矫累 瘤开";
-            case AreaType.IMPRECATION:
-                return "历林 备开";
-            case AreaType.RECOVERY:
-                return "雀汗 备开";
+            TypeToTextAsset.Register(k, TAResSysDefaultPath + "AreaTexts");
         }
-        return string.Empty;
+        return TypeToTextAsset.GetText(k, (int)type);
     }
 
     public static DoorDirType ReverseDoorDir(DoorDirType type)

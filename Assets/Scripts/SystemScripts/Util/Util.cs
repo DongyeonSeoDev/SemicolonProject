@@ -56,7 +56,7 @@ public static partial class Util
     private static IEnumerator ExecuteFuncCo(Action func, float delay, float duration, Action start = null, Action end = null, bool realTime = false)
     {
         if (!realTime)
-            yield return new WaitForSeconds(delay);
+            yield return new WaitForSeconds(delay * TimeManager.CurrentTimeScale);
         else
             yield return new WaitForSecondsRealtime(delay);
 
