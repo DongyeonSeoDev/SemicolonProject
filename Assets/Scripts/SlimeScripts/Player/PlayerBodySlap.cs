@@ -174,7 +174,7 @@ public class PlayerBodySlap : PlayerSkill
     {
         if (canCrashLayer.CompareGameObjectLayer(targetObject) && playerState.BodySlapping)
         {
-            Enemy.Enemy enemy = targetObject.GetComponent<Enemy.Enemy>();
+            ICanGetDamagableEnemy enemy = targetObject.GetComponent<ICanGetDamagableEnemy>();
 
             if (enemy != null)
             {

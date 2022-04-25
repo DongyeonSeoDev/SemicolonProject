@@ -57,7 +57,7 @@ public class PlayerProjectile : MonoBehaviour
         {
             if (whatIsEnemy.CompareGameObjectLayer(other.gameObject))
             {
-                Enemy.Enemy enemy = other.GetComponent<Enemy.Enemy>();
+                ICanGetDamagableEnemy enemy = other.GetComponent<ICanGetDamagableEnemy>();
 
                 if (enemy != null)
                 {

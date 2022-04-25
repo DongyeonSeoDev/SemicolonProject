@@ -308,7 +308,7 @@ public class Player : MonoBehaviour
             UIManager.Instance.UpdatePlayerHPUI(true);
         }
     }
-    public void GiveDamage(Enemy.Enemy targetEnemy, int minDamage, int maxDamage, float sturnTime = 1, float knockBackPower = 20, bool isKnockBack = true)
+    public void GiveDamage(ICanGetDamagableEnemy targetEnemy, int minDamage, int maxDamage, float sturnTime = 1, float knockBackPower = 20, bool isKnockBack = true)
     {
         (int, bool) damage;
         damage.Item1 = Random.Range(minDamage, maxDamage + 1);
@@ -318,7 +318,7 @@ public class Player : MonoBehaviour
 
         targetEnemy.GetDamage(damage.Item1, damage.Item2, isKnockBack, knockBackPower, sturnTime);
     }
-    public void Mag_GiveDamage(Enemy.Enemy targetEnemy, int minDamage, int maxDamage, float magnification, float strunTime = 1, float knockBackPower = 20, bool isKnockBack = true)
+    public void Mag_GiveDamage(ICanGetDamagableEnemy targetEnemy, int minDamage, int maxDamage, float magnification, float strunTime = 1, float knockBackPower = 20, bool isKnockBack = true)
     {
         (int, bool) damage;
         damage.Item1 = Random.Range(minDamage, maxDamage + 1);
