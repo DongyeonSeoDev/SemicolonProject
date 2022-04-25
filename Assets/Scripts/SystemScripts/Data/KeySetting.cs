@@ -10,7 +10,7 @@ public static class KeySetting
     {
         //순서대로 키세팅 UI에 표시됨
 
-        keyDict[KeyAction.MENU] = KeyCode.Tab;
+        //keyDict[KeyAction.MENU] = KeyCode.Tab;
         keyDict[KeyAction.INVENTORY] = KeyCode.I;
         keyDict[KeyAction.STAT] = KeyCode.T;
         keyDict[KeyAction.MONSTER_COLLECTION] = KeyCode.C;

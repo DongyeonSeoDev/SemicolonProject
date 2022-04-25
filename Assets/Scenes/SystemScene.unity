@@ -3997,7 +3997,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1331222542215954924, guid: 88dc84bf5c4dedf43a4da6e4c0ef3709, type: 3}
   m_PrefabInstance: {fileID: 4663527727965993806}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 4663527727965993807}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4239d1655f244094c89f3ea66ae48e63, type: 3}
@@ -30010,16 +30010,46 @@ MonoBehaviour:
   m_Events:
     m_Signals:
     - {fileID: 11400000, guid: b95ac18d068e42d4dafb3a393883bcec, type: 2}
+    - {fileID: 11400000, guid: ecbf323072b88f74da45715b01d29395, type: 2}
+    - {fileID: 11400000, guid: e7ea2acb9463c6c4c89807690c3725d6, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
         - m_Target: {fileID: 4355773152781845171}
-          m_TargetAssemblyTypeName: 
+          m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
           m_MethodName: 
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
             m_ObjectArgumentAssemblyTypeName: 
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 317012458589587072}
+          m_TargetAssemblyTypeName: UIManager, Assembly-CSharp
+          m_MethodName: FadeInOrdinaryCvs
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 5069582538427925159}
+          m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
+          m_MethodName: ActiveMonsterSlot
+          m_Mode: 3
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
             m_IntArgument: 0
             m_FloatArgument: 0
             m_StringArgument: 
@@ -60579,6 +60609,14 @@ PlayableDirector:
     value: {fileID: 0}
   - key: {fileID: 0}
     value: {fileID: 0}
+  - key: {fileID: 3871224299767301795, guid: 76a1a3b41af8d764c859e153e36ded97, type: 2}
+    value: {fileID: 1066146024480200799}
+  - key: {fileID: -4699496515445927640, guid: 76a1a3b41af8d764c859e153e36ded97, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: 1756094877044855783, guid: 76a1a3b41af8d764c859e153e36ded97, type: 2}
+    value: {fileID: 4663527727965993808}
+  - key: {fileID: -5822402464666114381, guid: 76a1a3b41af8d764c859e153e36ded97, type: 2}
+    value: {fileID: 4663527727965993807}
   m_ExposedReferences:
     m_References:
     - 54c5a69ee3507474b906e132158e97c5: {fileID: 0}
@@ -65709,6 +65747,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ChangeableBodyUI_1 (Default)
       objectReference: {fileID: 0}
+    - target: {fileID: 1331222542215954926, guid: 88dc84bf5c4dedf43a4da6e4c0ef3709, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1331222542215954927, guid: 88dc84bf5c4dedf43a4da6e4c0ef3709, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -65875,6 +65917,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 88dc84bf5c4dedf43a4da6e4c0ef3709, type: 3}
+--- !u!1 &4663527727965993807 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1331222542215954926, guid: 88dc84bf5c4dedf43a4da6e4c0ef3709, type: 3}
+  m_PrefabInstance: {fileID: 4663527727965993806}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &4663527727965993808 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 2917429514288856508, guid: 88dc84bf5c4dedf43a4da6e4c0ef3709, type: 3}
+  m_PrefabInstance: {fileID: 4663527727965993806}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4663527728071141437
 PrefabInstance:
   m_ObjectHideFlags: 0

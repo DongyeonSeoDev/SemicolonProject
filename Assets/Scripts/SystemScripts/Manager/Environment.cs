@@ -91,8 +91,8 @@ public class Environment : MonoSingleton<Environment>
         bloom.intensity.value = enter ? 1.17f : 1f;
         //bloom.threshold.value = enter ? 0.8f : 1f;
 
-        colorAdjustments.active = enter;
-        colorAdjustments.saturation.value = 40;
+        //colorAdjustments.active = enter;
+        //colorAdjustments.saturation.value = 40;
         //colorAdjustments.saturation.value = enter ? 40 : 0;
         //colorAdjustments.postExposure.value = enter ? 2f : 0;
 

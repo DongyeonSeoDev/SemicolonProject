@@ -33,10 +33,10 @@ public class StageGround : MonoBehaviour
 
     private void Awake()
     {
-        if(imprecMapEffects.first)
+       /* if(imprecMapEffects.first)
         {
             imprecMapEffects.second = imprecMapEffects.first.GetComponentsInChildren<MapParticleEffect>().FindAll(x => x.effectType == MapEffectType.IMPRECATION1);
-        }
+        }*/
        
     }
 
