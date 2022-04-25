@@ -119,20 +119,20 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
     }
     public void SetUnderstandingRate(string key, int value)
     {
-        if (playerEnemyUnderStandingRateDict .ContainsKey(key))
+        if (playerEnemyUnderStandingRateDict.ContainsKey(key))
         {
             playerEnemyUnderStandingRateDict [key] = value;
         }
         else
         {
-            playerEnemyUnderStandingRateDict .Add(key, value);
+            playerEnemyUnderStandingRateDict.Add(key, value);
         }
 
         MonsterCollection.Instance.UpdateUnderstanding(key);
     }
     public int GetUnderstandingRate(string key)
     {
-        if (playerEnemyUnderStandingRateDict .ContainsKey(key))
+        if (playerEnemyUnderStandingRateDict.ContainsKey(key))
         {
             return playerEnemyUnderStandingRateDict [key];
         }
@@ -214,12 +214,14 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
 
         if (value <= GetDrainProbabilityDict(objId)) // 확률 체크, 예외처리
         {
+
             // 장착을 물어봄
-            UIManager.Instance.DoChangeBody(objId);
+            //UIManager.Instance.DoChangeBody(objId);
             //Debug.Log("장착 물어보는 창이 뜨네요");
 
             UpUnderstandingRateWithQueue(objId, upValue);
             SetDrainProbabilityDict(objId, 0); // 장착을 했건 안했건 확률은 0이된다
+            UIManager.Instance.SaveMonsterBody(objId);
         }
     }
 
@@ -250,11 +252,15 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
     }
     public void UpUnderstandingRate(string objId, int upValue) // 이해도(동화율)을 올려줌
     {
-        SetUnderstandingRate(objId, GetUnderstandingRate(objId) + upValue);
+        int u = GetUnderstandingRate(objId) + upValue;
 
-        if (GetUnderstandingRate(objId) > MaxUnderstandingRate) // 최대치 처리
+        if (u > MaxUnderstandingRate) // 최대치 처리
         {
             SetUnderstandingRate(objId, MaxUnderstandingRate);
+        }
+        else
+        {
+            SetUnderstandingRate(objId, u);
         }
     }
 }

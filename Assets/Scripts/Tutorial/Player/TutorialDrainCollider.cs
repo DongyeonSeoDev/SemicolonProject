@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerDrainCollider : MonoBehaviour
+public class TutorialDrainCollider : MonoBehaviour
 {
     [SerializeField]
     private LayerMask canDrainObjLayers;
@@ -10,8 +10,8 @@ public class PlayerDrainCollider : MonoBehaviour
     [SerializeField]
     private GameObject grabSoftBody = null;
 
-    private List<Enemy.Enemy> tryDrainList = new List<Enemy.Enemy>();
-    private List<Enemy.Enemy> doDrainList = new List<Enemy.Enemy>();
+    private List<Enemy.TutorialEnemy> tryDrainList = new List<Enemy.TutorialEnemy>();
+    private List<Enemy.TutorialEnemy> doDrainList = new List<Enemy.TutorialEnemy>();
 
     private float drainTime = 3f;
     public float DrainTime
@@ -65,7 +65,7 @@ public class PlayerDrainCollider : MonoBehaviour
     {
         if (drainTimer > 0f)
         {
-            List<Enemy.Enemy> removeList = new List<Enemy.Enemy>();
+            List<Enemy.TutorialEnemy> removeList = new List<Enemy.TutorialEnemy>();
             drainTimer -= Time.deltaTime;
 
             if (drainTimer <= 0f)
@@ -115,7 +115,7 @@ public class PlayerDrainCollider : MonoBehaviour
             //Drain되는 오브젝트는 삭제처리
             SlimeGameManager.Instance.Player.DrainList.Add(other.gameObject);
 
-            Enemy.Enemy enemy = other.GetComponent<Enemy.Enemy>();
+            Enemy.TutorialEnemy enemy = other.GetComponent<Enemy.TutorialEnemy>();
 
             Vector2 dir = (transform.position - other.transform.position).normalized;
             float hpPercentage = enemy.EnemyHpPercent();// 닿은    적의 현재 체력의 퍼센트를 구함
@@ -197,7 +197,7 @@ public class PlayerDrainCollider : MonoBehaviour
 
     private void CheckDrainMoveTime()
     {
-        List<Enemy.Enemy> removeList = new List<Enemy.Enemy> ();
+        List<Enemy.TutorialEnemy> removeList = new List<Enemy.TutorialEnemy> ();
 
         try
         {

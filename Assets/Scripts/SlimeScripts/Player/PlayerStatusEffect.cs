@@ -70,7 +70,7 @@ public class PlayerStatusEffect : PlayerAction
 
         sturnTimer = sturnTime;
 
-        playerState.IsSturn = true;
+        playerState.IsStun = true;
 
         EventManager.TriggerEvent("PlayerSturn");
     }
@@ -83,7 +83,7 @@ public class PlayerStatusEffect : PlayerAction
             if (sturnTimer <= 0f)
             {
                 sturnTimer = 0f;
-                playerState.IsSturn = false;
+                playerState.IsStun = false;
             }
         }
     }

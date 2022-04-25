@@ -76,11 +76,11 @@ public class PlayerState : MonoBehaviour
         set { cantMove = value; }
     }
 
-    private bool isSturn = false; // 외부(적, 장해물 등)에 의한 멈춤처리
-    public bool IsSturn
+    private bool isStun = false; // 외부(적, 장해물 등)에 의한 멈춤처리
+    public bool IsStun
     {
-        get { return isSturn; }
-        set { isSturn = value; }
+        get { return isStun; }
+        set { isStun = value; }
     }
 
     void Start()
@@ -152,7 +152,7 @@ public class PlayerState : MonoBehaviour
         charging = false;
         bodySlapping = false;
         isKnockBack = false;
-        isSturn = false;
+        isStun = false;
         isDrain = false;
     }
 }

@@ -27,6 +27,7 @@ namespace Enemy
         private Tween damageBarTween = null;
 
         private CanvasGroup hpBarCanvasGroup = null;
+        public CanvasGroup bossNameText = null;
 
         private bool isSequencePlay = false;
 
@@ -60,6 +61,18 @@ namespace Enemy
             else
             {
                 activeFalseSequence.Restart();
+            }
+        }
+
+        public void SetActiveBossName(bool value)
+        {
+            if (value)
+            {
+                bossNameText.DOFade(1, 0.5f);
+            }
+            else
+            {
+                bossNameText.DOFade(0, 0.5f);
             }
         }
 
