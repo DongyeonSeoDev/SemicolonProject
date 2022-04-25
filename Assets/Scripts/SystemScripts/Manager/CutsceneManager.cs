@@ -47,4 +47,10 @@ public class CutsceneManager : MonoSingleton<CutsceneManager>
         pd.Resume();
     }
 
+    #region tutorial
+    public void TutoSlimeAbsorb()
+    {
+        SlimeGameManager.Instance.CurrentPlayerBody.GetComponent<PlayerDrain>().DoDrainByTuto();
+    }
+    #endregion
 }

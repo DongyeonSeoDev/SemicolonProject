@@ -40,6 +40,22 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                 Environment.Instance.mainLight.intensity = 1;
             });
         });
+
+        EventManager.StartListening("DrainTutorialEnemyDrain", enemyPos =>
+        {
+            RectTransform teHpBar;
+            if(StoredData.HasGameObjectKey("Tuto EnemyHp UI"))
+            {
+                teHpBar = StoredData.GetGameObjectData<RectTransform>("Tuto EnemyHp UI");
+            }
+            else
+            {
+                teHpBar = Instantiate(Resources.Load<GameObject>("Tutorial/UI/TutorialEnemyHP"), Util.WorldCvs.transform).GetComponent<RectTransform>();
+            }
+
+            teHpBar.gameObject.SetActive(true);
+            teHpBar.anchoredPosition = Util.ScreenToWorldPosForScreenSpace(enemyPos, Util.WorldCvs);
+        });
     }
 
     private void Start()

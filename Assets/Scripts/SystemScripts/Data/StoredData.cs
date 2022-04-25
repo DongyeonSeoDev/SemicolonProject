@@ -36,6 +36,7 @@ public static class StoredData
     }
 
     public static bool HasObjectKey(string key) => objDataDic.ContainsKey(key);
+
     #endregion
 
     #region GameObject
@@ -77,5 +78,18 @@ public static class StoredData
     }
 
     public static bool HasGameObjectKey(string key) => gameObjectDataDic.ContainsKey(key);
+
+    public static bool TryGetGameObject(string key, out GameObject obj)
+    {
+        obj = gameObjectDataDic.ContainsKey(key) ? gameObjectDataDic[key] : null;
+        return obj != null;
+    }
+
+    public static bool TryGetGameObject<T>(string key, out T obj)
+    {
+        obj = gameObjectDataDic.ContainsKey(key) ? gameObjectDataDic[key].GetComponent<T>() : default;
+        return obj != null;
+    }
+
     #endregion
 }

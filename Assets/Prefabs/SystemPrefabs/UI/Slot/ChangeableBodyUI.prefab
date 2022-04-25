@@ -186,7 +186,6 @@ GameObject:
   - component: {fileID: 1331222542215954918}
   - component: {fileID: 1331222542215954925}
   - component: {fileID: 1331222542215954924}
-  - component: {fileID: 2917429514288856508}
   m_Layer: 5
   m_Name: ChangeableBodyUI
   m_TagString: Untagged
@@ -290,25 +289,6 @@ MonoBehaviour:
   customContentsSizeFilter: {fileID: 7370267828823159495}
   outlineObj: {fileID: 3585396295854810252}
   cvsg: {fileID: 1331222542215954925}
---- !u!95 &2917429514288856508
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1331222542215954926}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &1331222542293177609
 GameObject:
   m_ObjectHideFlags: 0
