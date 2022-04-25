@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.Playables;
 using UnityEngine.Timeline;
 
-public class CutsceneManager : MonoSingleton<CutsceneManager>   
+public class CutsceneManager : MonoSingleton<CutsceneManager>
 {
-    private Dictionary<string,TimelineAsset> timeLineDict = new Dictionary<string, TimelineAsset>();
+    private Dictionary<string, TimelineAsset> timeLineDict = new Dictionary<string, TimelineAsset>();
     public TimelineAsset[] timeLineAssets;
     public PlayableDirector pd;
 
@@ -20,7 +20,7 @@ public class CutsceneManager : MonoSingleton<CutsceneManager>
 
     public void PlayCutscene(string key)
     {
-        if(!timeLineDict.ContainsKey(key))
+        if (!timeLineDict.ContainsKey(key))
         {
             Debug.LogWarning("Not Exist Key : " + key);
             return;
@@ -46,4 +46,5 @@ public class CutsceneManager : MonoSingleton<CutsceneManager>
     {
         pd.Resume();
     }
+
 }

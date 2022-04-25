@@ -144,4 +144,14 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             }
         }
     }
+
+    public void ActiveMonsterSlot(int num)
+    {
+        changeableBodysUIArr[num].gameObject.SetActive(true);  
+    }
+
+    public void ActiveSkillUI(int num)
+    {
+        skillUIArr[num].gameObject.SetActive(true); 
+    }
 }

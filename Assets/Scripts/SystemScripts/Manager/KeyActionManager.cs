@@ -197,14 +197,14 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
             if(!twComp && Time.time > phtOffTime)
             {
                 twComp = true;
-                playerHeadTxt.DOColor(Color.clear, 0.4f).OnComplete(()=>playerHeadTxt.gameObject.SetActive(false));
+                playerHeadTxt.DOColor(Color.clear, 0.3f).OnComplete(()=>playerHeadTxt.gameObject.SetActive(false));
             }
 
             /*if (playerHeadTextCurOffset.y < playerHeadTextOffset.y)
             {
                 playerHeadTextCurOffset.y += Time.deltaTime * (!twComp ? 3f : -3f);
             }*/
-            playerHeadTextCurOffset.y += Time.deltaTime * (!twComp ? 1.7f : -1.7f);
+            playerHeadTextCurOffset.y += Time.deltaTime * (!twComp ? 1.5f : -1.5f);
             playerHeadTextCurOffset.y = Mathf.Clamp(playerHeadTextCurOffset.y, 1, playerHeadTextOffset.y);
         }
     }

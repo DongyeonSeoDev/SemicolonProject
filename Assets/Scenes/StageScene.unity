@@ -180,7 +180,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5427881869486345104, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
       propertyPath: isPauseByTuto
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
@@ -2010,6 +2010,22 @@ PrefabInstance:
       propertyPath: transitionColor.r
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1874720646970232715, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_Events.m_Events.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 1690851370}
+    - target: {fileID: 1874720646970232715, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_Events.m_Events.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: Test
+      objectReference: {fileID: 0}
+    - target: {fileID: 1874720646970232715, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_Events.m_Events.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: CutsceneManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1874720646970232715, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_Events.m_Events.Array.data[0].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2048792471113035520, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2151,6 +2167,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 3871224299767301795, guid: 76a1a3b41af8d764c859e153e36ded97, type: 2}
     - target: {fileID: 2935571583272015193, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_SceneBindings.Array.data[7].key
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2935571583272015193, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_SceneBindings.Array.data[8].key
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2935571583272015193, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_SceneBindings.Array.data[4].value
       value: 
       objectReference: {fileID: 1614698500}
@@ -2158,6 +2182,18 @@ PrefabInstance:
       propertyPath: m_SceneBindings.Array.data[5].value
       value: 
       objectReference: {fileID: 1782452595}
+    - target: {fileID: 2935571583272015193, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_SceneBindings.Array.data[6].value
+      value: 
+      objectReference: {fileID: 1709406378}
+    - target: {fileID: 2935571583272015193, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_SceneBindings.Array.data[7].value
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 2935571583272015193, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_SceneBindings.Array.data[8].value
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 2935571583272015193, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_ExposedReferences.m_References.Array.size
       value: 3
@@ -2280,7 +2316,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5950706611391763827, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: isTestMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5950706611391763837, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_IsActive
@@ -2507,7 +2543,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 8.5
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -2604,6 +2640,28 @@ MonoBehaviour:
   m_CameraActivatedEvent:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &1690851370 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2935571584170346440, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+  m_PrefabInstance: {fileID: 1344996037}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec845ee32a8a8f74faa2ec90725f0935, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1709406378 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1874720646970232715, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+  m_PrefabInstance: {fileID: 1344996037}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1782452589
 GameObject:
   m_ObjectHideFlags: 0
@@ -2648,7 +2706,7 @@ MonoBehaviour:
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 8.5
+    OrthographicSize: 6
     NearClipPlane: 0.3
     FarClipPlane: 1000
     Dutch: 0

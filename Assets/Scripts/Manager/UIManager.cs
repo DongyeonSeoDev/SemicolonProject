@@ -890,6 +890,10 @@ public partial class UIManager : MonoSingleton<UIManager>
         loadingCvsg.DOFade(1, 1).SetEase(Ease.OutQuad).SetUpdate(true);
     }
 
+    public void FadeInOrdinaryCvs()
+    {
+        ordinaryCvsg.DOFade(1, 0.3f);
+    }
     #endregion
 
     #region 인벤 버튼 (inventory button)
