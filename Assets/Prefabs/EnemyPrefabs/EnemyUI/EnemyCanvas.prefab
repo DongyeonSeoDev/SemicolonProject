@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1559462951835451893}
   - component: {fileID: 1559462951835451897}
   m_Layer: 7
-  m_Name: EnemyHP
+  m_Name: EnemyCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -83,7 +83,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!114 &1559462951835451893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,7 +200,7 @@ GameObject:
   - component: {fileID: 1559462952483071912}
   - component: {fileID: 1559462952483071911}
   m_Layer: 7
-  m_Name: Image
+  m_Name: EnemyHPBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

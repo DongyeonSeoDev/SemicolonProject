@@ -176,6 +176,9 @@ MonoBehaviour:
   hpBar: {fileID: 6749001325011307883}
   enemyAttackCheck:
   - {fileID: 1379758292269083093}
+  hpTweenTime: 0.1
+  hpTweenDelayTime: 0.3
+  damageHPTweenTime: 0.2
 --- !u!114 &4040903921431046384
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -371,7 +374,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1559462951835451892, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
       propertyPath: m_Name
-      value: EnemyHP
+      value: EnemyCanvas
       objectReference: {fileID: 0}
     - target: {fileID: 1559462951835451892, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
       propertyPath: m_Layer

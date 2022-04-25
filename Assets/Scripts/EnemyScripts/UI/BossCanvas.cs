@@ -4,7 +4,7 @@ using DG.Tweening;
 
 namespace Enemy
 {
-    public class BossHPBar : EnemyHPBar
+    public class BossCanvas : EnemyCanvas
     {
         public RectTransform hpBarRectTransform = null;
         public Image fillHpBar = null;

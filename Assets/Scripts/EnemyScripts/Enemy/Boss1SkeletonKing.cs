@@ -32,7 +32,7 @@ namespace Enemy
         public Vector2 limitMaxPosition;
         public LayerMask whatIsWall;
 
-        private BossHPBar bossHPBar;
+        private BossCanvas bossHPBar;
 
         private List<float> specialAttack3Check = new List<float>();
         private int attackCount = 0;
@@ -59,7 +59,7 @@ namespace Enemy
         {
             base.OnEnable();
 
-            bossHPBar = FindObjectOfType<BossHPBar>();
+            bossHPBar = GetComponentInChildren<BossCanvas>();
             bossHPBar.Init(enemyData);
 
             enemyData.attackDelay = 1.8f;
