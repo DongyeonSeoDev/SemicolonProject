@@ -46,6 +46,12 @@ public class Player : MonoBehaviour
         }
     }
 
+    private List<GameObject> coveredObjectList = new List<GameObject>();
+    public List<GameObject> CoveredObjectList
+    {
+        get { return coveredObjectList; }
+    }
+
     private List<GameObject> drainList = new List<GameObject>();
     public List<GameObject> DrainList
     {
@@ -409,5 +415,4 @@ public class Player : MonoBehaviour
 
         EventManager.TriggerEvent("AfterPlayerRespawn");
     }
-
 }

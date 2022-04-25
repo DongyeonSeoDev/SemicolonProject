@@ -33,7 +33,16 @@ public class GrabSoftBody : SoftBody
 
     void Update()
     {
-        if(!setRay)
+        if (targetObj == null || !targetObj.activeSelf)
+        {
+            SlimePoolManager.Instance.AddObject(gameObject);
+
+            gameObject.SetActive(false);
+
+            return;
+        }
+
+        if (!setRay)
         {
             setRay = true;
             originLayer = targetObj.layer;
@@ -62,13 +71,6 @@ public class GrabSoftBody : SoftBody
         UpdateVerticies();
 
         transform.position = targetObj.transform.position;
-
-        if(!targetObj.activeSelf)
-        {
-            SlimePoolManager.Instance.AddObject(gameObject);
-
-            gameObject.SetActive(false);
-        }
     }
     public void OnSpawn(GameObject tObj, Vector2 offS)
     {

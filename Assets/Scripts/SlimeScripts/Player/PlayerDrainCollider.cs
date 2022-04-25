@@ -7,6 +7,8 @@ public class PlayerDrainCollider : MonoBehaviour
     [SerializeField]
     private LayerMask canDrainObjLayers;
 
+    private PlayerDrain playerDrain = null;
+
     [SerializeField]
     private GameObject grabSoftBody = null;
 
@@ -57,6 +59,10 @@ public class PlayerDrainCollider : MonoBehaviour
 
     private int int_timer = 0;
 
+    private void Start()
+    {
+        playerDrain = transform.parent.GetComponent<PlayerDrain>();
+    }
     private void OnEnable()
     {
         drainTimer = drainTime;
@@ -115,25 +121,25 @@ public class PlayerDrainCollider : MonoBehaviour
             //Drain되는 오브젝트는 삭제처리
             SlimeGameManager.Instance.Player.DrainList.Add(other.gameObject);
 
-            Enemy.Enemy enemy = other.GetComponent<Enemy.Enemy>();
+           ICanGetDamagableEnemy enemy = other.GetComponent<ICanGetDamagableEnemy>();
 
             Vector2 dir = (transform.position - other.transform.position).normalized;
-            float hpPercentage = enemy.EnemyHpPercent();// 닿은    적의 현재 체력의 퍼센트를 구함
+            float hpPercentage = enemy.EnemyHpPercent();// 닿은 적의 현재 체력의 퍼센트를 구함
 
             if (hpPercentage <= 0f)
             {
                 return;
             }
 
-            float distance = Vector2.Distance(transform.position, enemy.transform.position);
+            float distance = Vector2.Distance(transform.position, enemy.GetTransform().position);
             float drainMoveTime = 0f;
 
             tryDrainList.Add(enemy);
 
-            if (enemy != null && hpPercentage <= canDrainHpPercentage) // 흡수 성공
+            if (playerDrain.drainTutorial || (enemy != null && hpPercentage <= canDrainHpPercentage)) // 흡수 성공
             {
                 doDrainList.Add(enemy);
-                SpawnGrabObj(enemy.gameObject);
+                SpawnGrabObj(enemy.GetGameObject());
 
                 EventManager.TriggerEvent("TryDrain", other.transform.position, true);
 
@@ -209,8 +215,17 @@ public class PlayerDrainCollider : MonoBehaviour
 
                 if (drainMoveTimerDict[key] >= drainMoveTimeDict[key])
                 {
-                    removeList.Add(item);
                     RemoveList(key);
+                    removeList.Add(item);
+
+                    if (key.GetComponent<Enemy.DrainTutorialEnemy>() != null)
+                    {
+                        EventManager.TriggerEvent("DrainTutorialEnemyDrain", key.transform.position);
+
+                        Destroy(key.gameObject);
+
+                        return;
+                    }
 
                     if (doDrainList.Contains(item))
                     {

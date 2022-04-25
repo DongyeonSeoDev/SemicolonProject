@@ -101,10 +101,10 @@ MonoBehaviour:
   onCrashEffect: {fileID: 5849933449466126942, guid: 30be908edd7366b49801e2d58796386c, type: 3}
   whatIsCrashable:
     serializedVersion: 2
-    m_Bits: 192
+    m_Bits: 2097344
   whatIsEnemy:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 2097280
   moveTime: 3
   knockBackPower: 5
 --- !u!50 &8223448895546236960

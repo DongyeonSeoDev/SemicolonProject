@@ -12,9 +12,9 @@ GameObject:
   - component: {fileID: 1559462951835451895}
   - component: {fileID: 1559462951835451894}
   - component: {fileID: 1559462951835451893}
-  - component: {fileID: 1559462951835451897}
+  - component: {fileID: 4087776288725585960}
   m_Layer: 7
-  m_Name: EnemyHP
+  m_Name: TutorialEnemyHP
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -83,7 +83,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &1559462951835451893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -101,7 +101,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &1559462951835451897
+--- !u!114 &4087776288725585960
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -110,7 +110,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1559462951835451892}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7cc0768b533b65142bd6874c3c091629, type: 3}
+  m_Script: {fileID: 11500000, guid: 06236640b642e774abd12f20b378ddc6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1559462952085171734

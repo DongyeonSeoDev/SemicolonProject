@@ -27,6 +27,7 @@ public class PlayerDrain : PlayerSkill
         get { return upUnderstandingRateValue; }
     }
 
+    public bool drainTutorial = false;
     private bool canDrain = true;
 
     public override void Awake()
@@ -68,18 +69,30 @@ public class PlayerDrain : PlayerSkill
 
         if (canDrain)
         {
-            player.PlayerState.IsDrain = true;
-            player.PlayerOrderInLayerController.SetOrderInLayer("Object", 0);
+            drainTutorial = false;
 
-            SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = SlimeGameManager.Instance.SkillDelays[skillIdx];
-
-            EventManager.TriggerEvent("SetDrainTime", playerDrainCol.DrainTime);
-            EventManager.TriggerEvent("EnemyStop");
-
-            drainCollider.SetActive(true);
-
-            canDrain = false;
+            DoDrain();
         }
+    }
+    public void DoDrainByTuto()
+    {
+        drainTutorial = true;
+
+        DoDrain();
+    }
+    private void DoDrain()
+    {
+        player.PlayerState.IsDrain = true;
+        player.PlayerOrderInLayerController.SetOrderInLayer("Object", 0);
+
+        SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = SlimeGameManager.Instance.SkillDelays[skillIdx];
+
+        EventManager.TriggerEvent("SetDrainTime", playerDrainCol.DrainTime);
+        EventManager.TriggerEvent("EnemyStop");
+
+        drainCollider.SetActive(true);
+
+        canDrain = false;
     }
     private void OnDrain(GameObject obj, Vector2 position, int upValue) // upValue는 이해도(동화율)이 얼마나 오를 것인가.
     {

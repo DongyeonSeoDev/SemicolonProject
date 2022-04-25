@@ -11,6 +11,7 @@ TagManager:
   - NotMoveZone
   - FxTemporaire
   - SpawnPoint
+  - DrainTutorialEnemy
   layers:
   - Default
   - TransparentFX
