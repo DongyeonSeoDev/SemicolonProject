@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace Enemy
 {
-    public class TutorialEnemy : MonoBehaviour
+    public class TutorialEnemy : MonoBehaviour, ICanGetDamagableEnemy
     {
         public Image hpBarFillImage; // 적 HP 바 채워진것중 체력 확인용 ( 없으면 UI 만들어야 함 ( Assets > Prefabs > EnemyPrefabs > EnemyUI 참고 ) )
         public Image hpBarDamageFillImage; // 적 HP 바 채워진것중 데미지 확인용
@@ -22,8 +22,7 @@ namespace Enemy
         {
 
         }
-
-        public void GetDamage(int damage, bool critical)
+        public void GetDamage(int damage, bool critical = false, bool isKnockBack = false, float knockBackPower = 20, float stunTime = 1, Vector2? direction = null)
         {
             hp -= damage;
 

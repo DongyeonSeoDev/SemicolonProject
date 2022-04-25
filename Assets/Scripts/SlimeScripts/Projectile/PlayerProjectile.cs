@@ -44,10 +44,12 @@ public class PlayerProjectile : MonoBehaviour
     private void OnEnable()
     {
         EventManager.StartListening("PlayerDead", Despawn);
+        EventManager.StartListening("ExitCurrentMap", Despawn);
     }
     private void OnDisable()
     {
         EventManager.StopListening("PlayerDead", Despawn);
+        EventManager.StopListening("ExitCurrentMap", Despawn);
     }
     private void OnTriggerEnter2D(Collider2D other)
     {

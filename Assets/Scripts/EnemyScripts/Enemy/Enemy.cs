@@ -6,7 +6,7 @@ using DG.Tweening;
 namespace Enemy
 {
     [RequireComponent(typeof(OrderInLayerConroller))] // 利 layer 包府
-    public class Enemy : EnemyPoolData // 利 包府 努贰胶
+    public class Enemy : EnemyPoolData, ICanGetDamagableEnemy // 利 包府 努贰胶
     {
         public List<EnemyLootData> enemyLootListSO = new List<EnemyLootData>(); // 利 傈府前 府胶飘
         public EnemyDataSO enemyDataSO; // 利 单捞磐 包府 ( 绝栏搁 Scriptable Object俊辑 父甸绢具 窃 )
