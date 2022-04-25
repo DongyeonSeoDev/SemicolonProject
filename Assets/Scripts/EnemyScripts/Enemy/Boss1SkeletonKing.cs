@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Playables;
 
 namespace Enemy
 {
@@ -8,6 +9,7 @@ namespace Enemy
     {
         public List<float> specialAttack3HPPercent = new List<float>();
         public Transform movePivot;
+        public PlayableDirector playableDirector;
 
         public int fireCount = 0;
         public int maxAttackCount = 0;
@@ -53,7 +55,6 @@ namespace Enemy
 
             fireSpawnTimeSeconds = new WaitForSeconds(fireSpawnTime);
         }
-
         protected override void OnEnable()
         {
             base.OnEnable();
@@ -132,18 +133,28 @@ namespace Enemy
         {
             EventManager.TriggerEvent("StartCutScene");
 
-            Debug.Log("컷씬 테스트 중입니다. 잠시만 기다려 주세요.");
+            playableDirector.Play();
+
+            Util.DelayFunc(() =>
+            {
+                bossHPBar.SetActiveBossName(true);
+            }, 3f);
+
+            Util.DelayFunc(() =>
+            {
+                bossHPBar.SetActiveBossName(false);
+            }, 5f);
 
             Util.DelayFunc(() =>
             {
                 bossHPBar.SetActiveHPBar(true);
-            }, 9f);
+            }, 6f);
 
             Util.DelayFunc(() =>
             {
                 EventManager.TriggerEvent("EndCutScene");
                 base.MoveEnemy();
-            }, 10f);
+            }, 7f);
         }
 
         private Vector2 CheckPosition(Vector2 direction)
