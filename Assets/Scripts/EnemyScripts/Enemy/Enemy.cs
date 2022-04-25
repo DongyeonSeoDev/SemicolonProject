@@ -300,6 +300,8 @@ namespace Enemy
         public EnemyType GetEnemyType() => enemyData.enemyType; // 적 타입을 가져옴
         public EnemyController GetEnemyController() => enemyData.eEnemyController;
         public Vector2? GetKnockBackDirection() => enemyData.knockBackDirection; // 적이 넉백 공격을 할 수 있는지를 가져옴
+        public Transform GetTransform() => transform;
+        public GameObject GetGameObject() => gameObject;
         public string GetEnemyId() => enemyData.enemyType.ToString(); // 적 아이디를 가져옴
         public float EnemyHpPercent() => ((float)enemyData.hp / enemyData.maxHP) * 100f; // 적 체력 퍼센트를 가져옴
         public float GetKnockBackPower() => enemyData.knockBackPower; // 적이 넉백 공격을 할 수 있는지를 가져옴

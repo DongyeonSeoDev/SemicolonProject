@@ -33,10 +33,9 @@ namespace Enemy
 
             EffectManager.Instance.OnDamaged(damage, critical, true, transform.position);
         }
-        //public void SetHP()
-        //{
 
-        //}
+        public Transform GetTransform() => transform;
+        public GameObject GetGameObject() => gameObject;
         public float EnemyHpPercent() => ((float)hp / maxHP) * 100f;
     }
 }
