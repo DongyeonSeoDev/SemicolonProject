@@ -51,6 +51,19 @@ public class InputTutoData
 public class InputTutorial : MonoBehaviour
 {
     public bool isTestMode = false;
+    public bool keyNotPressed = false;
+
+    private readonly float keyNotPressTime = 20f;
+
+    private readonly string[] keyNotPressStrArr = {
+            "뭐라도 눌러보면 뭐라도 될것이다.",
+            "라면 끓이러 간게 아닌이상, 뭐라도 눌러보자",
+            "이 게임을 킨 이상 뭐라도 눌러보자.",
+            "포기하지마! 맞서싸워!!! 뭐라도 누르라고!!!"
+        };
+
+    public float keyNotPressTimer = 0f;
+
 
     [SerializeField]
     private List<InputTutoData> inputTutoDatas = new List<InputTutoData>();
@@ -122,6 +135,8 @@ public class InputTutorial : MonoBehaviour
             item.Value.CheckTimer();
         }
 
+        keyNotPressed = true;
+
         #region fixedKeyDict
         CheckFixedKey(KeyAction.LEFT);
         CheckFixedKey(KeyAction.RIGHT);
@@ -143,12 +158,30 @@ public class InputTutorial : MonoBehaviour
             EventManager.TriggerEvent("Tuto_GainAllArrowKey");
         }
         #endregion
+
+        if(keyNotPressed)
+        {
+            keyNotPressTimer += Time.deltaTime;
+
+            if(keyNotPressTimer >= keyNotPressTime)
+            {
+                KeyActionManager.Instance.SetPlayerHeadText(GetRandomNotPressedText());
+
+                keyNotPressTimer = 0f;
+            }
+        }
+        else
+        {
+            keyNotPressTimer = 0f;
+        }
     }
     private void CheckFixedKey(KeyAction keyAction)
     {
         if (Input.GetKey(KeySetting.fixedKeyDict[keyAction]))
         {
             CheckStartTimer(keyAction);
+
+            keyNotPressed = false;
         }
         else
         {
@@ -160,6 +193,8 @@ public class InputTutorial : MonoBehaviour
         if (Input.GetKey(KeySetting.keyDict[keyAction]))
         {
             CheckStartTimer(keyAction);
+
+            keyNotPressed = false;
         }
         else
         {
@@ -208,5 +243,9 @@ public class InputTutorial : MonoBehaviour
         {
             inputTutoDataDict[keyAction].timerStarted = false;
         }
+    }
+    private string GetRandomNotPressedText()
+    {
+        return keyNotPressStrArr[UnityEngine.Random.Range(0, keyNotPressStrArr.Length)];
     }
 }
