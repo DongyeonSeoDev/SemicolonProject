@@ -293,6 +293,7 @@ namespace Enemy
             for (int i = 0; i < enemyCount; i++)
             {
                 attackRangeArray[i] = (RushAttackRange)EnemyPoolManager.Instance.GetPoolObject(Type.EnemyRushAttackRange, new Vector2(0f, bossPositionArray[i].y));
+                attackRangeArray[i].AnimationReset();
             }
         }
 
