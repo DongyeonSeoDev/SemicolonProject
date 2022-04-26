@@ -47,7 +47,20 @@ public class PlayerChoiceStatControl : MonoBehaviour
         get { return attackNum; }
         set { attackNum = value; }
     }
-
+    private void OnEnable()
+    {
+        EventManager.StartListening("OnEnemyAttack", UpAttackNum);
+        EventManager.StartListening("OnAttackMiss", UpAttackMissedNum);
+    }
+    private void OnDisable()
+    {
+        EventManager.StopListening("OnEnemyAttack", UpAttackNum);
+        EventManager.StopListening("OnAttackMiss", UpAttackMissedNum);
+    }
+    private void Update()
+    {
+        CheckPatience();
+    }
     public void CheckEndurance()
     {
         int pasteEndurance = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance;
