@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6756117056355553512}
   - component: {fileID: 4466457964246414194}
   - component: {fileID: 2973497803206335627}
+  - component: {fileID: 6792208816708557335}
   m_Layer: 0
   m_Name: RushAttackRange
   m_TagString: Untagged
@@ -73,7 +74,7 @@ SpriteRenderer:
   m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 0358b17bd84cb634380bc1ac14593920, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 0, b: 0, a: 0.5882353}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 1
@@ -97,3 +98,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poolType: 106
   count: 3
+--- !u!95 &6792208816708557335
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7386416039059759709}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: ba80f43e74678684985490efc96f4163, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0

@@ -479,6 +479,12 @@ public partial class UIManager : MonoSingleton<UIManager>
 
         switch (type)
         {
+            case UIType.INVENTORY:
+                if(!Util.IsActiveGameUI(type))
+                {
+                    Inventory.Instance.invenUseActionImg.SetActive(false);
+                }
+                break;
             case UIType.KEYSETTING:
                 if (KeyActionManager.Instance.IsChangingKeySetting)  //키세팅 변경 중에는 esc로 키세팅 UI 안꺼지게
                     return true;
@@ -951,7 +957,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         if ( (data.itemType == ItemType.ETC && !((Ingredient)data).isUseable)) return;
 
         data.Use();
-        Inventory.Instance.RemoveItem(selectedItemId, 1);
+        Inventory.Instance.RemoveItem(selectedItemId, 1, "아이템을 소모했습니다.");
 
         if (selectedItemSlot.itemInfo == null)
         {

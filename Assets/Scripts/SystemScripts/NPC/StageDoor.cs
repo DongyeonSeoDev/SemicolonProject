@@ -28,6 +28,8 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
     private bool isExitDoor; //이 문이 입구였는가
     private bool isBreak;
 
+    private float damageableTime = 0.0f;
+
     public bool IsExitDoor { set => isExitDoor = value; }
 
     public bool IsBlindState => StateManager.Instance.stateCountDict[StateAbnormality.Blind.ToString()] > 0;
@@ -168,18 +170,24 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
 
     public void GetDamage(int damage, float charging)
     {
-        //charging이 maxCharging값과 같은 경우 밑의 코드를 실행함.
-        if (isOpen || isExitDoor || isBreak) return;
-
-        hp -= damage;
-        CinemachineCameraScript.Instance.Shake(2f, 2f, 0.3f);
-        EffectManager.Instance.CallGameEffect("DoorHitEff", transform.position, 1.5f);
-
-        if(hp <= 0)
+        if (Time.time > damageableTime)
         {
-            isBreak = true;
-            hp = 0;
-            Open();
+            if (charging < Global.GetSlimePos.GetComponent<PlayerBodySlap>().MaxChargingTime) return;
+            if (isOpen || isExitDoor || isBreak) return;
+
+            damageableTime = Time.time + 1f;
+
+            hp -= damage;
+            CinemachineCameraScript.Instance.Shake(2f, 2f, 0.3f);
+            EffectManager.Instance.CallGameEffect("DoorHitEff", transform.position, 1.5f);
+
+            if (hp <= 0)
+            {
+
+                isBreak = true;
+                hp = 0;
+                Open();
+            }
         }
     }
 }
