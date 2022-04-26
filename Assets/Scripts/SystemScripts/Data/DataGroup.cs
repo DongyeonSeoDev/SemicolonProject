@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
 
-[System.Serializable]
+[Serializable]
 public struct StageFork
 {
     public int stageNumber;

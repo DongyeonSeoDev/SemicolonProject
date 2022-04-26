@@ -202,6 +202,8 @@ public partial class GameManager : MonoSingleton<GameManager>
         slimeFollowObj.gameObject.AddComponent(typeof(SlimeFollowObj));
         slimeFollowObj.name = typeof(SlimeFollowObj).Name;
         StoredData.SetGameObjectKey("Slime Follow Obj", slimeFollowObj.gameObject);
+
+        //WDUtil.PrintStructSize(typeof(StageFork));
     }
 
     void PlayerDead()

@@ -26,6 +26,7 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
     private bool isOpen = false;  //이 문을 통해서 지나갈 수 있는 상태가 되었는가
     private bool isEnter; //문으로 입장할 수 있는 상태가 되어서 상호작용 키를 눌렀을 때 true로
     private bool isExitDoor; //이 문이 입구였는가
+    private bool isBreak;
 
     public bool IsExitDoor { set => isExitDoor = value; }
 
@@ -58,7 +59,7 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
 
     public override void Interaction()
     {
-        if(StageManager.Instance.IsStageClear)
+        if(StageManager.Instance.IsStageClear || isBreak)  //문을 부쉈거나 스테이지 클리어라면
         {
             if (!isEnter && !isExitDoor) //문을 열었거나 입구로 쓴 문이면 상호작용 아예 안되게
             {
@@ -100,6 +101,7 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
         doorLight.gameObject.SetActive(false);
         detectorObj.SetActive(false);
         isOpen = false;
+        //isBreak = false;
     }
 
     public void Pass()
@@ -117,7 +119,7 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
 
     public override void SetInteractionUI(bool on)
     {
-        if (StageManager.Instance.IsStageClear && !isExitDoor)
+        if ( (StageManager.Instance.IsStageClear || isBreak) && !isExitDoor)
         {
             base.SetInteractionUI(on);
 
@@ -147,7 +149,7 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
 
     public override void SetUI(bool on)
     {
-        if (StageManager.Instance.IsStageClear && !isExitDoor)
+        if ((StageManager.Instance.IsStageClear || isBreak) && !isExitDoor)
         {
             base.SetUI(on);
         }
@@ -156,6 +158,7 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
     private void OnEnable()
     {
         hp = maxHp;
+        isBreak = false;
     }
 
     private void OnDisable()
@@ -166,6 +169,7 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
     public void GetDamage(int damage, float charging)
     {
         //charging이 maxCharging값과 같은 경우 밑의 코드를 실행함.
+        if (isOpen || isExitDoor || isBreak) return;
 
         hp -= damage;
         CinemachineCameraScript.Instance.Shake(2f, 2f, 0.3f);
@@ -173,6 +177,7 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
 
         if(hp <= 0)
         {
+            isBreak = true;
             hp = 0;
             Open();
         }
