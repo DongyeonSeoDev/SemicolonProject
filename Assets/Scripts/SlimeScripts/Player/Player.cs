@@ -139,6 +139,10 @@ public class Player : MonoBehaviour
         set { currentHp = value; }
     }
 
+    private float originEternalSpeed = 0f;
+    private float originAdditionalSpeed = 0f;
+    private bool speedSlowStart = false;
+
     private void Awake()
     {
         playerState = GetComponent<PlayerState>();
@@ -165,6 +169,8 @@ public class Player : MonoBehaviour
         EventManager.StartListening("PlayerSetActiveFalse", SetActiveFalse);
         EventManager.StartListening("GameClear", WhenGameClear);
         EventManager.StartListening("ChangeBody", OnChangeBody);
+        EventManager.StartListening("StartPlayerSlow", StartPlayerSlow);
+        EventManager.StartListening("StopPlayerSlow", StopPlayerSlow);
 
         playerState.IsDead = false;
     }
@@ -186,6 +192,8 @@ public class Player : MonoBehaviour
         EventManager.StopListening("PlayerSetActiveFalse", SetActiveFalse);
         EventManager.StopListening("GameClear", WhenGameClear);
         EventManager.StopListening("ChangeBody", OnChangeBody);
+        EventManager.StopListening("StartPlayerSlow", StartPlayerSlow);
+        EventManager.StopListening("StopPlayerSlow", StopPlayerSlow);
     }
     private void OnChangeBody()
     {
@@ -396,6 +404,29 @@ public class Player : MonoBehaviour
         {
             //Debug.Log("우오옷 동화율이 오른다앗");
             PlayerEnemyUnderstandingRateManager.Instance.UpUnderstandingRate(SlimeGameManager.Instance.CurrentBodyId, upUnderstandingRateValueWhenEnemyDeadAfterBodyChanged);
+        }
+    }
+    private void StartPlayerSlow()
+    {
+        if(!speedSlowStart)
+        {
+            speedSlowStart = true;
+
+            originEternalSpeed = playerStat.eternalStat.speed;
+            originAdditionalSpeed = playerStat.additionalEternalStat.speed;
+
+            playerStat.eternalStat.speed = 0.1f;
+            playerStat.additionalEternalStat.speed = 0f;
+        }
+    }
+    private void StopPlayerSlow()
+    {
+        if (speedSlowStart)
+        {
+            speedSlowStart = false;
+
+            playerStat.eternalStat.speed = originEternalSpeed;
+            playerStat.additionalEternalStat.speed = originAdditionalSpeed;
         }
     }
     private void SetActiveFalse()
