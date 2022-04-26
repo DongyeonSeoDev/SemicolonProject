@@ -7,24 +7,6 @@ namespace Water
 {
     public class UtilMenu
     {
-        /*[MenuItem("Resource Manage/Data/Set Item ID")]  //원래는 아이템 아이디 타입이 int형이었으나 string으로 바꾸면서 필요 없어짐
-        static void SetResourceID()
-        {
-            int index = 0;
-            int offset = 5;
-
-            foreach (Food food in Resources.LoadAll<Food>(Global.foodDataPath))
-            {
-                food.id = index;
-                index += offset;
-            }
-
-            foreach (Ingredient ingredient in Resources.LoadAll<Ingredient>(Global.ingredientDataPath))
-            {
-                ingredient.id = index;
-                index += offset;
-            }
-        }*/
 
         [MenuItem("Resource Manage/Data/Set Max Count of Item Possession")]
         static void SetItemPossessionMaxCount()

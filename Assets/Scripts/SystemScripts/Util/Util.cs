@@ -23,10 +23,10 @@ public static partial class Util
     public static Vector3 ScreenToWorldPos(Vector3 screenPos) => MainCam.ScreenToWorldPoint(screenPos);
 
     //이것을 쓸거면 Anchor가 Left Bottom으로 설정되어있어야 함
-    public static Vector3 ScreenToWorldPosForScreenSpace(Vector3 point) => RectTransformUtility.WorldToScreenPoint(MainCam, point);  //camera일때
+    public static Vector3 WorldToScreenPosForScreenSpace(Vector3 point) => RectTransformUtility.WorldToScreenPoint(MainCam, point);  //camera일때
 
-    //anchor 중앙
-    public static Vector3 ScreenToWorldPosForScreenSpace(Vector3 point, Canvas cvs)
+    //anchor 중앙   이걸 쓰는게 좋음
+    public static Vector3 WorldToScreenPosForScreenSpace(Vector3 point, Canvas cvs)
     {
         Vector3 scrPos = WorldToScreenPoint(point);
         Vector2 localPos = Vector2.zero;

@@ -42,7 +42,7 @@ public class InteractionNoticeUI : MonoBehaviour
             //transform.position = Util.WorldToScreenPoint(obj.transform.position + obj.itrUIOffset);
             //rectTr.anchoredPosition = RectTransformUtility.WorldToScreenPoint(Util.MainCam, obj.transform.position + obj.itrUIOffset); --> 이 경우에는 anchor를 left bottom으로
 
-            rectTr.anchoredPosition = Util.ScreenToWorldPosForScreenSpace(obj.transform.position + obj.itrUIOffset, Util.WorldCvs);
+            rectTr.anchoredPosition = Util.WorldToScreenPosForScreenSpace(obj.transform.position + obj.itrUIOffset, Util.WorldCvs);
         }
     }
 

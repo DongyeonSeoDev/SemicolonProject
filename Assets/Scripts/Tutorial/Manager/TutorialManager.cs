@@ -4,6 +4,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Experimental.Rendering.Universal;
 using FkTweening;
+using DG.Tweening;
+using Water;
 
 public class TutorialManager : MonoSingleton<TutorialManager> 
 {
@@ -25,12 +27,17 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     private Light2D playerFollowLight;  //플레이어 따라다니는 라이트
     #endregion
 
+    public Pair<GameObject, Transform> acqDropIconPair; //UI획득하고 획득 연출 뜰 아이콘 오브젝트
+
+
     [Header("Test")]
     [SerializeField] private bool isTestMode = false;
     public bool IsTestMode => isTestMode;
 
     private void Awake()
     {
+        PoolManager.CreatePool(acqDropIconPair.first, acqDropIconPair.second, 2, "AcqDropIcon");
+
         EventManager.StartListening("Tuto_GainAllArrowKey", () =>
         {
             playerFollowLight.DOInnerRadius(20f, 1.5f, false);
@@ -43,18 +50,51 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
         EventManager.StartListening("DrainTutorialEnemyDrain", enemyPos =>
         {
+            //적 HP바 UI 생성 후 적 위치로 가져옴
             RectTransform teHpBar;
+            Canvas ordCvs = UIManager.Instance.ordinaryCvsg.GetComponent<Canvas>(); 
             if(StoredData.HasGameObjectKey("Tuto EnemyHp UI"))
             {
                 teHpBar = StoredData.GetGameObjectData<RectTransform>("Tuto EnemyHp UI");
             }
             else
             {
-                teHpBar = Instantiate(Resources.Load<GameObject>("Tutorial/UI/TutorialEnemyHP"), Util.WorldCvs.transform).GetComponent<RectTransform>();
+                teHpBar = Instantiate(Resources.Load<GameObject>("Tutorial/UI/TutorialEnemyHP"), ordCvs.transform).GetComponent<RectTransform>();
+                StoredData.SetGameObjectKey("Tuto EnemyHp UI", teHpBar.gameObject);
             }
 
-            teHpBar.gameObject.SetActive(true);
-            teHpBar.anchoredPosition = Util.ScreenToWorldPosForScreenSpace(enemyPos, Util.WorldCvs);
+            teHpBar.gameObject.SetActive(false);
+            teHpBar.anchoredPosition = Util.WorldToScreenPosForScreenSpace(enemyPos, ordCvs);
+
+            //Init
+            ordCvs.GetComponent<CanvasGroup>().alpha = 1;  //컷씬 시작상태라 alpha값이 0인 상태이므로 1로 켜줌. 
+            teHpBar.GetComponent<CanvasGroup>().alpha = 1;
+
+            hpUI.GetComponent<CanvasGroup>().alpha = 0; //아직 HP바 못얻은 상태이므로 alpha만 0으로 하고 옵젝 켜줌 (파티클은 alpha 0이어도 보이므로 아직은 꺼진 상태 유지) 
+            hpUI.gameObject.SetActive(true);
+
+            changeableBodysUIArr[0].GetComponent<CanvasGroup>().alpha = 0;  //alpha만 0으로 하고 켜줌
+            changeableBodysUIArr[0].gameObject.SetActive(true);
+
+            //UtilEditor.PauseEditor();
+
+            //HP바 tweening
+
+            Util.DelayFunc(() =>  //슬라임 흡수하고 원래 사이즈로 되돌아올 때까지 대기
+            {
+                teHpBar.gameObject.SetActive(true);
+
+                Sequence seq = DOTween.Sequence();
+                seq.Append(teHpBar.DOAnchorPos(Util.WorldToScreenPosForScreenSpace(Global.GetSlimePos.position + Vector3.down, ordCvs), 0.3f))
+                .AppendInterval(0.5f); //슬라임 밑으로 체력바 옮김
+                seq.Append(teHpBar.DOAnchorPos(new Vector2(-819.3f, 474f), 0.9f).SetEase(Ease.InQuad))
+                .AppendInterval(0.4f);  //HP UI 있는곳으로 옮김
+                seq.Append(teHpBar.GetComponent<CanvasGroup>().DOFade(0, 0.3f))
+                .AppendInterval(0.15f); //옮겨진 UI 안보이게
+                seq.Append(hpUI.GetComponent<CanvasGroup>().DOFade(1, 0.4f))
+                .Join(changeableBodysUIArr[0].GetComponent<CanvasGroup>().DOFade(1, 0.3f));  //원래 HPUI랑 첫번째 변신 슬롯 보이게
+                seq.Play();  //HP fill 차오르는 효과 필요
+            }, 3f);
         });
     }
 
@@ -107,12 +147,16 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             EffectManager.Instance.OnTouchEffect("TouchEffect1");
         }
 
-        if(!gm.savedData.userInfo.uiActiveDic[KeyAction.SETTING])
+        if (!gm.savedData.userInfo.uiActiveDic[KeyAction.SETTING])
         {
             tutorialPhases.Add(new SettingPhase(10, () =>
             {
-                UIOn(KeyAction.SETTING);
-                gm.savedData.userInfo.uiActiveDic[KeyAction.QUIT] = true;
+                PoolManager.GetItem<AcquisitionDropIcon>("AcqDropIcon").Set(UIManager.Instance.GetInterfaceSprite(UIType.SETTING),
+                Global.GetSlimePos.position - new Vector3(10f, 0), 3f, new Vector2(12, 12), () =>
+                {
+                    UIOn(KeyAction.SETTING);
+                    gm.savedData.userInfo.uiActiveDic[KeyAction.QUIT] = true;
+                });
             }));
         }
 

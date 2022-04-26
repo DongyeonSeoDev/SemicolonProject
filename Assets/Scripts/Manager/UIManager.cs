@@ -319,6 +319,16 @@ public partial class UIManager : MonoSingleton<UIManager>
         }
     }
 
+    public Sprite GetInterfaceSprite(UIType type)
+    {
+        MenuButton mb = menuBtns.Find(x => x.uiType == type);
+        if(mb)
+        {
+            return mb.transform.GetChild(0).GetComponent<Image>().sprite;
+        }
+        return null;
+    }
+
     private void UserInput()
     {
         if (Input.GetKeyDown(KeySetting.fixedKeyDict[KeyAction.SETTING]))

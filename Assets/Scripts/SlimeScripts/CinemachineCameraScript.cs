@@ -19,6 +19,8 @@ public class CinemachineCameraScript : MonoSingleton<CinemachineCameraScript>
         boundingCollider = GameObject.FindGameObjectWithTag("CameraLimit").GetComponent<Collider2D>();
         cinemachineNoise = cinemachine.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
+        cinemachine.m_Lens.OrthographicSize = 8.5f;
+
         EventManager.StartListening("PlayerDead", () =>
         {
             SetCinemachineFollow(SlimeGameManager.Instance.CurrentPlayerBody.transform);

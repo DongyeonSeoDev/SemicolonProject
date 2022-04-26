@@ -26,7 +26,7 @@ public class NPCUI : MonoBehaviour
             //transform.position = Util.WorldToScreenPoint(npc.transform.position + npc.uiOffset);  //overlay일때
             //rectTr.anchoredPosition = RectTransformUtility.WorldToScreenPoint(Util.MainCam, npc.transform.position + npc.uiOffset);  //camera일때
 
-            rectTr.anchoredPosition = Util.ScreenToWorldPosForScreenSpace(npc.transform.position + npc.uiOffset, Util.WorldCvs);
+            rectTr.anchoredPosition = Util.WorldToScreenPosForScreenSpace(npc.transform.position + npc.uiOffset, Util.WorldCvs);
         }
     }
 

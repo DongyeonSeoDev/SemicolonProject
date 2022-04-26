@@ -63,7 +63,7 @@ public class SettingPhase : TutorialPhase
 
     private int maxCount = 3, offset = 3;
 
-    private Vector2 effSpawnPosOffset = new Vector2(0, 11f);
+    private Vector2 effSpawnPosOffset = new Vector2(0, 13f);
 
     public SettingPhase(int pressCount, Action end)
     {

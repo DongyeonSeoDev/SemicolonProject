@@ -37,6 +37,8 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     public Transform slimeFollowObj { get; private set; }
 
+    public event Action gameQuitEvent;
+
     private void Awake()
     {
         filePath = Global.saveFileName_1.PersistentDataPath();
@@ -317,6 +319,7 @@ public partial class GameManager : MonoSingleton<GameManager>
     private void OnApplicationQuit()
     {
         Save();
+        gameQuitEvent?.Invoke();
     }
     private void OnApplicationFocus(bool focus)
     {

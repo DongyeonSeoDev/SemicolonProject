@@ -191,7 +191,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
             Transform target = SlimeGameManager.Instance.CurrentPlayerBody.transform;  //변신 시 플레이어가 잠깐 사라져서 이렇게 받아서 함
             if (target)
             {
-                phtRectTr.anchoredPosition = Util.ScreenToWorldPosForScreenSpace(target.position + playerHeadTextCurOffset, Util.WorldCvs);
+                phtRectTr.anchoredPosition = Util.WorldToScreenPosForScreenSpace(target.position + playerHeadTextCurOffset, Util.WorldCvs);
             }
 
             if(!twComp && Time.time > phtOffTime)
