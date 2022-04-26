@@ -159,7 +159,7 @@ public class InputTutorial : MonoBehaviour
         }
         #endregion
 
-        if(keyNotPressed)
+        if(!moveKeyClear && keyNotPressed)
         {
             keyNotPressTimer += Time.deltaTime;
 
