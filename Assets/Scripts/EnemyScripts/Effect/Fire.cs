@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 namespace Enemy
 {
@@ -8,10 +9,16 @@ namespace Enemy
     {
         public static List<GameObject> checkAttackObjectTogether = new List<GameObject>();
 
+        public Transform attackRange = null;
+        public Vector3 targetAttackRangeScale = new Vector3(2f, 2f, 1f);
+
         private Animator animator;
         private Collider2D attackCollider;
+        private SpriteRenderer attackRangeSprite = null;
         private Enemy enemyCheck;
         private EnemyController eEnemyController;
+        private Color currentAttackRangeColor;
+        private Color targetAttackRangeColor;
         private int attackPower;
         private bool checkTogether;
 
@@ -24,6 +31,11 @@ namespace Enemy
         {
             animator = GetComponent<Animator>();
             attackCollider = GetComponent<Collider2D>();
+            attackRangeSprite = attackRange.GetComponent<SpriteRenderer>();
+
+            currentAttackRangeColor = attackRangeSprite.color;
+            targetAttackRangeColor = currentAttackRangeColor;
+            targetAttackRangeColor.a = 1;
         }
 
         private void Start()
@@ -49,14 +61,32 @@ namespace Enemy
 
             if (attackTime > 0)
             {
-                Util.DelayFunc(Attack, attackTime);
+                attackRange.gameObject.SetActive(true);
+                attackRange.localScale = Vector3.zero;
+
+                attackRange.DOScale(targetAttackRangeScale, attackTime - 0.2f).OnComplete(() =>
+                {
+                    Attack();
+                });
+            }
+            else
+            {
+                attackRange.gameObject.SetActive(true);
             }
         }
 
         public void Attack()
         {
-            animator.ResetTrigger(hashReset);
-            animator.SetTrigger(hashAttack);
+            attackRangeSprite.color = targetAttackRangeColor;
+
+            Util.DelayFunc(() =>
+            {
+                attackRange.gameObject.SetActive(false);
+                attackRangeSprite.color = currentAttackRangeColor;
+
+                animator.ResetTrigger(hashReset);
+                animator.SetTrigger(hashAttack);
+            }, 0.2f);
         }
 
         public void AnimationEnd()

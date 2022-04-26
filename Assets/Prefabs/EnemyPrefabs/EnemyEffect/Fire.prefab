@@ -72,8 +72,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1158705011
-  m_SortingLayer: 6
+  m_SortingLayerID: -1646225281
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 3ae3cdefca5d68c4b8bcc80d134a261a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -135,6 +135,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   poolType: 104
   count: 10
+  attackRange: {fileID: 5474167377993900726}
+  targetAttackRangeScale: {x: 2, y: 2, z: 1}
 --- !u!1 &6248227328534518330
 GameObject:
   m_ObjectHideFlags: 0
@@ -203,11 +205,11 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1158705011
-  m_SortingLayer: 6
+  m_SortingLayerID: -1646225281
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: fdf46c93f722a1047baa0da8080a6aea, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 0.39215687}
+  m_Color: {r: 1, g: 0, b: 0, a: 0.47058824}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

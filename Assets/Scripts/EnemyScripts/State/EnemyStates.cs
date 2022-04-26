@@ -190,14 +190,11 @@ namespace Enemy
                 {
                     SetBossAttack(false);
 
-                    // 보스 분신과 공격 범위를 제거
+                    // 보스 분신 제거
                     for (int i = 0; i < enemyCount - 1; i++)
                     {
                         bossCloneArray[i].gameObject.SetActive(false);
-                        attackRangeArray[i].gameObject.SetActive(false);
                     }
-
-                    attackRangeArray[enemyCount - 1].gameObject.SetActive(false);
                 }
 
                 if (!isMove)
@@ -341,6 +338,12 @@ namespace Enemy
             {
                 enemyData.moveVector = isRightAttack ? Vector2.right : Vector2.left;
                 enemyData.enemySpriteRotateCommand.Execute();
+
+                // 공격 범위 제거
+                for (int i = 0; i < enemyCount; i++)
+                {
+                    attackRangeArray[i].gameObject.SetActive(false);
+                }
             }
         }
     }
