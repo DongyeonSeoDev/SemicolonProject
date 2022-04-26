@@ -80,9 +80,16 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
             //HP바 tweening
 
+            float hpFillEffectMaskCenterInitScale = StoredData.GetValueData<float>("hpFillEffectMaskCenterInitScale");
+
+            UIManager.Instance.playerHPInfo.first.fillAmount = 0;
+            UIManager.Instance.playerHPInfo.third.fillAmount = 0;
+            EffectManager.Instance.hpFillEffectMaskCenter.localScale = new Vector3(0, hpFillEffectMaskCenterInitScale, hpFillEffectMaskCenterInitScale);
+
             Util.DelayFunc(() =>  //슬라임 흡수하고 원래 사이즈로 되돌아올 때까지 대기
             {
                 teHpBar.gameObject.SetActive(true);
+                EffectManager.Instance.hpFillEffect.gameObject.SetActive(true);
 
                 Sequence seq = DOTween.Sequence();
                 seq.Append(teHpBar.DOAnchorPos(Util.WorldToScreenPosForScreenSpace(Global.GetSlimePos.position + Vector3.down, ordCvs), 0.3f))
@@ -92,8 +99,15 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                 seq.Append(teHpBar.GetComponent<CanvasGroup>().DOFade(0, 0.3f))
                 .AppendInterval(0.15f); //옮겨진 UI 안보이게
                 seq.Append(hpUI.GetComponent<CanvasGroup>().DOFade(1, 0.4f))
-                .Join(changeableBodysUIArr[0].GetComponent<CanvasGroup>().DOFade(1, 0.3f));  //원래 HPUI랑 첫번째 변신 슬롯 보이게
-                seq.Play();  //HP fill 차오르는 효과 필요
+                .Join(changeableBodysUIArr[0].GetComponent<CanvasGroup>().DOFade(1, 0.3f))  
+                .AppendInterval(0.2f);   //원래 HPUI랑 첫번째 변신 슬롯 보이게
+                seq.Append(UIManager.Instance.playerHPInfo.first.DOFillAmount(1, 0.7f))  //HP Fill 차오르게
+                .Join(EffectManager.Instance.hpFillEffectMaskCenter.DOScaleX(hpFillEffectMaskCenterInitScale, 0.75f)) //이펙트 마스크 넓힘 (이펙트도 점점 보이게)
+                .AppendCallback(() =>
+                {
+                    UIManager.Instance.playerHPInfo.third.fillAmount = 1;
+                });
+                seq.Play();
             }, 3f);
         });
     }

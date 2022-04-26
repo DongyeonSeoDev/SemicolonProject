@@ -79,6 +79,8 @@ public class EffectManager : MonoSingleton<EffectManager>
         hpFillEffectMaskCenterInitScale = hpFillEffectMaskCenter.localScale.x;
         warningHPRate = warningHPRatePercent * 0.01f;
 
+        StoredData.SetValueKey("hpFillEffectMaskCenterInitScale", hpFillEffectMaskCenterInitScale);
+
         PoolManager.CreatePool(pickupPlantEffects.first, transform, 2, "PickSuccessEff");
         PoolManager.CreatePool(pickupPlantEffects.second, transform, 2, "PickFailEff");
         PoolManager.CreatePool(damageTextPair.first, damageTextPair.second, 4, "DamageTextEff");

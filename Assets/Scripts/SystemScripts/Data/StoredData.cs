@@ -3,39 +3,51 @@ using UnityEngine;
 
 public static class StoredData
 {
-    private static Dictionary<string, object> objDataDic = new Dictionary<string, object>();
+    #region Valiable
+    private static Dictionary<string, object> valueDataDic = new Dictionary<string, object>();
     private static Dictionary<string, GameObject> gameObjectDataDic = new Dictionary<string, GameObject>();
+    #endregion
 
     #region object
-    public static void SetObjectKey(string key, object data)
+    public static void SetValueKey(string key, object data)
     {
         //objDataDic[key] = data;  //걍 이렇게 바로 해도 됨.
         
-        if(!objDataDic.ContainsKey(key))
-            objDataDic.Add(key, data);
+        if(!valueDataDic.ContainsKey(key))
+            valueDataDic.Add(key, data);
         else
-            objDataDic[key] = data;
+            valueDataDic[key] = data;
     }
 
-    public static object GetObjectData(string key)
+    public static object GetValueData(string key)
     {
-        if(objDataDic.ContainsKey(key))
+        if(valueDataDic.ContainsKey(key))
         {
-            return objDataDic[key];
+            return valueDataDic[key];
         }
         Debug.Log("키가 없다 : " + key);
         return null;
     }
 
-    public static void DeleteObjectKey(string key)
+    public static T GetValueData<T>(string key)
     {
-        if (objDataDic.ContainsKey(key))
+        if (valueDataDic.ContainsKey(key))
         {
-            objDataDic.Remove(key);
+            return (T)valueDataDic[key];
+        }
+        Debug.Log("키가 없다 : " + key);
+        return default;
+    }
+
+    public static void DeleteValueKey(string key)
+    {
+        if (valueDataDic.ContainsKey(key))
+        {
+            valueDataDic.Remove(key);
         }
     }
 
-    public static bool HasObjectKey(string key) => objDataDic.ContainsKey(key);
+    public static bool HasValueKey(string key) => valueDataDic.ContainsKey(key);
 
     #endregion
 
