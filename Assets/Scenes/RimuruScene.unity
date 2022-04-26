@@ -2851,6 +2851,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: DrainTutorialEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 6312957648424485583, guid: 47f47cd71c2d1e443a45506bf07d31a9, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6312957648424485616, guid: 47f47cd71c2d1e443a45506bf07d31a9, type: 3}
       propertyPath: m_SortingLayer
       value: 5
