@@ -951,7 +951,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         if ( (data.itemType == ItemType.ETC && !((Ingredient)data).isUseable)) return;
 
         data.Use();
-        Inventory.Instance.RemoveItem(selectedItemId, 1);
+        Inventory.Instance.RemoveItem(selectedItemId, 1, "아이템을 소모했습니다.");
 
         if (selectedItemSlot.itemInfo == null)
         {

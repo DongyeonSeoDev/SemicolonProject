@@ -67,7 +67,7 @@ public class CookingManager : MonoSingleton<CookingManager>
         {
             selectedFoodIngrImgs.ForEach(x => 
             {
-                Inventory.Instance.RemoveItem(x.IngredientInfo.ingredient.id, x.IngredientInfo.needCount * makeFoodCount);
+                Inventory.Instance.RemoveItem(x.IngredientInfo.ingredient.id, x.IngredientInfo.needCount * makeFoodCount, "아이템을 소모했습니다.");
             });
             MakeFoodInfoUIReset();
             CheckCannotMakeFoods();

@@ -233,12 +233,12 @@ public class Inventory : MonoSingleton<Inventory>
         Global.ActionTrigger("GetItem", id);
     }
 
-    public void RemoveItem(string id, int count)  //아이템 조짐
+    public void RemoveItem(string id, int count, string msg = "아이템을 잃었습니다.")  //아이템 조짐
     {
         if(gm.ExistItem(id))
         {
             gm.RemoveItem(id, count);
-            UIManager.Instance.RequestLeftBottomMsg(string.Format("아이템을 잃었습니다. ({0} -{1})", gm.GetItemData(id).itemName, count));
+            UIManager.Instance.RequestLeftBottomMsg(string.Format(msg + " ({0} -{1})", gm.GetItemData(id).itemName, count));
             
             if(gm.GetItemData(id).existBattleCount > 0)
             {
