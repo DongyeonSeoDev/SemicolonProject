@@ -18,14 +18,14 @@ namespace Enemy
 
         public void GetDamage(int damage, bool critical = false, bool isKnockBack = false, float knockBackPower = 20, float stunTime = 1, Vector2? direction = null)
         {
-            hp -= damage;
+            //hp -= damage;
 
-            if (hp < 0)
-            {
-                hp = 0;
-            }
+            //if (hp < 0)
+            //{
+            //    hp = 0;
+            //}
 
-            EffectManager.Instance.OnDamaged(damage, critical, true, transform.position);
+            //EffectManager.Instance.OnDamaged(damage, critical, true, transform.position);
         }
         public Transform GetTransform() => transform;
         public GameObject GetGameObject() => gameObject;

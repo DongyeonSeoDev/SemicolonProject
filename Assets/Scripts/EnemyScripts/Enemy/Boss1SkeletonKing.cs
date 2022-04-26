@@ -32,7 +32,7 @@ namespace Enemy
         public Vector2 limitMaxPosition;
         public LayerMask whatIsWall;
 
-        private BossHPBar bossHPBar;
+        private BossCanvas bossHPBar;
 
         private List<float> specialAttack3Check = new List<float>();
         private int attackCount = 0;
@@ -59,7 +59,7 @@ namespace Enemy
         {
             base.OnEnable();
 
-            bossHPBar = FindObjectOfType<BossHPBar>();
+            bossHPBar = GetComponentInChildren<BossCanvas>();
             bossHPBar.Init(enemyData);
 
             enemyData.attackDelay = 1.8f;
@@ -134,27 +134,13 @@ namespace Enemy
             EventManager.TriggerEvent("StartCutScene");
 
             playableDirector.Play();
+        }
 
-            Util.DelayFunc(() =>
-            {
-                bossHPBar.SetActiveBossName(true);
-            }, 3f);
+        public void EndCutScene()
+        {
+            EventManager.TriggerEvent("EndCutScene");
 
-            Util.DelayFunc(() =>
-            {
-                bossHPBar.SetActiveBossName(false);
-            }, 5f);
-
-            Util.DelayFunc(() =>
-            {
-                bossHPBar.SetActiveHPBar(true);
-            }, 6f);
-
-            Util.DelayFunc(() =>
-            {
-                EventManager.TriggerEvent("EndCutScene");
-                base.MoveEnemy();
-            }, 7f);
+            base.MoveEnemy();
         }
 
         private Vector2 CheckPosition(Vector2 direction)

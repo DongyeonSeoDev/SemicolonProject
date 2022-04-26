@@ -59,7 +59,7 @@ public class PlayerDrainCollider : MonoBehaviour
 
     private int int_timer = 0;
 
-    private void Start()
+    private void Awake()
     {
         playerDrain = transform.parent.GetComponent<PlayerDrain>();
     }
@@ -136,7 +136,7 @@ public class PlayerDrainCollider : MonoBehaviour
 
             tryDrainList.Add(enemy);
 
-            if (playerDrain.drainTutorial || (enemy != null && hpPercentage <= canDrainHpPercentage)) // 흡수 성공
+            if (playerDrain.drainTutorial || (enemy != null && hpPercentage <= canDrainHpPercentage)) // 흡수 성공////////////////////
             {
                 doDrainList.Add(enemy);
                 SpawnGrabObj(enemy.GetGameObject());

@@ -85,6 +85,7 @@ namespace Enemy
 
             pool.gameObject.SetActive(true);
             pool.transform.position = position;
+            pool.transform.rotation = Quaternion.identity;
 
             poolQueueDictionary[poolType].Enqueue(pool);
 

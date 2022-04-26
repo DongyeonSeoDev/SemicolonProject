@@ -83,9 +83,6 @@ namespace Enemy
             {
                 Spawn(spawnData[stageId], stageId);
 
-                EnemyManager.Instance.enemyCount = spawnData[stageId].Count;
-                EventManager.TriggerEvent("EnemySpawnAfter");
-
                 Util.DelayFunc(() => 
                 {
                     for (int i = 0; i < enemyDictionary[stageId].Count; i++)
@@ -112,6 +109,9 @@ namespace Enemy
                     enemyDictionary[stageId].Add(enemy.GetComponent<Enemy>());
                 }
             }
+
+            EnemyManager.Instance.enemyCount = spawnData.Count;
+            EventManager.TriggerEvent("EnemySpawnAfter");
         }
 
         private void Move(string stageId)

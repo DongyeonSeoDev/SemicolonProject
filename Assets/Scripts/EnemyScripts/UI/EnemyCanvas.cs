@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class EnemyHPBar : MonoBehaviour
+public class EnemyCanvas : MonoBehaviour
 {
     private Canvas canvas;
 

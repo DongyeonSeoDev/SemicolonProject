@@ -306,7 +306,7 @@ MonoBehaviour:
   skillIdx: 1
   canCrashLayer:
     serializedVersion: 2
-    m_Bits: 131264
+    m_Bits: 131520
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 128
@@ -356,6 +356,7 @@ MonoBehaviour:
   drainCollider: {fileID: 6491635181836223920}
   upMountingPercentageValue: 5
   upUnderstandingRateValue: 1
+  drainTutorial: 0
 --- !u!114 &5835559770882864823
 MonoBehaviour:
   m_ObjectHideFlags: 0

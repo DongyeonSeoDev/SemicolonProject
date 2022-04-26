@@ -47,7 +47,20 @@ public class PlayerChoiceStatControl : MonoBehaviour
         get { return attackNum; }
         set { attackNum = value; }
     }
-
+    private void OnEnable()
+    {
+        EventManager.StartListening("OnEnemyAttack", UpAttackNum);
+        EventManager.StartListening("OnAttackMiss", UpAttackMissedNum);
+    }
+    private void OnDisable()
+    {
+        EventManager.StopListening("OnEnemyAttack", UpAttackNum);
+        EventManager.StopListening("OnAttackMiss", UpAttackMissedNum);
+    }
+    private void Update()
+    {
+        CheckPatience();
+    }
     public void CheckEndurance()
     {
         int pasteEndurance = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance;
@@ -109,6 +122,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
         SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience = num;
 
         SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.minDamage += upDamagePerPatience * (num - pastePatienceNum);
+        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxDamage += upDamagePerPatience * (num - pastePatienceNum);
     }
     private void AttackNumReset()
     {

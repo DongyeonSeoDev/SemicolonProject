@@ -18,6 +18,10 @@ public class PlayerBodySlap : PlayerSkill
 
     [SerializeField]
     private float maxChargingTime = 3f;
+    public float MaxChargingTime
+    {
+        get { return maxChargingTime; }
+    }
     [SerializeField]
     private float minMoveToMouseChargeTime = 0.1f; // currentChargingTimer 값이 이 값보다 높아야 마우스로 이동한다.
     private float currentChargingTimer = 0f; // 이 타이머는 0에서 플레이어가 대쉬를 눌렀을 때 부터 올라간다. 이 값이 maxChargingTime과
@@ -174,22 +178,38 @@ public class PlayerBodySlap : PlayerSkill
     {
         if (canCrashLayer.CompareGameObjectLayer(targetObject) && playerState.BodySlapping)
         {
-            ICanGetDamagableEnemy enemy = targetObject.GetComponent<ICanGetDamagableEnemy>();
+            IDamageableBySlimeBodySlap damagableByBodySlap = targetObject.GetComponent<IDamageableBySlimeBodySlap>();
 
-            if (enemy != null)
+            if (damagableByBodySlap != null)
             {
-                SlimeGameManager.Instance.Player.Mag_GiveDamage(enemy, SlimeGameManager.Instance.Player.PlayerStat.MinDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, damageMagnificationOfBodySlap);
+                Debug.Log("aaaa");
+                damagableByBodySlap.GetDamage(1);// 여기에 매개변수 추가
             }
-
-            if (!bodyStopBodySlapTimerStart)
+            else
             {
-                StopBodySlap();
+                ICanGetDamagableEnemy enemy = targetObject.GetComponent<ICanGetDamagableEnemy>();
 
-                bodyStopBodySlapTimerStart = true;
-                stopBodySlapTimer = stopBodySlapTime;
+                if (enemy != null)
+                {
+                    SlimeGameManager.Instance.Player.Mag_GiveDamage(enemy, SlimeGameManager.Instance.Player.PlayerStat.MinDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, damageMagnificationOfBodySlap);
+
+                    EventManager.TriggerEvent("OnEnemyAttack");
+                }
+                else
+                {
+                    EventManager.TriggerEvent("OnAttackMiss");
+                }
+
+                if (!bodyStopBodySlapTimerStart)
+                {
+                    StopBodySlap();
+
+                    bodyStopBodySlapTimerStart = true;
+                    stopBodySlapTimer = stopBodySlapTime;
+                }
+
+                SoundManager.Instance.PlaySoundBox("SlimeSkill1Crash");
             }
-
-            SoundManager.Instance.PlaySoundBox("SlimeSkill1Crash");
         }
 
     }
