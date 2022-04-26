@@ -2070,7 +2070,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2935571583272015193, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_SceneBindings.Array.size
-      value: 7
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 2935571583272015193, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_SceneBindings.Array.data[4].key
@@ -2091,7 +2091,7 @@ PrefabInstance:
     - target: {fileID: 2935571583272015193, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_SceneBindings.Array.data[8].key
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 4820985945009789302, guid: 76a1a3b41af8d764c859e153e36ded97, type: 2}
     - target: {fileID: 2935571583272015193, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_SceneBindings.Array.data[4].value
       value: 
@@ -2107,14 +2107,14 @@ PrefabInstance:
     - target: {fileID: 2935571583272015193, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_SceneBindings.Array.data[7].value
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1614698500}
     - target: {fileID: 2935571583272015193, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_SceneBindings.Array.data[8].value
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1782452595}
     - target: {fileID: 2935571583272015193, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_ExposedReferences.m_References.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2935571583272015193, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_ExposedReferences.m_References.Array.data[1].first
@@ -2125,11 +2125,19 @@ PrefabInstance:
       value: 242b7da765aec0649b50f449565f8c0f
       objectReference: {fileID: 0}
     - target: {fileID: 2935571583272015193, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_ExposedReferences.m_References.Array.data[3].first
+      value: 71eba8804ddd81d438066906619998d5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2935571583272015193, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_ExposedReferences.m_References.Array.data[1].second
       value: 
       objectReference: {fileID: 1782452590}
     - target: {fileID: 2935571583272015193, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_ExposedReferences.m_References.Array.data[2].second
+      value: 
+      objectReference: {fileID: 1782452590}
+    - target: {fileID: 2935571583272015193, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_ExposedReferences.m_References.Array.data[3].second
       value: 
       objectReference: {fileID: 1782452590}
     - target: {fileID: 3395549028838288454, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
@@ -2307,22 +2315,6 @@ PrefabInstance:
     - target: {fileID: 7266880244804242061, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7625114132501623009, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
-      propertyPath: gameEffects.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 7625114132501623009, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
-      propertyPath: gameEffects.Array.data[5].first
-      value: 
-      objectReference: {fileID: 100000, guid: 979632a27455af442bd2d8f36eb0ffce, type: 3}
-    - target: {fileID: 7625114132501623009, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
-      propertyPath: gameEffects.Array.data[5].third
-      value: TouchEffect1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7625114132501623009, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
-      propertyPath: gameEffects.Array.data[5].second
-      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 7703981378852997025, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_SizeDelta.x
