@@ -153,6 +153,7 @@ public class StageManager : MonoSingleton<StageManager>
             }
 
             SoundManager.Instance.SetBGMPitch(1);
+            Enemy.EnemyManager.Instance.PlayerDeadEvent();
         });
         EventManager.TriggerEvent("StartBGM", startStageID);
         EventManager.StartListening("PlayerRespawn", Respawn);

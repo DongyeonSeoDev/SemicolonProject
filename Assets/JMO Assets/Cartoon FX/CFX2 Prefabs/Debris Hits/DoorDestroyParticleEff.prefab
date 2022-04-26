@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 198330214428362902}
   - component: {fileID: 199403377841047146}
   m_Layer: 0
-  m_Name: CFX2_RockHit
+  m_Name: DoorDestroyParticleEff
   m_TagString: FxTemporaire
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
