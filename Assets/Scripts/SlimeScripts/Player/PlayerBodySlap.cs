@@ -178,28 +178,37 @@ public class PlayerBodySlap : PlayerSkill
     {
         if (canCrashLayer.CompareGameObjectLayer(targetObject) && playerState.BodySlapping)
         {
-            ICanGetDamagableEnemy enemy = targetObject.GetComponent<ICanGetDamagableEnemy>();
+            IDamageableBySlimeBodySlap damagableByBodySlap = targetObject.GetComponent<IDamageableBySlimeBodySlap>();
 
-            if (enemy != null)
+            if (damagableByBodySlap != null)
             {
-                SlimeGameManager.Instance.Player.Mag_GiveDamage(enemy, SlimeGameManager.Instance.Player.PlayerStat.MinDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, damageMagnificationOfBodySlap);
-
-                EventManager.TriggerEvent("OnEnemyAttack");
+                damagableByBodySlap.GetDamage(1);// 여기에 매개변수 추가
             }
             else
             {
-                EventManager.TriggerEvent("OnAttackMiss");
+                ICanGetDamagableEnemy enemy = targetObject.GetComponent<ICanGetDamagableEnemy>();
+
+                if (enemy != null)
+                {
+                    SlimeGameManager.Instance.Player.Mag_GiveDamage(enemy, SlimeGameManager.Instance.Player.PlayerStat.MinDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, damageMagnificationOfBodySlap);
+
+                    EventManager.TriggerEvent("OnEnemyAttack");
+                }
+                else
+                {
+                    EventManager.TriggerEvent("OnAttackMiss");
+                }
+
+                if (!bodyStopBodySlapTimerStart)
+                {
+                    StopBodySlap();
+
+                    bodyStopBodySlapTimerStart = true;
+                    stopBodySlapTimer = stopBodySlapTime;
+                }
+
+                SoundManager.Instance.PlaySoundBox("SlimeSkill1Crash");
             }
-
-            if (!bodyStopBodySlapTimerStart)
-            {
-                StopBodySlap();
-
-                bodyStopBodySlapTimerStart = true;
-                stopBodySlapTimer = stopBodySlapTime;
-            }
-
-            SoundManager.Instance.PlaySoundBox("SlimeSkill1Crash");
         }
 
     }
