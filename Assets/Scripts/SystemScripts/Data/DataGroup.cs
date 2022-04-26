@@ -145,22 +145,34 @@ public class UIMsgQueue
 [Serializable]
 public class NPCInfo
 {
-    public short id;
-    public short talkId;
+    public string id;
+    public int talkId;
 
     public string npcName;
-    public List<Pair<List<string>, List<TalkEffect>>> talkContents; 
+
+    public List<Single<List<TalkElement>>> talkContents; 
 }
 
 [Serializable]
-public class TalkEffect
+public class TalkElement
 {
-    //example
-    public Sprite npcTalkSpr;
-    public AudioClip talkSound;
+    public string message;
+    //public Sprite npcTalkSpr;
+    //public AudioClip talkSound;
     public UnityEvent talkEvent;
 }
 
+
+[Serializable]
+public class Single<T>
+{
+    public T value;
+
+    public Single(T t)
+    {
+        this.value = t;
+    }
+}
 
 
 [Serializable]

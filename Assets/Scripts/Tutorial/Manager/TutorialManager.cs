@@ -76,15 +76,20 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             changeableBodysUIArr[0].GetComponent<CanvasGroup>().alpha = 0;  //alpha만 0으로 하고 켜줌
             changeableBodysUIArr[0].gameObject.SetActive(true);
 
-            //UtilEditor.PauseEditor();
-
-            //HP바 tweening
-
             float hpFillEffectMaskCenterInitScale = StoredData.GetValueData<float>("hpFillEffectMaskCenterInitScale");
 
             UIManager.Instance.playerHPInfo.first.fillAmount = 0;
             UIManager.Instance.playerHPInfo.third.fillAmount = 0;
             EffectManager.Instance.hpFillEffectMaskCenter.localScale = new Vector3(0, hpFillEffectMaskCenterInitScale, hpFillEffectMaskCenterInitScale);
+
+            Vector3 special2SkillSlotPos = skillUIArr[2].GetComponent<RectTransform>().anchoredPosition;
+            skillUIArr[2].GetComponent<CanvasGroup>().alpha = 0;
+            skillUIArr[2].gameObject.SetActive(true);
+            skillUIArr[2].GetComponent<RectTransform>().anchoredPosition = Util.WorldToScreenPosForScreenSpace(enemyPos, ordCvs);
+
+            //UtilEditor.PauseEditor();
+
+            //HP바 tweening
 
             Util.DelayFunc(() =>  //슬라임 흡수하고 원래 사이즈로 되돌아올 때까지 대기
             {
@@ -100,7 +105,9 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                 .AppendInterval(0.15f); //옮겨진 UI 안보이게
                 seq.Append(hpUI.GetComponent<CanvasGroup>().DOFade(1, 0.4f))
                 .Join(changeableBodysUIArr[0].GetComponent<CanvasGroup>().DOFade(1, 0.3f))  
-                .AppendInterval(0.2f);   //원래 HPUI랑 첫번째 변신 슬롯 보이게
+                .Join(skillUIArr[2].GetComponent<RectTransform>().DOAnchorPos(special2SkillSlotPos, 1f).SetEase(Ease.InOutBack))
+                .Join(skillUIArr[2].GetComponent<CanvasGroup>().DOFade(1, 0.6f).SetEase(Ease.OutCubic))
+                .AppendInterval(0.2f);   //원래 HPUI랑 첫번째 변신 슬롯 보이게 + 흡수 스킬 슬롯 얻음
                 seq.Append(UIManager.Instance.playerHPInfo.first.DOFillAmount(1, 0.7f))  //HP Fill 차오르게
                 .Join(EffectManager.Instance.hpFillEffectMaskCenter.DOScaleX(hpFillEffectMaskCenterInitScale, 0.75f)) //이펙트 마스크 넓힘 (이펙트도 점점 보이게)
                 .AppendCallback(() =>
