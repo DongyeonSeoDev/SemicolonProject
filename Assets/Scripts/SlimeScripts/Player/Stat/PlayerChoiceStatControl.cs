@@ -122,6 +122,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
         SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience = num;
 
         SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.minDamage += upDamagePerPatience * (num - pastePatienceNum);
+        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxDamage += upDamagePerPatience * (num - pastePatienceNum);
     }
     private void AttackNumReset()
     {
