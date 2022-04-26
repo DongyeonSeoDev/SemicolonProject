@@ -24,11 +24,15 @@ namespace Enemy
 
         public Dictionary<string, List<Enemy>> enemyDictionary = new Dictionary<string, List<Enemy>>();
 
-         private Dictionary<Type, Vector2> enemySpawnEffectPositionDic = new Dictionary<Type, Vector2>();
-         private Dictionary<Type, Vector3> enemySpawnEffectScaleDic = new Dictionary<Type, Vector3>();
+        public Vector3 effectRotationEuler = new Vector3(75f, 0f, 0f);
+        private Quaternion effectQuaternion;
+
+        private Dictionary<Type, Vector2> enemySpawnEffectPositionDic = new Dictionary<Type, Vector2>();
+        private Dictionary<Type, Vector3> enemySpawnEffectScaleDic = new Dictionary<Type, Vector3>();
 
         private void Start()
         {
+            effectQuaternion = Quaternion.Euler(effectRotationEuler);
             enemyDictionary = EnemyManager.Instance.enemyDictionary;
             enemySpawnEffectPositionDic = effectPositionList.ToDictionary(x => x.enemyType, x => x.spawnPosition);
             enemySpawnEffectScaleDic = effectPositionList.ToDictionary(x => x.enemyType, x => x.spawnScale);
@@ -63,6 +67,7 @@ namespace Enemy
                 {
                     EnemyPoolData effect = EnemyPoolManager.Instance.GetPoolObject(Type.EnemySpawnEffect, (Vector2)data.position + enemySpawnEffectPositionDic[data.enemyId]);
                     effect.transform.localScale = enemySpawnEffectScaleDic[data.enemyId];
+                    effect.transform.rotation = effectQuaternion;
 
                     effect.GetComponent<EnemySpawnEffect>().Play();
                 }
