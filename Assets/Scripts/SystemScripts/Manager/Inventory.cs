@@ -14,6 +14,8 @@ public class Inventory : MonoSingleton<Inventory>
 
     [SerializeField] private int maxItemSlotCount = 20;
 
+    public GameObject invenUseActionImg;
+
     #region Drag
     private ItemSlot beginSlot;
     public Image dragImage;
