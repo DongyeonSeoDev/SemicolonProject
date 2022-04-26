@@ -134,27 +134,13 @@ namespace Enemy
             EventManager.TriggerEvent("StartCutScene");
 
             playableDirector.Play();
+        }
 
-            Util.DelayFunc(() =>
-            {
-                bossHPBar.SetActiveBossName(true);
-            }, 3f);
+        public void EndCutScene()
+        {
+            EventManager.TriggerEvent("EndCutScene");
 
-            Util.DelayFunc(() =>
-            {
-                bossHPBar.SetActiveBossName(false);
-            }, 5f);
-
-            Util.DelayFunc(() =>
-            {
-                bossHPBar.SetActiveHPBar(true);
-            }, 6f);
-
-            Util.DelayFunc(() =>
-            {
-                EventManager.TriggerEvent("EndCutScene");
-                base.MoveEnemy();
-            }, 7f);
+            base.MoveEnemy();
         }
 
         private Vector2 CheckPosition(Vector2 direction)

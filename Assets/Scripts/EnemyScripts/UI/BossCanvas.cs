@@ -56,6 +56,10 @@ namespace Enemy
 
             if (value)
             {
+                hpBarRectTransform.anchoredPosition -= setActiveMoveValue;
+                fillHpBar.fillAmount = 0;
+                damageHpBar.fillAmount = 0;
+
                 activeTrueSequence.Restart();
             }
             else
@@ -87,8 +91,6 @@ namespace Enemy
             {
                 sequence.OnStart(() =>
                 {
-                    hpBarRectTransform.anchoredPosition -= setActiveMoveValue;
-                    fillHpBar.fillAmount = 0;
                     isSequencePlay = true;
                 });
 
@@ -100,6 +102,8 @@ namespace Enemy
                 sequence.OnComplete(() =>
                 {
                     isSequencePlay = false;
+                    fillHpBar.fillAmount = 1;
+                    damageHpBar.fillAmount = 1;
 
                     SetFill();
                 });
