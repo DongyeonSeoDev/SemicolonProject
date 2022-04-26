@@ -557,7 +557,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4754499370992049534}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -12.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 2624678038962131991}
@@ -582,7 +582,7 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 11
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 8919641663643523180}
+  m_LookAt: {fileID: 0}
   m_Follow: {fileID: 8919641663643523180}
   m_Lens:
     FieldOfView: 60
@@ -763,7 +763,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -50, y: 150}
+  m_AnchoredPosition: {x: 120, y: 50}
   m_SizeDelta: {x: 350, y: 70}
   m_Pivot: {x: 1, y: 0}
 --- !u!222 &4763116941889646947
@@ -858,7 +858,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 70}
+  m_AnchoredPosition: {x: 0, y: -50}
   m_SizeDelta: {x: 1000, y: 50}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &3458192794007166196
@@ -1028,7 +1028,7 @@ MonoBehaviour:
   hpBarRectTransform: {fileID: 8803849298620167304}
   fillHpBar: {fileID: 587979128009697581}
   damageHpBar: {fileID: 2192640563718134900}
-  setActiveMoveValue: {x: 0, y: 50}
+  setActiveMoveValue: {x: 0, y: 200}
   setActiveMoveTimeValue: 0.5
   fillAmountDelayTime: 0.5
   fillAmountTime: 0.5
@@ -1134,6 +1134,7 @@ GameObject:
   - component: {fileID: 1725690301}
   - component: {fileID: 5497031053508213442}
   - component: {fileID: 7559260690231365845}
+  - component: {fileID: 2374049792157328907}
   m_Layer: 7
   m_Name: Boss1_SkeletonKing
   m_TagString: Untagged
@@ -1362,8 +1363,92 @@ PlayableDirector:
     value: {fileID: 8853168047767985245}
   - key: {fileID: -8008934570344344091, guid: b4e9165d54aaa6f4eb91fec1c1404503, type: 2}
     value: {fileID: 4754499370992049534}
+  - key: {fileID: 8240124837624396382, guid: b4e9165d54aaa6f4eb91fec1c1404503, type: 2}
+    value: {fileID: 8919641663643523178}
+  - key: {fileID: -2844726025367901640, guid: b4e9165d54aaa6f4eb91fec1c1404503, type: 2}
+    value: {fileID: 2374049792157328907}
   m_ExposedReferences:
-    m_References: []
+    m_References:
+    - 70daa8598a291804fb8f9b83e6c87934: {fileID: 8919641663643523178}
+    - 3fef5d75a26fd4a44bdc652b3feaf2bd: {fileID: 5165744435782167508}
+--- !u!114 &2374049792157328907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8919641663643523178}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: b8beb8e0b91049745bc9c2ff6ede3d5c, type: 2}
+    - {fileID: 11400000, guid: b97ddd8f99797dd4b8936e83fe061018, type: 2}
+    - {fileID: 11400000, guid: 1a22aca33a3f1794c8f925928a07daab, type: 2}
+    - {fileID: 11400000, guid: c625c524a64028e469bc292044b75c65, type: 2}
+    - {fileID: 11400000, guid: 8c0f18ece5bddd8408e6e42fbf7d9d9a, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls: []
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3596100943080729175}
+          m_TargetAssemblyTypeName: Enemy.BossCanvas, Assembly-CSharp
+          m_MethodName: SetActiveBossName
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3596100943080729175}
+          m_TargetAssemblyTypeName: Enemy.BossCanvas, Assembly-CSharp
+          m_MethodName: SetActiveBossName
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3596100943080729175}
+          m_TargetAssemblyTypeName: Enemy.BossCanvas, Assembly-CSharp
+          m_MethodName: SetActiveHPBar
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1725690301}
+          m_TargetAssemblyTypeName: Enemy.Boss1SkeletonKing, Assembly-CSharp
+          m_MethodName: EndCutScene
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &9069869964825529982
 GameObject:
   m_ObjectHideFlags: 0
