@@ -143,6 +143,12 @@ namespace Enemy
                     
                     enemy.GetDamage(damage.Item1, damage.Item2);
                     attackObject.Add(collision.gameObject);
+
+                    EventManager.TriggerEvent("OnEnemyAttack");
+                }
+                else
+                {
+                    EventManager.TriggerEvent("OnAttackMiss");
                 }
             }
         }

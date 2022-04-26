@@ -60,11 +60,18 @@ namespace Enemy
 
                     EnemyPoolManager.Instance.GetPoolObject(Type.BulletEffect, transform.position).GetComponent<BulletEffect>().Play(angle);
                     gameObject.SetActive(false);
+
+                    EventManager.TriggerEvent("OnEnemyAttack");
                 }
             }
 
             if (collision.CompareTag("Wall"))
             {
+                if (eEnemyController == EnemyController.PLAYER)
+                {
+                    EventManager.TriggerEvent("OnAttackMiss");
+                }
+
                 EnemyPoolManager.Instance.GetPoolObject(Type.BulletEffect, transform.position).GetComponent<BulletEffect>().Play(angle);
                 gameObject.SetActive(false);
             }
