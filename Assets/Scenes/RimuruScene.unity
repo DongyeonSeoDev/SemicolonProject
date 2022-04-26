@@ -132,7 +132,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 661305349485032592, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
       propertyPath: skillDelay
-      value: 0.1
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 661305349485032592, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
       propertyPath: useEnergyAmount
@@ -2607,7 +2607,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ConfineMode: 0
   m_BoundingVolume: {fileID: 0}
-  m_BoundingShape2D: {fileID: 815715622}
+  m_BoundingShape2D: {fileID: 0}
   m_ConfineScreenEdges: 1
   m_Damping: 3
 --- !u!114 &1782452594

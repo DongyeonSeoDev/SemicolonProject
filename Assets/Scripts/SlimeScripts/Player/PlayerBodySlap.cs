@@ -18,6 +18,10 @@ public class PlayerBodySlap : PlayerSkill
 
     [SerializeField]
     private float maxChargingTime = 3f;
+    public float MaxChargingTime
+    {
+        get { return maxChargingTime; }
+    }
     [SerializeField]
     private float minMoveToMouseChargeTime = 0.1f; // currentChargingTimer 값이 이 값보다 높아야 마우스로 이동한다.
     private float currentChargingTimer = 0f; // 이 타이머는 0에서 플레이어가 대쉬를 눌렀을 때 부터 올라간다. 이 값이 maxChargingTime과
