@@ -131,8 +131,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 661305349485032592, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
+      propertyPath: projectile
+      value: 
+      objectReference: {fileID: 8223448895546236962, guid: 062ac0f8b869b214aa5b9cd4640d1401, type: 3}
+    - target: {fileID: 661305349485032592, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
       propertyPath: skillDelay
-      value: 0.01
+      value: 0.000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 661305349485032592, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
+      propertyPath: projectileSpeed
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 661305349485032592, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
       propertyPath: useEnergyAmount
@@ -140,11 +148,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3966382012738421239, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
       propertyPath: upDamagePerPatience
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3966382012738421239, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
       propertyPath: upMaxHpPerEnduranceUpAmount
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5427881869486345068, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
       propertyPath: m_Name
@@ -201,6 +209,18 @@ PrefabInstance:
     - target: {fileID: 5427881869486345105, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
       propertyPath: playerStat.eternalStat.maxHp
       value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 5427881869486345105, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
+      propertyPath: playerStat.eternalStat.maxDamage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5427881869486345105, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
+      propertyPath: playerStat.eternalStat.minDamage
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5427881869486345105, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
+      propertyPath: playerStat.eternalStat.criticalDamage
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5427881869486345105, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
       propertyPath: upMountingPercentageValueWhenEnemyDead
@@ -2108,6 +2128,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3710166553202853683, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3710166553202853683, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3917626530634563287, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2317,6 +2345,30 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8439711538291071118, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8706775525822491291, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8706775525822491291, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8706775525822491291, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8706775525822491291, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8706775525822491291, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8706775525822491291, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}

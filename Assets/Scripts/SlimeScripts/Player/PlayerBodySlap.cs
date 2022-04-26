@@ -182,8 +182,7 @@ public class PlayerBodySlap : PlayerSkill
 
             if (damagableByBodySlap != null)
             {
-                Debug.Log("aaaa");
-                damagableByBodySlap.GetDamage(1);// 여기에 매개변수 추가
+                damagableByBodySlap.GetDamage(1, currentChargingTimer);// 여기에 매개변수 추가
             }
             else
             {
