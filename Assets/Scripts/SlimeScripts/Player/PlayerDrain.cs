@@ -28,7 +28,9 @@ public class PlayerDrain : PlayerSkill
     }
 
     public bool drainTutorial = false;
+
     private bool canDrain = true;
+    public bool cantDrainObject = false;
 
     public override void Awake()
     {

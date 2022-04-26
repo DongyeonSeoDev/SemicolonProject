@@ -114,8 +114,8 @@ public class PlayerDrainCollider : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         // 1. 튜토리얼 전용 스크립트를 만든다
-
-        if (canDrainObjLayers.CompareGameObjectLayer(other.gameObject))
+        
+        if (!playerDrain.cantDrainObject && canDrainObjLayers.CompareGameObjectLayer(other.gameObject))
         {
             // Debug.Log(other.gameObject.layer);
             //Drain되는 오브젝트는 삭제처리
