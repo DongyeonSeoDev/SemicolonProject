@@ -109,7 +109,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                 .AppendInterval(0.15f); //옮겨진 UI 안보이게
                 seq.Append(hpUI.GetComponent<CanvasGroup>().DOFade(1, 0.4f))
                 .Join(changeableBodysUIArr[0].GetComponent<CanvasGroup>().DOFade(1, 0.3f))
-                .Join(skillUIArr[2].GetComponent<RectTransform>().DOAnchorPos(special2SkillSlotPos, 1f).SetEase(Ease.InOutBack))
+                .Join(skillUIArr[2].GetComponent<RectTransform>().DOAnchorPos(special2SkillSlotPos, 1f).SetEase(Ease.OutCubic))
                 .Join(skillUIArr[2].GetComponent<CanvasGroup>().DOFade(1, 0.6f).SetEase(Ease.OutCubic))
                 .AppendInterval(0.2f);   //원래 HPUI랑 첫번째 변신 슬롯 보이게 + 흡수 스킬 슬롯 얻음
                 seq.Append(UIManager.Instance.playerHPInfo.first.DOFillAmount(1, 0.7f))  //HP Fill 차오르게
@@ -129,7 +129,11 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                 RectTransform emphRectTr = PoolManager.GetItem<RectTransform>("UIEmphasisEff");
                 emphRectTr.transform.parent = skillUIArr[2].transform;
                 emphRectTr.anchoredPosition = Vector3.zero;
-                tutorialPhases.Add(new AbsorptionPhase(()=>TimeManager.TimeResume(Global.GetSlimePos.GetComponent<PlayerDrain>().DoDrainByTuto)));
+                tutorialPhases.Add(new AbsorptionPhase(() => 
+                {
+                    emphRectTr.gameObject.SetActive(false);
+                    TimeManager.TimeResume(Global.GetSlimePos.GetComponent<PlayerDrain>().DoDrainByTuto);
+                }));
             });
         });
     }
