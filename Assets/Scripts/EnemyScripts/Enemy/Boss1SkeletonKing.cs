@@ -417,5 +417,7 @@ namespace Enemy
 
             return null;
         }
+
+        public override void SetColor(float time) { }
     }
 }

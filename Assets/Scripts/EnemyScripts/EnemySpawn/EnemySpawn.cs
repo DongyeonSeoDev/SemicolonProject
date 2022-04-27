@@ -113,6 +113,8 @@ namespace Enemy
                     enemyDictionary.Add(stageId, new List<Enemy>());
                     enemyDictionary[stageId].Add(enemy.GetComponent<Enemy>());
                 }
+
+                enemy.GetComponent<Enemy>().SetColor(1f);
             }
 
             EnemyManager.Instance.enemyCount = spawnData.Count;

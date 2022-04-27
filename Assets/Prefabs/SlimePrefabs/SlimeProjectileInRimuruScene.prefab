@@ -106,7 +106,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2097280
   moveTime: 100
-  knockBackPower: 0
+  knockBackPower: 30
 --- !u!50 &8223448895546236960
 Rigidbody2D:
   serializedVersion: 4
