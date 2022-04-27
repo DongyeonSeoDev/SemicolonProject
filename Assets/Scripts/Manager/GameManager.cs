@@ -5,6 +5,7 @@ using System;
 using System.Text;
 using System.IO;
 using Water;
+using UnityEditor;
 
 public partial class GameManager : MonoSingleton<GameManager>
 {
@@ -39,6 +40,10 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     public event Action gameQuitEvent;
 
+#if UNITY_EDITOR
+    public Dictionary<KeyCode, Action> testKeyInputActionDict = new Dictionary<KeyCode, Action>();
+#endif
+
     private void Awake()
     {
         filePath = Global.saveFileName_1.PersistentDataPath();
@@ -48,8 +53,6 @@ public partial class GameManager : MonoSingleton<GameManager>
         
         Load();
         Init();
-
-        
     }
 
     #region Data
@@ -204,6 +207,23 @@ public partial class GameManager : MonoSingleton<GameManager>
         StoredData.SetGameObjectKey("Slime Follow Obj", slimeFollowObj.gameObject);
 
         //WDUtil.PrintStructSize(typeof(StageFork));
+    }
+
+    private void Update()
+    {
+
+
+#if UNITY_EDITOR
+        foreach(KeyCode key in testKeyInputActionDict.Keys)
+        {
+            if(Input.GetKeyDown(key))
+            {
+                testKeyInputActionDict[key].Invoke();
+            }
+        }
+#endif
+
+
     }
 
     void PlayerDead()
