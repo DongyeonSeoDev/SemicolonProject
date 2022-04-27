@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Collections;
 
 public static class TimeManager
 {
@@ -16,6 +17,8 @@ public static class TimeManager
 
     public static Action timePauseAction = null;
     public static Action timeResumeAction = null;
+
+    private static bool isLerp = false;
 
     public static void TimePause(Action pauseAction = null)
     {
@@ -69,5 +72,39 @@ public static class TimeManager
             }
             endAction?.Invoke();
         }, duration, null, realTime);
+    }
+
+    public static void LerpTime(float speed, float target, Action end = null)
+    {
+        if (isLerp) return;
+
+        end += () => isLerp = false;
+
+        isLerp = true;
+        KeyActionManager.Instance.StartCoroutine(LerpTimeCo(speed, target, end));
+    }
+
+    private static IEnumerator LerpTimeCo(float speed, float target, Action end)
+    {
+        float dir = currentTimeScale > target ? -1f : 1f;
+
+        while(currentTimeScale != target)
+        {
+            currentTimeScale += speed * Time.unscaledDeltaTime * dir;
+            Time.timeScale = currentTimeScale;
+
+            if( (currentTimeScale >= target && dir == 1f) || (currentTimeScale <= target && dir == -1f))
+            {
+                currentTimeScale = target;
+                Time.timeScale = currentTimeScale;
+            }
+
+            yield return null;
+        }
+
+        end();
+
+        if (currentTimeScale == 0f) TimePause();
+        else if (currentTimeScale == 1f && IsTimePaused) TimeResume();
     }
 }

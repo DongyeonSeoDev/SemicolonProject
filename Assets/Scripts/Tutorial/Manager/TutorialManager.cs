@@ -85,7 +85,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             Vector3 special2SkillSlotPos = skillUIArr[2].GetComponent<RectTransform>().anchoredPosition;
             skillUIArr[2].GetComponent<CanvasGroup>().alpha = 0;
             skillUIArr[2].gameObject.SetActive(true);
-            skillUIArr[2].GetComponent<RectTransform>().anchoredPosition = Util.WorldToScreenPosForScreenSpace(enemyPos, ordCvs);
+            skillUIArr[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(951, 740); //이걸 어떻게 고칠까. anchor가 달라서 위치가 제대로 안나옴(anchor가 중간이어야 오른쪽 코드가 잘됨) //Util.WorldToScreenPosForScreenSpace(enemyPos, ordCvs) - new Vector3(960f, -67f);
 
             //UtilEditor.PauseEditor();
 

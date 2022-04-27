@@ -50,7 +50,14 @@ public class CutsceneManager : MonoSingleton<CutsceneManager>
     #region tutorial
     public void TutoSlimeAbsorb()
     {
-        SlimeGameManager.Instance.CurrentPlayerBody.GetComponent<PlayerDrain>().DoDrainByTuto();
+        if (SlimeGameManager.Instance.CurrentBodyId == Global.OriginBodyID)
+        {
+            SlimeGameManager.Instance.CurrentPlayerBody.GetComponent<PlayerDrain>().DoDrainByTuto();
+
+            return;
+        }
+
+        Debug.LogError("Current Body is not Slime!!!");
     }
     #endregion
 }

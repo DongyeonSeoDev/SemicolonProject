@@ -282,12 +282,16 @@ public class PlayerInput : MonoBehaviour
     }
     private void PauseByCutScene()
     {
+        playerState.CantMove = false;
+
         isPauseByCutScene = true;
 
         PlayerReset();
     }
     private void ResumeByCutScene()
     {
+        playerState.CantMove = true;
+
         isPauseByCutScene = false;
 
         PlayerReset();

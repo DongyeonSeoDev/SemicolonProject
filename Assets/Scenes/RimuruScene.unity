@@ -140,7 +140,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 661305349485032592, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
       propertyPath: projectileSpeed
-      value: 0.1
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 661305349485032592, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
       propertyPath: useEnergyAmount
@@ -2311,6 +2311,10 @@ PrefabInstance:
     - target: {fileID: 7740545757498637308, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7779646850773830854, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 2.0500488
       objectReference: {fileID: 0}
     - target: {fileID: 7779646850773830854, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_AnchoredPosition.y

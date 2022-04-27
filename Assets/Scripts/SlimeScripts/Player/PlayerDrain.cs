@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerDrain : PlayerSkill
 {
+    private readonly string canDrainCheckColliderPath = "Player/PlayerCollider/CanDrainCheckCollider";
+
     [SerializeField]
     private GameObject drainCollider = null; // drain 체크에 사용될 Collider
     private PlayerDrainCollider playerDrainCol = null;
@@ -38,6 +40,13 @@ public class PlayerDrain : PlayerSkill
 
         playerDrainCol = drainCollider.GetComponent<PlayerDrainCollider>();
         drainCollider.SetActive(false);
+    }
+    private void Start()
+    {
+        if(TutorialManager.Instance.IsTutorialStage)
+        {
+            Instantiate(Resources.Load<GameObject>(canDrainCheckColliderPath), transform);
+        }
     }
     public override void OnEnable()
     {

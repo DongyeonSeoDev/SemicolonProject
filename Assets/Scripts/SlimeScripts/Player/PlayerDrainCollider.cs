@@ -56,6 +56,10 @@ public class PlayerDrainCollider : MonoBehaviour
     [Header("흡수하려는 적의 HP가 해당 변수 이하의 퍼센트가 되어야 흡수 가능")]
     [SerializeField]
     private float canDrainHpPercentage = 10;
+    public float CanDrainHpPercentage
+    {
+        get { return canDrainHpPercentage; }
+    }
 
     private int int_timer = 0;
 
