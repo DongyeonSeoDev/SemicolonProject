@@ -66,7 +66,7 @@ public class ImprecationObj : InteractionObj
 
     void RemoveRandomItem()
     {
-        UIManager.Instance.RequestLeftBottomMsg("저주로 임의의 인벤토리 한 칸의 아이템을 모두 잃었습니다.");
+        UIManager.Instance.RequestLogMsg("저주로 임의의 인벤토리 한 칸의 아이템을 모두 잃었습니다.");
         Inventory.Instance.RemoveRandomItem();
     }
 

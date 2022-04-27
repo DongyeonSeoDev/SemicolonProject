@@ -29,7 +29,6 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     public Pair<GameObject, Transform> acqDropIconPair; //UI획득하고 획득 연출 뜰 아이콘 오브젝트
 
-
     [Header("Test")]
     [SerializeField] private bool isTestMode = false;
     public bool IsTestMode => isTestMode;
@@ -38,7 +37,12 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     {
         PoolManager.CreatePool(acqDropIconPair.first, acqDropIconPair.second, 2, "AcqDropIcon");
 
-        EventManager.StartListening("Tuto_GainAllArrowKey", () =>
+        DefineAction();
+    }
+
+    private void DefineAction()
+    {
+        EventManager.StartListening("Tuto_GainArrowKey", () =>
         {
             playerFollowLight.DOInnerRadius(20f, 1.5f, false);
             playerFollowLight.DOOuterRadius(20f, 1.5f, false, () =>
@@ -46,14 +50,14 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                 playerFollowLight.gameObject.SetActive(false);
                 Environment.Instance.mainLight.intensity = 1;
             });
-        });
+        });  //플레이어가 방향키 하나 얻었을 때의 이벤트
 
         EventManager.StartListening("DrainTutorialEnemyDrain", enemyPos =>
         {
             //적 HP바 UI 생성 후 적 위치로 가져옴
             RectTransform teHpBar;
-            Canvas ordCvs = UIManager.Instance.ordinaryCvsg.GetComponent<Canvas>(); 
-            if(StoredData.HasGameObjectKey("Tuto EnemyHp UI"))
+            Canvas ordCvs = UIManager.Instance.ordinaryCvsg.GetComponent<Canvas>();
+            if (StoredData.HasGameObjectKey("Tuto EnemyHp UI"))
             {
                 teHpBar = StoredData.GetGameObjectData<RectTransform>("Tuto EnemyHp UI");
             }
@@ -104,7 +108,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                 seq.Append(teHpBar.GetComponent<CanvasGroup>().DOFade(0, 0.3f))
                 .AppendInterval(0.15f); //옮겨진 UI 안보이게
                 seq.Append(hpUI.GetComponent<CanvasGroup>().DOFade(1, 0.4f))
-                .Join(changeableBodysUIArr[0].GetComponent<CanvasGroup>().DOFade(1, 0.3f))  
+                .Join(changeableBodysUIArr[0].GetComponent<CanvasGroup>().DOFade(1, 0.3f))
                 .Join(skillUIArr[2].GetComponent<RectTransform>().DOAnchorPos(special2SkillSlotPos, 1f).SetEase(Ease.InOutBack))
                 .Join(skillUIArr[2].GetComponent<CanvasGroup>().DOFade(1, 0.6f).SetEase(Ease.OutCubic))
                 .AppendInterval(0.2f);   //원래 HPUI랑 첫번째 변신 슬롯 보이게 + 흡수 스킬 슬롯 얻음
@@ -116,12 +120,25 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                 });
                 seq.Play();
             }, 3f);
+        });  //플레이어가 튜토리얼(HP바 얻는 곳) 전용 몬스터를 흡수했을 때의 이벤트
+
+        EventManager.StartListening("Tuto_CanDrainObject", () =>
+        {
+            TimeManager.LerpTime(1f, 0f, () =>
+            {
+                RectTransform emphRectTr = PoolManager.GetItem<RectTransform>("UIEmphasisEff");
+                emphRectTr.transform.parent = skillUIArr[2].transform;
+                emphRectTr.anchoredPosition = Vector3.zero;
+                tutorialPhases.Add(new AbsorptionPhase(()=>TimeManager.TimeResume(Global.GetSlimePos.GetComponent<PlayerDrain>().DoDrainByTuto)));
+            });
         });
     }
 
     private void Start()
     {
-        
+
+        GameManager.Instance.testKeyInputActionDict.Add(KeyCode.B, () => EventManager.TriggerEvent("Tuto_CanDrainObject"));
+
         gm = GameManager.Instance;
         um = UIManager.Instance;
 
@@ -166,6 +183,8 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
             tutorialPhases.Add(new StartPhase(playerFollowLight,2));
             EffectManager.Instance.OnTouchEffect("TouchEffect1");
+
+            UIManager.Instance.RequestLogMsg("<b>[시작특전]</b> 마우스와 키보드를 획득하였습니다(?)", 4f);
         }
 
         if (!gm.savedData.userInfo.uiActiveDic[KeyAction.SETTING])
