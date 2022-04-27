@@ -151,6 +151,7 @@ public class PlayerState : MonoBehaviour
     {
         charging = false;
         bodySlapping = false;
+        cantMove = false;
         isKnockBack = false;
         isStun = false;
         isDrain = false;
