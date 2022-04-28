@@ -99,7 +99,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
     private int understadingRatePercentageWhenUpStat = 10;
     [Header("동화율 'understadingRatePercentageWhenUpStat'퍼당 변신시 오르게되는 능력치가 오르게 되는 수치(배율)")]
     [SerializeField]
-    private float upStatPercentage = 0.2f;
+    private float upStatPercentage = 0.05f;
     public float UpStatPercentage
     {
         get { return upStatPercentage; }
