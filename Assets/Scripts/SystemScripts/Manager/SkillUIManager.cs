@@ -43,7 +43,8 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
     public ParticleSystem energeParticleEff;
     public Color lowEnergeColor;
     public Gradient lowEnergeGrad;
-    
+
+    public bool IsAutoFitEnergeBar { get; set; }
 
     private void Awake()
     {
@@ -68,6 +69,8 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
         defaultSkill.Register(skillsSO.playerOriginBodySkills.second[0]);
         specialSkill.Register(skillsSO.playerOriginBodySkills.second[1]);
         drain.Register(skillsSO.playerOriginBodySkills.second[2]);
+
+        IsAutoFitEnergeBar = true;
 
         EventManager.StartListening("ChangeBody", (str, dead) =>
         {
@@ -134,7 +137,7 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
 
     private void UpdateEnergeBarUI()
     {
-        if(energeBarAndEff.first.activeSelf)
+        if(energeBarAndEff.first.activeSelf && IsAutoFitEnergeBar)
         {
             float rate = Global.CurrentPlayer.CurrentEnergy / Global.CurrentPlayer.MaxEnergy;
             energeFill.fillAmount = rate;
