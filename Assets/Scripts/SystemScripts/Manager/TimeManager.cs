@@ -33,7 +33,7 @@ public static class TimeManager
         timePauseQueue.Enqueue(true);
     }
 
-    public static void TimeResume(Action resumeAction = null)
+    public static void TimeResume(Action resumeAction = null, float curTimeScale = 0f)
     {
         if (timePauseQueue.Count > 0)
             timePauseQueue.Dequeue();
@@ -42,6 +42,11 @@ public static class TimeManager
 
         if(!IsTimePaused)
         {
+            if(curTimeScale > 0f)
+            {
+                currentTimeScale = curTimeScale;
+            }
+
             Time.timeScale = currentTimeScale;
             resumeAction?.Invoke();
 

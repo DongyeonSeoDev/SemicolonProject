@@ -125,7 +125,11 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                 tutorialPhases.Add(new AbsorptionPhase(() => 
                 {
                     emphRectTr.gameObject.SetActive(false);
-                    TimeManager.TimeResume(Global.GetSlimePos.GetComponent<PlayerDrain>().DoDrainByTuto);
+                    TimeManager.TimeResume(() =>
+                    {
+                        Global.GetSlimePos.GetComponent<PlayerDrain>().DoDrainByTuto();
+                        Destroy(Global.GetSlimePos.GetComponentInChildren<PlayerCanDrainCheckCollider>().gameObject);
+                    }, 1f);
                 }));
             });
         });
@@ -133,8 +137,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     private void Start()
     {
-
-        GameManager.Instance.testKeyInputActionDict.Add(KeyCode.B, () => EventManager.TriggerEvent("Tuto_CanDrainObject"));
+        GameManager.Instance.testKeyInputActionDict.Add(KeyCode.B, () => Debug.Log(Time.timeScale));
 
         gm = GameManager.Instance;
         um = UIManager.Instance;
