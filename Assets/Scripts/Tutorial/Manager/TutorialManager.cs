@@ -57,16 +57,8 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             //적 HP바 UI 생성 후 적 위치로 가져옴
             RectTransform teHpBar;
             Canvas ordCvs = UIManager.Instance.ordinaryCvsg.GetComponent<Canvas>();
-            if (StoredData.HasGameObjectKey("Tuto EnemyHp UI"))
-            {
-                teHpBar = StoredData.GetGameObjectData<RectTransform>("Tuto EnemyHp UI");
-            }
-            else
-            {
-                teHpBar = Instantiate(Resources.Load<GameObject>("Tutorial/UI/TutorialEnemyHP"), ordCvs.transform).GetComponent<RectTransform>();
-                StoredData.SetGameObjectKey("Tuto EnemyHp UI", teHpBar.gameObject);
-            }
 
+            teHpBar = Instantiate(Resources.Load<GameObject>("Tutorial/UI/TutorialEnemyHP"), ordCvs.transform).GetComponent<RectTransform>();
             teHpBar.gameObject.SetActive(false);
             teHpBar.anchoredPosition = Util.WorldToScreenPosForScreenSpace(enemyPos, ordCvs);
 
@@ -81,6 +73,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             changeableBodysUIArr[0].gameObject.SetActive(true);
 
             float hpFillEffectMaskCenterInitScale = StoredData.GetValueData<float>("hpFillEffectMaskCenterInitScale");
+            StoredData.DeleteValueKey("hpFillEffectMaskCenterInitScale");
 
             UIManager.Instance.playerHPInfo.first.fillAmount = 0;
             UIManager.Instance.playerHPInfo.third.fillAmount = 0;
