@@ -377,10 +377,10 @@ public partial class UIManager : MonoSingleton<UIManager>
             {
                 OnUIInteract(UIType.MONSTER_COLLECTION);
             }
-            else if (CheckInputAndActive(KeyAction.QUIT))
+            /*else if (CheckInputAndActive(KeyAction.QUIT))
             {
                 OnUIInteract(UIType.QUIT);
-            }
+            }*/
             else if (Input.GetKeyDown(KeyCode.E) && Util.IsActiveGameUI(UIType.ITEM_DETAIL))
             {
                 if (selectedItemSlot)

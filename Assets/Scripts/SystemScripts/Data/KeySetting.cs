@@ -24,7 +24,7 @@ public static class KeySetting
         keyDict[KeyAction.CHANGE_MONSTER1] = KeyCode.Alpha2;
         keyDict[KeyAction.CHANGE_MONSTER2] = KeyCode.Alpha3;
         //keyDict[KeyAction.SETTING] = KeyCode.Tab;
-        keyDict[KeyAction.QUIT] = KeyCode.F4;
+        //keyDict[KeyAction.QUIT] = KeyCode.F4;
     }
 
     public static void SetFixedKeySetting() //고정키 세팅
@@ -56,7 +56,7 @@ public static class KeySetting
             keyActive[KeyAction.INVENTORY] = false;
             keyActive[KeyAction.STAT] = false;
             keyActive[KeyAction.MONSTER_COLLECTION] = false;
-            keyActive[KeyAction.QUIT] = false;
+            //keyActive[KeyAction.QUIT] = false;
             
             return keyActive;
         }

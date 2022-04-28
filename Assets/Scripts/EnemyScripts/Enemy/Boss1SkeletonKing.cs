@@ -14,11 +14,17 @@ namespace Enemy
         public int fireCount = 0;
         public int maxAttackCount = 0;
         public float specialAttackTime = 6f;
-        public float bossMoveSpeed = 0f;
+        public float bossAttackMoveSpeed = 0f;
         public float fireDistance = 0f;
         public float fireSpawnTime = 0f;
         public float targetMoveSpeed = 0f;
         public float attackSpeedUpPercent = 0f;
+        public float startSpeed = 5f;
+        public float speedUpValue = 0.5f;
+        public float speedUpTime = 1f;
+
+        [HideInInspector]
+        public float currentSpeed = 0f;
 
         private EnemyCommand enemyMoveCommand;
         private EnemyCommand enemySpecialAttackMoveCommand;
@@ -37,6 +43,7 @@ namespace Enemy
         private List<float> specialAttack3Check = new List<float>();
         private int attackCount = 0;
         private float currentTime = 0f;
+        private float currentMoveTime = 0f;
         private bool isAttack = false;
         private bool isSpecialAttack1 = false;
         private bool isSpecialAttack3 = false;
@@ -65,14 +72,14 @@ namespace Enemy
             enemyData.attackDelay = 1.8f;
             enemyData.isAttackPlayerDistance = 3.5f;
             enemyData.attackPower = 30;
-            enemyData.maxHP = 500;
-            enemyData.hp = 500;
+            enemyData.maxHP = 2000;
+            enemyData.hp = 2000;
             enemyData.isNoKnockback = true;
             enemyData.isNoStun = true;
 
-            enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, movePivot, rb, 5f, 0f, false);
+            enemyMoveCommand = new BossMoveCommand(enemyData, movePivot, rb, this);
             enemySpecialAttackMoveCommand = new EnemyTargetMoveCommand(enemyData, targetMoveSpeed);
-            attackMoveCommand = new EnemyFollowPlayerCommand(enemyData, movePivot, rb, bossMoveSpeed, 0f, false);
+            attackMoveCommand = new EnemyFollowPlayerCommand(enemyData, movePivot, rb, bossAttackMoveSpeed, 0f, false);
             rushAttackReadyCommand = new BossRushAttackCommand(enemyData, movePivot, rb, -1f, false);
             rushAttackCommand = new BossRushAttackCommand(enemyData, movePivot, rb, 50f, true);
 
@@ -140,6 +147,8 @@ namespace Enemy
         {
             EventManager.TriggerEvent("EndCutScene");
 
+            SpeedReset();
+
             base.MoveEnemy();
         }
 
@@ -174,6 +183,14 @@ namespace Enemy
             {
                 currentTime += Time.deltaTime;
             }
+
+            currentMoveTime += Time.deltaTime;
+
+            if (currentMoveTime >= speedUpTime)
+            {
+                currentMoveTime = 0f;
+                currentSpeed += speedUpValue;
+            }
         }
 
         public void StopAttack() // EventManager에서 실행 - 적 공격 정지
@@ -188,6 +205,8 @@ namespace Enemy
             rb.velocity = Vector2.zero;
             attackCount++;
 
+            SpeedReset();
+
             rushAttackReadyCommand.Execute();
             enemyData.enemySpriteRotateCommand.Execute();
         }
@@ -196,6 +215,8 @@ namespace Enemy
         {
             rb.velocity = Vector2.zero;
             attackCount++;
+
+            SpeedReset();
 
             for (int i = 0; i < enemyAttackCheck.Length; i++)
             {
@@ -261,6 +282,8 @@ namespace Enemy
             enemyData.animationDictionary[EnemyAnimationType.Move] = hashMove;
             enemyData.enemyMoveCommand = enemyMoveCommand;
             enemyData.enemyChaseStateChangeCondition = null;
+
+            SpeedReset();
         }
 
         public void SpecialAttack2Start() // 애니메이션에서 실행 - 특수공격2 시작
@@ -275,7 +298,7 @@ namespace Enemy
 
             Fire.checkAttackObjectTogether.Clear();
             attackCount++;
- 
+
             for (int i = 0; i < fireCount - 1; i++)
             {
                 Fire fire = EnemyPoolManager.Instance.GetPoolObject(Type.Fire, AnglePosition(playerPosition, (360 / (fireCount - 1)) * i)).GetComponent<Fire>();
@@ -318,6 +341,8 @@ namespace Enemy
         {
             isSpecialAttack3 = true;
             attackCount++;
+
+            SpeedReset();
 
             for (int i = 0; i < 150; i++)
             {
@@ -419,5 +444,11 @@ namespace Enemy
         }
 
         public override void SetColor(float time) { }
+        //private void SpeedReset() => currentSpeed = startSpeed;
+
+        private void SpeedReset()
+        {
+            currentSpeed = startSpeed;
+        }
     }
 }
