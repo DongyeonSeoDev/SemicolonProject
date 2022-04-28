@@ -24,6 +24,12 @@ namespace Enemy
             {
                 gameObject.SetActive(false);
             });
+
+
+            EventManager.StartListening("ExitCurrentMap", () =>
+            {
+                gameObject.SetActive(false);
+            });
         }
 
         private void Update()
