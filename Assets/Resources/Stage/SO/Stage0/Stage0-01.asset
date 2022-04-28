@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Stage0-01
   m_EditorClassIdentifier: 
   stageFloor: {fileID: 11400000, guid: 516212a852b2f484a8abbed3d2618a20, type: 2}
-  stageName: '    '
+  stageName: "\uD558\uC218\uAD6C \uAE4A\uC740 \uACF3"
   stageMonsterBundleCount: 0
   stageMonsterBundleID: []
   stage: {fileID: 1378282381469885354, guid: f33f3730cd537b8459821f94d3e56c1a, type: 3}
