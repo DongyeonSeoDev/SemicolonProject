@@ -42,11 +42,11 @@ public class PlayerCanDrainCheckCollider : MonoBehaviour
         boxCol2D.isTrigger = true;
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         ICanGetDamagableEnemy enemy = collision.GetComponent<ICanGetDamagableEnemy>();
 
-        if(enemy != null && enemy.EnemyHpPercent() <= playerDrain.PlayerDrainCol.CanDrainHpPercentage)
+        if(enemy != null && enemy.EnemyHpPercent() > 0 && enemy.EnemyHpPercent() <= playerDrain.PlayerDrainCol.CanDrainHpPercentage)
         {
             //Debug.Log("拭今今今今今つ");
             EventManager.TriggerEvent("Tuto_CanDrainObject");
