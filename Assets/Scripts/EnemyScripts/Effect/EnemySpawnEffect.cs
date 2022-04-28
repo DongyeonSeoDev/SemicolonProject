@@ -11,14 +11,25 @@ namespace Enemy
             particle = GetComponent<ParticleSystem>();
         }
 
+        private void Start()
+        {
+            EventManager.StartListening("PlayerDead", Remove);
+            EventManager.StartListening("ExitCurrentMap", Remove);
+        }
+
         public void Play()
         {
             particle.Play();
 
             Util.DelayFunc(() =>
             {
-                gameObject.SetActive(false);
+                Remove();
             }, 4f, this);
+        }
+
+        private void Remove()
+        {
+            gameObject.SetActive(false);
         }
     }
 }

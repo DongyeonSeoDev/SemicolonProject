@@ -19,7 +19,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     public Transform[] changeableBodysUIArr;
 
     //튜토리얼 진행중인가
-    public bool IsTutorialStage => !GameManager.Instance.savedData.tutorialInfo.isEnded;
+    public bool IsTutorialStage => (!(GameManager.Instance.savedData.tutorialInfo.isEnded || isTestMode));
     //튜토리얼 진행시키는데 업데이트에서 처리해야할 데이터들
     private List<TutorialPhase> tutorialPhases = new List<TutorialPhase>();
 
