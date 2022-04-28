@@ -52,12 +52,6 @@ public class Player : MonoBehaviour
         get { return coveredObjectList; }
     }
 
-    private List<GameObject> drainList = new List<GameObject>();
-    public List<GameObject> DrainList
-    {
-        get { return drainList; }
-    }
-
     private float getExtraDamagePercantage = 0f;
     /// <summary>
     /// 추가 데미지 퍼센테이지가 20%이면 이 변수에 20을 넣으면 된다.

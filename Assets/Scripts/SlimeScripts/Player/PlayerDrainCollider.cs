@@ -123,17 +123,25 @@ public class PlayerDrainCollider : MonoBehaviour
         {
             // Debug.Log(other.gameObject.layer);
             //Drain되는 오브젝트는 삭제처리
-            SlimeGameManager.Instance.Player.DrainList.Add(other.gameObject);
 
            ICanGetDamagableEnemy enemy = other.GetComponent<ICanGetDamagableEnemy>();
+
+            if (tryDrainList.Contains(enemy))
+            {
+                return;
+            }
 
             Vector2 dir = (transform.position - other.transform.position).normalized;
             float hpPercentage = enemy.EnemyHpPercent();// 닿은 적의 현재 체력의 퍼센트를 구함
 
+            Debug.Log(hpPercentage);
+
             if (hpPercentage <= 0f)
             {
+                Debug.Log("aaa");    
                 return;
             }
+
 
             float distance = Vector2.Distance(transform.position, enemy.GetTransform().position);
             float drainMoveTime = 0f;
