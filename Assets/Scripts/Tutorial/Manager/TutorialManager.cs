@@ -56,6 +56,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             });
         });  //플레이어가 방향키 하나 얻었을 때의 이벤트
 
+        //플레이어가 작은 슬라임 흡수했을 때 이벤트
         EventManager.StartListening("DrainTutorialEnemyDrain", enemyPos =>
         {
             //적 HP바 UI 생성 후 적 위치로 가져옴
@@ -136,6 +137,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             }, 3f);
         });  //플레이어가 튜토리얼(HP바 얻는 곳) 전용 몬스터를 흡수했을 때의 이벤트
 
+        //플레이어와 튜토 슬라임 사이 거리가 일정 이하(흡수 판정 거리)일 때 이벤트
         EventManager.StartListening("Tuto_CanDrainObject", () =>
         {
             TimeManager.LerpTime(1f, 0f, () =>
@@ -150,22 +152,37 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                     {
                         Global.GetSlimePos.GetComponent<PlayerDrain>().DoDrainByTuto();
                         Destroy(Global.GetSlimePos.GetComponentInChildren<PlayerCanDrainCheckCollider>().gameObject);
+
                         EventManager.TriggerEvent("StartCutScene");
+                        Canvas ordCvs = UIManager.Instance.ordinaryCvsg.GetComponent<Canvas>();
+                        ordCvs.GetComponent<CanvasGroup>().alpha = 1;
 
                         Util.DelayFunc(() =>
                         {
-                            Canvas ordCvs = UIManager.Instance.ordinaryCvsg.GetComponent<Canvas>();
-                            ordCvs.GetComponent<CanvasGroup>().alpha = 1;
-
+                            //Init
                             Vector3 startPos = skillUIArr[0].GetComponent<RectTransform>().anchoredPosition;
                             skillUIArr[0].GetComponent<CanvasGroup>().alpha = 0;
                             skillUIArr[0].gameObject.SetActive(true);
-                            skillUIArr[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(951, 740);
+                            skillUIArr[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(951, 740); //몬스터 위치(의 스크린 좌표)로
+
+                            Vector3 orgEnergeEffMaskScl = StoredData.GetValueData<Vector3>("orgEnergeEffMaskScl");
+                            SkillUIManager sum = SkillUIManager.Instance;
+                            sum.energeFill.fillAmount = 0;
+                            sum.energeEffMask.localScale = new Vector3(0, orgEnergeEffMaskScl.y, orgEnergeEffMaskScl.z);
+                            sum.energeBarAndEff.second.SetActive(true);
+                            sum.energeBarAndEff.first.GetComponent<CanvasGroup>().alpha = 0;
+                            sum.energeBarAndEff.first.SetActive(true);
+
+                            //Tween Sequence
 
                             Sequence seq = DOTween.Sequence();
                             seq.Append(skillUIArr[0].GetComponent<RectTransform>().DOAnchorPos(startPos, 0.4f).SetEase(Ease.InQuad))
                             .Join(skillUIArr[0].GetComponent<CanvasGroup>().DOFade(1, 0.3f))
-                            .AppendInterval(0.3f);
+                            .AppendInterval(0.5f);
+                            seq.Append(sum.energeBarAndEff.first.GetComponent<CanvasGroup>().DOFade(1, 0.4f));
+                            seq.Append(sum.energeFill.DOFillAmount(1, 0.75f))
+                            .Join(sum.energeEffMask.DOScaleX(orgEnergeEffMaskScl.x, 0.68f));
+                            seq.AppendInterval(0.6f).AppendCallback(() => EventManager.TriggerEvent("EndCutScene"));
 
                         }, 1.5f, this);
 
@@ -177,7 +194,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     private void Start()
     {
-        GameManager.Instance.testKeyInputActionDict.Add(KeyCode.B, () => Debug.Log(Time.timeScale));
+        GameManager.Instance.testKeyInputActionDict.Add(KeyCode.B, () => EventManager.TriggerEvent("Tuto_CanDrainObject"));
 
         gm = GameManager.Instance;
         um = UIManager.Instance;

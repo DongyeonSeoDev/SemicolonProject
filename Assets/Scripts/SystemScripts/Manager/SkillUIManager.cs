@@ -49,6 +49,7 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
     {
         skillInfoUIArr = skillImgUIParent.GetComponentsInChildren<SkillInfoImage>();
         orgEnergeEffMaskScl = energeEffMask.localScale;
+        StoredData.SetValueKey("orgEnergeEffMaskScl", orgEnergeEffMaskScl);
 
         lowEnergeRate = lowEnergeRatePercent * 0.01f;
         energeBarEffMainModule = energeParticleEff.main;
