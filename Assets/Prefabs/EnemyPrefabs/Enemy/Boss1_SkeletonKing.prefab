@@ -1312,11 +1312,15 @@ MonoBehaviour:
   fireCount: 9
   maxAttackCount: 7
   specialAttackTime: 6
-  bossMoveSpeed: 30
+  bossAttackMoveSpeed: 30
   fireDistance: 2
   fireSpawnTime: 0.1
   targetMoveSpeed: 15
   attackSpeedUpPercent: 40
+  startSpeed: 5
+  speedUpValue: 0.5
+  speedUpTime: 1
+  currentSpeed: 0
   limitMinPosition: {x: 0, y: 0}
   limitMaxPosition: {x: 0, y: 0}
   whatIsWall:

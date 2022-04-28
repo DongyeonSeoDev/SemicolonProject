@@ -211,6 +211,32 @@ namespace Enemy
             rigid.velocity = targetPosition;
         }
     }
+    public class BossMoveCommand : EnemyCommand // 보스 움직임
+    {
+        private EnemyData enemyData;
+        private Transform enemyObject;
+        private Rigidbody2D rigid;
+        private Boss1SkeletonKing boss;
+
+        private Vector3 targetPosition;
+
+        public BossMoveCommand(EnemyData data, Transform enemyObject, Rigidbody2D rigid, Boss1SkeletonKing boss1SkeletonKing)
+        {
+            enemyData = data;
+
+            this.enemyObject = enemyObject;
+            this.rigid = rigid;
+            boss = boss1SkeletonKing;
+        }
+
+        public override void Execute()
+        {
+            targetPosition = (EnemyManager.Player.transform.position - enemyObject.position).normalized;
+            targetPosition *= boss.currentSpeed;
+            enemyData.moveVector = targetPosition;
+            rigid.velocity = targetPosition;
+        }
+    }
 
     public class BossRushAttackCommand : EnemyCommand // 보스 X축과 Y축 돌진 공격
     {
