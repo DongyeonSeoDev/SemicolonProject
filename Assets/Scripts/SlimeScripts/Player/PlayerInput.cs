@@ -40,6 +40,10 @@ public class PlayerInput : MonoBehaviour
     private bool skill1ButtonDowned = false;
     private bool skill2ButtonDowned = false;
 
+    private bool skill0TutoClear = false; // 기본공격
+    private bool skill1TutoClear = false;
+    private bool skill2TutoClear = false;
+
     private bool isDoSkill0 = false;
     public bool IsDoSkill0
     {
@@ -104,9 +108,15 @@ public class PlayerInput : MonoBehaviour
         playerState = GetComponent<PlayerState>();
 
         lastMoveVector = Vector2.left;
-        if (TutorialManager.Instance.IsTutorialStage && !TutorialManager.Instance.IsTestMode)
+        if (!TutorialManager.Instance.IsTestMode)
         {
             inputTutorial = gameObject.AddComponent<InputTutorial>();
+        }
+        else
+        {
+            skill0TutoClear = true;
+            skill1TutoClear = true;
+            skill2TutoClear = true;
         }
     }
 
@@ -154,45 +164,6 @@ public class PlayerInput : MonoBehaviour
                     lastMoveVector = moveVector;
                 }
 
-                if (!EventSystem.current.IsPointerOverGameObject() && 
-                    (inputTutorial == null || (!inputTutorial.InputTutoDataDict.ContainsKey(KeyAction.ATTACK) || 
-                    inputTutorial.InputTutoDataDict[KeyAction.ATTACK].isClear))) // mouse 0
-                {
-                    isDoSkill0 = Input.GetMouseButton(0);
-
-                    if(Input.GetMouseButtonDown(0))
-                    {
-                        skill0ButtonDowned = true;
-                    }
-
-                    if (Input.GetMouseButtonUp(0) || (skill0ButtonDowned && !Input.GetMouseButton(0)))
-                    {
-                        skill0ButtonDowned = false;
-
-                        EventManager.TriggerEvent("SkillButtonUp0");
-                    }
-                }
-
-                //Debug.Log(isDoSkill0 == Input.GetButton("Shoot"));
-                // ContainKey체크
-                if (inputTutorial == null || (!inputTutorial.InputTutoDataDict.ContainsKey(KeyAction.SPECIALATTACK2) || 
-                    inputTutorial.InputTutoDataDict[KeyAction.SPECIALATTACK2].isClear))
-                {
-                    if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.SPECIALATTACK2]))
-                    {
-                        isDoSkill2 = true;
-                        skill2ButtonDowned = true;
-                    }
-
-                    if (Input.GetKeyUp(KeySetting.keyDict[KeyAction.SPECIALATTACK2]) || (skill2ButtonDowned && !Input.GetKey(KeySetting.keyDict[KeyAction.SPECIALATTACK2])))
-                    {
-                        skill2ButtonDowned = false;
-
-                        EventManager.TriggerEvent("SkillButtonUp2");
-                    }
-                }
-
-
                 // ContainKey체크
                 if (inputTutorial == null || (!inputTutorial.InputTutoDataDict.ContainsKey(KeyAction.INTERACTION) ||
                     inputTutorial.InputTutoDataDict[KeyAction.INTERACTION].isClear))
@@ -200,6 +171,51 @@ public class PlayerInput : MonoBehaviour
                     if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.INTERACTION]))
                     {
                         isInteraction = true;
+                    }
+                }
+
+                if (skill0TutoClear)
+                {
+                    if (!EventSystem.current.IsPointerOverGameObject() &&
+                    (inputTutorial == null || (!inputTutorial.InputTutoDataDict.ContainsKey(KeyAction.ATTACK) ||
+                    inputTutorial.InputTutoDataDict[KeyAction.ATTACK].isClear))) // mouse 0
+                    {
+                        isDoSkill0 = Input.GetMouseButton(0);
+
+                        if (Input.GetMouseButtonDown(0))
+                        {
+                            skill0ButtonDowned = true;
+                        }
+
+                        if (Input.GetMouseButtonUp(0) || (skill0ButtonDowned && !Input.GetMouseButton(0)))
+                        {
+                            skill0ButtonDowned = false;
+
+                            EventManager.TriggerEvent("SkillButtonUp0");
+                        }
+                    }
+                }
+
+                //Debug.Log(isDoSkill0 == Input.GetButton("Shoot"));
+                // ContainKey체크
+
+                if (skill2TutoClear)
+                {
+                    if (inputTutorial == null || (!inputTutorial.InputTutoDataDict.ContainsKey(KeyAction.SPECIALATTACK2) ||
+                        inputTutorial.InputTutoDataDict[KeyAction.SPECIALATTACK2].isClear))
+                    {
+                        if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.SPECIALATTACK2]))
+                        {
+                            isDoSkill2 = true;
+                            skill2ButtonDowned = true;
+                        }
+
+                        if (Input.GetKeyUp(KeySetting.keyDict[KeyAction.SPECIALATTACK2]) || (skill2ButtonDowned && !Input.GetKey(KeySetting.keyDict[KeyAction.SPECIALATTACK2])))
+                        {
+                            skill2ButtonDowned = false;
+
+                            EventManager.TriggerEvent("SkillButtonUp2");
+                        }
                     }
                 }
             }
@@ -213,18 +229,22 @@ public class PlayerInput : MonoBehaviour
             if (inputTutorial == null || (!inputTutorial.InputTutoDataDict.ContainsKey(KeyAction.SPECIALATTACK1) ||
                     inputTutorial.InputTutoDataDict[KeyAction.SPECIALATTACK1].isClear))
             {
-                if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.SPECIALATTACK1])) // left shift
+
+                if (skill1TutoClear)
                 {
-                    skill1ButtonDowned = true;
+                    if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.SPECIALATTACK1])) // left shift
+                    {
+                        skill1ButtonDowned = true;
 
-                    isDoSkill1 = true;
-                }
+                        isDoSkill1 = true;
+                    }
 
-                if (Input.GetKeyUp(KeySetting.keyDict[KeyAction.SPECIALATTACK1]) || (skill1ButtonDowned && !Input.GetKey(KeySetting.keyDict[KeyAction.SPECIALATTACK1])))
-                {
-                    skill1ButtonDowned = false;
+                    if (Input.GetKeyUp(KeySetting.keyDict[KeyAction.SPECIALATTACK1]) || (skill1ButtonDowned && !Input.GetKey(KeySetting.keyDict[KeyAction.SPECIALATTACK1])))
+                    {
+                        skill1ButtonDowned = false;
 
-                    EventManager.TriggerEvent("SkillButtonUp1");
+                        EventManager.TriggerEvent("SkillButtonUp1");
+                    }
                 }
             }
         }

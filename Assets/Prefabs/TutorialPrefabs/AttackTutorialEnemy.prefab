@@ -143,8 +143,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff4d10ea9b91c724b945baf16af14d6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHP: 10
-  hp: 10
+  maxHP: 40
+  hp: 40
   hpBarFillImage: {fileID: 7481955638417017616}
   hpBarDamageFillImage: {fileID: 4649332666783088291}
   hpBar: {fileID: 7481955638649562364}
