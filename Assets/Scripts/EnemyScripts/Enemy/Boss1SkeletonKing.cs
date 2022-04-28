@@ -147,6 +147,8 @@ namespace Enemy
         {
             EventManager.TriggerEvent("EndCutScene");
 
+            SpeedReset();
+
             base.MoveEnemy();
         }
 
@@ -447,7 +449,6 @@ namespace Enemy
         private void SpeedReset()
         {
             currentSpeed = startSpeed;
-            Debug.Log("Reset Speed");
         }
     }
 }
