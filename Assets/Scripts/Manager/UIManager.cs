@@ -15,6 +15,8 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     public Queue<bool> activeUIQueue = new Queue<bool>(); //어떤 UI가 켜지거나 꺼지는 애니메이션(트위닝) 진행 중에 다른 UI (비)활성화 막기 위한 변수
     public Dictionary<UIType, bool> uiTweeningDic = new Dictionary<UIType, bool>(); //해당 UI가 트위닝 중인지(켜지거나 꺼지는 중인지) 확인하기 위함
+
+    public bool CanInteractUI { get; private set; }
     #endregion
 
     #region 마우스 따라다니는 정보 UI관련 변수들
@@ -156,6 +158,8 @@ public partial class UIManager : MonoSingleton<UIManager>
     {
         int i;
 
+        CanInteractUI = true;
+
         cursorImgRectTrm = cursorInfoImg.GetComponent<RectTransform>();
         sw = cursorImgRectTrm.rect.width;
 
@@ -275,8 +279,18 @@ public partial class UIManager : MonoSingleton<UIManager>
         {
             normalPanelCanvasg.DOFade(start ? 0 : 1, 0.25f);
         }));
-        EventManager.StartListening("StartCutScene", () => SetUIAlpha(0f));
-        EventManager.StartListening("EndCutScene", () => SetUIAlpha(1f));
+        EventManager.StartListening("StartCutScene", () =>
+        {
+            SetUIAlpha(0f);
+            CanInteractUI = false;
+            Cursor.visible = false;
+        });
+        EventManager.StartListening("EndCutScene", () =>
+        {
+            SetUIAlpha(1f);
+            CanInteractUI = true;
+            Cursor.visible = true;
+        });
     }
 
     #endregion
@@ -331,50 +345,53 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     private void UserInput()
     {
-        if (Input.GetKeyDown(KeySetting.fixedKeyDict[KeyAction.SETTING]))
+        if (CanInteractUI)
         {
-            if (activeUIList.Count > 0)
+            if (Input.GetKeyDown(KeySetting.fixedKeyDict[KeyAction.SETTING]))
             {
-                OnUIInteract(activeUIList[activeUIList.Count - 1]._UItype);
-            }
-            else
-            {
-                if (gm.savedData.userInfo.uiActiveDic[KeyAction.SETTING])
+                if (activeUIList.Count > 0)
                 {
-                    OnUIInteract(UIType.SETTING);
+                    OnUIInteract(activeUIList[activeUIList.Count - 1]._UItype);
                 }
                 else
                 {
-                    KeyActionManager.Instance.SetPlayerHeadText("?", 0.5f);
+                    if (gm.savedData.userInfo.uiActiveDic[KeyAction.SETTING])
+                    {
+                        OnUIInteract(UIType.SETTING);
+                    }
+                    else
+                    {
+                        KeyActionManager.Instance.SetPlayerHeadText("?", 0.5f);
+                    }
                 }
             }
-        }
-        else if (CheckInputAndActive(KeyAction.INVENTORY))
-        {
-            OnUIInteract(UIType.INVENTORY);
-        }
-        else if (CheckInputAndActive(KeyAction.STAT))
-        {
-            OnUIInteract(UIType.STAT);
-        }
-        else if(CheckInputAndActive(KeyAction.MONSTER_COLLECTION))
-        {
-            OnUIInteract(UIType.MONSTER_COLLECTION);
-        }
-        else if(CheckInputAndActive(KeyAction.QUIT))
-        {
-            OnUIInteract(UIType.QUIT);
-        }
-        else if(Input.GetKeyDown(KeyCode.E) && Util.IsActiveGameUI(UIType.ITEM_DETAIL))
-        {
-            if(selectedItemSlot)
+            else if (CheckInputAndActive(KeyAction.INVENTORY))
             {
-                OnClickItemUseBtn();
+                OnUIInteract(UIType.INVENTORY);
+            }
+            else if (CheckInputAndActive(KeyAction.STAT))
+            {
+                OnUIInteract(UIType.STAT);
+            }
+            else if (CheckInputAndActive(KeyAction.MONSTER_COLLECTION))
+            {
+                OnUIInteract(UIType.MONSTER_COLLECTION);
+            }
+            else if (CheckInputAndActive(KeyAction.QUIT))
+            {
+                OnUIInteract(UIType.QUIT);
+            }
+            else if (Input.GetKeyDown(KeyCode.E) && Util.IsActiveGameUI(UIType.ITEM_DETAIL))
+            {
+                if (selectedItemSlot)
+                {
+                    OnClickItemUseBtn();
+                }
             }
         }
 
 #if UNITY_EDITOR
-        else if(Input.GetKeyDown(ScreenShot.captureKeyCode))
+        if(Input.GetKeyDown(ScreenShot.captureKeyCode))
         {
             ScreenShot.StartScreenShot();
         }

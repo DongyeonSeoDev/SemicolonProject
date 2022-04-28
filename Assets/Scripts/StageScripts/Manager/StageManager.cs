@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System;
 using Water;
+using FkTweening;
 
 public class StageManager : MonoSingleton<StageManager>
 {
@@ -153,6 +154,7 @@ public class StageManager : MonoSingleton<StageManager>
             }
 
             SoundManager.Instance.SetBGMPitch(1);
+            DOUtil.StopCo("Next Enemys Spawn", this);
             Enemy.EnemyManager.Instance.PlayerDeadEvent();
         });
         EventManager.TriggerEvent("StartBGM", startStageID);
@@ -387,11 +389,74 @@ public class StageManager : MonoSingleton<StageManager>
         GameManager.Instance.ResetDroppedItems(); //Inactive Items
 
         //다음 스테이지 경우의 수만큼 문을 켜주고 문에 다음 스테이지 타입에 맞게 랜덤으로 다음 스테이지 설정
+       
+        if(currentStageNumber + 1 < currentStageData.stageFloor.LastStageNumber-2)
+        {
+            SetNextDoors(door => true);
+        }
+        else if(currentStageNumber + 1 == currentStageData.stageFloor.LastStageNumber - 2)
+        {
+            SetNextDoors(door => door.dirType != DoorDirType.BACK);
+        }
+        else if(currentStageNumber + 1 == currentStageData.stageFloor.LastStageNumber - 1)
+        {
+            SetNextDoors(door => door.dirType == DoorDirType.FRONT);
+        }
+        else
+        {
+            //Last Stage
+            //일단은 다음 문이 없음
+        }
+        
+
+        {
+            //해당 스테이지의 타입에 따라 무언가를 함  (해당 방을 입장했을 때)
+            switch (currentStageData.areaType)
+            {
+                case AreaType.START:
+                    if (currentStage.stageDoors.Length == 1)
+                    {
+                        currentStage.stageDoors[0].gameObject.SetActive(true);
+                        currentStage.stageDoors[0].IsExitDoor = false;
+                    }
+
+                    SetClearStage();
+                    break;
+                case AreaType.MONSTER:
+                    //EventManager.TriggerEvent("SpawnEnemy", currentStageData.stageID);
+                    SetMonsterStage();
+                    break;
+                case AreaType.CHEF:
+                    SetClearStage();
+                    ChefStage();
+                    break;
+                case AreaType.PLANTS:
+                    SetClearStage();
+                    break;
+                case AreaType.RANDOM:
+                    IsStageClear = false;
+                    EnterRandomArea();
+                    return;   //랜덤 맵이면 함수를 빠져나간다.
+                case AreaType.BOSS:
+                    SetMonsterStage();
+                    //EventManager.TriggerEvent("BossSpawn", CurrentMonstersOrderID);
+                    //currentStageMonsterBundleOrder++;
+                    break;
+            }
+
+
+            EventManager.TriggerEvent(Global.EnterNextMap);  //해당 방 입장 후에 필요한 이벤트들 처리
+        }
+    }
+
+    private void SetNextDoors(Func<StageDoor, bool> canSetDoorPos) //canSetDoorPos -> 이 자리에 문을 생성할 수 있는지
+    {
         int idx = 0;
         int count = currentStageData.stageFloor.randomStageList[currentStageNumber].nextStageTypes.Length;
+
         currentStage.stageDoors.ToRandomList(5).ForEach(door =>
         {
-            if(!door.gameObject.activeSelf && idx < count)
+            if (!door.gameObject.activeSelf && idx < count && canSetDoorPos(door))
             {
                 try
                 {
@@ -408,43 +473,6 @@ public class StageManager : MonoSingleton<StageManager>
                 }
             }
         });
-
-        //해당 스테이지의 타입에 따라 무언가를 함  (해당 방을 입장했을 때)
-        switch (currentStageData.areaType)
-        {
-            case AreaType.START:
-                if (currentStage.stageDoors.Length == 1)
-                {
-                    currentStage.stageDoors[0].gameObject.SetActive(true);
-                    currentStage.stageDoors[0].IsExitDoor = false;
-                }
-               
-                SetClearStage();
-                break;
-            case AreaType.MONSTER:
-                //EventManager.TriggerEvent("SpawnEnemy", currentStageData.stageID);
-                SetMonsterStage();
-                break;
-            case AreaType.CHEF:
-                SetClearStage();
-                ChefStage();
-                break;
-            case AreaType.PLANTS:
-                SetClearStage();
-                break;
-            case AreaType.RANDOM:
-                IsStageClear = false;
-                EnterRandomArea();
-                return;   //랜덤 맵이면 함수를 빠져나간다.
-            case AreaType.BOSS:
-                SetMonsterStage();
-                //EventManager.TriggerEvent("BossSpawn", CurrentMonstersOrderID);
-                //currentStageMonsterBundleOrder++;
-                break;
-        }
-
-        
-        EventManager.TriggerEvent(Global.EnterNextMap);  //해당 방 입장 후에 필요한 이벤트들 처리
     }
 
     public void SetMonsterStage()
@@ -465,10 +493,7 @@ public class StageManager : MonoSingleton<StageManager>
 
         if (currentArea != AreaType.BOSS)
         {
-            Util.DelayFunc(() =>
-            {
-                EventManager.TriggerEvent("SpawnEnemy", id);
-            }, 1f, this);
+            DOUtil.ExecuteTweening("Next Enemys Spawn", Util.DelayFuncCo(() => EventManager.TriggerEvent("SpawnEnemy", id), 1f, false), this);
         }
         else
         {

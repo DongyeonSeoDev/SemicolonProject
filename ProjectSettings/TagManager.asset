@@ -12,6 +12,8 @@ TagManager:
   - FxTemporaire
   - SpawnPoint
   - DrainTutorialEnemy
+  - Plant
+  - Door
   layers:
   - Default
   - TransparentFX
@@ -35,8 +37,8 @@ TagManager:
   - ENEMYMOVE
   - RAYCHECKING
   - TUTORIALENEMY
-  - 
-  - 
+  - INTERACTIVE
+  - INTERACTIVEOBSTACLE
   - 
   - 
   - 
