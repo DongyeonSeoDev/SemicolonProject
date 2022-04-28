@@ -36,6 +36,7 @@ public class PlayerMove : PlayerAction
         {
             Vector2 moveVec = playerInput.MoveVector * (playerStat.Speed);
 
+            Debug.Log(playerState.CantMove);
             if (!playerState.CantMove)
             {
                 if (moveVec != Vector2.zero)
@@ -48,11 +49,15 @@ public class PlayerMove : PlayerAction
                 }
 
                 rigid.velocity = lastMoveVec;
+
+                // 여기부턴 슬라임 바디포인트들의 움직임 처리
+
+                PlayerBodyPointMove(moveVec);
             }
-
-            // 여기부턴 슬라임 바디포인트들의 움직임 처리
-
-            PlayerBodyPointMove(moveVec);
+            else
+            {
+                rigid.velocity = Vector2.zero;
+            }
         }
         else
         {
