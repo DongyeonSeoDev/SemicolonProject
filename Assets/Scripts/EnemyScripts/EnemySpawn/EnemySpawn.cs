@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -41,6 +42,8 @@ namespace Enemy
 
             EventManager.StartListening("AfterPlayerRespawn", PlayerRespawnEvent);
             EventManager.StartListening("SpawnEnemy", SpawnEnemy);
+            EventManager.StartListening("PlayerDead", StopAllCoroutines);
+            EventManager.StartListening("ExitCurrentMap", StopAllCoroutines);
 
             CSVEnemySpawn.Instance.GetData();
         }
@@ -84,18 +87,18 @@ namespace Enemy
                 }
             }
 
-            Util.DelayFunc(() =>
-            {
-                Spawn(spawnData[stageId], stageId);
+            StartCoroutine(SpawnCoroutine(spawnData[stageId], stageId));
+        }
 
-                Util.DelayFunc(() => 
-                {
-                    for (int i = 0; i < enemyDictionary[stageId].Count; i++)
-                    {
-                        Move(stageId);
-                    }
-                }, 1f);
-            }, 2.5f);
+        private IEnumerator SpawnCoroutine(List<EnemySpawnData> spawnList, string stageId)
+        {
+            yield return new WaitForSeconds(2.5f);
+            Spawn(spawnList, stageId);
+            yield return new WaitForSeconds(1f);
+            for (int i = 0; i < enemyDictionary[stageId].Count; i++)
+            {
+                Move(stageId);
+            }
         }
 
         private void Spawn(List<EnemySpawnData> spawnData, string stageId)
