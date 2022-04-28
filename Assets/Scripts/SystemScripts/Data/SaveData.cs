@@ -37,7 +37,7 @@ public class TutorialInfo
 public class UserInfo
 {
     //stage
-    public string currentStageID = "Stage1-01"; //어느 스테이지까지 갔는지
+    public string currentStageID = "Stage0-01"; //어느 스테이지까지 갔는지
 
     //스탯 정보
     public int currentHp; //현재 HP

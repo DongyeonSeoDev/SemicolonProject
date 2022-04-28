@@ -15,30 +15,6 @@ public class StageGround : MonoBehaviour
     //[SerializeField] private bool autoInsertPlants;
     public Pick[] plants;
 
-    public Pair<Transform, List<MapParticleEffect>> imprecMapEffects;
-
-    /*  private void Awake()
-      {
-          AutoSetStageObjs();
-      }*/
-
-    /* [ContextMenu("AutoSetStageObjs")]
-     public void AutoSetStageObjs()
-     {
-         if (autoInsertStageDoors)
-             stageDoors = GetComponentsInChildren<StageDoor>();
-         if (autoInsertPlants)
-             plants = GetComponentsInChildren<Pick>();
-     }*/
-
-    private void Awake()
-    {
-       /* if(imprecMapEffects.first)
-        {
-            imprecMapEffects.second = imprecMapEffects.first.GetComponentsInChildren<MapParticleEffect>().FindAll(x => x.effectType == MapEffectType.IMPRECATION1);
-        }*/
-       
-    }
 
     private void OnEnable()
     {
@@ -67,21 +43,6 @@ public class StageGround : MonoBehaviour
     public void StageLightActive(bool on)
     {
         stageDoors.ForEach(x => x.DoorLightActive(on));
-    }
-
-    public void SetMapEffects()  //나중에 리펙토링 필요할듯. 일단 임시로 ㄱ
-    {
-       /*bool active;
-
-        if (imprecMapEffects.first != null)
-        {
-            active = StageManager.Instance.CurrentAreaType == AreaType.IMPRECATION;
-
-            for (int i = 0; i < imprecMapEffects.second.Count; i++)
-            {
-                imprecMapEffects.second[i].gameObject.SetActive(active);
-            }   
-        }*/
     }
 
     public StageDoor GetOpposeDoor(DoorDirType type)

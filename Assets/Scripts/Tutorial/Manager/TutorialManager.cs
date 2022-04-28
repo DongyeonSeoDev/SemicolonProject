@@ -86,7 +86,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             Vector3 special2SkillSlotPos = skillUIArr[2].GetComponent<RectTransform>().anchoredPosition;
             skillUIArr[2].GetComponent<CanvasGroup>().alpha = 0;
             skillUIArr[2].gameObject.SetActive(true);
-            skillUIArr[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(951, 740); //이걸 어떻게 고칠까. anchor가 달라서 위치가 제대로 안나옴(anchor가 중간이어야 오른쪽 코드가 잘됨) //Util.WorldToScreenPosForScreenSpace(enemyPos, ordCvs) - new Vector3(960f, -67f);
+            skillUIArr[2].GetComponent<RectTransform>().anchoredPosition = new Vector2(1135, 389); //이걸 어떻게 고칠까. anchor가 달라서 위치가 제대로 안나옴(anchor가 중간이어야 오른쪽 코드가 잘됨) //Util.WorldToScreenPosForScreenSpace(enemyPos, ordCvs) - new Vector3(960f, -67f);
 
             //UtilEditor.PauseEditor();
 
@@ -108,12 +108,14 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                 .AppendInterval(0.15f); //옮겨진 UI 안보이게
                 seq.Append(hpUI.GetComponent<CanvasGroup>().DOFade(1, 0.4f))
                 .Join(cursorImg.DOColor(Color.clear, 0.3f))
-                .Join(changeableBodysUIArr[0].GetComponent<CanvasGroup>().DOFade(1, 0.3f));
-                seq.Append(skillUIArr[2].GetComponent<RectTransform>().DOAnchorPos(special2SkillSlotPos, 1f).SetEase(Ease.OutCubic))
-                .Join(skillUIArr[2].GetComponent<CanvasGroup>().DOFade(1, 0.6f).SetEase(Ease.OutCubic))
-                .AppendInterval(0.2f);   //원래 HPUI랑 첫번째 변신 슬롯 보이게 + 흡수 스킬 슬롯 얻음
+                .Join(changeableBodysUIArr[0].GetComponent<CanvasGroup>().DOFade(1, 0.3f))
+                .AppendInterval(0.6f);
                 seq.Append(UIManager.Instance.playerHPInfo.first.DOFillAmount(1, 0.7f))  //HP Fill 차오르게
                 .Join(EffectManager.Instance.hpFillEffectMaskCenter.DOScaleX(hpFillEffectMaskCenterInitScale, 0.75f)) //이펙트 마스크 넓힘 (이펙트도 점점 보이게)
+                .AppendInterval(0.5f);
+                seq.Append(skillUIArr[2].GetComponent<RectTransform>().DOAnchorPos(special2SkillSlotPos, 1f).SetEase(Ease.OutCubic))
+                .Join(skillUIArr[2].GetComponent<CanvasGroup>().DOFade(1, 0.6f).SetEase(Ease.OutCubic))
+                .AppendInterval(0.2f)  //원래 HPUI랑 첫번째 변신 슬롯 보이게 + 흡수 스킬 슬롯 얻음
                 .AppendCallback(() =>
                 {
                     UIManager.Instance.playerHPInfo.third.fillAmount = 1;

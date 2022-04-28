@@ -106,7 +106,6 @@ public class StageManager : MonoSingleton<StageManager>
 
         EventManager.StartListening(Global.EnterNextMap, () =>  //해당 방을 입장했을 때, 마지막에 호출
         {
-            currentStage.SetMapEffects();
             currentStageNumber++;
         });
 
@@ -122,6 +121,7 @@ public class StageManager : MonoSingleton<StageManager>
     private void Init()
     {
         startStageID = GameManager.Instance.savedData.userInfo.currentStageID;
+        if (TutorialManager.Instance.IsTestMode) startStageID = "Stage1-01";
         currentFloor = GetStageData(startStageID).stageFloor.floor;
         InsertRandomMaps(currentFloor, true);
         SetRandomAreaRandomIncounter();
@@ -130,8 +130,6 @@ public class StageManager : MonoSingleton<StageManager>
 
         PoolManager.CreatePool(recoveryObjPref, npcParent, 1, "RecoveryObjPrefObjPref1");
         PoolManager.CreatePool(imprecationObjPref, npcParent, 1, "ImprecationObjPref1");
-
-        
     }
 
     private void DefineEvent()
@@ -165,11 +163,14 @@ public class StageManager : MonoSingleton<StageManager>
         {
             currentStageNumber = 0;
             currentFloor++;
+            InsertRandomMaps(currentFloor, true);
         });
     }
 
     private void SetRandomAreaRandomIncounter()  //일단 리펙토링 나중에 해야할 듯
     {
+        if (currentFloor == 0) return;
+
         StageBundleDataSO data = idToStageFloorDict[FloorToFloorID(currentFloor)];
         Dictionary<RandomRoomType, int> ranMapCnt = new Dictionary<RandomRoomType, int>();
         List<RandomRoomType> tempList = new List<RandomRoomType>();
@@ -279,36 +280,16 @@ public class StageManager : MonoSingleton<StageManager>
 
     private void InsertRandomMaps(int floor, bool init)
     {
+        if (currentFloor == 0) return;
+
         if (init)
         {
-            //List<string> stageIDList = new List<string>();
             StageBundleDataSO bundle = idToStageFloorDict[FloorToFloorID(floor)]; //층 정보 받음
 
-
-            /*foreach (StageDataSO data in bundle.stages)
-            {
-                stageIDList.Add(data.stageID);
-            }*/
             foreach (AreaType type in Enum.GetValues(typeof(AreaType)))  //기존 랜덤 맵 초기화
             {
                 randomRoomDict[floor][type].Clear();
             }
-
-            /*for (int i = 0; i < bundle.randomStageList.Count; i++) //로직 바꿀거
-            {
-                for (int j = 0; j < bundle.randomStageList[i].nextStageTypes.Length; j++) //지금 한 방식대로라면 굳이 이렇게 할 필요 없지만 나중에 로직 바꿀 수도 있으니 일단 일케 함
-                {
-                    int rand;
-                    StageDataSO data;
-                    do
-                    {
-                        rand = Random.Range(0, stageIDList.Count);
-                        data = idToStageDataDict[stageIDList[rand]];
-                    } while (data.areaType != bundle.randomStageList[i].nextStageTypes[j]);
-                    randomRoomDict[floor][bundle.randomStageList[i].nextStageTypes[j]].Add(data);
-                    stageIDList.RemoveAt(rand);
-                }
-            }*/
 
             Dictionary<AreaType, List<string>> areaDic = new Dictionary<AreaType, List<string>>();
             for (int i = 0; i < Global.EnumCount<AreaType>(); i++) areaDic.Add((AreaType)i, new List<string>());
@@ -389,16 +370,16 @@ public class StageManager : MonoSingleton<StageManager>
         GameManager.Instance.ResetDroppedItems(); //Inactive Items
 
         //다음 스테이지 경우의 수만큼 문을 켜주고 문에 다음 스테이지 타입에 맞게 랜덤으로 다음 스테이지 설정
-       
-        if(currentStageNumber + 1 < currentStageData.stageFloor.LastStageNumber-2)
+
+        if (currentStageNumber + 1 < currentStageData.stageFloor.LastStageNumber - 2)
         {
             SetNextDoors(door => true);
         }
-        else if(currentStageNumber + 1 == currentStageData.stageFloor.LastStageNumber - 2)
+        else if (currentStageNumber + 1 == currentStageData.stageFloor.LastStageNumber - 2)
         {
             SetNextDoors(door => door.dirType != DoorDirType.BACK);
         }
-        else if(currentStageNumber + 1 == currentStageData.stageFloor.LastStageNumber - 1)
+        else if (currentStageNumber + 1 == currentStageData.stageFloor.LastStageNumber - 1)
         {
             SetNextDoors(door => door.dirType == DoorDirType.FRONT);
         }
@@ -407,7 +388,6 @@ public class StageManager : MonoSingleton<StageManager>
             //Last Stage
             //일단은 다음 문이 없음
         }
-        
 
         {
             //해당 스테이지의 타입에 따라 무언가를 함  (해당 방을 입장했을 때)
@@ -454,25 +434,38 @@ public class StageManager : MonoSingleton<StageManager>
         int idx = 0;
         int count = currentStageData.stageFloor.randomStageList[currentStageNumber].nextStageTypes.Length;
 
-        currentStage.stageDoors.ToRandomList(5).ForEach(door =>
+        if (currentFloor > 0)
         {
-            if (!door.gameObject.activeSelf && idx < count && canSetDoorPos(door))
+            currentStage.stageDoors.ToRandomList(5).ForEach(door =>
             {
-                try
+                if (!door.gameObject.activeSelf && idx < count && canSetDoorPos(door))
                 {
-                    door.nextStageData = randomRoomDict[currentFloor][currentStageData.stageFloor.randomStageList[currentStageNumber].nextStageTypes[idx]][0];
-                    randomRoomDict[currentFloor][currentStageData.stageFloor.randomStageList[currentStageNumber].nextStageTypes[idx]].RemoveAt(0);
-                    randomRoomDict[currentFloor][currentStageData.stageFloor.randomStageList[currentStageNumber].nextStageTypes[idx]].Add(door.nextStageData);
-                    ++idx;
+                    try
+                    {
+                        door.nextStageData = randomRoomDict[currentFloor][currentStageData.stageFloor.randomStageList[currentStageNumber].nextStageTypes[idx]][0];
+                        randomRoomDict[currentFloor][currentStageData.stageFloor.randomStageList[currentStageNumber].nextStageTypes[idx]].RemoveAt(0);
+                        randomRoomDict[currentFloor][currentStageData.stageFloor.randomStageList[currentStageNumber].nextStageTypes[idx]].Add(door.nextStageData);
+                        ++idx;
+                        door.gameObject.SetActive(true);
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.LogException(e);
+                        Debug.Log($"스테이지를 불러오지 못함 {currentFloor} - {currentStageNumber} : idx: {idx}");
+                    }
+                }
+            });
+        }
+        else  //튜토리얼 맵이라면
+        {
+            currentStage.stageDoors.ForEach(door =>
+            {
+                if (!door.gameObject.activeSelf)
+                {
                     door.gameObject.SetActive(true);
                 }
-                catch (Exception e)
-                {
-                    Debug.LogException(e);
-                    Debug.Log($"스테이지를 불러오지 못함 {currentFloor} - {currentStageNumber} : idx: {idx}");
-                }
-            }
-        });
+            });
+        }
     }
 
     public void SetMonsterStage()
@@ -588,24 +581,6 @@ public class StageManager : MonoSingleton<StageManager>
 
         RandomRoomType room = randomZoneTypeListDic[currentFloor][0];
         randomZoneTypeListDic[currentFloor].RemoveAt(0);
-        /*if (randomZoneRestTypes.Count > 0)
-        {
-            //이전과 겹치지 않게 해줌.
-            int rand;
-            bool oneType = IsRestRandomAreaOneType();
-            do
-            {
-                rand = UnityEngine.Random.Range(0, randomZoneRestTypes.Count);
-            } while ((int)randomZoneRestTypes[rand] == prevRandRoomType && !oneType);
-
-            room = randomZoneRestTypes[rand];
-            randomZoneRestTypes.RemoveAt(rand);
-            prevRandRoomType = (int)room;
-        }
-        else //혹시 모를 예외처리
-        {
-            room = (RandomRoomType)UnityEngine.Random.Range(0, Global.EnumCount<RandomRoomType>());
-        }*/
 
         switch (room)
         {
@@ -643,18 +618,6 @@ public class StageManager : MonoSingleton<StageManager>
                 }
                 break;
         }
-    }
-
-    private bool IsRestRandomAreaOneType() //남은 랜덤 구역 타입이 한 타입밖에 존재하지 않은지 체크
-    {
-        RandomRoomType type = randomZoneRestTypes[0];
-
-        for(int i=1; i<randomZoneRestTypes.Count; i++)
-        {
-            if (type != randomZoneRestTypes[i]) return false;
-        }
-
-        return true;
     }
 
     private NPC GetNPC(string id)
