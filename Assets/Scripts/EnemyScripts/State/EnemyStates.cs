@@ -138,6 +138,7 @@ namespace Enemy
         private int moveCount = 3;
         private int enemyCount = 3;
 
+        private float moveSpeed = 35f;
         private float attackDistance = 5f;
 
         private bool isEnd = false;
@@ -167,7 +168,7 @@ namespace Enemy
                 AttackObjectReset();
                 SetBossAttack(true);
                 SetBossCloneData();
-            }, 2f);
+            }, 1f);
 
             base.Start();
         }
@@ -177,12 +178,12 @@ namespace Enemy
             if (isMove)
             {
                 // 보스 움직임
-                enemyData.enemyRigidbody2D.velocity = enemyData.moveVector * 20f;
+                enemyData.enemyRigidbody2D.velocity = enemyData.moveVector * moveSpeed;
 
                 // 보스 분신 움직임
                 for (int i = 0; i < enemyCount - 1; i++)
                 {
-                    bossCloneArray[i].MovePosition(enemyData.moveVector * 20f);
+                    bossCloneArray[i].MovePosition(enemyData.moveVector * moveSpeed);
                 }
 
                 // 끝에 도달했는지 확인
@@ -225,8 +226,8 @@ namespace Enemy
                             AttackObjectReset();
                             SetBossAttack(true);
                             SetBossCloneData();
-                        }, 2f);
-                    }, 2f);
+                        }, 1f);
+                    }, 1f);
                 }
             }
 
