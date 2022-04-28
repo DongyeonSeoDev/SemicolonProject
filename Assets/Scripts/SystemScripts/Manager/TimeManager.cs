@@ -91,13 +91,13 @@ public static class TimeManager
         while(currentTimeScale != target)
         {
             currentTimeScale += speed * Time.unscaledDeltaTime * dir;
-            Time.timeScale = currentTimeScale;
 
             if( (currentTimeScale >= target && dir == 1f) || (currentTimeScale <= target && dir == -1f))
             {
                 currentTimeScale = target;
-                Time.timeScale = currentTimeScale;
             }
+
+            Time.timeScale = currentTimeScale;
 
             yield return null;
         }

@@ -14,14 +14,16 @@ public abstract class NPC : InteractionObj
     }
     private void Start()
     {
-        fsOut.gameObject.SetActive(false);
+        if(fsOut)
+           fsOut.gameObject.SetActive(false);
     }
 
     public override void SetInteractionUI(bool on)
     {
         base.SetInteractionUI(on);
 
-        fsOut.gameObject.SetActive(on);
+        if(fsOut)
+           fsOut.gameObject.SetActive(on);
     }
     /* protected virtual void OnBecameInvisible()
      {

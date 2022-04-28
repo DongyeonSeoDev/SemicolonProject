@@ -304,7 +304,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         sList.ForEach(item =>
         {
             //limitedBattleCntItems.Remove(item);  //Inventory스크립트에서 처리
-            UIManager.Instance.RequestLeftBottomMsg("[최대 교전 수 도달]");
+            UIManager.Instance.RequestLogMsg("[최대 교전 수 도달]");
             Inventory.Instance.RemoveItem(item.first, 1);
             //UIManager.Instance.RequestLeftBottomMsg(string.Format("최대 교전 수 도달로 아이템을 잃었습니다. ({0} -{1})", GetItemData(item.first).itemName, 1));
         });

@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 6312957648424485617}
   - component: {fileID: 6312957648424485616}
   - component: {fileID: 6312957648424485619}
+  - component: {fileID: -5903270114350329522}
   - component: {fileID: 8187179007639833872}
   m_Layer: 21
   m_Name: DrainTutorialEnemy
@@ -110,6 +111,25 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.56, y: 2.56}
   m_EdgeRadius: 0
+--- !u!95 &-5903270114350329522
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6312957648424485583}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 96216846839967646baae2ae79207121, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &8187179007639833872
 MonoBehaviour:
   m_ObjectHideFlags: 0

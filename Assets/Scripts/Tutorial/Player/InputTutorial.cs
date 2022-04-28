@@ -155,7 +155,7 @@ public class InputTutorial : MonoBehaviour
         {
             moveKeyClear = true;
 
-            EventManager.TriggerEvent("Tuto_GainAllArrowKey");
+            EventManager.TriggerEvent("Tuto_GainArrowKey");
         }
         #endregion
 

@@ -118,3 +118,25 @@ public class SettingPhase : TutorialPhase
         base.End();
     }
 }
+
+public class AbsorptionPhase : TutorialPhase
+{
+    public AbsorptionPhase(Action end)
+    {
+        IsEnded = false;
+        endAction = end;
+    }
+
+    public override void DoPhaseUpdate()
+    {
+        if(Input.GetKeyDown(KeySetting.keyDict[KeyAction.SPECIALATTACK2]))
+        {
+            End();
+        }
+    }
+
+    public override void End()
+    {
+        base.End();
+    }
+}

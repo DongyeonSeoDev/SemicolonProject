@@ -10,7 +10,7 @@ public abstract class StateAbnormalityEffect
     public virtual void StartEffect()
     {
         StateManager.Instance.stateCountDict[StateAbn.ToString()] += Duration;
-        UIManager.Instance.RequestLeftBottomMsg(StateManager.Instance.GetBuffStateData(StateAbn.ToString()).stateName + " 저주에 걸렸습니다.");
+        UIManager.Instance.RequestLogMsg(StateManager.Instance.GetBuffStateData(StateAbn.ToString()).stateName + " 저주에 걸렸습니다.");
     }
 
     public virtual void StopEffect(bool showLog = true)
@@ -20,7 +20,7 @@ public abstract class StateAbnormalityEffect
         StateManager.Instance.stateCountDict[StateAbn.ToString()] = 0;
 
         if(alreadyImp && showLog)
-           UIManager.Instance.RequestLeftBottomMsg(StateManager.Instance.GetBuffStateData(StateAbn.ToString()).stateName + " 저주가 해제되었습니다.");
+           UIManager.Instance.RequestLogMsg(StateManager.Instance.GetBuffStateData(StateAbn.ToString()).stateName + " 저주가 해제되었습니다.");
     }
 
     public virtual void AddDuration(int value)

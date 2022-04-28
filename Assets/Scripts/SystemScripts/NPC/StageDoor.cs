@@ -174,6 +174,7 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
         {
             if (charging < Global.GetSlimePos.GetComponent<PlayerBodySlap>().MaxChargingTime) return;
             if (isOpen || isExitDoor || isBreak) return;
+            if (StageManager.Instance.CurrentAreaType == AreaType.BOSS) return;
 
             damageableTime = Time.time + 1f;
 

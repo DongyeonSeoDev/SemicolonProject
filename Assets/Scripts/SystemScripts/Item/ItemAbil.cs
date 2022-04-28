@@ -18,7 +18,7 @@ public class ItemUseMng
         value *= PlayerObj.PlayerStat.MaxHp * 0.01f;
         int iValue = Mathf.FloorToInt(value);
         PlayerObj.GetDamage(iValue, false, true);  
-        UIManager.Instance.RequestLeftBottomMsg("저주로 인해서 HP " + iValue + "%만큼 잃었습니다.");
+        UIManager.Instance.RequestLogMsg("저주로 인해서 HP " + iValue + "%만큼 잃었습니다.");
     }
 
     public static void IncreaseMaxHP(float value)

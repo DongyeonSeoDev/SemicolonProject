@@ -244,7 +244,7 @@ public partial class UIManager : MonoSingleton<UIManager>
             combInfoUI.first.sprite = data.GetSprite();
             combInfoUI.second.text = string.Format("{0} <color=blue>{1}</color>개", data.itemName, info.count);
 
-            RequestLeftBottomMsg(string.Format("아이템을 획득하였습니다. ({0} +{1})", data.itemName, info.count));
+            RequestLogMsg(string.Format("아이템을 획득하였습니다. ({0} +{1})", data.itemName, info.count));
 
             OnUIInteractSetActive(UIType.ITEM_DETAIL, false, true); //음식 제작 성공창이 띄워졌을 때 템 자세히 보기창 열려있으면 꺼줌
         });
@@ -253,14 +253,14 @@ public partial class UIManager : MonoSingleton<UIManager>
         Global.AddMonoAction(Global.AcquisitionItem, i =>
         {
             Item item = i as Item;
-            RequestLeftBottomMsg(string.Format("아이템을 획득하였습니다. ({0} +{1})", item.itemData.itemName, item.DroppedCnt));
+            RequestLogMsg(string.Format("아이템을 획득하였습니다. ({0} +{1})", item.itemData.itemName, item.DroppedCnt));
             UpdateInventoryItemCount(item.itemData.id);
         });
         //Pickup plant (채집 성공)
         Global.AddMonoAction(Global.PickupPlant, item =>
         {
             Pick p = (Pick)item;
-            RequestLeftBottomMsg(string.Format("아이템을 획득하였습니다. ({0} +{1})", p.itemData.itemName, p.DroppedCount));
+            RequestLogMsg(string.Format("아이템을 획득하였습니다. ({0} +{1})", p.itemData.itemName, p.DroppedCount));
             UpdateInventoryItemCount(p.itemData.id);
         });
         //아이템 버림  
@@ -774,7 +774,8 @@ public partial class UIManager : MonoSingleton<UIManager>
         //itemUseBtn.gameObject.SetActive(data.itemType != ItemType.ETC);
         //if (data.itemType == ItemType.ETC && ((Ingredient)data).isUseable) itemUseBtn.gameObject.SetActive(true);
 
-        
+        Inventory.Instance.invenUseActionImg.SetActive(data.itemType != ItemType.ETC);
+        if (data.itemType == ItemType.ETC && ((Ingredient)data).isUseable) Inventory.Instance.invenUseActionImg.SetActive(true);
     }
 
     public void UpdateInventoryItemCount(string id)
@@ -796,11 +797,11 @@ public partial class UIManager : MonoSingleton<UIManager>
         PoolManager.GetItem("SystemMsg").GetComponent<SystemMsg>().Set(msg, fontSize, existTime, textColor);
     }
 
-    public void RequestLeftBottomMsg(string msg)  //화면 왼쪽 하단에 표시되는 로그 텍스트
+    public void RequestLogMsg(string msg, float duration = 2f)  //화면 왼쪽 하단에 표시되는 로그 텍스트
     {
         Text t = PoolManager.GetItem<Text>("AcquisitionMsg");
         t.text = msg;
-        Util.DelayFunc(() => t.gameObject.SetActive(false), 2f, this, true);
+        Util.DelayFunc(() => t.gameObject.SetActive(false), duration, this, true);
     }
 
     public void RequestSelectionWindow(string message, List<Action> actions, List<string> btnTexts, bool activeWarning = true, List<Func<bool>> conditions = null, bool useIcon = false) //선택창을 띄움

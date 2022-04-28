@@ -240,7 +240,7 @@ public class Inventory : MonoSingleton<Inventory>
         if(gm.ExistItem(id))
         {
             gm.RemoveItem(id, count);
-            UIManager.Instance.RequestLeftBottomMsg(string.Format(msg + " ({0} -{1})", gm.GetItemData(id).itemName, count));
+            UIManager.Instance.RequestLogMsg(string.Format(msg + " ({0} -{1})", gm.GetItemData(id).itemName, count));
             
             if(gm.GetItemData(id).existBattleCount > 0)
             {
