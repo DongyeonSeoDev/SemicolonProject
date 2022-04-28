@@ -167,7 +167,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 573196299
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
   m_Color: {r: 0.24777165, g: 0.1372549, b: 1, a: 1}
@@ -252,9 +252,9 @@ GameObject:
   - component: {fileID: 105810240404778974}
   - component: {fileID: 8538742394377995457}
   - component: {fileID: 8632448655464481713}
-  m_Layer: 8
+  m_Layer: 22
   m_Name: PickItemSample
-  m_TagString: NPC
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -313,7 +313,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 573196299
-  m_SortingLayer: 1
+  m_SortingLayer: 2
   m_SortingOrder: 3
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -366,6 +366,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isHidenName: 0
   isHidenItrMark: 0
+  notInteractable: 0
   objName: 
   action: "\uCC44\uC9D1\uD558\uAE30"
   uiOffset: {x: 0, y: -1, z: 0}
@@ -373,6 +374,5 @@ MonoBehaviour:
   npcUI: {fileID: 0}
   itrUI: {fileID: 0}
   isEnemyStage: 1
-  pickSuccessProbability: 50
   _itemData: {fileID: 11400000, guid: 9fc9500b9b1a4b34aabf03d842ac24af, type: 2}
   fsOut: {fileID: 6970499727666502056}

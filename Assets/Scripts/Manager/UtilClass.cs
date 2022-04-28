@@ -152,7 +152,7 @@ public static partial class Util
 
     public static Vector3 WorldToScreenPoint(Vector3 worldPos) => MainCam.WorldToScreenPoint(worldPos);
 
-    private static IEnumerator DelayFuncCo(Action func, float delay, bool realTime)
+    public static IEnumerator DelayFuncCo(Action func, float delay, bool realTime)
     {
         if (!realTime)
             yield return new WaitForSeconds(delay * TimeManager.CurrentTimeScale);

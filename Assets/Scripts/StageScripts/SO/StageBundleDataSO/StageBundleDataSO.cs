@@ -11,6 +11,8 @@ public class StageBundleDataSO : ScriptableObject
     public List<StageDataSO> stages;
     public List<StageFork> randomStageList;
 
+    public int LastStageNumber => randomStageList.Count;
+
     private Dictionary<string, StageDataSO> stageDic;
     public void SetStageDic()
     {

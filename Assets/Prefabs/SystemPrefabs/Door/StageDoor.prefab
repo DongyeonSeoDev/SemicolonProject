@@ -42,9 +42,9 @@ GameObject:
   - component: {fileID: 8604531944747639584}
   - component: {fileID: 8604531944747639585}
   - component: {fileID: 8604531944747639586}
-  m_Layer: 8
+  m_Layer: 23
   m_Name: StageDoor
-  m_TagString: NPC
+  m_TagString: Door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
