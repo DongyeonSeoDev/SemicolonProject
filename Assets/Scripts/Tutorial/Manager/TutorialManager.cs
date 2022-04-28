@@ -62,9 +62,13 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             teHpBar.gameObject.SetActive(false);
             teHpBar.anchoredPosition = Util.WorldToScreenPosForScreenSpace(enemyPos, ordCvs);
 
+            //Cursor Img
+            Image cursorImg = teHpBar.GetChild(1).GetComponent<Image>();
+
             //Init
             ordCvs.GetComponent<CanvasGroup>().alpha = 1;  //컷씬 시작상태라 alpha값이 0인 상태이므로 1로 켜줌. 
             teHpBar.GetComponent<CanvasGroup>().alpha = 1;
+            cursorImg.color = Color.clear;
 
             hpUI.GetComponent<CanvasGroup>().alpha = 0; //아직 HP바 못얻은 상태이므로 alpha만 0으로 하고 옵젝 켜줌 (파티클은 alpha 0이어도 보이므로 아직은 꺼진 상태 유지) 
             hpUI.gameObject.SetActive(true);
@@ -95,14 +99,17 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
                 Sequence seq = DOTween.Sequence();
                 seq.Append(teHpBar.DOAnchorPos(Util.WorldToScreenPosForScreenSpace(Global.GetSlimePos.position + Vector3.down, ordCvs), 0.3f))
-                .AppendInterval(0.5f); //슬라임 밑으로 체력바 옮김
+                .AppendInterval(0.7f); //슬라임 밑으로 체력바 옮김
+                seq.Append(cursorImg.DOColor(Color.white, 0.5f))
+                .AppendInterval(0.4f);  //마우스 커서 이미지 보임
                 seq.Append(teHpBar.DOAnchorPos(new Vector2(-819.3f, 474f), 0.9f).SetEase(Ease.InQuad))
-                .AppendInterval(0.4f);  //HP UI 있는곳으로 옮김
+                .AppendInterval(0.4f).AppendCallback(()=>cursorImg.transform.parent = ordCvs.transform);  //HP UI 있는곳으로 옮김
                 seq.Append(teHpBar.GetComponent<CanvasGroup>().DOFade(0, 0.3f))
                 .AppendInterval(0.15f); //옮겨진 UI 안보이게
                 seq.Append(hpUI.GetComponent<CanvasGroup>().DOFade(1, 0.4f))
-                .Join(changeableBodysUIArr[0].GetComponent<CanvasGroup>().DOFade(1, 0.3f))
-                .Join(skillUIArr[2].GetComponent<RectTransform>().DOAnchorPos(special2SkillSlotPos, 1f).SetEase(Ease.OutCubic))
+                .Join(cursorImg.DOColor(Color.clear, 0.3f))
+                .Join(changeableBodysUIArr[0].GetComponent<CanvasGroup>().DOFade(1, 0.3f));
+                seq.Append(skillUIArr[2].GetComponent<RectTransform>().DOAnchorPos(special2SkillSlotPos, 1f).SetEase(Ease.OutCubic))
                 .Join(skillUIArr[2].GetComponent<CanvasGroup>().DOFade(1, 0.6f).SetEase(Ease.OutCubic))
                 .AppendInterval(0.2f);   //원래 HPUI랑 첫번째 변신 슬롯 보이게 + 흡수 스킬 슬롯 얻음
                 seq.Append(UIManager.Instance.playerHPInfo.first.DOFillAmount(1, 0.7f))  //HP Fill 차오르게
@@ -110,6 +117,8 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                 .AppendCallback(() =>
                 {
                     UIManager.Instance.playerHPInfo.third.fillAmount = 1;
+                    Destroy(teHpBar.gameObject);
+                    Destroy(cursorImg.gameObject);
                 });
                 seq.Play();
             }, 3f);
@@ -129,6 +138,25 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                     {
                         Global.GetSlimePos.GetComponent<PlayerDrain>().DoDrainByTuto();
                         Destroy(Global.GetSlimePos.GetComponentInChildren<PlayerCanDrainCheckCollider>().gameObject);
+                        EventManager.TriggerEvent("StartCutScene");
+
+                        Util.DelayFunc(() =>
+                        {
+                            Canvas ordCvs = UIManager.Instance.ordinaryCvsg.GetComponent<Canvas>();
+                            ordCvs.GetComponent<CanvasGroup>().alpha = 1;
+
+                            Vector3 startPos = skillUIArr[0].GetComponent<RectTransform>().anchoredPosition;
+                            skillUIArr[0].GetComponent<CanvasGroup>().alpha = 0;
+                            skillUIArr[0].gameObject.SetActive(true);
+                            skillUIArr[0].GetComponent<RectTransform>().anchoredPosition = new Vector2(951, 740);
+
+                            Sequence seq = DOTween.Sequence();
+                            seq.Append(skillUIArr[0].GetComponent<RectTransform>().DOAnchorPos(startPos, 0.4f).SetEase(Ease.InQuad))
+                            .Join(skillUIArr[0].GetComponent<CanvasGroup>().DOFade(1, 0.3f))
+                            .AppendInterval(0.3f);
+
+                        }, 1.5f, this);
+
                     }, 1f);
                 }));
             });

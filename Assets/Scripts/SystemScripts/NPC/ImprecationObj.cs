@@ -60,8 +60,16 @@ public class ImprecationObj : InteractionObj
 
     void OnStateAbnormal()
     {
-        StateAbnormality state = (StateAbnormality)UnityEngine.Random.Range(0, Global.EnumCount<StateAbnormality>()-1);
-        StateManager.Instance.StartStateAbnormality(state);
+        //아직 가난 저주가 없기 때문에 원래는 이 코드지만 임시 코드 작성함
+        //StateAbnormality antiBuff = (StateAbnormality)UnityEngine.Random.Range(0, Global.EnumCount<StateAbnormality>()-1);
+
+        StateAbnormality antiBuff = StateAbnormality.None;
+        do
+        {
+            antiBuff = (StateAbnormality)UnityEngine.Random.Range(0, Global.EnumCount<StateAbnormality>() - 1);
+        } while(antiBuff == StateAbnormality.Poverty);
+
+        StateManager.Instance.StartStateAbnormality(antiBuff);
     }
 
     void RemoveRandomItem()
