@@ -72,4 +72,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactionableNPCLayer:
     serializedVersion: 2
-    m_Bits: 256
+    m_Bits: 12583168

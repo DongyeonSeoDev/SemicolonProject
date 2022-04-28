@@ -36,7 +36,6 @@ public class PlayerMove : PlayerAction
         {
             Vector2 moveVec = playerInput.MoveVector * (playerStat.Speed);
 
-            Debug.Log(playerState.CantMove);
             if (!playerState.CantMove)
             {
                 if (moveVec != Vector2.zero)
