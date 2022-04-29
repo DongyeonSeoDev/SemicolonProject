@@ -22,6 +22,7 @@ namespace Enemy
         public float startSpeed = 5f;
         public float speedUpValue = 0.5f;
         public float speedUpTime = 1f;
+        public int bossHP = 2000;
 
         [HideInInspector]
         public float currentSpeed = 0f;
@@ -72,8 +73,8 @@ namespace Enemy
             enemyData.attackDelay = 1.8f;
             enemyData.isAttackPlayerDistance = 3.5f;
             enemyData.attackPower = 30;
-            enemyData.maxHP = 2000;
-            enemyData.hp = 2000;
+            enemyData.maxHP = bossHP;
+            enemyData.hp = bossHP;
             enemyData.isNoKnockback = true;
             enemyData.isNoStun = true;
 
@@ -91,6 +92,7 @@ namespace Enemy
 
             currentTime = 0f;
             attackCount = 0;
+
             isAttack = false;
             isSpecialAttack1 = false;
             isSpecialAttack3 = false;
@@ -444,11 +446,6 @@ namespace Enemy
         }
 
         public override void SetColor(float time) { }
-        //private void SpeedReset() => currentSpeed = startSpeed;
-
-        private void SpeedReset()
-        {
-            currentSpeed = startSpeed;
-        }
+        private void SpeedReset() => currentSpeed = startSpeed;
     }
 }
