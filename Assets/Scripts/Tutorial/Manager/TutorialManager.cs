@@ -310,4 +310,13 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             }
         }
     }
+
+    #region Tutorial Function
+
+    public void GetRushAttack()
+    {
+
+    }
+
+    #endregion
 }

@@ -29,6 +29,7 @@ public class TalkManager : MonoSingleton<TalkManager>
 
         twcb = () =>
         {
+            CurNPCInfoData.talkContents[CurNPCInfoData.talkId].value[dialogIndex].talkEndEvent?.Invoke();
             DelayFunc(NextDialog, CurNPCInfoData.talkContents[CurNPCInfoData.talkId].value[dialogIndex].message.Length * durationPerLit);
         };
     }
@@ -70,7 +71,7 @@ public class TalkManager : MonoSingleton<TalkManager>
         talkText.text = string.Empty;
         if (++dialogIndex < CurNPCInfoData.talkContents[CurNPCInfoData.talkId].value.Count)
         {
-            string msg = CurNPCInfoData.talkContents[CurNPCInfoData.talkId].value[dialogIndex].message;
+            string msg = string.Concat(CurNPCInfoData.npcName, ": ", CurNPCInfoData.talkContents[CurNPCInfoData.talkId].value[dialogIndex].message);
             talkText.DOText(msg, msg.Length * secondPerLit).OnComplete(twcb);
         }
         else

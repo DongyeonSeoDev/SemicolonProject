@@ -7534,6 +7534,96 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &931094078
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 931094080}
+  - component: {fileID: 931094079}
+  m_Layer: 0
+  m_Name: Test NPC
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &931094079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 931094078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9d629e06e8322d45a4c6a05a1ac56bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isHidenName: 0
+  isHidenItrMark: 0
+  notInteractable: 0
+  objName: "\uB3CC\uC9C4 \uB9C8\uC2A4\uD130"
+  action: "\uB300\uD654\uD558\uAE30"
+  uiOffset: {x: 0, y: -1, z: 0}
+  itrUIOffset: {x: 0, y: 1, z: 0}
+  npcUI: {fileID: 0}
+  itrUI: {fileID: 0}
+  npcInfo:
+    id: Rush Master
+    talkId: 0
+    npcName: 
+    talkContents:
+    - value:
+      - message: "\uC790\uB124, \uB098\uB97C \uBCF8 \uC801\uC774 \uC788\uB098?"
+        talkEndEvent:
+          m_PersistentCalls:
+            m_Calls: []
+      - message: "\uBB50 \uC77C\uB2E8\uC740 \uADF8\uAC8C \uC911\uC694\uD55C \uAC74
+          \uC544\uB2C8\uACA0\uC9C0"
+        talkEndEvent:
+          m_PersistentCalls:
+            m_Calls: []
+      - message: "\uC774 \uBB38\uC744 \uD1B5\uACFC\uD558\uACE0 \uC2F6\uC73C\uBA74
+          \uBAB8\uC744 \uC555\uCD95\uD574\uBCF4\uAC8C\uB098"
+        talkEndEvent:
+          m_PersistentCalls:
+            m_Calls:
+            - m_Target: {fileID: 1052285268442230364}
+              m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
+              m_MethodName: GetRushAttack
+              m_Mode: 1
+              m_Arguments:
+                m_ObjectArgument: {fileID: 0}
+                m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+                m_IntArgument: 0
+                m_FloatArgument: 0
+                m_StringArgument: 
+                m_BoolArgument: 0
+              m_CallState: 2
+    - value:
+      - message: "\uC880 \uB354 \uD798\uC744 \uBAA8\uC544\uBCF4\uAC8C!"
+        talkEndEvent:
+          m_PersistentCalls:
+            m_Calls: []
+  fsOut: {fileID: 0}
+--- !u!4 &931094080
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 931094078}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &942068277
 GameObject:
   m_ObjectHideFlags: 0
