@@ -51,6 +51,7 @@ public class StartPhase : TutorialPhase
     public override void End()
     {
         SlimeGameManager.Instance.Player.PlayerInput.IsPauseByTuto = false;
+        
         base.End();
     }
 }

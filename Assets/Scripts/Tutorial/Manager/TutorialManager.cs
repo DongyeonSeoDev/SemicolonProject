@@ -54,6 +54,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                 playerFollowLight.gameObject.SetActive(false);
                 Environment.Instance.mainLight.intensity = 1;
             });
+            StageManager.Instance.SetClearStage();
         });  //플레이어가 방향키 하나 얻었을 때의 이벤트
 
         //플레이어가 작은 슬라임 흡수했을 때 이벤트
@@ -136,6 +137,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                         UIManager.Instance.playerHPInfo.third.fillAmount = 1;
                         Destroy(teHpBar.gameObject);
                         Destroy(cursorImg.gameObject);
+                        EventManager.TriggerEvent("Skill2TutoClear");
                     });
                     seq.Play();
                 }, 3f);
@@ -161,6 +163,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                         EventManager.TriggerEvent("StartCutScene");
                         Canvas ordCvs = UIManager.Instance.ordinaryCvsg.GetComponent<Canvas>();
                         ordCvs.GetComponent<CanvasGroup>().alpha = 1;
+                        EffectManager.Instance.hpFillEffect.gameObject.SetActive(true);
 
                         Util.DelayFunc(() =>
                         {
@@ -188,7 +191,11 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                             seq.Append(sum.energeBarAndEff.first.GetComponent<CanvasGroup>().DOFade(1, 0.4f));
                             seq.Append(sum.energeFill.DOFillAmount(1, 0.75f))
                             .Join(sum.energeEffMask.DOScaleX(orgEnergeEffMaskScl.x, 0.68f));
-                            seq.AppendInterval(0.6f).AppendCallback(() => EventManager.TriggerEvent("EndCutScene"));
+                            seq.AppendInterval(0.6f).AppendCallback(() =>
+                            {
+                                EventManager.TriggerEvent("EndCutScene");
+                                EventManager.TriggerEvent("Skill0TutoClear");
+                            });
 
                         }, 2.5f, this);
 
@@ -200,8 +207,6 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     private void Start()
     {
-        GameManager.Instance.testKeyInputActionDict.Add(KeyCode.B, () => EventManager.TriggerEvent("Tuto_CanDrainObject"));
-
         gm = GameManager.Instance;
         um = UIManager.Instance;
 
@@ -246,8 +251,6 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
             tutorialPhases.Add(new StartPhase(playerFollowLight,2));
             EffectManager.Instance.OnTouchEffect("TouchEffect1");
-
-            UIManager.Instance.RequestLogMsg("<b>[시작특전]</b> 마우스와 키보드를 획득하였습니다(?)", 4f);
         }
 
         if (!gm.savedData.userInfo.uiActiveDic[KeyAction.SETTING])
@@ -306,15 +309,5 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                 i--;
             }
         }
-    }
-
-    public void ActiveMonsterSlot(int num)
-    {
-        changeableBodysUIArr[num].gameObject.SetActive(true);  
-    }
-
-    public void ActiveSkillUI(int num)
-    {
-        skillUIArr[num].gameObject.SetActive(true); 
     }
 }
