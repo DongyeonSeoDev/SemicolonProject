@@ -400,7 +400,15 @@ public class StageManager : MonoSingleton<StageManager>
                         currentStage.stageDoors[0].IsExitDoor = false;
                     }
 
-                    SetClearStage();
+                    if(currentStageData.mapEvent == null)
+                    {
+                        SetClearStage();
+                    }
+                    else
+                    {
+                        currentStageData.mapEvent.OnEnterEvent();
+                    }
+
                     break;
                 case AreaType.MONSTER:
                     //EventManager.TriggerEvent("SpawnEnemy", currentStageData.stageID);

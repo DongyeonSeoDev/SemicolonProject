@@ -21,6 +21,8 @@ public partial class StageDataSO : ScriptableObject
 
     public GameObject mapNPC;
 
+    public MapEventSO mapEvent;
+
     public string stageID => name;  //스테이지 아이디
 
     public string StageName => string.IsNullOrEmpty( stageName) ? Global.AreaTypeToString(areaType) : stageName;
