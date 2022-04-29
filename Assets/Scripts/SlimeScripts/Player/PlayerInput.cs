@@ -88,6 +88,10 @@ public class PlayerInput : MonoBehaviour
         EventManager.StartListening("StartCutScene", PauseByCutScene);
         EventManager.StartListening("EndCutScene", ResumeByCutScene);
 
+        EventManager.StartListening("Skill0TutoClear", Skill0TutoClear);
+        EventManager.StartListening("Skill1TutoClear", Skill1TutoClear);
+        EventManager.StartListening("Skill2TutoClear", Skill2TutoClear);
+
         TimeManager.timePauseAction += TimePause;
         TimeManager.timeResumeAction += TimeResume;
     }
@@ -97,6 +101,10 @@ public class PlayerInput : MonoBehaviour
         EventManager.StopListening("ChangeBody", PlayerReset);
         EventManager.StopListening("StartCutScene", PauseByCutScene);
         EventManager.StopListening("EndCutScene", ResumeByCutScene);
+
+        EventManager.StopListening("Skill0TutoClear", Skill0TutoClear);
+        EventManager.StopListening("Skill1TutoClear", Skill1TutoClear);
+        EventManager.StopListening("Skill2TutoClear", Skill2TutoClear);
 
         TimeManager.timePauseAction -= TimePause;
         TimeManager.timeResumeAction -= TimeResume;
@@ -300,6 +308,20 @@ public class PlayerInput : MonoBehaviour
     {
         isPause = false;
     }
+
+    private void Skill0TutoClear()
+    {
+        skill0TutoClear = true;
+    }
+    private void Skill1TutoClear()
+    {
+        skill1TutoClear = true;
+    }
+    private void Skill2TutoClear()
+    {
+        skill2TutoClear = true;
+    }
+
     private void PauseByCutScene()
     {
         playerState.CantMove = true;
