@@ -32,7 +32,7 @@ public class PlayerMove : PlayerAction
 
     private void Move()
     {
-        if (!playerState.BodySlapping)
+        if (!(playerState.BodySlapping || playerState.IsDrain))
         {
             Vector2 moveVec = playerInput.MoveVector * (playerStat.Speed);
 
@@ -61,6 +61,7 @@ public class PlayerMove : PlayerAction
         else
         {
             lastMoveVec = Vector2.zero;
+            rigid.velocity = Vector2.zero;
         }
     }
     private float GetMovePower(Transform pos)
