@@ -126,6 +126,11 @@ public class PlayerDrainCollider : MonoBehaviour
 
            ICanGetDamagableEnemy enemy = other.GetComponent<ICanGetDamagableEnemy>();
 
+            if(enemy.GetTransform().GetComponent<Enemy.TutorialEnemy>()) // 튜토리얼 상태가 아니어도 튜토리얼 대상을 흡수하면 튜토리얼 처리
+            {
+                playerDrain.drainTutorial = true;
+            }
+            
             if (tryDrainList.Contains(enemy))
             {
                 return;
@@ -141,7 +146,6 @@ public class PlayerDrainCollider : MonoBehaviour
                 Debug.Log("aaa");    
                 return;
             }
-
 
             float distance = Vector2.Distance(transform.position, enemy.GetTransform().position);
             float drainMoveTime = 0f;
@@ -230,7 +234,7 @@ public class PlayerDrainCollider : MonoBehaviour
                     RemoveList(key);
                     removeList.Add(item);
 
-                    if (key.GetComponent<Enemy.DrainTutorialEnemy>() != null)
+                    if (key.GetComponent<Enemy.TutorialEnemy>() != null)
                     {
                         EventManager.TriggerEvent("DrainTutorialEnemyDrain", key.transform.position);
 
