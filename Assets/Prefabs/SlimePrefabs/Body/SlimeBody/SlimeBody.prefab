@@ -228,10 +228,10 @@ MonoBehaviour:
   skillIdx: 1
   canCrashLayer:
     serializedVersion: 2
-    m_Bits: 8519872
+    m_Bits: 10617024
   whatIsEnemy:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 2097280
   bodySlapMoveVec: {x: 0, y: 0}
   maxChargingTime: 3
   minMoveToMouseChargeTime: 0.2
