@@ -3,6 +3,7 @@ using UnityEngine;
 public abstract class NPC : InteractionObj
 {
     [SerializeField] protected NPCInfo npcInfo;
+    public NPCInfo _NPCInfo => npcInfo;
 
     public FakeSpriteOutline fsOut;
 

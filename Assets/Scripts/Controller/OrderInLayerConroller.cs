@@ -39,7 +39,7 @@ public class OrderInLayerConroller : MonoBehaviour
     }
     private void SetOrderInLayerAuto()
     {
-        if(spriteRenderer == null)
+        if (spriteRenderer == null)
         {
             spriteShapeRenderer.sortingOrder = offest - (int)Mathf.Round(transform.position.y);
 

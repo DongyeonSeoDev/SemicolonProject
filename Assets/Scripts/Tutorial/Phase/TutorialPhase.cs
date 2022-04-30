@@ -141,3 +141,28 @@ public class AbsorptionPhase : TutorialPhase
         base.End();
     }
 }
+
+public class RushTutorialPhase : TutorialPhase
+{
+
+    private GameObject emphasisEff;
+
+    public RushTutorialPhase(GameObject emphasisEff)
+    {
+        this.emphasisEff = emphasisEff;
+    }
+
+    public override void DoPhaseUpdate()
+    {
+        if(Input.GetKeyUp(KeySetting.keyDict[KeyAction.SPECIALATTACK1]))
+        {
+            End();
+        }
+    }
+
+    public override void End()
+    {
+        emphasisEff.SetActive(false);
+        base.End();
+    }
+}

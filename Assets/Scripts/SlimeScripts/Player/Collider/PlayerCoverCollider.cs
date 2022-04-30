@@ -17,5 +17,6 @@ public class PlayerCoverCollider : MonoBehaviour
     private void OnTriggerExit2D(Collider2D collision)
     {
         SlimeGameManager.Instance.Player.CoveredObjectList.Remove(collision.gameObject);
+      
     }
 }

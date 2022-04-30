@@ -156,10 +156,13 @@ public class NPCInfo
 [Serializable]
 public class TalkElement
 {
+    [TextArea]
     public string message;
     //public Sprite npcTalkSpr;
     //public AudioClip talkSound;
-    public UnityEvent talkEvent;
+    //public UnityEvent talkEndEvent;
+
+    public string talkEndEventKey;
 }
 
 

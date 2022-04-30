@@ -7,8 +7,13 @@ namespace Enemy
 {
     public class EnemyData
     {
+        public Action adk = null;
         public EnemyData(EnemyDataSO enemyDataSO)
         {
+            Test(() =>
+            {
+                Debug.Log("afdfdfdf");
+            });
             enemyType = enemyDataSO.enemyType;
             normalColor = enemyDataSO.normalColor;
             damagedColor = enemyDataSO.damagedColor;
@@ -22,6 +27,10 @@ namespace Enemy
             playerControllerMove = new EnemyMovePlayerControllerCommand(this);
         }
 
+        private void Test(Action dk)
+        {
+            Debug.Log("aaaa");
+        }
         public EnemyController eEnemyController = EnemyController.AI;
         public EnemyType enemyType;
 
