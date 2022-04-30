@@ -38,7 +38,7 @@ public class PlayerCanDrainCheckCollider : MonoBehaviour
         }
 
         boxCol2D.offset = playerDrainCollider.offset;
-        boxCol2D.size = playerDrainCollider.size;
+        boxCol2D.size = playerDrainCollider.size / 1.2f;
         boxCol2D.isTrigger = true;
     }
 
