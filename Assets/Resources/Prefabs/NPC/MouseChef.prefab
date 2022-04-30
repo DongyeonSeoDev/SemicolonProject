@@ -126,6 +126,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isHidenName: 0
   isHidenItrMark: 0
+  notInteractable: 0
   objName: "\uC694\uB9AC\uC0AC \uC950"
   action: "\uC694\uB9AC\uD558\uAE30"
   uiOffset: {x: 0, y: -1, z: 0}
@@ -133,11 +134,11 @@ MonoBehaviour:
   npcUI: {fileID: 0}
   itrUI: {fileID: 0}
   npcInfo:
-    id: 0
+    id: Mouse Chef
     talkId: 0
     npcName: 
     talkContents: []
-  fsOut: {fileID: 6378824023241685622}
+  fsOut: {fileID: 0}
   canFoodList:
   - {fileID: 11400000, guid: bf8f07be0c84cb9408b0c2716ce9438e, type: 2}
   - {fileID: 11400000, guid: b2bcf1ea41585824da420596e547b510, type: 2}

@@ -160,7 +160,9 @@ public class TalkElement
     public string message;
     //public Sprite npcTalkSpr;
     //public AudioClip talkSound;
-    public UnityEvent talkEndEvent;
+    //public UnityEvent talkEndEvent;
+
+    public string talkEndEventKey;
 }
 
 

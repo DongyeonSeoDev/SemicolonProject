@@ -117,4 +117,12 @@ public static partial class Global
     }*/
 
     public static T[] GetEnumArr<T>() => (T[])Enum.GetValues(typeof(T));
+
+    public static void TriggerEvent(this string key)
+    {
+        if (!string.IsNullOrEmpty(key))
+        {
+            EventManager.TriggerEvent(key);
+        }
+    }
 }
