@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Enemy
@@ -130,20 +132,28 @@ namespace Enemy
     public partial class BossSpecialAttack1Status : EnemyState
     {
         private Boss1SkeletonKing boss = null;
+
         private Boss1Clone[] bossCloneArray;
         private AttackBoss1Clone[] attackBoss1CloneArray;
         private RushAttackRange[] attackRangeArray;
         private Vector2[] bossPositionArray;
+
+        private WaitForSeconds bossAfterImageTime;
+
+        private Color afterImageColor;
 
         private int moveCount = 3;
         private int enemyCount = 3;
 
         private float moveSpeed = 35f;
         private float attackDistance = 5f;
+        private float afterImageTime = 0.2f;
+        private float spawnAfterImageTime = 0.1f;
 
         private bool isEnd = false;
         private bool isMove = false;
         private bool isRightAttack = true;
+        private bool isAfterImage = false;
 
         public BossSpecialAttack1Status(EnemyData enemyData, Boss1SkeletonKing boss) : base(eState.ATTACK, enemyData) => this.boss = boss;
 
@@ -169,6 +179,10 @@ namespace Enemy
                 SetBossAttack(true);
                 SetBossCloneData();
             }, 1f);
+
+            bossAfterImageTime = new WaitForSeconds(spawnAfterImageTime);
+            afterImageColor = Color.white;
+            afterImageColor.a = 0.5f;
 
             base.Start();
         }
@@ -211,7 +225,9 @@ namespace Enemy
                         if (moveCount <= 0) // 종료
                         {
                             SetBossAttack(true);
+
                             isEnd = true;
+                            isAfterImage = false;
 
                             base.Update();
 
@@ -336,6 +352,8 @@ namespace Enemy
             enemyData.enemyAnimator.ResetTrigger(isAttack ? boss.hashSpecialAttack1End : boss.hashSpecialAttack1);
             enemyData.enemyAnimator.SetTrigger(isAttack ? boss.hashSpecialAttack1 : boss.hashSpecialAttack1End);
 
+            isAfterImage = isAttack;
+
             if (isAttack)
             {
                 enemyData.moveVector = isRightAttack ? Vector2.right : Vector2.left;
@@ -346,6 +364,23 @@ namespace Enemy
                 {
                     attackRangeArray[i].gameObject.SetActive(false);
                 }
+
+                boss.StartCoroutine(StartSpawnAfterImage());
+            }
+        }
+
+        /// <summary>
+        /// 보스 잔상 코드
+        /// </summary>
+        private IEnumerator StartSpawnAfterImage()
+        {
+            while (isAfterImage)
+            {
+                yield return bossAfterImageTime;
+
+                EnemyAfterImage afterImage = EnemyPoolManager.Instance.GetPoolObject(Type.EnemyAfterImage, boss.transform.position).GetComponent<EnemyAfterImage>();
+
+                afterImage.Init(enemyData.enemySpriteRenderer.sprite, afterImageColor, afterImageTime);
             }
         }
     }
