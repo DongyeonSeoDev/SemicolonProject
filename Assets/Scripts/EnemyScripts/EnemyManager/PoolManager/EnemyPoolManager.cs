@@ -18,7 +18,8 @@ namespace Enemy
         Fire,
         EnemySpawnEffect,
         EnemyRushAttackRange,
-        Boss1Clone
+        Boss1Clone,
+        EnemyAfterImage
     }
 
     public class EnemyPoolManager : MonoBehaviour

@@ -44,6 +44,11 @@ public class PlayerCanDrainCheckCollider : MonoBehaviour
 
     private void OnTriggerStay2D(Collider2D collision)
     {
+        if (SlimeGameManager.Instance.Player.PlayerState.IsDrain)
+        {
+            return;
+        }
+
         ICanGetDamagableEnemy enemy = collision.GetComponent<ICanGetDamagableEnemy>();
 
         if(enemy != null && enemy.EnemyHpPercent() > 0 && enemy.EnemyHpPercent() <= playerDrain.PlayerDrainCol.CanDrainHpPercentage)

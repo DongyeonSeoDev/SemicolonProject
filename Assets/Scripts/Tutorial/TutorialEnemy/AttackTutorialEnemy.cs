@@ -22,6 +22,8 @@ namespace Enemy
         public override void Start()
         {
             base.Start();
+
+            SetHP(false);
         }
         public override void Update()
         {

@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 40
-  hp: 40
+  hp: 20
   hpBarFillImage: {fileID: 7481955638417017616}
   hpBarDamageFillImage: {fileID: 4649332666783088291}
   hpBar: {fileID: 7481955638649562364}

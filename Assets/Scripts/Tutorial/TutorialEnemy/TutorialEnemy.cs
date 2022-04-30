@@ -22,7 +22,10 @@ namespace Enemy
             anim = GetComponent<Animator>();
             anim.Play("Move");
 
-            hp = maxHP;
+            if(hp > maxHP)
+            {
+                hp = maxHP;
+            }
         }
         public virtual void Update()
         {
