@@ -1200,8 +1200,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1646225281
-  m_SortingLayer: 5
+  m_SortingLayerID: -1158705011
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 33d21dfdf94441840a5075a7df757d2c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1320,6 +1320,7 @@ MonoBehaviour:
   startSpeed: 5
   speedUpValue: 0.5
   speedUpTime: 1
+  bossHP: 2000
   currentSpeed: 0
   limitMinPosition: {x: 0, y: 0}
   limitMaxPosition: {x: 0, y: 0}
