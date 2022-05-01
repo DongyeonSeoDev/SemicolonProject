@@ -237,6 +237,7 @@ public class PlayerDrainCollider : MonoBehaviour
                     if (key.GetComponent<Enemy.TutorialEnemy>() != null)
                     {
                         EventManager.TriggerEvent("DrainTutorialEnemyDrain", key.transform.position);
+                        EventManager.TriggerEvent("Tuto_EnemyDeathCheck");
 
                         Destroy(key.gameObject);
 
