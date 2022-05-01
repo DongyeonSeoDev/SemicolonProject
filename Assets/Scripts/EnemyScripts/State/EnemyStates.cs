@@ -147,8 +147,8 @@ namespace Enemy
 
         private float moveSpeed = 35f;
         private float attackDistance = 5f;
-        private float afterImageTime = 0.2f;
-        private float spawnAfterImageTime = 0.1f;
+        private float afterImageTime = 0.7f;
+        private float spawnAfterImageTime = 0.07f;
 
         private bool isEnd = false;
         private bool isMove = false;
@@ -182,7 +182,7 @@ namespace Enemy
 
             bossAfterImageTime = new WaitForSeconds(spawnAfterImageTime);
             afterImageColor = Color.white;
-            afterImageColor.a = 0.5f;
+            afterImageColor.a = 0.3f;
 
             base.Start();
         }
@@ -224,7 +224,17 @@ namespace Enemy
 
                         if (moveCount <= 0) // Á¾·á
                         {
-                            SetBossAttack(true);
+                            enemyData.enemyAnimator.ResetTrigger(boss.hashSpecialAttack1End);
+                            enemyData.enemyAnimator.SetTrigger(boss.hashAttackEnd);
+
+                            enemyData.moveVector = Vector2.left;
+
+                            if (enemyData.enemySpriteRotateCommand != null)
+                            {
+                                enemyData.enemySpriteRotateCommand.Execute();
+                            }
+
+                            enemyData.enemySpriteRenderer.enabled = true;
 
                             isEnd = true;
                             isAfterImage = false;
@@ -378,9 +388,20 @@ namespace Enemy
             {
                 yield return bossAfterImageTime;
 
-                EnemyAfterImage afterImage = EnemyPoolManager.Instance.GetPoolObject(Type.EnemyAfterImage, boss.transform.position).GetComponent<EnemyAfterImage>();
+                if (enemyData.enemySpriteRenderer.enabled)
+                {
+                    EnemyAfterImage afterImage = EnemyPoolManager.Instance.GetPoolObject(Type.EnemyAfterImage, boss.transform.position).GetComponent<EnemyAfterImage>();
+                    afterImage.Init(enemyData.enemySpriteRenderer.sprite, afterImageColor, afterImageTime, !isRightAttack);
+                }
 
-                afterImage.Init(enemyData.enemySpriteRenderer.sprite, afterImageColor, afterImageTime);
+                for (int i = 0; i < enemyCount - 1; i++)
+                {
+                    if (bossCloneArray[i].sr.enabled)
+                    {
+                        EnemyAfterImage bossClonefterImage = EnemyPoolManager.Instance.GetPoolObject(Type.EnemyAfterImage, bossCloneArray[i].transform.position).GetComponent<EnemyAfterImage>();
+                        bossClonefterImage.Init(bossCloneArray[i].sr.sprite, afterImageColor, afterImageTime, !isRightAttack);
+                    }
+                }
             }
         }
     }
