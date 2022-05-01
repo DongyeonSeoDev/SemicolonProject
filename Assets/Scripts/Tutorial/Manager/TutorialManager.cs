@@ -341,7 +341,6 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         if (gm.savedData.userInfo.uiActiveDic[kt]) return;
 
         AcquisitionDropIcon adi = PoolManager.GetItem<AcquisitionDropIcon>("AcqDropIcon");
-        adi.transform.localScale = new Vector3(3.5f, 3.5f, 1f);
         adi.Set(UIManager.Instance.GetInterfaceSprite(type),
                 Global.GetSlimePos.position - new Vector3(10f, 0), 3f, new Vector2(12, 12), () =>
                 {
@@ -361,7 +360,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                             break;
                     }
                 });
-        
+        adi.transform.localScale = new Vector3(3.5f, 3.5f, 1f);
     }
 
     #region Tutorial Function

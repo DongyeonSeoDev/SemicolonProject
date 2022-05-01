@@ -11,7 +11,10 @@ public abstract class NPC : InteractionObj
 
     protected void Awake()
     {
-        npcInfo.npcName = objName;
+        if (string.IsNullOrEmpty(npcInfo.npcName))
+            npcInfo.npcName = objName;
+        if (string.IsNullOrEmpty(npcInfo.id))
+            npcInfo.id = objId;
     }
     private void Start()
     {

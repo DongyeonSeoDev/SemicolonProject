@@ -6,10 +6,17 @@ public abstract class InteractionObj : MonoBehaviour
     [SerializeField] protected bool isHidenName, isHidenItrMark;
     [SerializeField] protected bool notInteractable;
 
+    [Space(15)]
+
     [SerializeField] protected string objName;
     public string ObjName { get { return objName; } }
 
+    [SerializeField] protected string objId;
+    public string ObjId => objId;
+
     public string action = "상호작용";
+
+    [Space(15)]
 
     public Vector3 uiOffset = Vector3.down;  //이름 UI 오프셋
     public Vector3 itrUIOffset = Vector3.up;  //상호작용 표시 UI 오프셋
@@ -17,7 +24,6 @@ public abstract class InteractionObj : MonoBehaviour
     //NPC이름과 상호작용 표시가 뜨는 범위가 다를 수 있으므로 분리함
     [HideInInspector] public NPCUI npcUI;
     [HideInInspector] public InteractionNoticeUI itrUI;
-
 
     public abstract void Interaction();
 

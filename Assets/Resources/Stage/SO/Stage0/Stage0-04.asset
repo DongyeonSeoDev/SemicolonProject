@@ -20,4 +20,4 @@ MonoBehaviour:
   areaType: 0
   enemySpeciesArea: 2
   mapNPC: {fileID: 0}
-  mapEvent: {fileID: 11400000, guid: c4b313f70f4b3684d9fdef5de11c47fc, type: 2}
+  mapEvent: {fileID: 11400000, guid: 71103da0633d13f4fa1abdb13850b696, type: 2}
