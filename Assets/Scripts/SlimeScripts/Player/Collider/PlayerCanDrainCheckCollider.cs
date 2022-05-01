@@ -42,6 +42,7 @@ public class PlayerCanDrainCheckCollider : MonoBehaviour
         boxCol2D.isTrigger = true;
     }
 
+
     private void OnTriggerStay2D(Collider2D collision)
     {
         if (SlimeGameManager.Instance.Player.PlayerState.IsDrain)
