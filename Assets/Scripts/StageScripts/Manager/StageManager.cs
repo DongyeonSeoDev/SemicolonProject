@@ -389,6 +389,11 @@ public class StageManager : MonoSingleton<StageManager>
             //일단은 다음 문이 없음
         }
 
+        if (currentStageData.isSaveStage)
+        {
+            GameManager.Instance.savedData.userInfo.currentStageID = currentStageData.stageID;
+        }
+
         {
             //해당 스테이지의 타입에 따라 무언가를 함  (해당 방을 입장했을 때)
             switch (currentStageData.areaType)

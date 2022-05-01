@@ -11,7 +11,9 @@ public partial class StageDataSO : ScriptableObject
     //public int stageNumber;  //스테이지 번호(구역당)    n - stageNumber
     public string stageName;  //스테이지 이름 (지역 이름)
 
-    public int stageMonsterBundleCount;
+    public bool isSaveStage; //이 스테이지 도착하면 저장할까
+
+    public int stageMonsterBundleCount;  //총 몇 세트의 몹들이 나오는지
     [HideInInspector] public string[] stageMonsterBundleID;
 
     public GameObject stage;  //스테이지 프리팹

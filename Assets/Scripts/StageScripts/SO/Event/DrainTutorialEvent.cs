@@ -7,11 +7,13 @@ public class DrainTutorialEvent : MapEventSO
 
     public override void OnEnterEvent()
     {
+        tutoEnemyDeathCnt = 0;
         EventManager.StartListening("Tuto_EnemyDeathCheck", CheckTutoEnemyDead);
     }
 
     private void CheckTutoEnemyDead()
     {
+        Debug.Log("tutoEnemyDeathCnt : " + tutoEnemyDeathCnt);
         if(++tutoEnemyDeathCnt == 2)
         {
             StageManager.Instance.SetClearStage();
