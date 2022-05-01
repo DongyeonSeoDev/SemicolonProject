@@ -80,7 +80,7 @@ public class SettingPhase : TutorialPhase
     }
     public override void DoPhaseUpdate()
     {
-        if(Input.GetKeyDown(KeySetting.fixedKeyDict[KeyAction.SETTING]) && !TimeManager.IsTimePaused)
+        if(Input.GetKeyDown(KeySetting.fixedKeyDict[KeyAction.SETTING]) && !TimeManager.IsTimePaused && UIManager.Instance.CanInteractUI)
         {
             if(++currentCount < pressCount)
             {

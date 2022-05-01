@@ -120,7 +120,8 @@ public class StageManager : MonoSingleton<StageManager>
 
     private void Init()
     {
-        startStageID = GameManager.Instance.savedData.userInfo.currentStageID;
+        startStageID = GameManager.Instance.savedData.stageInfo.currentStageID;
+        PassDir = GameManager.Instance.savedData.stageInfo.passDoorDir;
         if (TutorialManager.Instance.IsTestMode) startStageID = "Stage1-01";
         currentFloor = GetStageData(startStageID).stageFloor.floor;
         InsertRandomMaps(currentFloor, true);
@@ -391,7 +392,7 @@ public class StageManager : MonoSingleton<StageManager>
 
         if (currentStageData.isSaveStage)
         {
-            GameManager.Instance.savedData.userInfo.currentStageID = currentStageData.stageID;
+            SaveStage();
         }
 
         {
@@ -649,5 +650,14 @@ public class StageManager : MonoSingleton<StageManager>
         npc.gameObject.SetActive(true);
         npc.transform.position = currentStage.objSpawnPos.position;
         currentMapNPCList.Add(npc);
+    }
+
+    public void SaveStage(string stageId = "")
+    {
+        if (string.IsNullOrEmpty(stageId))
+            stageId = currentStageData.stageID;
+
+        GameManager.Instance.savedData.stageInfo.currentStageID = stageId;
+        GameManager.Instance.savedData.stageInfo.passDoorDir = PassDir;
     }
 }

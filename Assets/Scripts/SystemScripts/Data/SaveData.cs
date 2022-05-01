@@ -8,6 +8,7 @@ public class SaveData
     public Option option = new Option();
     public UserInfo userInfo = new UserInfo();
     public TutorialInfo tutorialInfo = new TutorialInfo();
+    public StageInfo stageInfo = new StageInfo();
 
     public void Save()
     {
@@ -34,11 +35,15 @@ public class TutorialInfo
 }
 
 [Serializable]
+public class StageInfo
+{
+    public string currentStageID = "Stage0-01"; //어느 스테이지까지 갔는지
+    public DoorDirType passDoorDir;
+}
+
+[Serializable]
 public class UserInfo
 {
-    //stage
-    public string currentStageID = "Stage0-01"; //어느 스테이지까지 갔는지
-
     //스탯 정보
     public int currentHp; //현재 HP
     public Stat playerStat = new Stat();  //현재 스탯
