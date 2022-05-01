@@ -38,9 +38,10 @@ public class PlayerCanDrainCheckCollider : MonoBehaviour
         }
 
         boxCol2D.offset = playerDrainCollider.offset;
-        boxCol2D.size = playerDrainCollider.size;
+        boxCol2D.size = playerDrainCollider.size / 1.2f;
         boxCol2D.isTrigger = true;
     }
+
 
     private void OnTriggerStay2D(Collider2D collision)
     {
@@ -55,6 +56,8 @@ public class PlayerCanDrainCheckCollider : MonoBehaviour
         {
             Debug.Log(enemy.EnemyHpPercent());
             EventManager.TriggerEvent("Tuto_CanDrainObject");
+
+            playerDrain.drainTutorialDone = true;
         }
     }
 }

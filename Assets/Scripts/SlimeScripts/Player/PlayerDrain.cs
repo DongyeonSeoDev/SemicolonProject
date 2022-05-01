@@ -32,6 +32,7 @@ public class PlayerDrain : PlayerSkill
     public bool drainTutorial = false;
 
     private bool canDrain = true;
+    public bool drainTutorialDone = false;
     public bool cantDrainObject = false;
 
     public override void Awake()
@@ -46,6 +47,10 @@ public class PlayerDrain : PlayerSkill
         if(TutorialManager.Instance.IsTutorialStage)
         {
             Instantiate(Resources.Load<GameObject>(canDrainCheckColliderPath), transform);
+        }
+        else
+        {
+            drainTutorialDone = true;
         }
     }
     public override void OnEnable()
@@ -93,6 +98,11 @@ public class PlayerDrain : PlayerSkill
     }
     private void DoDrain()
     {
+        if(!drainTutorialDone && !drainTutorial)
+        {
+            return;
+        }
+
         player.PlayerState.IsDrain = true;
         player.PlayerOrderInLayerController.SetOrderInLayer("Object", 0);
 

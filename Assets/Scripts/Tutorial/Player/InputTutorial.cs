@@ -28,8 +28,6 @@ public class InputTutoData
             return;
         }
 
-        KeyActionManager.Instance.SetPlayerHeadText("?", 0.5f);
-
         timerStarted = true;
         pressTimer = pressTime;
     }
@@ -76,6 +74,10 @@ public class InputTutorial : MonoBehaviour
 
     private bool moveKeyClear = false;
 
+    private bool skill0Clear = false;
+    private bool skill1Clear = false;
+    private bool skill2Clear = false;
+
     private void Awake()
     {
         #region 이동관련
@@ -91,12 +93,28 @@ public class InputTutorial : MonoBehaviour
         inputTutoDatas.Add(new InputTutoData(KeyAction.SPECIALATTACK2, 0f));
         #endregion
     }
-
+    private void OnEnable()
+    {
+        EventManager.StartListening("Skill0TutoClear", Skill0TutoClear);
+        EventManager.StartListening("Skill1TutoClear", Skill1TutoClear);
+        EventManager.StartListening("Skill2TutoClear", Skill2TutoClear);
+    }
+    private void OnDisable()
+    {
+        EventManager.StopListening("Skill0TutoClear", Skill0TutoClear);
+        EventManager.StopListening("Skill1TutoClear", Skill1TutoClear);
+        EventManager.StopListening("Skill2TutoClear", Skill2TutoClear);
+    }
     void Start()
     {
         if (isTestMode)
         {
             moveKeyClear = true;
+
+            skill0Clear = true;
+            skill1Clear = true;
+            skill2Clear = true;
+
             EventManager.TriggerEvent("Tuto_GainAllArrowKey");
 
             for (int i = 0; i < inputTutoDatas.Count; i++)
@@ -177,8 +195,28 @@ public class InputTutorial : MonoBehaviour
     }
     private void CheckFixedKey(KeyAction keyAction)
     {
+        if (KeyAction.ATTACK == keyAction && skill0Clear)
+        {
+            inputTutoDataDict[keyAction].isClear = true;
+        }
+
+        if (inputTutoDataDict.ContainsKey(keyAction) && inputTutoDataDict[keyAction].isClear)
+        {
+            return;
+        }
+
         if (Input.GetKey(KeySetting.fixedKeyDict[keyAction]))
         {
+            if (inputTutoDataDict.ContainsKey(keyAction) && !inputTutoDataDict[keyAction].timerStarted)
+            {
+                KeyActionManager.Instance.SetPlayerHeadText("?", 0.5f);
+            }
+
+            if (KeyAction.ATTACK == keyAction)
+            {
+                return;
+            }
+
             CheckStartTimer(keyAction);
 
             keyNotPressed = false;
@@ -190,8 +228,39 @@ public class InputTutorial : MonoBehaviour
     }
     private void CheckKey(KeyAction keyAction)
     {
+        switch (keyAction)
+        {
+            case KeyAction.SPECIALATTACK1:
+                if (skill1Clear)
+                {
+                    inputTutoDataDict[keyAction].isClear = true;
+                }
+                break;
+            case KeyAction.SPECIALATTACK2:
+                if (skill2Clear)
+                {
+                    inputTutoDataDict[keyAction].isClear = true;
+                }
+                break;
+        }
+
+        if (inputTutoDataDict.ContainsKey(keyAction) && inputTutoDataDict[keyAction].isClear)
+        {
+            return;
+        }
+
         if (Input.GetKey(KeySetting.keyDict[keyAction]))
         {
+            if (inputTutoDataDict.ContainsKey(keyAction) && !inputTutoDataDict[keyAction].timerStarted)
+            {
+                KeyActionManager.Instance.SetPlayerHeadText("?", 0.5f);
+            }
+
+            if (KeyAction.SPECIALATTACK1 == keyAction || KeyAction.SPECIALATTACK2 == keyAction)
+            {
+                return;
+            }
+
             CheckStartTimer(keyAction);
 
             keyNotPressed = false;
@@ -247,5 +316,17 @@ public class InputTutorial : MonoBehaviour
     private string GetRandomNotPressedText()
     {
         return keyNotPressStrArr[UnityEngine.Random.Range(0, keyNotPressStrArr.Length)];
+    }
+    private void Skill0TutoClear()
+    {
+        skill0Clear = true;
+    }
+    private void Skill1TutoClear()
+    {
+        skill1Clear = true;
+    }
+    private void Skill2TutoClear()
+    {
+        skill2Clear = true;
     }
 }
