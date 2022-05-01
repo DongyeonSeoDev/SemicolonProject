@@ -116,12 +116,23 @@ public class PlayerInput : MonoBehaviour
         playerState = GetComponent<PlayerState>();
 
         lastMoveVector = Vector2.left;
-        if (!TutorialManager.Instance.IsTestMode)
+
+        inputTutorial = GetComponent<InputTutorial>();
+
+        if (TutorialManager.Instance.IsTutorialStage)
         {
-            inputTutorial = gameObject.AddComponent<InputTutorial>();
+            if (inputTutorial == null)
+            {
+                inputTutorial = gameObject.AddComponent<InputTutorial>();
+            }
         }
         else
         {
+            if (inputTutorial != null)
+            {
+                Destroy(inputTutorial);
+            }
+
             skill0TutoClear = true;
             skill1TutoClear = true;
             skill2TutoClear = true;
