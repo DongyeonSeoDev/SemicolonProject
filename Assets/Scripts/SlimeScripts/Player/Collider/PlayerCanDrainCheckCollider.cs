@@ -56,6 +56,8 @@ public class PlayerCanDrainCheckCollider : MonoBehaviour
         {
             Debug.Log(enemy.EnemyHpPercent());
             EventManager.TriggerEvent("Tuto_CanDrainObject");
+
+            playerDrain.drainTutorialDone = true;
         }
     }
 }
