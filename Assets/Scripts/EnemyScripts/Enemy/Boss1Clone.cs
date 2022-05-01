@@ -5,12 +5,14 @@ namespace Enemy
     public class Boss1Clone : EnemyPoolData
     {
         private Rigidbody2D rigid;
+        public SpriteRenderer sr;
 
         private Vector2 targetPosition = Vector2.zero;
 
         private void Awake()
         {
             rigid = GetComponent<Rigidbody2D>();
+            sr = GetComponent<SpriteRenderer>();
         }
 
         private void Start()
