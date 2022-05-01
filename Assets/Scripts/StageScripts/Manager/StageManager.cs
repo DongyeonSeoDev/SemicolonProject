@@ -406,6 +406,7 @@ public class StageManager : MonoSingleton<StageManager>
                     }
                     else
                     {
+                        IsStageClear = false;
                         currentStageData.mapEvent.OnEnterEvent();
                     }
 

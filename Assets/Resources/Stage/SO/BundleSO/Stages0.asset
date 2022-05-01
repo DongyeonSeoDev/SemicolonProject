@@ -18,6 +18,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 87adf22d52c78e64583204ec1e8aa888, type: 2}
   - {fileID: 11400000, guid: 6de2e9bb37208e148a5790be2fb70f8b, type: 2}
   - {fileID: 11400000, guid: ba0ae5584611a0140b1687a55c5707f4, type: 2}
+  - {fileID: 11400000, guid: 44c5e04bbcfaa33449a48be1018701d7, type: 2}
+  - {fileID: 11400000, guid: 5bc9598e62ae6cc47b31eed454f8c3f8, type: 2}
+  - {fileID: 11400000, guid: 3ab00434fbcd45e4da9c3f132cc01c65, type: 2}
   randomStageList:
   - stageNumber: 1
     nextStageTypes: 00000000
@@ -28,4 +31,6 @@ MonoBehaviour:
   - stageNumber: 4
     nextStageTypes: 00000000
   - stageNumber: 5
+    nextStageTypes: 00000000
+  - stageNumber: 6
     nextStageTypes: 00000000

@@ -169,7 +169,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                             Util.DelayFunc(() =>
                             {
                                 //Init
-                                Vector3 startPos = GetUITutorialReady(skillUIArr[0].GetComponent<RectTransform>(), new Vector2(951, 740)); //몬스터 위치(의 스크린 좌표)로
+                                Vector3 startPos = GetUITutorialReady(skillUIArr[0].GetComponent<RectTransform>(), new Vector2(918, 393)); //몬스터 위치(의 스크린 좌표)로
                                
                                 Vector3 orgEnergeEffMaskScl = StoredData.GetValueData<Vector3>("orgEnergeEffMaskScl");
                                 SkillUIManager sum = SkillUIManager.Instance;
@@ -193,6 +193,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                                 {
                                     EventManager.TriggerEvent("EndCutScene");
                                     EventManager.TriggerEvent("Skill0TutoClear");
+                                    sum.IsAutoFitEnergeBar = true;
                                 });  
 
                             }, 2.5f, this); //end of util
@@ -266,6 +267,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                 {
                     UIOn(KeyAction.SETTING);
                     gm.savedData.userInfo.uiActiveDic[KeyAction.QUIT] = true;
+                    um.RequestLogMsg("설정을 획득했습니다");
                 });
             }));
         }
@@ -334,14 +336,30 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     private void GetUIIcon(UIType type) //설정, 인벤, 스탯, 도감 등의 메뉴 UI획득
     {
+        KeyAction kt = Util.EnumParse<KeyAction>(type.ToString());
+
+        if (gm.savedData.userInfo.uiActiveDic[kt]) return;
+
         AcquisitionDropIcon adi = PoolManager.GetItem<AcquisitionDropIcon>("AcqDropIcon");
         adi.transform.localScale = new Vector3(3.5f, 3.5f, 1f);
         adi.Set(UIManager.Instance.GetInterfaceSprite(type),
                 Global.GetSlimePos.position - new Vector3(10f, 0), 3f, new Vector2(12, 12), () =>
                 {
-                    KeyAction kt = Util.EnumParse<KeyAction>(type.ToString());
                     UIOn(kt);
                     gm.savedData.userInfo.uiActiveDic[kt] = true;
+
+                    switch(type)
+                    {
+                        case UIType.INVENTORY:
+                            um.RequestLogMsg("인벤토리를 획득했습니다");
+                            break;
+                        case UIType.STAT:
+                            um.RequestLogMsg("스탯을 획득했습니다");
+                            break;
+                        case UIType.MONSTER_COLLECTION:
+                            um.RequestLogMsg("몬스터 도감을 획득했습니다");
+                            break;
+                    }
                 });
         
     }
@@ -350,7 +368,9 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     public void GetRushAttack()  //돌진을 얻음
     {
-        Vector3 startPos = GetUITutorialReady(skillUIArr[1].GetComponent<RectTransform>(), new Vector2(951, 740));
+        if (StoredData.HasValueKey("GetRushAttack")) return;
+
+        Vector3 startPos = GetUITutorialReady(skillUIArr[1].GetComponent<RectTransform>(), new Vector2(1189, 343));
 
         Sequence seq = DOTween.Sequence();
         seq.Append(skillUIArr[1].GetComponent<CanvasGroup>().DOFade(1, 0.3f).SetEase(Ease.OutCirc))
@@ -358,24 +378,29 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         seq.AppendCallback(() =>
         {
             EventManager.TriggerEvent("Skill1TutoClear");
-            RectTransform emphRectTr = SetUIEmphasisEffect(skillUIArr[2].transform);
+            RectTransform emphRectTr = SetUIEmphasisEffect(skillUIArr[1].transform);
             tutorialPhases.Add(new RushTutorialPhase(emphRectTr.gameObject));
         }).Play();
+
+        StoredData.SetValueKey("GetRushAttack", true);
     }
 
     private void GetInventoryUI() //인벤 얻음
     {
         GetUIIcon(UIType.INVENTORY);
+        
     }
 
     private void GetStatUI() //스탯 UI 획득
     {
         GetUIIcon(UIType.STAT);
+        
     }
 
     private void GetMonsterCollectionUI() //몬스터 도감 UI 획득
     {
         GetUIIcon(UIType.MONSTER_COLLECTION);
+        
     }
     #endregion
 }

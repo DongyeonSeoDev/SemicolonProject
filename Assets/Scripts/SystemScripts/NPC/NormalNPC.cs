@@ -9,6 +9,10 @@ public class NormalNPC : NPC
 
     public override void Interaction()
     {
+        if (notInteractable) return;
+        notInteractable = true;
+        isHidenName = true;
+
         TalkManager.Instance.SetTalkData(npcInfo, transform);
     }
 

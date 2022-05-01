@@ -5,6 +5,6 @@ public class MapEventSO : ScriptableObject
 {
     public virtual void OnEnterEvent()
     {
-        StageManager.Instance.SetClearStage();
+        //StageManager.Instance.SetClearStage();
     }
 }
