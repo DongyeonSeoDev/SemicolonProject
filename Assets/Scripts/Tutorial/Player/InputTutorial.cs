@@ -195,6 +195,11 @@ public class InputTutorial : MonoBehaviour
     }
     private void CheckFixedKey(KeyAction keyAction)
     {
+        if (KeyAction.ATTACK == keyAction && skill0Clear)
+        {
+            inputTutoDataDict[keyAction].isClear = true;
+        }
+
         if (inputTutoDataDict.ContainsKey(keyAction) && inputTutoDataDict[keyAction].isClear)
         {
             return;
@@ -207,7 +212,7 @@ public class InputTutorial : MonoBehaviour
                 KeyActionManager.Instance.SetPlayerHeadText("?", 0.5f);
             }
 
-            if (KeyAction.ATTACK == keyAction && !skill0Clear)
+            if (KeyAction.ATTACK == keyAction)
             {
                 return;
             }
@@ -223,6 +228,22 @@ public class InputTutorial : MonoBehaviour
     }
     private void CheckKey(KeyAction keyAction)
     {
+        switch (keyAction)
+        {
+            case KeyAction.SPECIALATTACK1:
+                if (skill1Clear)
+                {
+                    inputTutoDataDict[keyAction].isClear = true;
+                }
+                break;
+            case KeyAction.SPECIALATTACK2:
+                if (skill2Clear)
+                {
+                    inputTutoDataDict[keyAction].isClear = true;
+                }
+                break;
+        }
+
         if (inputTutoDataDict.ContainsKey(keyAction) && inputTutoDataDict[keyAction].isClear)
         {
             return;
@@ -235,8 +256,7 @@ public class InputTutorial : MonoBehaviour
                 KeyActionManager.Instance.SetPlayerHeadText("?", 0.5f);
             }
 
-            if ((KeyAction.SPECIALATTACK1 == keyAction && !skill1Clear) ||
-                (KeyAction.SPECIALATTACK2 == keyAction && !skill2Clear))
+            if (KeyAction.SPECIALATTACK1 == keyAction || KeyAction.SPECIALATTACK2 == keyAction)
             {
                 return;
             }
