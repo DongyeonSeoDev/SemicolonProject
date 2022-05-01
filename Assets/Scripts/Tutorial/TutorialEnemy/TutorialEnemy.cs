@@ -53,6 +53,8 @@ namespace Enemy
 
                 anim.Play("Dead");
 
+                EventManager.TriggerEvent("Tuto_EnemyDeathCheck");
+
                 destroyTimer = destroyTime;
             }
         }
