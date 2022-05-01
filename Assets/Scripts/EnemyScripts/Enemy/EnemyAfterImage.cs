@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 namespace Enemy
 {
@@ -13,15 +14,13 @@ namespace Enemy
             sr = GetComponent<SpriteRenderer>();
         }
 
-        public void Init(Sprite sprite, Color color, float time)
+        public void Init(Sprite sprite, Color color, float time, bool isFlipX)
         {
             sr.sprite = sprite;
             sr.color = color;
+            sr.flipX = isFlipX;
 
-            Util.DelayFunc(() =>
-            {
-                gameObject.SetActive(false);
-            }, time);
+            sr.DOFade(0f, time);
         }
     }
 }

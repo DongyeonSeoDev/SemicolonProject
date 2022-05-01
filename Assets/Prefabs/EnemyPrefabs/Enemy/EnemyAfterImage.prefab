@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolType: 108
-  count: 10
+  count: 30
 --- !u!114 &2903056277303856404
 MonoBehaviour:
   m_ObjectHideFlags: 0

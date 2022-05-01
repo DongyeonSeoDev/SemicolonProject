@@ -49,11 +49,13 @@ namespace Enemy
         private bool isSpecialAttack1 = false;
         private bool isSpecialAttack3 = false;
 
+        public readonly int hashSpecialAttack1 = Animator.StringToHash("specialAttack1");
+        public readonly int hashSpecialAttack1End = Animator.StringToHash("specialAttack1End");
+        public readonly int hashAttackEnd = Animator.StringToHash("attackEnd");
+
         private readonly int hashMove = Animator.StringToHash("move");
         private readonly int hashAttack1 = Animator.StringToHash("attack");
         private readonly int hashAttack2 = Animator.StringToHash("attack2");
-        public readonly int hashSpecialAttack1 = Animator.StringToHash("specialAttack1");
-        public readonly int hashSpecialAttack1End = Animator.StringToHash("specialAttack1End");
         private readonly int hashSpecialAttack2 = Animator.StringToHash("specialAttack2");
         private readonly int hashSpecialAttack3 = Animator.StringToHash("specialAttack3");
 
