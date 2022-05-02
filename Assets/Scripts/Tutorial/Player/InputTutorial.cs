@@ -81,10 +81,10 @@ public class InputTutorial : MonoBehaviour
     private void Awake()
     {
         #region 이동관련
-        inputTutoDatas.Add(new InputTutoData(KeyAction.LEFT, 3f));
-        inputTutoDatas.Add(new InputTutoData(KeyAction.RIGHT, 3f));
-        inputTutoDatas.Add(new InputTutoData(KeyAction.UP, 3f));
-        inputTutoDatas.Add(new InputTutoData(KeyAction.DOWN, 3f));
+        inputTutoDatas.Add(new InputTutoData(KeyAction.LEFT, 0.3f));
+        inputTutoDatas.Add(new InputTutoData(KeyAction.RIGHT, .3f));
+        inputTutoDatas.Add(new InputTutoData(KeyAction.UP, .3f));
+        inputTutoDatas.Add(new InputTutoData(KeyAction.DOWN, .3f));
         #endregion
 
         #region 공격관련

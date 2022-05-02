@@ -63,6 +63,11 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
 
     public override void Interaction()
     {
+        if(StageManager.Instance.canNextStage != null)
+        {
+            if (!StageManager.Instance.canNextStage()) return;
+        }
+
         if(StageManager.Instance.IsStageClear || isBreak)  //문을 부쉈거나 스테이지 클리어라면
         {
             if (!isEnter && !isExitDoor) //문을 열었거나 입구로 쓴 문이면 상호작용 아예 안되게
