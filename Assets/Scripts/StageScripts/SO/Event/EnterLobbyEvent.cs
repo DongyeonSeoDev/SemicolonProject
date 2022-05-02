@@ -9,10 +9,10 @@ public class EnterLobbyEvent : MapEventSO
         {
             GameManager.Instance.savedData.tutorialInfo.isEnded = true;
             StageManager.Instance.SaveStage("Stage0-06");
-            CutsceneManager.Instance.PlayCutscene("TutorialCutscene2");
+            
         }
 
-        
+        CutsceneManager.Instance.PlayCutscene("TutorialCutscene2");
 
         StageManager.Instance.canNextStage = CanNextStage;
         StageManager.Instance.SetClearStage();
