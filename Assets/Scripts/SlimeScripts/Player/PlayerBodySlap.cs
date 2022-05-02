@@ -210,7 +210,6 @@ public class PlayerBodySlap : PlayerSkill
                 SoundManager.Instance.PlaySoundBox("SlimeSkill1Crash");
             }
         }
-
     }
     private void StartBodySlap()
     {
