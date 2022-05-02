@@ -16,8 +16,8 @@ namespace Enemy
             enemyData.attackDelay = 2f;
             enemyData.chaseSpeed = 2f;
             enemyData.attackPower = 20;
-            enemyData.maxHP = 50;
-            enemyData.hp = 50;
+            enemyData.maxHP = 59;
+            enemyData.hp = 59;
             enemyData.playerAnimationTime = 1f;
 
             enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, false);

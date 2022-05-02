@@ -76,6 +76,13 @@ public class PlayerState : MonoBehaviour
         set { cantMove = value; }
     }
 
+    private bool cantChangeDir = false;
+    public bool CantChangeDir
+    {
+        get { return cantChangeDir; }
+        set { cantChangeDir = value; }
+    }
+
     private bool isStun = false; // 외부(적, 장해물 등)에 의한 멈춤처리
     public bool IsStun
     {

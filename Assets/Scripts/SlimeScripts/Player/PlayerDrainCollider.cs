@@ -8,6 +8,7 @@ public class PlayerDrainCollider : MonoBehaviour
     private LayerMask canDrainObjLayers;
 
     private PlayerDrain playerDrain = null;
+    private PlayerState playerState = null;
 
     [SerializeField]
     private GameObject grabSoftBody = null;
@@ -66,6 +67,7 @@ public class PlayerDrainCollider : MonoBehaviour
     private void Awake()
     {
         playerDrain = transform.parent.GetComponent<PlayerDrain>();
+        playerState = SlimeGameManager.Instance.Player.GetComponent<PlayerState>();
     }
     private void OnEnable()
     {
@@ -139,11 +141,8 @@ public class PlayerDrainCollider : MonoBehaviour
             Vector2 dir = (transform.position - other.transform.position).normalized;
             float hpPercentage = enemy.EnemyHpPercent();// 닿은 적의 현재 체력의 퍼센트를 구함
 
-            Debug.Log(hpPercentage);
-
             if (hpPercentage <= 0f)
             {
-                Debug.Log("aaa");    
                 return;
             }
 
@@ -233,6 +232,8 @@ public class PlayerDrainCollider : MonoBehaviour
                 {
                     RemoveList(key);
                     removeList.Add(item);
+
+                    playerState.CantChangeDir = false;
 
                     if (key.GetComponent<Enemy.TutorialEnemy>() != null)
                     {

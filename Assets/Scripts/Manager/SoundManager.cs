@@ -85,6 +85,8 @@ public class SoundManager : MonoSingleton<SoundManager>
                 soundBoxesDict.Add(x.SoundBoxId, x);
             }
         });
+
+
     }
     private void OnEnable()
     {
@@ -145,9 +147,9 @@ public class SoundManager : MonoSingleton<SoundManager>
 
         if (soundBoxesDict.ContainsKey(soundBoxId))
         {
-            if(soundBoxesDictForPooling.ContainsKey(soundBoxId))
+            if (soundBoxesDictForPooling.ContainsKey(soundBoxId))
             {
-                if(soundBoxesDictForPooling[soundBoxId].Count > 0)
+                if (soundBoxesDictForPooling[soundBoxId].Count > 0)
                 {
                     soundBox = soundBoxesDictForPooling[soundBoxId].Dequeue();
                     soundBox.gameObject.SetActive(true);

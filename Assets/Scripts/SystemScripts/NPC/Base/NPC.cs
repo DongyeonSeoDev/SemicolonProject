@@ -9,12 +9,17 @@ public abstract class NPC : InteractionObj
 
     public string npcId => name;
 
-    protected void Awake()
+    protected override void Awake()
     {
         if (string.IsNullOrEmpty(npcInfo.npcName))
             npcInfo.npcName = objName;
         if (string.IsNullOrEmpty(npcInfo.id))
             npcInfo.id = objId;
+
+        objName = npcInfo.npcName;
+        objId = npcInfo.id;
+
+        base.Awake();
     }
     private void Start()
     {

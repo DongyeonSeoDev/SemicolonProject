@@ -36,7 +36,7 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
 
     public bool IsBlindState => StateManager.Instance.stateCountDict[StateAbnormality.Blind.ToString()] > 0;
 
-    private void Awake()
+    protected override void Awake()
     {
         spr = GetComponent<SpriteRenderer>();
 
@@ -79,10 +79,10 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
         }
         else
         {
-            if (StageManager.Instance.CurrentAreaType == AreaType.MONSTER)
+           /* if (StageManager.Instance.CurrentAreaType == AreaType.MONSTER)
                 UIManager.Instance.RequestSystemMsg("몬스터가 남아있을 때는 다음 지역으로 입장할 수 없습니다.");
             else
-                UIManager.Instance.RequestSystemMsg("아직은 지나갈 수 없습니다.");
+                UIManager.Instance.RequestSystemMsg("아직은 지나갈 수 없습니다.");*/
         }
     }
 

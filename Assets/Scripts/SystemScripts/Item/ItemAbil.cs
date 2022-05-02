@@ -9,7 +9,7 @@ public class ItemUseMng
         value *= PlayerObj.PlayerStat.MaxHp * 0.01f;
         int iValue = Mathf.CeilToInt(value);
         PlayerObj.GetHeal(iValue);
-        UIManager.Instance.InsertNoticeQueue("HP " + iValue + " 회복");
+        UIManager.Instance.RequestLogMsg("HP " + iValue + " 회복");
         //EffectManager.Instance.OnTopRightBtnEffect(UIType.STAT, true);
     }
 
@@ -25,7 +25,7 @@ public class ItemUseMng
     {
         PlayerObj.PlayerStat.additionalEternalStat.maxHp += value;
         UIManager.Instance.UpdatePlayerHPUI();
-        UIManager.Instance.InsertNoticeQueue("최대 HP " + value + " 상승");
+        UIManager.Instance.RequestLogMsg("최대 HP " + value + " 상승");
         PlayerObj.GetHeal((int)value);
         EffectManager.Instance.OnTopRightBtnEffect(UIType.STAT, true);
     }
@@ -35,7 +35,7 @@ public class ItemUseMng
         PlayerObj.PlayerStat.additionalEternalStat.minDamage += value;
         PlayerObj.PlayerStat.additionalEternalStat.maxDamage += value;
 
-        UIManager.Instance.InsertNoticeQueue("공격력 " + value + " 상승");
+        UIManager.Instance.RequestLogMsg("공격력 " + value + " 상승");
         EffectManager.Instance.OnTopRightBtnEffect(UIType.STAT, true);
     }
 }

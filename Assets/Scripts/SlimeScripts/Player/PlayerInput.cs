@@ -81,12 +81,15 @@ public class PlayerInput : MonoBehaviour
         set { isPauseByCutScene = value; }
     }
 
+    private bool gameClear = true;
+
     private void OnEnable()
     {
         EventManager.StartListening("PlayerDead", PlayerReset);
         EventManager.StartListening("ChangeBody", PlayerReset);
         EventManager.StartListening("StartCutScene", PauseByCutScene);
         EventManager.StartListening("EndCutScene", ResumeByCutScene);
+        EventManager.StartListening("GameClear", GameClear);
 
         EventManager.StartListening("Skill0TutoClear", Skill0TutoClear);
         EventManager.StartListening("Skill1TutoClear", Skill1TutoClear);
@@ -101,6 +104,7 @@ public class PlayerInput : MonoBehaviour
         EventManager.StopListening("ChangeBody", PlayerReset);
         EventManager.StopListening("StartCutScene", PauseByCutScene);
         EventManager.StopListening("EndCutScene", ResumeByCutScene);
+        EventManager.StopListening("GameClear", GameClear);
 
         EventManager.StopListening("Skill0TutoClear", Skill0TutoClear);
         EventManager.StopListening("Skill1TutoClear", Skill1TutoClear);
@@ -141,11 +145,14 @@ public class PlayerInput : MonoBehaviour
             skill1TutoClear = true;
             skill2TutoClear = true;
         }
+
+        gameClear = false;
+        playerState.CantMove = false;
     }
 
     void Update()
     {
-        if (!(isPauseByTuto || isPause || isPauseByCutScene) &&
+        if (!(isPauseByTuto || isPause || isPauseByCutScene || gameClear) &&
             !(playerState.IsDead || playerState.IsStun || playerState.IsKnockBack || playerState.IsDrain))
         {
             if (!playerState.Chargning)
@@ -352,5 +359,10 @@ public class PlayerInput : MonoBehaviour
         isPauseByCutScene = false;
 
         PlayerReset();
+    }
+    private void GameClear()
+    {
+        gameClear = true;
+        playerState.CantMove = true; ;
     }
 }

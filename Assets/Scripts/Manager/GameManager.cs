@@ -59,7 +59,7 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     public void SaveData()
     {
-        MonsterCollection.Instance.Save();
+        //MonsterCollection.Instance.Save();
         KeyActionManager.Instance.SaveKey();
         saveData.Save();
     }

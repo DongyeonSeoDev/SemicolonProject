@@ -65,7 +65,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
         savedBodys.ForEach(x => x.InitSet());
 
-        Load();
+        //Load();
         AllUpdateUnderstanding();
         AllUpdateDrainProbability();
 
@@ -244,6 +244,12 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     
     public void AddSavedBody(string id, int slotNumber = -1)
     {
+        if (!GameManager.Instance.savedData.userInfo.isGainBodyChangeSlot)
+        {
+            GameManager.Instance.savedData.userInfo.isGainBodyChangeSlot = true;
+            TutorialManager.Instance.GetBodyChangeSlot();
+        }
+
         if (slotNumber == -1) 
         {
             for (int i = 0; i < savedBodys.Count; i++)

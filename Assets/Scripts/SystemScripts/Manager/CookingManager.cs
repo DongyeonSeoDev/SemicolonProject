@@ -36,7 +36,7 @@ public class CookingManager : MonoSingleton<CookingManager>
 
     #region 음식이나 재료 자세히 보기창
     public Image detailFoodImg;
-    public Text detailNameTxt, explanationTxt;
+    public Text detailNameTxt, explanationTxt, abilExplanationTxt;
     [HideInInspector] public string detailID = string.Empty; //현재 자세히 보기중인 음식 혹은 재료의 아이디
     #endregion
 
@@ -257,6 +257,7 @@ public class CookingManager : MonoSingleton<CookingManager>
         detailFoodImg.sprite = data.GetSprite();
         detailNameTxt.text = data.itemName;
         explanationTxt.text = data.explanation;
+        abilExplanationTxt.text = data.abilExplanation;
     }
 
    
