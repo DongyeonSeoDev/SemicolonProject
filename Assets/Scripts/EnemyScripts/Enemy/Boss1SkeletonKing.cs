@@ -101,10 +101,10 @@ namespace Enemy
 
             whatIsWall = LayerMask.GetMask("WALL");
 
-            limitMaxPosition.y = CheckPosition(Vector2.up).y - 3f;
-            limitMinPosition.y = CheckPosition(Vector2.down).y + 3f;
-            limitMaxPosition.x = CheckPosition(Vector2.right).x - 3f;
-            limitMinPosition.x = CheckPosition(Vector2.left).x + 3f;
+            limitMaxPosition.y = CheckPosition(Vector2.up).y - 1.3f;
+            limitMinPosition.y = CheckPosition(Vector2.down).y + 1.82f;
+            limitMaxPosition.x = CheckPosition(Vector2.right).x - 2.4f;
+            limitMinPosition.x = CheckPosition(Vector2.left).x + 2.4f;
 
             specialAttack3Check.Clear();
 
