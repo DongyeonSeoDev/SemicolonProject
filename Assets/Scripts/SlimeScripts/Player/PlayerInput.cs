@@ -125,6 +125,8 @@ public class PlayerInput : MonoBehaviour
             {
                 inputTutorial = gameObject.AddComponent<InputTutorial>();
             }
+
+            isPauseByTuto = true;
         }
         else
         {
@@ -132,6 +134,8 @@ public class PlayerInput : MonoBehaviour
             {
                 Destroy(inputTutorial);
             }
+
+            isPauseByTuto = false;
 
             skill0TutoClear = true;
             skill1TutoClear = true;
