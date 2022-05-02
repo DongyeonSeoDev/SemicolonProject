@@ -5,10 +5,27 @@ public class EnterLobbyEvent : MapEventSO
 {
     public override void OnEnterEvent()
     {
-        //카메라 움직여서 맵 보여줌
+        if (TutorialManager.Instance.IsTutorialStage)
+        {
+            //카메라 움직여서 맵 보여줌
+            GameManager.Instance.savedData.tutorialInfo.isEnded = true;
+            StageManager.Instance.SaveStage("Stage0-06");
+        }
 
-        GameManager.Instance.savedData.tutorialInfo.isEnded = true;
-        StageManager.Instance.SaveStage("Stage0-06");
+        StageManager.Instance.canNextStage = CanNextStage;
         StageManager.Instance.SetClearStage();
+    }
+
+    private bool CanNextStage()
+    {
+        foreach (bool value in GameManager.Instance.savedData.userInfo.uiActiveDic.keyValueDic.Values)
+        {
+            if (!value)
+            {
+                KeyActionManager.Instance.SetPlayerHeadText("아직 준비가 덜 된 것 같다.", 2.5f);
+                return false;
+            }
+        }
+        return true;
     }
 }

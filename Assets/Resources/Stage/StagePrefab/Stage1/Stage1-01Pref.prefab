@@ -70,6 +70,7 @@ MonoBehaviour:
   objSpawnPos: {fileID: 0}
   stageDoors:
   - {fileID: 5654240363682025687}
+  - {fileID: 3130592704407506472}
   plants: []
 --- !u!1 &1378282382014638738
 GameObject:
@@ -25641,6 +25642,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3797613347199539750}
     m_Modifications:
+    - target: {fileID: 1633916054253291305, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.15
+      objectReference: {fileID: 0}
     - target: {fileID: 8604531944747639584, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -25660,7 +25665,7 @@ PrefabInstance:
     - target: {fileID: 8604531944747639586, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
       propertyPath: nextStageData
       value: 
-      objectReference: {fileID: 11400000, guid: 72429167179995d46b3afd90e6b40961, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 8604531944747639587, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
       propertyPath: m_Name
       value: StageDoor_Front (1)
@@ -25716,6 +25721,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8604531944747639599, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
   m_PrefabInstance: {fileID: 6637014257098337546}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3130592704407506472 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8604531944747639586, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
+  m_PrefabInstance: {fileID: 6637014257098337546}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b9e200c7d6f9e14ab3cc9a33c90f74e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7880340873346022131
 PrefabInstance:
   m_ObjectHideFlags: 0

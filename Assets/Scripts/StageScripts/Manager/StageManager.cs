@@ -35,7 +35,7 @@ public class StageManager : MonoSingleton<StageManager>
     #region Map Values
     [SerializeField] private int MaxStage;
     [SerializeField] private string startStageID;
-    [HideInInspector] public Vector2 respawnPos;
+    //[HideInInspector] public Vector2 respawnPos;
 
     //public Sprite openDoorSpr, closeDoorSpr;
     public Sprite[] doorSprites;
@@ -51,6 +51,8 @@ public class StageManager : MonoSingleton<StageManager>
     public Transform stageParent;
     public Transform npcParent;
     #endregion
+
+    public Func<bool> canNextStage = null;  //다음 스테이지를 갈 때 이게 null이면 가지고 무언가 값이 있으면 그것을 실행해서 true면 지나가짐
 
     public DoorDirType PassDir { get; set; } //전 스테이지에서 지나간 문 방향
     public bool IsStageClear { get; set; }
@@ -127,7 +129,7 @@ public class StageManager : MonoSingleton<StageManager>
         InsertRandomMaps(currentFloor, true);
         SetRandomAreaRandomIncounter();
         Util.DelayFunc(() => NextStage(startStageID), 0.2f);
-        respawnPos = idToStageDataDict[startStageID].stage.GetComponent<StageGround>().playerSpawnPoint.position;
+        //respawnPos = idToStageDataDict[startStageID].stage.GetComponent<StageGround>().playerSpawnPoint.position;
 
         PoolManager.CreatePool(recoveryObjPref, npcParent, 1, "RecoveryObjPrefObjPref1");
         PoolManager.CreatePool(imprecationObjPref, npcParent, 1, "ImprecationObjPref1");
@@ -155,6 +157,8 @@ public class StageManager : MonoSingleton<StageManager>
             SoundManager.Instance.SetBGMPitch(1);
             DOUtil.StopCo("Next Enemys Spawn", this);
             Enemy.EnemyManager.Instance.PlayerDeadEvent();
+
+            if (canNextStage != null) canNextStage = null;
         });
         EventManager.TriggerEvent("StartBGM", startStageID);
         EventManager.StartListening("PlayerRespawn", Respawn);
@@ -387,7 +391,13 @@ public class StageManager : MonoSingleton<StageManager>
         else
         {
             //Last Stage
-            //일단은 다음 문이 없음
+            currentStage.stageDoors.ForEach(door =>
+            {
+                if (!door.gameObject.activeSelf)
+                {
+                    door.gameObject.SetActive(true);
+                }
+            });
         }
 
         if (currentStageData.isSaveStage)
@@ -477,6 +487,7 @@ public class StageManager : MonoSingleton<StageManager>
             {
                 if (!door.gameObject.activeSelf)
                 {
+                    Debug.Log(door.name);
                     door.gameObject.SetActive(true);
                 }
             });
@@ -659,5 +670,6 @@ public class StageManager : MonoSingleton<StageManager>
 
         GameManager.Instance.savedData.stageInfo.currentStageID = stageId;
         GameManager.Instance.savedData.stageInfo.passDoorDir = PassDir;
+        startStageID = stageId;
     }
 }
