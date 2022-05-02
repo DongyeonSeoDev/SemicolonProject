@@ -48,6 +48,8 @@ public class InputTutoData
 }
 public class InputTutorial : MonoBehaviour
 {
+    private readonly string tutoStageId = "Stage0";
+
     public bool isTestMode = false;
     public bool keyNotPressed = false;
 
@@ -179,6 +181,7 @@ public class InputTutorial : MonoBehaviour
             moveKeyClear = true;
 
             EventManager.TriggerEvent("Tuto_GainArrowKey");
+            EventManager.TriggerEvent("StartBGM", tutoStageId);
         }
 #endregion
 
