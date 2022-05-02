@@ -184,6 +184,18 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
         #region 원래의 모습으로 변신
         if (bodyId == "origin")
         {
+            if (pasteBodyAdditionalStat != null && !isDead)
+            {
+                Player.PlayerStat.additionalEternalStat -= pasteBodyAdditionalStat;
+
+                //player.CurrentHp = (player.PlayerStat.MaxHp * hpPercentage).Round();
+                Player.CurrentHp = Player.PlayerStat.MaxHp * hpPercentage;
+
+                pasteBodyAdditionalStat = new EternalStat();
+
+                SetCanBodyChangeFalse();
+            }
+
             (newBody, found) = SlimePoolManager.Instance.Find(originPlayerBody, false);
 
             if (!found)
@@ -198,18 +210,6 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
             Enemy.EnemyManager.Player = newBody;
             currentBodyId = bodyId;
-
-            if (pasteBodyAdditionalStat != null && !isDead)
-            {
-                Player.PlayerStat.additionalEternalStat -= pasteBodyAdditionalStat;
-
-                //player.CurrentHp = (player.PlayerStat.MaxHp * hpPercentage).Round();
-                Player.CurrentHp = Player.PlayerStat.MaxHp * hpPercentage;
-
-                pasteBodyAdditionalStat = new EternalStat();
-
-                SetCanBodyChangeFalse();
-            }
 
             newBody.transform.position = spawnPos;
 
@@ -227,21 +227,6 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
         {
             (GameObject, EternalStat) newBodyData = playerEnemyUnderstandingRateManager.ChangalbeBodyDict[bodyId];
             currentBodyId = bodyId;
-
-            (newBody, found) = SlimePoolManager.Instance.Find(newBodyData.Item1);
-
-            if (!found)
-            {
-                newBody = Instantiate(newBodyData.Item1, Player.transform);
-            }
-            else
-            {
-                newBody.SetActive(true);
-            }
-
-            Enemy.EnemyManager.Player = newBody;
-
-            //newBody = Instantiate(newBodyData.Item1, player.transform);
 
             if (pasteBodyAdditionalStat != null && !isDead)
             {
@@ -280,6 +265,21 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
             //player.CurrentHp = (player.PlayerStat.MaxHp * hpPercentage).Round();
             Player.CurrentHp = Player.PlayerStat.MaxHp * hpPercentage;
+
+            (newBody, found) = SlimePoolManager.Instance.Find(newBodyData.Item1);
+
+            if (!found)
+            {
+                newBody = Instantiate(newBodyData.Item1, Player.transform);
+            }
+            else
+            {
+                newBody.SetActive(true);
+            }
+
+            Enemy.EnemyManager.Player = newBody;
+
+            //newBody = Instantiate(newBodyData.Item1, player.transform);
  
             newBody.AddComponent<PlayerBodyScript>();
 
