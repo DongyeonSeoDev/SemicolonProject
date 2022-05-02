@@ -8,7 +8,7 @@ public class PlayerCanDrainCheckCollider : MonoBehaviour
     private PlayerDrain playerDrain = null;
 
     private BoxCollider2D playerDrainCollider = null;
-    private BoxCollider2D boxCol2D = null;
+    private CircleCollider2D cirCol2D = null;
 
     void Start()
     {
@@ -21,11 +21,11 @@ public class PlayerCanDrainCheckCollider : MonoBehaviour
             return;
         }
 
-        boxCol2D = GetComponent<BoxCollider2D>();
+        cirCol2D = GetComponent<CircleCollider2D>();
 
-        if(boxCol2D == null)
+        if(cirCol2D == null)
         {
-            boxCol2D = gameObject.AddComponent<BoxCollider2D>();
+            cirCol2D = gameObject.AddComponent<CircleCollider2D>();
         }
 
         playerDrain = SlimeGameManager.Instance.CurrentPlayerBody.GetComponent<PlayerDrain>();
@@ -40,11 +40,10 @@ public class PlayerCanDrainCheckCollider : MonoBehaviour
                 .GetComponent<BoxCollider2D>();
         }
 
-        boxCol2D.offset = playerDrainCollider.offset;
-        boxCol2D.size = playerDrainCollider.size / 1.2f;
-        boxCol2D.isTrigger = true;
+        cirCol2D.offset = playerDrainCollider.offset;
+        cirCol2D.radius = (playerDrainCollider.size.y > playerDrainCollider.size.x ? playerDrainCollider.size.x : playerDrainCollider.size.y) / 2f;
+        cirCol2D.isTrigger = true;
     }
-
 
     private void OnTriggerStay2D(Collider2D collision)
     {
