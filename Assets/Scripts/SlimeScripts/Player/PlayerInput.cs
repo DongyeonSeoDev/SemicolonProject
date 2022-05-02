@@ -287,7 +287,6 @@ public class PlayerInput : MonoBehaviour
     private void PlayerReset()
     {
         moveVector = Vector2.zero;
-        lastMoveVector = Vector2.zero;
 
         isDoSkill0 = false;
         isDoSkill1 = false;
