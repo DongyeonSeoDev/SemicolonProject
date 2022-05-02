@@ -72,7 +72,7 @@ public class SettingPhase : TutorialPhase
     {
         if (!PoolManager.IsContainKey("DustEffect1"))
         {
-            GameObject o = Util.LoadAssetPrefab("SystemPrefabs/Effect/FallDustEffect"); 
+            GameObject o = Resources.Load<GameObject>("System/Effects/FallDustEffect"); 
             PoolManager.CreatePool(o, EffectManager.Instance.transform, 3, "DustEffect1");
         }
 

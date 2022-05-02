@@ -46,7 +46,7 @@ public class StateManager : SingletonClass<StateManager>
         stateCountDict.Remove(StateAbnormality.None.ToString());
 
         Transform slotPar = GameObject.Find("StateInfoImagesPanel").transform;
-        GameObject slotUI = Util.LoadAssetPrefab("SystemPrefabs/UI/Slot/StateInfoSlot");
+        GameObject slotUI = Resources.Load<GameObject>("System/UI/UIStateInfoSlot");
         PoolManager.CreatePool(slotUI, slotPar, 3, "StateSlot");
 
         foreach(BuffStateDataSO data in Resources.LoadAll<BuffStateDataSO>("System/State/"))
