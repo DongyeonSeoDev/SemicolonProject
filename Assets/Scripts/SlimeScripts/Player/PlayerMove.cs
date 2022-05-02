@@ -32,11 +32,11 @@ public class PlayerMove : PlayerAction
 
     private void Move()
     {
-        if (!(playerState.BodySlapping || playerState.IsDrain))
+        if (!(playerState.BodySlapping || playerInput.IsPauseByCutScene || playerState.IsDrain))
         {
             Vector2 moveVec = playerInput.MoveVector * (playerStat.Speed);
 
-            if (!playerState.CantMove)
+            if (!(playerState.CantMove || playerState.CantChangeDir))
             {
                 if (moveVec != Vector2.zero)
                 {
@@ -53,7 +53,7 @@ public class PlayerMove : PlayerAction
 
                 PlayerBodyPointMove(moveVec);
             }
-            else
+            else if(!playerState.CantChangeDir)
             {
                 rigid.velocity = Vector2.zero;
             }

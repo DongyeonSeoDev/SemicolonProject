@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerCanDrainCheckCollider : MonoBehaviour
 {
+    private PlayerState playerState = null;
     private PlayerDrain playerDrain = null;
 
     private BoxCollider2D playerDrainCollider = null;
@@ -28,6 +29,8 @@ public class PlayerCanDrainCheckCollider : MonoBehaviour
         }
 
         playerDrain = SlimeGameManager.Instance.CurrentPlayerBody.GetComponent<PlayerDrain>();
+        playerState = SlimeGameManager.Instance.Player.GetComponent<PlayerState>();
+
         playerDrainCollider = playerDrain.PlayerDrainCol.GetComponent<BoxCollider2D>();
 
         if(playerDrainCollider == null)
@@ -57,6 +60,7 @@ public class PlayerCanDrainCheckCollider : MonoBehaviour
             Debug.Log(enemy.EnemyHpPercent());
             EventManager.TriggerEvent("Tuto_CanDrainObject");
 
+            playerState.CantChangeDir = true;
             playerDrain.drainTutorialDone = true;
         }
     }

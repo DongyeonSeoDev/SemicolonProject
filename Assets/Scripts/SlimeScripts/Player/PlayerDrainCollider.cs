@@ -8,6 +8,7 @@ public class PlayerDrainCollider : MonoBehaviour
     private LayerMask canDrainObjLayers;
 
     private PlayerDrain playerDrain = null;
+    private PlayerState playerState = null;
 
     [SerializeField]
     private GameObject grabSoftBody = null;
@@ -66,6 +67,7 @@ public class PlayerDrainCollider : MonoBehaviour
     private void Awake()
     {
         playerDrain = transform.parent.GetComponent<PlayerDrain>();
+        playerState = SlimeGameManager.Instance.Player.GetComponent<PlayerState>();
     }
     private void OnEnable()
     {
@@ -238,6 +240,8 @@ public class PlayerDrainCollider : MonoBehaviour
                     {
                         EventManager.TriggerEvent("DrainTutorialEnemyDrain", key.transform.position);
                         EventManager.TriggerEvent("Tuto_EnemyDeathCheck");
+
+                        playerState.CantChangeDir = false;
 
                         Destroy(key.gameObject);
 

@@ -80,7 +80,6 @@ public class PlayerInput : MonoBehaviour
         get { return isPauseByCutScene; }
         set { isPauseByCutScene = value; }
     }
-
     private void OnEnable()
     {
         EventManager.StartListening("PlayerDead", PlayerReset);
