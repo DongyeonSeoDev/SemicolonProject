@@ -29,6 +29,7 @@ namespace Enemy
                 lastSpeed = 0f;
                 enemyData.isPlayerControllerMove = true;
             }
+
             if (playerInput.MoveVector * speed != Vector2.zero)
             {
                 lastSpeed = speed;
