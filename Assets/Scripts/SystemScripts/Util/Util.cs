@@ -172,7 +172,7 @@ public static partial class Util
 
     public static T EnumParse<T>(string str) => (T)Enum.Parse(typeof(T), str);
 
-    public static GameObject LoadAssetPrefab(string path) => AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/" + path + ".prefab");
+    //public static GameObject LoadAssetPrefab(string path) => AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/" + path + ".prefab");
 }
 
 namespace Water
