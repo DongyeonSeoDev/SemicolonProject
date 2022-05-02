@@ -81,17 +81,22 @@ public class InputTutorial : MonoBehaviour
     private void Awake()
     {
         #region 이동관련
-        inputTutoDatas.Add(new InputTutoData(KeyAction.LEFT, 3f));
-        inputTutoDatas.Add(new InputTutoData(KeyAction.RIGHT, 3f));
-        inputTutoDatas.Add(new InputTutoData(KeyAction.UP, 3f));
-        inputTutoDatas.Add(new InputTutoData(KeyAction.DOWN, 3f));
+#if UNITY_EDITOR
+        float moveTutoWaitTime = 0.2f;
+#else
+        float moveTutoWaitTime = 3f;
+#endif
+        inputTutoDatas.Add(new InputTutoData(KeyAction.LEFT, moveTutoWaitTime));
+        inputTutoDatas.Add(new InputTutoData(KeyAction.RIGHT, moveTutoWaitTime));
+        inputTutoDatas.Add(new InputTutoData(KeyAction.UP, moveTutoWaitTime));
+        inputTutoDatas.Add(new InputTutoData(KeyAction.DOWN, moveTutoWaitTime));
         #endregion
 
         #region 공격관련
         inputTutoDatas.Add(new InputTutoData(KeyAction.ATTACK, 0f));
         inputTutoDatas.Add(new InputTutoData(KeyAction.SPECIALATTACK1, 0f));
         inputTutoDatas.Add(new InputTutoData(KeyAction.SPECIALATTACK2, 0f));
-        #endregion
+#endregion
     }
     private void OnEnable()
     {
@@ -155,19 +160,19 @@ public class InputTutorial : MonoBehaviour
 
         keyNotPressed = true;
 
-        #region fixedKeyDict
+#region fixedKeyDict
         CheckFixedKey(KeyAction.LEFT);
         CheckFixedKey(KeyAction.RIGHT);
         CheckFixedKey(KeyAction.UP);
         CheckFixedKey(KeyAction.DOWN);
         CheckFixedKey(KeyAction.ATTACK);
-        #endregion
-        #region keyDict
+#endregion
+#region keyDict
         CheckKey(KeyAction.SPECIALATTACK1);
         CheckKey(KeyAction.SPECIALATTACK2);
-        #endregion
+#endregion
 
-        #region MoveKeyClearCheck
+#region MoveKeyClearCheck
 
         if ((CheckClear(KeyAction.LEFT) || CheckClear(KeyAction.RIGHT) || CheckClear(KeyAction.UP) || CheckClear(KeyAction.DOWN)) && !moveKeyClear)
         {
@@ -175,7 +180,7 @@ public class InputTutorial : MonoBehaviour
 
             EventManager.TriggerEvent("Tuto_GainArrowKey");
         }
-        #endregion
+#endregion
 
         if(!moveKeyClear && keyNotPressed)
         {
