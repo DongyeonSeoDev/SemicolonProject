@@ -9,5 +9,6 @@ public class EnterLobbyEvent : MapEventSO
 
         GameManager.Instance.savedData.tutorialInfo.isEnded = true;
         StageManager.Instance.SaveStage("Stage0-06");
+        StageManager.Instance.SetClearStage();
     }
 }
