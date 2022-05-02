@@ -209,6 +209,7 @@ MonoBehaviour:
   objName: "\uD0D0\uD5D8\uAC00"
   objId: 
   action: "\uB300\uD654\uD558\uAE30"
+  autoAwakeAdd: 1
   uiOffset: {x: 0, y: -1.35, z: 0}
   itrUIOffset: {x: 0, y: 1, z: 0}
   npcUI: {fileID: 0}

@@ -368,8 +368,9 @@ MonoBehaviour:
   isHidenItrMark: 0
   notInteractable: 0
   objName: "\uB3C4\uAC10"
-  objId: 
+  objId: MonColNPC
   action: "\uAC00\uC838\uAC00\uAE30"
+  autoAwakeAdd: 1
   uiOffset: {x: 0, y: -1, z: 0}
   itrUIOffset: {x: 0, y: 1, z: 0}
   npcUI: {fileID: 0}

@@ -5,13 +5,16 @@ using UnityEngine;
 public class NormalNPC : NPC
 {
 
-
+    protected override void Awake()
+    {
+        base.Awake();
+    }
 
     public override void Interaction()
     {
-        if (notInteractable) return;
+        /*if (notInteractable) return;
         notInteractable = true;
-        isHidenItrMark = true;
+        isHidenItrMark = true;*/
 
         TalkManager.Instance.SetTalkData(npcInfo, transform);
     }

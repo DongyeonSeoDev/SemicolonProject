@@ -18,12 +18,24 @@ public abstract class InteractionObj : MonoBehaviour
 
     [Space(15)]
 
+    [SerializeField] private bool autoAwakeAdd; //ObjectManager의 dictionanry로 awake에서 자동으로 들갈지
+
+    [Space(15)]
+
     public Vector3 uiOffset = Vector3.down;  //이름 UI 오프셋
     public Vector3 itrUIOffset = Vector3.up;  //상호작용 표시 UI 오프셋
 
     //NPC이름과 상호작용 표시가 뜨는 범위가 다를 수 있으므로 분리함
     [HideInInspector] public NPCUI npcUI;
     [HideInInspector] public InteractionNoticeUI itrUI;
+
+    protected virtual void Awake()
+    {
+        if(autoAwakeAdd)
+        {
+            ObjectManager.Instance.itrObjDic.Add(ObjId,this);
+        }
+    }
 
     public abstract void Interaction();
 

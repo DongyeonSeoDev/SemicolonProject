@@ -22,7 +22,7 @@ public class Pick : InteractionObj
     //protected int droppedCount = 1;
     //public int DroppedCnt { get { return droppedCount; } }
 
-    private void Awake()
+    protected override void Awake()
     {
         spr = GetComponent<SpriteRenderer>();
         spr.sprite = _itemData.GetSecondSprite();

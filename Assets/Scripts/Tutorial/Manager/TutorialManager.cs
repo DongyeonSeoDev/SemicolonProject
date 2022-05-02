@@ -6,6 +6,7 @@ using UnityEngine.Experimental.Rendering.Universal;
 using FkTweening;
 using DG.Tweening;
 using Water;
+using System;
 
 public class TutorialManager : MonoSingleton<TutorialManager> 
 {
@@ -62,6 +63,18 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         {
             if (!StoredData.HasValueKey("DrainTutorialEnemyDrain1"))
             {
+                Action logAction = null;
+                logAction = () =>
+                {
+                    um.RequestLogMsg("HP를 얻었습니다.");
+                    um.RequestLogMsg("흡수를 얻었습니다.");
+                    um.RequestLogMsg("기본 슬라임 변신 슬롯을 얻었습니다.");
+
+                    EventManager.StopListening("EndCutScene", logAction);
+                };
+                EventManager.StartListening("EndCutScene", logAction);
+                
+
                 StoredData.SetValueKey("DrainTutorialEnemyDrain1", true);
 
                 //적 HP바 UI 생성 후 적 위치로 가져옴
@@ -150,7 +163,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             {
                 StoredData.SetValueKey("Tuto_CanDrainObject1", true);
 
-                TimeManager.LerpTime(1f, 0f, () =>
+                TimeManager.LerpTime(2f, 0f, () =>
                 {
                     RectTransform emphRectTr = SetUIEmphasisEffect(skillUIArr[2].transform);
                     tutorialPhases.Add(new AbsorptionPhase(() =>
@@ -194,6 +207,9 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                                     EventManager.TriggerEvent("EndCutScene");
                                     EventManager.TriggerEvent("Skill0TutoClear");
                                     sum.IsAutoFitEnergeBar = true;
+
+                                    um.RequestLogMsg("공격 에너지를 얻었습니다.");
+                                    um.RequestLogMsg("기본 공격을 얻었습니다.");
                                 });  
 
                             }, 2.5f, this); //end of util
@@ -235,7 +251,12 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         for (int i = 0; i < skillUIArr.Length; i++)
         {
             skillUIArr[i].gameObject.SetActive(active);
-            changeableBodysUIArr[i].gameObject.SetActive(active);
+            //changeableBodysUIArr[i].gameObject.SetActive(active);
+        }
+        changeableBodysUIArr[0].gameObject.SetActive(active);
+        for(int i=1; i< changeableBodysUIArr.Length; i++)
+        {
+            changeableBodysUIArr[i].gameObject.SetActive(gm.savedData.userInfo.isGainBodyChangeSlot);   
         }
 
         //PlayerFollowLight Init Setting
@@ -334,7 +355,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         return emphRectTr; 
     }
 
-    private void GetUIIcon(UIType type) //설정, 인벤, 스탯, 도감 등의 메뉴 UI획득
+    private void GetUIIcon(UIType type, Vector3 startPos) //설정, 인벤, 스탯, 도감 등의 메뉴 UI획득
     {
         KeyAction kt = Util.EnumParse<KeyAction>(type.ToString());
 
@@ -342,7 +363,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
         AcquisitionDropIcon adi = PoolManager.GetItem<AcquisitionDropIcon>("AcqDropIcon");
         adi.Set(UIManager.Instance.GetInterfaceSprite(type),
-                Global.GetSlimePos.position - new Vector3(10f, 0), 3f, new Vector2(12, 12), () =>
+                startPos, 3f, new Vector2(12, 12), () =>
                 {
                     UIOn(kt);
                     gm.savedData.userInfo.uiActiveDic[kt] = true;
@@ -379,6 +400,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             EventManager.TriggerEvent("Skill1TutoClear");
             RectTransform emphRectTr = SetUIEmphasisEffect(skillUIArr[1].transform);
             tutorialPhases.Add(new RushTutorialPhase(emphRectTr.gameObject));
+            um.RequestLogMsg("돌진을 얻었습니다.");
         }).Play();
 
         StoredData.SetValueKey("GetRushAttack", true);
@@ -386,20 +408,32 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     private void GetInventoryUI() //인벤 얻음
     {
-        GetUIIcon(UIType.INVENTORY);
+        GetUIIcon(UIType.INVENTORY, ObjectManager.Instance.itrObjDic["Merchant"].transform.position);
         
     }
 
     private void GetStatUI() //스탯 UI 획득
     {
-        GetUIIcon(UIType.STAT);
+        GetUIIcon(UIType.STAT, ObjectManager.Instance.itrObjDic["StatNPC"].transform.position);
         
     }
 
     private void GetMonsterCollectionUI() //몬스터 도감 UI 획득
     {
-        GetUIIcon(UIType.MONSTER_COLLECTION);
+        GetUIIcon(UIType.MONSTER_COLLECTION, ObjectManager.Instance.itrObjDic["MonColNPC"].transform.position);
         
+    }
+
+    public void GetBodyChangeSlot()
+    {
+        for(int i=1; i<changeableBodysUIArr.Length; i++)
+        {
+            changeableBodysUIArr[i].GetComponent<CanvasGroup>().alpha = 0;
+            changeableBodysUIArr[i].gameObject.SetActive(true);
+            changeableBodysUIArr[i].GetComponent<CanvasGroup>().DOFade(1, 0.5f);
+        }
+
+        UIManager.Instance.RequestLogMsg("변신 슬롯을 얻었습니다.");
     }
     #endregion
 }

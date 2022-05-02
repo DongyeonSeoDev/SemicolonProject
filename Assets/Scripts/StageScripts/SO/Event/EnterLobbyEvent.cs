@@ -18,9 +18,11 @@ public class EnterLobbyEvent : MapEventSO
 
     private bool CanNextStage()
     {
-        foreach (bool value in GameManager.Instance.savedData.userInfo.uiActiveDic.keyValueDic.Values)
+        foreach (KeyAction key in GameManager.Instance.savedData.userInfo.uiActiveDic.keyValueDic.Keys)
         {
-            if (!value)
+            if (key == KeyAction.SETTING) continue;
+
+            if (!GameManager.Instance.savedData.userInfo.uiActiveDic[key])
             {
                 KeyActionManager.Instance.SetPlayerHeadText("아직 준비가 덜 된 것 같다.", 2.5f);
                 return false;

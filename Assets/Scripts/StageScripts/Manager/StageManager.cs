@@ -40,6 +40,7 @@ public class StageManager : MonoSingleton<StageManager>
     //public Sprite openDoorSpr, closeDoorSpr;
     public Sprite[] doorSprites;
     public Dictionary<string, Sprite> doorSprDic = new Dictionary<string, Sprite>();
+    private bool[] floorInitSet;
     #endregion
 
     #region obj
@@ -111,7 +112,9 @@ public class StageManager : MonoSingleton<StageManager>
             currentStageNumber++;
         });
 
-        
+        floorInitSet = new bool[MaxStage + 1];
+        for(int i=0; i<floorInitSet.Length; i++)
+            floorInitSet[i] = false;
     }
 
     private void Start()
@@ -126,7 +129,7 @@ public class StageManager : MonoSingleton<StageManager>
         PassDir = GameManager.Instance.savedData.stageInfo.passDoorDir;
         if (TutorialManager.Instance.IsTestMode) startStageID = "Stage1-01";
         currentFloor = GetStageData(startStageID).stageFloor.floor;
-        InsertRandomMaps(currentFloor, true);
+        InsertRandomMaps(currentFloor);
         SetRandomAreaRandomIncounter();
         Util.DelayFunc(() => NextStage(startStageID), 0.2f);
         //respawnPos = idToStageDataDict[startStageID].stage.GetComponent<StageGround>().playerSpawnPoint.position;
@@ -166,9 +169,7 @@ public class StageManager : MonoSingleton<StageManager>
         EventManager.StartListening("PickupMiniGame", (Action<bool>)(start => currentStage.StageLightActive(!start)));
         EventManager.StartListening("GameClear", () =>
         {
-            currentStageNumber = 0;
-            currentFloor++;
-            InsertRandomMaps(currentFloor, true);
+            Debug.Log("Game Clear : " + currentFloor + "-" + currentStageNumber);
         });
     }
 
@@ -283,12 +284,13 @@ public class StageManager : MonoSingleton<StageManager>
         return string.Empty;
     }
 
-    private void InsertRandomMaps(int floor, bool init)
+    private void InsertRandomMaps(int floor)
     {
         if (currentFloor == 0) return;
 
-        if (init)
+        if (!floorInitSet[floor])
         {
+            floorInitSet[floor] = true; 
             StageBundleDataSO bundle = idToStageFloorDict[FloorToFloorID(floor)]; //층 정보 받음
 
             foreach (AreaType type in Enum.GetValues(typeof(AreaType)))  //기존 랜덤 맵 초기화
@@ -338,6 +340,16 @@ public class StageManager : MonoSingleton<StageManager>
         //IsLastStage = currentStageData.endStage;
         currentStage = null;
         currentStageMonsterBundleOrder = 1;
+
+        if(currentStageData.stageFloor.floor != currentFloor) //다음 스테이지가 층이 다르면 새로 세팅 해야함
+        {
+            currentStageNumber = 0;
+            currentFloor++;
+            InsertRandomMaps(currentFloor);
+            SetRandomAreaRandomIncounter();
+
+            Debug.Log("층 UP : " + currentFloor);
+        }
 
         if (!idToStageObjDict.TryGetValue(id, out currentStage))
         {
@@ -569,7 +581,9 @@ public class StageManager : MonoSingleton<StageManager>
     {
         //prevRandRoomType = -1;
         currentStageNumber = 0;
-        InsertRandomMaps(currentFloor, false);
+        currentFloor--;
+        PassDir = GameManager.Instance.savedData.stageInfo.passDoorDir;
+        InsertRandomMaps(currentFloor);
         SetRandomAreaRandomIncounter();
         NextStage(startStageID);
     }

@@ -55,6 +55,7 @@ public class UserInfo
     public SaveDic<string, MonsterInfo> monsterInfoDic = new SaveDic<string, MonsterInfo>(); //몬스터 이해도(동화율), 흡수 확률 등의 정보
 
     public SaveDic<KeyAction, bool> uiActiveDic = new SaveDic<KeyAction, bool>();
+    public bool isGainBodyChangeSlot = false;
 }
 
 [Serializable]
