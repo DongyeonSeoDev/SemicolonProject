@@ -11,6 +11,7 @@ public class NormalEventObject : InteractionObj
         if (notInteractable) return;
 
         notInteractable = true;
+        isHidenItrMark = true;
         interactionEventKey.TriggerEvent();
     }
 

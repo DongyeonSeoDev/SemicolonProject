@@ -6,7 +6,8 @@ public class EnterLobbyEvent : MapEventSO
     public override void OnEnterEvent()
     {
         //카메라 움직여서 맵 보여줌
-      
+
+        GameManager.Instance.savedData.tutorialInfo.isEnded = true;
         StageManager.Instance.SaveStage("Stage0-06");
     }
 }

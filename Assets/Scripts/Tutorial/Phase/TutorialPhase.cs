@@ -39,6 +39,8 @@ public class StartPhase : TutorialPhase
                 if (needCount == currentCount)
                 {
                     complete = true;
+                    StoredData.GetGameObjectData("PlayerHeadTxtObj").GetComponent<CanvasGroup>().alpha = 1;
+                    StoredData.DeleteGameObjectKey("PlayerHeadTxtObj");
                     EffectManager.Instance.OnTouchEffect();
                     light.DOInnerRadius(2, 1.5f, true);
                     light.DOOuterRadius(4, 1.8f, true, () => End());

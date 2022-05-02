@@ -11,7 +11,7 @@ public class NormalNPC : NPC
     {
         if (notInteractable) return;
         notInteractable = true;
-        isHidenName = true;
+        isHidenItrMark = true;
 
         TalkManager.Instance.SetTalkData(npcInfo, transform);
     }

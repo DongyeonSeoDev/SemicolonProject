@@ -25483,6 +25483,10 @@ PrefabInstance:
       propertyPath: npc
       value: 
       objectReference: {fileID: 6230166543938301408}
+    - target: {fileID: 8299106540666898036, guid: c209247278d2e8b43a75191f211d61b5, type: 3}
+      propertyPath: door
+      value: 
+      objectReference: {fileID: 7517293596149303416}
     - target: {fileID: 8604531944747639585, guid: c209247278d2e8b43a75191f211d61b5, type: 3}
       propertyPath: m_Size.x
       value: 1.3219527

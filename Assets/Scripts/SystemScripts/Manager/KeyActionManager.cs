@@ -35,6 +35,12 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
 
     private void Start()
     {
+        if(TutorialManager.Instance.IsTutorialStage)
+        {
+            playerHeadTxt.GetComponent<CanvasGroup>().alpha = 0;
+            StoredData.SetGameObjectKey("PlayerHeadTxtObj", playerHeadTxt.gameObject);
+        }
+
         foreach(KeyAction action in KeySetting.fixedKeyDict.Keys)
         {
             Instantiate(keyInfoPair.first, keyInfoPair.second).GetComponent<KeyInfoUI>()
