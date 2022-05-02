@@ -251,10 +251,10 @@ GameObject:
   - component: {fileID: 4325486159664823449}
   - component: {fileID: 6840423819659291922}
   - component: {fileID: 8714188248352220718}
-  - component: {fileID: 7037264469492529058}
-  m_Layer: 22
+  - component: {fileID: 2200524833689841837}
+  m_Layer: 8
   m_Name: CollectionObj
-  m_TagString: Object
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -352,7 +352,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.45, y: 0.45}
   m_EdgeRadius: 0
---- !u!114 &7037264469492529058
+--- !u!114 &2200524833689841837
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -361,19 +361,29 @@ MonoBehaviour:
   m_GameObject: {fileID: 8047484767025190961}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b6b9bcc48cb477241a4e771de35f6781, type: 3}
+  m_Script: {fileID: 11500000, guid: a9d629e06e8322d45a4c6a05a1ac56bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   isHidenName: 0
   isHidenItrMark: 0
   notInteractable: 0
-  objName: "\uB3C4\uAC10"
-  objId: MonColNPC
-  action: "\uAC00\uC838\uAC00\uAE30"
+  objName: "\uBAAC\uC2A4\uD130 \uB3C4\uAC10"
+  objId: 
+  action: "\uC0B4\uD3B4\uBCF4\uAE30"
   autoAwakeAdd: 1
   uiOffset: {x: 0, y: -1, z: 0}
   itrUIOffset: {x: 0, y: 1, z: 0}
   npcUI: {fileID: 0}
   itrUI: {fileID: 0}
-  interactionEventKey: GetMonsterCollectionUI
+  npcInfo:
+    id: MonsterCollectionObjNPC
+    talkId: 0
+    npcName: 
+    talkContents:
+    - value:
+      - message: "\uD761\uC218\uB97C \uD1B5\uD574 \uD761\uC218\uD655\uB960\uC774
+          \uB192\uC744\uC218\uB85D \uBCC0\uC2E0\uD560 \uD655\uB960\uC774 \uC62C\uB77C\uAC00\uBA70
+          \uBCC0\uC2E0 \uD6C4 \uCC98\uCE58 \uC2DC \uB3D9\uD654\uC728\uC774 \uC0C1\uC2B9\uD558\uC5EC
+          \uC2A4\uD0EF\uC774 \uC0C1\uC2B9\uD558\uAC8C \uB41C\uB2E4\uACE0 \uC801\uD600\uC788\uB2E4."
+        talkEndEventKey: GetMonsterCollectionUI
   fsOut: {fileID: 5441568095466652562}

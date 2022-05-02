@@ -25213,6 +25213,22 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 21300000, guid: ae284dae415ea9249814bcbf0e644519, type: 3}
     - target: {fileID: 8604531944747639585, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
+      propertyPath: m_Size.x
+      value: 1.0814877
+      objectReference: {fileID: 0}
+    - target: {fileID: 8604531944747639585, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
+      propertyPath: m_Size.y
+      value: 1.0045674
+      objectReference: {fileID: 0}
+    - target: {fileID: 8604531944747639585, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.014496803
+      objectReference: {fileID: 0}
+    - target: {fileID: 8604531944747639585, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.0010807514
+      objectReference: {fileID: 0}
+    - target: {fileID: 8604531944747639585, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
       propertyPath: m_SpriteTilingProperty.oldSize.x
       value: 1
       objectReference: {fileID: 0}
@@ -25489,19 +25505,19 @@ PrefabInstance:
       objectReference: {fileID: 7517293596149303416}
     - target: {fileID: 8604531944747639585, guid: c209247278d2e8b43a75191f211d61b5, type: 3}
       propertyPath: m_Size.x
-      value: 1.3219527
+      value: 0.9559288
       objectReference: {fileID: 0}
     - target: {fileID: 8604531944747639585, guid: c209247278d2e8b43a75191f211d61b5, type: 3}
       propertyPath: m_Size.y
-      value: 1.5354153
+      value: 1.0778859
       objectReference: {fileID: 0}
     - target: {fileID: 8604531944747639585, guid: c209247278d2e8b43a75191f211d61b5, type: 3}
       propertyPath: m_Offset.x
-      value: 0.017605245
+      value: 0.066408634
       objectReference: {fileID: 0}
     - target: {fileID: 8604531944747639585, guid: c209247278d2e8b43a75191f211d61b5, type: 3}
       propertyPath: m_Offset.y
-      value: -0.17746574
+      value: -0.034106374
       objectReference: {fileID: 0}
     - target: {fileID: 8604531944747639587, guid: c209247278d2e8b43a75191f211d61b5, type: 3}
       propertyPath: m_Name

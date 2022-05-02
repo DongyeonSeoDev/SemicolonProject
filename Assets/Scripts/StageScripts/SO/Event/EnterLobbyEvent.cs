@@ -7,10 +7,12 @@ public class EnterLobbyEvent : MapEventSO
     {
         if (TutorialManager.Instance.IsTutorialStage)
         {
-            //카메라 움직여서 맵 보여줌
             GameManager.Instance.savedData.tutorialInfo.isEnded = true;
             StageManager.Instance.SaveStage("Stage0-06");
+            CutsceneManager.Instance.PlayCutscene("TutorialCutscene2");
         }
+
+        
 
         StageManager.Instance.canNextStage = CanNextStage;
         StageManager.Instance.SetClearStage();
