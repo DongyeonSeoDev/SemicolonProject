@@ -13,9 +13,9 @@ public class NormalEventObject : InteractionObj
 
     public override void Interaction()
     {
-        /*if (notInteractable) return;
+        if (notInteractable) return;
         notInteractable = true;
-        isHidenItrMark = true;*/
+        isHidenItrMark = true;
 
         interactionEventKey.TriggerEvent();
     }

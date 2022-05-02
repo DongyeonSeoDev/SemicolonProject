@@ -10,6 +10,8 @@ public class CutsceneManager : MonoSingleton<CutsceneManager>
     public TimelineAsset[] timeLineAssets;
     public PlayableDirector pd;
 
+    public GameObject cutsceneVCam1;
+
     private void Awake()
     {
         for (int i = 0; i < timeLineAssets.Length; i++)
@@ -59,5 +61,20 @@ public class CutsceneManager : MonoSingleton<CutsceneManager>
 
         Debug.LogError("Current Body is not Slime!!!");
     }
+    #endregion
+
+
+    #region Function
+
+    public void ActiveCsVCam1()
+    {
+        cutsceneVCam1.gameObject.SetActive(true);
+    }
+
+    public void InactiveCsVCam1()
+    {
+        cutsceneVCam1.gameObject.SetActive(false);
+    }
+
     #endregion
 }

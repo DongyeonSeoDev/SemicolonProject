@@ -420,7 +420,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     private void GetMonsterCollectionUI() //∏ÛΩ∫≈Õ µµ∞® UI »πµÊ
     {
-        GetUIIcon(UIType.MONSTER_COLLECTION, ObjectManager.Instance.itrObjDic["MonColNPC"].transform.position);
+        GetUIIcon(UIType.MONSTER_COLLECTION, ObjectManager.Instance.itrObjDic["MonsterCollectionObjNPC"].transform.position);
         
     }
 
