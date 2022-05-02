@@ -1,3 +1,5 @@
+#if UNITY_EDITOR
+
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -16,4 +18,7 @@ public static class UtilEditor
     {
         EditorApplication.isPaused = false;
     }
+
 }
+
+#endif
