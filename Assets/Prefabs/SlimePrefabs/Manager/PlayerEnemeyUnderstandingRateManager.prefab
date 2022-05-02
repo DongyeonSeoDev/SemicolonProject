@@ -66,8 +66,8 @@ MonoBehaviour:
     body: {fileID: 3351713311786356781, guid: bd1420554775ff64abf2f4527d18fcce, type: 3}
     additionalBodyStat:
       maxHp: -20
-      minDamage: 2
-      maxDamage: 2
+      minDamage: 5
+      maxDamage: 5
       defense: 0
       intellect: 0
       speed: 6
@@ -85,9 +85,9 @@ MonoBehaviour:
       maxHp: 150
       minDamage: 5
       maxDamage: 5
-      defense: 2
+      defense: 3
       intellect: 0
-      speed: -2
+      speed: 0
       attackSpeed: 0
       criticalRate: 0
       criticalDamage: 0
