@@ -422,13 +422,13 @@ namespace Enemy
         private int wallCheck = LayerMask.GetMask("WALL");
         private float force;
 
-        public EnemyAddForceCommand(Rigidbody2D rigid, Enemy enemy, float rushAttack = 0f, EnemyPositionCheckData positionData = null)
+        public EnemyAddForceCommand(Rigidbody2D rigid, Enemy enemy, float rushForce = 0f, EnemyPositionCheckData positionData = null)
         {
             rigidboyd2D = rigid;
             this.enemy = enemy;
             positionCheckData = positionData;
 
-            force = rushAttack == 0 ? enemy.GetEnemyAttackPower() : rushAttack;
+            force = rushForce;
         }
 
         public override void Execute()
@@ -449,7 +449,7 @@ namespace Enemy
 
             direction = direction.Value.normalized;
 
-            var ray = Physics2D.Raycast(rigidboyd2D.transform.position, direction.Value, force / 10f, wallCheck);
+            var ray = Physics2D.Raycast(rigidboyd2D.transform.position, direction.Value, GetForce() / 10f, wallCheck);
 
             if (ray.collider != null)
             {
@@ -458,9 +458,11 @@ namespace Enemy
             }
             else
             {
-                rigidboyd2D.AddForce(direction.Value * force, ForceMode2D.Impulse);
+                rigidboyd2D.AddForce(direction.Value * GetForce(), ForceMode2D.Impulse);
             }
         }
+
+        private float GetForce() => force == 0 ? enemy.GetKnockBackPower() : force;
     }
 
     public class EnemySpriteFlipCommand : EnemyCommand

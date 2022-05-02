@@ -312,7 +312,6 @@ namespace Enemy
             enemyData.isEnemyMove = true; // 적을 움직이는 상태로 바꿈
         }
 
-        public EnemyType GetEnemyType() => enemyData.enemyType; // 적 타입을 가져옴
         public EnemyController GetEnemyController() => enemyData.eEnemyController;
         public Vector2? GetKnockBackDirection() => enemyData.knockBackDirection; // 적이 넉백 공격을 할 수 있는지를 가져옴
         public Transform GetTransform() => transform;
