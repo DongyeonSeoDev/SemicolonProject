@@ -278,7 +278,7 @@ GameObject:
   - component: {fileID: 6504409884613948760}
   - component: {fileID: 6339767192302880404}
   m_Layer: 5
-  m_Name: StateInfoSlot
+  m_Name: UIStateInfoSlot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
