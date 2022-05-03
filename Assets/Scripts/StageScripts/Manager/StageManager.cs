@@ -329,6 +329,8 @@ public class StageManager : MonoSingleton<StageManager>
 
     public void NextStage(string id)
     {
+        Debug.Log("Next Stage : " + id);
+
         //EventManager.TriggerEvent("ExitStage");
         EventManager.TriggerEvent("ExitCurrentMap");
 
@@ -348,7 +350,7 @@ public class StageManager : MonoSingleton<StageManager>
             InsertRandomMaps(currentFloor);
             SetRandomAreaRandomIncounter();
 
-            Debug.Log("Ãþ UP : " + currentFloor);
+            Debug.Log("Floor UP : " + currentFloor);
         }
 
         if (!idToStageObjDict.TryGetValue(id, out currentStage))
@@ -579,6 +581,8 @@ public class StageManager : MonoSingleton<StageManager>
 
     private void Respawn()
     {
+        Debug.Log("Respawn : " + startStageID);
+
         //prevRandRoomType = -1;
         currentStageNumber = 0;
         //currentFloor--;
