@@ -134,7 +134,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 0.0.1
+  bundleVersion: 0.1
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -155,7 +155,7 @@ PlayerSettings:
   applicationIdentifier:
     Standalone: com.Semicolon.SemicolonProject
   buildNumber:
-    Standalone: 0
+    Standalone: 1
     iPhone: 0
     tvOS: 0
   overrideDefaultApplicationIdentifier: 0
@@ -270,7 +270,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: d1f94eb541d98c94c9e0a776707e9c7c, type: 3}
+      m_Icon: {fileID: 2800000, guid: b69e850b0596226488ce9dc9d818b9bf, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0

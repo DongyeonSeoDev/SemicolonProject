@@ -39,6 +39,8 @@ namespace Enemy
 
         public Vector2 limitMinPosition;
         public Vector2 limitMaxPosition;
+        public Vector2 limitMinFirePosition;
+        public Vector2 limitMaxFirePosition;
         public LayerMask whatIsWall;
 
         private BossCanvas bossHPBar;
@@ -106,10 +108,15 @@ namespace Enemy
 
             whatIsWall = LayerMask.GetMask("WALL");
 
-            limitMaxPosition.y = CheckPosition(Vector2.up).y - 1.3f;
-            limitMinPosition.y = CheckPosition(Vector2.down).y + 1.82f;
-            limitMaxPosition.x = CheckPosition(Vector2.right).x - 2.4f;
-            limitMinPosition.x = CheckPosition(Vector2.left).x + 2.4f;
+            limitMaxFirePosition.y = CheckPosition(Vector2.up).y - 0.5f;
+            limitMinFirePosition.y = CheckPosition(Vector2.down).y + 0.5f;
+            limitMaxFirePosition.x = CheckPosition(Vector2.right).x - 0.5f;
+            limitMinFirePosition.x = CheckPosition(Vector2.left).x + 0.5f;
+
+            limitMaxPosition.y = limitMaxFirePosition.y - 0.8f;
+            limitMinPosition.y = limitMinFirePosition.y + 1.32f;
+            limitMaxPosition.x = limitMaxFirePosition.x - 1.9f;
+            limitMinPosition.x = limitMinFirePosition.x + 1.9f;
 
             specialAttack3Check.Clear();
 
@@ -377,7 +384,7 @@ namespace Enemy
             for (int i = 0; i < 150; i++)
             {
                 Fire fire = EnemyPoolManager.Instance.GetPoolObject(Type.Fire, RandomPosition()).GetComponent<Fire>();
-                fire.Spawn(this, enemyData.eEnemyController, enemyData.attackPower, 1f, false);
+                fire.Spawn(this, enemyData.eEnemyController, enemyData.attackPower - 15, 1f, false);
 
                 yield return fireSpawnTimeSeconds2;
             }
@@ -390,8 +397,8 @@ namespace Enemy
         {
             Vector2 randomPosition = Vector2.zero;
 
-            randomPosition.x = Random.Range(limitMinPosition.x, limitMaxPosition.x);
-            randomPosition.y = Random.Range(limitMinPosition.y, limitMaxPosition.y);
+            randomPosition.x = Random.Range(limitMinFirePosition.x, limitMaxFirePosition.x);
+            randomPosition.y = Random.Range(limitMinFirePosition.y, limitMaxFirePosition.y);
 
             return randomPosition;
         }
