@@ -6,6 +6,7 @@ namespace Enemy
     {
         public float speed;
         private float angle;
+        private bool isStop = false;
 
         public Vector2 limitMaxPosition;
         public Vector2 limitMinPosition;
@@ -30,10 +31,25 @@ namespace Enemy
             {
                 gameObject.SetActive(false);
             });
+
+            EventManager.StartListening("EnemyStart", () =>
+            {
+                isStop = false;
+            });
+
+            EventManager.StartListening("EnemyStop", () =>
+            {
+                isStop = true;
+            });
         }
 
         private void Update()
         {
+            if (isStop)
+            {
+                return;
+            }
+
             transform.position += targetDirection * speed * Time.deltaTime;
 
             if (transform.position.x < limitMinPosition.x || transform.position.x > limitMaxPosition.x 
