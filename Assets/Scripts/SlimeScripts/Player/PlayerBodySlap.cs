@@ -71,6 +71,12 @@ public class PlayerBodySlap : PlayerSkill
     [SerializeField]
     private LineRenderer bodySlapLine = null;
 
+    [SerializeField]
+    private float bodySlapLineLength = 1f;
+
+    [SerializeField]
+    private List<Material> materials = new List<Material>();
+
     public override void Awake()
     {
         base.Awake();
@@ -258,8 +264,15 @@ currentChargingTimer * targetPosFarPerCharge * bodySlapMoveVec;
             }
 
             bodySlapLine.SetPosition(0, transform.position);
-            bodySlapLine.SetPosition(1, moveTargetPos);
+            bodySlapLine.SetPosition(1, (Vector2)transform.position + bodySlapMoveVec * bodySlapLineLength);
+
+            int matNum = (int)((currentChargingTimer / maxChargingTime ) * (materials.Count - 1));
+
+            bodySlapLine.material = materials[matNum];
         }
+        // 3 : 4 = a (currentBodySlapTime) : b 
+        // 4a = 3b
+        // b = 4a / 3
     }
     private void CheckBodySlapTime()
     {
