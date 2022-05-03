@@ -110,11 +110,17 @@ public static partial class Global
 
     public static void MonoActionTrigger(string key, MonoBehaviour mono)
     {
-        stringToActionDict[key].ActionTrigger(mono);
+        if (stringToActionDict.ContainsKey(key))
+            stringToActionDict[key].ActionTrigger(mono);
+        else
+            Debug.Log("Not Exist Key : " + key);
     }
     public static void ActionTrigger(string key, object obj)
     {
-        stringToActionDict[key].ActionTrigger(obj);
+        if (stringToActionDict.ContainsKey(key))
+            stringToActionDict[key].ActionTrigger(obj);
+        else
+            Debug.Log("Not Exist Key : " + key);
     }
 
     public static void RemoveKey(string key)

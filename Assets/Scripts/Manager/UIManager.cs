@@ -1001,6 +1001,8 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     public void OnClickItemUseBtn()  //아직 마석 장착에 대한 로직은 없음
     {
+        if (selectedItemSlot.itemInfo == null) return;
+
         ItemSO data = gm.GetItemData(selectedItemId);
         if ( (data.itemType == ItemType.ETC && !((Ingredient)data).isUseable)) return;
 
@@ -1011,6 +1013,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         {
             OnUIInteract(UIType.ITEM_DETAIL, true);
             selectedImg.gameObject.SetActive(false);
+            Inventory.Instance.invenUseActionImg.SetActive(false);
         }
 
         Global.ActionTrigger("ItemUse", selectedItemId);

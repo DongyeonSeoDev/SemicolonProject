@@ -171,15 +171,15 @@ public partial class GameManager : MonoSingleton<GameManager>
             Global.ActionTrigger("GetItem", ((Item)item).itemData.id);
         });
 
-        /*Global.AddAction("GetItem", _id =>
+        Global.AddAction("GetItem", _id =>
         {
-            string id = (string)_id;
+            /*string id = (string)_id;
             int limitedBattleCount = itemDataDic[id].existBattleCount;
             if (limitedBattleCount > 0)
             {
                 limitedBattleCntItems.Add(new Triple<string, int, int>(id, 0, limitedBattleCount));
-            }
-        });*/
+            }*/
+        });
 
         //Ç® »ý¼º
         PoolManager.CreatePool(itemPrefab, transform, 6, "Item");
@@ -334,8 +334,6 @@ public partial class GameManager : MonoSingleton<GameManager>
     {
         Application.Quit();
     }
-
-  
 
     #region OnApplication
     private void OnApplicationQuit()
