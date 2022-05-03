@@ -110,6 +110,7 @@ public class PlayerDrainCollider : MonoBehaviour
                 SlimeGameManager.Instance.Player.PlayerState.IsDrain = false;
 
                 EventManager.TriggerEvent("EnemyStart");
+                EventManager.TriggerEvent("PlayerStart");
 
                 gameObject.SetActive(false);
             }
@@ -121,7 +122,7 @@ public class PlayerDrainCollider : MonoBehaviour
     {
         // 1. 튜토리얼 전용 스크립트를 만든다
         
-        if (!playerDrain.cantDrainObject && canDrainObjLayers.CompareGameObjectLayer(other.gameObject))
+        if (canDrainObjLayers.CompareGameObjectLayer(other.gameObject))
         {
             // Debug.Log(other.gameObject.layer);
             //Drain되는 오브젝트는 삭제처리
@@ -151,7 +152,7 @@ public class PlayerDrainCollider : MonoBehaviour
 
             tryDrainList.Add(enemy);
 
-            if (playerDrain.drainTutorial || (enemy != null && hpPercentage <= canDrainHpPercentage)) // 흡수 성공////////////////////
+            if ((playerDrain.drainTutorial || (enemy != null && hpPercentage <= canDrainHpPercentage)) && !playerDrain.cantDrainObject) // 흡수 성공////////////////////
             {
                 doDrainList.Add(enemy);
                 SpawnGrabObj(enemy.GetGameObject());

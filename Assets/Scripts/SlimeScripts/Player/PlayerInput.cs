@@ -36,6 +36,27 @@ public class PlayerInput : MonoBehaviour
         set { isInteraction = value; }
     }
 
+    private bool cantPlaySkill0 = false;
+    public bool CantPlaySkill0
+    {
+        get { return cantPlaySkill0; }
+        set { cantPlaySkill0 = value; }
+    }
+
+    private bool cantPlaySkill1 = false;
+    public bool CantPlaySkill1
+    {
+        get { return cantPlaySkill1; }
+        set { cantPlaySkill1 = value; }
+    }
+
+    private bool cantPlaySkill2 = false;
+    public bool CantPlaySkill2
+    {
+        get { return cantPlaySkill2; }
+        set { cantPlaySkill2 = value; }
+    }
+
     private bool skill0ButtonDowned = false;
     private bool skill1ButtonDowned = false;
     private bool skill2ButtonDowned = false;
@@ -208,7 +229,8 @@ public class PlayerInput : MonoBehaviour
                 {
                     if (!EventSystem.current.IsPointerOverGameObject() &&
                     (inputTutorial == null || (!inputTutorial.InputTutoDataDict.ContainsKey(KeyAction.ATTACK) ||
-                    inputTutorial.InputTutoDataDict[KeyAction.ATTACK].isClear))) // mouse 0
+                    inputTutorial.InputTutoDataDict[KeyAction.ATTACK].isClear))
+                    && !cantPlaySkill0) // mouse 0
                     {
                         isDoSkill0 = Input.GetMouseButton(0);
 
@@ -231,8 +253,9 @@ public class PlayerInput : MonoBehaviour
 
                 if (skill2TutoClear)
                 {
-                    if (inputTutorial == null || (!inputTutorial.InputTutoDataDict.ContainsKey(KeyAction.SPECIALATTACK2) ||
+                    if ((inputTutorial == null || (!inputTutorial.InputTutoDataDict.ContainsKey(KeyAction.SPECIALATTACK2) ||
                         inputTutorial.InputTutoDataDict[KeyAction.SPECIALATTACK2].isClear))
+                        && !cantPlaySkill2)
                     {
                         if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.SPECIALATTACK2]))
                         {
@@ -256,8 +279,9 @@ public class PlayerInput : MonoBehaviour
 
             mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             // ContainKeyüũ
-            if (inputTutorial == null || (!inputTutorial.InputTutoDataDict.ContainsKey(KeyAction.SPECIALATTACK1) ||
+            if ((inputTutorial == null || (!inputTutorial.InputTutoDataDict.ContainsKey(KeyAction.SPECIALATTACK1) ||
                     inputTutorial.InputTutoDataDict[KeyAction.SPECIALATTACK1].isClear))
+                    && !cantPlaySkill1)
             {
 
                 if (skill1TutoClear)
