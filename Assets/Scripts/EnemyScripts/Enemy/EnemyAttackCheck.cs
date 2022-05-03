@@ -6,6 +6,8 @@ namespace Enemy
 {
     public class EnemyAttackCheck : MonoBehaviour
     {
+        public int addAttackValue = 0;
+
         private Enemy enemy;
         private Rigidbody2D enemyRigidbody;
         private PlayerStatusEffect playerStatusEffect;
@@ -63,7 +65,7 @@ namespace Enemy
             isUseKnockBack = enemy.GetIsKnockBack();
             positionCheckData = enemy.positionCheckData;
             eEnemyController = enemy.GetEnemyController();
-            attackPower = enemy.GetEnemyAttackPower();
+            attackPower = enemy.GetEnemyAttackPower() + addAttackValue;
             enemyRigidbody = enemy.GetComponent<Rigidbody2D>();
 
             if (eEnemyController == EnemyController.PLAYER)
