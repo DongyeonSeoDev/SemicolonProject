@@ -1,3 +1,5 @@
+#define TEST_BUILD
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -58,13 +60,16 @@ namespace Enemy
         private readonly int hashAttack2 = Animator.StringToHash("attack2");
         private readonly int hashSpecialAttack2 = Animator.StringToHash("specialAttack2");
         private readonly int hashSpecialAttack3 = Animator.StringToHash("specialAttack3");
-
+#if TEST_BUILD
+        private GameObject skill = null;
+#endif
         protected override void Awake()
         {
             base.Awake();
 
             fireSpawnTimeSeconds = new WaitForSeconds(fireSpawnTime);
         }
+
         protected override void OnEnable()
         {
             base.OnEnable();
@@ -117,6 +122,19 @@ namespace Enemy
 
             EventManager.StartListening("PlayerDead", StopAttack);
             EventManager.StartListening("BossDead", StopAttack);
+#if TEST_BUILD
+            if (skill == null)
+            {
+                try
+                {
+                    skill = GameObject.Find("SkillInfoImage_SpecialAtk2");
+                }
+                catch
+                {
+                    skill = null;
+                }
+            }
+#endif
         }
 
         protected override void OnDisable()
@@ -152,6 +170,10 @@ namespace Enemy
             EventManager.TriggerEvent("EndCutScene");
 
             SpeedReset();
+#if TEST_BUILD
+            playerInput.CantPlaySkill2 = true;
+            skill.SetActive(false);
+#endif
 
             base.MoveEnemy();
         }
@@ -202,6 +224,10 @@ namespace Enemy
             StopAllCoroutines();
 
             bossHPBar.SetActiveHPBar(false);
+#if TEST_BUILD
+            playerInput.CantPlaySkill2 = false;
+            skill.SetActive(true);
+#endif
         }
 
         public void AttackReady() // 애니메이션에서 실행 - 공격하기전 이동
