@@ -134,7 +134,11 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
     private void PlayerBodySpawn()
     {
         Player.gameObject.SetActive(true);
-        currentPlayerBody.SetActive(true);
+
+        if (currentPlayerBody != null)
+        {
+            currentPlayerBody.SetActive(true);
+        }
 
         //currentPlayerBody.transform.position = spawnPosition;
         pasteBodyAdditionalStat = new EternalStat();
