@@ -581,7 +581,7 @@ public class StageManager : MonoSingleton<StageManager>
     {
         //prevRandRoomType = -1;
         currentStageNumber = 0;
-        currentFloor--;
+        //currentFloor--;
         PassDir = GameManager.Instance.savedData.stageInfo.passDoorDir;
         InsertRandomMaps(currentFloor);
         SetRandomAreaRandomIncounter();
