@@ -269,7 +269,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         });
         //아이템 버림  
         Global.AddAction(Global.JunkItem, JunkItem);
-        EventManager.StartListening("ChangeResolution", OnChangedResolution);
+        //EventManager.StartListening("ChangeResolution", OnChangedResolution);
 
         EventManager.StartListening("PlayerDead", () => OnUIInteractSetActive(UIType.DEATH, true, true));
         EventManager.StartListening("GameClear", () => OnUIInteract(UIType.CLEAR, true));

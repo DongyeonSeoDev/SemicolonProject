@@ -107,7 +107,7 @@ public class ResolutionOption : MonoBehaviour
     public void OnClickOKBtn()
     {
         Screen.SetResolution(whResolutionList[resolutionNum].first, whResolutionList[resolutionNum].second, screenMode);
-        EventManager.TriggerEvent("ChangeResolution");
+        UIManager.Instance.OnChangedResolution();
         prevResolNum = resolutionNum;
         prevScrMode = screenMode;
     }
@@ -127,7 +127,7 @@ public class ResolutionOption : MonoBehaviour
         }
     }
 
-    public void OnResolutionUIUpdate()
+    public void OnResolutionUIUpdate() //화면 크기로 인해서 강제로 해상도 변경될 때
     {
         fullScrTg.isOn = Screen.fullScreenMode.Equals(FullScreenMode.FullScreenWindow);
         screenMode = Screen.fullScreenMode;
@@ -136,11 +136,12 @@ public class ResolutionOption : MonoBehaviour
         resolutionDd.value = whResolutionList.Count - 1;
         resolutionNum = resolutionDd.value;
         prevResolNum = resolutionNum;
+
+        UIManager.Instance.OnChangedResolution();
     }
 
     private IEnumerator CheckOverResolutionCo() //1초마다 지원하는 해상도를 넘었는지 체크하고 넘었다고 지원하는 해상도중 최대사이즈로 바꿔줌
     {
-        EventManager.StartListening("ChangeResolution", OnResolutionUIUpdate);
         WaitForSecondsRealtime wsr = new WaitForSecondsRealtime(1);
 
         while(true)
@@ -148,7 +149,7 @@ public class ResolutionOption : MonoBehaviour
             if (Screen.width > MaxScrWH.Item1 || Screen.height > MaxScrWH.Item2)
             {
                 Screen.SetResolution(MaxScrWH.Item1, MaxScrWH.Item2, Screen.fullScreenMode);
-                EventManager.TriggerEvent("ChangeResolution");
+                OnResolutionUIUpdate();
             }
             yield return wsr;
         }
