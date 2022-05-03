@@ -130,7 +130,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.022105634, y: -0.15664083}
+  m_Offset: {x: 0.019001484, y: -0.20320356}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -141,7 +141,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.5329162, y: 1.5231005}
+  m_Size: {x: 1.2783735, y: 0.9084728}
   m_EdgeRadius: 0
 --- !u!114 &8604531944747639586
 MonoBehaviour:
@@ -159,7 +159,9 @@ MonoBehaviour:
   isHidenItrMark: 0
   notInteractable: 0
   objName: 
+  objId: 
   action: "\uC785\uC7A5"
+  autoAwakeAdd: 0
   uiOffset: {x: 0, y: -1.3, z: 0}
   itrUIOffset: {x: 0, y: 1.1, z: 0}
   npcUI: {fileID: 0}
