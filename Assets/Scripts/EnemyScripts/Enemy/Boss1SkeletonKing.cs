@@ -333,6 +333,11 @@ namespace Enemy
             List<Fire> fireList = new List<Fire>();
             Vector3 playerPosition = EnemyManager.Player.transform.position;
 
+            playerPosition.x = playerPosition.x < limitMinFirePosition.x + 1.5f ? limitMinFirePosition.x + 1.5f : playerPosition.x;
+            playerPosition.x = playerPosition.x > limitMaxFirePosition.x - 1.5f ? limitMaxFirePosition.x - 1.5f : playerPosition.x;
+            playerPosition.y = playerPosition.y < limitMinFirePosition.y + 1.5f ? limitMinFirePosition.y + 1.5f : playerPosition.y;
+            playerPosition.y = playerPosition.y > limitMaxFirePosition.y - 1.5f ? limitMaxFirePosition.y - 1.5f : playerPosition.y;
+
             Fire.checkAttackObjectTogether.Clear();
             attackCount++;
 
