@@ -242,13 +242,13 @@ public class Inventory : MonoSingleton<Inventory>
             gm.RemoveItem(id, count);
             UIManager.Instance.RequestLogMsg(string.Format(msg + " ({0} -{1})", gm.GetItemData(id).itemName, count));
             
-            if(gm.GetItemData(id).existBattleCount > 0)
+            /*if(gm.GetItemData(id).existBattleCount > 0)
             {
                 for(int i=0; i<count; i++)
                 {
                     gm.RemoveLimitedBattleCntItemsElement(id);
                 }
-            }
+            }*/
 
             ItemSlot slot = FindInsertableSlot(id);
             if (!slot) slot = FindSlot(id);

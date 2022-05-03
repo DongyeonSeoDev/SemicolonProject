@@ -93,6 +93,7 @@ GameObject:
   - component: {fileID: 250806574885566931}
   - component: {fileID: 4870787070711797190}
   - component: {fileID: 250806574885566928}
+  - component: {fileID: 4747888290308321681}
   m_Layer: 5
   m_Name: SkillInfoImage
   m_TagString: Untagged
@@ -218,6 +219,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitionEnable: 1
   explanation: "\uC2A4\uD0AC\uC774\uB984(\uAE30\uBCF8\uACF5\uACA9)"
+  fontSize: 30
 --- !u!114 &250806574885566955
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,6 +283,20 @@ MonoBehaviour:
   skillEx: 
   skillType: 0
   ccsf: {fileID: 6023767009730862125}
+--- !u!114 &4747888290308321681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4870787070711797214}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80b1ee9a9e8d7044d91481019e85f20d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionEnable: 1
+  needWaitTime: 1.5
 --- !u!1 &5354620198144440413
 GameObject:
   m_ObjectHideFlags: 0

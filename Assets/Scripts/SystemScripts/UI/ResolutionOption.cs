@@ -59,7 +59,7 @@ public class ResolutionOption : MonoBehaviour
         int optionNum = 0, w = Screen.width, h = Screen.height;
         for(int i = 0; i < whResolutionList.Count; i++)
         {
-            if ((float)whResolutionList[i].first / whResolutionList[i].second < limWidthDivHeightRate) continue;
+            //if ((float)whResolutionList[i].first / whResolutionList[i].second < limWidthDivHeightRate) continue;
 
             Dropdown.OptionData option = new Dropdown.OptionData();
             option.text = whResolutionList[i].first + " x " + whResolutionList[i].second;
@@ -148,7 +148,7 @@ public class ResolutionOption : MonoBehaviour
     {
         WaitForSecondsRealtime wsr = new WaitForSecondsRealtime(1);
 
-        float w, h;
+        int w, h;
 
         while (true)
         {

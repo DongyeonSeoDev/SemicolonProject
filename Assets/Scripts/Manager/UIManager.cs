@@ -30,6 +30,9 @@ public partial class UIManager : MonoSingleton<UIManager>
     private float sw; //cursorImgRectTrm의 처음 너비(최소 너비)
     public float widthOffset = 39;  //마우스 따라다니는 정보 텍스트에서 이미지 너비 키울때 글자당 키울 길이
 
+    public Image mouseOverTimeCheckImg; //어떤 UI에 마우스를 대고 있으면 몇 초 후에 UI뜨는데 그 UI의 필을 표시할 이미지
+    private float moTime, moElapsed;
+
     private Pair<float, float> screenHalf = new Pair<float, float>();
     #endregion
 
@@ -74,6 +77,8 @@ public partial class UIManager : MonoSingleton<UIManager>
     public Triple<Image, TextMeshProUGUI, Image> playerHPInfo;  //HPBar Image, HP Text (TMP), Green HPBar (Delay)
     private bool isStartDelayHPFillTimer; // green HP bar decrease soon
     private float setDelayHPFillTime; //time to reduce green hp bar
+
+    public Pair<Image, Text> invenHpInfo;
     #endregion
 
     #region SelectionWindow
@@ -300,6 +305,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     {
         UserInput();
         CursorInfo();
+        UIDelayImgUpdate();
         Notice();
         DelayHPFill();
     }
@@ -501,6 +507,8 @@ public partial class UIManager : MonoSingleton<UIManager>
                 {
                     Inventory.Instance.invenUseActionImg.SetActive(false);
                 }
+                invenHpInfo.first.fillAmount = (float)sgm.Player.CurrentHp / sgm.Player.PlayerStat.MaxHp;
+                invenHpInfo.second.text = string.Concat("HP : ",Mathf.Ceil(Mathf.Clamp(sgm.Player.CurrentHp, 0, sgm.Player.PlayerStat.MaxHp)), '/', Mathf.Ceil(sgm.Player.PlayerStat.MaxHp));
                 break;
             case UIType.KEYSETTING:
                 if (KeyActionManager.Instance.IsChangingKeySetting)  //키세팅 변경 중에는 esc로 키세팅 UI 안꺼지게
@@ -735,14 +743,14 @@ public partial class UIManager : MonoSingleton<UIManager>
         }
     }
 
-    public void SetCursorInfoUI(string msg, int fontSize = 39)
+    public void SetCursorInfoUI(string msg, int fontSize = 30)
     {
         isOnCursorInfo = true;
 
         cursorInfoText.text = msg;
         cursorInfoText.fontSize = fontSize;
 
-        cursorImgRectTrm.sizeDelta = new Vector2(Mathf.Clamp(msg.Length * widthOffset, sw, 1000f), cursorImgRectTrm.rect.height);
+        //cursorImgRectTrm.sizeDelta = new Vector2(Mathf.Clamp(msg.Length * widthOffset, sw, 1000f), cursorImgRectTrm.rect.height);
         cursorInfoImgOffset = new Vector3(cursorImgRectTrm.rect.width, cursorImgRectTrm.rect.height) * 0.5f;
 
         cursorInfoImg.gameObject.SetActive(true);
@@ -753,6 +761,28 @@ public partial class UIManager : MonoSingleton<UIManager>
         cursorInfoImg.gameObject.SetActive(false);
         isOnCursorInfo = false;
     }
+
+    private void UIDelayImgUpdate()
+    {
+        if(mouseOverTimeCheckImg.gameObject.activeSelf)
+        {
+            moElapsed += Time.unscaledDeltaTime;
+            mouseOverTimeCheckImg.fillAmount = Mathf.Clamp( moElapsed / moTime, 0f, 1f);
+            mouseOverTimeCheckImg.transform.position = Input.mousePosition;
+        }
+    }
+    public void SetUIDelayImg(float time)
+    {
+        mouseOverTimeCheckImg.gameObject.SetActive(true);
+        mouseOverTimeCheckImg.fillAmount = 0;
+        moTime = time;
+        moElapsed = 0f;
+    }
+    public void OffUIDelayImg()
+    {
+        mouseOverTimeCheckImg.gameObject.SetActive(false);
+    }
+
     #endregion
 
     #region Inventory
@@ -1002,6 +1032,13 @@ public partial class UIManager : MonoSingleton<UIManager>
         statTexts[7].text = stat.AttackSpeed.ToString();
 
         //statText.text = $"HP\t\t{currentHP}/{stat.hp}\n\n공격력\t\t{stat.damage}\n\n방어력\t\t{stat.defense}\n\n이동속도\t\t{stat.speed}";
+    }
+
+    public void UpdatePlayerHPInInven()
+    {
+        invenHpInfo.first.DOKill();
+        invenHpInfo.first.DOFillAmount((float)sgm.Player.CurrentHp / sgm.Player.PlayerStat.MaxHp, 0.3f).SetUpdate(true);
+        invenHpInfo.second.text = string.Concat("HP : ",Mathf.Ceil(Mathf.Clamp(sgm.Player.CurrentHp, 0, sgm.Player.PlayerStat.MaxHp)), '/', Mathf.Ceil(sgm.Player.PlayerStat.MaxHp));
     }
 
     public void UpdatePlayerHPUI(bool decrease = false)

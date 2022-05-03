@@ -10,6 +10,7 @@ public class ItemUseMng
         int iValue = Mathf.CeilToInt(value);
         PlayerObj.GetHeal(iValue);
         UIManager.Instance.RequestLogMsg("HP " + iValue + " 회복");
+        UIManager.Instance.UpdatePlayerHPInInven();
         //EffectManager.Instance.OnTopRightBtnEffect(UIType.STAT, true);
     }
 
@@ -19,6 +20,7 @@ public class ItemUseMng
         int iValue = Mathf.FloorToInt(value);
         PlayerObj.GetDamage(iValue, false, true);  
         UIManager.Instance.RequestLogMsg("저주로 인해서 HP " + iValue + "%만큼 잃었습니다.");
+        UIManager.Instance.UpdatePlayerHPInInven();
     }
 
     public static void IncreaseMaxHP(float value)
@@ -28,6 +30,7 @@ public class ItemUseMng
         UIManager.Instance.RequestLogMsg("최대 HP " + value + " 상승");
         PlayerObj.GetHeal((int)value);
         EffectManager.Instance.OnTopRightBtnEffect(UIType.STAT, true);
+        UIManager.Instance.UpdatePlayerHPInInven();
     }
 
     public static void IncreaseStr(int value)

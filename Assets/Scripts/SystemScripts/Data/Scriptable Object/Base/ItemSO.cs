@@ -13,7 +13,7 @@ public abstract class ItemSO : ScriptableObject
     public string id => name;  //원래는 int형이고 변수형태였음
     public int maxCount; //해당 아이템을 최대 몇 개까지 인벤토리에 겹치게 해서 가질 수 있는지
 
-    public int existBattleCount = -1; //n번의 전투 후에는 해당 아이템이 사라짐. -1이면 무한. 해당 스테이지 내 모든 몹 잡을 시 카운트를 한 번 셈.
+    //public int existBattleCount = -1; //n번의 전투 후에는 해당 아이템이 사라짐. -1이면 무한. 해당 스테이지 내 모든 몹 잡을 시 카운트를 한 번 셈.
 
     public string itemName;
 
