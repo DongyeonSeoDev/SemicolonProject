@@ -110,6 +110,7 @@ public class PlayerDrainCollider : MonoBehaviour
                 SlimeGameManager.Instance.Player.PlayerState.IsDrain = false;
 
                 EventManager.TriggerEvent("EnemyStart");
+                EventManager.TriggerEvent("PlayerStart");
 
                 gameObject.SetActive(false);
             }

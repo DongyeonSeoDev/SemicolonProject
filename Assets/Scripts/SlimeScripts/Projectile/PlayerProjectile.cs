@@ -7,6 +7,9 @@ public class PlayerProjectile : MonoBehaviour
     private SlimePoolManager slimePoolManager = null;
     private PlayerInput playerInput = null;
 
+    private Rigidbody2D rigid = null;
+    private Animator anim = null;
+
     [SerializeField]
     private GameObject onCrashEffect = null;
 
@@ -15,9 +18,8 @@ public class PlayerProjectile : MonoBehaviour
     [SerializeField]
     private LayerMask whatIsEnemy;
 
-    private Rigidbody2D rigid = null;
-
     private Vector2 moveVec = Vector2.zero;
+    private Vector2 lastMoveVec = Vector2.zero;
 
     private float moveSpeed = 1f;
 
@@ -28,26 +30,36 @@ public class PlayerProjectile : MonoBehaviour
     [SerializeField]
     private float knockBackPower = 0f;
 
+    private bool isStop = false;
+
     private void Awake()
     {
         slimePoolManager = SlimePoolManager.Instance;
         playerInput = SlimeGameManager.Instance.Player.GetComponent<PlayerInput>();
 
         rigid = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
     }
 
     void Update()
     {
-        Move();
-        CheckMoveTime();
+        if (!isStop)
+        {
+            Move();
+            CheckMoveTime();
+        }
     }
     private void OnEnable()
     {
+        EventManager.StartListening("PlayerStart", PlayerStart);
+        EventManager.StartListening("PlayerStop", PlayerStop);
         EventManager.StartListening("PlayerDead", Despawn);
         EventManager.StartListening("ExitCurrentMap", Despawn);
     }
     private void OnDisable()
     {
+        EventManager.StopListening("PlayerStart", PlayerStart);
+        EventManager.StopListening("PlayerStop", PlayerStop);
         EventManager.StopListening("PlayerDead", Despawn);
         EventManager.StopListening("ExitCurrentMap", Despawn);
     }
@@ -136,5 +148,18 @@ public class PlayerProjectile : MonoBehaviour
 
         slimePoolManager.AddObject(gameObject);
         gameObject.SetActive(false);
+    }
+    private void PlayerStart()
+    {
+        isStop = false;
+        moveVec = lastMoveVec;
+        anim.speed = 1f;
+    }
+    private void PlayerStop()
+    {
+        isStop = true;
+        lastMoveVec = moveVec;
+        rigid.velocity = Vector2.zero;
+        anim.speed = 0f;
     }
 }

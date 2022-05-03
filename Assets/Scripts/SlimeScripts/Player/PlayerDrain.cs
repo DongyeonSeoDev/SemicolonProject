@@ -110,6 +110,7 @@ public class PlayerDrain : PlayerSkill
 
         EventManager.TriggerEvent("SetDrainTime", playerDrainCol.DrainTime);
         EventManager.TriggerEvent("EnemyStop");
+        EventManager.TriggerEvent("PlayerStop");
 
         drainCollider.SetActive(true);
 
