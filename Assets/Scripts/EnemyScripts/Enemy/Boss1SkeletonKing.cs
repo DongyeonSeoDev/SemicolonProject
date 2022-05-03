@@ -26,8 +26,16 @@ namespace Enemy
         public float speedUpTime = 1f;
         public int bossHP = 2000;
 
-        [HideInInspector]
-        public float currentSpeed = 0f;
+        [Header("Distance")]
+        public float fireLimitDistance = 1.5f;
+        public float fireLimitSpawnDistance = 0.5f;
+
+        [HideInInspector] public Vector2 limitMinPosition;
+        [HideInInspector] public Vector2 limitMaxPosition;
+        [HideInInspector] public Vector2 limitMinFirePosition;
+        [HideInInspector] public Vector2 limitMaxFirePosition;
+        [HideInInspector] public LayerMask whatIsWall;
+        [HideInInspector] public float currentSpeed = 0f;
 
         private EnemyCommand enemyMoveCommand;
         private EnemyCommand enemySpecialAttackMoveCommand;
@@ -36,12 +44,6 @@ namespace Enemy
         private EnemyCommand rushAttackCommand;
         private WaitForSeconds fireSpawnTimeSeconds;
         private WaitForSeconds fireSpawnTimeSeconds2 = new WaitForSeconds(0.1f);
-
-        public Vector2 limitMinPosition;
-        public Vector2 limitMaxPosition;
-        public Vector2 limitMinFirePosition;
-        public Vector2 limitMaxFirePosition;
-        public LayerMask whatIsWall;
 
         private BossCanvas bossHPBar;
 
@@ -108,10 +110,10 @@ namespace Enemy
 
             whatIsWall = LayerMask.GetMask("WALL");
 
-            limitMaxFirePosition.y = CheckPosition(Vector2.up).y - 0.5f;
-            limitMinFirePosition.y = CheckPosition(Vector2.down).y + 0.5f;
-            limitMaxFirePosition.x = CheckPosition(Vector2.right).x - 0.5f;
-            limitMinFirePosition.x = CheckPosition(Vector2.left).x + 0.5f;
+            limitMaxFirePosition.y = CheckPosition(Vector2.up).y - fireLimitSpawnDistance;
+            limitMinFirePosition.y = CheckPosition(Vector2.down).y + fireLimitSpawnDistance;
+            limitMaxFirePosition.x = CheckPosition(Vector2.right).x - fireLimitSpawnDistance;
+            limitMinFirePosition.x = CheckPosition(Vector2.left).x + fireLimitSpawnDistance;
 
             limitMaxPosition.y = limitMaxFirePosition.y - 0.8f;
             limitMinPosition.y = limitMinFirePosition.y + 1.32f;
@@ -333,10 +335,10 @@ namespace Enemy
             List<Fire> fireList = new List<Fire>();
             Vector3 playerPosition = EnemyManager.Player.transform.position;
 
-            playerPosition.x = playerPosition.x < limitMinFirePosition.x + 1.5f ? limitMinFirePosition.x + 1.5f : playerPosition.x;
-            playerPosition.x = playerPosition.x > limitMaxFirePosition.x - 1.5f ? limitMaxFirePosition.x - 1.5f : playerPosition.x;
-            playerPosition.y = playerPosition.y < limitMinFirePosition.y + 1.5f ? limitMinFirePosition.y + 1.5f : playerPosition.y;
-            playerPosition.y = playerPosition.y > limitMaxFirePosition.y - 1.5f ? limitMaxFirePosition.y - 1.5f : playerPosition.y;
+            playerPosition.x = playerPosition.x < limitMinFirePosition.x + fireLimitDistance ? limitMinFirePosition.x + fireLimitDistance : playerPosition.x;
+            playerPosition.x = playerPosition.x > limitMaxFirePosition.x - fireLimitDistance ? limitMaxFirePosition.x - fireLimitDistance : playerPosition.x;
+            playerPosition.y = playerPosition.y < limitMinFirePosition.y + fireLimitDistance ? limitMinFirePosition.y + fireLimitDistance : playerPosition.y;
+            playerPosition.y = playerPosition.y > limitMaxFirePosition.y - fireLimitDistance ? limitMaxFirePosition.y - fireLimitDistance : playerPosition.y;
 
             Fire.checkAttackObjectTogether.Clear();
             attackCount++;
