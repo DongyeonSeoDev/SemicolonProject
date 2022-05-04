@@ -86,7 +86,7 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
         }
     }
 
-    public void Open()
+    public void Open() //열기
     {
         if (isExitDoor || !gameObject.activeSelf || isOpen) return;
 
@@ -102,7 +102,7 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
         EffectManager.Instance.CallGameEffect("DoorDestEff", transform.position, 1.5f);
     }
 
-    public void Close()
+    public void Close() //닫기
     {
         if (isExitDoor || !gameObject.activeSelf) return;
 
@@ -113,7 +113,7 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
         //isBreak = false;
     }
 
-    public void Pass()
+    public void Pass() //이 문이 입구가 될 것임
     {
         spr.sprite = StageManager.Instance.doorSprDic[dirType.ToString() + "Exit"];
         isExitDoor = true;
@@ -128,11 +128,11 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
 
     public override void SetInteractionUI(bool on)
     {
-        if ( (StageManager.Instance.IsStageClear || isBreak) && !isExitDoor)
+        if ( (StageManager.Instance.IsStageClear || isBreak) && !isExitDoor) //해당 스테이지 클리어했거나 문이 부서진 상태이면서 입구가 아니면
         {
             base.SetInteractionUI(on);
 
-            if (nextStageData.areaType == AreaType.MONSTER && !IsBlindState)  //담 스테이지가 몬스터 맵이면 종족 아이콘 띄움
+            if (nextStageData.areaType == AreaType.MONSTER && !IsBlindState)  //담 스테이지가 몬스터 맵이면서 실명 저주 안걸린 상태면 종족 아이콘 띄움
             {
                 if (on)
                 {
@@ -175,7 +175,7 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
         isOpen = false;
     }
 
-    public void GetDamage(int damage, float charging)
+    public void GetDamage(int damage, float charging) //돌진으로 쳐맞음
     {
         if (Time.time > damageableTime)
         {

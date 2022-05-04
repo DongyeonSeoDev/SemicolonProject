@@ -9,9 +9,9 @@ public class StateManager : SingletonClass<StateManager>
 
     public Dictionary<string, int> stateCountDict = new Dictionary<string, int>();  //해당 상태이상이 앞으로 효과가 몇 번 더 발동이 되는지 저장
 
-    public Dictionary<string, Action<bool>> stateStopDict = new Dictionary<string, Action<bool>>();
+    public Dictionary<string, Action<bool>> stateStopDict = new Dictionary<string, Action<bool>>(); //버프를 해제시키는 함수를 담아놓음
 
-    private Dictionary<string, BuffSlot> buffSlotDic = new Dictionary<string, BuffSlot>();
+    private Dictionary<string, BuffSlot> buffSlotDic = new Dictionary<string, BuffSlot>(); //왼 위 적용중인 버프 아이콘들
 
 
     public bool IsPlayerFullHP => SlimeGameManager.Instance.Player.CurrentHp == SlimeGameManager.Instance.Player.PlayerStat.MaxHp;

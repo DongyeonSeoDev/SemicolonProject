@@ -327,6 +327,7 @@ public class StageManager : MonoSingleton<StageManager>
         randomZoneRestTypes = randomZoneRestTypes.ToRandomList(15);*/
     }
 
+    //다음 스테이지로 감. (검은색 로딩 화면 중에 이루어지는 함수)
     public void NextStage(string id)
     {
         Debug.Log("Next Stage : " + id);
