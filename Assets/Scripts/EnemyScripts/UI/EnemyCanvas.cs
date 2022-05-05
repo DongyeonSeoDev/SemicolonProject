@@ -9,12 +9,4 @@ public class EnemyCanvas : MonoBehaviour
         canvas = GetComponent<Canvas>();
         canvas.worldCamera = Util.MainCam;
     }
-
-    protected virtual void Update()
-    {
-        if (transform.rotation != Quaternion.identity)
-        {
-            transform.rotation = Quaternion.identity;
-        }
-    }
 }

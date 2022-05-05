@@ -261,6 +261,7 @@ MonoBehaviour:
   hpTweenTime: 0.1
   hpTweenDelayTime: 0.3
   damageHPTweenTime: 0.2
+  anotherImage: {fileID: 5565962855984174146}
 --- !u!114 &4040903921431046384
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -310,22 +310,22 @@ namespace Enemy
             {
                 if (enemyData.isDamaged) // 색깔 변경
                 {
-                    enemyData.enemySpriteRenderer.color = enemyData.damagedColor;
+                    enemyData.enemy.ChangeColor(enemyData.damagedColor);
                 }
                 else // 색깔 변경 해제
                 {
-                    enemyData.enemySpriteRenderer.color = enemyData.normalColor;
+                    enemyData.enemy.ChangeColor(enemyData.normalColor);
                 }
             }
             else if (enemyData.eEnemyController == EnemyController.PLAYER)
             {
                 if (enemyData.isDamaged) // 색깔 변경
                 {
-                    enemyData.enemySpriteRenderer.color = enemyData.playerDamagedColor;
+                    enemyData.enemy.ChangeColor(enemyData.playerDamagedColor);
                 }
                 else // 색깔 변경 해제
                 {
-                    enemyData.enemySpriteRenderer.color = enemyData.playerNormalColor;
+                    enemyData.enemy.ChangeColor(enemyData.playerNormalColor);
                 }
             }
         }
@@ -480,10 +480,20 @@ namespace Enemy
             if (enemyData.moveVector.x < 0)
             {
                 enemyData.enemySpriteRenderer.flipX = true;
+
+                if (enemyData.enemyCanvas != null)
+                {
+                    enemyData.enemyCanvas.transform.rotation = Quaternion.identity;
+                }
             }
             else if (enemyData.moveVector.x > 0)
             {
                 enemyData.enemySpriteRenderer.flipX = false;
+
+                if (enemyData.enemyCanvas != null)
+                {
+                    enemyData.enemyCanvas.transform.rotation = Quaternion.identity;
+                }
             }
         }
     }
@@ -502,10 +512,20 @@ namespace Enemy
             if (enemyData.moveVector.x < 0)
             {
                 enemyData.enemyObject.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+
+                if (enemyData.enemyCanvas != null)
+                {
+                    enemyData.enemyCanvas.transform.rotation = Quaternion.identity;
+                }
             }
             else if (enemyData.moveVector.x > 0)
             {
                 enemyData.enemyObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+
+                if (enemyData.enemyCanvas != null)
+                {
+                    enemyData.enemyCanvas.transform.rotation = Quaternion.identity;
+                }
             }
         }
     }
