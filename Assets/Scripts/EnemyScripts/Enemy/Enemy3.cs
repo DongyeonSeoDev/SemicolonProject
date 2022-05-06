@@ -21,7 +21,7 @@ namespace Enemy
             enemyData.hp = 59;
             enemyData.playerAnimationTime = 1f;
 
-            enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, false);
+            enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance);
             enemyAttackCommand = new EnemyAddForceCommand(rb, this, enemyData.rushForce, positionCheckData);
             enemyData.enemySpriteRotateCommand = new EnemySpriteFlipCommand(enemyData);
         }

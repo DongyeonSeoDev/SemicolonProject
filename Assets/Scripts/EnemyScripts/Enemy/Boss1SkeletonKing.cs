@@ -93,7 +93,7 @@ namespace Enemy
 
             enemyMoveCommand = new BossMoveCommand(enemyData, movePivot, rb, this);
             enemySpecialAttackMoveCommand = new EnemyTargetMoveCommand(enemyData, targetMoveSpeed);
-            attackMoveCommand = new EnemyFollowPlayerCommand(enemyData, movePivot, rb, bossAttackMoveSpeed, 0f, false);
+            attackMoveCommand = new EnemyTargetMoveCommand(enemyData, bossAttackMoveSpeed);
             rushAttackReadyCommand = new BossRushAttackCommand(enemyData, movePivot, rb, -1f, false);
             rushAttackCommand = new BossRushAttackCommand(enemyData, movePivot, rb, 50f, true);
 
@@ -250,6 +250,11 @@ namespace Enemy
 
             rushAttackReadyCommand.Execute();
             enemyData.enemySpriteRotateCommand.Execute();
+        }
+
+        public void SetAttackMovePosition() // 애니메이션에서 실행 - 공격할 위치 설정
+        {
+            enemyData.moveVector = (EnemyManager.Player.transform.position - transform.position).normalized;
         }
 
         public void AttackMove() // 애니메이션에서 실행 - 공격하면서 움직이는 코드
