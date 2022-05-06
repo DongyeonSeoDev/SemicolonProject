@@ -29,7 +29,7 @@ public class UIInfoDelay : UITransition
         {
             isMouseOver = true;
             checkTime = Time.unscaledTime + needWaitTime;
-            UIManager.Instance.SetUIDelayImg(needWaitTime);
+            UIManager.Instance.SetUIDelayImg(needWaitTime- (Mathf.Clamp(needWaitTime * 0.1f, 0.1f, 0.2f)) ); //저 값을 빼는 것은 UI Fill이 다 찬 것을 보여주고 UI 띄우기 위함. 안하면 약간 Fill 남은 상태에서 UI 띄워진 것처럼 보임
         }
         else
         {
