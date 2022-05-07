@@ -33,6 +33,22 @@ namespace Water
             }
                 
         }
+        public static void PoolObjSetActiveFalse(string key, Func<GameObject,bool> func)
+        {
+            if (poolDic.ContainsKey(key))
+            {
+                poolDic[key].PoolSetActiveFalse(func);
+            }
+
+        }
+        public static void PoolObjSetActiveFalse<T>(string key, Func<T, bool> func)
+        {
+            if (poolDic.ContainsKey(key))
+            {
+                poolDic[key].PoolSetActiveFalse<T>(func);
+            }
+
+        }
         /*public static void PoolObjSetActiveFalse(string[] keys)
         {
             for (int i = 0; i < keys.Length; i++)
@@ -41,17 +57,29 @@ namespace Water
                     poolDic[keys[i]].PoolSetActiveFalse();
             }
         }*/
-            
+
         public static bool IsContainKey(string key) => poolDic.ContainsKey(key);
 
-        public static void ClearPool(string key)
+        public static void ClearPool(string key, bool destroy = false)
         {
             if (poolDic.ContainsKey(key))
+            {
+                if(destroy)
+                {
+                    poolDic[key].DestroyAllObj();
+                }
                 poolDic.Remove(key);
+            }
         }
 
-        public static void ClearAllPool()
+        public static void ClearAllPool(bool destroy = false)
         {
+            if (destroy)
+            {
+                foreach (string key in poolDic.Keys)
+                    poolDic[key].DestroyAllObj();
+            }
+
             poolDic.Clear();
         }
     }
@@ -122,6 +150,35 @@ namespace Water
                     x.SetActive(false);
                 }
             });
+        }
+
+        public void PoolSetActiveFalse(Func<GameObject,bool> func)
+        {
+            queue.ForEach(x => {
+                if (x.activeSelf && func(x))
+                {
+                    x.SetActive(false);
+                }
+            });
+        }
+
+        public void PoolSetActiveFalse<T>(Func<T, bool> func)
+        {
+            queue.ForEach(x => {
+                if (x.activeSelf && func(x.GetComponent<T>()))
+                {
+                    x.SetActive(false);
+                }
+            });
+        }
+
+        public void DestroyAllObj()
+        {
+            while(queue.Count > 0)
+            {
+                GameObject obj = queue.Dequeue();
+                GameObject.Destroy(obj);
+            }
         }
     }
     
