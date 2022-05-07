@@ -85,9 +85,9 @@ namespace Enemy
             if (!isDelay)
             {
                 EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Attack, enemyData.enemyAnimator, TriggerType.SetTrigger);
+                EnemyManager.SpriteFlipCheck(enemyData);
             }
 
-            EnemyManager.SpriteFlipCheck(enemyData);
             currentTime = 0f;
 
             base.Start();
@@ -443,7 +443,6 @@ namespace Enemy
 
             if (SlimeGameManager.Instance.CurrentSkillDelayTimer[0] <= enemyData.playerAnimationDelay) // 공격 종료
             {
-                EnemyManager.SpriteFlipCheck(enemyData);
                 base.Update();
             }
 
