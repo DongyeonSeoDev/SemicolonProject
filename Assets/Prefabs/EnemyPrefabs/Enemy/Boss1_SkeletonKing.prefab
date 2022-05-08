@@ -1321,9 +1321,9 @@ MonoBehaviour:
   fireSpawnTime: 0.1
   targetMoveSpeed: 15
   attackSpeedUpPercent: 40
-  startSpeed: 5
+  startSpeed: 7
   speedUpValue: 0.5
-  speedUpTime: 1
+  speedUpTime: 0.5
   bossHP: 2000
   fireLimitDistance: 1.5
   fireLimitSpawnDistance: 0.5

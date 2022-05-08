@@ -54,6 +54,7 @@ namespace Enemy
         private bool isAttack = false;
         private bool isSpecialAttack1 = false;
         private bool isSpecialAttack3 = false;
+        private bool isSpeedUpTime = true;
 
         public readonly int hashSpecialAttack1 = Animator.StringToHash("specialAttack1");
         public readonly int hashSpecialAttack1End = Animator.StringToHash("specialAttack1End");
@@ -84,7 +85,7 @@ namespace Enemy
             enemyData.enemyCanvas = bossHPBar.gameObject;
 
             enemyData.attackDelay = 1.8f;
-            enemyData.isAttackPlayerDistance = 3.5f;
+            enemyData.isAttackPlayerDistance = 4f;
             enemyData.attackPower = 30;
             enemyData.maxHP = bossHP;
             enemyData.hp = bossHP;
@@ -117,10 +118,10 @@ namespace Enemy
             limitMaxFirePosition.x = CheckPosition(Vector2.right).x - fireLimitSpawnDistance;
             limitMinFirePosition.x = CheckPosition(Vector2.left).x + fireLimitSpawnDistance;
 
-            limitMaxPosition.y = limitMaxFirePosition.y - 0.8f;
-            limitMinPosition.y = limitMinFirePosition.y + 1.32f;
-            limitMaxPosition.x = limitMaxFirePosition.x - 1.9f;
-            limitMinPosition.x = limitMinFirePosition.x + 1.9f;
+            limitMaxPosition.y = limitMaxFirePosition.y - 0.9f;
+            limitMinPosition.y = limitMinFirePosition.y + 1.42f;
+            limitMaxPosition.x = limitMaxFirePosition.x - 2f;
+            limitMinPosition.x = limitMinFirePosition.x + 2f;
 
             specialAttack3Check.Clear();
 
@@ -221,12 +222,15 @@ namespace Enemy
                 currentTime += Time.deltaTime;
             }
 
-            currentMoveTime += Time.deltaTime;
-
-            if (currentMoveTime >= speedUpTime)
+            if (isSpeedUpTime)
             {
-                currentMoveTime = 0f;
-                currentSpeed += speedUpValue;
+                currentMoveTime += Time.deltaTime;
+
+                if (currentMoveTime >= speedUpTime)
+                {
+                    currentMoveTime = 0f;
+                    currentSpeed += speedUpValue;
+                }
             }
         }
 
@@ -334,6 +338,8 @@ namespace Enemy
 
         public void SpecialAttack2Start() // 애니메이션에서 실행 - 특수공격2 시작
         {
+            isSpeedUpTime = false;
+
             StartCoroutine(SpecialAttack2());
         }
 
@@ -395,6 +401,8 @@ namespace Enemy
 
             SpeedReset();
 
+            isSpeedUpTime = false;
+
             for (int i = 0; i < 150; i++)
             {
                 Fire fire = EnemyPoolManager.Instance.GetPoolObject(Type.Fire, RandomPosition()).GetComponent<Fire>();
@@ -420,6 +428,7 @@ namespace Enemy
         public void SpecialAttackEnd() // 애니메이션에서 실행 - 특수공격2 종료
         {
             isAttack = false;
+            isSpeedUpTime = true;
         }
 
         public void SpecialAttackCheck() // 이벤트 구독에 사용됨 - 특수공격 사용 확인
