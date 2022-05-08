@@ -127,12 +127,13 @@ public class PickupCheck : MonoBehaviour
         isGameStart = false;
         UIManager.Instance.OnUIInteractSetActive(UIType.MINIGAME_PICKUP, false, true);
         CurrentPick.PickResult(success, count);
-        EventManager.TriggerEvent("PickupMiniGame", false);
+        
     }
 
     public void Inactive()
     {
         TimeManager.TimeResume();
+        EventManager.TriggerEvent("PickupMiniGame", false);
         isGameStart = false;
         circleCvsg.DOFade(0, 0.2f).SetUpdate(true);
         pickupCircleCheckGamePanel.DOFade(0, 0.25f).SetUpdate(true).OnComplete(() =>

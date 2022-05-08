@@ -282,7 +282,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         EventManager.StartListening("ChangeBody", (str, dead) => { if(!dead) InsertNoticeQueue(MonsterCollection.Instance.GetMonsterInfo(str).bodyName + "(으)로 변신하였습니다"); });
         EventManager.StartListening("PickupMiniGame", (Action<bool>)(start =>
         {
-            normalPanelCanvasg.DOFade(start ? 0 : 1, 0.25f);
+            normalPanelCanvasg.DOFade(start ? 0 : 1, 0.25f).SetUpdate(true);
         }));
         EventManager.StartListening("StartCutScene", () =>
         {
