@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace Enemy
 {
     public class Enemy1 : Enemy // 첫번째 적
