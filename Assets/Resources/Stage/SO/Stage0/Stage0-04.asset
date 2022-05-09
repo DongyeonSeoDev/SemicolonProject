@@ -14,6 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   stageFloor: {fileID: 11400000, guid: 516212a852b2f484a8abbed3d2618a20, type: 2}
   stageName: '    '
+  isSaveStage: 0
+  useOpenDoorSound: 1
   stageMonsterBundleCount: 0
   stageMonsterBundleID: []
   stage: {fileID: 1378282381469885354, guid: e9c3eecb013710245885827c3bc814f6, type: 3}

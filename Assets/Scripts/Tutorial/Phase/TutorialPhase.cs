@@ -106,6 +106,8 @@ public class SettingPhase : TutorialPhase
                 camShakeStr += 0.2f;
                 camFreq += 0.1f;
 
+                SoundManager.Instance.PlaySoundBox("ESC Effect SFX");
+
                 //Dust Particle Effect
                 ParticleSystem ps = PoolManager.GetItem<ParticleSystem>("DustEffect1");
                 ParticleSystem.MainModule main = ps.main;

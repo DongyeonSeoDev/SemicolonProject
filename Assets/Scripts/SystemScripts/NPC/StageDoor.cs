@@ -90,6 +90,12 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
     {
         if (isExitDoor || !gameObject.activeSelf || isOpen) return;
 
+        AreaType t = StageManager.Instance.CurrentAreaType;
+        if (StageManager.Instance.CurrentStageData.useOpenDoorSound || t == AreaType.MONSTER || t == AreaType.RANDOM || t == AreaType.BOSS)
+        {
+            SoundManager.Instance.PlaySoundBox("Door Break SFX");
+        }
+
         isOpen = true;
         isEnter = false;
         spr.sprite = StageManager.Instance.doorSprDic[dirType.ToString() + "Open"];
@@ -191,7 +197,7 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
 
             if (hp <= 0)
             {
-                SoundManager.Instance.PlaySoundBox("Door Break SFX");
+               
                 isBreak = true;
                 hp = 0;
                 Open();

@@ -143,7 +143,7 @@ MonoBehaviour:
   soundBoxId: Door Hit SFX
   audioSource: {fileID: -2057280067287601774}
   isBackgroundMusic: 0
-  playToEnd: 0
+  playToEnd: 1
   playTime: 0.5
   defaultVolume: 0.5
   defaultPitch: 1

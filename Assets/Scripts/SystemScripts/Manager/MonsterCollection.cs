@@ -214,7 +214,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     private string AdditionalStat(float value, bool percent = false)
     {
         if (!percent) return string.Concat("(", value >= 0 ? "+" : "", value, ')');
-        else return string.Concat("(+", value >= 0 ? "+" : "", value, "%)");
+        else return string.Concat("(", value >= 0 ? "+" : "", value, "%)");
     }
 
     #endregion

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -2057280067287601774}
   - component: {fileID: -8177254558972320154}
   m_Layer: 0
-  m_Name: Door Break SFX
+  m_Name: GetBuffSFX
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42,7 +42,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -2798515193983515459, guid: 792b4c7968e272d4cab917717e755752, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 0bc3ba0acec874eb4a1cb87c2e2ea7c3, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 8669fc8ab5e4b4d1b83ee66b210452b5, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0cc83990bb0e0f4bb9aaec369a4f7b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundBoxId: Door Break SFX
+  soundBoxId: GetBuffSFX
   audioSource: {fileID: -2057280067287601774}
   isBackgroundMusic: 0
   playToEnd: 1
