@@ -4,15 +4,22 @@ using UnityEngine;
 
 public class PlayerAvoidCloseCheckCollider : MonoBehaviour
 {
-    // Start is called before the first frame update
+    private EdgeCollider2D edgeCollider2D = null;
+    private List<Vector2> pointList = new List<Vector2> ();
+
     void Start()
     {
-        
+        edgeCollider2D = GetComponent<EdgeCollider2D>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         
+    }
+    public void InsertEdgePoint(Vector2 pos)
+    {
+        pointList.Add(pos);
+
+        edgeCollider2D.SetPoints(pointList);
     }
 }

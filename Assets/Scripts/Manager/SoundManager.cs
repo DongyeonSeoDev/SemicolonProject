@@ -142,6 +142,11 @@ public class SoundManager : MonoSingleton<SoundManager>
     }
     public void PlaySoundBox(string soundBoxId)
     {
+        if (soundBoxesDict[soundBoxId].IsBackgroundMusic ? (false) : (effectSoundsPause || effectSoundVolume <= 0f || UIManager.Instance.masterSoundSlider.value <= UIManager.Instance.masterSoundSlider.minValue))
+        {
+            return;
+        }
+
         GameObject soundBoxObj = null;
         SoundBox soundBox = null;
 
