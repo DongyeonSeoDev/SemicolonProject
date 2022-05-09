@@ -191,10 +191,14 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
 
             if (hp <= 0)
             {
-
+                SoundManager.Instance.PlaySoundBox("Door Break SFX");
                 isBreak = true;
                 hp = 0;
                 Open();
+            }
+            else
+            {
+                SoundManager.Instance.PlaySoundBox("Door Hit SFX");
             }
         }
     }
