@@ -383,14 +383,10 @@ MonoBehaviour:
   plants:
   - {fileID: 1922145319084488927}
   - {fileID: 7094775100746487176}
-  - {fileID: 0}
   - {fileID: 981852187168984956}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 6023695996824967392}
   - {fileID: 4743348430477039639}
   - {fileID: 6301840734114458552}
-  - {fileID: 0}
 --- !u!1 &1455471918951084097
 GameObject:
   m_ObjectHideFlags: 0

@@ -372,12 +372,8 @@ MonoBehaviour:
   - {fileID: 2896634154378890886}
   plants:
   - {fileID: 2215549287139561428}
-  - {fileID: 0}
   - {fileID: 7215967086364227840}
-  - {fileID: 0}
   - {fileID: 5587711140021698792}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 8268929169346041578}
   - {fileID: 6317505289826012936}
 --- !u!1 &3553275141150440558
@@ -26521,7 +26517,7 @@ PrefabInstance:
     - target: {fileID: 8632448655464481713, guid: 913d8b5e292ca3f4b9cdf9e9ace1a6f4, type: 3}
       propertyPath: _itemData
       value: 
-      objectReference: {fileID: 11400000, guid: f4122a4ced4ee8349ae86eb5adef071a, type: 2}
+      objectReference: {fileID: 11400000, guid: 9fc9500b9b1a4b34aabf03d842ac24af, type: 2}
     - target: {fileID: 8702471488895736902, guid: 913d8b5e292ca3f4b9cdf9e9ace1a6f4, type: 3}
       propertyPath: m_Name
       value: PickItemSample
