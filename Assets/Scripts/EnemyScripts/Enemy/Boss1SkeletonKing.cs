@@ -288,12 +288,6 @@ namespace Enemy
 
             rushAttackCommand.Execute();
             enemyData.enemySpriteRotateCommand.Execute();
-
-            if (Random.Range(0, 10) < 2)
-            {
-                isSpecialAttack1 = true;
-                attackCount = attackCount - 3 < 0 ? 0 : attackCount - 3;
-            }
         }
 
         private void SpecialAttack1() // 특수 공격 실행
@@ -467,11 +461,21 @@ namespace Enemy
         {
             if (enemyData.animationDictionary[EnemyAnimationType.Attack] == hashAttack1)
             {
-                if (Random.Range(0, 10) < 6)
-                {
-                    enemyData.animationDictionary[EnemyAnimationType.Attack] = hashAttack2;
+                int random = Random.Range(0, 10);
 
-                    return new EnemyAIAttackState(enemyData);
+                if (!isSpecialAttack1)
+                {
+                    if (random < 6)
+                    {
+                        enemyData.animationDictionary[EnemyAnimationType.Attack] = hashAttack2;
+
+                        return new EnemyAIAttackState(enemyData);
+                    }
+                    else if (random < 8)
+                    {
+                        isSpecialAttack1 = true;
+                        attackCount = attackCount - 3 < 0 ? 0 : attackCount - 3;
+                    }
                 }
 
                 return null;
