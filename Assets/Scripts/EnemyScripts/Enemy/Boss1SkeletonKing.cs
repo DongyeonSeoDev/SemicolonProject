@@ -295,7 +295,7 @@ namespace Enemy
             isSpecialAttack1 = false;
             isAttack = true;
 
-            enemyData.moveVector = (new Vector3(limitMinPosition.x, transform.position.y, transform.position.z) - transform.position).normalized;
+            enemyData.moveVector = Vector2.left;
 
             enemyData.animationDictionary[EnemyAnimationType.Move] = hashSpecialAttack1;
             enemyData.enemyMoveCommand = enemySpecialAttackMoveCommand;
