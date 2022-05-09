@@ -113,6 +113,8 @@ namespace Enemy
 
             whatIsWall = LayerMask.GetMask("WALL");
 
+            #region SetLimitPosition
+
             limitMaxFirePosition.y = CheckPosition(Vector2.up).y - fireLimitSpawnDistance;
             limitMinFirePosition.y = CheckPosition(Vector2.down).y + fireLimitSpawnDistance;
             limitMaxFirePosition.x = CheckPosition(Vector2.right).x - fireLimitSpawnDistance;
@@ -122,6 +124,8 @@ namespace Enemy
             limitMinPosition.y = limitMinFirePosition.y + 1.42f;
             limitMaxPosition.x = limitMaxFirePosition.x - 2f;
             limitMinPosition.x = limitMinFirePosition.x + 2f;
+
+            #endregion
 
             specialAttack3Check.Clear();
 
