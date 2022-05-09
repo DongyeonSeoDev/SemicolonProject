@@ -463,19 +463,20 @@ namespace Enemy
             {
                 int random = Random.Range(0, 10);
 
-                if (!isSpecialAttack1)
+                if (attackCount + 1 >= maxAttackCount)
                 {
-                    if (random < 6)
-                    {
-                        enemyData.animationDictionary[EnemyAnimationType.Attack] = hashAttack2;
+                    attackCount = maxAttackCount;
+                }
+                else if (random < 6)
+                {
+                    enemyData.animationDictionary[EnemyAnimationType.Attack] = hashAttack2;
 
-                        return new EnemyAIAttackState(enemyData);
-                    }
-                    else if (random < 8)
-                    {
-                        isSpecialAttack1 = true;
-                        attackCount = attackCount - 3 < 0 ? 0 : attackCount - 3;
-                    }
+                    return new EnemyAIAttackState(enemyData);
+                }
+                else if (random < 8)
+                {
+                    isSpecialAttack1 = true;
+                    attackCount = attackCount - 3 < 0 ? 0 : attackCount - 3;
                 }
 
                 return null;
