@@ -232,6 +232,10 @@ public partial class UIManager : MonoSingleton<UIManager>
         masterSoundSlider.value = option.masterSound;
         BGMSlider.value = option.bgmSize;
         SFXSlider.value = option.soundEffectSize;
+
+        OnChangedMasterVolume();
+        OnChangedBGMVolume();
+        OnChangedSFXVolume();
     }
 
     public void OnChangedResolution()

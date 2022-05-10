@@ -145,5 +145,5 @@ MonoBehaviour:
   isBackgroundMusic: 0
   playToEnd: 1
   playTime: 0.5
-  defaultVolume: 0.5
-  defaultPitch: 1
+  defaultVolume: 1
+  defaultPitch: 0.5

@@ -9,6 +9,9 @@ public class UIScale : UITransition
     public float transitionTime = 0.3f;
     public Vector3 targetScale = new Vector3(1.2f, 1.2f, 1.2f);
 
+    public bool useSound = true;
+    public string soundId = "UIMouseEnterSFX1";
+
     protected override void Awake()
     {
         base.Awake();
@@ -17,5 +20,9 @@ public class UIScale : UITransition
     public override void Transition(bool on)
     {
         transform.DOScale(on && transitionEnable ? targetScale : Vector3.one, transitionTime).SetUpdate(true);
+        if(on&& transitionEnable && useSound)
+        {
+            SoundManager.Instance.PlaySoundBox(soundId);
+        }
     }
 }
