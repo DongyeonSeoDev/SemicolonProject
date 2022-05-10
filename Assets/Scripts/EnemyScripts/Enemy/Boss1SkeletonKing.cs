@@ -15,6 +15,7 @@ namespace Enemy
 
         public int fireCount = 0;
         public int maxAttackCount = 0;
+        public int bossHP = 2000;
         public float specialAttackTime = 6f;
         public float bossAttackMoveSpeed = 0f;
         public float fireDistance = 0f;
@@ -24,7 +25,6 @@ namespace Enemy
         public float startSpeed = 5f;
         public float speedUpValue = 0.5f;
         public float speedUpTime = 1f;
-        public int bossHP = 2000;
 
         [Header("Distance")]
         public float fireLimitDistance = 1.5f;
