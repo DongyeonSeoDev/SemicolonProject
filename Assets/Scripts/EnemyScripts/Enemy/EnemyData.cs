@@ -33,9 +33,11 @@ namespace Enemy
         public Func<EnemyState> addChangeAttackCondition = null;
 
         public GameObject enemyObject;
+        public GameObject enemyCanvas;
         public Animator enemyAnimator;
         public SpriteRenderer enemySpriteRenderer;
         public Rigidbody2D enemyRigidbody2D;
+        public Enemy enemy;
 
         public EnemyCommand enemyMoveCommand;
         public EnemyCommand enemySpriteRotateCommand;

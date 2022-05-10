@@ -5,6 +5,7 @@ namespace Enemy
     public class Enemy3 : Enemy // 세번째 적
     {
         private EnemyCommand enemyAttackCommand;
+        public SpriteRenderer anotherImage;
 
         protected override void OnEnable()
         {
@@ -20,7 +21,7 @@ namespace Enemy
             enemyData.hp = 59;
             enemyData.playerAnimationTime = 1f;
 
-            enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, false);
+            enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance);
             enemyAttackCommand = new EnemyAddForceCommand(rb, this, enemyData.rushForce, positionCheckData);
             enemyData.enemySpriteRotateCommand = new EnemySpriteFlipCommand(enemyData);
         }
@@ -50,6 +51,13 @@ namespace Enemy
         public void EnemyAttack() // 애니메이션에서 실행 - 적 공격
         {
             enemyAttackCommand.Execute();
+        }
+
+        public override void ChangeColor(Color color)
+        {
+            anotherImage.color = color;
+
+            base.ChangeColor(color);
         }
     }
 }

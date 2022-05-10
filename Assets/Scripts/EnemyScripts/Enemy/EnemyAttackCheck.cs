@@ -7,6 +7,7 @@ namespace Enemy
     public class EnemyAttackCheck : MonoBehaviour
     {
         public int addAttackValue = 0;
+        public float stunTime = 1f;
 
         private Enemy enemy;
         private Rigidbody2D enemyRigidbody;
@@ -115,7 +116,7 @@ namespace Enemy
                     if (playerStatusEffect != null)
                     {
                         playerStatusEffect.KnockBack(positionCheckData.position, 50f, 0.1f);
-                        playerStatusEffect.Sturn(1f);
+                        playerStatusEffect.Sturn(stunTime);
                     }
                     else
                     {

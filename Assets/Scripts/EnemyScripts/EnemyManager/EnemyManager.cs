@@ -187,7 +187,7 @@ namespace Enemy
             }
             else if (enemyData.eEnemyController == EnemyController.PLAYER)
             {
-                enemyData.moveVector.x = Util.MainCam.ScreenToWorldPoint(Input.mousePosition).x;
+                enemyData.moveVector.x = Util.MainCam.ScreenToWorldPoint(Input.mousePosition).x - EnemyManager.Player.transform.position.x;
             }
 
             if (enemyData.enemySpriteRotateCommand != null)

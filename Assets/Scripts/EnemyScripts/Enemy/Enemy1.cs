@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace Enemy
 {
     public class Enemy1 : Enemy // 첫번째 적
@@ -12,7 +10,7 @@ namespace Enemy
             enemyData.hp = 50;
 
             enemyData.playerAnimationTime = 0.85f;
-            enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, false); // MoveCommand 추가
+            enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance); // MoveCommand 추가
             enemyData.enemySpriteRotateCommand = new EnemySpriteFlipCommand(enemyData);
         }
 

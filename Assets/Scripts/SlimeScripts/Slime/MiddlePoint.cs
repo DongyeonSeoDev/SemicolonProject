@@ -9,6 +9,9 @@ public class MiddlePoint : BodyPoint
     {
         get { return playerDrain; }
     }
+
+    private PlayerAvoidCloseCheckCollider playerAvoidCloseCheckCollider = null;
+
     [SerializeField]
     private EdgeCollider2D triggerEdgeCollider2D = null;
 
@@ -46,6 +49,8 @@ public class MiddlePoint : BodyPoint
     private void Start()
     {
         playerDrain = GetComponent<PlayerDrain>();
+        playerAvoidCloseCheckCollider = GetComponentInChildren<PlayerAvoidCloseCheckCollider>();
+        playerAvoidCloseCheckCollider.SetMiddlePoint(this);
     }
     private void FixedUpdate()
     {
@@ -58,8 +63,10 @@ public class MiddlePoint : BodyPoint
 
         for(int i = 0; i < notMiddlePointsPositions.Length; i++)
         {
-            notMiddlePointsPositions[i.Limit(0, softBody.NotMiddlePoints.Count - 1)] = softBody.NotMiddlePoints[i.Limit(0, softBody.NotMiddlePoints.Count - 1)].localPosition;
+            notMiddlePointsPositions[i] = softBody.NotMiddlePoints[i.Limit(0, softBody.NotMiddlePoints.Count - 1)].localPosition;
         }
+
+        playerAvoidCloseCheckCollider.SetEdgePoints(notMiddlePointsPositions);
     }
     private void FixedUpdateEdgeCollider()
     {
