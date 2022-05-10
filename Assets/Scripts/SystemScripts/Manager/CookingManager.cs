@@ -58,8 +58,13 @@ public class CookingManager : MonoSingleton<CookingManager>
             foodBtnDic.Add(x.FoodData.id, x);
         });
 
-        countPlusBtn.onClick.AddListener(() => ChangeMakeFoodCount(true));
-        countMinusBtn.onClick.AddListener(() => ChangeMakeFoodCount(false));
+        //countPlusBtn.onClick.AddListener(() => ChangeMakeFoodCount(true));
+        //countMinusBtn.onClick.AddListener(() => ChangeMakeFoodCount(false));
+        countPlusBtn.GetComponent<ButtonHoldEvent>().OnPressing += () => ChangeMakeFoodCount(true);
+        countMinusBtn.GetComponent<ButtonHoldEvent>().OnPressing += () => ChangeMakeFoodCount(false);
+
+        countPlusBtn.GetComponent<ButtonHoldEvent>().CanContinue += () => countPlusBtn.interactable;
+        countMinusBtn.GetComponent<ButtonHoldEvent>().CanContinue += () => countMinusBtn.interactable;
 
         Global.AddMonoAction(Global.TalkWithChef, x => ShowFoodList((Chef)x));
 

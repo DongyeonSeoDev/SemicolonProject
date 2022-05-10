@@ -10,7 +10,7 @@ public class BuffSlot : MonoBehaviour
 
     private void Awake()
     {
-        GetComponent<Button>().onClick.AddListener(() => UIManager.Instance.StateInfoDetail(buffData));
+        GetComponent<UIInfoDelay>().mouseOverEvent += () => UIManager.Instance.StateInfoDetail(buffData);
     }
 
     public void SetData(BuffStateDataSO data)

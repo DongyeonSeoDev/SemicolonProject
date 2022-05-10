@@ -277,6 +277,7 @@ GameObject:
   - component: {fileID: 6339767192302880405}
   - component: {fileID: 6504409884613948760}
   - component: {fileID: 6339767192302880404}
+  - component: {fileID: 3210758003661138622}
   m_Layer: 5
   m_Name: UIStateInfoSlot
   m_TagString: Untagged
@@ -415,6 +416,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitionEnable: 1
   explanation: 
+  fontSize: 30
 --- !u!114 &6504409884613948760
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -446,3 +448,17 @@ MonoBehaviour:
   coolTimeImg: {fileID: 2326752271030050469}
   coolTimeTxt: {fileID: 2326752271185457689}
   nifc: {fileID: 6339767192302880405}
+--- !u!114 &3210758003661138622
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4038348400325864259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80b1ee9a9e8d7044d91481019e85f20d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionEnable: 1
+  needWaitTime: 1.5

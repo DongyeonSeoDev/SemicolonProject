@@ -125,13 +125,14 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                     .AppendInterval(0.7f); //슬라임 밑으로 체력바 옮김
                     seq.Append(cursorImg.DOColor(Color.white, 0.5f))
                         .AppendInterval(0.4f).AppendCallback(() => cursorImg.sprite = clickedCursorSpr);  //마우스 커서 이미지 보임
-                    seq.Append(teHpBar.DOAnchorPos(new Vector2(-819.3f, 474f), 0.9f).SetEase(Ease.InQuad))
+                    seq.Append(teHpBar.DOAnchorPos(new Vector2(-640f, 474f), 0.9f).SetEase(Ease.InQuad))
                         .AppendInterval(0.4f).AppendCallback(() =>
                         {
                             cursorImg.transform.parent = ordCvs.transform;
                             cursorImg.sprite = cursorSpr;
                         });  //HP UI 있는곳으로 옮김
                     seq.AppendInterval(0.3f);
+                    seq.Append(teHpBar.DOScale(SVector3.two, 0.4f)).AppendInterval(0.3f);
                     seq.Append(teHpBar.GetComponent<CanvasGroup>().DOFade(0, 0.3f))
                     .AppendInterval(0.15f); //옮겨진 UI 안보이게
                     seq.Append(hpUI.GetComponent<CanvasGroup>().DOFade(1, 0.4f))

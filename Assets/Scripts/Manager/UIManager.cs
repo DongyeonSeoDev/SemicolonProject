@@ -30,6 +30,9 @@ public partial class UIManager : MonoSingleton<UIManager>
     private float sw; //cursorImgRectTrm의 처음 너비(최소 너비)
     public float widthOffset = 39;  //마우스 따라다니는 정보 텍스트에서 이미지 너비 키울때 글자당 키울 길이
 
+    public Image mouseOverTimeCheckImg; //어떤 UI에 마우스를 대고 있으면 몇 초 후에 UI뜨는데 그 UI의 필을 표시할 이미지
+    private float moTime, moElapsed;
+
     private Pair<float, float> screenHalf = new Pair<float, float>();
     #endregion
 
@@ -74,6 +77,8 @@ public partial class UIManager : MonoSingleton<UIManager>
     public Triple<Image, TextMeshProUGUI, Image> playerHPInfo;  //HPBar Image, HP Text (TMP), Green HPBar (Delay)
     private bool isStartDelayHPFillTimer; // green HP bar decrease soon
     private float setDelayHPFillTime; //time to reduce green hp bar
+
+    public Pair<Image, Text> invenHpInfo;
     #endregion
 
     #region SelectionWindow
@@ -96,7 +101,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     [Space(10)]
     public CanvasGroup normalPanelCanvasg;
     public CanvasGroup priorNormalPanelCvsg;
-    public CanvasGroup settingCvsg;
+    //public CanvasGroup settingCvsg;
     public CanvasGroup worldUICvsg;
     public CanvasGroup ordinaryCvsg;
     public CanvasGroup msgCvsg;
@@ -146,6 +151,7 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     private GameManager gm;
     private SlimeGameManager sgm;
+    private SoundManager sm;
 
     #region Init
     private void Awake()
@@ -211,6 +217,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     {
         gm = GameManager.Instance;
         sgm = SlimeGameManager.Instance;
+        sm = SoundManager.Instance;
     }
 
     private void Start()
@@ -227,6 +234,10 @@ public partial class UIManager : MonoSingleton<UIManager>
         masterSoundSlider.value = option.masterSound;
         BGMSlider.value = option.bgmSize;
         SFXSlider.value = option.soundEffectSize;
+
+        OnChangedMasterVolume();
+        OnChangedBGMVolume();
+        OnChangedSFXVolume();
     }
 
     public void OnChangedResolution()
@@ -258,14 +269,14 @@ public partial class UIManager : MonoSingleton<UIManager>
         {
             Item item = i as Item;
             RequestLogMsg(string.Format("아이템을 획득하였습니다. ({0} +{1})", item.itemData.itemName, item.DroppedCnt));
-            UpdateInventoryItemCount(item.itemData.id);
+            //UpdateInventoryItemCount(item.itemData.id);
         });
         //Pickup plant (채집 성공)
         Global.AddMonoAction(Global.PickupPlant, item =>
         {
             Pick p = (Pick)item;
             RequestLogMsg(string.Format("아이템을 획득하였습니다. ({0} +{1})", p.itemData.itemName, p.DroppedCount));
-            UpdateInventoryItemCount(p.itemData.id);
+            //UpdateInventoryItemCount(p.itemData.id);
         });
         //아이템 버림  
         Global.AddAction(Global.JunkItem, JunkItem);
@@ -277,7 +288,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         EventManager.StartListening("ChangeBody", (str, dead) => { if(!dead) InsertNoticeQueue(MonsterCollection.Instance.GetMonsterInfo(str).bodyName + "(으)로 변신하였습니다"); });
         EventManager.StartListening("PickupMiniGame", (Action<bool>)(start =>
         {
-            normalPanelCanvasg.DOFade(start ? 0 : 1, 0.25f);
+            normalPanelCanvasg.DOFade(start ? 0 : 1, 0.25f).SetUpdate(true);
         }));
         EventManager.StartListening("StartCutScene", () =>
         {
@@ -300,6 +311,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     {
         UserInput();
         CursorInfo();
+        UIDelayImgUpdate();
         Notice();
         DelayHPFill();
     }
@@ -465,7 +477,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         }
 
         menuBtns.Find(x => x.uiType == type).OnSelected(true);
-       
+        sm.PlaySoundBox("MenuOpen");
     }
 
     private bool ExceptionHandler(UIType type) //UI여닫는 상호작용에 대한 예외처리. true를 리턴하면 상호작용 안함 
@@ -479,12 +491,14 @@ public partial class UIManager : MonoSingleton<UIManager>
                 OnUIInteractSetActive(UIType.MENU, true, true);  //메뉴창을 띄움
                 MenuBtnSelectedMark(type);
                 selectedMenuType = type;
+                
             }
             else
             {
                 if(selectedMenuType == type)
                 {
                     OnUIInteract(UIType.MENU);
+                    
                     return true;
                 }
                 else
@@ -501,6 +515,8 @@ public partial class UIManager : MonoSingleton<UIManager>
                 {
                     Inventory.Instance.invenUseActionImg.SetActive(false);
                 }
+                invenHpInfo.first.fillAmount = (float)sgm.Player.CurrentHp / sgm.Player.PlayerStat.MaxHp;
+                invenHpInfo.second.text = string.Concat("HP : ",Mathf.Ceil(Mathf.Clamp(sgm.Player.CurrentHp, 0, sgm.Player.PlayerStat.MaxHp)), '/', Mathf.Ceil(sgm.Player.PlayerStat.MaxHp));
                 break;
             case UIType.KEYSETTING:
                 if (KeyActionManager.Instance.IsChangingKeySetting)  //키세팅 변경 중에는 esc로 키세팅 UI 안꺼지게
@@ -735,14 +751,14 @@ public partial class UIManager : MonoSingleton<UIManager>
         }
     }
 
-    public void SetCursorInfoUI(string msg, int fontSize = 39)
+    public void SetCursorInfoUI(string msg, int fontSize = 30)
     {
         isOnCursorInfo = true;
 
         cursorInfoText.text = msg;
         cursorInfoText.fontSize = fontSize;
 
-        cursorImgRectTrm.sizeDelta = new Vector2(Mathf.Clamp(msg.Length * widthOffset, sw, 1000f), cursorImgRectTrm.rect.height);
+        //cursorImgRectTrm.sizeDelta = new Vector2(Mathf.Clamp(msg.Length * widthOffset, sw, 1000f), cursorImgRectTrm.rect.height);
         cursorInfoImgOffset = new Vector3(cursorImgRectTrm.rect.width, cursorImgRectTrm.rect.height) * 0.5f;
 
         cursorInfoImg.gameObject.SetActive(true);
@@ -753,6 +769,28 @@ public partial class UIManager : MonoSingleton<UIManager>
         cursorInfoImg.gameObject.SetActive(false);
         isOnCursorInfo = false;
     }
+
+    private void UIDelayImgUpdate()
+    {
+        if(mouseOverTimeCheckImg.gameObject.activeSelf)
+        {
+            moElapsed += Time.unscaledDeltaTime;
+            mouseOverTimeCheckImg.fillAmount = Mathf.Clamp( moElapsed / moTime, 0f, 1f);
+            mouseOverTimeCheckImg.transform.position = Input.mousePosition;
+        }
+    }
+    public void SetUIDelayImg(float time)
+    {
+        mouseOverTimeCheckImg.gameObject.SetActive(true);
+        mouseOverTimeCheckImg.fillAmount = 0;
+        moTime = time;
+        moElapsed = 0f;
+    }
+    public void OffUIDelayImg()
+    {
+        mouseOverTimeCheckImg.gameObject.SetActive(false);
+    }
+
     #endregion
 
     #region Inventory
@@ -765,11 +803,12 @@ public partial class UIManager : MonoSingleton<UIManager>
             selectedItemSlot.outline.DOKill();
             selectedItemSlot.outline.enabled = false;
         }*/
-        selectedItemSlot = slot;
+        //selectedItemSlot = slot;
 
-        if (selectedItemId == itemID) return;
+        if (selectedItemSlot && selectedItemSlot == slot) return;
         else if (string.IsNullOrEmpty(selectedItemId)) OnUIInteract(UIType.ITEM_DETAIL);
         selectedItemId = itemID;
+        selectedItemSlot = slot;
 
         ItemSO data = gm.GetItemData(itemID);
 
@@ -782,11 +821,7 @@ public partial class UIManager : MonoSingleton<UIManager>
 
         itemAbilExplanation.text = data.abilExplanation;
 
-        selectedImg.gameObject.SetActive(true);
-        selectedImg.transform.SetParent(slot.root.transform);
-        selectedImg.transform.localPosition = Vector3.zero;
-        selectedImg.transform.SetAsLastSibling();
-        selectedImg.transform.localScale = Vector3.one; //왜인지 옮길 수록 스케일이 작아져서 원래대로 되돌림
+        Util.SetSlotMark(selectedImg,slot.root.transform); //왜인지 옮길 수록 스케일이 작아져서 원래대로 되돌림
 
         //itemUseBtn.gameObject.SetActive(data.itemType != ItemType.ETC);
         //if (data.itemType == ItemType.ETC && ((Ingredient)data).isUseable) itemUseBtn.gameObject.SetActive(true);
@@ -795,13 +830,13 @@ public partial class UIManager : MonoSingleton<UIManager>
         if (data.itemType == ItemType.ETC && ((Ingredient)data).isUseable) Inventory.Instance.invenUseActionImg.SetActive(true);
     }
 
-    public void UpdateInventoryItemCount(string id)
+    /*public void UpdateInventoryItemCount(string id)
     {
         if (selectedItemId == id)
         {
             //itemCntTxt.text = string.Format("수량: {0}개", gm.GetItemCount(id));
         }
-    }
+    }*/
     #endregion
 
     #region Message
@@ -971,16 +1006,20 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     public void OnClickItemUseBtn()  //아직 마석 장착에 대한 로직은 없음
     {
+        if (selectedItemSlot.itemInfo == null) return;
+
         ItemSO data = gm.GetItemData(selectedItemId);
         if ( (data.itemType == ItemType.ETC && !((Ingredient)data).isUseable)) return;
 
         data.Use();
         Inventory.Instance.RemoveItem(selectedItemId, 1, "아이템을 소모했습니다.");
+        SoundManager.Instance.PlaySoundBox("UseItemSFX");
 
         if (selectedItemSlot.itemInfo == null)
         {
             OnUIInteract(UIType.ITEM_DETAIL, true);
             selectedImg.gameObject.SetActive(false);
+            Inventory.Instance.invenUseActionImg.SetActive(false);
         }
 
         Global.ActionTrigger("ItemUse", selectedItemId);
@@ -1002,6 +1041,13 @@ public partial class UIManager : MonoSingleton<UIManager>
         statTexts[7].text = stat.AttackSpeed.ToString();
 
         //statText.text = $"HP\t\t{currentHP}/{stat.hp}\n\n공격력\t\t{stat.damage}\n\n방어력\t\t{stat.defense}\n\n이동속도\t\t{stat.speed}";
+    }
+
+    public void UpdatePlayerHPInInven()
+    {
+        invenHpInfo.first.DOKill();
+        invenHpInfo.first.DOFillAmount((float)sgm.Player.CurrentHp / sgm.Player.PlayerStat.MaxHp, 0.3f).SetUpdate(true);
+        invenHpInfo.second.text = string.Concat("HP : ",Mathf.Ceil(Mathf.Clamp(sgm.Player.CurrentHp, 0, sgm.Player.PlayerStat.MaxHp)), '/', Mathf.Ceil(sgm.Player.PlayerStat.MaxHp));
     }
 
     public void UpdatePlayerHPUI(bool decrease = false)

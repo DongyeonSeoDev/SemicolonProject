@@ -151,6 +151,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitionEnable: 1
   transitionColor: {r: 1, g: 0.16470589, b: 0.16470589, a: 0.27058825}
+  soundId: UIMouseEnterSFX2
 --- !u!114 &5459103182628416211
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,6 +166,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitionEnable: 1
   explanation: "\uD0A4 \uC9C0\uC815\uD558\uAE30"
+  fontSize: 30
 --- !u!1 &7312177941776442755
 GameObject:
   m_ObjectHideFlags: 0

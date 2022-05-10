@@ -37,6 +37,7 @@ public class RecoveryObj : InteractionObj
     {
         StageManager.Instance.SetClearStage();
         EffectManager.Instance.CallFollowTargetGameEffect("RecoveryEff", GameManager.Instance.slimeFollowObj, effOffset, 3f);
+        SoundManager.Instance.PlaySoundBox("GetBuffSFX");
         recoveryLight.DOIntensity(0, 1f, true, () => recoveryLight.gameObject.SetActive(false));
     }
 

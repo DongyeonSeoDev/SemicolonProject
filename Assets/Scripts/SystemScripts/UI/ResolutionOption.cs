@@ -16,6 +16,8 @@ public class ResolutionOption : MonoBehaviour
     public Dropdown resolutionDd;
     public Toggle fullScrTg;
 
+    [SerializeField] private float limWidthDivHeightRate = 1.6f;
+
     public (int, int) MaxScrWH => (whResolutionList[whResolutionList.Count-1].first, whResolutionList[whResolutionList.Count - 1].second);
 
     private void Start()
@@ -57,6 +59,8 @@ public class ResolutionOption : MonoBehaviour
         int optionNum = 0, w = Screen.width, h = Screen.height;
         for(int i = 0; i < whResolutionList.Count; i++)
         {
+            //if ((float)whResolutionList[i].first / whResolutionList[i].second < limWidthDivHeightRate) continue;
+
             Dropdown.OptionData option = new Dropdown.OptionData();
             option.text = whResolutionList[i].first + " x " + whResolutionList[i].second;
             resolutionDd.options.Add(option);
@@ -144,9 +148,14 @@ public class ResolutionOption : MonoBehaviour
     {
         WaitForSecondsRealtime wsr = new WaitForSecondsRealtime(1);
 
-        while(true)
+        int w, h;
+
+        while (true)
         {
-            if (Screen.width > MaxScrWH.Item1 || Screen.height > MaxScrWH.Item2)
+            w = Screen.width;
+            h = Screen.height;
+
+            if (w > MaxScrWH.Item1 || h > MaxScrWH.Item2)  //(float)w / h < limWidthDivHeightRate
             {
                 Screen.SetResolution(MaxScrWH.Item1, MaxScrWH.Item2, Screen.fullScreenMode);
                 OnResolutionUIUpdate();

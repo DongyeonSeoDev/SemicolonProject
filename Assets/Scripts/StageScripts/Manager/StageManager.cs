@@ -62,7 +62,6 @@ public class StageManager : MonoSingleton<StageManager>
     private string CurrentMonstersOrderID => currentStageData.stageMonsterBundleCount < currentStageMonsterBundleOrder ? string.Empty : currentStageData.stageMonsterBundleID[currentStageMonsterBundleOrder - 1];
 
     private Dictionary<int, List<RandomRoomType>> randomZoneTypeListDic = new Dictionary<int, List<RandomRoomType>>(); //랜덤 구역에서 나올 구역 타입들을 미리 넣어놓음
-    private List<RandomRoomType> randomZoneRestTypes = new List<RandomRoomType>(); //랜덤구역에서 나올 지역 타입들 현재 남은 것 (테스트용 변수)
     //private int prevRandRoomType = -1;  // 이전 랜덤 구역의 타입
 
     //public bool IsLastStage { get; set; } 
@@ -179,7 +178,6 @@ public class StageManager : MonoSingleton<StageManager>
 
         StageBundleDataSO data = idToStageFloorDict[FloorToFloorID(currentFloor)];
         Dictionary<RandomRoomType, int> ranMapCnt = new Dictionary<RandomRoomType, int>();
-        List<RandomRoomType> tempList = new List<RandomRoomType>();
 
         int cnt = data.stages.FindAll(x => x.areaType == AreaType.RANDOM).Count;
         int rrCnt = Global.EnumCount<RandomRoomType>();
@@ -191,13 +189,9 @@ public class StageManager : MonoSingleton<StageManager>
 
         randomZoneTypeListDic[currentFloor].Clear();
 
+        count = rrCnt * q;
         for (i = 0; i < rrCnt; i++)
         {
-            for (int j = 0; j < q; j++)
-            {
-                tempList.Add((RandomRoomType)i);
-                count++;
-            }
             ranMapCnt.Add((RandomRoomType)i, q);
         }
 
@@ -205,22 +199,15 @@ public class StageManager : MonoSingleton<StageManager>
         List<RandomRoomType> rList = new List<RandomRoomType>();
         if (r > 0)
         {
+            RandomRoomType rr;
             for (i = 0; i < r; i++)
             {
-                RandomRoomType rr = (RandomRoomType)UnityEngine.Random.Range(0, rrCnt);
-                if (rList.Contains(rr))
-                {
-                    i--;
-                }
-                else
-                {
-                    rList.Add(rr);
-                }
-            }
+                rr = (RandomRoomType)UnityEngine.Random.Range(0, rrCnt);
 
-            for (i = 0; i < rList.Count; i++)
-            {
-                tempList.Add(rList[i]);
+                if (rList.Contains(rr))
+                    i--;
+                else
+                    rList.Add(rr);
             }
         }
 
@@ -267,12 +254,41 @@ public class StageManager : MonoSingleton<StageManager>
                 break;
         }
 
+        //나머지 남은 방들을 랜덤한 위치에 집어넣음
         for(i=0; i<r; i++)
         {
-            randomZoneTypeListDic[currentFloor].Insert(UnityEngine.Random.Range(0, randomZoneTypeListDic[currentFloor].Count), (RandomRoomType)UnityEngine.Random.Range(0, rrCnt));
-        }
+            pre = UnityEngine.Random.Range(0, randomZoneTypeListDic[currentFloor].Count);
 
-        randomZoneRestTypes = randomZoneTypeListDic[currentFloor];
+            if(pre > 1 && randomZoneTypeListDic[currentFloor][pre-1] == rList[i])
+            {
+                if(randomZoneTypeListDic[currentFloor][pre - 2] == rList[i]) //넣은 위치로부터 뒤에 두 개가 같은 맵이고 넣을 맵도 같은 맵이면
+                {
+                    i--;
+                    continue;
+                }
+            }
+
+            // 0 1 2 3 4 5 리스트에 insert(4, 100)을 하면 0 1 2 3 100 4 5가 됨
+            if(pre < randomZoneTypeListDic[currentFloor].Count - 1 && randomZoneTypeListDic[currentFloor][pre] == rList[i])
+            {
+                if(randomZoneTypeListDic[currentFloor][pre + 1] == rList[i]) //넣고나서 앞에 두 개가 같은 맵이고 넣을 맵도 같은 맵이면
+                {
+                    i--;
+                    continue;
+                }
+            }
+            
+            if(pre > 0 && randomZoneTypeListDic[currentFloor][pre - 1] == rList[i])
+            {
+                if(randomZoneTypeListDic[currentFloor][pre] == rList[i]) //넣은 위치에서 앞과 뒤가 같은 맵이고 넣을 맵도 같은 맵이면
+                {
+                    i--;
+                    continue;
+                }
+            }
+
+            randomZoneTypeListDic[currentFloor].Insert(pre, rList[i]);
+        }
     }
 
     private string FloorToFloorID(int floor)
@@ -318,15 +334,9 @@ public class StageManager : MonoSingleton<StageManager>
         {
             randomRoomDict[floor][type] = randomRoomDict[floor][type].ToRandomList();
         }
-
-        /*randomZoneRestTypes.Clear();
-        for(int i=0; i<randomZoneTypeListDic[currentFloor].Count; i++)
-        {
-            randomZoneRestTypes.Add(randomZoneTypeListDic[currentFloor][i]);
-        }
-        randomZoneRestTypes = randomZoneRestTypes.ToRandomList(15);*/
     }
 
+    //다음 스테이지로 감. (검은색 로딩 화면 중에 이루어지는 함수)
     public void NextStage(string id)
     {
         Debug.Log("Next Stage : " + id);
@@ -453,6 +463,7 @@ public class StageManager : MonoSingleton<StageManager>
                     SetClearStage();
                     break;
                 case AreaType.RANDOM:
+                    SetMonsterStage();
                     IsStageClear = false;
                     EnterRandomArea();
                     return;   //랜덤 맵이면 함수를 빠져나간다.

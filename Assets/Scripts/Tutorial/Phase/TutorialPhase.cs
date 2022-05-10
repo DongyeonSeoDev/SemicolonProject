@@ -40,10 +40,9 @@ public class StartPhase : TutorialPhase
                 {
                     complete = true;
                     
-                   
                     EffectManager.Instance.OnTouchEffect();
                     light.DOInnerRadius(2, 1.5f, true);
-                    light.DOOuterRadius(4, 1.8f, true, () => End());
+                    light.DOOuterRadius(4, 1.6f, true, () => End());
                 }
             }
         }
@@ -83,9 +82,22 @@ public class SettingPhase : TutorialPhase
         endAction = end;
         IsEnded = false;
     }
+
+    private bool RecognizeESC()
+    {
+        if (Input.GetKeyDown(KeySetting.fixedKeyDict[KeyAction.SETTING]) && !TimeManager.IsTimePaused && UIManager.Instance.CanInteractUI)
+        {
+            if(!Util.IsActiveGameUI(UIType.SKILLDETAIL) && !Util.IsActiveGameUI(UIType.STATEINFO))
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public override void DoPhaseUpdate()
     {
-        if(Input.GetKeyDown(KeySetting.fixedKeyDict[KeyAction.SETTING]) && !TimeManager.IsTimePaused && UIManager.Instance.CanInteractUI)
+        if(RecognizeESC())
         {
             if(++currentCount < pressCount)
             {
@@ -93,6 +105,8 @@ public class SettingPhase : TutorialPhase
                 CinemachineCameraScript.Instance.Shake(camShakeStr, camFreq, 0.3f);
                 camShakeStr += 0.2f;
                 camFreq += 0.1f;
+
+                SoundManager.Instance.PlaySoundBox("ESC Effect SFX");
 
                 //Dust Particle Effect
                 ParticleSystem ps = PoolManager.GetItem<ParticleSystem>("DustEffect1");

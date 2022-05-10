@@ -6,7 +6,7 @@ public static class TypeToSprite
 {
     private static Dictionary<string, Pair<string,Sprite[]>> allDictionary = new Dictionary<string,Pair<string,Sprite[]>>();
 
-    public static void Register<T>(string key, string path, int count)
+    public static void Register(string key, string path, int count)
     {
         allDictionary.Add(key, new Pair<string, Sprite[]>(path, new Sprite[count]));
     }

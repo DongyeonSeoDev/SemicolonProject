@@ -15,16 +15,16 @@ public class PickupCheck : MonoBehaviour
 
     [SerializeField] private Image checkFill;
 
-    [SerializeField] private Pair<float,float> checkRange;
-    [SerializeField] private float plusRange;
-    [SerializeField] private float speed;
+    [SerializeField] private Pair<float,float> checkRange; //성공을 체크하는 fillamount 범위 
+    [SerializeField] private float plusRange; //fillamount가 몇 이상이면 1+1할지
+    [SerializeField] private float speed; 
     [SerializeField] private float acceleration;
     private float currentSpeed;
 
     public VertexGradient successVG, failVG;
 
-    private bool isReady = false;
-    private bool isGameStart = false;
+    private bool isReady = false; //미니게임 UI가 다 나왔는지
+    private bool isGameStart = false; //미니 게임을 시작했는지
     public bool IsGameStart => isGameStart;
 
     private Vector3 tweeningMove = new Vector3(50, 0, 0);
@@ -32,7 +32,7 @@ public class PickupCheck : MonoBehaviour
 
     public Pick CurrentPick { get; private set; }
 
-    public void InteractPick(Pick pick)
+    public void InteractPick(Pick pick) //채집 시도 => 미니게임 시작
     {
         CurrentPick = pick;
         UIManager.Instance.OnUIInteractSetActive(UIType.MINIGAME_PICKUP, true, true);
@@ -98,12 +98,12 @@ public class PickupCheck : MonoBehaviour
             if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.EVENT]))
             {
                 yield return wsr;
-                if (checkFill.fillAmount >= checkRange.first && checkFill.fillAmount <= checkRange.second)
+                if (checkFill.fillAmount >= checkRange.first && checkFill.fillAmount <= checkRange.second) //체크 범위안에 들어옴 (성공)
                 {
                     
                     EndGame(true, checkFill.fillAmount >= plusRange ? 2 : 1);
                 }
-                else
+                else  //체크 범위 밖에서 누름 (실패)
                 {
                     EndGame(false);
                 }
@@ -111,7 +111,7 @@ public class PickupCheck : MonoBehaviour
                 break;
             }
 
-            if(checkFill.fillAmount >= 1)
+            if(checkFill.fillAmount >= 1) //fillamount가 다 참 (실패)
             {
                 yield return wsr;
                 EndGame(false);
@@ -127,12 +127,13 @@ public class PickupCheck : MonoBehaviour
         isGameStart = false;
         UIManager.Instance.OnUIInteractSetActive(UIType.MINIGAME_PICKUP, false, true);
         CurrentPick.PickResult(success, count);
-        EventManager.TriggerEvent("PickupMiniGame", false);
+        
     }
 
     public void Inactive()
     {
         TimeManager.TimeResume();
+        EventManager.TriggerEvent("PickupMiniGame", false);
         isGameStart = false;
         circleCvsg.DOFade(0, 0.2f).SetUpdate(true);
         pickupCircleCheckGamePanel.DOFade(0, 0.25f).SetUpdate(true).OnComplete(() =>

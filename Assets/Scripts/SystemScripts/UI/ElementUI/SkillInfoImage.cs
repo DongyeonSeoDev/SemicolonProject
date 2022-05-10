@@ -21,7 +21,8 @@ public class SkillInfoImage : MonoBehaviour
 
     private void Awake()
     {
-        skillBtn.onClick.AddListener(() => SkillUIManager.Instance.OnClickSkillButton(skillImgCoolTxtImgTriple.first.sprite, nifc.explanation, skillEx));
+        //skillBtn.onClick.AddListener(() => SkillUIManager.Instance.OnClickSkillButton(skillImgCoolTxtImgTriple.first.sprite, nifc.explanation, skillEx));
+        GetComponent<UIInfoDelay>().mouseOverEvent += () => SkillUIManager.Instance.OnClickSkillButton(skillImgCoolTxtImgTriple.first.sprite, nifc.explanation, skillEx);
     }
 
 

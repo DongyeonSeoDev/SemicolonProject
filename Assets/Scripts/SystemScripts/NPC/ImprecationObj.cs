@@ -27,6 +27,7 @@ public class ImprecationObj : InteractionObj
     {
         StageManager.Instance.SetClearStage();
         EffectManager.Instance.CallFollowTargetGameEffect("ImprecationEff", GameManager.Instance.slimeFollowObj, Vector3.up, 2f);
+        SoundManager.Instance.PlaySoundBox("GetDebuffSFX");
     }
 
     private void OnEnable()

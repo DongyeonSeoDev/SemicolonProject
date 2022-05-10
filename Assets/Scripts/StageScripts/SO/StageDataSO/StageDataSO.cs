@@ -12,6 +12,7 @@ public partial class StageDataSO : ScriptableObject
     public string stageName;  //스테이지 이름 (지역 이름)
 
     public bool isSaveStage; //이 스테이지 도착하면 저장할까
+    public bool useOpenDoorSound;  //문 사운드 사용할까
 
     public int stageMonsterBundleCount;  //총 몇 세트의 몹들이 나오는지
     [HideInInspector] public string[] stageMonsterBundleID;
