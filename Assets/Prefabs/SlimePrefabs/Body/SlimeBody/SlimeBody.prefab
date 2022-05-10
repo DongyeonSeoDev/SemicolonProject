@@ -240,6 +240,7 @@ MonoBehaviour:
   damageMagnificationOfBodySlap: 2
   moveBackSpeed: 5
   bodySlapMoveSpeed: 50
+  offsetBodySlapMovePos: 2
   bodySlapTime: 0.15
   stopBodySlapTime: 0.5
   stopBodySlapOffset: 5
@@ -1757,9 +1758,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 6840160282341942531}
     m_Modifications:
+    - target: {fileID: 2131840008940636931, guid: 3f0c11c3aba46fe4d8b936a1b30548cf, type: 3}
+      propertyPath: checkLayer.m_Bits
+      value: 2048
+      objectReference: {fileID: 0}
     - target: {fileID: 2919269884512297872, guid: 3f0c11c3aba46fe4d8b936a1b30548cf, type: 3}
       propertyPath: m_Name
       value: AvoidCloseCheckCollider
+      objectReference: {fileID: 0}
+    - target: {fileID: 7491075731991253569, guid: 3f0c11c3aba46fe4d8b936a1b30548cf, type: 3}
+      propertyPath: m_Points.Array.size
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8052699467457133646, guid: 3f0c11c3aba46fe4d8b936a1b30548cf, type: 3}
       propertyPath: m_RootOrder
