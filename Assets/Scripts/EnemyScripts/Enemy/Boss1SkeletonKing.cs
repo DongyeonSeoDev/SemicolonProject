@@ -15,6 +15,7 @@ namespace Enemy
 
         public int fireCount = 0;
         public int maxAttackCount = 0;
+        public int bossHP = 2000;
         public float specialAttackTime = 6f;
         public float bossAttackMoveSpeed = 0f;
         public float fireDistance = 0f;
@@ -24,10 +25,17 @@ namespace Enemy
         public float startSpeed = 5f;
         public float speedUpValue = 0.5f;
         public float speedUpTime = 1f;
-        public int bossHP = 2000;
 
-        [HideInInspector]
-        public float currentSpeed = 0f;
+        [Header("Distance")]
+        public float fireLimitDistance = 1.5f;
+        public float fireLimitSpawnDistance = 0.5f;
+
+        [HideInInspector] public Vector2 limitMinPosition;
+        [HideInInspector] public Vector2 limitMaxPosition;
+        [HideInInspector] public Vector2 limitMinFirePosition;
+        [HideInInspector] public Vector2 limitMaxFirePosition;
+        [HideInInspector] public LayerMask whatIsWall;
+        [HideInInspector] public float currentSpeed = 0f;
 
         private EnemyCommand enemyMoveCommand;
         private EnemyCommand enemySpecialAttackMoveCommand;
@@ -36,12 +44,6 @@ namespace Enemy
         private EnemyCommand rushAttackCommand;
         private WaitForSeconds fireSpawnTimeSeconds;
         private WaitForSeconds fireSpawnTimeSeconds2 = new WaitForSeconds(0.1f);
-
-        public Vector2 limitMinPosition;
-        public Vector2 limitMaxPosition;
-        public Vector2 limitMinFirePosition;
-        public Vector2 limitMaxFirePosition;
-        public LayerMask whatIsWall;
 
         private BossCanvas bossHPBar;
 
@@ -52,6 +54,7 @@ namespace Enemy
         private bool isAttack = false;
         private bool isSpecialAttack1 = false;
         private bool isSpecialAttack3 = false;
+        private bool isSpeedUpTime = true;
 
         public readonly int hashSpecialAttack1 = Animator.StringToHash("specialAttack1");
         public readonly int hashSpecialAttack1End = Animator.StringToHash("specialAttack1End");
@@ -79,8 +82,10 @@ namespace Enemy
             bossHPBar = GetComponentInChildren<BossCanvas>();
             bossHPBar.Init(enemyData);
 
+            enemyData.enemyCanvas = bossHPBar.gameObject;
+
             enemyData.attackDelay = 1.8f;
-            enemyData.isAttackPlayerDistance = 3.5f;
+            enemyData.isAttackPlayerDistance = 4f;
             enemyData.attackPower = 30;
             enemyData.maxHP = bossHP;
             enemyData.hp = bossHP;
@@ -89,7 +94,7 @@ namespace Enemy
 
             enemyMoveCommand = new BossMoveCommand(enemyData, movePivot, rb, this);
             enemySpecialAttackMoveCommand = new EnemyTargetMoveCommand(enemyData, targetMoveSpeed);
-            attackMoveCommand = new EnemyFollowPlayerCommand(enemyData, movePivot, rb, bossAttackMoveSpeed, 0f, false);
+            attackMoveCommand = new EnemyTargetMoveCommand(enemyData, bossAttackMoveSpeed);
             rushAttackReadyCommand = new BossRushAttackCommand(enemyData, movePivot, rb, -1f, false);
             rushAttackCommand = new BossRushAttackCommand(enemyData, movePivot, rb, 50f, true);
 
@@ -108,15 +113,19 @@ namespace Enemy
 
             whatIsWall = LayerMask.GetMask("WALL");
 
-            limitMaxFirePosition.y = CheckPosition(Vector2.up).y - 0.5f;
-            limitMinFirePosition.y = CheckPosition(Vector2.down).y + 0.5f;
-            limitMaxFirePosition.x = CheckPosition(Vector2.right).x - 0.5f;
-            limitMinFirePosition.x = CheckPosition(Vector2.left).x + 0.5f;
+            #region SetLimitPosition
 
-            limitMaxPosition.y = limitMaxFirePosition.y - 0.8f;
-            limitMinPosition.y = limitMinFirePosition.y + 1.32f;
-            limitMaxPosition.x = limitMaxFirePosition.x - 1.9f;
-            limitMinPosition.x = limitMinFirePosition.x + 1.9f;
+            limitMaxFirePosition.y = CheckPosition(Vector2.up).y - fireLimitSpawnDistance;
+            limitMinFirePosition.y = CheckPosition(Vector2.down).y + fireLimitSpawnDistance;
+            limitMaxFirePosition.x = CheckPosition(Vector2.right).x - fireLimitSpawnDistance;
+            limitMinFirePosition.x = CheckPosition(Vector2.left).x + fireLimitSpawnDistance;
+
+            limitMaxPosition.y = limitMaxFirePosition.y - 0.9f;
+            limitMinPosition.y = limitMinFirePosition.y + 1.42f;
+            limitMaxPosition.x = limitMaxFirePosition.x - 2f;
+            limitMinPosition.x = limitMinFirePosition.x + 2f;
+
+            #endregion
 
             specialAttack3Check.Clear();
 
@@ -217,12 +226,15 @@ namespace Enemy
                 currentTime += Time.deltaTime;
             }
 
-            currentMoveTime += Time.deltaTime;
-
-            if (currentMoveTime >= speedUpTime)
+            if (isSpeedUpTime)
             {
-                currentMoveTime = 0f;
-                currentSpeed += speedUpValue;
+                currentMoveTime += Time.deltaTime;
+
+                if (currentMoveTime >= speedUpTime)
+                {
+                    currentMoveTime = 0f;
+                    currentSpeed += speedUpValue;
+                }
             }
         }
 
@@ -246,6 +258,11 @@ namespace Enemy
 
             rushAttackReadyCommand.Execute();
             enemyData.enemySpriteRotateCommand.Execute();
+        }
+
+        public void SetAttackMovePosition() // 애니메이션에서 실행 - 공격할 위치 설정
+        {
+            enemyData.moveVector = (EnemyManager.Player.transform.position - transform.position).normalized;
         }
 
         public void AttackMove() // 애니메이션에서 실행 - 공격하면서 움직이는 코드
@@ -275,12 +292,6 @@ namespace Enemy
 
             rushAttackCommand.Execute();
             enemyData.enemySpriteRotateCommand.Execute();
-
-            if (Random.Range(0, 10) < 2)
-            {
-                isSpecialAttack1 = true;
-                attackCount = attackCount - 3 < 0 ? 0 : attackCount - 3;
-            }
         }
 
         private void SpecialAttack1() // 특수 공격 실행
@@ -288,7 +299,7 @@ namespace Enemy
             isSpecialAttack1 = false;
             isAttack = true;
 
-            enemyData.moveVector = (new Vector3(limitMinPosition.x, transform.position.y, transform.position.z) - transform.position).normalized;
+            enemyData.moveVector = Vector2.left;
 
             enemyData.animationDictionary[EnemyAnimationType.Move] = hashSpecialAttack1;
             enemyData.enemyMoveCommand = enemySpecialAttackMoveCommand;
@@ -325,6 +336,8 @@ namespace Enemy
 
         public void SpecialAttack2Start() // 애니메이션에서 실행 - 특수공격2 시작
         {
+            isSpeedUpTime = false;
+
             StartCoroutine(SpecialAttack2());
         }
 
@@ -333,10 +346,10 @@ namespace Enemy
             List<Fire> fireList = new List<Fire>();
             Vector3 playerPosition = EnemyManager.Player.transform.position;
 
-            playerPosition.x = playerPosition.x < limitMinFirePosition.x + 1.5f ? limitMinFirePosition.x + 1.5f : playerPosition.x;
-            playerPosition.x = playerPosition.x > limitMaxFirePosition.x - 1.5f ? limitMaxFirePosition.x - 1.5f : playerPosition.x;
-            playerPosition.y = playerPosition.y < limitMinFirePosition.y + 1.5f ? limitMinFirePosition.y + 1.5f : playerPosition.y;
-            playerPosition.y = playerPosition.y > limitMaxFirePosition.y - 1.5f ? limitMaxFirePosition.y - 1.5f : playerPosition.y;
+            playerPosition.x = playerPosition.x < limitMinFirePosition.x + fireLimitDistance ? limitMinFirePosition.x + fireLimitDistance : playerPosition.x;
+            playerPosition.x = playerPosition.x > limitMaxFirePosition.x - fireLimitDistance ? limitMaxFirePosition.x - fireLimitDistance : playerPosition.x;
+            playerPosition.y = playerPosition.y < limitMinFirePosition.y + fireLimitDistance ? limitMinFirePosition.y + fireLimitDistance : playerPosition.y;
+            playerPosition.y = playerPosition.y > limitMaxFirePosition.y - fireLimitDistance ? limitMaxFirePosition.y - fireLimitDistance : playerPosition.y;
 
             Fire.checkAttackObjectTogether.Clear();
             attackCount++;
@@ -386,6 +399,8 @@ namespace Enemy
 
             SpeedReset();
 
+            isSpeedUpTime = false;
+
             for (int i = 0; i < 150; i++)
             {
                 Fire fire = EnemyPoolManager.Instance.GetPoolObject(Type.Fire, RandomPosition()).GetComponent<Fire>();
@@ -411,6 +426,7 @@ namespace Enemy
         public void SpecialAttackEnd() // 애니메이션에서 실행 - 특수공격2 종료
         {
             isAttack = false;
+            isSpeedUpTime = true;
         }
 
         public void SpecialAttackCheck() // 이벤트 구독에 사용됨 - 특수공격 사용 확인
@@ -449,11 +465,22 @@ namespace Enemy
         {
             if (enemyData.animationDictionary[EnemyAnimationType.Attack] == hashAttack1)
             {
-                if (Random.Range(0, 10) < 6)
+                int random = Random.Range(0, 10);
+
+                if (attackCount + 1 >= maxAttackCount)
+                {
+                    attackCount = maxAttackCount;
+                }
+                else if (random < 6)
                 {
                     enemyData.animationDictionary[EnemyAnimationType.Attack] = hashAttack2;
 
                     return new EnemyAIAttackState(enemyData);
+                }
+                else if (random < 8)
+                {
+                    isSpecialAttack1 = true;
+                    attackCount = attackCount - 3 < 0 ? 0 : attackCount - 3;
                 }
 
                 return null;

@@ -70,7 +70,7 @@ namespace Enemy
             this.enemyData = enemyData;
             this.positionCheckData = positionCheckData;
 
-            enemyRunAwayCommand = new EnemyFollowPlayerCommand(enemyData, enemyData.enemyObject.transform, enemyData.enemyRigidbody2D, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, true, positionCheckData);
+            enemyRunAwayCommand = new EnemyLongDistanceFollowPlayerCommand(enemyData, enemyData.enemyObject.transform, enemyData.enemyRigidbody2D, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, positionCheckData);
 
             currentMoveTime = 0f;
         }
@@ -139,72 +139,60 @@ namespace Enemy
         }
     }
 
-    public class EnemyFollowPlayerCommand : EnemyCommand // 적 움직임
+    public class EnemyLongDistanceFollowPlayerCommand : EnemyCommand
     {
         private EnemyData enemyData;
-        private Transform enemyObject;
-        private Rigidbody2D rigid;
         private EnemyPositionCheckData positionCheckData;
-
+        private Transform enemyTransform;
+        private Rigidbody2D rigid;
+        private Vector3 targetPosition;
         private float followSpeed;
         private float followDistance;
-        private bool isLongDistanceAttack;
-
-        private Vector3 targetPosition;
+        private float lastTime;
         private float angle;
+        private float addAngle;
+        private float angleChangeTime;
 
-        private float lastTime = 0f;
-        private float angleChangeTime = 1f;
-        private float addAngle = 0;
-
-        public EnemyFollowPlayerCommand(EnemyData data, Transform enemyObject, Rigidbody2D rigid, float followSpeed, float followDistance, bool isLongDistanceAttack, EnemyPositionCheckData positionCheckData = null)
+        public EnemyLongDistanceFollowPlayerCommand(EnemyData data, Transform enemyTransform, Rigidbody2D rigid, float followSpeed, float followDistance, EnemyPositionCheckData positionCheckData = null, float angleChangeTime = 1f)
         {
             enemyData = data;
-            this.enemyObject = enemyObject;
+            this.enemyTransform = enemyTransform;
             this.rigid = rigid;
 
             this.followSpeed = followSpeed;
             this.followDistance = followDistance;
-            this.isLongDistanceAttack = isLongDistanceAttack;
 
             this.positionCheckData = positionCheckData;
+
+            this.angleChangeTime = angleChangeTime;
 
             lastTime = 0;
         }
 
         public override void Execute()
         {
-            if (isLongDistanceAttack)
+            if (positionCheckData != null && positionCheckData.isWall)
             {
-                if (positionCheckData != null && positionCheckData.isWall)
-                {
-                    lastTime = Time.time - 0.5f;
-                    targetPosition = positionCheckData.oppositeDirectionWall * followSpeed;
-                    positionCheckData.isWall = false;
-                }
-                else if (lastTime + angleChangeTime <= Time.time)
-                {
-                    targetPosition = enemyObject.transform.position - EnemyManager.Player.transform.position;
-
-                    angle = Mathf.Atan2(targetPosition.x, targetPosition.y) * Mathf.Rad2Deg + 90f;
-
-                    addAngle = Random.Range(-60f, 60f);
-                    lastTime = Time.time;
-
-                    angle = (angle + addAngle) % 360;
-
-                    targetPosition.x = EnemyManager.Player.transform.position.x + (followDistance * Mathf.Cos(angle * Mathf.Deg2Rad) * -1f);
-                    targetPosition.y = EnemyManager.Player.transform.position.y + (followDistance * Mathf.Sin(angle * Mathf.Deg2Rad));
-                    targetPosition.z = EnemyManager.Player.transform.position.z;
-
-                    targetPosition = (targetPosition - enemyObject.position).normalized;
-                    targetPosition *= followSpeed;
-                }
+                lastTime = Time.time - 0.5f;
+                targetPosition = positionCheckData.oppositeDirectionWall * followSpeed;
+                positionCheckData.isWall = false;
             }
-            else
+            else if (lastTime + angleChangeTime <= Time.time)
             {
-                // 이동
-                targetPosition = (EnemyManager.Player.transform.position - enemyObject.position).normalized;
+                targetPosition = enemyTransform.transform.position - EnemyManager.Player.transform.position;
+
+                angle = Mathf.Atan2(targetPosition.x, targetPosition.y) * Mathf.Rad2Deg + 90f;
+
+                addAngle = Random.Range(-60f, 60f);
+                lastTime = Time.time;
+
+                angle = (angle + addAngle) % 360;
+
+                targetPosition.x = EnemyManager.Player.transform.position.x + (followDistance * Mathf.Cos(angle * Mathf.Deg2Rad) * -1f);
+                targetPosition.y = EnemyManager.Player.transform.position.y + (followDistance * Mathf.Sin(angle * Mathf.Deg2Rad));
+                targetPosition.z = EnemyManager.Player.transform.position.z;
+
+                targetPosition = (targetPosition - enemyTransform.position).normalized;
                 targetPosition *= followSpeed;
             }
 
@@ -212,6 +200,34 @@ namespace Enemy
             rigid.velocity = targetPosition;
         }
     }
+
+    public class EnemyFollowPlayerCommand : EnemyCommand
+    {
+        private EnemyData enemyData;
+        private Rigidbody2D rigid;
+        private Transform enemyTransform;
+        private Vector2 targetPosition;
+        private float followSpeed;
+
+        public EnemyFollowPlayerCommand(EnemyData data, Transform enemyTransform, Rigidbody2D rigid, float followSpeed, float followDistance, EnemyPositionCheckData positionCheckData = null)
+        {
+            enemyData = data;
+            this.enemyTransform = enemyTransform;
+            this.rigid = rigid;
+
+            this.followSpeed = followSpeed;
+        }
+
+        public override void Execute()
+        {
+            targetPosition = (EnemyManager.Player.transform.position - enemyTransform.position).normalized;
+            targetPosition *= followSpeed;
+            
+            enemyData.moveVector = targetPosition;
+            rigid.velocity = targetPosition;
+        }
+    }
+
     public class BossMoveCommand : EnemyCommand // 보스 움직임
     {
         private EnemyData enemyData;
@@ -310,22 +326,22 @@ namespace Enemy
             {
                 if (enemyData.isDamaged) // 색깔 변경
                 {
-                    enemyData.enemySpriteRenderer.color = enemyData.damagedColor;
+                    enemyData.enemy.ChangeColor(enemyData.damagedColor);
                 }
                 else // 색깔 변경 해제
                 {
-                    enemyData.enemySpriteRenderer.color = enemyData.normalColor;
+                    enemyData.enemy.ChangeColor(enemyData.normalColor);
                 }
             }
             else if (enemyData.eEnemyController == EnemyController.PLAYER)
             {
                 if (enemyData.isDamaged) // 색깔 변경
                 {
-                    enemyData.enemySpriteRenderer.color = enemyData.playerDamagedColor;
+                    enemyData.enemy.ChangeColor(enemyData.playerDamagedColor);
                 }
                 else // 색깔 변경 해제
                 {
-                    enemyData.enemySpriteRenderer.color = enemyData.playerNormalColor;
+                    enemyData.enemy.ChangeColor(enemyData.playerNormalColor);
                 }
             }
         }
@@ -480,10 +496,20 @@ namespace Enemy
             if (enemyData.moveVector.x < 0)
             {
                 enemyData.enemySpriteRenderer.flipX = true;
+
+                if (enemyData.enemyCanvas != null)
+                {
+                    enemyData.enemyCanvas.transform.rotation = Quaternion.identity;
+                }
             }
             else if (enemyData.moveVector.x > 0)
             {
                 enemyData.enemySpriteRenderer.flipX = false;
+
+                if (enemyData.enemyCanvas != null)
+                {
+                    enemyData.enemyCanvas.transform.rotation = Quaternion.identity;
+                }
             }
         }
     }
@@ -502,10 +528,20 @@ namespace Enemy
             if (enemyData.moveVector.x < 0)
             {
                 enemyData.enemyObject.transform.rotation = Quaternion.Euler(0f, 180f, 0f);
+
+                if (enemyData.enemyCanvas != null)
+                {
+                    enemyData.enemyCanvas.transform.rotation = Quaternion.identity;
+                }
             }
             else if (enemyData.moveVector.x > 0)
             {
                 enemyData.enemyObject.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
+
+                if (enemyData.enemyCanvas != null)
+                {
+                    enemyData.enemyCanvas.transform.rotation = Quaternion.identity;
+                }
             }
         }
     }
