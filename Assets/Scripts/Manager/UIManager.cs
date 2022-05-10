@@ -269,14 +269,14 @@ public partial class UIManager : MonoSingleton<UIManager>
         {
             Item item = i as Item;
             RequestLogMsg(string.Format("아이템을 획득하였습니다. ({0} +{1})", item.itemData.itemName, item.DroppedCnt));
-            UpdateInventoryItemCount(item.itemData.id);
+            //UpdateInventoryItemCount(item.itemData.id);
         });
         //Pickup plant (채집 성공)
         Global.AddMonoAction(Global.PickupPlant, item =>
         {
             Pick p = (Pick)item;
             RequestLogMsg(string.Format("아이템을 획득하였습니다. ({0} +{1})", p.itemData.itemName, p.DroppedCount));
-            UpdateInventoryItemCount(p.itemData.id);
+            //UpdateInventoryItemCount(p.itemData.id);
         });
         //아이템 버림  
         Global.AddAction(Global.JunkItem, JunkItem);
@@ -830,13 +830,13 @@ public partial class UIManager : MonoSingleton<UIManager>
         if (data.itemType == ItemType.ETC && ((Ingredient)data).isUseable) Inventory.Instance.invenUseActionImg.SetActive(true);
     }
 
-    public void UpdateInventoryItemCount(string id)
+    /*public void UpdateInventoryItemCount(string id)
     {
         if (selectedItemId == id)
         {
             //itemCntTxt.text = string.Format("수량: {0}개", gm.GetItemCount(id));
         }
-    }
+    }*/
     #endregion
 
     #region Message
@@ -1013,6 +1013,7 @@ public partial class UIManager : MonoSingleton<UIManager>
 
         data.Use();
         Inventory.Instance.RemoveItem(selectedItemId, 1, "아이템을 소모했습니다.");
+        SoundManager.Instance.PlaySoundBox("UseItemSFX");
 
         if (selectedItemSlot.itemInfo == null)
         {

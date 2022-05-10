@@ -270,7 +270,7 @@ public class Inventory : MonoSingleton<Inventory>
                 }
             }
 
-            UIManager.Instance.UpdateInventoryItemCount(id);
+            //UIManager.Instance.UpdateInventoryItemCount(id);
         }
     }
 
