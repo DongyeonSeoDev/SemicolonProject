@@ -97,7 +97,7 @@ public class StageCheatWindow : EditorWindow
                 EditorGUI.BeginDisabledGroup(!Application.isPlaying);
                 GUILayout.Label("[Stage Cheat]", EditorStyles.boldLabel);
                 //useClearStageKey = GUILayout.Toggle(useClearStageKey, "스테이지 넘기기 단축키 사용 (F6)");
-                GUILayout.Label("(몬스터가 나오고 눌러)", EditorStyles.label);
+                //GUILayout.Label("(몬스터가 나오고 눌러)", EditorStyles.label);
 
                 GUILayout.BeginHorizontal();
 

@@ -463,6 +463,7 @@ public class StageManager : MonoSingleton<StageManager>
                     SetClearStage();
                     break;
                 case AreaType.RANDOM:
+                    SetMonsterStage();
                     IsStageClear = false;
                     EnterRandomArea();
                     return;   //랜덤 맵이면 함수를 빠져나간다.
