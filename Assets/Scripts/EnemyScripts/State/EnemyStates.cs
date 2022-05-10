@@ -85,9 +85,9 @@ namespace Enemy
             if (!isDelay)
             {
                 EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Attack, enemyData.enemyAnimator, TriggerType.SetTrigger);
+                EnemyManager.SpriteFlipCheck(enemyData);
             }
 
-            EnemyManager.SpriteFlipCheck(enemyData);
             currentTime = 0f;
 
             base.Start();
@@ -141,12 +141,14 @@ namespace Enemy
         private WaitForSeconds bossAfterImageTime;
 
         private Color afterImageColor;
+        private Vector2 bossPosition;
 
         private int moveCount = 3;
-        private int enemyCount = 3;
+        private int enemyCount = 4;
+        private int randomNum;
 
         private float moveSpeed = 35f;
-        private float attackDistance = 5f;
+        private float attackDistance = 5.2f;
         private float afterImageTime = 0.7f;
         private float spawnAfterImageTime = 0.07f;
 
@@ -293,23 +295,58 @@ namespace Enemy
             {
                 bossPositionArray[i] = new Vector2(boss.transform.position.x, defaultY + (i * addYValue));
             }
+
+            SetRandomBossPosition();
         }
         
         private void SetMiddlePosition(float defaultY, float addValue)
         {
-            var middle = Mathf.CeilToInt(enemyCount * 0.5f);
-
-            for (int i = 1; i < middle; i++)
+            if (enemyCount % 2 == 0)
             {
-                bossPositionArray[i] = new Vector2(boss.transform.position.x, defaultY + (i * addValue));
+                var current = -addValue * (Mathf.CeilToInt(enemyCount * 0.5f) - 1);
+
+                for (int i = 0; i < enemyCount - 1; i++)
+                {
+                    bossPositionArray[i] = new Vector2(boss.transform.position.x, defaultY + current);
+                    current += addValue;
+                }
+
+                if ((boss.limitMaxPosition.y + boss.limitMinPosition.y) / 2 > defaultY)
+                {
+                    bossPositionArray[enemyCount - 1] = new Vector2(boss.transform.position.x, defaultY + current);
+                }
+                else
+                {
+                    bossPositionArray[enemyCount - 1] = new Vector2(boss.transform.position.x, defaultY - current);
+                }
+            }
+            else
+            {
+                var middle = Mathf.CeilToInt(enemyCount * 0.5f);
+
+                for (int i = 1; i < middle; i++)
+                {
+                    bossPositionArray[i] = new Vector2(boss.transform.position.x, defaultY + (i * addValue));
+                }
+
+                bossPositionArray[0] = new Vector2(boss.transform.position.x, defaultY);
+
+                for (int i = middle; i < enemyCount; i++)
+                {
+                    bossPositionArray[i] = new Vector2(boss.transform.position.x, defaultY - ((i - middle + 1) * addValue));
+                }
             }
 
-            bossPositionArray[0] = new Vector2(boss.transform.position.x, defaultY);
+            SetRandomBossPosition();
+        }
+        
+        private void SetRandomBossPosition()
+        {
+            randomNum = Random.Range(0, enemyCount);
 
-            for (int i = middle; i < enemyCount; i++)
-            {
-                bossPositionArray[i] = new Vector2(boss.transform.position.x, defaultY - ((i - middle + 1) * addValue));
-            }
+            bossPosition = bossPositionArray[randomNum];
+            bossPositionArray[randomNum] = bossPositionArray[0];
+            bossPositionArray[randomNum] = bossPosition;
         }
         
         /// <summary>
@@ -443,7 +480,6 @@ namespace Enemy
 
             if (SlimeGameManager.Instance.CurrentSkillDelayTimer[0] <= enemyData.playerAnimationDelay) // 공격 종료
             {
-                EnemyManager.SpriteFlipCheck(enemyData);
                 base.Update();
             }
 

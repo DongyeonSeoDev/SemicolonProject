@@ -97,7 +97,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolType: 106
-  count: 3
+  count: 4
 --- !u!95 &6792208816708557335
 Animator:
   serializedVersion: 3

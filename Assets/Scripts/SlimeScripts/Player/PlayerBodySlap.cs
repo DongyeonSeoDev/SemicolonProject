@@ -42,6 +42,9 @@ public class PlayerBodySlap : PlayerSkill
     [SerializeField]
     private float bodySlapMoveSpeed = 2f;
 
+    [Header("기본 돌진 거리 값")]
+    [SerializeField]
+    private float offsetBodySlapMovePos = 2f;
     [SerializeField]
     private float bodySlapTime = 3f;
     private float currentBodySlapTime = 0f;
@@ -70,6 +73,12 @@ public class PlayerBodySlap : PlayerSkill
 
     [SerializeField]
     private LineRenderer bodySlapLine = null;
+
+    [SerializeField]
+    private float bodySlapLineLength = 1f;
+
+    [SerializeField]
+    private List<Material> materials = new List<Material>();
 
     public override void Awake()
     {
@@ -245,20 +254,31 @@ public class PlayerBodySlap : PlayerSkill
 
             EventManager.TriggerEvent("PlayerCharging");
 
+            int chargingNum = (int)((currentChargingTimer / maxChargingTime) * (materials.Count - 2)) + 1;
+            int matNum = 0;
+
             if (currentChargingTimer > minMoveToMouseChargeTime)
             {
-                bodySlapMoveVec = (playerInput.MousePosition - (Vector2)transform.position).normalized;
+                matNum = (int)((currentChargingTimer / maxChargingTime) * (materials.Count - 2)) + 1;
 
-                moveTargetPos = (Vector2)transform.position + bodySlapTime * bodySlapMoveSpeed * bodySlapMoveVec +
-currentChargingTimer * targetPosFarPerCharge * bodySlapMoveVec;
+                    bodySlapMoveVec = (playerInput.MousePosition - (Vector2)transform.position).normalized;
+
+                    moveTargetPos = (Vector2)transform.position + bodySlapTime * offsetBodySlapMovePos * bodySlapMoveVec +
+    chargingNum * targetPosFarPerCharge * bodySlapMoveVec;
+
             }
             else
             {
-                moveTargetPos = (Vector2)transform.position + bodySlapTime * bodySlapMoveSpeed * bodySlapMoveVec;
+                moveTargetPos = (Vector2)transform.position + bodySlapTime * offsetBodySlapMovePos * bodySlapMoveVec
+                    /*+ minMoveToMouseChargeTime * targetPosFarPerCharge * bodySlapMoveVec*/;
             }
+            
+            Debug.Log(currentChargingTimer + " a " + Vector2.Distance(transform.position, moveTargetPos));
 
             bodySlapLine.SetPosition(0, transform.position);
-            bodySlapLine.SetPosition(1, moveTargetPos);
+            bodySlapLine.SetPosition(1, (Vector2)transform.position + bodySlapMoveVec * bodySlapLineLength);
+
+            bodySlapLine.material = materials[matNum];
         }
     }
     private void CheckBodySlapTime()

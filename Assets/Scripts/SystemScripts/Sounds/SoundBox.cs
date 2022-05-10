@@ -131,7 +131,7 @@ public class SoundBox : MonoBehaviour
     {
         if(!(isBackgroundMusic || isPause) && playTimer > 0f)
         {
-            playTimer -= Time.deltaTime;
+            playTimer -= Time.unscaledDeltaTime;
 
             if(playTimer <= 0f)
             {

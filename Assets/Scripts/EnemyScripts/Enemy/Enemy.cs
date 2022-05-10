@@ -108,6 +108,7 @@ namespace Enemy
                 enemyAnimator = anim,
                 enemySpriteRenderer = sr,
                 enemyRigidbody2D = rb,
+                enemy = this
             };
 
             enemyData.enemyAnimator.enabled = true; // 애니메이션 실행
@@ -129,11 +130,11 @@ namespace Enemy
             // 색깔 리셋
             if (enemyData.eEnemyController == EnemyController.AI)
             {
-                sr.color = enemyData.normalColor;
+                enemyData.enemy.ChangeColor(enemyData.normalColor);
             }
             else if (enemyData.eEnemyController == EnemyController.PLAYER)
             {
-                sr.color = enemyData.playerNormalColor;
+                enemyData.enemy.ChangeColor(enemyData.playerNormalColor);
             }
 
             // 이벤트 추가
@@ -145,6 +146,11 @@ namespace Enemy
             EnemyStart();
 
             playerInput = SlimeGameManager.Instance.Player.GetComponent<PlayerInput>();
+
+            if (hpBar != null)
+            {
+                enemyData.enemyCanvas = hpBar;
+            }
         }
 
         protected virtual void Update()
@@ -241,7 +247,7 @@ namespace Enemy
                 hpBar.SetActive(false);
             }
 
-            sr.color = enemyData.playerNormalColor;
+            enemyData.enemy.ChangeColor(enemyData.playerNormalColor);
 
             if (enemyAttackCheck != null)
             {
@@ -310,6 +316,11 @@ namespace Enemy
         public virtual void MoveEnemy()
         {
             enemyData.isEnemyMove = true; // 적을 움직이는 상태로 바꿈
+        }
+
+        public virtual void ChangeColor(Color color)
+        {
+            sr.color = color;
         }
 
         public EnemyController GetEnemyController() => enemyData.eEnemyController;

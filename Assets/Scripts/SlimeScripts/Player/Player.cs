@@ -379,6 +379,8 @@ public class Player : MonoBehaviour
     }
     private void PlayerDead()
     {
+        playerStat.additionalEternalStat = new EternalStat();
+
         EventManager.TriggerEvent("PlayerSetActiveFalse");
     }
     private void EnemyDead(string objId)
