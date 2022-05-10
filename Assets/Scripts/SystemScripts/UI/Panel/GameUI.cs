@@ -20,6 +20,9 @@ public class GameUI : MonoBehaviour
     private GameUIFields gameUIFields;
     public GameUIFields UIFields { get { return gameUIFields; } }
 
+    public Pair<bool, string> openUISoundPair;
+    public Pair<bool, string> closeUISoundPair;
+
 
     public void ResetPos() => rectTrm.anchoredPosition = originPos;
 
@@ -41,6 +44,11 @@ public class GameUI : MonoBehaviour
     {
         gameObject.SetActive(true);
         UIManager.Instance.uiTweeningDic[_UItype] = true;
+        if (openUISoundPair.first)
+        {
+           
+            SoundManager.Instance.PlaySoundBox(openUISoundPair.second);
+        }
         if(setLastSibling.first)
         {
             setLastSibling.second.SetAsLastSibling();
@@ -169,6 +177,11 @@ public class GameUI : MonoBehaviour
         }
 
         UIManager.Instance.uiTweeningDic[_UItype] = true;
+        if (closeUISoundPair.first)
+        {
+            
+            SoundManager.Instance.PlaySoundBox(closeUISoundPair.second);
+        }
         switch (_UItype)
         {
             case UIType.CHEF_FOODS_PANEL:

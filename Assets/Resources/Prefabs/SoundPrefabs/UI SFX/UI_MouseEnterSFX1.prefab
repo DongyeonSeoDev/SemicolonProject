@@ -146,4 +146,4 @@ MonoBehaviour:
   playToEnd: 0
   playTime: 0.2
   defaultVolume: 1
-  defaultPitch: 1
+  defaultPitch: 1.9

@@ -101,7 +101,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     [Space(10)]
     public CanvasGroup normalPanelCanvasg;
     public CanvasGroup priorNormalPanelCvsg;
-    public CanvasGroup settingCvsg;
+    //public CanvasGroup settingCvsg;
     public CanvasGroup worldUICvsg;
     public CanvasGroup ordinaryCvsg;
     public CanvasGroup msgCvsg;
@@ -151,6 +151,7 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     private GameManager gm;
     private SlimeGameManager sgm;
+    private SoundManager sm;
 
     #region Init
     private void Awake()
@@ -216,6 +217,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     {
         gm = GameManager.Instance;
         sgm = SlimeGameManager.Instance;
+        sm = SoundManager.Instance;
     }
 
     private void Start()
@@ -475,7 +477,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         }
 
         menuBtns.Find(x => x.uiType == type).OnSelected(true);
-       
+        sm.PlaySoundBox("MenuOpen");
     }
 
     private bool ExceptionHandler(UIType type) //UI여닫는 상호작용에 대한 예외처리. true를 리턴하면 상호작용 안함 
@@ -489,12 +491,14 @@ public partial class UIManager : MonoSingleton<UIManager>
                 OnUIInteractSetActive(UIType.MENU, true, true);  //메뉴창을 띄움
                 MenuBtnSelectedMark(type);
                 selectedMenuType = type;
+                
             }
             else
             {
                 if(selectedMenuType == type)
                 {
                     OnUIInteract(UIType.MENU);
+                    
                     return true;
                 }
                 else

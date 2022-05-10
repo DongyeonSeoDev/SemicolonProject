@@ -42,7 +42,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -2798515193983515459, guid: 792b4c7968e272d4cab917717e755752, type: 2}
-  m_audioClip: {fileID: 8300000, guid: ea6f99e99613d483dbb162c72b9a211f, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 1b4a055b704764054bdf138b93eff0a8, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -143,7 +143,7 @@ MonoBehaviour:
   soundBoxId: MenuClose
   audioSource: {fileID: -2057280067287601774}
   isBackgroundMusic: 0
-  playToEnd: 1
-  playTime: 0.2
+  playToEnd: 0
+  playTime: 0.4
   defaultVolume: 1
-  defaultPitch: 1
+  defaultPitch: 2
