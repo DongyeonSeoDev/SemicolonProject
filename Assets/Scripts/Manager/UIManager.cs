@@ -803,11 +803,12 @@ public partial class UIManager : MonoSingleton<UIManager>
             selectedItemSlot.outline.DOKill();
             selectedItemSlot.outline.enabled = false;
         }*/
-        selectedItemSlot = slot;
+        //selectedItemSlot = slot;
 
-        if (selectedItemId == itemID) return;
+        if (selectedItemSlot && selectedItemSlot == slot) return;
         else if (string.IsNullOrEmpty(selectedItemId)) OnUIInteract(UIType.ITEM_DETAIL);
         selectedItemId = itemID;
+        selectedItemSlot = slot;
 
         ItemSO data = gm.GetItemData(itemID);
 
@@ -820,11 +821,7 @@ public partial class UIManager : MonoSingleton<UIManager>
 
         itemAbilExplanation.text = data.abilExplanation;
 
-        selectedImg.gameObject.SetActive(true);
-        selectedImg.transform.SetParent(slot.root.transform);
-        selectedImg.transform.localPosition = Vector3.zero;
-        selectedImg.transform.SetAsLastSibling();
-        selectedImg.transform.localScale = Vector3.one; //왜인지 옮길 수록 스케일이 작아져서 원래대로 되돌림
+        Util.SetSlotMark(selectedImg,slot.root.transform); //왜인지 옮길 수록 스케일이 작아져서 원래대로 되돌림
 
         //itemUseBtn.gameObject.SetActive(data.itemType != ItemType.ETC);
         //if (data.itemType == ItemType.ETC && ((Ingredient)data).isUseable) itemUseBtn.gameObject.SetActive(true);

@@ -10,6 +10,8 @@ public class UIColor : UITransition
     private Color originColor;
     private Image img;
 
+    public string soundId;
+
     protected override void Awake()
     {
         base.Awake();
@@ -20,5 +22,10 @@ public class UIColor : UITransition
     public override void Transition(bool on)
     {
         img.DOColor(transitionEnable && on ? transitionColor : originColor, 0.3f).SetUpdate(true);
+
+        if (on && transitionEnable && !string.IsNullOrEmpty(soundId))
+        {
+            SoundManager.Instance.PlaySoundBox(soundId);
+        }
     }
 }

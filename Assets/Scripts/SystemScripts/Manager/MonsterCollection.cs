@@ -15,6 +15,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
     #region Detail View
     private string selectedDetailMobId;
+    private MonsterInfoSlot selectedMobSlot;
+    public GameObject slotSelectedImg;
 
     public Triple<Image, TextMeshProUGUI, Text> monsterImgNameEx;
     public Pair<Image, Text> mobTypeImgText;
@@ -39,12 +41,24 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     [Space(15)]
     [SerializeField] private List<ChangeBodySlot> changeBodySlots;
 
-    //Bottom Left Save Body UI List
+    //Bottom Top Save Body UI List
     [Space(15)]
     [SerializeField] private List<ChangeableBody> savedBodys;
     [SerializeField] private int maxSavedBodyCount = 3;
 
+    private Vector3 currentBodySlotScale;
+    private List<Vector3> savedBodyPosList = new List<Vector3>();
+
     public Sprite notExistBodySpr; //빈 슬롯일 때의 스프라이트 (몸)
+
+    private void Awake()
+    {
+        for(int i=0; i<savedBodys.Count; i++)
+        {
+            savedBodyPosList.Add(savedBodys[i].RectTrm.anchoredPosition);
+        }
+        currentBodySlotScale = savedBodys[0].transform.localScale;
+    }
 
     private void Start()
     {
@@ -85,6 +99,13 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
                 RemoveSavedBody(i);
             }
             changeBodySlots.ForEach(x => x.Unregister());
+
+            for (int i = 0; i < savedBodys.Count; i++)
+            {
+                savedBodys[i].RectTrm.anchoredPosition = savedBodyPosList[i];
+                savedBodys[i].transform.localScale = Vector3.one;
+            }
+            savedBodys[0].transform.localScale = currentBodySlotScale;
         });
         EventManager.StartListening("ChangeBody", (str, dead) =>
         {
@@ -93,6 +114,21 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
                 savedBodys[i].CheckUsedMob(str);
                 if (!dead)
                     savedBodys[i].StartCoolTimeUI();
+            }
+
+            int index = 1;
+            for (int i = 0; i < savedBodys.Count; i++)
+            {
+                if(savedBodys[i].BodyID == str)
+                {
+                    savedBodys[i].RectTrm.DOAnchorPos(savedBodyPosList[0], 0.3f);
+                    savedBodys[i].transform.DOScale(currentBodySlotScale, 0.3f);
+                }
+                else
+                {
+                    savedBodys[i].RectTrm.DOAnchorPos(savedBodyPosList[index++], 0.3f);
+                    savedBodys[i].transform.DOScale(Vector3.one, 0.3f);
+                }
             }
         });
         EventManager.StartListening("EnemyDead", id => Util.DelayFunc(()=>UpdateMonsterDetailPanel(id), 0.3f));  //몹 잡았는데 몹 자세히 보기 열려있으면 새로고침하는데 함수 호출 순서 이슈때문에 약간의 딜레이를 줌
@@ -123,11 +159,13 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             UpdateDrainProbability(key);
     }
 
-    public void Detail(ChangeBodyData data, string id) //몹 정보 자세히 보기
+    public void Detail(MonsterInfoSlot slot, string id) //몹 정보 자세히 보기
     {
         if (selectedDetailMobId == id) return;
         selectedDetailMobId = id;
+        selectedMobSlot = slot;
 
+        ChangeBodyData data = slot.BodyData;
         UIManager.Instance.OnUIInteractSetActive(UIType.MONSTERINFO_DETAIL, true);
 
         monsterImgNameEx.first.sprite = data.bodyImg;
@@ -141,11 +179,12 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         mobDropItemImg.sprite = item.GetSprite();
         mobDropItemImg.GetComponent<NameInfoFollowingCursor>().explanation = item.itemName;
 
-        
         if (UIManager.Instance.gameUIList[(int)UIType.MONSTERINFO_DETAIL_ITEM].gameObject.activeSelf)
             DetailItem();
         if (UIManager.Instance.gameUIList[(int)UIType.MONSTERINFO_DETAIL_STAT].gameObject.activeSelf)
             DetailStat();
+
+        Util.SetSlotMark(slotSelectedImg.transform, slot.MobImgBg);
     }
 
     public void UpdateMonsterDetailPanel(string id) //흡수확률과 동화율 새로 고침한다
@@ -160,6 +199,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     public void CloseDetail() //몹 정보 자세히 보기 닫음
     {
         selectedDetailMobId = string.Empty;
+        selectedMobSlot = null;
+        slotSelectedImg.SetActive(false);
     }
 
     public ChangeBodyData GetMonsterInfo(string id)

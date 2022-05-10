@@ -13,6 +13,8 @@ public class MonsterInfoSlot : MonoBehaviour
 
     [SerializeField] private Image drainProbabilityFill;
 
+    public Transform MobImgBg { get; private set; }
+
     //public Transform acqMarkPar; //변신 가능 텍스트 UI의 부모
     //[SerializeField] private Text understandingRateText;
 
@@ -29,7 +31,9 @@ public class MonsterInfoSlot : MonoBehaviour
         monsterImg.sprite = data.bodyImg;
         dropItem = data.dropItem;
 
-        monsterImg.GetComponent<Button>().onClick.AddListener(() => MonsterCollection.Instance.Detail(BodyData, monsterBodyID));
+        MobImgBg = monsterImg.transform.parent;
+
+        monsterImg.GetComponent<Button>().onClick.AddListener(() => MonsterCollection.Instance.Detail(this, monsterBodyID));
     }
 
     public void UpdateAssimilationRate(float rate)

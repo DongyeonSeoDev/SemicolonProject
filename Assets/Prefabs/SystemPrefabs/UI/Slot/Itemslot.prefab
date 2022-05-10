@@ -267,7 +267,6 @@ MonoBehaviour:
   itemImg: {fileID: 657810604597692557}
   itemCountTxt: {fileID: 657810603792353081}
   button: {fileID: 657810604133206173}
-  outline: {fileID: 7287481163088615279}
   cvsg: {fileID: 657810604133206161}
   nifc: {fileID: -4119854739441694744}
 --- !u!114 &1899653170039834938
@@ -298,6 +297,7 @@ MonoBehaviour:
   transitionEnable: 0
   transitionTime: 0.5
   targetScale: {x: 1.1, y: 1.1, z: 1.1}
+  soundId: UIMouseEnterSFX3
 --- !u!114 &-4119854739441694744
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -312,6 +312,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitionEnable: 0
   explanation: 
+  fontSize: 30
 --- !u!114 &7287481163088615279
 MonoBehaviour:
   m_ObjectHideFlags: 0

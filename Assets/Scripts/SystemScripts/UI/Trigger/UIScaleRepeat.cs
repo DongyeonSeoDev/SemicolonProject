@@ -9,6 +9,8 @@ public class UIScaleRepeat : UITransition
     public float transitionTime = 0.2f;
     public Vector3 targetScale = new Vector3(1.1f, 1.1f, 1.1f);
 
+    public string soundId;
+
     protected override void Awake()
     {
         base.Awake();
@@ -19,6 +21,10 @@ public class UIScaleRepeat : UITransition
         if (on && transitionEnable)
         {
             transform.DOScale(targetScale, transitionTime).SetLoops(-1,LoopType.Yoyo).SetUpdate(true);
+            if (!string.IsNullOrEmpty(soundId))
+            {
+                SoundManager.Instance.PlaySoundBox(soundId);
+            }
         }
         else
         {

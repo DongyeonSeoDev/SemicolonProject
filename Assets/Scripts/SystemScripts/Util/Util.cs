@@ -46,6 +46,15 @@ public static partial class Util
 
     public static bool CompareLayer(this Collider2D obj, int layer) => obj.gameObject.layer == layer;
 
+    public static void SetSlotMark(Transform mark, Transform parent)
+    {
+        mark.gameObject.SetActive(true);
+        mark.SetParent(parent);
+        mark.localPosition = Vector3.zero;
+        mark.SetAsLastSibling();
+        mark.localScale = Vector3.one;
+    }
+
     public static void ExecuteFunc(Action func, float delay, float duration, MonoBehaviour mono = null, Action start=null, Action end = null, bool realTime = false)
     {
         if (!mono) mono = GameManager.Instance;

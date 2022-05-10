@@ -9,7 +9,21 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
     [SerializeField] private KeyAction slotKey;
 
     [SerializeField] private string bodyID = ""; //이 슬롯에 저장되어있는 몬스터 아이디   (monster id)
+    public string BodyID => bodyID;
     public bool Registered => !string.IsNullOrEmpty(bodyID);
+
+    private RectTransform rectTrm;
+    public RectTransform RectTrm
+    {
+        get
+        {
+            if(rectTrm==null)
+            {
+                rectTrm = GetComponent<RectTransform>();
+            }
+            return rectTrm;
+        }
+    }
 
     public Image bodyImg;
     public Pair<Image, Text> coolTimeUIPair;
