@@ -111,11 +111,13 @@ namespace Enemy
                 else if (currentMoveTime <= 1f)
                 {
                     enemyData.enemyRigidbody2D.velocity = Vector2.zero;
+                    enemyData.moveVector = Vector2.zero;
                     currentMoveTime -= Time.deltaTime;
                 }
                 else
                 {
                     enemyData.enemyRigidbody2D.velocity = targetPosition;
+                    enemyData.moveVector = targetPosition;
                     currentMoveTime -= Time.deltaTime;
                 }
             }
