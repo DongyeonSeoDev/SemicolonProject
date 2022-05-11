@@ -937,6 +937,8 @@ public partial class UIManager : MonoSingleton<UIManager>
         seq.Append(loadingCvsg.DOFade(0, end).SetEase(Ease.OutQuad));
         seq.OnComplete(() => loadingEndAction());
         seq.Play();
+
+        SoundManager.Instance.PlaySoundBox("LoadingSFX");
     }
 
     public void StartLoadingIn()

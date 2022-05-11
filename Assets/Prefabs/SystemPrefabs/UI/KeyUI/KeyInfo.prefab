@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7312177941013293943}
   - component: {fileID: 7312177941013293944}
   - component: {fileID: 5459103182628416211}
+  - component: {fileID: 3584338515401373174}
   m_Layer: 5
   m_Name: KeyButton
   m_TagString: Untagged
@@ -167,6 +168,19 @@ MonoBehaviour:
   transitionEnable: 1
   explanation: "\uD0A4 \uC9C0\uC815\uD558\uAE30"
   fontSize: 30
+--- !u!114 &3584338515401373174
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7312177941013293949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fee35aab2f889924f904b88f8c221a7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  soundId: UIClickSFX2
 --- !u!1 &7312177941776442755
 GameObject:
   m_ObjectHideFlags: 0

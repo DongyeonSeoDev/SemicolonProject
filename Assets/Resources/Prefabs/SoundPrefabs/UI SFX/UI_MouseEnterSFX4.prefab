@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: -2057280067287601774}
   - component: {fileID: -8177254558972320154}
   m_Layer: 0
-  m_Name: ChangeBodySFX
+  m_Name: UI_MouseEnterSFX4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42,7 +42,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -2798515193983515459, guid: 792b4c7968e272d4cab917717e755752, type: 2}
-  m_audioClip: {fileID: 8300000, guid: ea60b8202d33641bcac91d2f39867630, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 02cf6aefb4bf84ebbafd7ecb053a064e, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -140,10 +140,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0cc83990bb0e0f4bb9aaec369a4f7b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  soundBoxId: ChangeBodySFX
+  soundBoxId: UIMouseEnterSFX4
   audioSource: {fileID: -2057280067287601774}
   isBackgroundMusic: 0
   playToEnd: 0
-  playTime: 0.55
+  playTime: 0.2
   defaultVolume: 1
-  defaultPitch: 1.1
+  defaultPitch: 2
