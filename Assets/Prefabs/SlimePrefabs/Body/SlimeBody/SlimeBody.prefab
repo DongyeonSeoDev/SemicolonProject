@@ -1767,6 +1767,10 @@ PrefabInstance:
       value: AvoidCloseCheckCollider
       objectReference: {fileID: 0}
     - target: {fileID: 7491075731991253569, guid: 3f0c11c3aba46fe4d8b936a1b30548cf, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7491075731991253569, guid: 3f0c11c3aba46fe4d8b936a1b30548cf, type: 3}
       propertyPath: m_Points.Array.size
       value: 0
       objectReference: {fileID: 0}
