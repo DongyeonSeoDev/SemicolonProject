@@ -10,7 +10,7 @@ namespace Enemy
         Slime_01 = 1,
         Rat_02,
         Slime_03,
-        SkeletonArcher,
+        SkeletonArcher_04,
         Boss_SkeletonKing_50 = 50,
         Bullet = 100,
         EnemyLoot,

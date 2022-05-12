@@ -23,8 +23,9 @@ namespace Enemy
             enemyData.maxHP = 50;
             enemyData.hp = 50;
 
-            enemyData.enemyMoveCommand = new EnemyRandomMoveCommand(enemyData, positionCheckData); // MoveCommand 积己
-            enemyData.enemySpriteRotateCommand = new EnemySpriteRotateCommand(enemyData);
+            // TODO: 框流烙 内靛 累己秦具窃
+            //enemyData.enemyMoveCommand = new EnemyRandomMoveCommand(enemyData, positionCheckData); // MoveCommand 积己
+            //enemyData.enemySpriteRotateCommand = new EnemySpriteRotateCommand(enemyData);
             //enemyAttackPlayerCommand = new EnemyAttackPlayerCommand(transform, this, enemyData.attackPower);
             //enemyAttackCommand = new EnemyAttackCommand(this, enemyData.enemyObject.transform, enemyData.attackPower);
         }
