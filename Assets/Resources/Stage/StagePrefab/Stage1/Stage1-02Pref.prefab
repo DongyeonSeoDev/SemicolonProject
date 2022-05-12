@@ -73,9 +73,6 @@ MonoBehaviour:
   - {fileID: 2903864314925138834}
   - {fileID: 2111183138866665230}
   plants: []
-  imprecMapEffects:
-    first: {fileID: 0}
-    second: []
 --- !u!1 &3553275141150440558
 GameObject:
   m_ObjectHideFlags: 0
@@ -205,7 +202,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6792075201188143648
 Transform:
   m_ObjectHideFlags: 0
