@@ -22,12 +22,44 @@ public class PlayerAvoidCloseCheckCollider : MonoBehaviour
         pointList.Clear();
         edgeCollider2D.SetPoints(pointList);
     }
-
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("응애");
+        if (!SlimeGameManager.Instance.playerHitCheckDict.ContainsKey(collision.gameObject) && checkLayer.CompareGameObjectLayer(collision.gameObject))
+        {
+            SlimeGameManager.Instance.playerHitCheckDict.Add(collision.gameObject, false);
+        }
     }
+    private void Update()
+    {
+        List<GameObject> removeList = new List<GameObject>();
+
+        foreach (var item in SlimeGameManager.Instance.playerHitCheckDict)
+        {
+            if (!item.Key.activeSelf)
+            {
+                bool hitCheck = item.Value;
+                
+                removeList.Add(item.Key);
+
+                if (hitCheck) // 공격 회피를 못했으니 리턴
+                {
+                    Debug.Log("회피실패!");
+
+                    continue;
+                }
+
+                // 회피 성공
+                Debug.Log("DEF" + item.Key.name);
+                Debug.Log("회피!");
+            }
+        }
+
+        foreach(var item in removeList)
+        {
+            SlimeGameManager.Instance.playerHitCheckDict.Remove(item);
+        }
+    }
+
     public void SetMiddlePoint(MiddlePoint middlePoint)
     {
         this.middlePoint = middlePoint;

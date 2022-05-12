@@ -10,11 +10,29 @@ public class SaveData
     public TutorialInfo tutorialInfo = new TutorialInfo();
     public StageInfo stageInfo = new StageInfo();
 
+    public void ResetComplete()
+    {
+        option.keyInputDict.ClearDic();
+        userInfo = new UserInfo();
+        tutorialInfo = new TutorialInfo();
+        stageInfo = new StageInfo();
+    }
+
+    public void ResetAfterTuto()
+    {
+        UserInfo uInfo = new UserInfo();
+        uInfo.monsterLearningDic = userInfo.monsterLearningDic;
+        uInfo.uiActiveDic = userInfo.uiActiveDic;
+        uInfo.isGainBodyChangeSlot = userInfo.isGainBodyChangeSlot;
+        userInfo = uInfo;
+    }
+
     public void Save()
     {
         userInfo.userItems.Save();
         userInfo.monsterInfoDic.Save();
         userInfo.uiActiveDic.Save();
+        userInfo.monsterLearningDic.Save();
         option.keyInputDict.Save();
     }
     public void Load()
@@ -22,6 +40,7 @@ public class SaveData
         userInfo.userItems.Load();
         userInfo.monsterInfoDic.Load();
         userInfo.uiActiveDic.Load();
+        userInfo.monsterLearningDic.Load();
         option.keyInputDict.Load();
     }
 }
@@ -53,6 +72,7 @@ public class UserInfo
     //public List<Triple<int, int, int>> limitedBattleCntItems = new List<Triple<int, int, int>>(); //n교전 후에 사라지는 아이템들 리스트 (아이디, 현재 교전 수, 최대 교전 수(가 되면 사라짐))
     public SaveDic<string, ItemInfo> userItems = new SaveDic<string, ItemInfo>(); //인벤토리 목록 
     public SaveDic<string, MonsterInfo> monsterInfoDic = new SaveDic<string, MonsterInfo>(); //몬스터 이해도(동화율), 흡수 확률 등의 정보
+    public SaveDic<string, MonsterLearningInfo> monsterLearningDic = new SaveDic<string, MonsterLearningInfo>();
 
     public SaveDic<KeyAction, bool> uiActiveDic = new SaveDic<KeyAction, bool>();
     public bool isGainBodyChangeSlot = false;
@@ -119,6 +139,8 @@ public class SaveDic<K, V>
     public void ClearDic()
     {
         keyValueDic.Clear();
+        keyList.Clear();
+        valueList.Clear();
     }
 }
 #endregion

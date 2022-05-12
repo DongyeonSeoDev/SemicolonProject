@@ -14,6 +14,8 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
     private CinemachineCameraScript cinemachineCameraScript = null;
     private PlayerEnemyUnderstandingRateManager playerEnemyUnderstandingRateManager = null;
 
+    public Dictionary<GameObject, bool> playerHitCheckDict = new Dictionary<GameObject, bool>();
+
     /// <summary>
     /// 이 코드는 사용하면 위험할 수 있다. Property인 Player를 사용하자
     /// </summary>
@@ -104,6 +106,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
     {
         get { return upStatPercentage; }
     }
+
     private void Awake()
     {
         playerEnemyUnderstandingRateManager = PlayerEnemyUnderstandingRateManager.Instance;

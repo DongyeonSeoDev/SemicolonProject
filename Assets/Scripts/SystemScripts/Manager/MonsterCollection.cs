@@ -10,6 +10,9 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
     public Dictionary<string, MonsterInfoSlot> mobIdToSlot = new Dictionary<string, MonsterInfoSlot>();
 
+    private Dictionary<string, MonsterLearningInfo> mobLearningInfoDic = new Dictionary<string, MonsterLearningInfo>();
+    private MonsterLearningInfo tempDummyMobLearningInfo;
+
     public Pair<GameObject, Transform> mobInfoUIPair;
     public GameObject trfAbleTxtPref;
 
@@ -31,6 +34,9 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     public Text[] statText; //몹으로 변신시 상승 능력치 확인 텍스트
     public Text statIncrRatePerAssim; //동화율 n 오를 때마다 처음 스탯의 m퍼센트만큼 증가함을 나타내는 텍스트
 
+    //몬스터 (주로 스탯의)특성 정보
+    public Text featureTxt;
+
     #endregion
 
     [SerializeField] private ChangeBodyData defaultSlimeBodyData;
@@ -50,6 +56,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     private List<Vector3> savedBodyPosList = new List<Vector3>();
 
     public Sprite notExistBodySpr; //빈 슬롯일 때의 스프라이트 (몸)
+    public Sprite questionSpr; // ? 스프라이트
 
     private void Awake()
     {
@@ -70,18 +77,23 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         changeBodySlots.ForEach(x => x.SetSlotNumber());
 
         //모든 몹 정보 가져와서 UI생성하고 값 넣음
+        MonsterLearningInfo mlInfo = new MonsterLearningInfo();
         urmg.ChangableBodyList.ForEach(body =>
         {
             MonsterInfoSlot ui = Instantiate(mobInfoUIPair.first, mobInfoUIPair.second).GetComponent<MonsterInfoSlot>();
             ui.Init(body);
-            mobIdToSlot.Add(body.bodyId.ToString(), ui);
+
+            string id = body.bodyId.ToString();
+            mobIdToSlot.Add(id, ui);
+            mobLearningInfoDic.Add(id, mlInfo);
         });
 
         savedBodys.ForEach(x => x.InitSet());
 
-        //Load();
+        Load();
         AllUpdateUnderstanding();
         AllUpdateDrainProbability();
+        AllUpdateMonColImgs();
 
         foreach (MonsterInfoSlot slot in mobIdToSlot.Values)
             slot.MarkAcqBody(false);
@@ -131,7 +143,14 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
                 }
             }
         });
-        EventManager.StartListening("EnemyDead", id => Util.DelayFunc(()=>UpdateMonsterDetailPanel(id), 0.3f));  //몹 잡았는데 몹 자세히 보기 열려있으면 새로고침하는데 함수 호출 순서 이슈때문에 약간의 딜레이를 줌
+        EventManager.StartListening("EnemyDead", id =>
+        {
+            if (!mobLearningInfoDic[id].kill)
+            {
+                ChangeLearningStateKill(id, true);
+            }
+            //Util.DelayFunc(() => UpdateMonsterDetailPanel(id), 0.3f)
+        });  ////몹 잡았는데 몹 자세히 보기 열려있으면 새로고침하는데 함수 호출 순서 이슈때문에 약간의 딜레이를 줌
     }
 
     public void UpdateUnderstanding(string id)  //몹 동화율 정보 업뎃
@@ -159,6 +178,15 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             UpdateDrainProbability(key);
     }
 
+    public void AllUpdateMonColImgs() //몬스터 도감에서 모든 몬스터 이미지를 갱신한다. (저장 안된건 ?고 된건 사진 나오게)
+    {
+        foreach(string key in mobLearningInfoDic.Keys)
+        {
+            if (mobLearningInfoDic[key].meet)
+                mobIdToSlot[key].SetMonsterImg(true);
+        }
+    }
+
     public void Detail(MonsterInfoSlot slot, string id) //몹 정보 자세히 보기
     {
         if (selectedDetailMobId == id) return;
@@ -168,16 +196,36 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         ChangeBodyData data = slot.BodyData;
         UIManager.Instance.OnUIInteractSetActive(UIType.MONSTERINFO_DETAIL, true);
 
-        monsterImgNameEx.first.sprite = data.bodyImg;
-        monsterImgNameEx.second.text = data.bodyName;
-        monsterImgNameEx.third.text = data.bodyExplanation;
+        if (mobLearningInfoDic[id].meet)
+        {
+            monsterImgNameEx.first.sprite = data.bodyImg;
+            monsterImgNameEx.second.text = data.bodyName;
+            monsterImgNameEx.third.text = data.bodyExplanation;
 
-        mobDrainProbAndAssimTmp.first.text="흡수확률: " + urmg.GetDrainProbabilityDict(id).ToString() + "%";
-        mobDrainProbAndAssimTmp.second.text="동화율: " + urmg.GetUnderstandingRate(id).ToString() + "%";
+            mobDrainProbAndAssimTmp.first.text = "흡수확률: " + urmg.GetDrainProbabilityDict(id).ToString() + "%";
+            mobDrainProbAndAssimTmp.second.text = "동화율: " + urmg.GetUnderstandingRate(id).ToString() + "%";
+        }
+        else
+        {
+            monsterImgNameEx.first.sprite = questionSpr;
+            monsterImgNameEx.second.text = "???";
+            monsterImgNameEx.third.text = data.hint;
 
-        ItemSO item = data.dropItem;
-        mobDropItemImg.sprite = item.GetSprite();
-        mobDropItemImg.GetComponent<NameInfoFollowingCursor>().explanation = item.itemName;
+            mobDrainProbAndAssimTmp.first.text = "흡수확률: ??%";
+            mobDrainProbAndAssimTmp.second.text = "동화율: ??%";
+        }
+
+        if (mobLearningInfoDic[id].kill)
+        {
+            ItemSO item = data.dropItem;
+            mobDropItemImg.sprite = item.GetSprite();
+            mobDropItemImg.GetComponent<NameInfoFollowingCursor>().explanation = item.itemName;
+        }
+        else
+        {
+            mobDropItemImg.sprite = questionSpr;
+            mobDropItemImg.GetComponent<NameInfoFollowingCursor>().explanation = "???";
+        }
 
         if (UIManager.Instance.gameUIList[(int)UIType.MONSTERINFO_DETAIL_ITEM].gameObject.activeSelf)
             DetailItem();
@@ -187,7 +235,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         Util.SetSlotMark(slotSelectedImg.transform, slot.MobImgBg);
     }
 
-    public void UpdateMonsterDetailPanel(string id) //흡수확률과 동화율 새로 고침한다
+    public void UpdateMonsterDetailPanel(string id) //흡수확률과 동화율 새로 고침한다  (방식을 바꿔서 굳이 할 필요 없음)
     {
         if (Util.IsActiveGameUI(UIType.MONSTERINFO_DETAIL))
         {
@@ -222,17 +270,27 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
     public void DetailStat()
     {
-        EternalStat stat = mobIdToSlot[selectedDetailMobId].BodyData.additionalBodyStat;
-        EternalStat addiStat = SlimeGameManager.Instance.GetExtraUpStat(selectedDetailMobId);
+        if (mobLearningInfoDic[selectedDetailMobId].assimilation)
+        {
+            EternalStat stat = mobIdToSlot[selectedDetailMobId].BodyData.additionalBodyStat;
+            EternalStat addiStat = SlimeGameManager.Instance.GetExtraUpStat(selectedDetailMobId);
 
-        statText[0].text = MinusException(stat.maxHp) + AdditionalStat(addiStat.maxHp);
-        statText[1].text = MinusException(stat.maxDamage) + AdditionalStat(addiStat.maxDamage);  //maxDamage만큼 min/max 데미지를 올려준다
-        statText[2].text = MinusException(stat.defense) + AdditionalStat(addiStat.defense);
-        statText[3].text = MinusException(Mathf.RoundToInt(stat.speed)) + AdditionalStat(Mathf.RoundToInt(addiStat.speed));
-        statText[4].text = string.Concat(MinusException(stat.criticalRate), '%') + AdditionalStat(addiStat.criticalRate, true);
-        statText[5].text = string.Concat( MinusException(stat.criticalDamage), '%') + AdditionalStat(addiStat.criticalDamage, true);
-        statText[6].text = MinusException(stat.intellect) + AdditionalStat(addiStat.intellect);
-        statText[7].text = MinusException(stat.attackSpeed) + AdditionalStat(addiStat.attackSpeed);
+            statText[0].text = MinusException(stat.maxHp) + AdditionalStat(addiStat.maxHp);
+            statText[1].text = MinusException(stat.maxDamage) + AdditionalStat(addiStat.maxDamage);  //maxDamage만큼 min/max 데미지를 올려준다
+            statText[2].text = MinusException(stat.defense) + AdditionalStat(addiStat.defense);
+            statText[3].text = MinusException(Mathf.RoundToInt(stat.speed)) + AdditionalStat(Mathf.RoundToInt(addiStat.speed));
+            statText[4].text = string.Concat(MinusException(stat.criticalRate), '%') + AdditionalStat(addiStat.criticalRate, true);
+            statText[5].text = string.Concat(MinusException(stat.criticalDamage), '%') + AdditionalStat(addiStat.criticalDamage, true);
+            statText[6].text = MinusException(stat.intellect) + AdditionalStat(addiStat.intellect);
+            statText[7].text = MinusException(stat.attackSpeed) + AdditionalStat(addiStat.attackSpeed);
+        }
+        else
+        {
+            for(int i=0; i<statText.Length; i++)
+            {
+                statText[i].text = "??";
+            }
+        }
     }
 
     private string MinusException(int value)
@@ -264,11 +322,81 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
     public void DetailItem()
     {
-        ItemSO item = mobIdToSlot[selectedDetailMobId].BodyData.dropItem;
+        if (mobLearningInfoDic[selectedDetailMobId].kill)
+        {
+            ItemSO item = mobIdToSlot[selectedDetailMobId].BodyData.dropItem;
 
-        mobItemImgNameEx.first.sprite = item.GetSprite();
-        mobItemImgNameEx.second.text = item.itemName;
-        mobItemImgNameEx.third.text = item.explanation;
+            mobItemImgNameEx.first.sprite = item.GetSprite();
+            mobItemImgNameEx.second.text = item.itemName;
+            mobItemImgNameEx.third.text = item.explanation;
+        }
+        else
+        {
+            mobItemImgNameEx.first.sprite = questionSpr;
+            mobItemImgNameEx.second.text = "???";
+            mobItemImgNameEx.third.text = "?????";
+        }
+    }
+
+    #endregion
+
+    #region Detail Feature
+
+    public void DetailFeature()
+    {
+        featureTxt.text = mobLearningInfoDic[selectedDetailMobId].kill ? mobIdToSlot[selectedDetailMobId].BodyData.featureExplanation : "???";
+    }
+
+    #endregion
+
+    #region Monster Learning
+
+    public void ChangeLearningStateMeet(string id, bool value)
+    {
+        tempDummyMobLearningInfo = mobLearningInfoDic[id];
+        tempDummyMobLearningInfo.meet = value;
+        mobLearningInfoDic[id] = tempDummyMobLearningInfo;
+
+        if (value)
+        {
+            mobIdToSlot[id].SetMonsterImg(true);
+        }
+    }
+    public void ChangeLearningStateKill(string id, bool value)
+    {
+        tempDummyMobLearningInfo = mobLearningInfoDic[id];
+        tempDummyMobLearningInfo.kill = value;
+        mobLearningInfoDic[id] = tempDummyMobLearningInfo;
+    }
+    public void ChangeLearningStateAssimilation(string id, bool value)
+    {
+        tempDummyMobLearningInfo = mobLearningInfoDic[id];
+        tempDummyMobLearningInfo.assimilation = value;
+        mobLearningInfoDic[id] = tempDummyMobLearningInfo;
+    }
+
+    public void CheckRecordedMonsters(List<EnemySpawnData> spawnEnemyList)
+    {
+        List<Enemy.Type> list = new List<Enemy.Type>();
+        int i;
+
+        for(i=0; i < spawnEnemyList.Count; i++)
+        {
+            if(!list.Contains(spawnEnemyList[i].enemyId))
+            {
+                list.Add(spawnEnemyList[i].enemyId);
+            }
+        }
+
+        string id;
+        for(i=0; i<list.Count; i++)
+        {
+            id = list[i].ToString();
+            if (!mobLearningInfoDic[id].meet)
+            {
+                ChangeLearningStateMeet(id, true);
+            }
+        }
     }
 
     #endregion
@@ -315,6 +443,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         EffectManager.Instance.OnTopRightBtnEffect(UIType.MONSTER_COLLECTION, true);
         UIManager.Instance.RequestLogMsg(GetMonsterInfo(id).bodyName + "(를)을 완전히 흡수하였습니다.");
         mobIdToSlot[id].MarkAcqBody(true);
+        ChangeLearningStateAssimilation(id, true);
     }
 
     public void RemoveSavedBody(int slotNumber)
@@ -376,15 +505,23 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         {
             uInfo.monsterInfoDic[key] = new MonsterInfo(key, urmg.PlayerEnemyUnderStandingRateDic[key], urmg.GetDrainProbabilityDict(key));
         }
+        foreach(string key in mobLearningInfoDic.Keys)
+        {
+            uInfo.monsterLearningDic[key] = mobLearningInfoDic[key];
+        }
     }
 
     public void Load()
     {
         UserInfo uInfo = GameManager.Instance.savedData.userInfo;
-        foreach (string key in uInfo.monsterInfoDic.keyList)
+        foreach (string key in uInfo.monsterInfoDic.keyValueDic.Keys)
         {
             urmg.PlayerEnemyUnderStandingRateDic[key] = uInfo.monsterInfoDic[key].understandingRate;
             urmg.DrainProbabilityDict[key] = uInfo.monsterInfoDic[key].absorptionRate;
+        }
+        foreach(string key in uInfo.monsterLearningDic.keyValueDic.Keys)
+        {
+            mobLearningInfoDic[key] = uInfo.monsterLearningDic[key];
         }
     }
     #endregion

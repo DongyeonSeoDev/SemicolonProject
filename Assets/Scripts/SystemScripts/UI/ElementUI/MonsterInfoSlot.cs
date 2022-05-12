@@ -28,12 +28,18 @@ public class MonsterInfoSlot : MonoBehaviour
         monsterBodyID = data.bodyId.ToString();
         BodyData = data;
 
-        monsterImg.sprite = data.bodyImg;
+        //monsterImg.sprite = data.bodyImg;
+        monsterImg.sprite = MonsterCollection.Instance.questionSpr;
         dropItem = data.dropItem;
 
         MobImgBg = monsterImg.transform.parent;
 
         monsterImg.GetComponent<Button>().onClick.AddListener(() => MonsterCollection.Instance.Detail(this, monsterBodyID));
+    }
+
+    public void SetMonsterImg(bool set)
+    {
+        monsterImg.sprite = set ? BodyData.bodyImg : MonsterCollection.Instance.questionSpr;
     }
 
     public void UpdateAssimilationRate(float rate)

@@ -272,8 +272,6 @@ public class PlayerBodySlap : PlayerSkill
                 moveTargetPos = (Vector2)transform.position + bodySlapTime * offsetBodySlapMovePos * bodySlapMoveVec
                     /*+ minMoveToMouseChargeTime * targetPosFarPerCharge * bodySlapMoveVec*/;
             }
-            
-            Debug.Log(currentChargingTimer + " a " + Vector2.Distance(transform.position, moveTargetPos));
 
             bodySlapLine.SetPosition(0, transform.position);
             bodySlapLine.SetPosition(1, (Vector2)transform.position + bodySlapMoveVec * bodySlapLineLength);

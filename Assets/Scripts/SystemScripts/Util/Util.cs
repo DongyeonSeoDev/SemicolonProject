@@ -82,18 +82,25 @@ public static partial class Util
         end?.Invoke();
     }
 
-    public static T Find<T>(this IEnumerable<T> list, Func<T,bool> action)
+    public static T EnumParse<T>(string str) => (T)Enum.Parse(typeof(T), str);
+
+    //public static GameObject LoadAssetPrefab(string path) => AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/" + path + ".prefab");
+}
+
+public static partial class Util
+{
+    public static T Find<T>(this IEnumerable<T> list, Func<T, bool> action)
     {
         foreach (T item in list)
         {
-            if(action(item))
+            if (action(item))
             {
                 return item;
             }
         }
         return default(T);
     }
-    
+
     public static List<T> FindAll<T>(this IEnumerable<T> list, Func<T, bool> action)
     {
         List<T> itemList = new List<T>();
@@ -120,7 +127,7 @@ public static partial class Util
 
         if (itemList.Count > 1)
         {
-            return itemList[UnityEngine.Random.Range(0,itemList.Count)];
+            return itemList[UnityEngine.Random.Range(0, itemList.Count)];
         }
         else if (itemList.Count == 1)
         {
@@ -144,7 +151,7 @@ public static partial class Util
             }
         }
 
-        for(int i=0; i< randomScale; i++)
+        for (int i = 0; i < randomScale; i++)
         {
             int ran1 = UnityEngine.Random.Range(0, itemList.Count);
             int ran2 = UnityEngine.Random.Range(0, itemList.Count);
@@ -178,10 +185,6 @@ public static partial class Util
         if (itemList.Count < 2) return itemList[0];
         return itemList[UnityEngine.Random.Range(0, itemList.Count)];
     }
-
-    public static T EnumParse<T>(string str) => (T)Enum.Parse(typeof(T), str);
-
-    //public static GameObject LoadAssetPrefab(string path) => AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/" + path + ".prefab");
 }
 
 namespace Water
