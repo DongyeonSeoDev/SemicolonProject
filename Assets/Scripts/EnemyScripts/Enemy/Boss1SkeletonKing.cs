@@ -483,7 +483,7 @@ namespace Enemy
                     attackCount = attackCount - 3 < 0 ? 0 : attackCount - 3;
                 }
 
-                return null;
+                return new EnemyChaseState(enemyData);
             }
             else
             {
