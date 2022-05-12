@@ -29,7 +29,7 @@ namespace Enemy
 
             if (eEnemyController == EnemyController.AI && collision.CompareTag("Player"))
             {
-                SlimeGameManager.Instance.Player.GetDamage(Random.Range(attackPower - 5, attackPower + 6));
+                SlimeGameManager.Instance.Player.GetDamage(gameObject, Random.Range(attackPower - 5, attackPower + 6));
 
                 attackObject.Add(collision.gameObject);
             }

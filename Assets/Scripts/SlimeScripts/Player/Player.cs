@@ -268,6 +268,13 @@ public class Player : MonoBehaviour
             UIManager.Instance.UpdatePlayerHPUI(true);
         }
     }
+    /// <summary>
+    /// EventManager.TriggerEvent("PlayerOnDamage", GameObject); 를 항상 같이 호출해줄것!
+    /// </summary>
+    /// <param name="attacker"></param>
+    /// <param name="damage"></param>
+    /// <param name="critical"></param>
+    /// <param name="stateAbnormality"></param>
     public void GetDamage(GameObject attacker, int damage, bool critical = false, bool stateAbnormality = false)
     {
         if ((playerState.BodySlapping && !stateAbnormality) ||
@@ -275,6 +282,13 @@ public class Player : MonoBehaviour
             SlimeGameManager.Instance.GameClear)
         {
             return;
+        }
+
+        //SlimeGameManager.Instance.playerHitCheckDict.Add(attacker, false);
+
+        if (SlimeGameManager.Instance.playerHitCheckDict.ContainsKey(attacker))
+        {
+            SlimeGameManager.Instance.playerHitCheckDict[attacker] = true;
         }
 
         if (!playerState.IsDead)
@@ -312,7 +326,7 @@ public class Player : MonoBehaviour
                 }
             }
 
-            EffectManager.Instance.OnDamaged(dm, critical, false, SlimeGameManager.Instance.CurrentPlayerBody.transform.position); 
+            EffectManager.Instance.OnDamaged(dm, critical, false, SlimeGameManager.Instance.CurrentPlayerBody.transform.position);
             UIManager.Instance.UpdatePlayerHPUI(true);
         }
     }

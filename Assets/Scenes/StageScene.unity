@@ -130,6 +130,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3420212902346404783, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
+      propertyPath: distanceToMiddle
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5427881869486345068, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
       propertyPath: m_Name
       value: Player
@@ -2688,6 +2692,18 @@ PrefabInstance:
     - target: {fileID: 6325097880581833384, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6391854297262304533, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -55.505615
+      objectReference: {fileID: 0}
+    - target: {fileID: 6391854297910967634, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -55.505615
+      objectReference: {fileID: 0}
+    - target: {fileID: 6391854298442154303, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 52.19995
       objectReference: {fileID: 0}
     - target: {fileID: 6649220129303688327, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_SizeDelta.x
