@@ -19,7 +19,7 @@ public static class KeySetting
         keyDict[KeyAction.EVENT] = KeyCode.Space;
         keyDict[KeyAction.SPECIALATTACK1] = KeyCode.LeftShift;
         keyDict[KeyAction.SPECIALATTACK2] = KeyCode.Q;
-        keyDict[KeyAction.MANASTONE] = KeyCode.E;
+        //keyDict[KeyAction.MANASTONE] = KeyCode.E;
         keyDict[KeyAction.CHANGE_SLIME] = KeyCode.Alpha1;
         keyDict[KeyAction.CHANGE_MONSTER1] = KeyCode.Alpha2;
         keyDict[KeyAction.CHANGE_MONSTER2] = KeyCode.Alpha3;

@@ -34,7 +34,8 @@ public enum UIType
     STATEINFO,
     MINIGAME_PICKUP,
     UIOFFCONFIRM,
-    MENU
+    MENU,
+    MONSTERINFO_DETAIL_FEATURE
 }
 
 public enum KeyAction

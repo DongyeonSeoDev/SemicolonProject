@@ -64,6 +64,11 @@ public class MenuButton : UITransition
         {
             img.DOColor(on ? transitionColor : originColor, 0.3f).SetUpdate(true);
             childImg.transform.DOScale(on ? SVector3.onePointTwo : Vector3.one, 0.2f).SetUpdate(true);
+
+            if (on)
+            {
+                SoundManager.Instance.PlaySoundBox("UIMouseEnterSFX4");
+            }
         }
     }
 }

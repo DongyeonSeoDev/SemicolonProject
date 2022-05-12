@@ -13,6 +13,14 @@ public struct StageFork
 }
 
 [Serializable]
+public struct MonsterLearningInfo
+{
+    public bool meet;
+    public bool kill;
+    public bool assimilation;
+}
+
+[Serializable]
 public class IngredientCount
 {
     public Ingredient ingredient; //음식을 만들기 위한 필요 재료
@@ -77,7 +85,6 @@ public class Triple<A,B,C>
     }
 }
 
-[Serializable]
 public class GameUIFields
 {
     public RectTransform rectTrm;
@@ -103,7 +110,6 @@ public class ItemInfo
     }
 }
 
-[Serializable]
 public class NoticeUISet
 {
     public string msg;

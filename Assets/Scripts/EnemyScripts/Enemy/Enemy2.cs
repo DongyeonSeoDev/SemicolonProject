@@ -9,7 +9,6 @@ namespace Enemy
         {
             base.OnEnable();
 
-            enemyData.isAttackCommand = true;
             enemyData.isLongDistanceAttack = true;
             enemyData.chaseSpeed = 10f;
             enemyData.attackDelay = 1.5f;
