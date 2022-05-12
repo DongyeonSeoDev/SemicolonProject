@@ -18223,6 +18223,9 @@ MonoBehaviour:
       monsterInfoDic:
         keyList: []
         valueList: []
+      monsterLearningDic:
+        keyList: []
+        valueList: []
       uiActiveDic:
         keyList: 
         valueList: 
@@ -74425,7 +74428,7 @@ MonoBehaviour:
   - {fileID: 9012395817953262125}
   maxSavedBodyCount: 3
   notExistBodySpr: {fileID: 21300000, guid: 0630b8d5ad77fa94bb32ca4792fc9c8a, type: 3}
-  questionSpr: {fileID: 21300000, guid: 0630b8d5ad77fa94bb32ca4792fc9c8a, type: 3}
+  questionSpr: {fileID: 21300000, guid: f797543d240dbe64ebefba5f6814c4a4, type: 3}
 --- !u!1 &7266880244804242060
 GameObject:
   m_ObjectHideFlags: 0
