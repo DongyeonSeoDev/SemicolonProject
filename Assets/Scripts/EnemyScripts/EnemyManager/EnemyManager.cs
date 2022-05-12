@@ -14,7 +14,8 @@ namespace Enemy
         Slime_01,
         Rat_02,
         Slime_03,
-        Boss_SkeletonKing_04,
+        SkeletonArcher_04,
+        Boss_SkeletonKing_01,
     }
 
     public enum TriggerType
