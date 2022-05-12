@@ -532,7 +532,7 @@ public partial class UIManager : MonoSingleton<UIManager>
                 //setting.SetChildImgs(true);
                 break;
             case UIType.MONSTERINFO_DETAIL:  //몹 드랍템 정보창이나 추가스탯 창 UI켜져있으면 몹 정보 자세히 보기 UI 상호작용 여닫기 X
-                if (gameUIList[(int)UIType.MONSTERINFO_DETAIL_ITEM].gameObject.activeSelf || gameUIList[(int)UIType.MONSTERINFO_DETAIL_STAT].gameObject.activeSelf)
+                if (Util.IsActiveGameUI(UIType.MONSTERINFO_DETAIL_ITEM) || Util.IsActiveGameUI(UIType.MONSTERINFO_DETAIL_STAT) || Util.IsActiveGameUI(UIType.MONSTERINFO_DETAIL_FEATURE))
                     return true;
                 break; 
             case UIType.CHANGEABLEMOBLIST:      //몸 제거창 뜨면 일시정지
@@ -548,6 +548,9 @@ public partial class UIManager : MonoSingleton<UIManager>
                 break;
             case UIType.MONSTERINFO_DETAIL_ITEM:  //몹 자세히 보기에서 드랍템 정보 UI 업뎃
                 MonsterCollection.Instance.DetailItem();
+                break;
+            case UIType.MONSTERINFO_DETAIL_FEATURE:
+                MonsterCollection.Instance.DetailFeature();
                 break;
             case UIType.CHEF_FOODS_PANEL:
                 if (gameUIList[(int)type].gameObject.activeSelf)  //만들 요리 고르는 창 닫으려는데 음식 제작 패널 켜져있으면 그걸 먼저 닫아줌
@@ -576,8 +579,13 @@ public partial class UIManager : MonoSingleton<UIManager>
                     OnUIInteract(UIType.MONSTERINFO_DETAIL_STAT);
                     return true;
                 }
+                else if (Util.IsActiveGameUI(UIType.MONSTERINFO_DETAIL_FEATURE))
+                {
+                    OnUIInteract(UIType.MONSTERINFO_DETAIL_FEATURE);
+                    return true;
+                }
 
-                if(!Util.IsActiveGameUI(UIType.MENU))
+                if (!Util.IsActiveGameUI(UIType.MENU))
                 {
                     TimeManager.TimePause();
                 }
@@ -631,6 +639,8 @@ public partial class UIManager : MonoSingleton<UIManager>
             case UIType.MONSTERINFO_DETAIL_ITEM:
                 return;
             case UIType.MONSTERINFO_DETAIL_STAT:
+                return;
+            case UIType.MONSTERINFO_DETAIL_FEATURE:
                 return;
         }
         if (add) activeUIList.Add(ui);

@@ -95,6 +95,7 @@ namespace Enemy
             yield return new WaitForSeconds(2.5f);
             Spawn(spawnList, stageId);
             yield return new WaitForSeconds(1f);
+            MonsterCollection.Instance.CheckRecordedMonsters(spawnList);
             for (int i = 0; i < enemyDictionary[stageId].Count; i++)
             {
                 Move(stageId);

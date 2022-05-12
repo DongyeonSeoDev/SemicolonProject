@@ -13,7 +13,9 @@ public struct ChangeBodyData
     public EternalStat additionalBodyStat; // 변신 후의 플레이어의 Additional스탯, (이해도 100% 기준)
     public Sprite bodyImg;
     public ItemSO dropItem;
-    public string bodyExplanation;
+    [TextArea] public string bodyExplanation;
+    [TextArea] public string featureExplanation;
+    [TextArea] public string hint;
 }
 public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnderstandingRateManager>
 {

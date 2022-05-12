@@ -59,7 +59,7 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     public void SaveData()
     {
-        //MonsterCollection.Instance.Save();
+        MonsterCollection.Instance.Save();
         KeyActionManager.Instance.SaveKey();
         saveData.Save();
     }
@@ -94,13 +94,13 @@ public partial class GameManager : MonoSingleton<GameManager>
     {
         if (!saveData.tutorialInfo.isEnded)
         {
-            saveData = new SaveData();
+            saveData.ResetComplete();
         }
         
         {   //키세팅 정보 불러옴
             KeySetting.SetDefaultKeySetting();
 
-            if (saveData.option.keyInputDict.keyList.Count > 0)
+            if (saveData.option.keyInputDict.keyValueDic.Keys.Count > 0)
             {
                 foreach (KeyAction key in saveData.option.keyInputDict.keyList)
                 {
@@ -112,7 +112,10 @@ public partial class GameManager : MonoSingleton<GameManager>
             {
                 saveData.userInfo.uiActiveDic = KeySetting.InitKeyActionActive;
             }
-           
+            else
+            {
+                saveData.ResetAfterTuto();
+            }
         }
         //슬라임에게 스탯 데이터 넣기
         //옵션 설정 내용 넣기 
@@ -140,8 +143,8 @@ public partial class GameManager : MonoSingleton<GameManager>
     private void Init()
     {
         //saveData.userInfo = new UserInfo();  //UserInfo클래스의 저장 정보를 날림
-        saveData.userInfo.userItems.ClearDic();
-        saveData.userInfo.monsterInfoDic.ClearDic();
+        //saveData.userInfo.userItems.ClearDic();
+        //saveData.userInfo.monsterInfoDic.ClearDic();
 
         List<Food> allFoods = new List<Food>(Resources.LoadAll<Food>(Global.foodDataPath));
         List<FoodButton> fbList = new List<FoodButton>();
