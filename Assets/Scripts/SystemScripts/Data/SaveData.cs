@@ -21,7 +21,7 @@ public class SaveData
     public void ResetAfterTuto()
     {
         UserInfo uInfo = new UserInfo();
-        uInfo.monsterInfoDic = userInfo.monsterInfoDic;
+        uInfo.monsterLearningDic = userInfo.monsterLearningDic;
         uInfo.uiActiveDic = userInfo.uiActiveDic;
         uInfo.isGainBodyChangeSlot = userInfo.isGainBodyChangeSlot;
         userInfo = uInfo;
@@ -139,6 +139,8 @@ public class SaveDic<K, V>
     public void ClearDic()
     {
         keyValueDic.Clear();
+        keyList.Clear();
+        valueList.Clear();
     }
 }
 #endregion

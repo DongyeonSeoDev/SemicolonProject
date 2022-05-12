@@ -508,10 +508,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         foreach(string key in mobLearningInfoDic.Keys)
         {
             uInfo.monsterLearningDic[key] = mobLearningInfoDic[key];
-            Debug.Log(key);
         }
-
-        Debug.Log(GameManager.Instance.savedData.userInfo.monsterLearningDic["Rat_02"].meet);
     }
 
     public void Load()
@@ -525,7 +522,6 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         foreach(string key in uInfo.monsterLearningDic.keyValueDic.Keys)
         {
             mobLearningInfoDic[key] = uInfo.monsterLearningDic[key];
-            Debug.Log(mobLearningInfoDic[key]);
         }
     }
     #endregion
