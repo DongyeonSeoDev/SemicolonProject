@@ -10,7 +10,7 @@ public class UIScale : UITransition
     public Vector3 targetScale = new Vector3(1.2f, 1.2f, 1.2f);
 
     public bool useSound = true;
-    public string soundId = "UIMouseEnterSFX1";
+    public string soundId = "UIMouseEnterSFX4";
 
     protected override void Awake()
     {
