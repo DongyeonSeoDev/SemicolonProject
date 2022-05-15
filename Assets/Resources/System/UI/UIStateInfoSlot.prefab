@@ -434,7 +434,7 @@ MonoBehaviour:
   transitionTime: 0.15
   targetScale: {x: 1.05, y: 1.05, z: 1.05}
   useSound: 1
-  soundId: UIMouseEnterSFX1
+  soundId: UIMouseEnterSFX3
 --- !u!114 &6339767192302880404
 MonoBehaviour:
   m_ObjectHideFlags: 0
