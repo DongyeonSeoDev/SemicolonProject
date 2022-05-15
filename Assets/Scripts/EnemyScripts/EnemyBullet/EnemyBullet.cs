@@ -117,7 +117,7 @@ namespace Enemy
             this.enemy = enemy;
 
             angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0f, 0f, angle - addAngle);
+            transform.rotation = Quaternion.Euler(0f, 0f, angle + addAngle);
 
             if (controller == EnemyController.AI)
             {
