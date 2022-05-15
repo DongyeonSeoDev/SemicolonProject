@@ -22,8 +22,7 @@ public class PlayerBodySlap : PlayerSkill
     {
         get { return maxChargingTime; }
     }
-    [SerializeField]
-    private float minMoveToMouseChargeTime = 0.1f; // currentChargingTimer 값이 이 값보다 높아야 마우스로 이동한다.
+
     private float currentChargingTimer = 0f; // 이 타이머는 0에서 플레이어가 대쉬를 눌렀을 때 부터 올라간다. 이 값이 maxChargingTime과
                                              // 같으면 풀차징으로 판정한다.
 
@@ -239,7 +238,7 @@ public class PlayerBodySlap : PlayerSkill
     }
     private void CheckChargeTime()
     {
-        if(startCharging)
+        if (startCharging)
         {
             if (!maxCharging)
             {
@@ -254,29 +253,22 @@ public class PlayerBodySlap : PlayerSkill
 
             EventManager.TriggerEvent("PlayerCharging");
 
-            int chargingNum = (int)((currentChargingTimer / maxChargingTime) * (materials.Count - 2)) + 1;
+            int chargingNum = (int)((currentChargingTimer / maxChargingTime) * (materials.Count - 1));
             int matNum = 0;
 
-            if (currentChargingTimer > minMoveToMouseChargeTime)
-            {
-                matNum = (int)((currentChargingTimer / maxChargingTime) * (materials.Count - 2)) + 1;
+            matNum = (int)((currentChargingTimer / maxChargingTime) * (materials.Count - 1));
 
-                    bodySlapMoveVec = (playerInput.MousePosition - (Vector2)transform.position).normalized;
+            Debug.Log(currentChargingTimer);
 
-                    moveTargetPos = (Vector2)transform.position + bodySlapTime * offsetBodySlapMovePos * bodySlapMoveVec +
-    chargingNum * targetPosFarPerCharge * bodySlapMoveVec;
+            bodySlapMoveVec = (playerInput.MousePosition - (Vector2)transform.position).normalized;
 
-            }
-            else
-            {
-                moveTargetPos = (Vector2)transform.position + bodySlapTime * offsetBodySlapMovePos * bodySlapMoveVec
-                    /*+ minMoveToMouseChargeTime * targetPosFarPerCharge * bodySlapMoveVec*/;
-            }
+            moveTargetPos = (Vector2)transform.position + bodySlapTime * offsetBodySlapMovePos * bodySlapMoveVec +
+chargingNum * targetPosFarPerCharge * bodySlapMoveVec;
 
             bodySlapLine.SetPosition(0, transform.position);
             bodySlapLine.SetPosition(1, (Vector2)transform.position + bodySlapMoveVec * bodySlapLineLength);
 
-            bodySlapLine.material = materials[matNum];
+            bodySlapLine.material = materials[chargingNum];
         }
     }
     private void CheckBodySlapTime()

@@ -231,9 +231,6 @@ public class PlayerDrainCollider : MonoBehaviour
 
                 if (drainMoveTimerDict[key] >= drainMoveTimeDict[key])
                 {
-                    RemoveList(key);
-                    removeList.Add(item);
-
                     playerState.CantChangeDir = false;
 
                     if (key.GetComponent<Enemy.TutorialEnemy>() != null)
@@ -243,6 +240,9 @@ public class PlayerDrainCollider : MonoBehaviour
 
                         Destroy(key.gameObject);
 
+                        RemoveList(key);
+                        removeList.Add(item);
+
                         return;
                     }
 
@@ -250,6 +250,9 @@ public class PlayerDrainCollider : MonoBehaviour
                     {
                         EventManager.TriggerEvent("OnDrain", key, key.transform.position, 1); // 여기의 param은 임시 값
                     }
+
+                    RemoveList(key);
+                    removeList.Add(item);
 
                     continue;
                 }

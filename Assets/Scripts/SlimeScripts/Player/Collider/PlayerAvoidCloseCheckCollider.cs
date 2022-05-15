@@ -49,7 +49,6 @@ public class PlayerAvoidCloseCheckCollider : MonoBehaviour
                 }
 
                 // 회피 성공
-                Debug.Log("DEF" + item.Key.name);
                 Debug.Log("회피!");
             }
         }
