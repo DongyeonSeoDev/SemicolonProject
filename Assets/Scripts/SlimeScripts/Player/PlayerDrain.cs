@@ -119,6 +119,14 @@ public class PlayerDrain : PlayerSkill
     private void OnDrain(GameObject obj, Vector2 position, int upValue) // upValue는 이해도(동화율)이 얼마나 오를 것인가.
     {
         Enemy.Enemy enemy = obj.GetComponent<Enemy.Enemy>();
+
+        if(enemy == null)
+        {
+            Destroy(obj);
+
+            return;
+        }
+
         string objId = enemy.GetEnemyId();
 
         if (PlayerEnemyUnderstandingRateManager.Instance.CheckMountObjIdContain(objId))

@@ -82,12 +82,11 @@ public class PlayerDrainCollider : MonoBehaviour
 
             if (drainTimer <= 0f)
             {
-                try
+                //try
                 {
                     foreach (var item in tryDrainList)
                     {
                         removeList.Add(item);
-                        RemoveList(item.GetGameObject());
 
                         if (doDrainList.Contains(item))
                         {
@@ -95,15 +94,16 @@ public class PlayerDrainCollider : MonoBehaviour
                         }
                     }
                 }
-                catch
-                {
+                //catch
+                //{
                     
-                }
+                //}
 
                 foreach(var item in removeList)
                 {
                     doDrainList.Remove(item);
                     tryDrainList.Remove(item);
+                    RemoveList(item.GetGameObject());
                 }
 
                 SlimeGameManager.Instance.Player.PlayerOrderInLayerController.StartSetOrderInLayerAuto();
@@ -221,7 +221,7 @@ public class PlayerDrainCollider : MonoBehaviour
     {
         List<ICanGetDamagableEnemy> removeList = new List<ICanGetDamagableEnemy> ();
 
-        try
+        //try
         {
             foreach (var item in tryDrainList)
             {
@@ -238,12 +238,18 @@ public class PlayerDrainCollider : MonoBehaviour
                         EventManager.TriggerEvent("DrainTutorialEnemyDrain", key.transform.position);
                         EventManager.TriggerEvent("Tuto_EnemyDeathCheck");
 
-                        Destroy(key.gameObject);
-
-                        RemoveList(key);
                         removeList.Add(item);
 
-                        return;
+                        //foreach (var item2 in removeList)
+                        //{
+                        //    doDrainList.Remove(item2);
+                        //    tryDrainList.Remove(item2);
+
+                        //    RemoveList(item2.GetGameObject());
+                        //    Destroy(item2.GetGameObject());
+                        //}
+
+                        continue;
                     }
 
                     if (doDrainList.Contains(item))
@@ -251,7 +257,6 @@ public class PlayerDrainCollider : MonoBehaviour
                         EventManager.TriggerEvent("OnDrain", key, key.transform.position, 1); // 여기의 param은 임시 값
                     }
 
-                    RemoveList(key);
                     removeList.Add(item);
 
                     continue;
@@ -282,15 +287,22 @@ public class PlayerDrainCollider : MonoBehaviour
                 }
             }
         }
-        catch
-        {
+        //catch
+        //{
 
-        }
+        //}
 
         foreach(var item in removeList)
         {
             doDrainList.Remove(item);
             tryDrainList.Remove(item);
+
+            RemoveList(item.GetGameObject());
+
+            if(item.GetGameObject().GetComponent<Enemy.TutorialEnemy>() != null)
+            {
+                Destroy(item.GetGameObject());
+            }
         }
     }
 
