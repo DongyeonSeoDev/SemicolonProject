@@ -5,6 +5,9 @@ namespace Enemy
     public class EnemyBullet : EnemyPoolData
     {
         public float speed;
+        public float addAngle;
+        public bool isBulletEffect;
+
         private float angle;
         private bool isStop = false;
 
@@ -59,14 +62,23 @@ namespace Enemy
             }
         }
 
+        private void StartBulletEffect()
+        {
+            if (isBulletEffect)
+            {
+                EnemyPoolManager.Instance.GetPoolObject(Type.BulletEffect, transform.position).GetComponent<BulletEffect>().Play(angle);
+            }
+
+            gameObject.SetActive(false);
+        }
+
         private void OnTriggerEnter2D(Collider2D collision)
         {
             if (eEnemyController == EnemyController.AI && collision.CompareTag("Player"))
             {
                 SlimeGameManager.Instance.Player.GetDamage(gameObject, Random.Range(attackDamage - 5, attackDamage + 6));
 
-                EnemyPoolManager.Instance.GetPoolObject(Type.BulletEffect, transform.position).GetComponent<BulletEffect>().Play(angle);
-                gameObject.SetActive(false);
+                StartBulletEffect();
             }
             else if (eEnemyController == EnemyController.PLAYER)
             {
@@ -80,8 +92,7 @@ namespace Enemy
 
                     enemy.GetDamage(damage.Item1, damage.Item2);
 
-                    EnemyPoolManager.Instance.GetPoolObject(Type.BulletEffect, transform.position).GetComponent<BulletEffect>().Play(angle);
-                    gameObject.SetActive(false);
+                    StartBulletEffect();
 
                     EventManager.TriggerEvent("OnEnemyAttack");
                 }
@@ -94,12 +105,11 @@ namespace Enemy
                     EventManager.TriggerEvent("OnAttackMiss");
                 }
 
-                EnemyPoolManager.Instance.GetPoolObject(Type.BulletEffect, transform.position).GetComponent<BulletEffect>().Play(angle);
-                gameObject.SetActive(false);
+                StartBulletEffect();
             }
         }
 
-        public void Init(EnemyController controller, int damage, Vector3 direction, Enemy enemy = null)
+        public void Init(EnemyController controller, Vector3 direction, int damage, Enemy enemy = null)
         {
             eEnemyController = controller;
             attackDamage = damage;
@@ -107,7 +117,7 @@ namespace Enemy
             this.enemy = enemy;
 
             angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0f, 0f, angle - 90f);
+            transform.rotation = Quaternion.Euler(0f, 0f, angle - addAngle);
 
             if (controller == EnemyController.AI)
             {

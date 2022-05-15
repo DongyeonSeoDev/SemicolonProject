@@ -12,15 +12,16 @@ namespace Enemy
             enemyData.chaseSpeed = 10f;
             enemyData.attackDelay = 1f;
             enemyData.playerAnimationTime = 0.55f;
-            enemyData.isAttackPlayerDistance = 5f;
+            enemyData.isAttackPlayerDistance = 10f;
             enemyData.maxHP = 50;
             enemyData.hp = 50;
+            enemyData.attackPower = 15;
 
             enemyData.enemyMoveCommand = new EnemyLongDistanceFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed, enemyData.isAttackPlayerDistance);
             enemyData.enemySpriteRotateCommand = new EnemySpriteRotateCommand(enemyData);
 
-            enemyAttackPlayerCommand = new EnemyAttackPlayerCommand(transform, this, enemyData.attackPower);
-            enemyAttackCommand = new EnemyAttackCommand(this, enemyData.enemyObject.transform, enemyData.attackPower);
+            enemyAttackPlayerCommand = new PlayerlongRangeAttackCommand(transform, this, Type.Arrow, enemyData.attackPower);
+            enemyAttackCommand = new EnemylongRangeAttackCommand(this, enemyData.enemyObject.transform, Type.Arrow, enemyData.attackPower);
         }
 
         public void EnemyAttack() // 애니메이션에서 실행 - 적 공격

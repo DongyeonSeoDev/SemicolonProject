@@ -20,8 +20,8 @@ namespace Enemy
 
             enemyData.enemyMoveCommand = new EnemyRandomMoveCommand(enemyData, positionCheckData); // MoveCommand 생성
             enemyData.enemySpriteRotateCommand = new EnemySpriteRotateCommand(enemyData);
-            enemyAttackPlayerCommand = new EnemyAttackPlayerCommand(transform, this, enemyData.attackPower);
-            enemyAttackCommand = new EnemyAttackCommand(this, enemyData.enemyObject.transform, enemyData.attackPower);
+            enemyAttackPlayerCommand = new PlayerlongRangeAttackCommand(transform, this, Type.Bullet, enemyData.attackPower);
+            enemyAttackCommand = new EnemylongRangeAttackCommand(this, enemyData.enemyObject.transform, Type.Bullet, enemyData.attackPower);
         }
 
         public void EnemyAttack() // 애니메이션에서 실행 - 적 공격
