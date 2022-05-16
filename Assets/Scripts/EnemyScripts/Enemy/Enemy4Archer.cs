@@ -1,9 +1,20 @@
+ #define TEST_ENEMY4
+
 namespace Enemy
 {
     public class Enemy4Archer : Enemy
     {
         private EnemyCommand enemyAttackCommand;
         private EnemyCommand enemyAttackPlayerCommand;
+
+#if TEST_ENEMY4
+
+        private void Start()
+        {
+            MoveEnemy();
+        }
+
+#endif
 
         protected override void OnEnable()
         {
