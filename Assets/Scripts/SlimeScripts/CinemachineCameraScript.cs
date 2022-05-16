@@ -48,6 +48,13 @@ public class CinemachineCameraScript : MonoSingleton<CinemachineCameraScript>
         DOUtil.ExecuteTweening("CVCam_Shake_" + name, ShakeCo(duration), this);
     }
 
+    public void Shake(CamShakeData shakeData)
+    {
+        cinemachineNoise.m_AmplitudeGain = shakeData.strength;
+        cinemachineNoise.m_FrequencyGain = shakeData.frequency;
+        DOUtil.ExecuteTweening("CVCam_Shake_" + name, ShakeCo(shakeData.duration), this);
+    }
+
     private IEnumerator ShakeCo(float duration)
     {
         yield return new WaitForSeconds(duration);

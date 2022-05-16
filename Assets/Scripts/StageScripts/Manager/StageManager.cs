@@ -537,7 +537,7 @@ public class StageManager : MonoSingleton<StageManager>
 
         if (currentArea != AreaType.BOSS)
         {
-            DOUtil.ExecuteTweening("Next Enemys Spawn", Util.DelayFuncCo(() => EventManager.TriggerEvent("SpawnEnemy", id), 1f, false), this);
+            DOUtil.ExecuteTweening("Next Enemys Spawn", Util.DelayFuncCo(() => EventManager.TriggerEvent("SpawnEnemy", id), 1f, false, false), this);
         }
         else
         {

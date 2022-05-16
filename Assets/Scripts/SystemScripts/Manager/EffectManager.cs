@@ -5,6 +5,14 @@ using TMPro;
 using DG.Tweening;
 using UnityEngine.EventSystems;
 
+[System.Serializable]
+public struct CamShakeData
+{
+    public float strength;
+    public float frequency;
+    public float duration;
+}
+
 public class EffectManager : MonoSingleton<EffectManager>
 {
     private float fillBackWidth;
@@ -48,7 +56,21 @@ public class EffectManager : MonoSingleton<EffectManager>
     [Header("채집 성공/실패 이펙트")]
     public Pair<GameObject, GameObject> pickupPlantEffects;  //채집 성공, 실패 이펙트
 
-    
+    #region Camera Effect
+
+    [Space(20)]
+    [Header("Camera Effect")]
+    public CamShakeData playerHitShake;
+    public CamShakeData enemyHitShake;
+
+    #endregion
+
+    #region Time Effect
+
+    public float atkTimeFreezeScale = 0.9f;
+    public float atkTimeFreezeDuration = 0.15f;
+
+    #endregion
 
     #region damage text effect related
     [Header("데미지 텍스트")]
@@ -204,6 +226,9 @@ public class EffectManager : MonoSingleton<EffectManager>
         tmp.transform.DOMove(tmp.transform.position + Global.damageTextMove, 0.6f);
         //tmp.transform.DOScale(!critical ? SVector3.zeroPointSeven : Vector3.one, 0.8f).SetEase(damageTxtScaleCurve);
         tmp.DOColor(Color.clear, 0.7f).SetEase(damageTxtScaleCurve).OnComplete(() => tmp.gameObject.SetActive(false));
+
+        CinemachineCameraScript.Instance.Shake(isEnemy ? enemyHitShake : playerHitShake);
+        TimeManager.SetTimeScale(atkTimeFreezeScale,atkTimeFreezeDuration, null, false, false);
     }
     public void OnDamaged(int damage, Vector2 pos, Vector3 scale, VertexGradient textColor)
     {

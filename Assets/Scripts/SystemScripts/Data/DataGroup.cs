@@ -220,3 +220,15 @@ public class ActionGroup
         objAction?.Invoke(obj);
     }
 }
+
+namespace Water
+{
+    [Serializable]
+    public class PoolBaseData
+    {
+        public GameObject poolObj;
+        public Transform parent;
+        public int defaultSpawnCount;
+        public string poolKey;
+    }
+}

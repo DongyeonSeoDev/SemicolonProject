@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 using System.Collections;
+using FkTweening;
 
 public static class TimeManager
 {
@@ -61,14 +62,14 @@ public static class TimeManager
     /// <param name="duration"></param>
     /// <param name="endAction"></param>
     /// <param name="realTime"></param>
-    public static void SetTimeScale(float scale, float duration, Action endAction = null, bool realTime = false)
+    public static void SetTimeScale(float scale, float duration, Action endAction = null, bool realTime = false, bool applyCurTimeScale = true)
     {
         currentTimeScale = scale;
         if (!IsTimePaused)
         {
             Time.timeScale = currentTimeScale;
         }
-        Util.DelayFunc(() =>
+        DOUtil.ExecuteTweening("Set Time Scale", Util.DelayFuncCo(() =>
         {
             currentTimeScale = 1f;
             if (!IsTimePaused)
@@ -76,7 +77,7 @@ public static class TimeManager
                 Time.timeScale = currentTimeScale;
             }
             endAction?.Invoke();
-        }, duration, null, realTime);
+        }, duration, realTime, applyCurTimeScale), KeyActionManager.Instance);
     }
 
     public static void LerpTime(float speed, float target, Action end = null)
@@ -86,7 +87,9 @@ public static class TimeManager
         end += () => isLerp = false;
 
         isLerp = true;
-        KeyActionManager.Instance.StartCoroutine(LerpTimeCo(speed, target, end));
+
+        DOUtil.ExecuteTweening("SetLerpTime", LerpTimeCo(speed, target, end), KeyActionManager.Instance);
+        //KeyActionManager.Instance.StartCoroutine(LerpTimeCo(speed, target, end));
     }
 
     private static IEnumerator LerpTimeCo(float speed, float target, Action end)
