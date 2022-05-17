@@ -113,24 +113,21 @@ namespace Enemy
                     enemyRigidbody.velocity = Vector2.zero;
                     enemyRigidbody.angularVelocity = 0f;
 
-                    if (playerStatusEffect != null)
+                    if (enemy != null)
                     {
-                        playerStatusEffect.KnockBack(positionCheckData.position, 50f, 0.1f);
-                        playerStatusEffect.Sturn(stunTime);
+                        enemy.GetDamage(0, false, true, true, false, 30f, 1f, positionCheckData.position);
                     }
                     else
                     {
-                        if (enemy != null)
-                        {
-                            enemy.GetDamage(0, false, false, 30f, 1f, positionCheckData.position);
-                        }
+                        playerStatusEffect.KnockBack(positionCheckData.position, 50f, 0.1f);
+                        playerStatusEffect.Sturn(stunTime);
                     }
                 }
                 else
                 {
                     if (enemy != null)
                     {
-                        enemy.GetDamage(0);
+                        enemy.GetDamage(0, false, false, false, false);
                     }
                 }
             }
@@ -144,7 +141,7 @@ namespace Enemy
                     damage.Item1 = UnityEngine.Random.Range(SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage + 1);
                     damage = SlimeGameManager.Instance.Player.CriticalCheck(damage.Item1);
                     
-                    enemy.GetDamage(damage.Item1, damage.Item2);
+                    enemy.GetDamage(damage.Item1, damage.Item2, false, false);
                     attackObject.Add(collision.gameObject);
 
                     EventManager.TriggerEvent("OnEnemyAttack");

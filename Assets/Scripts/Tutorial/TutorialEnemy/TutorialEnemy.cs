@@ -42,9 +42,10 @@ namespace Enemy
             }
         }
 
-        public virtual void GetDamage(int damage, bool critical = false, bool isKnockBack = false, float knockBackPower = 20, float stunTime = 1, Vector2? direction = null)
+        public virtual void GetDamage(int damage, bool critical, bool isKnockBack, bool isStun, bool isShowText = true, float knockBackPower = 20, float stunTime = 1, Vector2? direction = null)
         {
         }
+
         public void CheckDead()
         {
             if(!destroyTimerStarted && hp <= 0)

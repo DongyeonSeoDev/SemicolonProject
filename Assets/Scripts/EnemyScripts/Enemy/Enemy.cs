@@ -207,7 +207,7 @@ namespace Enemy
         }
 
         // 적 데미지 받는 코드
-        public void GetDamage(int damage, bool critical = false, bool isKnockBack = false, float knockBackPower = 20f, float stunTime = 1f, Vector2? direction = null)
+        public void GetDamage(int damage, bool critical, bool isKnockBack, bool isStun, bool isShowText = true, float knockBackPower = 20f, float stunTime = 1f, Vector2? direction = null)
         {
             if (enemyData.isEnemyMove && !enemyData.isDamaged)
             {
@@ -216,11 +216,15 @@ namespace Enemy
 
                 enemyData.isKnockBack = isKnockBack;
                 enemyData.knockBackPower = knockBackPower;
-                enemyData.stunTime = stunTime;
+
+                enemyData.stunTime = isStun ? stunTime : 0;
 
                 enemyData.knockBackDirection = direction;
 
-                EffectManager.Instance.OnDamaged(damage, critical, true, transform.position);
+                if (isShowText)
+                {
+                    EffectManager.Instance.OnDamaged(damage, critical, true, transform.position);
+                }
             }
         }
 
@@ -248,6 +252,8 @@ namespace Enemy
             }
 
             enemyData.enemy.ChangeColor(enemyData.playerNormalColor);
+
+            MoveEnemy();
 
             if (enemyAttackCheck != null)
             {

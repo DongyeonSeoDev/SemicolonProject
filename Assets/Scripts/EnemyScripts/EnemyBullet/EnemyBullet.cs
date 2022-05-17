@@ -96,23 +96,28 @@ namespace Enemy
                 return;
             }
 
+            Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+
             if (eEnemyController == EnemyController.AI && collision.CompareTag("Player"))
             {
                 SlimeGameManager.Instance.Player.GetDamage(gameObject, Random.Range(attackDamage - 5, attackDamage + 6));
+
+                if (enemy != null && enemy != this.enemy)
+                {
+                    enemy.GetDamage(0, false, false, false, false);
+                }
 
                 StartBulletEffect();
             }
             else if (eEnemyController == EnemyController.PLAYER)
             {
-                Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-
                 if (enemy != null && enemy != this.enemy)
                 {
                     (int, bool) damage;
                     damage.Item1 = Random.Range(SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage + 1);
                     damage = SlimeGameManager.Instance.Player.CriticalCheck(damage.Item1);
 
-                    enemy.GetDamage(damage.Item1, damage.Item2);
+                    enemy.GetDamage(damage.Item1, damage.Item2, false, false);
 
                     StartBulletEffect();
 

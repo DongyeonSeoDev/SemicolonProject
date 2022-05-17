@@ -338,7 +338,7 @@ public class Player : MonoBehaviour
 
         damage = CriticalCheck(damage.Item1);
 
-        targetEnemy.GetDamage(damage.Item1, damage.Item2, isKnockBack, knockBackPower, stunTime);
+        targetEnemy.GetDamage(damage.Item1, damage.Item2, isKnockBack, stunTime > 0, true, knockBackPower, stunTime);
     }
     public void Mag_GiveDamage(ICanGetDamagableEnemy targetEnemy, int minDamage, int maxDamage, float magnification, float stunTime = 1, float knockBackPower = 20, bool isKnockBack = true)
     {
@@ -350,7 +350,7 @@ public class Player : MonoBehaviour
 
         damage.Item1 = (int)(damage.Item1 * magnification);
 
-        targetEnemy.GetDamage(damage.Item1, damage.Item2, isKnockBack, knockBackPower, stunTime);
+        targetEnemy.GetDamage(damage.Item1, damage.Item2, isKnockBack, stunTime > 0, true, knockBackPower, stunTime);
     }
     public (int, bool) CriticalCheck(int damage)
     {
