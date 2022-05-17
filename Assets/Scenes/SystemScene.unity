@@ -35812,6 +35812,8 @@ MonoBehaviour:
     strength: 1
     frequency: 0.5
     duration: 0.15
+  atkTimeFreezeScale: 0.9
+  atkTimeFreezeDuration: 0.15
   damageTextPair:
     first: {fileID: 5417508494795338472, guid: 080c6787743771449a460b3335346d8b, type: 3}
     second: {fileID: 2504640074803177491}
@@ -48074,7 +48076,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 1
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 1515897899}
   m_PlaneDistance: 10
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -66731,6 +66733,7 @@ MonoBehaviour:
   ingredientImgParent: {fileID: 4910010479458673666}
   itemPrefab: {fileID: 4326160251562388895, guid: 107f39f0dc10f3448b385f13094c50a5, type: 3}
   itemCloneEffectPrefab: {fileID: 4326160251562388895, guid: 3659a623beedfcd45814fe35ac5ebd52, type: 3}
+  poolBaseDatas: []
   pickupCheckGame: {fileID: 7977640338272202385}
   droppedItemList: []
   emptyPrefab: {fileID: 5473085890069589814, guid: 6423943eff9285045a68494222a74ff1, type: 3}

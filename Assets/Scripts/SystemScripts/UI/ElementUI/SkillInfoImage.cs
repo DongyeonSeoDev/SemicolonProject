@@ -77,4 +77,9 @@ public class SkillInfoImage : MonoBehaviour
             skillUICmd.Execute();
         }
     }
+
+    private void OnEnable()
+    {
+        UpdateKeyCode();
+    }
 }
