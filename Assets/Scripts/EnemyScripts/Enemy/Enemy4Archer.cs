@@ -1,9 +1,13 @@
- #define TEST_ENEMY4
+#define TEST_ENEMY4
+
+using UnityEngine;
 
 namespace Enemy
 {
     public class Enemy4Archer : Enemy
     {
+        public Transform shotPosition;
+
         private EnemyCommand enemyAttackCommand;
         private EnemyCommand enemyAttackPlayerCommand;
 
@@ -27,12 +31,14 @@ namespace Enemy
             enemyData.maxHP = 50;
             enemyData.hp = 50;
             enemyData.attackPower = 15;
+            enemyData.playerAnimationDelay = 0.2f;
+            enemyData.playerAnimationSpeed = 1.0f;
 
             enemyData.enemyMoveCommand = new EnemyLongDistanceFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed, enemyData.isAttackPlayerDistance);
             enemyData.enemySpriteRotateCommand = new EnemySpriteRotateCommand(enemyData);
 
-            enemyAttackPlayerCommand = new PlayerlongRangeAttackCommand(transform, this, Type.Arrow, enemyData.attackPower);
-            enemyAttackCommand = new EnemylongRangeAttackCommand(this, enemyData.enemyObject.transform, Type.Arrow, enemyData.attackPower);
+            enemyAttackPlayerCommand = new PlayerlongRangeAttackCommand(transform, shotPosition, this, Type.Arrow, enemyData.attackPower);
+            enemyAttackCommand = new EnemylongRangeAttackCommand(this, enemyData.enemyObject.transform, Type.Arrow, shotPosition, enemyData.attackPower);
         }
 
         public void EnemyAttack() // 애니메이션에서 실행 - 적 공격

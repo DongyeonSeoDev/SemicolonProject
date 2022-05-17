@@ -427,18 +427,20 @@ namespace Enemy
     public class EnemylongRangeAttackCommand : EnemyCommand // 적 공격
     {
         private Transform enemyTransform;
+        private Transform shotTransform;
         private Enemy enemy;
 
         private Type objectType;
 
         private int attackDamage;
 
-        public EnemylongRangeAttackCommand(Enemy enemy, Transform enemyPosition, Type objectType, int damage)
+        public EnemylongRangeAttackCommand(Enemy enemy, Transform enemyPosition, Type objectType, Transform enemyTransform, int damage)
         {
             enemyTransform = enemyPosition;
             this.enemy = enemy;
             this.objectType = objectType;
             attackDamage = damage;
+            this.enemyTransform = enemyTransform;
         }
 
         public override void Execute()
@@ -453,16 +455,19 @@ namespace Enemy
     {
         private PlayerInput playerInput;
         private Transform transform;
+        private Transform shotTransform;
         private Enemy enemy;
 
         private Type objectType;
 
         private int attackDamage;
 
-        public PlayerlongRangeAttackCommand(Transform transform, Enemy enemy, Type objectType, int attackDamage)
+        public PlayerlongRangeAttackCommand(Transform transform, Transform shotTransform, Enemy enemy, Type objectType, int attackDamage)
         {
             playerInput = SlimeGameManager.Instance.Player.GetComponent<PlayerInput>();
+
             this.transform = transform;
+            this.shotTransform = shotTransform;
             this.attackDamage = attackDamage;
             this.enemy = enemy;
             this.objectType = objectType;
@@ -470,7 +475,7 @@ namespace Enemy
 
         public override void Execute()
         {
-            EnemyPoolData spawnObject = EnemyPoolManager.Instance.GetPoolObject(objectType, transform.position);
+            EnemyPoolData spawnObject = EnemyPoolManager.Instance.GetPoolObject(objectType, shotTransform.position);
 
             spawnObject.GetComponent<EnemyBullet>().Init(enemy.GetEnemyController(), (playerInput.AttackMousePosition - (Vector2)transform.position).normalized, attackDamage, enemy);
         }

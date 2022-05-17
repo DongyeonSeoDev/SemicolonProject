@@ -3676,110 +3676,25 @@ PrefabInstance:
       value: -1111
       objectReference: {fileID: 0}
     - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
-      propertyPath: changableBodyList.Array.size
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
       propertyPath: changableBodyList.Array.data[3].body
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 7363181102221842606, guid: e62341af4ab0f6c449dc8e41b66968d7, type: 3}
     - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
       propertyPath: changableBodyList.Array.data[4].body
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
-      propertyPath: changableBodyList.Array.data[3].bodyId
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
-      propertyPath: changableBodyList.Array.data[4].bodyId
-      value: 4
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 8919641663643523178, guid: ed89bbd8246da2f489396f41f0f95a05, type: 3}
     - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
       propertyPath: changableBodyList.Array.data[3].bodyImg
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 21300000, guid: 1e73fa0328b566a4787a35162592c611, type: 3}
     - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
       propertyPath: changableBodyList.Array.data[4].bodyImg
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
-      propertyPath: changableBodyList.Array.data[3].bodyName
-      value: "SkeletonArcher_04 (\uC784\uC2DC)"
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 21300000, guid: 33d21dfdf94441840a5075a7df757d2c, type: 3}
     - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
       propertyPath: changableBodyList.Array.data[3].dropItem
       value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
-      propertyPath: changableBodyList.Array.data[4].bodyName
-      value: "Boss_SkeletonKing_01 (\uC784\uC2DC)"
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
-      propertyPath: changableBodyList.Array.data[4].dropItem
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
-      propertyPath: changableBodyList.Array.data[3].bodyExplanation
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
-      propertyPath: changableBodyList.Array.data[4].bodyExplanation
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
-      propertyPath: changableBodyList.Array.data[0].featureExplanation
-      value: "\uB192\uC740 \uACF5\uACA9\uB825\uC744 \uAC00\uC9C4\uB2E4."
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
-      propertyPath: changableBodyList.Array.data[1].featureExplanation
-      value: "\uC774\uB3D9\uC18D\uB3C4\uAC00 \uBE60\uB974\uB2E4."
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
-      propertyPath: changableBodyList.Array.data[2].featureExplanation
-      value: "\uB3CC\uC9C4\uC744 \uD560 \uC218 \uC788\uC73C\uBA70 \uCCB4\uB825\uC774
-        \uB192\uB2E4."
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
-      propertyPath: changableBodyList.Array.data[3].featureExplanation
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
-      propertyPath: changableBodyList.Array.data[4].featureExplanation
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
-      propertyPath: changableBodyList.Array.data[3].additionalBodyStat.maxHp
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
-      propertyPath: changableBodyList.Array.data[4].additionalBodyStat.maxHp
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
-      propertyPath: changableBodyList.Array.data[3].additionalBodyStat.defense
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
-      propertyPath: changableBodyList.Array.data[4].additionalBodyStat.defense
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
-      propertyPath: changableBodyList.Array.data[3].additionalBodyStat.maxDamage
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
-      propertyPath: changableBodyList.Array.data[3].additionalBodyStat.minDamage
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
-      propertyPath: changableBodyList.Array.data[4].additionalBodyStat.maxDamage
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
-      propertyPath: changableBodyList.Array.data[4].additionalBodyStat.minDamage
-      value: 0
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11400000, guid: c2607854e0183b7409b93f098da0e3fb, type: 2}
     - target: {fileID: 5692856494302310611, guid: 753933377d0100245b27316586c7ec1e, type: 3}
       propertyPath: m_RootOrder
       value: 11

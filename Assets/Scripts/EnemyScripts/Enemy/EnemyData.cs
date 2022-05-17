@@ -69,6 +69,7 @@ namespace Enemy
         public float currentRunAwayTime = 1f;
         public float playerAnimationTime;
         public float playerAnimationDelay = 1f;
+        public float playerAnimationSpeed = 1.2f;
 
         public bool isDamaged = false;
         public bool isAttack = false;
