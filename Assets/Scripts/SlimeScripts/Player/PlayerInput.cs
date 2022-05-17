@@ -104,6 +104,18 @@ public class PlayerInput : MonoBehaviour
 
     private bool gameClear = true;
 
+    [SerializeField]
+    private float playerStopStayTime = 2f;
+    private float playerStopStayTimer = 0f;
+
+    private bool playerStopStayTimerStarted = false;
+
+    private bool playerStopStay = false;
+    public bool PlayerStopStay
+    {
+        get { return playerStopStay; }
+    }
+
     private void OnEnable()
     {
         EventManager.StartListening("PlayerDead", PlayerReset);
@@ -134,7 +146,6 @@ public class PlayerInput : MonoBehaviour
         TimeManager.timePauseAction -= TimePause;
         TimeManager.timeResumeAction -= TimeResume;
     }
-
 
     private void Start()
     {
@@ -173,6 +184,17 @@ public class PlayerInput : MonoBehaviour
 
     void Update()
     {
+        if(playerStopStayTimerStarted)
+        {
+            playerStopStayTimer -= Time.deltaTime; 
+
+            if(playerStopStayTimer <= 0f)
+            {
+                playerStopStayTimer = 0f;
+                playerStopStay = true;
+            }
+        }
+
         if (!(isPauseByTuto || isPause || isPauseByCutScene || gameClear) &&
             !(playerState.IsDead || playerState.IsStun || playerState.IsKnockBack || playerState.IsDrain))
         {
@@ -205,6 +227,25 @@ public class PlayerInput : MonoBehaviour
                 }
 
                 moveVector = moveVector.normalized;
+
+                if(moveVector != Vector2.zero)
+                {
+                    if(playerStopStayTimerStarted && playerStopStay)
+                    {
+                        // 추진력 실행 코드
+                        Debug.Log("이러석구나... 내가 멈췄던 것은 추진력을 얻기 위해서였다!!!");
+                    }
+
+                    playerStopStay = false;
+                    playerStopStayTimerStarted = false;
+
+                }
+                else if(!(playerStopStayTimerStarted || playerStopStay))
+                {
+                    playerStopStayTimerStarted = true;
+
+                    playerStopStayTimer = playerStopStayTime;
+                }
 
                 if (playerState.BodySlapping)
                 {

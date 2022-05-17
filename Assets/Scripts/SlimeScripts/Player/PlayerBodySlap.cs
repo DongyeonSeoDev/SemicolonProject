@@ -177,6 +177,7 @@ public class PlayerBodySlap : PlayerSkill
         SoundManager.Instance.PlaySoundBox("SlimeSkill1Start");
 
         EventManager.TriggerEvent("PlayerBodySlap", currentBodySlapTime);
+        EventManager.TriggerEvent("OnBodySlap");
 
         bodySlapTimer = 0f;
 

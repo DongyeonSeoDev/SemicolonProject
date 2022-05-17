@@ -50,6 +50,11 @@ public class PlayerAvoidCloseCheckCollider : MonoBehaviour
 
                 // 회피 성공
                 Debug.Log("회피!");
+
+                if (SlimeGameManager.Instance.Player.PlayerState.IsInMomentom)
+                {
+                    EventManager.TriggerEvent("OnAvoidInMomentom");
+                }
             }
         }
 

@@ -102,6 +102,7 @@ public class ChoiceStat
 {
     public int overweight; // 과체중
     public int patience; // 인내력
+    public int momentom; // 추진력
     public int endurance; // 맷집
     public int luck; // 운
 

@@ -90,6 +90,13 @@ public class PlayerState : MonoBehaviour
         set { isStun = value; }
     }
 
+    private bool isInMomentom = false;
+    public bool IsInMomentom
+    {
+        get { return isInMomentom; }
+        set { isInMomentom = value; }
+    }
+
     void Start()
     {
         playerInput = GetComponent<PlayerInput>();
