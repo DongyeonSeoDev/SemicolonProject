@@ -459,7 +459,7 @@ namespace Enemy
                 SlimeGameManager.Instance.CurrentSkillDelayTimer[0] = SlimeGameManager.Instance.SkillDelays[0];
 
                 EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Attack, enemyData.enemyAnimator, TriggerType.SetTrigger);
-                enemyData.enemyAnimator.speed = 1.2f;
+                enemyData.enemyAnimator.speed = enemyData.playerAnimationSpeed;
 
                 EnemyManager.SpriteFlipCheck(enemyData);
             }

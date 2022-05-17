@@ -57,8 +57,8 @@ namespace Enemy
         public float chaseSpeed = 5f;
         public float isAttackPlayerDistance = 2f;
         public float isMinAttackPlayerDistance = 5f;
-        public float isRunAwayDistance = 9f;
         public float isMaxAttackPlayerDistance = 10f;
+        public float isRunAwayDistance = 9f;
         public float attackDelay = 1f;
         public float damageDelay = 0.1f;
         public float rushForce = 50f;
@@ -69,6 +69,7 @@ namespace Enemy
         public float currentRunAwayTime = 1f;
         public float playerAnimationTime;
         public float playerAnimationDelay = 1f;
+        public float playerAnimationSpeed = 1.2f;
 
         public bool isDamaged = false;
         public bool isAttack = false;
