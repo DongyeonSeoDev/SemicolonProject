@@ -19,6 +19,9 @@ public class PlayerShoot : PlayerSkill
     [SerializeField]
     private float useEnergyAmount = 1f;
 
+    [SerializeField]
+    private CamShakeData shakeData;
+
     private bool canShoot = true;
 
     public override void Awake()
@@ -69,6 +72,8 @@ public class PlayerShoot : PlayerSkill
 
             temp.transform.position = (Vector2)transform.position + (direction * shootPosOffset);
             temp.GetComponent<PlayerProjectile>().OnSpawn(direction, projectileSpeed);
+
+            CinemachineCameraScript.Instance.Shake(shakeData);
 
             SlimeGameManager.Instance.Player.UseEnergy(useEnergyAmount);
             SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = SlimeGameManager.Instance.SkillDelays[skillIdx];

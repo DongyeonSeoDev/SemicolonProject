@@ -17,6 +17,11 @@ public class PlayerBodySlap : PlayerSkill
     private Vector2 moveTargetPos = Vector2.zero;
 
     [SerializeField]
+    private CamShakeData doBodySlapShakeData;
+    [SerializeField]
+    private CamShakeData whenBodySlapCrashShakeData;
+
+    [SerializeField]
     private float maxChargingTime = 3f;
     public float MaxChargingTime
     {
@@ -174,6 +179,9 @@ public class PlayerBodySlap : PlayerSkill
 
         currentBodySlapTime = Vector2.Distance(moveOriginPos, moveTargetPos) / bodySlapMoveSpeed;
 
+        doBodySlapShakeData.duration = currentBodySlapTime;
+        CinemachineCameraScript.Instance.Shake(doBodySlapShakeData);
+
         SoundManager.Instance.PlaySoundBox("SlimeSkill1Start");
 
         EventManager.TriggerEvent("PlayerBodySlap", currentBodySlapTime);
@@ -217,6 +225,7 @@ public class PlayerBodySlap : PlayerSkill
                 }
 
                 SoundManager.Instance.PlaySoundBox("SlimeSkill1Crash");
+                CinemachineCameraScript.Instance.Shake(whenBodySlapCrashShakeData);
             }
         }
     }
