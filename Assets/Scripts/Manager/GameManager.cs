@@ -205,18 +205,27 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     private void Start()
     {
+#if UNITY_EDITOR
         Util.DelayFunc(() =>
         {
             checkGameStringKeys.poolKeyList = PoolManager.poolDic.Keys.ToList();
             Global.SetResordEventKey();
         }, 3f);
 
+        testKeyInputActionDict.Add(KeyCode.F7, () =>
+        {
+            checkItrObjDic.Clear();
+            foreach(string key in ObjectManager.Instance.itrObjDic.Keys)
+            {
+                checkItrObjDic.Add(new Pair<string, InteractionObj>(key, ObjectManager.Instance.itrObjDic[key]));
+            }
+        });
+#endif
+
         slimeFollowObj = PoolManager.GetItem("EmptyObject").transform;
         slimeFollowObj.gameObject.AddComponent(typeof(SlimeFollowObj));
         slimeFollowObj.name = typeof(SlimeFollowObj).Name;
         StoredData.SetGameObjectKey("Slime Follow Obj", slimeFollowObj.gameObject);
-
-        testKeyInputActionDict.Add(KeyCode.N, () => CinemachineCameraScript.Instance.DoOrthographicSize(5f, 1.5f));
 
         //WDUtil.PrintStructSize(typeof(StageFork));
     }

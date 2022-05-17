@@ -442,6 +442,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
         EffectManager.Instance.OnTopRightBtnEffect(UIType.MONSTER_COLLECTION, true);
         UIManager.Instance.RequestLogMsg(GetMonsterInfo(id).bodyName + "(를)을 완전히 흡수하였습니다.");
+        UIManager.Instance.InsertNoticeQueue(GetMonsterInfo(id).bodyName + " 몸체 획득", 53);
         mobIdToSlot[id].MarkAcqBody(true);
         ChangeLearningStateAssimilation(id, true);
     }
