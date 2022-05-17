@@ -216,6 +216,8 @@ public partial class GameManager : MonoSingleton<GameManager>
         slimeFollowObj.name = typeof(SlimeFollowObj).Name;
         StoredData.SetGameObjectKey("Slime Follow Obj", slimeFollowObj.gameObject);
 
+        testKeyInputActionDict.Add(KeyCode.N, () => CinemachineCameraScript.Instance.DoOrthographicSize(5f, 1.5f));
+
         //WDUtil.PrintStructSize(typeof(StageFork));
     }
 

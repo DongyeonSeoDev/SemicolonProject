@@ -1,5 +1,61 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1092107975367374862
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8716850740977726619}
+  - component: {fileID: 1772156907361847429}
+  m_Layer: 6
+  m_Name: StageWallCollider
+  m_TagString: Wall
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8716850740977726619
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1092107975367374862}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1378282381469885332}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!68 &1772156907361847429
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1092107975367374862}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 99387a733fb54b64da99a36073c5c699, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0.3
+  m_Points:
+  - {x: -17.729782, y: -9.515633}
+  - {x: 25.3367, y: -9.411467}
+  - {x: 25.742752, y: 53.172333}
+  - {x: -17.353233, y: 52.902565}
+  - {x: -18.228971, y: -9.570349}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0
 --- !u!1 &1378282381469885354
 GameObject:
   m_ObjectHideFlags: 0
@@ -41,6 +97,7 @@ Transform:
   - {fileID: 7565600274211297449}
   - {fileID: 6417796810551186216}
   - {fileID: 237265578578209066}
+  - {fileID: 8716850740977726619}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -89,7 +146,7 @@ GameObject:
   - component: {fileID: 6042642567769055823}
   - component: {fileID: 7429725869894611199}
   - component: {fileID: 4632541290753484613}
-  m_Layer: 6
+  m_Layer: 17
   m_Name: BackgroundTilemap
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -36348,7 +36405,7 @@ Tilemap:
       m_TileColorIndex: 22
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
-      m_AllTileFlags: 1
+      m_AllTileFlags: 2147483649
   - first: {x: 2, y: 46, z: 0}
     second:
       serializedVersion: 2
@@ -36358,7 +36415,7 @@ Tilemap:
       m_TileColorIndex: 22
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
-      m_AllTileFlags: 1
+      m_AllTileFlags: 2147483649
   - first: {x: 3, y: 46, z: 0}
     second:
       serializedVersion: 2
@@ -36368,7 +36425,7 @@ Tilemap:
       m_TileColorIndex: 22
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
-      m_AllTileFlags: 1
+      m_AllTileFlags: 2147483649
   - first: {x: 4, y: 46, z: 0}
     second:
       serializedVersion: 2
@@ -36378,7 +36435,7 @@ Tilemap:
       m_TileColorIndex: 22
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
-      m_AllTileFlags: 1
+      m_AllTileFlags: 2147483649
   - first: {x: 5, y: 46, z: 0}
     second:
       serializedVersion: 2
@@ -36388,7 +36445,7 @@ Tilemap:
       m_TileColorIndex: 22
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
-      m_AllTileFlags: 1
+      m_AllTileFlags: 2147483649
   - first: {x: 6, y: 46, z: 0}
     second:
       serializedVersion: 2
@@ -36398,7 +36455,7 @@ Tilemap:
       m_TileColorIndex: 22
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
-      m_AllTileFlags: 1
+      m_AllTileFlags: 2147483649
   - first: {x: 7, y: 46, z: 0}
     second:
       serializedVersion: 2
@@ -36928,7 +36985,7 @@ Tilemap:
       m_TileColorIndex: 22
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
-      m_AllTileFlags: 1
+      m_AllTileFlags: 2147483649
   - first: {x: 2, y: 47, z: 0}
     second:
       serializedVersion: 2
@@ -36978,7 +37035,7 @@ Tilemap:
       m_TileColorIndex: 22
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
-      m_AllTileFlags: 1
+      m_AllTileFlags: 2147483649
   - first: {x: 7, y: 47, z: 0}
     second:
       serializedVersion: 2
@@ -37508,7 +37565,7 @@ Tilemap:
       m_TileColorIndex: 22
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
-      m_AllTileFlags: 1
+      m_AllTileFlags: 2147483649
   - first: {x: 2, y: 48, z: 0}
     second:
       serializedVersion: 2
@@ -37558,7 +37615,7 @@ Tilemap:
       m_TileColorIndex: 22
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
-      m_AllTileFlags: 1
+      m_AllTileFlags: 2147483649
   - first: {x: 7, y: 48, z: 0}
     second:
       serializedVersion: 2
@@ -38088,7 +38145,7 @@ Tilemap:
       m_TileColorIndex: 22
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
-      m_AllTileFlags: 1
+      m_AllTileFlags: 2147483649
   - first: {x: 2, y: 49, z: 0}
     second:
       serializedVersion: 2
@@ -38138,7 +38195,7 @@ Tilemap:
       m_TileColorIndex: 22
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
-      m_AllTileFlags: 1
+      m_AllTileFlags: 2147483649
   - first: {x: 7, y: 49, z: 0}
     second:
       serializedVersion: 2
@@ -38668,7 +38725,7 @@ Tilemap:
       m_TileColorIndex: 22
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
-      m_AllTileFlags: 1
+      m_AllTileFlags: 2147483649
   - first: {x: 2, y: 50, z: 0}
     second:
       serializedVersion: 2
@@ -38718,7 +38775,7 @@ Tilemap:
       m_TileColorIndex: 22
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
-      m_AllTileFlags: 1
+      m_AllTileFlags: 2147483649
   - first: {x: 7, y: 50, z: 0}
     second:
       serializedVersion: 2
@@ -45135,9 +45192,29 @@ CompositeCollider2D:
         Y: -100000000
       - X: 250000000
         Y: -100000000
+    - - X: 20000100
+        Y: 470000100
+      - X: 20000100
+        Y: 510000000
+      - X: 59999900
+        Y: 510000000
+      - X: 59999900
+        Y: 470000100
     - - X: -160000000
         Y: -90000000
       - X: -160000000
+        Y: 510000000
+      - X: 9999900
+        Y: 510000000
+      - X: 9999900
+        Y: 459999959
+      - X: 9999959
+        Y: 459999900
+      - X: 70000041
+        Y: 459999900
+      - X: 70000100
+        Y: 459999959
+      - X: 70000100
         Y: 510000000
       - X: 240000000
         Y: 510000000
@@ -45152,7 +45229,15 @@ CompositeCollider2D:
     - - {x: 24, y: -8.99997}
       - {x: -16, y: -8.99997}
       - {x: -15.999971, y: 51}
+      - {x: 0.99999, y: 50.999973}
+      - {x: 1.0000252, y: 45.999992}
+      - {x: 7.0000095, y: 46.000027}
+      - {x: 7.000039, y: 51}
       - {x: 24, y: 50.999973}
+    - - {x: 5.99999, y: 47.00004}
+      - {x: 2.00001, y: 47.00004}
+      - {x: 2.0000393, y: 51}
+      - {x: 5.99999, y: 50.999973}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
 --- !u!1 &3435292629063395997
@@ -46848,11 +46933,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
---- !u!4 &7517293596149303413 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8604531944747639599, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
-  m_PrefabInstance: {fileID: 2250597521609157466}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &7517293596149303416 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8604531944747639586, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
@@ -46864,6 +46944,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b9e200c7d6f9e14ab3cc9a33c90f74e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &7517293596149303413 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8604531944747639599, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
+  m_PrefabInstance: {fileID: 2250597521609157466}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4561541106128672179
 PrefabInstance:
   m_ObjectHideFlags: 0

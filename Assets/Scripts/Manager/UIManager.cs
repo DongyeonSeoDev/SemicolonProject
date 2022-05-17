@@ -79,6 +79,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     private float setDelayHPFillTime; //time to reduce green hp bar
 
     public Pair<Image, Text> invenHpInfo;
+    public Pair<Transform, float> invenHpEffMaskInfo;
     #endregion
 
     #region SelectionWindow
@@ -143,7 +144,8 @@ public partial class UIManager : MonoSingleton<UIManager>
     private UIType selectedMenuType;
 
     //public Text statText;
-    public Text[] statTexts;
+    public Text[] statTexts; //영구 스탯
+    public Text[] choiceStatTexts;  //선택 스탯
 
     #endregion
 
@@ -174,6 +176,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         defaultTopCenterMsgVG = topCenterMsgTMP.colorGradient;
         //topCenterMsgTMPCvsg = topCenterMsgTMP.GetComponent<CanvasGroup>();
 
+        invenHpEffMaskInfo.second = invenHpEffMaskInfo.first.localScale.x;
        
         for(i=0; i<gameCanvases.Length; i++)
         {
@@ -517,6 +520,7 @@ public partial class UIManager : MonoSingleton<UIManager>
                 }
                 invenHpInfo.first.fillAmount = (float)sgm.Player.CurrentHp / sgm.Player.PlayerStat.MaxHp;
                 invenHpInfo.second.text = string.Concat("HP : ",Mathf.Ceil(Mathf.Clamp(sgm.Player.CurrentHp, 0, sgm.Player.PlayerStat.MaxHp)), '/', Mathf.Ceil(sgm.Player.PlayerStat.MaxHp));
+                invenHpEffMaskInfo.first.localScale = new Vector3(invenHpEffMaskInfo.second*invenHpInfo.first.fillAmount, invenHpEffMaskInfo.second, invenHpEffMaskInfo.second);
                 break;
             case UIType.KEYSETTING:
                 if (KeyActionManager.Instance.IsChangingKeySetting)  //키세팅 변경 중에는 esc로 키세팅 UI 안꺼지게
@@ -1055,10 +1059,22 @@ public partial class UIManager : MonoSingleton<UIManager>
         //statText.text = $"HP\t\t{currentHP}/{stat.hp}\n\n공격력\t\t{stat.damage}\n\n방어력\t\t{stat.defense}\n\n이동속도\t\t{stat.speed}";
     }
 
+    public void UpdateChoiceStatUI()
+    {
+        Stat stat = sgm.Player.PlayerStat;
+
+        //choiceStatTexts[0].text = stat.choiceStat.endurance.ToString(); //맷집
+        //choiceStatTexts[1].text = stat.choiceStat.patience.ToString(); //인내력
+    }
+
     public void UpdatePlayerHPInInven()
     {
         invenHpInfo.first.DOKill();
-        invenHpInfo.first.DOFillAmount((float)sgm.Player.CurrentHp / sgm.Player.PlayerStat.MaxHp, 0.3f).SetUpdate(true);
+        invenHpEffMaskInfo.first.DOKill();
+
+        float rate = (float)sgm.Player.CurrentHp / sgm.Player.PlayerStat.MaxHp;
+        invenHpInfo.first.DOFillAmount(rate, 0.3f).SetUpdate(true);
+        invenHpEffMaskInfo.first.DOScaleX(rate * invenHpEffMaskInfo.second, 0.3f).SetUpdate(true);
         invenHpInfo.second.text = string.Concat("HP : ",Mathf.Ceil(Mathf.Clamp(sgm.Player.CurrentHp, 0, sgm.Player.PlayerStat.MaxHp)), '/', Mathf.Ceil(sgm.Player.PlayerStat.MaxHp));
     }
 

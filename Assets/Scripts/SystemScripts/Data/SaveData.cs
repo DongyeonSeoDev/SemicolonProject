@@ -65,6 +65,7 @@ public class UserInfo
 {
     //스탯 정보
     public int currentHp; //현재 HP
+    public float currentExperience;
     public Stat playerStat = new Stat();  //현재 스탯
 
     public string currentBodyID; //현재 장착중인 몸 아이디

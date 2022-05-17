@@ -364,7 +364,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
         AcquisitionDropIcon adi = PoolManager.GetItem<AcquisitionDropIcon>("AcqDropIcon");
         adi.Set(UIManager.Instance.GetInterfaceSprite(type),
-                startPos, 3f, new Vector2(12, 12), () =>
+                startPos, 2.4f, new Vector2(-7, 7), () =>
                 {
                     UIOn(kt);
                     gm.savedData.userInfo.uiActiveDic[kt] = true;
@@ -431,7 +431,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         {
             changeableBodysUIArr[i].GetComponent<CanvasGroup>().alpha = 0;
             changeableBodysUIArr[i].gameObject.SetActive(true);
-            changeableBodysUIArr[i].GetComponent<CanvasGroup>().DOFade(1, 0.5f);
+            changeableBodysUIArr[i].GetComponent<CanvasGroup>().DOFade(i==1 ? 1f : 0.4f, 0.5f);
         }
 
         UIManager.Instance.RequestLogMsg("변신 슬롯을 얻었습니다.");

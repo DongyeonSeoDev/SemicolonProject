@@ -92,7 +92,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slotNumber: 0
-  slotId: -1
   bodyID: 
   monsterImgName:
     first: {fileID: 5242618291068016649}
@@ -369,6 +368,8 @@ MonoBehaviour:
   transitionEnable: 1
   transitionTime: 0.3
   targetScale: {x: 1.2, y: 1.2, z: 1.2}
+  useSound: 1
+  soundId: UIMouseEnterSFX5
 --- !u!1 &5242618291695663431
 GameObject:
   m_ObjectHideFlags: 0
