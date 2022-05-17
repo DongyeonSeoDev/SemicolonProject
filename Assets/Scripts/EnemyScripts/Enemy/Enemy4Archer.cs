@@ -1,5 +1,3 @@
-#define TEST_ENEMY4
-
 using UnityEngine;
 
 namespace Enemy
@@ -10,15 +8,6 @@ namespace Enemy
 
         private EnemyCommand enemyAttackCommand;
         private EnemyCommand enemyAttackPlayerCommand;
-
-#if TEST_ENEMY4
-
-        private void Start()
-        {
-            MoveEnemy();
-        }
-
-#endif
 
         protected override void OnEnable()
         {
