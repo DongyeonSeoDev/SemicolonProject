@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 7496146302045236838}
   - component: {fileID: 4322804713794740887}
   - component: {fileID: 3966382012738421239}
+  - component: {fileID: 9036656189394809005}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -75,6 +76,7 @@ MonoBehaviour:
     choiceStat:
       overweight: 0
       patience: 0
+      momentom: 0
       endurance: 0
       luck: 0
       viscosity: 0
@@ -107,6 +109,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isPauseByTuto: 1
   isPauseByCutScene: 0
+  playerStopStayTime: 2
 --- !u!114 &5427881869486345071
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,11 +173,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddaeeb1615f267e449c6c8b96a25a1cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firstEnduranceValue: 1
+  firstPatienceValue: 1
+  firstMomentomValue: 1
+  unlockEnduranceStatValue: 100
+  unlockPatienceStatValue: 100
+  unlockMomentomStatValue: 150
   enduranceUpAmount: 100
   upMaxHpPerEnduranceUpAmount: 5
-  firstPatienceValue: 1
   patienceUpAmount: 100
   upDamagePerPatience: 1
+  avoidInMomentomNum: 0
+  momentomAmount: 10
+  upMomentomSpeedPerMomentom: 0.2
+--- !u!114 &9036656189394809005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5427881869486345068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59a61e7e4bced804499d225c9b98c277, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  momentomTime: 3
 --- !u!1 &9040924975962532946
 GameObject:
   m_ObjectHideFlags: 0
