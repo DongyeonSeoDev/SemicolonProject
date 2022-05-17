@@ -147,6 +147,10 @@ MonoBehaviour:
   poolType: 109
   count: 10
   speed: 10
+  addAngle: 0
+  removeBulletTime: 5
+  fadeTime: 0.5
   isBulletEffect: 0
+  isRemainBullet: 1
   limitMaxPosition: {x: 100, y: 100}
   limitMinPosition: {x: -100, y: -100}

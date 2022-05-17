@@ -1,4 +1,6 @@
 using UnityEngine;
+using DG.Tweening;
+using System.Collections;
 
 namespace Enemy
 {
@@ -6,13 +8,23 @@ namespace Enemy
     {
         public float speed;
         public float addAngle;
+        public float removeBulletTime;
+        public float fadeTime;
         public bool isBulletEffect;
+        public bool isRemainBullet;
 
         private float angle;
         private bool isStop = false;
+        private bool isDelete = false;
 
         public Vector2 limitMaxPosition;
         public Vector2 limitMinPosition;
+
+        private SpriteRenderer sr;
+        private BoxCollider2D col;
+        private WaitForSeconds ws;
+
+        private Color currentColor;
 
         private EnemyController eEnemyController;
 
@@ -26,13 +38,13 @@ namespace Enemy
         {
             EventManager.StartListening("AfterPlayerRespawn", () =>
             {
-                gameObject.SetActive(false);
+                RemoveBullet();
             });
 
 
             EventManager.StartListening("ExitCurrentMap", () =>
             {
-                gameObject.SetActive(false);
+                RemoveBullet();
             });
 
             EventManager.StartListening("EnemyStart", () =>
@@ -44,11 +56,16 @@ namespace Enemy
             {
                 isStop = true;
             });
+
+            sr = GetComponent<SpriteRenderer>();
+            col = GetComponent<BoxCollider2D>();
+            ws = new WaitForSeconds(removeBulletTime);
+            currentColor = sr.color;
         }
 
         private void Update()
         {
-            if (isStop)
+            if (isStop || isDelete)
             {
                 return;
             }
@@ -74,6 +91,11 @@ namespace Enemy
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            if (isDelete)
+            {
+                return;
+            }
+
             if (eEnemyController == EnemyController.AI && collision.CompareTag("Player"))
             {
                 SlimeGameManager.Instance.Player.GetDamage(gameObject, Random.Range(attackDamage - 5, attackDamage + 6));
@@ -105,8 +127,43 @@ namespace Enemy
                     EventManager.TriggerEvent("OnAttackMiss");
                 }
 
-                StartBulletEffect();
+                if (isRemainBullet)
+                {
+                    StartCoroutine(DeleteBullet());
+                }
+                else
+                {
+                    StartBulletEffect();
+                }
             }
+        }
+
+        private IEnumerator DeleteBullet()
+        {
+            col.enabled = false;
+            isDelete = true;
+
+            yield return ws;
+
+            sr.DOFade(0f, fadeTime).OnComplete(() =>
+            {
+                ResetBullet();
+                StartBulletEffect();
+            });
+        }
+
+        private void ResetBullet()
+        {
+            col.enabled = true;
+            isDelete = false;
+            sr.color = currentColor;
+        }
+
+        private void RemoveBullet()
+        {
+            gameObject.SetActive(false);
+            StopAllCoroutines();
+            ResetBullet();
         }
 
         public void Init(EnemyController controller, Vector3 direction, int damage, Enemy enemy = null)
