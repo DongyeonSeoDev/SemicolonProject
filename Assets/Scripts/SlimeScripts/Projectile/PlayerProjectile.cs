@@ -151,15 +151,21 @@ public class PlayerProjectile : MonoBehaviour
     }
     private void PlayerStart()
     {
-        isStop = false;
-        moveVec = lastMoveVec;
-        anim.speed = 1f;
+        if (isStop)
+        {
+            isStop = false;
+            moveVec = lastMoveVec;
+            anim.speed = 1f;
+        }
     }
     private void PlayerStop()
     {
-        isStop = true;
-        lastMoveVec = moveVec;
-        rigid.velocity = Vector2.zero;
-        anim.speed = 0f;
+        if (!isStop)
+        {
+            isStop = true;
+            lastMoveVec = moveVec;
+            rigid.velocity = Vector2.zero;
+            anim.speed = 0f;
+        }
     }
 }
