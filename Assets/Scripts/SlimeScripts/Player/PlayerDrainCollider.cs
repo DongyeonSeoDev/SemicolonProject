@@ -301,7 +301,10 @@ public class PlayerDrainCollider : MonoBehaviour
 
             if(item.GetGameObject().GetComponent<Enemy.TutorialEnemy>() != null)
             {
+                //EventManager.TriggerEvent("EnemyDead", enemyData.enemyType.ToString());
                 Destroy(item.GetGameObject());
+
+                Enemy.EnemyManager.Instance.EnemyDestroy();
             }
         }
     }

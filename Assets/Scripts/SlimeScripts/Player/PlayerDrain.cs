@@ -123,6 +123,7 @@ public class PlayerDrain : PlayerSkill
         if(enemy == null)
         {
             Destroy(obj);
+            Enemy.EnemyManager.Instance.EnemyDestroy();
 
             return;
         }
