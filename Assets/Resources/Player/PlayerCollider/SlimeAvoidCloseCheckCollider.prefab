@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 7491075731991253569}
   - component: {fileID: 2131840008940636931}
   m_Layer: 13
-  m_Name: AvoidCloseCheckCollider
+  m_Name: SlimeAvoidCloseCheckCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

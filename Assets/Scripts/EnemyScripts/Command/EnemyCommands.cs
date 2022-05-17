@@ -9,7 +9,6 @@ namespace Enemy
         private PlayerInput playerInput = null;
         private Stat playerStat = null;
         private float lastSpeed = 0f;
-        private float speed = 0f;
         private int wallCheck = LayerMask.GetMask("WALL");
 
         public EnemyMovePlayerControllerCommand(EnemyData data)
@@ -18,8 +17,6 @@ namespace Enemy
             playerStat = SlimeGameManager.Instance.Player.PlayerStat;
 
             enemyData = data;
-
-            speed = playerStat.Speed;
         }
 
         public override void Execute()
@@ -30,13 +27,13 @@ namespace Enemy
                 enemyData.isPlayerControllerMove = true;
             }
 
-            if (playerInput.MoveVector * speed != Vector2.zero)
+            if (playerInput.MoveVector * playerStat.Speed != Vector2.zero)
             {
-                lastSpeed = speed;
+                lastSpeed = playerStat.Speed;
             }
             else
             {
-                lastSpeed = Mathf.Lerp(lastSpeed, 0f, Time.deltaTime * speed / 2f);
+                lastSpeed = Mathf.Lerp(lastSpeed, 0f, Time.deltaTime * playerStat.Speed / 2f);
             }
 
             var ray = Physics2D.Raycast(enemyData.enemyRigidbody2D.transform.position, playerInput.MoveVector, lastSpeed / 10f, wallCheck);

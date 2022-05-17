@@ -31,5 +31,12 @@ public class PlayerBodyScript : MonoBehaviour
         {
             Instantiate(Resources.Load<GameObject>("Player/PlayerCollider/GetItemCollider"), transform);
         }
+
+        AvoidCloseCheckCollider z = GetComponentInChildren<AvoidCloseCheckCollider>();
+
+        if(z == null)
+        {
+            Instantiate(Resources.Load<GameObject>("Player/PlayerCollider/BoxAvoidCloseCheckCollider"), transform);
+        }
     }
 }

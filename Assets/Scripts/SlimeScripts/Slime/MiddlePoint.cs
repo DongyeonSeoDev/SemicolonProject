@@ -10,7 +10,7 @@ public class MiddlePoint : BodyPoint
         get { return playerDrain; }
     }
 
-    private PlayerAvoidCloseCheckCollider playerAvoidCloseCheckCollider = null;
+    private SlimeAvoidCloseCheckCollider playerAvoidCloseCheckCollider = null;
 
     [SerializeField]
     private EdgeCollider2D triggerEdgeCollider2D = null;
@@ -49,7 +49,7 @@ public class MiddlePoint : BodyPoint
     private void Start()
     {
         playerDrain = GetComponent<PlayerDrain>();
-        playerAvoidCloseCheckCollider = GetComponentInChildren<PlayerAvoidCloseCheckCollider>();
+        playerAvoidCloseCheckCollider = GetComponentInChildren<SlimeAvoidCloseCheckCollider>();
         playerAvoidCloseCheckCollider.SetMiddlePoint(this);
     }
     private void FixedUpdate()
