@@ -51,6 +51,13 @@ public class Stat
 }
 
 [Serializable]
+public struct StatElement<T>
+{
+    public T statValue;
+    public bool isUnlock;
+}
+
+[Serializable]
 public class EternalStat
 {
     public static EternalStat operator +(EternalStat a, EternalStat b) => new EternalStat(a.maxHp + b.maxHp, a.minDamage + b.minDamage, a.maxDamage + b.maxDamage, a.defense + b.defense, a.intellect + b.intellect, a.speed + b.speed, a.attackSpeed + b.attackSpeed, a.criticalRate + b.criticalRate, a.criticalDamage + b.criticalDamage);
@@ -100,20 +107,25 @@ public class EternalStat
 [Serializable]
 public class ChoiceStat
 {
-    public int overweight; // 과체중
-    public int patience; // 인내력
-    public int momentom; // 추진력
-    public int endurance; // 맷집
-    public int luck; // 운
+    //public int overweight; // 과체중
+    public StatElement<int> patience; // 인내력
 
-    public float viscosity; // 점성
-    public float humidity; // 습도
+    public StatElement<int> momentom; // 추진력
 
-    public float affinity; // 친밀도
-    public float dominion; // 지배력
+    public StatElement<int> endurance; // 맷집
 
-    public float marineLifeFitness; // 해양생물 적합력
-    public float landCreatureFitness; // 지상생물 적합력
+    //public int luck; // 운
 
-    public float cookingAbility;
+    //public float viscosity; // 점성
+    //public float humidity; // 습도
+
+    //public float affinity; // 친밀도
+    //public float dominion; // 지배력
+
+    //public float marineLifeFitness; // 해양생물 적합력
+    //public float landCreatureFitness; // 지상생물 적합력
+
+    //public float cookingAbility;
 }
+
+

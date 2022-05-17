@@ -127,7 +127,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
     }
     public void CheckEndurance()
     {
-        int pasteEndurance = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance;
+        int pasteEndurance = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance.statValue;
         int num = (int)totalDamage / enduranceUpAmount;
 
         if (pasteEndurance != num && num > 0)
@@ -135,17 +135,18 @@ public class PlayerChoiceStatControl : MonoBehaviour
             if(pasteEndurance == 0)
             {
                 // 처음 이 스탯이 생김
+                SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance.isUnlock = true;
                 num = firstEnduranceValue;
             }
 
-            SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance = num;
+            SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance.statValue = num;
 
             SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxHp += upMaxHpPerEnduranceUpAmount * (num - pasteEndurance);
         }
     }
     public void CheckPatience()
     {
-        int pastePatienceNum = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience;
+        int pastePatienceNum = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.statValue;
         int num = 0;
 
         if (pastePatienceNum == 0)
@@ -155,6 +156,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
                 // 처음 이 스탯이 생김
 
                 num = firstPatienceValue;
+                SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.isUnlock = true;
 
                 AttackNumReset();
             }
@@ -164,7 +166,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
             num = ((attackNum + attackMissedNum) / patienceUpAmount) + firstPatienceValue;
         }
 
-        SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience = num;
+        SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.statValue = num;
 
         SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.minDamage -= upDamagePerPatience * pastePatienceNum;
         SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxDamage -= upDamagePerPatience * pastePatienceNum;
@@ -180,7 +182,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
     public void CheckMomentom()
     {
-        int pasteMomentomNum = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom;
+        int pasteMomentomNum = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.statValue;
         int num = 0;
 
         if(pasteMomentomNum == 0)
@@ -190,6 +192,8 @@ public class PlayerChoiceStatControl : MonoBehaviour
                 // 이 스탯이 처음 생김
                 Debug.Log("Momentom True Wireless Earbuds 2"); // 추진력 해금 체크용 코드 // 참고로 좋은 무선이어폰임 추천함
                 num = firstMomentomValue;
+
+                SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.isUnlock = true;
             }
         }
         else
@@ -197,7 +201,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
             num = (avoidInMomentomNum / momentomAmount) + firstMomentomValue;
         }
 
-        SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom = num;
+        SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.statValue = num;
     }
     public void UpAttackMissedNum()
     {
@@ -209,7 +213,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
     {
         // 몬스터를 때렸을 경우
 
-        if (SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience == 0)
+        if (SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.isUnlock)
         {
             attackMissedNum = 0;
 
@@ -220,7 +224,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
     }
     public void UpAvoidInMomentomNum()
     {
-        if(SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom == 0)
+        if(!SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.isUnlock)
         {
             return;
         }

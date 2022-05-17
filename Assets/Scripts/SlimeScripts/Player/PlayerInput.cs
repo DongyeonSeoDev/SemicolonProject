@@ -228,7 +228,7 @@ public class PlayerInput : MonoBehaviour
 
                 moveVector = moveVector.normalized;
 
-                if (!playerState.IsInMomentom)
+                if (SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.isUnlock && !playerState.IsInMomentom) // 추진력을 얻었는지, 추진력 중복상태는 아닌지 체크
                 {
                     if (moveVector != Vector2.zero)
                     {
