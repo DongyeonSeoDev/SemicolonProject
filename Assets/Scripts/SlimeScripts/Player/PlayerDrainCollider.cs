@@ -82,24 +82,18 @@ public class PlayerDrainCollider : MonoBehaviour
 
             if (drainTimer <= 0f)
             {
-                //try
+                foreach (var item in tryDrainList)
                 {
-                    foreach (var item in tryDrainList)
-                    {
-                        removeList.Add(item);
+                    removeList.Add(item);
 
-                        if (doDrainList.Contains(item))
-                        {
-                            EventManager.TriggerEvent("OnDrain", item.GetGameObject(), item.GetTransform().position, 1); // 여기의 param은 임시 값
-                        }
+                    if (doDrainList.Contains(item))
+                    {
+                        EventManager.TriggerEvent("OnDrain", item.GetGameObject(), item.GetTransform().position, 1); // 여기의 param은 임시 값
                     }
                 }
-                //catch
-                //{
-                    
-                //}
 
-                foreach(var item in removeList)
+
+                foreach (var item in removeList)
                 {
                     doDrainList.Remove(item);
                     tryDrainList.Remove(item);
@@ -219,89 +213,72 @@ public class PlayerDrainCollider : MonoBehaviour
 
     private void CheckDrainMoveTime()
     {
-        List<ICanGetDamagableEnemy> removeList = new List<ICanGetDamagableEnemy> ();
+        List<ICanGetDamagableEnemy> removeList = new List<ICanGetDamagableEnemy>();
 
-        //try
+        foreach (var item in tryDrainList)
         {
-            foreach (var item in tryDrainList)
+            GameObject key = item.GetGameObject();
+
+            drainMoveTimerDict[key] += Time.deltaTime;
+
+            if (drainMoveTimerDict[key] >= drainMoveTimeDict[key])
             {
-                GameObject key = item.GetGameObject();
+                playerState.CantChangeDir = false;
 
-                drainMoveTimerDict[key] += Time.deltaTime;
-
-                if (drainMoveTimerDict[key] >= drainMoveTimeDict[key])
+                if (key.GetComponent<Enemy.TutorialEnemy>() != null)
                 {
-                    playerState.CantChangeDir = false;
-
-                    if (key.GetComponent<Enemy.TutorialEnemy>() != null)
-                    {
-                        EventManager.TriggerEvent("DrainTutorialEnemyDrain", key.transform.position);
-                        EventManager.TriggerEvent("Tuto_EnemyDeathCheck");
-
-                        removeList.Add(item);
-
-                        //foreach (var item2 in removeList)
-                        //{
-                        //    doDrainList.Remove(item2);
-                        //    tryDrainList.Remove(item2);
-
-                        //    RemoveList(item2.GetGameObject());
-                        //    Destroy(item2.GetGameObject());
-                        //}
-
-                        continue;
-                    }
-
-                    if (doDrainList.Contains(item))
-                    {
-                        EventManager.TriggerEvent("OnDrain", key, key.transform.position, 1); // 여기의 param은 임시 값
-                    }
+                    EventManager.TriggerEvent("DrainTutorialEnemyDrain", key.transform.position);
+                    EventManager.TriggerEvent("Tuto_EnemyDeathCheck");
 
                     removeList.Add(item);
 
                     continue;
                 }
 
-                bool updateObj = false;
-                int_timer = (int)drainMoveTimerDict[key];
-
-                if (!paste_int_DrainMoveTimerDict.ContainsKey(key))
+                if (doDrainList.Contains(item))
                 {
-                    paste_int_DrainMoveTimerDict.Add(key, -1);
+                    EventManager.TriggerEvent("OnDrain", key, key.transform.position, 1); // 여기의 param은 임시 값
                 }
 
-                if (int_timer != paste_int_DrainMoveTimerDict[key])
-                {
-                    updateObj = true;
-                }
+                removeList.Add(item);
 
-                paste_int_DrainMoveTimerDict[key] = int_timer;
+                continue;
+            }
 
-                if (drainMoveTimerDict[key] % drainMoveUpdateTime <= 0.1f && updateObj)
-                {
-                    item.GetTransform().position = Vector2.Lerp(drainMoveOriginPosDict[key], drainMoveTargetPosDict[key], drainMoveTimerDict[key] / drainMoveTimeDict[key]);
-                }
-                else
-                {
-                    item.GetTransform().position = Vector2.Lerp(drainMoveOriginPosDict[key], drainMoveTargetPosDict[key], paste_int_DrainMoveTimerDict[key] / drainMoveTimeDict[key]);
-                }
+            bool updateObj = false;
+            int_timer = (int)drainMoveTimerDict[key];
+
+            if (!paste_int_DrainMoveTimerDict.ContainsKey(key))
+            {
+                paste_int_DrainMoveTimerDict.Add(key, -1);
+            }
+
+            if (int_timer != paste_int_DrainMoveTimerDict[key])
+            {
+                updateObj = true;
+            }
+
+            paste_int_DrainMoveTimerDict[key] = int_timer;
+
+            if (drainMoveTimerDict[key] % drainMoveUpdateTime <= 0.1f && updateObj)
+            {
+                item.GetTransform().position = Vector2.Lerp(drainMoveOriginPosDict[key], drainMoveTargetPosDict[key], drainMoveTimerDict[key] / drainMoveTimeDict[key]);
+            }
+            else
+            {
+                item.GetTransform().position = Vector2.Lerp(drainMoveOriginPosDict[key], drainMoveTargetPosDict[key], paste_int_DrainMoveTimerDict[key] / drainMoveTimeDict[key]);
             }
         }
-        //catch
-        //{
 
-        //}
-
-        foreach(var item in removeList)
+        foreach (var item in removeList)
         {
             doDrainList.Remove(item);
             tryDrainList.Remove(item);
 
             RemoveList(item.GetGameObject());
 
-            if(item.GetGameObject().GetComponent<Enemy.TutorialEnemy>() != null)
+            if (item.GetGameObject().GetComponent<Enemy.TutorialEnemy>() != null)
             {
-                //EventManager.TriggerEvent("EnemyDead", enemyData.enemyType.ToString());
                 Destroy(item.GetGameObject());
 
                 Enemy.EnemyManager.Instance.EnemyDestroy();
