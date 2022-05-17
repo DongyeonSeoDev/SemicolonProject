@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
@@ -13,12 +12,13 @@ namespace Enemy
         public Vector3 targetAttackRangeScale = new Vector3(2f, 2f, 1f);
 
         private Animator animator;
-        private Collider2D attackCollider;
         private SpriteRenderer attackRangeSprite = null;
         private Enemy enemyCheck;
+
         private EnemyController eEnemyController;
         private Color currentAttackRangeColor;
         private Color targetAttackRangeColor;
+
         private int attackPower;
         private bool checkTogether;
 
@@ -30,7 +30,6 @@ namespace Enemy
         private void Awake()
         {
             animator = GetComponent<Animator>();
-            attackCollider = GetComponent<Collider2D>();
             attackRangeSprite = attackRange.GetComponent<SpriteRenderer>();
 
             currentAttackRangeColor = attackRangeSprite.color;

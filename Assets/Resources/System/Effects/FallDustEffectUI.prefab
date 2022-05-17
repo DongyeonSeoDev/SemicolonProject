@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4595405342842094086
+--- !u!1 &5108834442706182062
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,37 +8,42 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4599201788134811912}
-  - component: {fileID: 4396125456545578178}
-  - component: {fileID: 4397290366313905194}
+  - component: {fileID: 3246560714207814225}
+  - component: {fileID: 4909554558615822698}
+  - component: {fileID: 4910684316157239682}
   m_Layer: 0
-  m_Name: FallDustEffect
+  m_Name: FallDustEffectUI
   m_TagString: FxTemporaire
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4599201788134811912
-Transform:
+--- !u!224 &3246560714207814225
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4595405342842094086}
+  m_GameObject: {fileID: 5108834442706182062}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 0, y: 1.59, z: 0.84}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
---- !u!198 &4396125456545578178
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 590}
+  m_SizeDelta: {x: 1954.2, y: 421}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!198 &4909554558615822698
 ParticleSystem:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4595405342842094086}
+  m_GameObject: {fileID: 5108834442706182062}
   serializedVersion: 7
   lengthInSec: 0.5
   simulationSpeed: 1
@@ -150,8 +155,8 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 4
-      minScalar: 3
+      scalar: 1.2
+      minScalar: 1
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -248,8 +253,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 1.4
-      minScalar: 0.4
+      scalar: 50
+      minScalar: 40
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -523,7 +528,7 @@ ParticleSystem:
     donutRadius: 0.2
     m_Position: {x: 0, y: 0, z: 0}
     m_Rotation: {x: 0, y: 0, z: 0}
-    m_Scale: {x: 86.52, y: 1, z: 1}
+    m_Scale: {x: 1956.6, y: 8.1, z: 1}
     placementMode: 0
     m_MeshMaterialIndex: 0
     m_MeshNormalOffset: 0
@@ -4565,14 +4570,14 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
---- !u!199 &4397290366313905194
+--- !u!199 &4910684316157239682
 ParticleSystemRenderer:
   serializedVersion: 6
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4595405342842094086}
+  m_GameObject: {fileID: 5108834442706182062}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -4603,9 +4608,9 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 521365507
-  m_SortingLayer: 7
-  m_SortingOrder: 0
+  m_SortingLayerID: 1072796663
+  m_SortingLayer: 8
+  m_SortingOrder: 10
   m_RenderMode: 0
   m_SortMode: 1
   m_MinParticleSize: 0

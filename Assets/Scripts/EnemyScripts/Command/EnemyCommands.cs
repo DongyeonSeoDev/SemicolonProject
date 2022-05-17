@@ -67,7 +67,7 @@ namespace Enemy
             this.enemyData = enemyData;
             this.positionCheckData = positionCheckData;
 
-            enemyRunAwayCommand = new EnemyLongDistanceFollowPlayerCommand(enemyData, enemyData.enemyObject.transform, enemyData.enemyRigidbody2D, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, positionCheckData);
+            enemyRunAwayCommand = new EnemyRunAwayCommand(enemyData, enemyData.enemyObject.transform, enemyData.enemyRigidbody2D, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance, positionCheckData);
 
             currentMoveTime = 0f;
         }
@@ -141,6 +141,44 @@ namespace Enemy
     public class EnemyLongDistanceFollowPlayerCommand : EnemyCommand
     {
         private EnemyData enemyData;
+        private Transform enemyTransform;
+        private Rigidbody2D rigid;
+        private Vector3 targetPosition;
+        private float followSpeed;
+        private float followDistance;
+        private float angle;
+
+        public EnemyLongDistanceFollowPlayerCommand(EnemyData data, Transform enemyTransform, Rigidbody2D rigid, float followSpeed, float followDistance)
+        {
+            enemyData = data;
+            this.enemyTransform = enemyTransform;
+            this.rigid = rigid;
+
+            this.followSpeed = followSpeed;
+            this.followDistance = followDistance;
+        }
+
+        public override void Execute()
+        {
+            targetPosition = enemyTransform.transform.position - EnemyManager.Player.transform.position;
+
+            angle = Mathf.Atan2(targetPosition.x, targetPosition.y) * Mathf.Rad2Deg + 90f;
+
+            targetPosition.x = EnemyManager.Player.transform.position.x + (followDistance * Mathf.Cos(angle * Mathf.Deg2Rad) * -1f);
+            targetPosition.y = EnemyManager.Player.transform.position.y + (followDistance * Mathf.Sin(angle * Mathf.Deg2Rad));
+            targetPosition.z = EnemyManager.Player.transform.position.z;
+
+            targetPosition = (targetPosition - enemyTransform.position).normalized;
+            targetPosition *= followSpeed;
+
+            enemyData.moveVector = targetPosition;
+            rigid.velocity = targetPosition;
+        }
+    }
+
+    public class EnemyRunAwayCommand : EnemyCommand
+    {
+        private EnemyData enemyData;
         private EnemyPositionCheckData positionCheckData;
         private Transform enemyTransform;
         private Rigidbody2D rigid;
@@ -152,7 +190,7 @@ namespace Enemy
         private float addAngle;
         private float angleChangeTime;
 
-        public EnemyLongDistanceFollowPlayerCommand(EnemyData data, Transform enemyTransform, Rigidbody2D rigid, float followSpeed, float followDistance, EnemyPositionCheckData positionCheckData = null, float angleChangeTime = 1f)
+        public EnemyRunAwayCommand(EnemyData data, Transform enemyTransform, Rigidbody2D rigid, float followSpeed, float followDistance, EnemyPositionCheckData positionCheckData = null, float angleChangeTime = 1f)
         {
             enemyData = data;
             this.enemyTransform = enemyTransform;
@@ -383,49 +421,60 @@ namespace Enemy
         }
     }
 
-    public class EnemyAttackCommand : EnemyCommand // 적 공격
+    public class EnemylongRangeAttackCommand : EnemyCommand // 적 공격
     {
-        public Transform enemyTransform;
-        public int attackDamage;
-
+        private Transform enemyTransform;
+        private Transform shotTransform;
         private Enemy enemy;
 
-        public EnemyAttackCommand(Enemy enemy, Transform enemyPosition, int damage)
+        private Type objectType;
+
+        private int attackDamage;
+
+        public EnemylongRangeAttackCommand(Enemy enemy, Transform enemyPosition, Type objectType, Transform enemyTransform, int damage)
         {
             enemyTransform = enemyPosition;
-            attackDamage = damage;
             this.enemy = enemy;
+            this.objectType = objectType;
+            attackDamage = damage;
+            this.enemyTransform = enemyTransform;
         }
 
         public override void Execute()
         {
-            EnemyPoolData bullet = EnemyPoolManager.Instance.GetPoolObject(Type.Bullet, enemyTransform.position);
+            EnemyPoolData spawnObject = EnemyPoolManager.Instance.GetPoolObject(objectType, enemyTransform.position);
 
-            bullet.GetComponent<EnemyBullet>().Init(enemy.GetEnemyController(), attackDamage, (EnemyManager.Player.transform.position - enemyTransform.position).normalized);
+            spawnObject.GetComponent<EnemyBullet>().Init(enemy.GetEnemyController(), (EnemyManager.Player.transform.position - enemyTransform.position).normalized, attackDamage);
         }
     }
 
-    public class EnemyAttackPlayerCommand : EnemyCommand
+    public class PlayerlongRangeAttackCommand : EnemyCommand
     {
-        PlayerInput playerInput;
-        Transform transform;
-        Enemy enemy;
+        private PlayerInput playerInput;
+        private Transform transform;
+        private Transform shotTransform;
+        private Enemy enemy;
 
-        int attackDamage;
+        private Type objectType;
 
-        public EnemyAttackPlayerCommand(Transform transform, Enemy enemy, int attackDamage)
+        private int attackDamage;
+
+        public PlayerlongRangeAttackCommand(Transform transform, Transform shotTransform, Enemy enemy, Type objectType, int attackDamage)
         {
             playerInput = SlimeGameManager.Instance.Player.GetComponent<PlayerInput>();
+
             this.transform = transform;
+            this.shotTransform = shotTransform;
             this.attackDamage = attackDamage;
             this.enemy = enemy;
+            this.objectType = objectType;
         }
 
         public override void Execute()
         {
-            EnemyPoolData bullet = EnemyPoolManager.Instance.GetPoolObject(Type.Bullet, transform.position);
+            EnemyPoolData spawnObject = EnemyPoolManager.Instance.GetPoolObject(objectType, shotTransform.position);
 
-            bullet.GetComponent<EnemyBullet>().Init(enemy.GetEnemyController(), attackDamage, (playerInput.AttackMousePosition - (Vector2)transform.position).normalized, enemy);
+            spawnObject.GetComponent<EnemyBullet>().Init(enemy.GetEnemyController(), (playerInput.AttackMousePosition - (Vector2)transform.position).normalized, attackDamage, enemy);
         }
     }
 

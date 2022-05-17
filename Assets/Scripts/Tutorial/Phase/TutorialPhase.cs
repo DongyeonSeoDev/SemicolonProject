@@ -66,7 +66,7 @@ public class SettingPhase : TutorialPhase
 
     private float camShakeStr = 0.3f, camFreq = 0.7f;
 
-    private int maxCount = 3, offset = 3;
+    private int maxCount = 9, offset = 4;
 
     private Vector2 effSpawnPosOffset = new Vector2(0, 13f);
 
@@ -74,8 +74,8 @@ public class SettingPhase : TutorialPhase
     {
         if (!PoolManager.IsContainKey("DustEffect1"))
         {
-            GameObject o = Resources.Load<GameObject>("System/Effects/FallDustEffect"); 
-            PoolManager.CreatePool(o, EffectManager.Instance.transform, 3, "DustEffect1");
+            GameObject o = Resources.Load<GameObject>("System/Effects/FallDustEffectUI"); 
+            PoolManager.CreatePool(o, UIManager.Instance.worldUICvsg.transform, 3, "DustEffect1");
         }
 
         this.pressCount = pressCount;
@@ -103,8 +103,8 @@ public class SettingPhase : TutorialPhase
             {
                 //Camera Shake
                 CinemachineCameraScript.Instance.Shake(camShakeStr, camFreq, 0.3f);
-                camShakeStr += 0.2f;
-                camFreq += 0.1f;
+                camShakeStr += 0.25f;
+                camFreq += 0.14f;
 
                 SoundManager.Instance.PlaySoundBox("ESC Effect SFX");
 
@@ -114,7 +114,10 @@ public class SettingPhase : TutorialPhase
                 main.maxParticles = maxCount;
                 maxCount += offset;
 
-                SlimeFollowObj sfo = PoolManager.GetItem<SlimeFollowObj>("PlayerFollowEmptyObj");
+                ps.Play();
+                Util.DelayFunc(() => ps.gameObject.SetActive(false), 2f);
+
+                /*SlimeFollowObj sfo = PoolManager.GetItem<SlimeFollowObj>("PlayerFollowEmptyObj");
                 sfo.offset = effSpawnPosOffset;
                 ps.gameObject.transform.SetParent(sfo.transform);
                 ps.gameObject.transform.localPosition = Vector2.zero;
@@ -124,7 +127,7 @@ public class SettingPhase : TutorialPhase
                     ps.gameObject.transform.parent = null;
                     sfo.gameObject.SetActive(false);
                     ps.gameObject.SetActive(false);
-                },2f);          
+                },2f);*/   
             }
             else
             {
@@ -136,6 +139,7 @@ public class SettingPhase : TutorialPhase
     public override void End()
     {
         base.End();
+        Util.DelayFunc(() => PoolManager.ClearPool("DustEffect1", true), 5f);
     }
 }
 

@@ -52,7 +52,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
             keyUI.Set(action, KeySetting.keyDict[action], ()=>ChangeUserCustomKey((int)action, keyUI.ID));
             keyInfoDic.Add(keyUI.ID, keyUI);
         }
-        SkillUIManager.Instance.UpdateSkillKeyCode();
+        //SkillUIManager.Instance.UpdateSkillKeyCode();
         MonsterCollection.Instance.UpdateSavedBodyChangeKeyCodeTxt();
 
         

@@ -33,7 +33,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1378282381469885332}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &4423148325749221914
 Tilemap:
@@ -328,6 +328,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5644488139118373319}
+  - {fileID: 7078514150884846219}
   - {fileID: 2148907154892946820}
   - {fileID: 4914014471284163896}
   - {fileID: 7390969969572133560}
@@ -372,9 +373,6 @@ MonoBehaviour:
   - {fileID: 2111183138866665230}
   plants:
   - {fileID: 3133389912354758311}
-  imprecMapEffects:
-    first: {fileID: 0}
-    second: []
 --- !u!1 &3553275141150440558
 GameObject:
   m_ObjectHideFlags: 0
@@ -522,7 +520,7 @@ Transform:
   - {fileID: 2111183138866665219}
   - {fileID: 7139777225889162742}
   m_Father: {fileID: 1378282381469885332}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &4494191825279851398
 Tilemap:
@@ -688,7 +686,7 @@ GameObject:
   - component: {fileID: 16108726974356214}
   - component: {fileID: 313871833558510064}
   - component: {fileID: 4712970174437435159}
-  m_Layer: 6
+  m_Layer: 17
   m_Name: BackgroundTilemap
   m_TagString: Wall
   m_Icon: {fileID: 0}
@@ -707,7 +705,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1378282381469885332}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &2485262131653571447
 Tilemap:
@@ -25946,7 +25944,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1378282381469885332}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6725977625556355905
 GameObject:
@@ -25981,7 +25979,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1378282381469885332}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &2340873013643165143
 Tilemap:
@@ -27608,6 +27606,62 @@ CompositeCollider2D:
       - {x: -12.99997, y: -6}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
+--- !u!1 &6895953917711804763
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7078514150884846219}
+  - component: {fileID: 1741625961988668410}
+  m_Layer: 6
+  m_Name: StageWallCollider
+  m_TagString: Wall
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7078514150884846219
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6895953917711804763}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1378282381469885332}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!68 &1741625961988668410
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6895953917711804763}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 6200000, guid: 99387a733fb54b64da99a36073c5c699, type: 2}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0.3
+  m_Points:
+  - {x: -15.802739, y: -6.286531}
+  - {x: 15.6494, y: -6.286531}
+  - {x: 15.588916, y: 18.649294}
+  - {x: -14.453375, y: 18.617373}
+  - {x: -14.684806, y: -6.110567}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0
 --- !u!1 &8377802028032261225
 GameObject:
   m_ObjectHideFlags: 0
@@ -27638,7 +27692,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1378282381469885332}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1839735485 &4658172167743996193
 Tilemap:
@@ -27977,7 +28031,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3588515738583035167, guid: 282716b886e7e4f49ae55ecfe29b9972, type: 3}
       propertyPath: m_RootOrder
-      value: 7
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 3588515738583035167, guid: 282716b886e7e4f49ae55ecfe29b9972, type: 3}
       propertyPath: m_LocalPosition.x

@@ -125,4 +125,6 @@ public static partial class Global
             EventManager.TriggerEvent(key);
         }
     }
+
+    public static string AlternateIfEmpty(this string str, string replace) => !string.IsNullOrEmpty(str) ? str : replace;
 }

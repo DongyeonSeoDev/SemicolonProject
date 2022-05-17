@@ -21,6 +21,20 @@ namespace Water
             }
         }
 
+        public static void CreatePool(PoolBaseData poolBaseDatas)
+        {
+            //string k = poolBaseDatas.poolKey ?? poolBaseDatas.poolObj.name;  // ""가 아니라 null이어야 뒤의 name이 들감.
+            string k = poolBaseDatas.poolKey.AlternateIfEmpty(poolBaseDatas.poolObj.name);
+            if (!poolDic.ContainsKey(k))
+            {
+                poolDic.Add(k, new ObjPool(poolBaseDatas.poolObj, poolBaseDatas.parent, poolBaseDatas.defaultSpawnCount));
+            }
+            else
+            {
+                Debug.Log("풀 생성 실패 : " + k);
+            }
+        }
+
         public static GameObject GetItem(string key) => poolDic[key].GetItem();
         public static T GetItem<T>(string key) => poolDic[key].GetItem<T>();
 

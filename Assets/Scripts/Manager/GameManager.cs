@@ -6,6 +6,7 @@ using System.Text;
 using System.IO;
 using Water;
 using UnityEditor;
+using FkTweening;
 
 public partial class GameManager : MonoSingleton<GameManager>
 {
@@ -27,6 +28,8 @@ public partial class GameManager : MonoSingleton<GameManager>
     public Transform foodBtnParent, ingredientImgParent;
 
     public GameObject itemPrefab, itemCloneEffectPrefab;
+
+    public PoolBaseData[] poolBaseDatas;
     #endregion
 
     public PickupCheck pickupCheckGame;
@@ -190,6 +193,10 @@ public partial class GameManager : MonoSingleton<GameManager>
         PoolManager.CreatePool(emptyPrefab, transform, 3, "EmptyObject");
         PoolManager.CreatePool(Resources.Load<GameObject>("System/Etc/PlayerFollowEmptyObj"), transform, 2, "PlayerFollowEmptyObj");
 
+        for(int i=0; i<poolBaseDatas.Length; i++)
+            PoolManager.CreatePool(poolBaseDatas[i]);
+        
+
         //이벤트 정의
         EventManager.StartListening("PlayerDead", PlayerDead);
         EventManager.StartListening("PlayerRespawn", PlayerRespawnEvent);
@@ -208,6 +215,8 @@ public partial class GameManager : MonoSingleton<GameManager>
         slimeFollowObj.gameObject.AddComponent(typeof(SlimeFollowObj));
         slimeFollowObj.name = typeof(SlimeFollowObj).Name;
         StoredData.SetGameObjectKey("Slime Follow Obj", slimeFollowObj.gameObject);
+
+        testKeyInputActionDict.Add(KeyCode.N, () => CinemachineCameraScript.Instance.DoOrthographicSize(5f, 1.5f));
 
         //WDUtil.PrintStructSize(typeof(StageFork));
     }

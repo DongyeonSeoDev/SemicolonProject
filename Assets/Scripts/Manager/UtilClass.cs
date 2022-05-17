@@ -149,19 +149,19 @@ public static partial class Util
 
     public static string PersistentDataPath(this string fileName) => string.Concat(Application.persistentDataPath, "/", fileName);
 
-    public static void DelayFunc(Action a, float delay, MonoBehaviour mono = null, bool realTime=false)
+    public static void DelayFunc(Action a, float delay, MonoBehaviour mono = null, bool realTime=false, bool applyCurTimeScale = true)
     {
         if (!mono) mono = GameManager.Instance;
 
-        mono.StartCoroutine(DelayFuncCo(a, delay,realTime));
+        mono.StartCoroutine(DelayFuncCo(a, delay,realTime, applyCurTimeScale));
     }
 
     public static Vector3 WorldToScreenPoint(Vector3 worldPos) => MainCam.WorldToScreenPoint(worldPos);
 
-    public static IEnumerator DelayFuncCo(Action func, float delay, bool realTime)
+    public static IEnumerator DelayFuncCo(Action func, float delay, bool realTime, bool applyCurTimeScale)
     {
         if (!realTime)
-            yield return new WaitForSeconds(delay * TimeManager.CurrentTimeScale);
+            yield return new WaitForSeconds(delay * (applyCurTimeScale ? TimeManager.CurrentTimeScale : 1f));
         else
             yield return new WaitForSecondsRealtime(delay);
         func();

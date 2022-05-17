@@ -1,15 +1,30 @@
 using UnityEngine;
+using DG.Tweening;
+using System.Collections;
 
 namespace Enemy
 {
     public class EnemyBullet : EnemyPoolData
     {
         public float speed;
+        public float addAngle;
+        public float removeBulletTime;
+        public float fadeTime;
+        public bool isBulletEffect;
+        public bool isRemainBullet;
+
         private float angle;
         private bool isStop = false;
+        private bool isDelete = false;
 
         public Vector2 limitMaxPosition;
         public Vector2 limitMinPosition;
+
+        private SpriteRenderer sr;
+        private BoxCollider2D col;
+        private WaitForSeconds ws;
+
+        private Color currentColor;
 
         private EnemyController eEnemyController;
 
@@ -23,13 +38,13 @@ namespace Enemy
         {
             EventManager.StartListening("AfterPlayerRespawn", () =>
             {
-                gameObject.SetActive(false);
+                RemoveBullet();
             });
 
 
             EventManager.StartListening("ExitCurrentMap", () =>
             {
-                gameObject.SetActive(false);
+                RemoveBullet();
             });
 
             EventManager.StartListening("EnemyStart", () =>
@@ -41,11 +56,16 @@ namespace Enemy
             {
                 isStop = true;
             });
+
+            sr = GetComponent<SpriteRenderer>();
+            col = GetComponent<BoxCollider2D>();
+            ws = new WaitForSeconds(removeBulletTime);
+            currentColor = sr.color;
         }
 
         private void Update()
         {
-            if (isStop)
+            if (isStop || isDelete)
             {
                 return;
             }
@@ -59,14 +79,28 @@ namespace Enemy
             }
         }
 
+        private void StartBulletEffect()
+        {
+            if (isBulletEffect)
+            {
+                EnemyPoolManager.Instance.GetPoolObject(Type.BulletEffect, transform.position).GetComponent<BulletEffect>().Play(angle);
+            }
+
+            gameObject.SetActive(false);
+        }
+
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            if (isDelete)
+            {
+                return;
+            }
+
             if (eEnemyController == EnemyController.AI && collision.CompareTag("Player"))
             {
                 SlimeGameManager.Instance.Player.GetDamage(gameObject, Random.Range(attackDamage - 5, attackDamage + 6));
 
-                EnemyPoolManager.Instance.GetPoolObject(Type.BulletEffect, transform.position).GetComponent<BulletEffect>().Play(angle);
-                gameObject.SetActive(false);
+                StartBulletEffect();
             }
             else if (eEnemyController == EnemyController.PLAYER)
             {
@@ -80,8 +114,7 @@ namespace Enemy
 
                     enemy.GetDamage(damage.Item1, damage.Item2);
 
-                    EnemyPoolManager.Instance.GetPoolObject(Type.BulletEffect, transform.position).GetComponent<BulletEffect>().Play(angle);
-                    gameObject.SetActive(false);
+                    StartBulletEffect();
 
                     EventManager.TriggerEvent("OnEnemyAttack");
                 }
@@ -94,12 +127,46 @@ namespace Enemy
                     EventManager.TriggerEvent("OnAttackMiss");
                 }
 
-                EnemyPoolManager.Instance.GetPoolObject(Type.BulletEffect, transform.position).GetComponent<BulletEffect>().Play(angle);
-                gameObject.SetActive(false);
+                if (isRemainBullet)
+                {
+                    StartCoroutine(DeleteBullet());
+                }
+                else
+                {
+                    StartBulletEffect();
+                }
             }
         }
 
-        public void Init(EnemyController controller, int damage, Vector3 direction, Enemy enemy = null)
+        private IEnumerator DeleteBullet()
+        {
+            col.enabled = false;
+            isDelete = true;
+
+            yield return ws;
+
+            sr.DOFade(0f, fadeTime).OnComplete(() =>
+            {
+                ResetBullet();
+                StartBulletEffect();
+            });
+        }
+
+        private void ResetBullet()
+        {
+            col.enabled = true;
+            isDelete = false;
+            sr.color = currentColor;
+        }
+
+        private void RemoveBullet()
+        {
+            gameObject.SetActive(false);
+            StopAllCoroutines();
+            ResetBullet();
+        }
+
+        public void Init(EnemyController controller, Vector3 direction, int damage, Enemy enemy = null)
         {
             eEnemyController = controller;
             attackDamage = damage;
@@ -107,7 +174,7 @@ namespace Enemy
             this.enemy = enemy;
 
             angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0f, 0f, angle - 90f);
+            transform.rotation = Quaternion.Euler(0f, 0f, angle + addAngle);
 
             if (controller == EnemyController.AI)
             {
