@@ -12,7 +12,6 @@ public class BodyPointCrashCheckCollider : MonoBehaviour
         get { return col; }
     }
 
-
     [SerializeField]
     private LayerMask whatIsWall;
 
@@ -23,6 +22,14 @@ public class BodyPointCrashCheckCollider : MonoBehaviour
     private void OnEnable()
     {
         EventManager.StartListening("BodyPointCrash", BodyPointCrash);
+        EventManager.StartListening("OnBodySlap", OnBodySlap);
+        EventManager.StartListening("ExitCurrentMap", ExitCurrentMap);
+    }
+    private void OnDisable()
+    {
+        EventManager.StopListening("BodyPointCrash", BodyPointCrash);
+        EventManager.StopListening("OnBodySlap", OnBodySlap);
+        EventManager.StopListening("ExitCurrentMap", ExitCurrentMap);
     }
 
     void Update()
@@ -32,13 +39,11 @@ public class BodyPointCrashCheckCollider : MonoBehaviour
             transform.localPosition = Vector3.zero;
         }
     }
-    private void OnDisable()
+
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        EventManager.StopListening("BodyPointCrash", BodyPointCrash);
-    }
-    private void OnTriggerStay2D(Collider2D other)
-    {
-        if (whatIsWall.CompareGameObjectLayer(other.gameObject))
+        GameObject obj = other.gameObject;
+        if (whatIsWall.CompareGameObjectLayer(obj))
         {
             if(bodyPoint.IsWall)
             {
@@ -48,14 +53,48 @@ public class BodyPointCrashCheckCollider : MonoBehaviour
             bodyPoint.IsWall = true;
         }
 
-        EventManager.TriggerEvent("BodyPointCrash", other.gameObject);
+        if (SlimeGameManager.Instance.Player.PlayerState.BodySlapping)
+        {
+            EventManager.TriggerEvent("BodyPointCrash", obj);
+        }
+        else
+        {
+            if (bodyPoint.MiddlePoint != null && !bodyPoint.MiddlePoint.WillCrashList.Contains(obj))
+            {
+                bodyPoint.MiddlePoint.WillCrashList.Add(obj);
+            }
+        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (whatIsWall.CompareGameObjectLayer(other.gameObject))
+        GameObject obj = other.gameObject;
+
+        if (whatIsWall.CompareGameObjectLayer(obj))
         {
             bodyPoint.IsWall = false;
+        }
+
+        if(bodyPoint.MiddlePoint != null && bodyPoint.MiddlePoint.WillCrashList.Contains(obj))
+        {
+            bodyPoint.MiddlePoint.WillCrashList.Remove(obj);
+        }
+    }
+    private void OnBodySlap()
+    {
+        if (bodyPoint.MiddlePoint != null)
+        {
+            foreach (var item in bodyPoint.MiddlePoint.WillCrashList)
+            {
+                EventManager.TriggerEvent("BodyPointCrash", item);
+            }
+        }
+    }
+    private void ExitCurrentMap()
+    {
+        if (bodyPoint.MiddlePoint != null)
+        {
+            bodyPoint.MiddlePoint.WillCrashList.Clear();
         }
     }
     private void BodyPointCrash(GameObject targetObject)

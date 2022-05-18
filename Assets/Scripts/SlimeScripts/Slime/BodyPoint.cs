@@ -8,6 +8,11 @@ public class BodyPoint : MonoBehaviour
     private Rigidbody2D rigid = null;
 
     private MiddlePoint middlePoint = null;
+    public MiddlePoint MiddlePoint
+    {
+        get { return middlePoint; }
+    }
+
     private BodyPointCrashCheckCollider bodyPointCrashCheckCollider = null;
 
     [SerializeField]

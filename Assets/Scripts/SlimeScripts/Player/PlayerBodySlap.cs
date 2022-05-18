@@ -84,6 +84,8 @@ public class PlayerBodySlap : PlayerSkill
     [SerializeField]
     private List<Material> materials = new List<Material>();
 
+    private List<GameObject> hitWhenBodySlap = new List<GameObject>(); // 중복처리를 위한 리스트
+
     public override void Awake()
     {
         base.Awake();
@@ -195,7 +197,15 @@ public class PlayerBodySlap : PlayerSkill
     {   
         if (canCrashLayer.CompareGameObjectLayer(targetObject) && playerState.BodySlapping)
         {
-            Debug.Log("aaaaaaaa");
+            if(hitWhenBodySlap.Contains(targetObject))
+            {
+                return;
+            }
+
+            Debug.Log(targetObject.name);
+
+            hitWhenBodySlap.Add(targetObject);
+
             IDamageableBySlimeBodySlap damagableByBodySlap = targetObject.GetComponent<IDamageableBySlimeBodySlap>();
 
             if (damagableByBodySlap != null)
@@ -242,6 +252,7 @@ public class PlayerBodySlap : PlayerSkill
     }
     private void StopBodySlap()
     {
+        hitWhenBodySlap.Clear();
         stopBodySlapTimer = 0f;
 
         bodySlapStart = false;
