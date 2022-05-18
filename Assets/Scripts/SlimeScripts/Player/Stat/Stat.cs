@@ -3,9 +3,13 @@ using System;
 [Serializable]
 public class Stat
 {
-    public EternalStat eternalStat = new EternalStat();
-    public EternalStat additionalEternalStat = new EternalStat();
-    public ChoiceStat choiceStat = new ChoiceStat();
+    public int currentStatPoint;   //현재 가지고 있는 스탯 포인트
+    public int accumulateStatPoint;  //지금까지 모은 누적 스탯포인트
+    public float currentHp;  //현재 체력
+    public float currentExp;  //현재 경험치
+    public EternalStat eternalStat = new EternalStat();  //기본 영구 스탯
+    public EternalStat additionalEternalStat = new EternalStat();  //영구 스탯(추가 능력치)
+    public ChoiceStat choiceStat = new ChoiceStat();  //기본 선택 스탯
 
     #region default stat + additional stat  property
     public float MaxHp  
@@ -55,6 +59,7 @@ public struct StatElement<T>
 {
     public T statValue;
     public bool isUnlock;
+    public int usedStatPoint;
 }
 
 [Serializable]

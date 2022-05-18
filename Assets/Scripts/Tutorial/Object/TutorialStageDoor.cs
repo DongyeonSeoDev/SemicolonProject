@@ -7,11 +7,14 @@ public class TutorialStageDoor : MonoBehaviour, IDamageableBySlimeBodySlap
     [SerializeField] private StageDoor door;
 
     private int hp = 2;
+    private bool isDamageable = true;
 
     public void GetDamage(int damage, float charging)
     {
+        if (!isDamageable) return;
         if(door.IsOpen)
         {
+            npc._NPCInfo.talkId = 3;
             gameObject.SetActive(false);
             return;
         }
@@ -26,6 +29,8 @@ public class TutorialStageDoor : MonoBehaviour, IDamageableBySlimeBodySlap
             {
                 npc._NPCInfo.talkId = 3;
             }
+            isDamageable = false;
+            Util.DelayFunc(() => isDamageable = true, 1f);
         }
     }
 }
