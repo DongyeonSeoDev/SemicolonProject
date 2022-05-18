@@ -231,4 +231,12 @@ MonoBehaviour:
     - value:
       - message: "\uC880 \uB354 \uD798\uC744 \uBAA8\uC544\uBCF4\uAC8C!"
         talkEndEventKey: 
+    - value:
+      - message: "\uC774\uC81C \uCD5C\uB300\uD55C \uD798\uC744 \uBAA8\uC544\uC11C
+          \uBB38\uC744 \uD5A5\uD574 \uB3CC\uC9C4\uC744 \uD574\uBCF4\uAC8C\uB098"
+        talkEndEventKey: 
+    - value:
+      - message: "\uBB50\uD558\uACE0 \uC788\uC9C0? \uBB38\uC744 \uBD80\uC248\uC73C\uBA74
+          \uC5B4\uC11C \uC9C0\uB098\uAC00\uAC8C\uB098"
+        talkEndEventKey: 
   fsOut: {fileID: 0}

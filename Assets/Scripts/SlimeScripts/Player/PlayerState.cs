@@ -45,7 +45,10 @@ public class PlayerState : MonoBehaviour
     public bool BodySlapping
     {
         get { return bodySlapping; }
-        set { bodySlapping = value; }
+        set 
+        {
+            bodySlapping = value;
+        }
     }
 
     private bool charging = false;
@@ -105,11 +108,15 @@ public class PlayerState : MonoBehaviour
     {
         EventManager.StartListening("PlayerDead", PlayerReset);
         EventManager.StartListening("ChangeBody", PlayerReset);
+        EventManager.StartListening("PlayerStop", PlayerStop);
+        EventManager.StartListening("PlayerStart", PlayerStart);
     }
     private void OnDisable()
     {
         EventManager.StopListening("PlayerDead", PlayerReset);
         EventManager.StopListening("ChangeBody", PlayerReset);
+        EventManager.StopListening("PlayerStop", PlayerStop);
+        EventManager.StopListening("PlayerStart", PlayerStart);
     }
 
     void Update()
@@ -169,5 +176,13 @@ public class PlayerState : MonoBehaviour
         isKnockBack = false;
         isStun = false;
         isDrain = false;
+    }
+    private void PlayerStop()
+    {
+        cantMove = true;
+    }
+    private void PlayerStart()
+    {
+        cantMove = false;
     }
 }

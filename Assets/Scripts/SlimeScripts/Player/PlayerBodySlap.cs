@@ -17,6 +17,11 @@ public class PlayerBodySlap : PlayerSkill
     private Vector2 moveTargetPos = Vector2.zero;
 
     [SerializeField]
+    private CamShakeData doBodySlapShakeData;
+    [SerializeField]
+    private CamShakeData whenBodySlapCrashShakeData;
+
+    [SerializeField]
     private float maxChargingTime = 3f;
     public float MaxChargingTime
     {
@@ -78,6 +83,8 @@ public class PlayerBodySlap : PlayerSkill
 
     [SerializeField]
     private List<Material> materials = new List<Material>();
+
+    private List<GameObject> hitWhenBodySlap = new List<GameObject>(); // 중복처리를 위한 리스트
 
     public override void Awake()
     {
@@ -174,6 +181,9 @@ public class PlayerBodySlap : PlayerSkill
 
         currentBodySlapTime = Vector2.Distance(moveOriginPos, moveTargetPos) / bodySlapMoveSpeed;
 
+        doBodySlapShakeData.duration = currentBodySlapTime;
+        CinemachineCameraScript.Instance.Shake(doBodySlapShakeData);
+
         SoundManager.Instance.PlaySoundBox("SlimeSkill1Start");
 
         EventManager.TriggerEvent("PlayerBodySlap", currentBodySlapTime);
@@ -184,9 +194,18 @@ public class PlayerBodySlap : PlayerSkill
         SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = SlimeGameManager.Instance.SkillDelays[skillIdx];
     }
     private void BodyPointCrash(GameObject targetObject) // BodyPoint가 특정 오브젝트와 충돌했을 때 호출
-    {
+    {   
         if (canCrashLayer.CompareGameObjectLayer(targetObject) && playerState.BodySlapping)
         {
+            if(hitWhenBodySlap.Contains(targetObject))
+            {
+                return;
+            }
+
+            Debug.Log(targetObject.name);
+
+            hitWhenBodySlap.Add(targetObject);
+
             IDamageableBySlimeBodySlap damagableByBodySlap = targetObject.GetComponent<IDamageableBySlimeBodySlap>();
 
             if (damagableByBodySlap != null)
@@ -217,6 +236,7 @@ public class PlayerBodySlap : PlayerSkill
                 }
 
                 SoundManager.Instance.PlaySoundBox("SlimeSkill1Crash");
+                CinemachineCameraScript.Instance.Shake(whenBodySlapCrashShakeData);
             }
         }
     }
@@ -232,6 +252,7 @@ public class PlayerBodySlap : PlayerSkill
     }
     private void StopBodySlap()
     {
+        hitWhenBodySlap.Clear();
         stopBodySlapTimer = 0f;
 
         bodySlapStart = false;

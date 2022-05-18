@@ -391,6 +391,8 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     {
         if (StoredData.HasValueKey("GetRushAttack")) return;
 
+        (ObjectManager.Instance.itrObjDic["Rush Master"] as NormalNPC)._NPCInfo.talkId = 2;
+
         Vector3 startPos = GetUITutorialReady(skillUIArr[1].GetComponent<RectTransform>(), new Vector2(1189, 343));
 
         Sequence seq = DOTween.Sequence();

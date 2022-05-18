@@ -46,6 +46,11 @@ public class MiddlePoint : BodyPoint
         set { afterImageSoftBodySpawned = value; }  
     }
 
+    private List<GameObject> willCrashList = new List<GameObject>();
+    public List<GameObject> WillCrashList
+    {
+        get { return willCrashList; }
+    }
     private void Start()
     {
         playerDrain = GetComponent<PlayerDrain>();
