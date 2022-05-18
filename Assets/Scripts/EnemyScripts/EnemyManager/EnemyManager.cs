@@ -132,19 +132,6 @@ namespace Enemy
             return false;
         }
 
-        public static bool IsAttackDelay(EnemyData data, float currentAttackDelay = 0)
-        {
-            if (currentAttackDelay <= 0 || data.isCurrentAttackTime)
-            {
-                return data.isCurrentAttackTime;
-            }
-
-            data.isCurrentAttackTime = true;
-            Util.DelayFunc(() => data.isCurrentAttackTime = false, currentAttackDelay);
-
-            return data.isCurrentAttackTime;
-        }
-
         public static void SetEnemyAnimationDictionary(Dictionary<EnemyAnimationType, int> enemyAnimationDictionary, List<EnemyAnimation> animationList)
         {
             for (int i = 0; i < animationList.Count; i++)

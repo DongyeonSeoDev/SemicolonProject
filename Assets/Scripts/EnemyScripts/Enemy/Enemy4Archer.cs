@@ -14,16 +14,19 @@ namespace Enemy
             base.OnEnable();
 
             enemyData.chaseSpeed = 10f;
-            enemyData.attackDelay = 1f;
-            enemyData.playerAnimationTime = 0.55f;
-            enemyData.isAttackPlayerDistance = 10f;
+            enemyData.attackDelay = 0.42f;
+            enemyData.playerAnimationTime = 0.45f;
+            enemyData.isAttackPlayerDistance = 12f;
             enemyData.maxHP = 50;
             enemyData.hp = 50;
             enemyData.attackPower = 15;
             enemyData.playerAnimationDelay = 0.2f;
             enemyData.playerAnimationSpeed = 1.0f;
+            enemyData.startAttackDelay = 0.5f;
+            enemyData.minAttackCount = 3;
+            enemyData.maxAttackCount = 5;
 
-            enemyData.enemyMoveCommand = new EnemyLongDistanceFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed, enemyData.isAttackPlayerDistance);
+            enemyData.enemyMoveCommand = new EnemyLongDistanceFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed, enemyData.isAttackPlayerDistance - 2f);
             enemyData.enemySpriteRotateCommand = new EnemySpriteRotateCommand(enemyData);
 
             enemyAttackPlayerCommand = new PlayerlongRangeAttackCommand(transform, shotPosition, this, Type.Arrow, enemyData.attackPower);

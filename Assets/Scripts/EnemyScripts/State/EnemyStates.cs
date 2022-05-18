@@ -69,7 +69,9 @@ namespace Enemy
     public partial class EnemyAIAttackState : EnemyState // 적 공격 상태
     {
         private float currentTime;
-        private bool isDelay = false;
+        private bool isUseStartDelay = false;
+        private bool isStartDelay = false;
+        private int enemyAttackCount = 0;
 
         public EnemyAIAttackState(EnemyData enemyData) : base(eState.ATTACK, enemyData) { }
 
@@ -77,42 +79,50 @@ namespace Enemy
         {
             EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.AttackEnd, enemyData.enemyAnimator, TriggerType.ResetTrigger);
 
-            if (enemyData.isUseDelay) // 공격 쿨타임 확인
+            if (enemyData.startAttackDelay > 0)
             {
-                isDelay = EnemyManager.IsAttackDelay(enemyData);
+                isUseStartDelay = true;
+                isStartDelay = true;
+
+                Util.DelayFunc(() =>
+                {
+                    isStartDelay = false;
+                }, enemyData.startAttackDelay);
             }
 
-            if (!isDelay)
+            if (!isUseStartDelay)
             {
                 EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Attack, enemyData.enemyAnimator, TriggerType.SetTrigger);
                 EnemyManager.SpriteFlipCheck(enemyData);
             }
 
             currentTime = 0f;
+            enemyAttackCount = 0;
 
             base.Start();
         }
 
         protected override void Update()
         {
-            if (!isDelay) // 공격 시간 확인
+            if (isUseStartDelay)
             {
-                currentTime += Time.deltaTime;
-            }
-            else
-            {
-                isDelay = EnemyManager.IsAttackDelay(enemyData);
-
-                if (!isDelay)
+                if (!isStartDelay)
                 {
+                    isUseStartDelay = false;
+
                     EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Attack, enemyData.enemyAnimator, TriggerType.SetTrigger);
                     EnemyManager.SpriteFlipCheck(enemyData);
                 }
+            }
+            else
+            {
+                currentTime += Time.deltaTime;
             }
 
             if (currentTime >= enemyData.attackDelay) // 공격 종료
             {
                 currentTime = 0f;
+                enemyAttackCount++;
 
                 EnemyManager.SpriteFlipCheck(enemyData);
 

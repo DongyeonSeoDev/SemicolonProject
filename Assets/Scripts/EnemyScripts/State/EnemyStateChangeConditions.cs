@@ -46,7 +46,7 @@ namespace Enemy
                 return;
             }
 
-            if (EnemyManager.IsAttackPlayer(enemyData))
+            if (!enemyData.isNoAttack && EnemyManager.IsAttackPlayer(enemyData))
             {
                 if (enemyData.attackTypeCheckCondition != null)
                 {
@@ -71,6 +71,8 @@ namespace Enemy
     {
         protected override void StateChangeCondition()
         {
+            Debug.Log(enemyAttackCount);
+
             if (AnyStateChangeState())
             {
                 return;
@@ -87,8 +89,25 @@ namespace Enemy
                 }
             }
 
+            Debug.Log(enemyData.minAttackCount > 0);
+            Debug.Log(enemyData.maxAttackCount > 0);
+            Debug.Log(enemyAttackCount > Random.Range(enemyData.minAttackCount, enemyData.maxAttackCount));
+
             if (enemyData.eEnemyController == EnemyController.AI && !EnemyManager.IsAttackPlayer(enemyData))
             {
+                ChangeState(new EnemyChaseState(enemyData));
+            }
+            else if (enemyData.minAttackCount > 0 && enemyData.maxAttackCount > 0 && (enemyAttackCount > Random.Range(enemyData.minAttackCount, enemyData.maxAttackCount)))
+            {
+                Debug.Log("NOATTACK");
+
+                enemyData.isNoAttack = true;
+
+                Util.DelayFunc(() =>
+                {
+                    enemyData.isNoAttack = false;
+                }, enemyData.noAttackTime);
+
                 ChangeState(new EnemyChaseState(enemyData));
             }
         }

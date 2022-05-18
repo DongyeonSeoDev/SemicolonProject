@@ -431,18 +431,18 @@ namespace Enemy
 
         private int attackDamage;
 
-        public EnemylongRangeAttackCommand(Enemy enemy, Transform enemyPosition, Type objectType, Transform enemyTransform, int damage)
+        public EnemylongRangeAttackCommand(Enemy enemy, Transform enemyPosition, Type objectType, Transform shotTransform, int damage)
         {
-            enemyTransform = enemyPosition;
             this.enemy = enemy;
+            enemyTransform = enemyPosition;
             this.objectType = objectType;
+            this.shotTransform = shotTransform;
             attackDamage = damage;
-            this.enemyTransform = enemyTransform;
         }
 
         public override void Execute()
         {
-            EnemyPoolData spawnObject = EnemyPoolManager.Instance.GetPoolObject(objectType, enemyTransform.position);
+            EnemyPoolData spawnObject = EnemyPoolManager.Instance.GetPoolObject(objectType, shotTransform.position);
 
             spawnObject.GetComponent<EnemyBullet>().Init(enemy.GetEnemyController(), (EnemyManager.Player.transform.position - enemyTransform.position).normalized, attackDamage);
         }

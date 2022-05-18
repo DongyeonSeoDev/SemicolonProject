@@ -170,6 +170,11 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
+        if (Input.GetKey(KeyCode.RightControl))
+        {
+            Debug.Log("RightControl");
+        }
+
         if (currentHp <= 0)
         {
             EventManager.TriggerEvent("PlayerDead");
