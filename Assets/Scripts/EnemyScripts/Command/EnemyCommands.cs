@@ -147,8 +147,10 @@ namespace Enemy
         private float followSpeed;
         private float followDistance;
         private float angle;
+        private float moveDelay;
+        private float currentTime = 0f;
 
-        public EnemyLongDistanceFollowPlayerCommand(EnemyData data, Transform enemyTransform, Rigidbody2D rigid, float followSpeed, float followDistance)
+        public EnemyLongDistanceFollowPlayerCommand(EnemyData data, Transform enemyTransform, Rigidbody2D rigid, float followSpeed, float followDistance, float moveDelay)
         {
             enemyData = data;
             this.enemyTransform = enemyTransform;
@@ -156,23 +158,37 @@ namespace Enemy
 
             this.followSpeed = followSpeed;
             this.followDistance = followDistance;
+
+            this.moveDelay = moveDelay;
         }
 
         public override void Execute()
         {
-            targetPosition = enemyTransform.transform.position - EnemyManager.Player.transform.position;
+            if (currentTime > moveDelay)
+            {
+                currentTime = 0f;
 
-            angle = Mathf.Atan2(targetPosition.x, targetPosition.y) * Mathf.Rad2Deg + 90f;
+                targetPosition = enemyTransform.transform.position - EnemyManager.Player.transform.position;
 
-            targetPosition.x = EnemyManager.Player.transform.position.x + (followDistance * Mathf.Cos(angle * Mathf.Deg2Rad) * -1f);
-            targetPosition.y = EnemyManager.Player.transform.position.y + (followDistance * Mathf.Sin(angle * Mathf.Deg2Rad));
-            targetPosition.z = EnemyManager.Player.transform.position.z;
+                angle = Mathf.Atan2(targetPosition.x, targetPosition.y) * Mathf.Rad2Deg + 90f;
 
-            targetPosition = (targetPosition - enemyTransform.position).normalized;
-            targetPosition *= followSpeed;
+                targetPosition.x = EnemyManager.Player.transform.position.x + (followDistance * Mathf.Cos(angle * Mathf.Deg2Rad) * -1f);
+                targetPosition.y = EnemyManager.Player.transform.position.y + (followDistance * Mathf.Sin(angle * Mathf.Deg2Rad));
+                targetPosition.z = EnemyManager.Player.transform.position.z;
 
-            enemyData.moveVector = targetPosition;
-            rigid.velocity = targetPosition;
+                targetPosition = (targetPosition - enemyTransform.position).normalized;
+                targetPosition *= followSpeed;
+
+                enemyData.moveVector = targetPosition;
+                rigid.velocity = targetPosition;
+            }
+            else
+            {
+                currentTime += Time.deltaTime;
+
+                enemyData.moveVector = targetPosition;
+                rigid.velocity = targetPosition;
+            }
         }
     }
 

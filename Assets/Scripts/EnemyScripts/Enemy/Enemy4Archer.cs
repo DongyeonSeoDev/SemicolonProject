@@ -5,6 +5,7 @@ namespace Enemy
     public class Enemy4Archer : Enemy
     {
         public Transform shotPosition;
+        public float moveDelay = 1f;
 
         private EnemyCommand enemyAttackCommand;
         private EnemyCommand enemyAttackPlayerCommand;
@@ -26,7 +27,7 @@ namespace Enemy
             enemyData.minAttackCount = 3;
             enemyData.maxAttackCount = 5;
 
-            enemyData.enemyMoveCommand = new EnemyLongDistanceFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed, enemyData.isAttackPlayerDistance - 2f);
+            enemyData.enemyMoveCommand = new EnemyLongDistanceFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed, enemyData.isAttackPlayerDistance - 2f, moveDelay);
             enemyData.enemySpriteRotateCommand = new EnemySpriteRotateCommand(enemyData);
 
             enemyAttackPlayerCommand = new PlayerlongRangeAttackCommand(transform, shotPosition, this, Type.Arrow, enemyData.attackPower);
