@@ -55,11 +55,12 @@ public class Stat
 }
 
 [Serializable]
-public struct StatElement<T>
+public class StatElement<T>  // 메모(이거 확인하면 이 주석 지우고) : string 넣어서 그냥 class로 바꿈.
 {
     public T statValue;
-    public bool isUnlock;
-    public int usedStatPoint;
+    public bool isUnlock;  //획득한 스탯인가
+    public int usedStatPoint;  //이 스탯에 사용된 스탯포인트 (Stat클래스의 eternalStat에서만 쓰일듯함)
+    public string statName;  //이 스탯의 이름 (예 : 체력, 공격력, 방어력)
 }
 
 [Serializable]
