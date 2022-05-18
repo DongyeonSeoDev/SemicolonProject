@@ -118,10 +118,10 @@ public class PlayerDrainCollider : MonoBehaviour
         
         if (canDrainObjLayers.CompareGameObjectLayer(other.gameObject))
         {
-            // Debug.Log(other.gameObject.layer);
+            //Debug.Log(other.gameObject.layer);
             //Drain되는 오브젝트는 삭제처리
 
-           ICanGetDamagableEnemy enemy = other.GetComponent<ICanGetDamagableEnemy>();
+            ICanGetDamagableEnemy enemy = other.GetComponent<ICanGetDamagableEnemy>();
 
             if(enemy.GetTransform().GetComponent<Enemy.TutorialEnemy>()) // 튜토리얼 상태가 아니어도 튜토리얼 대상을 흡수하면 튜토리얼 처리
             {
@@ -154,6 +154,7 @@ public class PlayerDrainCollider : MonoBehaviour
                 EventManager.TriggerEvent("TryDrain", other.transform.position, true);
 
                 Debug.Log("Do Drain");
+                
             }
             else if(enemy != null) // 흡수 실패
             {

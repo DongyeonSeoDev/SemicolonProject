@@ -259,3 +259,6 @@ MonoBehaviour:
   whatIsWall:
     serializedVersion: 2
     m_Bits: 131136
+  whatIsCrashable:
+    serializedVersion: 2
+    m_Bits: 10485952
