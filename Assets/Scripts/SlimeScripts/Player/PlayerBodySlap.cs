@@ -192,9 +192,10 @@ public class PlayerBodySlap : PlayerSkill
         SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = SlimeGameManager.Instance.SkillDelays[skillIdx];
     }
     private void BodyPointCrash(GameObject targetObject) // BodyPoint가 특정 오브젝트와 충돌했을 때 호출
-    {
+    {   
         if (canCrashLayer.CompareGameObjectLayer(targetObject) && playerState.BodySlapping)
         {
+            Debug.Log("aaaaaaaa");
             IDamageableBySlimeBodySlap damagableByBodySlap = targetObject.GetComponent<IDamageableBySlimeBodySlap>();
 
             if (damagableByBodySlap != null)
