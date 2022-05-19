@@ -234,15 +234,22 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 2097280
   bodySlapMoveVec: {x: 0, y: 0}
+  doBodySlapShakeData:
+    strength: 1
+    frequency: 1
+    duration: 0.1
+  whenBodySlapCrashShakeData:
+    strength: 0
+    frequency: 0
+    duration: 0
   maxChargingTime: 1
-  minMoveToMouseChargeTime: 0.2
-  targetPosFarPerCharge: 2
+  targetPosFarPerCharge: 3
   damageMagnificationOfBodySlap: 2
   moveBackSpeed: 5
-  bodySlapMoveSpeed: 50
-  offsetBodySlapMovePos: 2
+  bodySlapMoveSpeed: 30
+  offsetBodySlapMovePos: 3
   bodySlapTime: 0.15
-  stopBodySlapTime: 0.5
+  stopBodySlapTime: 1
   stopBodySlapOffset: 5
   bodySlapLine: {fileID: 0}
   bodySlapLineLength: 3
