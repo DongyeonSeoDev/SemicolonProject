@@ -13,6 +13,8 @@ namespace Enemy
         public float maxHP = 10;
         public float hp = 10;
 
+        public string objName = "";
+
         protected bool destroyTimerStarted = false;
         protected readonly float destroyTime = 1f;
         protected float destroyTimer = 0f;
@@ -64,7 +66,7 @@ namespace Enemy
         public float EnemyHpPercent() => ((float)hp / maxHP) * 100f;
         public string GetEnemyName()
         {
-            return "TutorialEnemy";
+            return objName;
         }
     }
 }

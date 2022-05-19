@@ -334,7 +334,6 @@ namespace Enemy
         public Transform GetTransform() => transform;
         public GameObject GetGameObject() => gameObject;
         public string GetEnemyId() => enemyData.enemyType.ToString(); // 적 아이디를 가져옴
-        public string GetEnemyName() => enemyData.enemyType.ToString();
         public float EnemyHpPercent() => ((float)enemyData.hp / enemyData.maxHP) * 100f; // 적 체력 퍼센트를 가져옴
         public float GetKnockBackPower() => enemyData.knockBackPower; // 적이 넉백 공격을 할 수 있는지를 가져옴
         public float GetEnemyAttackPower() => enemyData.attackPower; // 적 공격력을 가져옴

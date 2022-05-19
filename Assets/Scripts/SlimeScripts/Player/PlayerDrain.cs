@@ -122,13 +122,17 @@ public class PlayerDrain : PlayerSkill
 
         if(enemy == null)
         {
-            Destroy(obj);
-            Enemy.EnemyManager.Instance.EnemyDestroy();
+            if (obj.GetComponent<Enemy.TutorialEnemy>() != null)
+            {
+                Destroy(obj);
+                Enemy.EnemyManager.Instance.EnemyDestroy();
+            }
 
             return;
         }
 
         string objId = enemy.GetEnemyId();
+        string objName = Global.GetMonsterName(objId);
 
         if (PlayerEnemyUnderstandingRateManager.Instance.CheckMountObjIdContain(objId))
         {
@@ -136,8 +140,16 @@ public class PlayerDrain : PlayerSkill
         }
         else
         {
+            bool drain = false;
+            float drainPercentage = 0f;
+
             PlayerEnemyUnderstandingRateManager.Instance.UpDrainProbabilityDict(objId, upMountingPercentageValue);
-            PlayerEnemyUnderstandingRateManager.Instance.CheckMountingEnemy(objId, upUnderstandingRateValue);
+            (drain, drainPercentage) = PlayerEnemyUnderstandingRateManager.Instance.CheckMountingEnemy(objId, upUnderstandingRateValue);
+
+            if(!drain)
+            {
+                UIManager.Instance.RequestLogMsg(objName + "(를)을 흡수하는데 실패하셨습니다. (확률: " + drainPercentage + "%)");
+            }
         }
 
         if (enemy != null)

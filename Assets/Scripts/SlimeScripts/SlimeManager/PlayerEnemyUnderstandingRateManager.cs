@@ -198,33 +198,34 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
     {
         return mountedObjList.Contains(objId);
     }
-    public void CheckMountingEnemy(string objId, int upValue)
+    public (bool, float) CheckMountingEnemy(string objId, int upValue)
     {
+        float drainPercentage = GetDrainProbabilityDict(objId);
+
         if (!DrainProbabilityDict.ContainsKey(objId))
         {
-            return;
+            return (false, drainPercentage);
         }
 
         if(mountedObjList.Contains(objId))
         {
             UpUnderstandingRateWithQueue(objId, upValue);
 
-            return;
+            return (false, drainPercentage);
         }
 
         float value = UnityEngine.Random.Range(0f, 100f);
 
-        if (value <= GetDrainProbabilityDict(objId)) // 확률 체크, 예외처리
+        if (value <= drainPercentage) // 확률 체크, 예외처리
         {
-
-            // 장착을 물어봄
-            //UIManager.Instance.DoChangeBody(objId);
-            //Debug.Log("장착 물어보는 창이 뜨네요");
-
             UpUnderstandingRateWithQueue(objId, upValue);
-            SetDrainProbabilityDict(objId, 0); // 장착을 했건 안했건 확률은 0이된다
+            SetDrainProbabilityDict(objId, 0);
             UIManager.Instance.SaveMonsterBody(objId);
+
+            return (true, drainPercentage);
         }
+
+        return (false, drainPercentage);
     }
 
     private void UpUnderstandingRateWithQueue(string objId, int upValue)
