@@ -127,7 +127,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
     }
     public void CheckEndurance()
     {
-        int pasteEndurance = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance.statValue;
+        int pasteEndurance = (int)SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance.statValue;
         int num = (int)totalDamage / enduranceUpAmount;
 
         if (pasteEndurance != num && num > 0)
@@ -146,7 +146,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
     }
     public void CheckPatience()
     {
-        int pastePatienceNum = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.statValue;
+        int pastePatienceNum = (int)SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.statValue;
         int num = 0;
 
         if (pastePatienceNum == 0)
@@ -182,7 +182,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
     public void CheckMomentom()
     {
-        int pasteMomentomNum = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.statValue;
+        int pasteMomentomNum = (int)SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.statValue;
         int num = 0;
 
         if(pasteMomentomNum == 0)

@@ -205,6 +205,7 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     private void Start()
     {
+
 #if UNITY_EDITOR
         Util.DelayFunc(() =>
         {
