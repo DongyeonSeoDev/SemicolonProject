@@ -104,7 +104,7 @@ namespace Enemy
 
                 if (enemy != null && enemy != this.enemy)
                 {
-                    enemy.GetDamage(0, false, false, false, false);
+                    enemy.GetDamage(0, false, false, false, targetDirection, transform.position, false);
                 }
 
                 StartBulletEffect();
@@ -117,7 +117,7 @@ namespace Enemy
                     damage.Item1 = Random.Range(SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage + 1);
                     damage = SlimeGameManager.Instance.Player.CriticalCheck(damage.Item1);
 
-                    enemy.GetDamage(damage.Item1, damage.Item2, false, false);
+                    enemy.GetDamage(damage.Item1, damage.Item2, false, false, targetDirection, transform.position);
 
                     StartBulletEffect();
 

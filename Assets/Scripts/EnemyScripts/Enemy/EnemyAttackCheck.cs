@@ -115,7 +115,7 @@ namespace Enemy
 
                     if (enemy != null)
                     {
-                        enemy.GetDamage(0, false, true, true, false, 30f, 1f, positionCheckData.position);
+                        enemy.GetDamage(0, false, true, true, positionCheckData.position, this.enemy.transform.position, false, 30f, 0.7f, new Vector3(1.5f, 1.5f, 1.5f));
                     }
                     else
                     {
@@ -127,7 +127,7 @@ namespace Enemy
                 {
                     if (enemy != null)
                     {
-                        enemy.GetDamage(0, false, false, false, false);
+                        enemy.GetDamage(0, false, false, false, enemy.transform.position - this.enemy.transform.position, this.enemy.transform.position, false);
                     }
                 }
             }
@@ -141,7 +141,7 @@ namespace Enemy
                     damage.Item1 = UnityEngine.Random.Range(SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage + 1);
                     damage = SlimeGameManager.Instance.Player.CriticalCheck(damage.Item1);
                     
-                    enemy.GetDamage(damage.Item1, damage.Item2, false, false);
+                    enemy.GetDamage(damage.Item1, damage.Item2, false, false, enemy.transform.position - this.enemy.transform.position, this.enemy.transform.position);
                     attackObject.Add(collision.gameObject);
 
                     EventManager.TriggerEvent("OnEnemyAttack");

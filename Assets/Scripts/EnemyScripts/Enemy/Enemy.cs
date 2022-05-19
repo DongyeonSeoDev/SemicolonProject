@@ -172,6 +172,7 @@ namespace Enemy
                 enemyData.hp -= enemyData.damagedValue;
 
                 SetHP(true);
+                HitParticleEffect();
 
                 enemyDamagedCommand.Execute();
 
@@ -207,7 +208,7 @@ namespace Enemy
         }
 
         // 적 데미지 받는 코드
-        public void GetDamage(float damage, bool critical, bool isKnockBack, bool isStun, bool isShowText = true, float knockBackPower = 20f, float stunTime = 1f, Vector2? direction = null)
+        public void GetDamage(float damage, bool critical, bool isKnockBack, bool isStun, Vector3 direction, Vector3 position, bool isShowText = true, float knockBackPower = 20f, float stunTime = 1f, Vector3? size = null)
         {
             if (enemyData.isEnemyMove && !enemyData.isDamaged)
             {
@@ -221,11 +222,25 @@ namespace Enemy
 
                 enemyData.knockBackDirection = direction;
 
+                enemyData.damageDirection = direction;
+                enemyData.damagePosition = position;
+                enemyData.effectSize = size == null ? Vector3.one : size.Value;
+
                 if (isShowText)
                 {
                     EffectManager.Instance.OnDamaged(damage, critical, true, transform.position);
                 }
             }
+        }
+
+        // 적이 데미지를 받았을때 이펙트
+        private void HitParticleEffect()
+        {
+            EnemyHitEffect effect = EnemyPoolManager.Instance.GetPoolObject(Type.HitEffect, enemyData.damagePosition).GetComponent<EnemyHitEffect>();
+            effect.transform.rotation = Quaternion.Euler(0f, 0f, (Mathf.Atan2(enemyData.damageDirection.y, enemyData.damageDirection.x) * Mathf.Rad2Deg) + 90f);
+            effect.transform.localScale = enemyData.effectSize;
+
+            effect.Play();
         }
 
         // 적이 죽었을때 발동되는 코드

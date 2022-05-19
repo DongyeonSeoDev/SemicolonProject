@@ -30,9 +30,9 @@ namespace Enemy
             base.Update();
         }
 
-        public override void GetDamage(float damage, bool critical, bool isKnockBack, bool isStun, bool isShowText = true, float knockBackPower = 20, float stunTime = 1, Vector2? direction = null)
+        public override void GetDamage(float damage, bool critical, bool isKnockBack, bool isStun, Vector3 direction, Vector3 position, bool isShowText = true, float knockBackPower = 20f, float stunTime = 1f, Vector3? size = null)
         {
-            base.GetDamage(damage, critical, isKnockBack, isStun, isShowText, knockBackPower, stunTime, direction);
+            base.GetDamage(damage, critical, isKnockBack, isStun, direction, position, isShowText, knockBackPower, stunTime, size);
 
             hp -= damage;
 

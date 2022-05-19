@@ -9,6 +9,8 @@ namespace Enemy
         private EnemyController eEnemyController;
         private float attackPower;
 
+        public Vector3 direction;
+
         public void Init(EnemyController controllerm, float power)
         {
             eEnemyController = controllerm;
@@ -35,7 +37,7 @@ namespace Enemy
 
                 if (enemy != null)
                 {
-                    enemy.GetDamage(0, false, false, false, false);
+                    enemy.GetDamage(0, false, false, false, direction, transform.position, false);
                 }
 
                 attackObject.Add(collision.gameObject);
@@ -48,7 +50,7 @@ namespace Enemy
                     damage.Item1 = Random.Range(SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage + 1);
                     damage = SlimeGameManager.Instance.Player.CriticalCheck(damage.Item1);
 
-                    enemy.GetDamage(damage.Item1, damage.Item2, false, false);
+                    enemy.GetDamage(damage.Item1, damage.Item2, false, false, direction, transform.position);
 
                     attackObject.Add(collision.gameObject);
                 }

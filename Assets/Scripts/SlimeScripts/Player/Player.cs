@@ -328,7 +328,7 @@ public class Player : MonoBehaviour
             UIManager.Instance.UpdatePlayerHPUI(true);
         }
     }
-    public void GiveDamage(ICanGetDamagableEnemy targetEnemy, float minDamage, float maxDamage, float stunTime = 1, float knockBackPower = 20, bool isKnockBack = true)
+    public void GiveDamage(ICanGetDamagableEnemy targetEnemy, Vector2 direction, Vector2 position, float minDamage, float maxDamage, float stunTime = 1, float knockBackPower = 20, bool isKnockBack = true, Vector3? size = null)
     {
         (float, bool) damage;
         damage.Item1 = Random.Range(minDamage, maxDamage + 1);
@@ -336,9 +336,9 @@ public class Player : MonoBehaviour
 
         damage = CriticalCheck(damage.Item1);
 
-        targetEnemy.GetDamage(damage.Item1, damage.Item2, isKnockBack, stunTime > 0, true, knockBackPower, stunTime);
+        targetEnemy.GetDamage(damage.Item1, damage.Item2, isKnockBack, stunTime > 0, direction, position, true, knockBackPower, stunTime, size);
     }
-    public void Mag_GiveDamage(ICanGetDamagableEnemy targetEnemy, float minDamage, float maxDamage, float magnification, float stunTime = 1, float knockBackPower = 20, bool isKnockBack = true)
+    public void Mag_GiveDamage(ICanGetDamagableEnemy targetEnemy, Vector2 direction, Vector2 position, float minDamage, float maxDamage, float magnification, float stunTime = 1, float knockBackPower = 20, bool isKnockBack = true, Vector3? size = null)
     {
         (float, bool) damage;
         damage.Item1 = Random.Range(minDamage, maxDamage + 1);
@@ -348,7 +348,7 @@ public class Player : MonoBehaviour
 
         damage.Item1 = (int)(damage.Item1 * magnification);
 
-        targetEnemy.GetDamage(damage.Item1, damage.Item2, isKnockBack, stunTime > 0, true, knockBackPower, stunTime);
+        targetEnemy.GetDamage(damage.Item1, damage.Item2, isKnockBack, stunTime > 0, direction, position, true, knockBackPower, stunTime, size);
     }
     public (float, bool) CriticalCheck(float damage)
     {

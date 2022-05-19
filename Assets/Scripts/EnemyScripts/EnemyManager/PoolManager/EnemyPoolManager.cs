@@ -21,7 +21,8 @@ namespace Enemy
         EnemyRushAttackRange,
         Boss1Clone,
         EnemyAfterImage,
-        Arrow
+        Arrow,
+        HitEffect
     }
 
     public class EnemyPoolManager : MonoBehaviour
