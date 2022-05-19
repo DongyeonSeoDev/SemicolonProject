@@ -45,10 +45,7 @@ public class PlayerState : MonoBehaviour
     public bool BodySlapping
     {
         get { return bodySlapping; }
-        set 
-        {
-            bodySlapping = value;
-        }
+        set { bodySlapping = value;}
     }
 
     private bool charging = false;
