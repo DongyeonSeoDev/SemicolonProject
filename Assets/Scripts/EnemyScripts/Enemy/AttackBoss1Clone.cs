@@ -7,9 +7,9 @@ namespace Enemy
     {
         private List<GameObject> attackObject = new List<GameObject>();
         private EnemyController eEnemyController;
-        private int attackPower;
+        private float attackPower;
 
-        public void Init(EnemyController controllerm, int power)
+        public void Init(EnemyController controllerm, float power)
         {
             eEnemyController = controllerm;
             attackPower = power;
@@ -44,7 +44,7 @@ namespace Enemy
             {
                 if (enemy != null)
                 {
-                    (int, bool) damage;
+                    (float, bool) damage;
                     damage.Item1 = Random.Range(SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage + 1);
                     damage = SlimeGameManager.Instance.Player.CriticalCheck(damage.Item1);
 

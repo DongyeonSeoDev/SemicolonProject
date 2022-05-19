@@ -48,72 +48,324 @@ MonoBehaviour:
     bodyId: 0
     body: {fileID: 1748969661245656920, guid: 99878bdc48206b64d92b0711ec15cf97, type: 3}
     additionalBodyStat:
-      maxHp: 100
-      minDamage: 8
-      maxDamage: 8
-      defense: 2
-      intellect: 0
-      speed: 4
-      attackSpeed: 0
-      criticalRate: 0
-      criticalDamage: 0
+      maxHp:
+        id: 5
+        statValue: 100
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uCD5C\uB300\uCCB4\uB825"
+        emotionRangeList: []
+      minDamage:
+        id: 10
+        statValue: 8
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uCD5C\uC18C\uACF5\uACA9\uB825"
+        emotionRangeList: []
+      maxDamage:
+        id: 15
+        statValue: 8
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uCD5C\uB300\uACF5\uACA9\uB825"
+        emotionRangeList: []
+      defense:
+        id: 20
+        statValue: 2
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uBC29\uC5B4\uB825"
+        emotionRangeList: []
+      intellect:
+        id: 25
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uC9C0\uB2A5"
+        emotionRangeList: []
+      speed:
+        id: 30
+        statValue: 4
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uC774\uB3D9\uC18D\uB3C4"
+        emotionRangeList: []
+      attackSpeed:
+        id: 35
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uACF5\uACA9\uC18D"
+        emotionRangeList: []
+      criticalRate:
+        id: 40
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uD06C\uB9AC\uD2F0\uCEEC\uD655\uB960"
+        emotionRangeList: []
+      criticalDamage:
+        id: 45
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uD06C\uB9AC\uD2F0\uCEEC\uB370\uBBF8\uC9C0"
+        emotionRangeList: []
     bodyImg: {fileID: 21300000, guid: d28dff12c2591a84c9cbea9bd1f40fa2, type: 3}
     dropItem: {fileID: 11400000, guid: 06dd51cfab1cb904b9bbbedef6545d02, type: 2}
     bodyExplanation: "\uC5B4\uB514\uC11C\uB098 \uBCFC \uC218 \uC788\uB294 \uC2AC\uB77C\uC784\uC73C\uB85C
       \uAC00\uAE4C\uC774 \uB2E4\uAC00\uAC00\uBA74 \uC704\uD5D8\uD560 \uAC83 \uAC19\uB2E4."
     featureExplanation: "\uB192\uC740 \uACF5\uACA9\uB825\uC744 \uAC00\uC9C4\uB2E4."
-    hint: 
+    hint: "\uD558\uC218\uAD6C\uC5D0\uC11C \uB4F1\uC7A5\uD55C\uB2E4."
   - bodyName: "\uC0DD\uC950"
     bodyId: 1
     body: {fileID: 3351713311786356781, guid: bd1420554775ff64abf2f4527d18fcce, type: 3}
     additionalBodyStat:
-      maxHp: -20
-      minDamage: 5
-      maxDamage: 5
-      defense: 0
-      intellect: 0
-      speed: 6
-      attackSpeed: 0
-      criticalRate: 0
-      criticalDamage: 0
+      maxHp:
+        id: 5
+        statValue: -20
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uCD5C\uB300\uCCB4\uB825"
+        emotionRangeList: []
+      minDamage:
+        id: 10
+        statValue: 5
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uCD5C\uC18C\uACF5\uACA9\uB825"
+        emotionRangeList: []
+      maxDamage:
+        id: 15
+        statValue: 5
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uCD5C\uB300\uACF5\uACA9\uB825"
+        emotionRangeList: []
+      defense:
+        id: 20
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uBC29\uC5B4\uB825"
+        emotionRangeList: []
+      intellect:
+        id: 25
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uC9C0\uB2A5"
+        emotionRangeList: []
+      speed:
+        id: 30
+        statValue: 6
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uC774\uB3D9\uC18D\uB3C4"
+        emotionRangeList: []
+      attackSpeed:
+        id: 35
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uACF5\uACA9\uC18D"
+        emotionRangeList: []
+      criticalRate:
+        id: 40
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uD06C\uB9AC\uD2F0\uCEEC\uD655\uB960"
+        emotionRangeList: []
+      criticalDamage:
+        id: 45
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uD06C\uB9AC\uD2F0\uCEEC\uB370\uBBF8\uC9C0"
+        emotionRangeList: []
     bodyImg: {fileID: 21300000, guid: dc4b2010e28bb6b4e946bacb9864068a, type: 3}
     dropItem: {fileID: 11400000, guid: ac78587e7a385054a9d1150a539d138b, type: 2}
     bodyExplanation: "\uC0DD\uC950\uC758 \uBAA8\uC591\uC744 \uD558\uACE0 \uC788\uC73C\uBA70
       \uC0DD\uAC01\uBCF4\uB2E4 \uAC81\uC774 \uB9CE\uC740 \uBAAC\uC2A4\uD130\uB2E4."
     featureExplanation: "\uC774\uB3D9\uC18D\uB3C4\uAC00 \uBE60\uB974\uB2E4."
-    hint: 
+    hint: "\uD558\uC218\uAD6C\uC5D0\uC11C \uB4F1\uC7A5\uD55C\uB2E4."
   - bodyName: "\uCD08\uB85D\uC2AC\uB77C\uC784"
     bodyId: 2
     body: {fileID: 1985576452176110918, guid: 5cd02f2595541bd499b9053078cfe146, type: 3}
     additionalBodyStat:
-      maxHp: 150
-      minDamage: 5
-      maxDamage: 5
-      defense: 3
-      intellect: 0
-      speed: 0
-      attackSpeed: 0
-      criticalRate: 0
-      criticalDamage: 0
+      maxHp:
+        id: 5
+        statValue: 150
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uCD5C\uB300\uCCB4\uB825"
+        emotionRangeList: []
+      minDamage:
+        id: 10
+        statValue: 5
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uCD5C\uC18C\uACF5\uACA9\uB825"
+        emotionRangeList: []
+      maxDamage:
+        id: 15
+        statValue: 5
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uCD5C\uB300\uACF5\uACA9\uB825"
+        emotionRangeList: []
+      defense:
+        id: 20
+        statValue: 3
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uBC29\uC5B4\uB825"
+        emotionRangeList: []
+      intellect:
+        id: 25
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uC9C0\uB2A5"
+        emotionRangeList: []
+      speed:
+        id: 30
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uC774\uB3D9\uC18D\uB3C4"
+        emotionRangeList: []
+      attackSpeed:
+        id: 35
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uACF5\uACA9\uC18D"
+        emotionRangeList: []
+      criticalRate:
+        id: 40
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uD06C\uB9AC\uD2F0\uCEEC\uD655\uB960"
+        emotionRangeList: []
+      criticalDamage:
+        id: 45
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uD06C\uB9AC\uD2F0\uCEEC\uB370\uBBF8\uC9C0"
+        emotionRangeList: []
     bodyImg: {fileID: 21300000, guid: 238a27f12e439d942aa76ea5098ad18d, type: 3}
     dropItem: {fileID: 11400000, guid: 06dd51cfab1cb904b9bbbedef6545d02, type: 2}
     bodyExplanation: "\uC5B4\uCA4C\uBA74 \uB098\uC640 \uB2EE\uC558\uC744\uC9C0\uB3C4?"
     featureExplanation: "\uB3CC\uC9C4\uC744 \uD560 \uC218 \uC788\uC73C\uBA70 \uCCB4\uB825\uC774
       \uB192\uB2E4."
-    hint: 
+    hint: "\uD558\uC218\uAD6C\uC5D0\uC11C \uB4F1\uC7A5\uD55C\uB2E4."
   - bodyName: "SkeletonArcher_04 (\uC784\uC2DC)"
     bodyId: 3
     body: {fileID: 0}
     additionalBodyStat:
-      maxHp: 0
-      minDamage: 0
-      maxDamage: 0
-      defense: 0
-      intellect: 0
-      speed: 0
-      attackSpeed: 0
-      criticalRate: 0
-      criticalDamage: 0
+      maxHp:
+        id: 0
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: 
+        emotionRangeList: []
+      minDamage:
+        id: 0
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: 
+        emotionRangeList: []
+      maxDamage:
+        id: 0
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: 
+        emotionRangeList: []
+      defense:
+        id: 0
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: 
+        emotionRangeList: []
+      intellect:
+        id: 0
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: 
+        emotionRangeList: []
+      speed:
+        id: 0
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: 
+        emotionRangeList: []
+      attackSpeed:
+        id: 0
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: 
+        emotionRangeList: []
+      criticalRate:
+        id: 0
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: 
+        emotionRangeList: []
+      criticalDamage:
+        id: 0
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: 
+        emotionRangeList: []
     bodyImg: {fileID: 0}
     dropItem: {fileID: 0}
     bodyExplanation: 
@@ -123,15 +375,78 @@ MonoBehaviour:
     bodyId: 4
     body: {fileID: 0}
     additionalBodyStat:
-      maxHp: 0
-      minDamage: 0
-      maxDamage: 0
-      defense: 0
-      intellect: 0
-      speed: 0
-      attackSpeed: 0
-      criticalRate: 0
-      criticalDamage: 0
+      maxHp:
+        id: 0
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: 
+        emotionRangeList: []
+      minDamage:
+        id: 0
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: 
+        emotionRangeList: []
+      maxDamage:
+        id: 0
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: 
+        emotionRangeList: []
+      defense:
+        id: 0
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: 
+        emotionRangeList: []
+      intellect:
+        id: 0
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: 
+        emotionRangeList: []
+      speed:
+        id: 0
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: 
+        emotionRangeList: []
+      attackSpeed:
+        id: 0
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: 
+        emotionRangeList: []
+      criticalRate:
+        id: 0
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: 
+        emotionRangeList: []
+      criticalDamage:
+        id: 0
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: 
+        emotionRangeList: []
     bodyImg: {fileID: 0}
     dropItem: {fileID: 0}
     bodyExplanation: 

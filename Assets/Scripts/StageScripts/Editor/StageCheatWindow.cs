@@ -132,11 +132,11 @@ public class StageCheatWindow : EditorWindow
                 GUILayout.Label("[Player Cheat]", EditorStyles.boldLabel);
 
                 //플레이어 스탯 정함
-                playerStat.eternalStat.maxHp = EditorGUILayout.FloatField("Max Hp", playerStat.eternalStat.maxHp);
-                playerStat.eternalStat.minDamage = EditorGUILayout.IntField("Min Damage", playerStat.eternalStat.minDamage);
-                playerStat.eternalStat.maxDamage = EditorGUILayout.IntField("Max Damage", playerStat.eternalStat.maxDamage);
-                playerStat.eternalStat.defense = EditorGUILayout.IntField("Defense", playerStat.eternalStat.defense);
-                playerStat.eternalStat.speed = EditorGUILayout.FloatField("Speed", playerStat.eternalStat.speed);
+                playerStat.eternalStat.maxHp.statValue = EditorGUILayout.FloatField("Max Hp", playerStat.eternalStat.maxHp.statValue);
+                playerStat.eternalStat.minDamage.statValue = EditorGUILayout.FloatField("Min Damage", playerStat.eternalStat.minDamage.statValue);
+                playerStat.eternalStat.maxDamage.statValue = EditorGUILayout.FloatField("Max Damage", playerStat.eternalStat.maxDamage.statValue);
+                playerStat.eternalStat.defense.statValue = EditorGUILayout.FloatField("Defense", playerStat.eternalStat.defense.statValue);
+                playerStat.eternalStat.speed.statValue = EditorGUILayout.FloatField("Speed", playerStat.eternalStat.speed.statValue);
 
                 GUILayout.Space(10);
 

@@ -30,7 +30,7 @@ namespace Enemy
 
         private Vector3 targetDirection;
 
-        private int attackDamage;
+        private float attackDamage;
 
         private Enemy enemy;
 
@@ -113,7 +113,7 @@ namespace Enemy
             {
                 if (enemy != null && enemy != this.enemy)
                 {
-                    (int, bool) damage;
+                    (float, bool) damage;
                     damage.Item1 = Random.Range(SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage + 1);
                     damage = SlimeGameManager.Instance.Player.CriticalCheck(damage.Item1);
 
@@ -171,7 +171,7 @@ namespace Enemy
             ResetBullet();
         }
 
-        public void Init(EnemyController controller, Vector3 direction, int damage, Enemy enemy = null)
+        public void Init(EnemyController controller, Vector3 direction, float damage, Enemy enemy = null)
         {
             eEnemyController = controller;
             attackDamage = damage;

@@ -53,36 +53,182 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStat:
+    currentStatPoint: 0
+    accumulateStatPoint: 0
+    currentHp: 0
+    currentExp: 0
+    maxExp: 1000
     eternalStat:
-      maxHp: 100
-      minDamage: 8
-      maxDamage: 12
-      defense: 2
-      intellect: 0
-      speed: 8
-      attackSpeed: 1
-      criticalRate: 50
-      criticalDamage: 10
+      maxHp:
+        id: 5
+        statValue: 100
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uCD5C\uB300\uCCB4\uB825"
+        emotionRangeList: []
+      minDamage:
+        id: 10
+        statValue: 8
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uCD5C\uC18C\uACF5\uACA9\uB825"
+        emotionRangeList: []
+      maxDamage:
+        id: 15
+        statValue: 12
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uCD5C\uB300\uACF5\uACA9\uB825"
+        emotionRangeList: []
+      defense:
+        id: 20
+        statValue: 2
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uBC29\uC5B4\uB825"
+        emotionRangeList: []
+      intellect:
+        id: 25
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uC9C0\uB2A5"
+        emotionRangeList: []
+      speed:
+        id: 30
+        statValue: 8
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uC774\uB3D9\uC18D\uB3C4"
+        emotionRangeList: []
+      attackSpeed:
+        id: 35
+        statValue: 1
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uACF5\uACA9\uC18D"
+        emotionRangeList: []
+      criticalRate:
+        id: 40
+        statValue: 50
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uD06C\uB9AC\uD2F0\uCEEC\uD655\uB960"
+        emotionRangeList: []
+      criticalDamage:
+        id: 45
+        statValue: 10
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: "\uD06C\uB9AC\uD2F0\uCEEC\uB370\uBBF8\uC9C0"
+        emotionRangeList: []
     additionalEternalStat:
-      maxHp: 0
-      minDamage: 0
-      maxDamage: 0
-      defense: 0
-      intellect: 0
-      speed: 0
-      attackSpeed: 0
-      criticalRate: 0
-      criticalDamage: 0
+      maxHp:
+        id: 0
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: 
+        emotionRangeList: []
+      minDamage:
+        id: 0
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: 
+        emotionRangeList: []
+      maxDamage:
+        id: 0
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: 
+        emotionRangeList: []
+      defense:
+        id: 0
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: 
+        emotionRangeList: []
+      intellect:
+        id: 0
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: 
+        emotionRangeList: []
+      speed:
+        id: 0
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: 
+        emotionRangeList: []
+      attackSpeed:
+        id: 0
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: 
+        emotionRangeList: []
+      criticalRate:
+        id: 0
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: 
+        emotionRangeList: []
+      criticalDamage:
+        id: 0
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        usedStatPoint: 0
+        statName: 
+        emotionRangeList: []
     choiceStat:
       patience:
+        id: 0
         statValue: 0
+        upStatValue: 0
         isUnlock: 0
+        usedStatPoint: 0
+        statName: 
+        emotionRangeList: []
       momentom:
+        id: 0
         statValue: 0
+        upStatValue: 0
         isUnlock: 0
+        usedStatPoint: 0
+        statName: 
+        emotionRangeList: []
       endurance:
+        id: 0
         statValue: 0
+        upStatValue: 0
         isUnlock: 0
+        usedStatPoint: 0
+        statName: 
+        emotionRangeList: []
   playerInput: {fileID: 0}
   playerChoiceStatControl: {fileID: 0}
   playerOrderInLayerController: {fileID: 0}

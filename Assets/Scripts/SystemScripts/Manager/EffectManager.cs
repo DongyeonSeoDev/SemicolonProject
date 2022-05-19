@@ -212,12 +212,12 @@ public class EffectManager : MonoSingleton<EffectManager>
         }
     }
 
-    public void OnDamaged(int damage, bool critical, bool isEnemy, Vector2 pos) //When monster or player receive damage, Shows damage text effect UI.
+    public void OnDamaged(float damage, bool critical, bool isEnemy, Vector2 pos) //When monster or player receive damage, Shows damage text effect UI.
     {
         TextMeshProUGUI tmp = PoolManager.GetItem<TextMeshProUGUI>("DamageTextEff");
         tmp.color = Color.white;
         tmp.transform.localScale = !critical ? Vector3.one : SVector3.onePointTwo;
-        tmp.SetText(damage.ToString());
+        tmp.SetText(((int)damage).ToString());
         tmp.colorGradient = isEnemy ? (critical ? enemyDamagedTextVG.cri : enemyDamagedTextVG.normal) : (critical?playerDamagedTextVG.cri:playerDamagedTextVG.normal);
         tmp.transform.position = pos + Vector2.up;
         tmp.transform.SetAsLastSibling();
@@ -230,7 +230,7 @@ public class EffectManager : MonoSingleton<EffectManager>
         CinemachineCameraScript.Instance.Shake(isEnemy ? enemyHitShake : playerHitShake);
         TimeManager.SetTimeScale(atkTimeFreezeScale,atkTimeFreezeDuration, null, false, false);
     }
-    public void OnDamaged(int damage, Vector2 pos, Vector3 scale, VertexGradient textColor)
+    /*public void OnDamaged(float damage, Vector2 pos, Vector3 scale, VertexGradient textColor)
     {
         TextMeshProUGUI tmp = PoolManager.GetItem<TextMeshProUGUI>("DamageTextEff");
         tmp.color = Color.white;
@@ -244,7 +244,7 @@ public class EffectManager : MonoSingleton<EffectManager>
         tmp.transform.DOMove(tmp.transform.position + Global.damageTextMove, 0.6f);
         //tmp.transform.DOScale(scale - SVector3.zeroPointThree, 0.8f).SetEase(damageTxtScaleCurve);
         tmp.DOColor(Color.clear, 0.7f).SetEase(damageTxtScaleCurve).OnComplete(() => tmp.gameObject.SetActive(false));
-    }
+    }*/
 
     public void OnWorldTextEffect(string msg, Vector2 pos, Vector3 scale, VertexGradient textColor)  //게임 속에서 어떤 이벤트에 대해 텍스트 효과를 잠깐 띄움
     {

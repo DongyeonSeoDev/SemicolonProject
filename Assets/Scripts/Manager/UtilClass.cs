@@ -215,15 +215,15 @@ public static partial class ScriptHelper
     {
         EternalStat result = a;
 
-        result.maxHp = a.maxHp.Abs();
-        result.minDamage = a.minDamage.Abs();
-        result.maxDamage = a.maxDamage.Abs();
-        result.defense = a.defense.Abs();
-        result.intellect = a.intellect.Abs();
-        result.speed = a.speed.Abs();
-        result.attackSpeed = a.attackSpeed.Abs();
-        result.criticalRate = a.criticalRate.Abs();
-        result.criticalDamage = a.criticalDamage.Abs();
+        result.maxHp.statValue = a.maxHp.statValue.Abs();
+        result.minDamage.statValue = a.minDamage.statValue.Abs();
+        result.maxDamage.statValue = a.maxDamage.statValue.Abs();
+        result.defense.statValue = a.defense.statValue.Abs();
+        result.intellect.statValue = a.intellect.statValue.Abs();
+        result.speed.statValue = a.speed.statValue.Abs();
+        result.attackSpeed.statValue = a.attackSpeed.statValue.Abs();
+        result.criticalRate.statValue = a.criticalRate.statValue.Abs();
+        result.criticalDamage.statValue = a.criticalDamage.statValue.Abs();
 
         return result;
     }
