@@ -3294,31 +3294,6 @@ PrefabInstance:
       propertyPath: a.Array.data[1].b
       value: -1111
       objectReference: {fileID: 0}
-    - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
-      propertyPath: changableBodyList.Array.data[0].hint
-      value: "\uD558\uC218\uAD6C\uC5D0\uC11C \uB4F1\uC7A5\uD55C\uB2E4."
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
-      propertyPath: changableBodyList.Array.data[1].hint
-      value: "\uD558\uC218\uAD6C\uC5D0\uC11C \uB4F1\uC7A5\uD55C\uB2E4."
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
-      propertyPath: changableBodyList.Array.data[2].hint
-      value: "\uD558\uC218\uAD6C\uC5D0\uC11C \uB4F1\uC7A5\uD55C\uB2E4."
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
-      propertyPath: changableBodyList.Array.data[0].featureExplanation
-      value: "\uB192\uC740 \uACF5\uACA9\uB825\uC744 \uAC00\uC9C4\uB2E4."
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
-      propertyPath: changableBodyList.Array.data[1].featureExplanation
-      value: "\uC774\uB3D9\uC18D\uB3C4\uAC00 \uBE60\uB974\uB2E4."
-      objectReference: {fileID: 0}
-    - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
-      propertyPath: changableBodyList.Array.data[2].featureExplanation
-      value: "\uB3CC\uC9C4\uC744 \uD560 \uC218 \uC788\uC73C\uBA70 \uCCB4\uB825\uC774
-        \uB192\uB2E4."
-      objectReference: {fileID: 0}
     - target: {fileID: 5692856494302310611, guid: 753933377d0100245b27316586c7ec1e, type: 3}
       propertyPath: m_RootOrder
       value: 11

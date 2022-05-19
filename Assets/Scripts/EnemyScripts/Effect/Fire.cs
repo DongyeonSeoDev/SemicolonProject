@@ -19,7 +19,7 @@ namespace Enemy
         private Color currentAttackRangeColor;
         private Color targetAttackRangeColor;
 
-        private int attackPower;
+        private float attackPower;
         private bool checkTogether;
 
         private readonly int hashAttack = Animator.StringToHash("Attack");
@@ -43,7 +43,7 @@ namespace Enemy
             EventManager.StartListening("BossDead", PlayerDeadEvent);
         }
 
-        public void Spawn(Enemy enemy, EnemyController controller, int power, float attackTime, bool checkTogether)
+        public void Spawn(Enemy enemy, EnemyController controller, float power, float attackTime, bool checkTogether)
         {
             animator.ResetTrigger(hashAttack);
             animator.SetTrigger(hashReset);
@@ -144,7 +144,7 @@ namespace Enemy
             {
                 if (enemy != null && enemy != enemyCheck)
                 {
-                    (int, bool) damage;
+                    (float, bool) damage;
                     damage.Item1 = Random.Range(SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage + 1);
                     damage = SlimeGameManager.Instance.Player.CriticalCheck(damage.Item1);
 

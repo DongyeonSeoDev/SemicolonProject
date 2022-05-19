@@ -20,7 +20,7 @@ namespace Enemy
 
         private bool isAttackInit = false;
         private bool isUseKnockBack = false;
-        private int attackPower = 0;
+        private float attackPower = 0;
 
         public Action<EnemyController> enemyControllerChange = null;
 
@@ -137,7 +137,7 @@ namespace Enemy
 
                 if (enemy != null && enemy != this.enemy)
                 {
-                    (int, bool) damage;
+                    (float, bool) damage;
                     damage.Item1 = UnityEngine.Random.Range(SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage + 1);
                     damage = SlimeGameManager.Instance.Player.CriticalCheck(damage.Item1);
                     

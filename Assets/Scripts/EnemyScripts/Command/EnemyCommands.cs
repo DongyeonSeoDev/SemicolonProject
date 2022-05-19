@@ -445,9 +445,9 @@ namespace Enemy
 
         private Type objectType;
 
-        private int attackDamage;
+        private float attackDamage;
 
-        public EnemylongRangeAttackCommand(Enemy enemy, Transform enemyPosition, Type objectType, Transform shotTransform, int damage)
+        public EnemylongRangeAttackCommand(Enemy enemy, Transform enemyPosition, Type objectType, Transform shotTransform, float damage)
         {
             this.enemy = enemy;
             enemyTransform = enemyPosition;
@@ -473,9 +473,9 @@ namespace Enemy
 
         private Type objectType;
 
-        private int attackDamage;
+        private float attackDamage;
 
-        public PlayerlongRangeAttackCommand(Transform transform, Transform shotTransform, Enemy enemy, Type objectType, int attackDamage)
+        public PlayerlongRangeAttackCommand(Transform transform, Transform shotTransform, Enemy enemy, Type objectType, float attackDamage)
         {
             playerInput = SlimeGameManager.Instance.Player.GetComponent<PlayerInput>();
 

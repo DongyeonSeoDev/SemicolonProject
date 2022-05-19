@@ -518,8 +518,8 @@ public partial class UIManager : MonoSingleton<UIManager>
                 {
                     Inventory.Instance.invenUseActionImg.SetActive(false);
                 }
-                invenHpInfo.first.fillAmount = (float)sgm.Player.CurrentHp / sgm.Player.PlayerStat.MaxHp;
-                invenHpInfo.second.text = string.Concat("HP : ",Mathf.Ceil(Mathf.Clamp(sgm.Player.CurrentHp, 0, sgm.Player.PlayerStat.MaxHp)), '/', Mathf.Ceil(sgm.Player.PlayerStat.MaxHp));
+                invenHpInfo.first.fillAmount = (float)sgm.Player.PlayerStat.currentHp / sgm.Player.PlayerStat.MaxHp;
+                invenHpInfo.second.text = string.Concat("HP : ",Mathf.Ceil(Mathf.Clamp(sgm.Player.PlayerStat.currentHp, 0, sgm.Player.PlayerStat.MaxHp)), '/', Mathf.Ceil(sgm.Player.PlayerStat.MaxHp));
                 invenHpEffMaskInfo.first.localScale = new Vector3(invenHpEffMaskInfo.second*invenHpInfo.first.fillAmount, invenHpEffMaskInfo.second, invenHpEffMaskInfo.second);
                 break;
             case UIType.KEYSETTING:
@@ -1047,7 +1047,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     {
         Stat stat = sgm.Player.PlayerStat;
 
-        statTexts[0].text = string.Concat(Mathf.Ceil( Mathf.Clamp(sgm.Player.CurrentHp, 0, stat.MaxHp)), '/',Mathf.Ceil( stat.MaxHp));
+        statTexts[0].text = string.Concat(Mathf.Ceil( Mathf.Clamp(sgm.Player.PlayerStat.currentHp, 0, stat.MaxHp)), '/',Mathf.Ceil( stat.MaxHp));
         statTexts[1].text = string.Concat( stat.MinDamage, '~', stat.MaxDamage);
         statTexts[2].text = stat.Defense.ToString();
         statTexts[3].text = Mathf.RoundToInt(Mathf.Abs(stat.Speed)).ToString(); //스피드가 몇인지 소수로 나오면 어색할 것 같아서 일단은 정수로 나오게 함.
@@ -1072,10 +1072,10 @@ public partial class UIManager : MonoSingleton<UIManager>
         invenHpInfo.first.DOKill();
         invenHpEffMaskInfo.first.DOKill();
 
-        float rate = (float)sgm.Player.CurrentHp / sgm.Player.PlayerStat.MaxHp;
+        float rate = (float)sgm.Player.PlayerStat.currentHp / sgm.Player.PlayerStat.MaxHp;
         invenHpInfo.first.DOFillAmount(rate, 0.3f).SetUpdate(true);
         invenHpEffMaskInfo.first.DOScaleX(rate * invenHpEffMaskInfo.second, 0.3f).SetUpdate(true);
-        invenHpInfo.second.text = string.Concat("HP : ",Mathf.Ceil(Mathf.Clamp(sgm.Player.CurrentHp, 0, sgm.Player.PlayerStat.MaxHp)), '/', Mathf.Ceil(sgm.Player.PlayerStat.MaxHp));
+        invenHpInfo.second.text = string.Concat("HP : ",Mathf.Ceil(Mathf.Clamp(sgm.Player.PlayerStat.currentHp, 0, sgm.Player.PlayerStat.MaxHp)), '/', Mathf.Ceil(sgm.Player.PlayerStat.MaxHp));
     }
 
     public void UpdatePlayerHPUI(bool decrease = false)
@@ -1083,7 +1083,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         isStartDelayHPFillTimer = false;
 
         Player p = sgm.Player;
-        float hp = Mathf.Clamp(p.CurrentHp, 0f, p.PlayerStat.MaxHp);
+        float hp = Mathf.Clamp(p.PlayerStat.currentHp, 0f, p.PlayerStat.MaxHp);
 
         float rate = (float)hp / p.PlayerStat.MaxHp;
         playerHPInfo.first.DOFillAmount(rate, 0.3f).OnComplete(()=> { if (!decrease) playerHPInfo.third.fillAmount = playerHPInfo.first.fillAmount; });

@@ -10,8 +10,8 @@ namespace Enemy
     {
         private Animator anim = null;
 
-        public int maxHP = 10;
-        public int hp = 10;
+        public float maxHP = 10;
+        public float hp = 10;
 
         protected bool destroyTimerStarted = false;
         protected readonly float destroyTime = 1f;
@@ -42,7 +42,7 @@ namespace Enemy
             }
         }
 
-        public virtual void GetDamage(int damage, bool critical, bool isKnockBack, bool isStun, bool isShowText = true, float knockBackPower = 20, float stunTime = 1, Vector2? direction = null)
+        public virtual void GetDamage(float damage, bool critical, bool isKnockBack, bool isStun, bool isShowText = true, float knockBackPower = 20, float stunTime = 1, Vector2? direction = null)
         {
         }
 
@@ -62,5 +62,9 @@ namespace Enemy
         public Transform GetTransform() => transform;
         public GameObject GetGameObject() => gameObject;
         public float EnemyHpPercent() => ((float)hp / maxHP) * 100f;
+        public string GetEnemyName()
+        {
+            return "TutorialEnemy";
+        }
     }
 }

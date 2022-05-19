@@ -127,7 +127,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
     }
     public void CheckEndurance()
     {
-        int pasteEndurance = (int)SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance.statValue;
+        float pasteEndurance = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance.statValue;
         int num = (int)totalDamage / enduranceUpAmount;
 
         if (pasteEndurance != num && num > 0)
@@ -141,12 +141,12 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
             SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance.statValue = num;
 
-            SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxHp += upMaxHpPerEnduranceUpAmount * (num - pasteEndurance);
+            SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxHp.statValue += upMaxHpPerEnduranceUpAmount * (num - pasteEndurance);
         }
     }
     public void CheckPatience()
     {
-        int pastePatienceNum = (int)SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.statValue;
+        float pastePatienceNum = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.statValue;
         int num = 0;
 
         if (pastePatienceNum == 0)
@@ -166,13 +166,14 @@ public class PlayerChoiceStatControl : MonoBehaviour
             num = ((attackNum + attackMissedNum) / patienceUpAmount) + firstPatienceValue;
         }
 
+        Debug.Log(SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat);
         SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.statValue = num;
 
-        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.minDamage -= upDamagePerPatience * pastePatienceNum;
-        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxDamage -= upDamagePerPatience * pastePatienceNum;
+        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.minDamage.statValue -= upDamagePerPatience * pastePatienceNum;
+        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxDamage.statValue -= upDamagePerPatience * pastePatienceNum;
 
-        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.minDamage = upDamagePerPatience * num;
-        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxDamage = upDamagePerPatience * num;
+        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.minDamage.statValue = upDamagePerPatience * num;
+        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxDamage.statValue = upDamagePerPatience * num;
     }
     private void AttackNumReset()
     {
@@ -182,7 +183,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
     public void CheckMomentom()
     {
-        int pasteMomentomNum = (int)SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.statValue;
+        float pasteMomentomNum = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.statValue;
         int num = 0;
 
         if(pasteMomentomNum == 0)

@@ -275,14 +275,14 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             EternalStat stat = mobIdToSlot[selectedDetailMobId].BodyData.additionalBodyStat;
             EternalStat addiStat = SlimeGameManager.Instance.GetExtraUpStat(selectedDetailMobId);
 
-            statText[0].text = MinusException(stat.maxHp) + AdditionalStat(addiStat.maxHp);
-            statText[1].text = MinusException(stat.maxDamage) + AdditionalStat(addiStat.maxDamage);  //maxDamage만큼 min/max 데미지를 올려준다
-            statText[2].text = MinusException(stat.defense) + AdditionalStat(addiStat.defense);
-            statText[3].text = MinusException(Mathf.RoundToInt(stat.speed)) + AdditionalStat(Mathf.RoundToInt(addiStat.speed));
-            statText[4].text = string.Concat(MinusException(stat.criticalRate), '%') + AdditionalStat(addiStat.criticalRate, true);
-            statText[5].text = string.Concat(MinusException(stat.criticalDamage), '%') + AdditionalStat(addiStat.criticalDamage, true);
-            statText[6].text = MinusException(stat.intellect) + AdditionalStat(addiStat.intellect);
-            statText[7].text = MinusException(stat.attackSpeed) + AdditionalStat(addiStat.attackSpeed);
+            statText[0].text = MinusException(stat.maxHp.statValue) + AdditionalStat(addiStat.maxHp.statValue);
+            statText[1].text = MinusException(stat.maxDamage.statValue) + AdditionalStat(addiStat.maxDamage.statValue);  //maxDamage만큼 min/max 데미지를 올려준다
+            statText[2].text = MinusException(stat.defense.statValue) + AdditionalStat(addiStat.defense.statValue);
+            statText[3].text = MinusException(Mathf.RoundToInt(stat.speed.statValue)) + AdditionalStat(Mathf.RoundToInt(addiStat.speed.statValue));
+            statText[4].text = string.Concat(MinusException(stat.criticalRate.statValue), '%') + AdditionalStat(addiStat.criticalRate.statValue, true);
+            statText[5].text = string.Concat(MinusException(stat.criticalDamage.statValue), '%') + AdditionalStat(addiStat.criticalDamage.statValue, true);
+            statText[6].text = MinusException(stat.intellect.statValue) + AdditionalStat(addiStat.intellect.statValue);
+            statText[7].text = MinusException(stat.attackSpeed.statValue) + AdditionalStat(addiStat.attackSpeed.statValue);
         }
         else
         {
@@ -299,8 +299,9 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         else return "+" + value.ToString();
     }
 
-    private string MinusException(float value)
+    private string MinusException(float _value)
     {
+        int value = Mathf.RoundToInt(_value);
         if (value < 0) return value.ToString();
         else return "+" + value.ToString();
     }
@@ -310,8 +311,9 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         if (!percent) return string.Concat('(', value >= 0 ? "+" : "", value, ')');
         else return string.Concat("(", value >= 0 ? "+" : "", value, "%)");
     }
-    private string AdditionalStat(float value, bool percent = false)
+    private string AdditionalStat(float _value, bool percent = false)
     {
+        int value = Mathf.RoundToInt(_value);
         if (!percent) return string.Concat("(", value >= 0 ? "+" : "", value, ')');
         else return string.Concat("(", value >= 0 ? "+" : "", value, "%)");
     }

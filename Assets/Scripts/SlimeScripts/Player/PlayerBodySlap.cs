@@ -202,8 +202,6 @@ public class PlayerBodySlap : PlayerSkill
                 return;
             }
 
-            Debug.Log(targetObject.name);
-
             hitWhenBodySlap.Add(targetObject);
 
             IDamageableBySlimeBodySlap damagableByBodySlap = targetObject.GetComponent<IDamageableBySlimeBodySlap>();
@@ -277,7 +275,7 @@ public class PlayerBodySlap : PlayerSkill
 
             int chargingNum = (int)((currentChargingTimer / maxChargingTime) * (materials.Count - 1));
             int matNum = 0;
-
+            
             matNum = (int)((currentChargingTimer / maxChargingTime) * (materials.Count - 1));
 
             bodySlapMoveVec = (playerInput.MousePosition - (Vector2)transform.position).normalized;

@@ -25,7 +25,7 @@ public class ItemUseMng
 
     public static void IncreaseMaxHP(float value)
     {
-        PlayerObj.PlayerStat.additionalEternalStat.maxHp += value;
+        PlayerObj.PlayerStat.additionalEternalStat.maxHp.statValue += value;
         UIManager.Instance.UpdatePlayerHPUI();
         UIManager.Instance.RequestLogMsg("ÃÖ´ë HP " + value + " »ó½Â");
         PlayerObj.GetHeal((int)value);
@@ -33,10 +33,10 @@ public class ItemUseMng
         UIManager.Instance.UpdatePlayerHPInInven();
     }
 
-    public static void IncreaseStr(int value)
+    public static void IncreaseStr(float value)
     {
-        PlayerObj.PlayerStat.additionalEternalStat.minDamage += value;
-        PlayerObj.PlayerStat.additionalEternalStat.maxDamage += value;
+        PlayerObj.PlayerStat.additionalEternalStat.minDamage.statValue += value;
+        PlayerObj.PlayerStat.additionalEternalStat.maxDamage.statValue += value;
 
         UIManager.Instance.RequestLogMsg("°ø°Ý·Â " + value + " »ó½Â");
         EffectManager.Instance.OnTopRightBtnEffect(UIType.STAT, true);

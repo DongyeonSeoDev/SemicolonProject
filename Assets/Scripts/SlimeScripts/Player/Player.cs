@@ -126,13 +126,6 @@ public class Player : MonoBehaviour
     }
     #endregion
 
-    private float currentHp = 0;
-    public float CurrentHp
-    {
-        get { return currentHp; }
-        set { currentHp = value; }
-    }
-
     private float originEternalSpeed = 0f;
     private float originAdditionalSpeed = 0f;
     private bool speedSlowStart = false;
@@ -151,7 +144,7 @@ public class Player : MonoBehaviour
 
         playerState.IsDead = false;
 
-        currentHp = playerStat.MaxHp;
+        playerStat.currentHp = playerStat.MaxHp;
         currentEnergy = maxEnergy;
 
         UIManager.Instance.UpdatePlayerHPUI();
@@ -175,7 +168,7 @@ public class Player : MonoBehaviour
             Debug.Log("RightControl");
         }
 
-        if (currentHp <= 0)
+        if (playerStat.currentHp <= 0)
         {
             EventManager.TriggerEvent("PlayerDead");
         }
@@ -225,7 +218,7 @@ public class Player : MonoBehaviour
 
         return true;
     }
-    public void GetDamage(int damage, bool critical = false, bool stateAbnormality = false)
+    public void GetDamage(float damage, bool critical = false, bool stateAbnormality = false)
     {
         if ((playerState.BodySlapping && !stateAbnormality) ||
             (playerState.IsDrain && !stateAbnormality) ||
@@ -236,7 +229,7 @@ public class Player : MonoBehaviour
 
         if (!playerState.IsDead)
         {
-            int dm = damage;
+            float dm = damage;
 
             if (!stateAbnormality) // 효과데미지 아닐 때
             {
@@ -253,15 +246,15 @@ public class Player : MonoBehaviour
                 playerChoiceStatControl.TotalDamage += dm;
             }
 
-            currentHp -= dm;
+            playerStat.currentHp -= dm;
 
             SlimeGameManager.Instance.Player.PlayerChoiceStatControl.CheckEndurance();
 
-            if (currentHp <= 0)
+            if (playerStat.currentHp <= 0)
             {
                 if (stateAbnormality)
                 {
-                    currentHp = 1;
+                    playerStat.currentHp = 1;
                 }
                 else
                 {
@@ -280,7 +273,7 @@ public class Player : MonoBehaviour
     /// <param name="damage"></param>
     /// <param name="critical"></param>
     /// <param name="stateAbnormality"></param>
-    public void GetDamage(GameObject attacker, int damage, bool critical = false, bool stateAbnormality = false)
+    public void GetDamage(GameObject attacker, float damage, bool critical = false, bool stateAbnormality = false)
     {
         if ((playerState.BodySlapping && !stateAbnormality) ||
             (playerState.IsDrain && !stateAbnormality) ||
@@ -298,7 +291,7 @@ public class Player : MonoBehaviour
 
         if (!playerState.IsDead)
         {
-            int dm = damage;
+            float dm = damage;
 
             if (!stateAbnormality) // 효과데미지 아닐 때
             {
@@ -315,15 +308,15 @@ public class Player : MonoBehaviour
                 playerChoiceStatControl.TotalDamage += dm;
             }
 
-            currentHp -= dm;
+            playerStat.currentHp -= dm;
 
             SlimeGameManager.Instance.Player.PlayerChoiceStatControl.CheckEndurance();
 
-            if (currentHp <= 0)
+            if (playerStat.currentHp <= 0)
             {
                 if (stateAbnormality)
                 {
-                    currentHp = 1;
+                    playerStat.currentHp = 1;
                 }
                 else
                 {
@@ -335,9 +328,9 @@ public class Player : MonoBehaviour
             UIManager.Instance.UpdatePlayerHPUI(true);
         }
     }
-    public void GiveDamage(ICanGetDamagableEnemy targetEnemy, int minDamage, int maxDamage, float stunTime = 1, float knockBackPower = 20, bool isKnockBack = true)
+    public void GiveDamage(ICanGetDamagableEnemy targetEnemy, float minDamage, float maxDamage, float stunTime = 1, float knockBackPower = 20, bool isKnockBack = true)
     {
-        (int, bool) damage;
+        (float, bool) damage;
         damage.Item1 = Random.Range(minDamage, maxDamage + 1);
         damage.Item2 = false;
 
@@ -345,9 +338,9 @@ public class Player : MonoBehaviour
 
         targetEnemy.GetDamage(damage.Item1, damage.Item2, isKnockBack, stunTime > 0, true, knockBackPower, stunTime);
     }
-    public void Mag_GiveDamage(ICanGetDamagableEnemy targetEnemy, int minDamage, int maxDamage, float magnification, float stunTime = 1, float knockBackPower = 20, bool isKnockBack = true)
+    public void Mag_GiveDamage(ICanGetDamagableEnemy targetEnemy, float minDamage, float maxDamage, float magnification, float stunTime = 1, float knockBackPower = 20, bool isKnockBack = true)
     {
-        (int, bool) damage;
+        (float, bool) damage;
         damage.Item1 = Random.Range(minDamage, maxDamage + 1);
         damage.Item2 = false;
 
@@ -357,9 +350,9 @@ public class Player : MonoBehaviour
 
         targetEnemy.GetDamage(damage.Item1, damage.Item2, isKnockBack, stunTime > 0, true, knockBackPower, stunTime);
     }
-    public (int, bool) CriticalCheck(int damage)
+    public (float, bool) CriticalCheck(float damage)
     {
-        int n_damage = damage;
+        float n_damage = damage;
         bool isCritical = false;
 
         float checkRate = 0f;
@@ -381,11 +374,11 @@ public class Player : MonoBehaviour
         {
             if (healAmount > 0)
             {
-                currentHp += healAmount;
+                playerStat.currentHp += healAmount;
 
-                if (currentHp > playerStat.MaxHp)
+                if (playerStat.currentHp > playerStat.MaxHp)
                 {
-                    currentHp = playerStat.MaxHp;
+                    playerStat.currentHp = playerStat.MaxHp;
                 }
 
                 UIManager.Instance.UpdatePlayerHPUI();
@@ -427,11 +420,11 @@ public class Player : MonoBehaviour
         {
             speedSlowStart = true;
 
-            originEternalSpeed = playerStat.eternalStat.speed;
-            originAdditionalSpeed = playerStat.additionalEternalStat.speed;
+            originEternalSpeed = playerStat.eternalStat.speed.statValue;
+            originAdditionalSpeed = playerStat.additionalEternalStat.speed.statValue;
 
-            playerStat.eternalStat.speed = 0.1f;
-            playerStat.additionalEternalStat.speed = 0f;
+            playerStat.eternalStat.speed.statValue = 0.1f;
+            playerStat.additionalEternalStat.speed.statValue = 0f;
         }
     }
     private void StopPlayerSlow()
@@ -440,8 +433,8 @@ public class Player : MonoBehaviour
         {
             speedSlowStart = false;
 
-            playerStat.eternalStat.speed = originEternalSpeed;
-            playerStat.additionalEternalStat.speed = originAdditionalSpeed;
+            playerStat.eternalStat.speed.statValue = originEternalSpeed;
+            playerStat.additionalEternalStat.speed.statValue = originAdditionalSpeed;
         }
     }
     private void SetActiveFalse()
@@ -453,7 +446,7 @@ public class Player : MonoBehaviour
         playerStat.additionalEternalStat = new EternalStat();
 
         playerState.IsDead = false;
-        currentHp = playerStat.MaxHp;
+        playerStat.currentHp = playerStat.MaxHp;
 
         UIManager.Instance.UpdatePlayerHPUI();
 

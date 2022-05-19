@@ -154,7 +154,8 @@ public class PlayerDrainCollider : MonoBehaviour
                 EventManager.TriggerEvent("TryDrain", other.transform.position, true);
 
                 Debug.Log("Do Drain");
-                
+
+                //UIManager.Instance.RequestLogMsg(enemy.Get);
             }
             else if(enemy != null) // 흡수 실패
             {

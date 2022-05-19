@@ -72,6 +72,10 @@ namespace Enemy
         public float playerAnimationSpeed = 1.2f;
         public float startAttackDelay = 0f;
         public float noAttackTime = 2f;
+        public float attackPower = 10;
+        public float damagedValue;
+        public float maxHP = 30;
+        public float hp = 30;
 
         public bool isDamaged = false;
         public bool isAttack = false;
@@ -85,10 +89,6 @@ namespace Enemy
         public bool isNoStun = false;
         public bool isNoAttack = false;
 
-        public int attackPower = 10;
-        public int damagedValue;
-        public int maxHP = 30;
-        public int hp = 30;
         public int minAttackCount = 0;
         public int maxAttackCount = 0;
     }

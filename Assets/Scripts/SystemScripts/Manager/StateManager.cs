@@ -14,7 +14,7 @@ public class StateManager : SingletonClass<StateManager>
     private Dictionary<string, BuffSlot> buffSlotDic = new Dictionary<string, BuffSlot>(); //왼 위 적용중인 버프 아이콘들
 
 
-    public bool IsPlayerFullHP => SlimeGameManager.Instance.Player.CurrentHp == SlimeGameManager.Instance.Player.PlayerStat.MaxHp;
+    public bool IsPlayerFullHP => SlimeGameManager.Instance.Player.PlayerStat.currentHp == SlimeGameManager.Instance.Player.PlayerStat.MaxHp;
     public bool IsPlayerNoImpr
     {
         get
