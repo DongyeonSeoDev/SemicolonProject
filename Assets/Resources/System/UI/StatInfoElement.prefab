@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8268666277484178456}
   - component: {fileID: 8268666277484178439}
   m_Layer: 5
-  m_Name: UsedStatText
+  m_Name: UsedStatPointText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -449,3 +449,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9490ec3af5665ab47abe1895c788e65f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  usedStatPointTxt: {fileID: 8268666277484178439}
+  curStatTxt: {fileID: 8268666277674441151}
+  statNameTxt: {fileID: 8268666277978502186}
+  statUpBtn: {fileID: 8268666278075833770}

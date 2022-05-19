@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 [Serializable]
 public class Stat
@@ -6,7 +7,8 @@ public class Stat
     public int currentStatPoint;   //현재 가지고 있는 스탯 포인트
     public int accumulateStatPoint;  //지금까지 모은 누적 스탯포인트
     public float currentHp;  //현재 체력
-    public float currentExp;  //현재 경험치
+    public float currentExp;  //현재 스탯 포인트 경험치
+    public float maxExp; //최대 스탯포인트 경험치
     public EternalStat eternalStat = new EternalStat();  //기본 영구 스탯
     public EternalStat additionalEternalStat = new EternalStat();  //영구 스탯(추가 능력치)
     public ChoiceStat choiceStat = new ChoiceStat();  //기본 선택 스탯
@@ -55,12 +57,15 @@ public class Stat
 }
 
 [Serializable]
-public class StatElement<T>  // 메모(이거 확인하면 이 주석 지우고) : string 넣어서 그냥 class로 바꿈.
+public class StatElement
 {
-    public T statValue;
+    public ushort id;
+    public float statValue;  //일단 정수만 쓰이더라도 타입은 다 float으로 해준다
     public bool isUnlock;  //획득한 스탯인가
     public int usedStatPoint;  //이 스탯에 사용된 스탯포인트 (Stat클래스의 eternalStat에서만 쓰일듯함)
-    public string statName;  //이 스탯의 이름 (예 : 체력, 공격력, 방어력)
+    public string statName;  //이 스탯의 이름 (예 : 체력, 공격력, 방어력) --> 스탯 요소 찾을 때 dic 쓸건데 키값으로 이걸 할까? 아니면 새로 string변수 추가해서 영어로 된걸 키값으로 쓸가?       
+
+    public List<Pair<float,string>> emotionRangeList;  //스탯 수치에 따른 감정
 }
 
 [Serializable]
@@ -114,11 +119,11 @@ public class EternalStat
 public class ChoiceStat
 {
     //public int overweight; // 과체중
-    public StatElement<int> patience; // 인내력
+    public StatElement patience; // 인내력
 
-    public StatElement<int> momentom; // 추진력
+    public StatElement momentom; // 추진력
 
-    public StatElement<int> endurance; // 맷집
+    public StatElement endurance; // 맷집
 
     //public int luck; // 운
 

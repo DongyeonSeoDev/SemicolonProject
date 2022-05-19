@@ -145,15 +145,19 @@ public class SettingPhase : TutorialPhase
 
 public class AbsorptionPhase : TutorialPhase
 {
+
+    private float startTime;
+
     public AbsorptionPhase(Action end)
     {
         IsEnded = false;
         endAction = end;
+        startTime = Time.unscaledTime + 1f;
     }
 
     public override void DoPhaseUpdate()
     {
-        if(Input.GetKeyDown(KeySetting.keyDict[KeyAction.SPECIALATTACK2]))
+        if(Input.GetKeyDown(KeySetting.keyDict[KeyAction.SPECIALATTACK2]) && startTime < Time.unscaledTime)
         {
             End();
         }

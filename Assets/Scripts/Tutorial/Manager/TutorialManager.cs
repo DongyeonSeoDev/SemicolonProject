@@ -163,6 +163,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             if (!StoredData.HasValueKey("Tuto_CanDrainObject1"))
             {
                 StoredData.SetValueKey("Tuto_CanDrainObject1", true);
+                SlimeGameManager.Instance.Player.PlayerInput.CantPlaySkill2 = true;
 
                 TimeManager.LerpTime(2f, 0f, () =>
                 {
@@ -172,6 +173,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                         emphRectTr.gameObject.SetActive(false);
                         TimeManager.TimeResume(() =>
                         {
+                            SlimeGameManager.Instance.Player.PlayerInput.CantPlaySkill2 = false;
                             Global.GetSlimePos.GetComponent<PlayerDrain>().DoDrainByTuto();
                             Destroy(Global.GetSlimePos.GetComponentInChildren<PlayerCanDrainCheckCollider>().gameObject);
 
