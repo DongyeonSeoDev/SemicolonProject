@@ -97244,6 +97244,7 @@ MonoBehaviour:
   - {fileID: 1728279447259921967}
   - {fileID: 1862273523188956872}
   choiceStatTexts: []
+  playerStatUI: {fileID: 711549148}
   canvasParent: {fileID: 9044744882917293734}
   gameCanvases:
   - {fileID: 3598090946973797072}
@@ -97963,6 +97964,7 @@ MonoBehaviour:
         accumulateStatPoint: 0
         currentHp: 0
         currentExp: 0
+        maxExp: 0
         eternalStat:
           maxHp: 0
           minDamage: 0

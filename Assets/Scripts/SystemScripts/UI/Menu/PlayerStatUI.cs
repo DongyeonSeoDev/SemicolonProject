@@ -8,7 +8,7 @@ public class PlayerStatUI : MonoBehaviour
     private Stat playerStat;
 
     public Pair<Image,Text> statExpPair; // 1: 스탯포인트 경험치 게이지바, 2: 가지고 있는 스탯포인트 텍스트
-    private Dictionary<string, StatInfoElement> statInfoUIDic = new Dictionary<string, StatInfoElement>();
+    private Dictionary<ushort, StatInfoElement> statInfoUIDic = new Dictionary<ushort, StatInfoElement>();
    
     public Dictionary<ushort, Pair<StatElement,StatElement>> eternalStatDic = new Dictionary<ushort, Pair<StatElement, StatElement>>(); // 1: 디폴트, 2: 추가
     //선택스탯쪽은 나중에
@@ -24,7 +24,7 @@ public class PlayerStatUI : MonoBehaviour
     private void DicInit()
     {
         playerStat = SlimeGameManager.Instance.Player.PlayerStat;
-        
+        //여기서 스탯 정보를 Dic에 담는다
     }
 
     public void UpdateAllStatUI()
@@ -35,7 +35,7 @@ public class PlayerStatUI : MonoBehaviour
         }
     }
 
-    public void UpdateStatUI(string id)
+    public void UpdateStatUI(ushort id)
     {
         statInfoUIDic[id].UpdateUI();
     }
@@ -56,5 +56,15 @@ public class PlayerStatUI : MonoBehaviour
     public void UpdateCurStatPoint(bool statUpMark)
     {
         statExpPair.second.text = statUpMark ? string.Concat(playerStat.currentStatPoint, "<color=red>-", needStatPoint,"</color>") : playerStat.currentStatPoint.ToString();
+    }
+
+    public void OnMouseEnterStatUpBtn(int needStatPoint)
+    {
+        if(needStatPoint == -1)
+        {
+            UpdateCurStatPoint(false);
+            return;
+        }  
+        this.needStatPoint = needStatPoint;
     }
 }
