@@ -284,11 +284,18 @@ public class PlayerInput : MonoBehaviour
                             skill0ButtonDowned = true;
                         }
 
-                        if (Input.GetMouseButtonUp(0) || (skill0ButtonDowned && !Input.GetMouseButton(0)))
+                        if (Input.GetMouseButtonUp(0))
                         {
                             skill0ButtonDowned = false;
 
                             EventManager.TriggerEvent("SkillButtonUp0");
+                        }
+
+                        if((skill0ButtonDowned && !Input.GetMouseButton(0)))
+                        {
+                            skill0ButtonDowned = false;
+
+                            EventManager.TriggerEvent("SkillCancel0");
                         }
                     }
                 }
@@ -308,11 +315,18 @@ public class PlayerInput : MonoBehaviour
                             skill2ButtonDowned = true;
                         }
 
-                        if (Input.GetKeyUp(KeySetting.keyDict[KeyAction.SPECIALATTACK2]) || (skill2ButtonDowned && !Input.GetKey(KeySetting.keyDict[KeyAction.SPECIALATTACK2])))
+                        if (Input.GetKeyUp(KeySetting.keyDict[KeyAction.SPECIALATTACK2]))
                         {
                             skill2ButtonDowned = false;
 
                             EventManager.TriggerEvent("SkillButtonUp2");
+                        }
+
+                        if((skill2ButtonDowned && !Input.GetKey(KeySetting.keyDict[KeyAction.SPECIALATTACK2])))
+                        {
+                            skill2ButtonDowned = false;
+
+                            EventManager.TriggerEvent("SkillCancel2");
                         }
                     }
                 }
@@ -338,11 +352,18 @@ public class PlayerInput : MonoBehaviour
                         isDoSkill1 = true;
                     }
 
-                    if (Input.GetKeyUp(KeySetting.keyDict[KeyAction.SPECIALATTACK1]) || (skill1ButtonDowned && !Input.GetKey(KeySetting.keyDict[KeyAction.SPECIALATTACK1])))
+                    if (Input.GetKeyUp(KeySetting.keyDict[KeyAction.SPECIALATTACK1]))
                     {
                         skill1ButtonDowned = false;
 
                         EventManager.TriggerEvent("SkillButtonUp1");
+                    }
+
+                    if((skill1ButtonDowned && !Input.GetKey(KeySetting.keyDict[KeyAction.SPECIALATTACK1])))
+                    {
+                        skill1ButtonDowned = false;
+
+                        EventManager.TriggerEvent("SkillCancel1");
                     }
                 }
             }

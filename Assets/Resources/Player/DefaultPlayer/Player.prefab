@@ -113,7 +113,7 @@ MonoBehaviour:
         upStatValue: 0
         isUnlock: 0
         usedStatPoint: 0
-        statName: "\uACF5\uACA9\uC18D"
+        statName: "\uACF5\uACA9\uC18D\uB3C4"
         emotionRangeList: []
       criticalRate:
         id: 40

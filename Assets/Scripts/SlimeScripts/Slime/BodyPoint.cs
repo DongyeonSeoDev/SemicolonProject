@@ -131,6 +131,7 @@ public class BodyPoint : MonoBehaviour
             EventManager.StartListening("SetDrainTime", (Action<float>)PlayerDrain);
             EventManager.StartListening("PlayerShoot", SetMoveToMiddleTimer);
             EventManager.StartListening("PlayerCharging", SetMoveToMiddleTimer);
+            EventManager.StartListening("PlayerChargingCancel", SetMoveToMiddleTimerZero);
             EventManager.StartListening("PlayerBodySlap", (Action<float>)PlayerBodySlap);
         }
     }
@@ -157,6 +158,7 @@ public class BodyPoint : MonoBehaviour
         {
             EventManager.StopListening("PlayerShoot", SetMoveToMiddleTimer);
             EventManager.StopListening("PlayerCharging", SetMoveToMiddleTimer);
+            EventManager.StopListening("PlayerChargingCancel", SetMoveToMiddleTimerZero);
             EventManager.StopListening("PlayerBodySlap", (Action<float>)PlayerBodySlap);
         }
     }
@@ -252,6 +254,12 @@ public class BodyPoint : MonoBehaviour
     private void SetMoveToMiddleTimer()
     {
         moveToMiddleTimer = moveToMiddleTime;
+    }
+    private void SetMoveToMiddleTimerZero()
+    {
+        moveToMiddleTimer = 0f;
+
+        isMoveToMiddle = false;
     }
     private void PlayerBodySlap(float bodySlapTime)
     {

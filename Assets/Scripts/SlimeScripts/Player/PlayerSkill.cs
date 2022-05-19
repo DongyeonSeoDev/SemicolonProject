@@ -28,11 +28,13 @@ public abstract class PlayerSkill : PlayerAction
 
         EventManager.StartListening("StartSkill" + skillIdx, DoSkill);
         EventManager.StartListening("SkillButtonUp" + skillIdx, SkillButtonUp);
+        EventManager.StartListening("SkillCancel" + skillIdx, SkillCancel);
     }
     public virtual void OnDisable()
     {
         EventManager.StopListening("StartSkill" + skillIdx, DoSkill);
         EventManager.StopListening("SkillButtonUp" + skillIdx, SkillButtonUp);
+        EventManager.StopListening("SkillCancel" + skillIdx, SkillCancel);
     }
 
     public void WhenChangeSkill()
@@ -44,6 +46,10 @@ public abstract class PlayerSkill : PlayerAction
         
     }
     public virtual void SkillButtonUp()
+    {
+
+    }
+    public virtual void SkillCancel()
     {
 
     }

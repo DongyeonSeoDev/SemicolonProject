@@ -143,7 +143,6 @@ public class PlayerBodySlap : PlayerSkill
 
             playerState.Chargning = true;
 
-            bodySlapMoveVec = playerInput.LastMoveVector;
             currentBodySlapTime = bodySlapTime;
 
             startCharging = true;
@@ -237,6 +236,20 @@ public class PlayerBodySlap : PlayerSkill
                 CinemachineCameraScript.Instance.Shake(whenBodySlapCrashShakeData);
             }
         }
+    }
+    public override void SkillCancel()
+    {
+        base.SkillCancel();
+
+        EventManager.TriggerEvent("PlayerChargingCancel");
+
+        canBodySlap = true;
+
+        bodySlapLine.gameObject.SetActive(false);
+
+        playerState.Chargning = false;
+
+        StopBodySlap();
     }
     private void StartBodySlap()
     {
