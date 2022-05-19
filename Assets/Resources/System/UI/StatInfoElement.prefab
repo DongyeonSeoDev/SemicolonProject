@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8268666277484178456}
   - component: {fileID: 8268666277484178439}
   m_Layer: 5
-  m_Name: UsedStatPointText
+  m_Name: StatLVText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -249,6 +249,7 @@ GameObject:
   - component: {fileID: 8268666278075833772}
   - component: {fileID: 8268666278075833771}
   - component: {fileID: 8268666278075833770}
+  - component: {fileID: 8607258303998384096}
   m_Layer: 5
   m_Name: StatUpButton
   m_TagString: Untagged
@@ -357,6 +358,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &8607258303998384096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8268666278075833768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
 --- !u!1 &8268666278276601052
 GameObject:
   m_ObjectHideFlags: 0
@@ -449,7 +463,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9490ec3af5665ab47abe1895c788e65f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  usedStatPointTxt: {fileID: 8268666277484178439}
+  transitionEnable: 1
+  statLvTxt: {fileID: 8268666277484178439}
   curStatTxt: {fileID: 8268666277674441151}
   statNameTxt: {fileID: 8268666277978502186}
   statUpBtn: {fileID: 8268666278075833770}

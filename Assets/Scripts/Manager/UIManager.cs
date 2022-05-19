@@ -147,6 +147,8 @@ public partial class UIManager : MonoSingleton<UIManager>
     public Text[] statTexts; //영구 스탯
     public Text[] choiceStatTexts;  //선택 스탯
 
+    public PlayerStatUI playerStatUI;
+
     #endregion
 
     public GameUI CurrentReConfirmUI { get; set; }
@@ -544,7 +546,10 @@ public partial class UIManager : MonoSingleton<UIManager>
                     TimeManager.TimePause();
                 break;
             case UIType.STAT:  //스탯 UI 업데이트
-                UpdateStatUI();
+                playerStatUI.UpdateAllStatUI();
+                playerStatUI.UpdateStatExp(false);
+                playerStatUI.UpdateCurStatPoint(false);
+                //UpdateStatUI();
                 EffectManager.Instance.OnTopRightBtnEffect(UIType.STAT, false);
                 break;
             case UIType.MONSTERINFO_DETAIL_STAT: //몹 자세히 보기에서 추가 스탯 정보 UI 업뎃
@@ -1043,7 +1048,8 @@ public partial class UIManager : MonoSingleton<UIManager>
     #endregion
 
     #region Stat
-    public void UpdateStatUI()
+
+   /* public void UpdateStatUI()
     {
         Stat stat = sgm.Player.PlayerStat;
 
@@ -1065,7 +1071,7 @@ public partial class UIManager : MonoSingleton<UIManager>
 
         //choiceStatTexts[0].text = stat.choiceStat.endurance.ToString(); //맷집
         //choiceStatTexts[1].text = stat.choiceStat.patience.ToString(); //인내력
-    }
+    }*/
 
     public void UpdatePlayerHPInInven()
     {

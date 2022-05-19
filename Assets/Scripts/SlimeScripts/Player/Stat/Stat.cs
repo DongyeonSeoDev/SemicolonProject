@@ -12,6 +12,14 @@ public class Stat
     public EternalStat eternalStat = new EternalStat();  //기본 영구 스탯
     public EternalStat additionalEternalStat = new EternalStat();  //영구 스탯(추가 능력치)
     public ChoiceStat choiceStat = new ChoiceStat();  //기본 선택 스탯
+    
+    public void ResetAfterRegame()
+    {
+        currentStatPoint += accumulateStatPoint;
+        accumulateStatPoint = 0;
+        additionalEternalStat = new EternalStat();
+        choiceStat = new ChoiceStat();
+    }
 
     #region default stat + additional stat  property
     public float MaxHp  
@@ -63,7 +71,7 @@ public class StatElement
     public float statValue;  //일단 정수만 쓰이더라도 타입은 다 float으로 해준다
     public float upStatValue; // 특정 스탯 포인트를 투자했을 때 오를 스탯의 값
     public bool isUnlock;  //획득한 스탯인가
-    public int usedStatPoint;  //이 스탯에 사용된 스탯포인트 (Stat클래스의 eternalStat에서만 쓰일듯함)
+    public int statLv;  //스탯 레벨 (이 스탯을 몇 번 올렸는지) (Stat클래스의 eternalStat에서만 쓰일듯함)
     public string statName;  //이 스탯의 이름 (예 : 체력, 공격력, 방어력) --> 스탯 요소 찾을 때 dic 쓸건데 키값으로 이걸 할까? 아니면 새로 string변수 추가해서 영어로 된걸 키값으로 쓸가?       
 
     public List<Pair<float,string>> emotionRangeList;  //스탯 수치에 따른 감정

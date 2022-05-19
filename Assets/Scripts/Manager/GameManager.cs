@@ -64,6 +64,7 @@ public partial class GameManager : MonoSingleton<GameManager>
     {
         MonsterCollection.Instance.Save();
         KeyActionManager.Instance.SaveKey();
+        savedData.userInfo.playerStat = SlimeGameManager.Instance.Player.PlayerStat;
         saveData.Save();
     }
 

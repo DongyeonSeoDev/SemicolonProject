@@ -8,8 +8,9 @@ public class PlayerStatUI : MonoBehaviour
     private Stat playerStat;
 
     public Pair<Image,Text> statExpPair; // 1: 스탯포인트 경험치 게이지바, 2: 가지고 있는 스탯포인트 텍스트
+    public Pair<GameObject, Transform> statInfoUIPair;
+
     private Dictionary<ushort, StatInfoElement> statInfoUIDic = new Dictionary<ushort, StatInfoElement>();
-   
     public Dictionary<ushort, Pair<StatElement,StatElement>> eternalStatDic = new Dictionary<ushort, Pair<StatElement, StatElement>>(); // 1: 디폴트, 2: 추가
     //선택스탯쪽은 나중에
 
@@ -18,16 +19,49 @@ public class PlayerStatUI : MonoBehaviour
 
     private void Start()
     {
-        DicInit();
+        InitSet();
     }
 
-    private void DicInit()
+    private void InitSet()
     {
+        if (GameManager.Instance.savedData.tutorialInfo.isEnded)
+        {
+            SlimeGameManager.Instance.Player.PlayerStat = GameManager.Instance.savedData.userInfo.playerStat;
+        }
+
         playerStat = SlimeGameManager.Instance.Player.PlayerStat;
-        //여기서 스탯 정보를 Dic에 담는다
+
+        eternalStatDic.Add(NGlobal.MaxHpID, new Pair<StatElement, StatElement>(playerStat.eternalStat.maxHp, playerStat.additionalEternalStat.maxHp));
+        eternalStatDic.Add(NGlobal.MinDamageID, new Pair<StatElement, StatElement>(playerStat.eternalStat.minDamage, playerStat.additionalEternalStat.minDamage));
+        eternalStatDic.Add(NGlobal.MaxDamageID, new Pair<StatElement, StatElement>(playerStat.eternalStat.maxDamage, playerStat.additionalEternalStat.maxDamage));
+        eternalStatDic.Add(NGlobal.DefenseID, new Pair<StatElement, StatElement>(playerStat.eternalStat.defense, playerStat.additionalEternalStat.defense));
+        eternalStatDic.Add(NGlobal.IntellectID, new Pair<StatElement, StatElement>(playerStat.eternalStat.intellect, playerStat.additionalEternalStat.intellect));
+        eternalStatDic.Add(NGlobal.SpeedID, new Pair<StatElement, StatElement>(playerStat.eternalStat.speed, playerStat.additionalEternalStat.speed));
+        eternalStatDic.Add(NGlobal.AttackSpeedID, new Pair<StatElement, StatElement>(playerStat.eternalStat.attackSpeed, playerStat.additionalEternalStat.attackSpeed));
+        eternalStatDic.Add(NGlobal.CriticalRate, new Pair<StatElement, StatElement>(playerStat.eternalStat.criticalRate, playerStat.additionalEternalStat.criticalRate));
+        eternalStatDic.Add(NGlobal.CriticalDamage, new Pair<StatElement, StatElement>(playerStat.eternalStat.criticalDamage, playerStat.additionalEternalStat.criticalDamage));
+
+        foreach(ushort key in eternalStatDic.Keys)
+        {
+            StatInfoElement el = Instantiate(statInfoUIPair.first, statInfoUIPair.second).GetComponent<StatInfoElement>();
+            el.InitSet(eternalStatDic[key].first);
+            statInfoUIDic.Add(key, el);
+        }
+
     }
 
-    public void UpdateAllStatUI()
+    public float GetCurrentPlayerStat(ushort id)  //해당 스탯의 최종 수치를 반환  
+    {
+        if(eternalStatDic.ContainsKey(id))
+        {
+            return eternalStatDic[id].first.statValue + eternalStatDic[id].second.statValue;
+        }
+
+        Debug.LogWarning("Not Exist ID : " + id);
+        return 0f;
+    }
+
+    public void UpdateAllStatUI()  //모든 스탯의 현재 스탯과 스탯포인트 사용 횟수를 업뎃함
     {
         foreach(StatInfoElement item in statInfoUIDic.Values)
         {
@@ -35,12 +69,12 @@ public class PlayerStatUI : MonoBehaviour
         }
     }
 
-    public void UpdateStatUI(ushort id)
+    public void UpdateStatUI(ushort id)  //선택한 스탯의 현재 스탯과 스탯포인트 사용 횟수를 업뎃함
     {
         statInfoUIDic[id].UpdateUI();
     }
 
-    public void UpdateStatExp(bool tweening)
+    public void UpdateStatExp(bool tweening)  //스탯포인트 경험치바를 업뎃함
     {
         float rate = playerStat.currentExp / playerStat.maxExp;
         if(tweening)
@@ -53,18 +87,29 @@ public class PlayerStatUI : MonoBehaviour
         }
     }
 
-    public void UpdateCurStatPoint(bool statUpMark)
+    public void UpdateCurStatPoint(bool statUpMark) //현재 가지고있는 스탯포인트 업뎃
     {
         statExpPair.second.text = statUpMark ? string.Concat(playerStat.currentStatPoint, "<color=red>-", needStatPoint,"</color>") : playerStat.currentStatPoint.ToString();
     }
 
-    public void OnMouseEnterStatUpBtn(int needStatPoint)
+    public void OnMouseEnterStatUpBtn(int needStatPoint)  //어떤 스탯의 스탯 올리기 버튼에 마우스대거나 뗄 때
     {
-        if(needStatPoint == -1)
-        {
-            UpdateCurStatPoint(false);
-            return;
-        }  
         this.needStatPoint = needStatPoint;
+        UpdateCurStatPoint(needStatPoint != -1);
+    }
+
+    public bool CanStatUp(ushort id) => Mathf.Pow(2, eternalStatDic[id].first.statLv) <= playerStat.currentStatPoint;
+
+    public void StatUp(ushort id)
+    {
+        UpdateCurStatPoint(false);
+        StatElement stat = eternalStatDic[id].first;
+        int value = (int)Mathf.Pow(2, stat.statLv);
+        playerStat.currentStatPoint -= value;
+        playerStat.accumulateStatPoint += value;
+        stat.statLv++;
+        stat.statValue += stat.upStatValue;
+        //eternalStatDic[id].second.statValue += stat.upStatValue;
+
     }
 }
