@@ -16,7 +16,6 @@ public class PlayerStatUI : MonoBehaviour
 
     private int needStatPoint; //스탯 올리기 버튼에 마우스 댈 때 올리기 위해서 필요한 스탯 포인트 저장
 
-
     private void Start()
     {
         InitSet();
@@ -24,12 +23,18 @@ public class PlayerStatUI : MonoBehaviour
 
     private void InitSet()
     {
+        playerStat = SlimeGameManager.Instance.Player.PlayerStat;
+
         if (GameManager.Instance.savedData.tutorialInfo.isEnded)
         {
-            SlimeGameManager.Instance.Player.PlayerStat = GameManager.Instance.savedData.userInfo.playerStat;
+            playerStat = GameManager.Instance.savedData.userInfo.playerStat;
+            Debug.Log("Player Stat is Loaded");
+            SlimeGameManager.Instance.Player.PlayerStat = playerStat;
         }
-
-        playerStat = SlimeGameManager.Instance.Player.PlayerStat;
+        else
+        {
+            GameManager.Instance.savedData.userInfo.playerStat = playerStat;
+        }
 
         eternalStatDic.Add(NGlobal.MaxHpID, new Pair<StatElement, StatElement>(playerStat.eternalStat.maxHp, playerStat.additionalEternalStat.maxHp));
         eternalStatDic.Add(NGlobal.MinDamageID, new Pair<StatElement, StatElement>(playerStat.eternalStat.minDamage, playerStat.additionalEternalStat.minDamage));
@@ -47,7 +52,6 @@ public class PlayerStatUI : MonoBehaviour
             el.InitSet(eternalStatDic[key].first);
             statInfoUIDic.Add(key, el);
         }
-
     }
 
     public float GetCurrentPlayerStat(ushort id)  //해당 스탯의 최종 수치를 반환  
@@ -111,5 +115,25 @@ public class PlayerStatUI : MonoBehaviour
         stat.statValue += stat.upStatValue;
         //eternalStatDic[id].second.statValue += stat.upStatValue;
 
+    }
+
+    public void AddPlayerStatPointExp(float value)
+    {
+        playerStat.currentExp += value;
+        if(playerStat.currentExp >= playerStat.maxExp)
+        {
+            int point = Mathf.FloorToInt(playerStat.currentExp / playerStat.maxExp);
+            playerStat.currentExp -= point * playerStat.maxExp;
+            playerStat.currentStatPoint += point;
+        }
+    }
+
+    public void Save()
+    {
+        //튜토리얼이 끝났다면 플레이어의 스탯정보를 저장
+        /*if (GameManager.Instance.savedData.tutorialInfo.isEnded)
+        {
+            GameManager.Instance.savedData.userInfo.playerStat = playerStat;
+        }*/
     }
 }

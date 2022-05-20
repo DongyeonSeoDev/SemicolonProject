@@ -19,6 +19,7 @@ public class Stat
         accumulateStatPoint = 0;
         additionalEternalStat = new EternalStat();
         choiceStat = new ChoiceStat();
+        eternalStat.Reset();
     }
 
     #region default stat + additional stat  property
@@ -74,7 +75,10 @@ public class StatElement
     public int statLv;  //스탯 레벨 (이 스탯을 몇 번 올렸는지) (Stat클래스의 eternalStat에서만 쓰일듯함)
     public string statName;  //이 스탯의 이름 (예 : 체력, 공격력, 방어력) --> 스탯 요소 찾을 때 dic 쓸건데 키값으로 이걸 할까? 아니면 새로 string변수 추가해서 영어로 된걸 키값으로 쓸가?       
 
-    public List<Pair<float,string>> emotionRangeList;  //스탯 수치에 따른 감정
+    public List<Pair<float,string>> emotionRangeList = new List<Pair<float, string>>();  //스탯 수치에 따른 감정
+
+    public StatElement() { }
+
 }
 
 [Serializable]
@@ -122,6 +126,30 @@ public class EternalStat
         criticalRate.statValue = cr;
         criticalDamage.statValue = cd;
     }
+
+    public void Reset()
+    {
+        maxHp.statValue -= maxHp.statLv * maxHp.upStatValue;
+        minDamage.statValue -= minDamage.statLv * minDamage.upStatValue;
+        maxDamage.statValue -= maxDamage.statLv * maxDamage.upStatValue;
+        defense.statValue -= defense.statLv * defense.upStatValue;
+        intellect.statValue -= intellect.statLv * intellect.upStatValue;
+        speed.statValue -= speed.statLv * speed.upStatValue;
+        attackSpeed.statValue -= attackSpeed.statLv * attackSpeed.upStatValue;
+        criticalRate.statValue -= criticalRate.statLv * criticalRate.upStatValue;
+        criticalDamage.statValue -= criticalDamage.statLv * criticalDamage.upStatValue;
+
+        maxHp.statLv = 0;
+        minDamage.statLv = 0;
+        maxDamage.statLv = 0;
+        defense.statLv = 0;
+        intellect.statLv = 0;
+        speed.statLv = 0;
+        attackSpeed.statLv = 0;
+        criticalRate.statLv = 0;
+        criticalDamage.statLv = 0;
+    }
+
 }
 
 [Serializable]

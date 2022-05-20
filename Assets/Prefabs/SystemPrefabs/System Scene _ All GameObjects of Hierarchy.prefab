@@ -10641,8 +10641,6 @@ MonoBehaviour:
       bgmSize: 0.6
       soundEffectSize: 0.7
     userInfo:
-      currentHp: 0
-      currentExperience: 0
       playerStat:
         currentStatPoint: 0
         accumulateStatPoint: 0
@@ -10655,7 +10653,7 @@ MonoBehaviour:
             statValue: 0
             upStatValue: 0
             isUnlock: 0
-            usedStatPoint: 0
+            statLv: 0
             statName: 
             emotionRangeList: []
           minDamage:
@@ -10663,7 +10661,7 @@ MonoBehaviour:
             statValue: 0
             upStatValue: 0
             isUnlock: 0
-            usedStatPoint: 0
+            statLv: 0
             statName: 
             emotionRangeList: []
           maxDamage:
@@ -10671,7 +10669,7 @@ MonoBehaviour:
             statValue: 0
             upStatValue: 0
             isUnlock: 0
-            usedStatPoint: 0
+            statLv: 0
             statName: 
             emotionRangeList: []
           defense:
@@ -10679,7 +10677,7 @@ MonoBehaviour:
             statValue: 0
             upStatValue: 0
             isUnlock: 0
-            usedStatPoint: 0
+            statLv: 0
             statName: 
             emotionRangeList: []
           intellect:
@@ -10687,7 +10685,7 @@ MonoBehaviour:
             statValue: 0
             upStatValue: 0
             isUnlock: 0
-            usedStatPoint: 0
+            statLv: 0
             statName: 
             emotionRangeList: []
           speed:
@@ -10695,7 +10693,7 @@ MonoBehaviour:
             statValue: 0
             upStatValue: 0
             isUnlock: 0
-            usedStatPoint: 0
+            statLv: 0
             statName: 
             emotionRangeList: []
           attackSpeed:
@@ -10703,7 +10701,7 @@ MonoBehaviour:
             statValue: 0
             upStatValue: 0
             isUnlock: 0
-            usedStatPoint: 0
+            statLv: 0
             statName: 
             emotionRangeList: []
           criticalRate:
@@ -10711,7 +10709,7 @@ MonoBehaviour:
             statValue: 0
             upStatValue: 0
             isUnlock: 0
-            usedStatPoint: 0
+            statLv: 0
             statName: 
             emotionRangeList: []
           criticalDamage:
@@ -10719,7 +10717,7 @@ MonoBehaviour:
             statValue: 0
             upStatValue: 0
             isUnlock: 0
-            usedStatPoint: 0
+            statLv: 0
             statName: 
             emotionRangeList: []
         additionalEternalStat:
@@ -10728,7 +10726,7 @@ MonoBehaviour:
             statValue: 0
             upStatValue: 0
             isUnlock: 0
-            usedStatPoint: 0
+            statLv: 0
             statName: 
             emotionRangeList: []
           minDamage:
@@ -10736,7 +10734,7 @@ MonoBehaviour:
             statValue: 0
             upStatValue: 0
             isUnlock: 0
-            usedStatPoint: 0
+            statLv: 0
             statName: 
             emotionRangeList: []
           maxDamage:
@@ -10744,7 +10742,7 @@ MonoBehaviour:
             statValue: 0
             upStatValue: 0
             isUnlock: 0
-            usedStatPoint: 0
+            statLv: 0
             statName: 
             emotionRangeList: []
           defense:
@@ -10752,7 +10750,7 @@ MonoBehaviour:
             statValue: 0
             upStatValue: 0
             isUnlock: 0
-            usedStatPoint: 0
+            statLv: 0
             statName: 
             emotionRangeList: []
           intellect:
@@ -10760,7 +10758,7 @@ MonoBehaviour:
             statValue: 0
             upStatValue: 0
             isUnlock: 0
-            usedStatPoint: 0
+            statLv: 0
             statName: 
             emotionRangeList: []
           speed:
@@ -10768,7 +10766,7 @@ MonoBehaviour:
             statValue: 0
             upStatValue: 0
             isUnlock: 0
-            usedStatPoint: 0
+            statLv: 0
             statName: 
             emotionRangeList: []
           attackSpeed:
@@ -10776,7 +10774,7 @@ MonoBehaviour:
             statValue: 0
             upStatValue: 0
             isUnlock: 0
-            usedStatPoint: 0
+            statLv: 0
             statName: 
             emotionRangeList: []
           criticalRate:
@@ -10784,7 +10782,7 @@ MonoBehaviour:
             statValue: 0
             upStatValue: 0
             isUnlock: 0
-            usedStatPoint: 0
+            statLv: 0
             statName: 
             emotionRangeList: []
           criticalDamage:
@@ -10792,7 +10790,7 @@ MonoBehaviour:
             statValue: 0
             upStatValue: 0
             isUnlock: 0
-            usedStatPoint: 0
+            statLv: 0
             statName: 
             emotionRangeList: []
         choiceStat:
@@ -10801,7 +10799,7 @@ MonoBehaviour:
             statValue: 0
             upStatValue: 0
             isUnlock: 0
-            usedStatPoint: 0
+            statLv: 0
             statName: 
             emotionRangeList: []
           momentom:
@@ -10809,7 +10807,7 @@ MonoBehaviour:
             statValue: 0
             upStatValue: 0
             isUnlock: 0
-            usedStatPoint: 0
+            statLv: 0
             statName: 
             emotionRangeList: []
           endurance:
@@ -10817,7 +10815,7 @@ MonoBehaviour:
             statValue: 0
             upStatValue: 0
             isUnlock: 0
-            usedStatPoint: 0
+            statLv: 0
             statName: 
             emotionRangeList: []
       currentBodyID: 
@@ -37184,7 +37182,7 @@ MonoBehaviour:
   m_Interactable: 1
   m_TargetGraphic: {fileID: 2888659041480771614}
   m_HandleRect: {fileID: 2888659041480771609}
-  m_Direction: 3
+  m_Direction: 2
   m_Value: 0
   m_Size: 1
   m_NumberOfSteps: 0
@@ -72434,7 +72432,7 @@ MonoBehaviour:
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
+        statLv: 0
         statName: 
         emotionRangeList: []
       minDamage:
@@ -72442,7 +72440,7 @@ MonoBehaviour:
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
+        statLv: 0
         statName: 
         emotionRangeList: []
       maxDamage:
@@ -72450,7 +72448,7 @@ MonoBehaviour:
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
+        statLv: 0
         statName: 
         emotionRangeList: []
       defense:
@@ -72458,7 +72456,7 @@ MonoBehaviour:
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
+        statLv: 0
         statName: 
         emotionRangeList: []
       intellect:
@@ -72466,7 +72464,7 @@ MonoBehaviour:
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
+        statLv: 0
         statName: 
         emotionRangeList: []
       speed:
@@ -72474,7 +72472,7 @@ MonoBehaviour:
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
+        statLv: 0
         statName: 
         emotionRangeList: []
       attackSpeed:
@@ -72482,7 +72480,7 @@ MonoBehaviour:
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
+        statLv: 0
         statName: 
         emotionRangeList: []
       criticalRate:
@@ -72490,7 +72488,7 @@ MonoBehaviour:
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
+        statLv: 0
         statName: 
         emotionRangeList: []
       criticalDamage:
@@ -72498,7 +72496,7 @@ MonoBehaviour:
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
+        statLv: 0
         statName: 
         emotionRangeList: []
     bodyImg: {fileID: 21300000, guid: 01878e98b816a8b4b8befe2f3212f51f, type: 3}
