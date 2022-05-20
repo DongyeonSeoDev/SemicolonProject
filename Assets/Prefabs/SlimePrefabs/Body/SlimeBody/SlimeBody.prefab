@@ -247,7 +247,7 @@ MonoBehaviour:
   damageMagnificationOfBodySlap: 2
   moveBackSpeed: 5
   bodySlapMoveSpeed: 30
-  offsetBodySlapMovePos: 3
+  offsetBodySlapMovePos: 10
   bodySlapTime: 0.15
   stopBodySlapTime: 1
   stopBodySlapOffset: 5
