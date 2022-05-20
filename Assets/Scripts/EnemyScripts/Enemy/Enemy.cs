@@ -172,7 +172,6 @@ namespace Enemy
                 enemyData.hp -= enemyData.damagedValue;
 
                 SetHP(true);
-                HitParticleEffect();
 
                 enemyDamagedCommand.Execute();
 
@@ -228,19 +227,9 @@ namespace Enemy
 
                 if (isShowText)
                 {
-                    EffectManager.Instance.OnDamaged(damage, critical, true, transform.position);
+                    EffectManager.Instance.OnDamaged(damage, critical, true, transform.position, enemyData.damagePosition, enemyData.damageDirection, Vector3.one);
                 }
             }
-        }
-
-        // 적이 데미지를 받았을때 이펙트
-        private void HitParticleEffect()
-        {
-            EnemyHitEffect effect = EnemyPoolManager.Instance.GetPoolObject(Type.HitEffect, enemyData.damagePosition).GetComponent<EnemyHitEffect>();
-            effect.transform.rotation = Quaternion.Euler(0f, 0f, (Mathf.Atan2(enemyData.damageDirection.y, enemyData.damageDirection.x) * Mathf.Rad2Deg) + 90f);
-            effect.transform.localScale = enemyData.effectSize;
-
-            effect.Play();
         }
 
         // 적이 죽었을때 발동되는 코드

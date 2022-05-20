@@ -41,7 +41,7 @@ namespace Enemy
                 hp = 0;
             }
 
-            EffectManager.Instance.OnDamaged(damage, critical, true, transform.position);
+            EffectManager.Instance.OnDamaged(damage, critical, true, transform.position, position, direction, Vector3.one);
 
             SetHP(true);
         }

@@ -218,7 +218,7 @@ public class Player : MonoBehaviour
 
         return true;
     }
-    public void GetDamage(float damage, bool critical = false, bool stateAbnormality = false)
+    public void GetDamage(float damage, Vector2 position, Vector2 direction, Vector3 size, bool isUseParticle = true, bool critical = false, bool stateAbnormality = false)
     {
         if ((playerState.BodySlapping && !stateAbnormality) ||
             (playerState.IsDrain && !stateAbnormality) ||
@@ -262,7 +262,7 @@ public class Player : MonoBehaviour
                 }
             }
 
-            EffectManager.Instance.OnDamaged(dm, critical, false, SlimeGameManager.Instance.CurrentPlayerBody.transform.position);
+            EffectManager.Instance.OnDamaged(dm, critical, false, SlimeGameManager.Instance.CurrentPlayerBody.transform.position, position, direction, size, isUseParticle);
             UIManager.Instance.UpdatePlayerHPUI(true);
         }
     }
@@ -273,7 +273,7 @@ public class Player : MonoBehaviour
     /// <param name="damage"></param>
     /// <param name="critical"></param>
     /// <param name="stateAbnormality"></param>
-    public void GetDamage(GameObject attacker, float damage, bool critical = false, bool stateAbnormality = false)
+    public void GetDamage(GameObject attacker, float damage, Vector2 position, Vector2 direction, Vector3 size, bool critical = false, bool stateAbnormality = false)
     {
         if ((playerState.BodySlapping && !stateAbnormality) ||
             (playerState.IsDrain && !stateAbnormality) ||
@@ -324,7 +324,7 @@ public class Player : MonoBehaviour
                 }
             }
 
-            EffectManager.Instance.OnDamaged(dm, critical, false, SlimeGameManager.Instance.CurrentPlayerBody.transform.position);
+            EffectManager.Instance.OnDamaged(dm, critical, false, SlimeGameManager.Instance.CurrentPlayerBody.transform.position, position, direction, size);
             UIManager.Instance.UpdatePlayerHPUI(true);
         }
     }

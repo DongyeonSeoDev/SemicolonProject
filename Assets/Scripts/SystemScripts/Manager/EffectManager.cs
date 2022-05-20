@@ -4,6 +4,7 @@ using Water;
 using TMPro;
 using DG.Tweening;
 using UnityEngine.EventSystems;
+using Enemy;
 
 [System.Serializable]
 public struct CamShakeData
@@ -212,7 +213,7 @@ public class EffectManager : MonoSingleton<EffectManager>
         }
     }
 
-    public void OnDamaged(float damage, bool critical, bool isEnemy, Vector2 pos) //When monster or player receive damage, Shows damage text effect UI.
+    public void OnDamaged(float damage, bool critical, bool isEnemy, Vector2 pos, Vector2 effectPosition, Vector2 direction, Vector3 size, bool isUseParticle = true) //When monster or player receive damage, Shows damage text effect UI.
     {
         TextMeshProUGUI tmp = PoolManager.GetItem<TextMeshProUGUI>("DamageTextEff");
         tmp.color = Color.white;
@@ -229,6 +230,15 @@ public class EffectManager : MonoSingleton<EffectManager>
 
         CinemachineCameraScript.Instance.Shake(isEnemy ? enemyHitShake : playerHitShake);
         TimeManager.SetTimeScale(atkTimeFreezeScale,atkTimeFreezeDuration, null, false, false);
+
+        if (isUseParticle)
+        {
+            EnemyHitEffect effect = EnemyPoolManager.Instance.GetPoolObject(Type.HitEffect, effectPosition).GetComponent<EnemyHitEffect>();
+            effect.transform.rotation = Quaternion.Euler(0f, 0f, (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) + 90f);
+            effect.transform.localScale = size;
+
+            effect.Play();
+        }
     }
     /*public void OnDamaged(float damage, Vector2 pos, Vector3 scale, VertexGradient textColor)
     {

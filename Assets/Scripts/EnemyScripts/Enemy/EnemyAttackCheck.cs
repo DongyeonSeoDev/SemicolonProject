@@ -103,13 +103,14 @@ namespace Enemy
 
             if (eEnemyController == EnemyController.AI && collision.CompareTag("Player"))
             {
-                SlimeGameManager.Instance.Player.GetDamage(gameObject, UnityEngine.Random.Range(attackPower - 5, attackPower + 6));
                 attackObject.Add(collision.gameObject);
 
                 var enemy = collision.GetComponent<Enemy>();
 
                 if (isUseKnockBack)
                 {
+                    SlimeGameManager.Instance.Player.GetDamage(gameObject, UnityEngine.Random.Range(attackPower - 5, attackPower + 6), this.enemy.transform.position, positionCheckData.position, Vector3.one);
+
                     enemyRigidbody.velocity = Vector2.zero;
                     enemyRigidbody.angularVelocity = 0f;
 
@@ -127,7 +128,12 @@ namespace Enemy
                 {
                     if (enemy != null)
                     {
+                        SlimeGameManager.Instance.Player.GetDamage(gameObject, UnityEngine.Random.Range(attackPower - 5, attackPower + 6), this.enemy.transform.position, enemy.transform.position - this.enemy.transform.position, Vector3.one);
                         enemy.GetDamage(0, false, false, false, enemy.transform.position - this.enemy.transform.position, this.enemy.transform.position, false);
+                    }
+                    else
+                    {
+                        SlimeGameManager.Instance.Player.GetDamage(gameObject, UnityEngine.Random.Range(attackPower - 5, attackPower + 6), this.enemy.transform.position, EnemyManager.Player.transform.position - this.enemy.transform.position, Vector3.one);
                     }
                 }
             }
