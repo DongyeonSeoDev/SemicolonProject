@@ -213,7 +213,12 @@ public class EffectManager : MonoSingleton<EffectManager>
         }
     }
 
-    public void OnDamaged(float damage, bool critical, bool isEnemy, Vector2 pos, Vector2 effectPosition, Vector2 direction, Vector3 size, bool isUseParticle = true) //When monster or player receive damage, Shows damage text effect UI.
+    public void OnDamaged(float damage, bool critical, bool isEnemy, Vector2 pos)
+    {
+        OnDamaged(damage, critical, isEnemy, pos, Vector2.zero, size: Vector3.zero);
+    }
+
+    public void OnDamaged(float damage, bool critical, bool isEnemy, Vector2 pos, Vector2 direction, Vector2? effectPosition = null, Vector3? size = null) //When monster or player receive damage, Shows damage text effect UI.
     {
         TextMeshProUGUI tmp = PoolManager.GetItem<TextMeshProUGUI>("DamageTextEff");
         tmp.color = Color.white;
@@ -231,11 +236,11 @@ public class EffectManager : MonoSingleton<EffectManager>
         CinemachineCameraScript.Instance.Shake(isEnemy ? enemyHitShake : playerHitShake);
         TimeManager.SetTimeScale(atkTimeFreezeScale,atkTimeFreezeDuration, null, false, false);
 
-        if (isUseParticle)
+        if (size != Vector3.zero)
         {
-            EnemyHitEffect effect = EnemyPoolManager.Instance.GetPoolObject(Type.HitEffect, effectPosition).GetComponent<EnemyHitEffect>();
+            EnemyHitEffect effect = EnemyPoolManager.Instance.GetPoolObject(Type.HitEffect, effectPosition == null ? pos : effectPosition.Value).GetComponent<EnemyHitEffect>();
             effect.transform.rotation = Quaternion.Euler(0f, 0f, (Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg) + 90f);
-            effect.transform.localScale = size;
+            effect.transform.localScale = size == null ? Vector3.one : size.Value;
 
             effect.Play();
         }
