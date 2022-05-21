@@ -33,11 +33,11 @@ namespace Enemy
 
             if (eEnemyController == EnemyController.AI && collision.CompareTag("Player"))
             {
-                SlimeGameManager.Instance.Player.GetDamage(gameObject, Random.Range(attackPower - 5, attackPower + 6), transform.position, direction, Vector3.one);
+                SlimeGameManager.Instance.Player.GetDamage(gameObject, Random.Range(attackPower - 5, attackPower + 6), transform.position, direction);
 
                 if (enemy != null)
                 {
-                    enemy.GetDamage(0, false, false, false, direction, transform.position, false);
+                    enemy.AttackInit(0, false, false);
                 }
 
                 attackObject.Add(collision.gameObject);
@@ -50,7 +50,7 @@ namespace Enemy
                     damage.Item1 = Random.Range(SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage + 1);
                     damage = SlimeGameManager.Instance.Player.CriticalCheck(damage.Item1);
 
-                    enemy.GetDamage(damage.Item1, damage.Item2, false, false, direction, transform.position);
+                    enemy.GetDamage(damage.Item1, damage.Item2, false, false, transform.position, direction);
 
                     attackObject.Add(collision.gameObject);
                 }

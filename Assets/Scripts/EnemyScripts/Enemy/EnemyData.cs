@@ -43,10 +43,6 @@ namespace Enemy
         public EnemyCommand enemySpriteRotateCommand;
         public EnemyCommand playerControllerMove;
 
-        public Vector2 damageDirection;
-        public Vector2 damagePosition;
-        public Vector3 effectSize;
-
         public Vector2? knockBackDirection;
         public Vector2 moveVector;
 

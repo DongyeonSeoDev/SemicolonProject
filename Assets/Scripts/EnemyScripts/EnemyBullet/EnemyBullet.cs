@@ -100,11 +100,11 @@ namespace Enemy
 
             if (eEnemyController == EnemyController.AI && collision.CompareTag("Player"))
             {
-                SlimeGameManager.Instance.Player.GetDamage(gameObject, Random.Range(attackDamage - 5, attackDamage + 6), transform.position, targetDirection, Vector3.one);
+                SlimeGameManager.Instance.Player.GetDamage(gameObject, Random.Range(attackDamage - 5, attackDamage + 6), transform.position, targetDirection);
 
                 if (enemy != null && enemy != this.enemy)
                 {
-                    enemy.GetDamage(0, false, false, false, targetDirection, transform.position, false);
+                    enemy.AttackInit(0, false, false);
                 }
 
                 StartBulletEffect();
@@ -117,7 +117,7 @@ namespace Enemy
                     damage.Item1 = Random.Range(SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage + 1);
                     damage = SlimeGameManager.Instance.Player.CriticalCheck(damage.Item1);
 
-                    enemy.GetDamage(damage.Item1, damage.Item2, false, false, targetDirection, transform.position);
+                    enemy.GetDamage(damage.Item1, damage.Item2, false, false, transform.position, targetDirection);
 
                     StartBulletEffect();
 

@@ -216,7 +216,7 @@ public class PlayerBodySlap : PlayerSkill
 
                 if (enemy != null)
                 {
-                    SlimeGameManager.Instance.Player.Mag_GiveDamage(enemy, bodySlapMoveVec, transform.position, SlimeGameManager.Instance.Player.PlayerStat.MinDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, damageMagnificationOfBodySlap, 1, 20, true, new Vector3(1.5f, 1.5f, 1.5f));
+                    SlimeGameManager.Instance.Player.Mag_GiveDamage(enemy, SlimeGameManager.Instance.Player.PlayerStat.MinDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, transform.position, bodySlapMoveVec, damageMagnificationOfBodySlap, effectSize: new Vector3(1.5f, 1.5f, 1.5f));
 
                     EventManager.TriggerEvent("OnEnemyAttack");
                 }
