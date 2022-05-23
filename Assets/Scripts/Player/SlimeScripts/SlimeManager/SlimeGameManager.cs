@@ -154,20 +154,29 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
     }
     public void PlayerBodyChange(string bodyId, bool isDead = false)
     {
-        if (!isDead)
+        #region 예외처리
+        if (isDead)
         {
-            if (bodyId == "" || !canBodyChange)
-            {
-                return;
-            }
-
-            if (bodyId == currentBodyId)
-            {
-                Debug.Log("이미 해당 Body로 변신중입니다.");
-
-                return;
-            }
+            return;
         }
+
+        if (bodyId == "" || !canBodyChange)
+        {
+            return;
+        }
+
+        if (bodyId == currentBodyId)
+        {
+            Debug.Log("이미 해당 Body로 변신중입니다.");
+
+            return;
+        }
+
+        if (player.PlayerState.IsDrain)
+        {
+            return;
+        }
+        #endregion
 
         Enemy.Enemy enemy = null;
 
@@ -288,7 +297,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             Enemy.EnemyManager.Player = newBody;
 
             //newBody = Instantiate(newBodyData.Item1, player.transform);
- 
+
             newBody.AddComponent<PlayerBodyScript>();
 
             enemy = newBody.GetComponent<Enemy.Enemy>();
