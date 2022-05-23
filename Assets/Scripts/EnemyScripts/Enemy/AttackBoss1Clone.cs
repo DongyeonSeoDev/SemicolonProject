@@ -47,7 +47,7 @@ namespace Enemy
                 if (enemy != null)
                 {
                     (float, bool) damage;
-                    damage.Item1 = Random.Range(SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage + 1);
+                    damage.Item1 = Random.Range(SlimeGameManager.Instance.Player.PlayerStat.MinDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage + 1);
                     damage = SlimeGameManager.Instance.Player.CriticalCheck(damage.Item1);
 
                     enemy.GetDamage(damage.Item1, damage.Item2, false, false, transform.position, direction);

@@ -146,7 +146,7 @@ namespace Enemy
                 if (enemy != null && enemy != this.enemy)
                 {
                     (float, bool) damage;
-                    damage.Item1 = UnityEngine.Random.Range(SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage + 1);
+                    damage.Item1 = UnityEngine.Random.Range(SlimeGameManager.Instance.Player.PlayerStat.MinDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage + 1);
                     damage = SlimeGameManager.Instance.Player.CriticalCheck(damage.Item1);
                     
                     enemy.GetDamage(damage.Item1, damage.Item2, false, false, hit.point, enemy.transform.position - this.enemy.transform.position);
