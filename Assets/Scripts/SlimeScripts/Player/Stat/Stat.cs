@@ -73,9 +73,6 @@ public class StatElement
     public float upStatValue; // 특정 스탯 포인트를 투자했을 때 오를 스탯의 값
     public bool isUnlock;  //획득한 스탯인가
     public int statLv;  //스탯 레벨 (이 스탯을 몇 번 올렸는지) (Stat클래스의 eternalStat에서만 쓰일듯함)
-    public string statName;  //이 스탯의 이름 (예 : 체력, 공격력, 방어력) --> 스탯 요소 찾을 때 dic 쓸건데 키값으로 이걸 할까? 아니면 새로 string변수 추가해서 영어로 된걸 키값으로 쓸가?       
-
-    public List<Pair<float,string>> emotionRangeList = new List<Pair<float, string>>();  //스탯 수치에 따른 감정
 
     public StatElement() { }
 
@@ -175,5 +172,3 @@ public class ChoiceStat
 
     //public float cookingAbility;
 }
-
-

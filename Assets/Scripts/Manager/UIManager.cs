@@ -143,10 +143,6 @@ public partial class UIManager : MonoSingleton<UIManager>
     public List<MenuButton> menuBtns;
     private UIType selectedMenuType;
 
-    //public Text statText;
-    public Text[] statTexts; //øµ±∏ Ω∫≈»
-    public Text[] choiceStatTexts;  //º±≈√ Ω∫≈»
-
     public PlayerStatUI playerStatUI;
 
     #endregion

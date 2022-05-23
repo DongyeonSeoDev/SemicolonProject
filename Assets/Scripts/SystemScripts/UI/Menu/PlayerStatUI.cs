@@ -6,6 +6,7 @@ using DG.Tweening;
 public class PlayerStatUI : MonoBehaviour
 {
     private Stat playerStat;
+    public Stat PlayerStat => playerStat;
 
     public Pair<Image,Text> statExpPair; // 1: 스탯포인트 경험치 게이지바, 2: 가지고 있는 스탯포인트 텍스트
     public Pair<GameObject, Transform> statInfoUIPair;
@@ -15,6 +16,36 @@ public class PlayerStatUI : MonoBehaviour
     //선택스탯쪽은 나중에
 
     private int needStatPoint; //스탯 올리기 버튼에 마우스 댈 때 올리기 위해서 필요한 스탯 포인트 저장
+
+    private Dictionary<ushort, StatSO> statDataDic;
+
+    public StatSO GetStatSOData(ushort id)
+    {
+        if(statDataDic.ContainsKey(id))
+        {
+            return statDataDic[id];
+        }
+        Debug.Log("존재하지 않는 Stat ID : " + id);
+        return null;
+    }
+    public T GetStatSOData<T>(ushort id) where T : StatSO
+    {
+        if (statDataDic.ContainsKey(id))
+        {
+            return statDataDic[id] as T;
+        }
+        Debug.Log("존재하지 않는 Stat ID : " + id);
+        return null;
+    }
+
+    private void Awake()
+    {
+        statDataDic = new Dictionary<ushort, StatSO>(); 
+        foreach(StatSO so in Resources.LoadAll<StatSO>("System/StatData/"))
+        {
+            statDataDic.Add(so.statId, so);
+        }
+    }
 
     private void Start()
     {
@@ -126,6 +157,12 @@ public class PlayerStatUI : MonoBehaviour
             playerStat.currentExp -= point * playerStat.maxExp;
             playerStat.currentStatPoint += point;
         }
+    }
+
+    public void StatUnlock(StatElement se)
+    {
+        se.isUnlock = true;
+        statInfoUIDic[se.id].gameObject.SetActive(true);
     }
 
     public void Save()

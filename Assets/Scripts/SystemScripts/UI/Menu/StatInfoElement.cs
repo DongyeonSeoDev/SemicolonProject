@@ -31,7 +31,7 @@ public class StatInfoElement : UITransition
     public void InitSet(StatElement info)
     {
         id = info.id;
-        statNameTxt.text = info.statName;
+        statNameTxt.text = NGlobal.playerStatUI.GetStatSOData(id).statName;
         statUpBtn.onClick.AddListener(() =>
         {
             if (NGlobal.playerStatUI.CanStatUp(id))
