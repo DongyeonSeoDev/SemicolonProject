@@ -68,7 +68,7 @@ public class PlayerProjectile : MonoBehaviour
         bool isCritical = false;
 
         if (whatIsCrashable.CompareGameObjectLayer(other.gameObject))
-        {
+        { 
             if (whatIsEnemy.CompareGameObjectLayer(other.gameObject))
             {
                 ICanGetDamagableEnemy enemy = other.GetComponent<ICanGetDamagableEnemy>();

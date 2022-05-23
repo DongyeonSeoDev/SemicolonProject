@@ -247,9 +247,10 @@ public class PlayerBodySlap : PlayerSkill
     {
         base.SkillCancel();
 
-        EventManager.TriggerEvent("PlayerChargingCancel");
-
+        startCharging = false;
         canBodySlap = true;
+
+        EventManager.TriggerEvent("PlayerChargingCancel");
 
         bodySlapChargingEffect.gameObject.SetActive(false);
         bodySlapLine.gameObject.SetActive(false);

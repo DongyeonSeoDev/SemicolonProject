@@ -253,13 +253,14 @@ public class BodyPoint : MonoBehaviour
     }
     private void SetMoveToMiddleTimer()
     {
+        Debug.Log("aaaa");
         moveToMiddleTimer = moveToMiddleTime;
     }
     private void SetMoveToMiddleTimerZero()
     {
-        moveToMiddleTimer = 0f;
-
         isMoveToMiddle = false;
+
+         moveToMiddleTimer = 0f;
     }
     private void PlayerBodySlap(float bodySlapTime)
     {
@@ -293,7 +294,7 @@ public class BodyPoint : MonoBehaviour
 
                 return;
             }
-           
+
             isMoveToMiddle = true;
 
             MoveToMiddle();
