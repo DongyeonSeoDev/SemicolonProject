@@ -65,6 +65,8 @@ public class PlayerProjectile : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
+        bool isCritical = false;
+
         if (whatIsCrashable.CompareGameObjectLayer(other.gameObject))
         {
             if (whatIsEnemy.CompareGameObjectLayer(other.gameObject))
@@ -73,7 +75,7 @@ public class PlayerProjectile : MonoBehaviour
 
                 if (enemy != null)
                 {
-                    SlimeGameManager.Instance.Player.GiveDamage(enemy, SlimeGameManager.Instance.Player.PlayerStat.MinDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, 0f, knockBackPower, true);
+                    isCritical = SlimeGameManager.Instance.Player.GiveDamage(enemy, SlimeGameManager.Instance.Player.PlayerStat.MinDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, 0f, knockBackPower, true).Item2;
 
                     EventManager.TriggerEvent("OnEnemyAttack");
                 }
@@ -88,6 +90,7 @@ public class PlayerProjectile : MonoBehaviour
             }
 
             ShowOnCrashEffect();
+
             Despawn();
         }
     }

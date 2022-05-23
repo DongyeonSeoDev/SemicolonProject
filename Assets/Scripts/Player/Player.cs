@@ -327,8 +327,8 @@ public class Player : MonoBehaviour
             EffectManager.Instance.OnDamaged(dm, critical, false, SlimeGameManager.Instance.CurrentPlayerBody.transform.position);
             UIManager.Instance.UpdatePlayerHPUI(true);
         }
-    }
-    public void GiveDamage(ICanGetDamagableEnemy targetEnemy, float minDamage, float maxDamage, float stunTime = 1, float knockBackPower = 20, bool isKnockBack = true)
+    } 
+    public (float, bool) GiveDamage(ICanGetDamagableEnemy targetEnemy, float minDamage, float maxDamage, float stunTime = 1, float knockBackPower = 20, bool isKnockBack = true)
     {
         (float, bool) damage;
         damage.Item1 = Random.Range(minDamage, maxDamage + 1);
@@ -337,8 +337,10 @@ public class Player : MonoBehaviour
         damage = CriticalCheck(damage.Item1);
 
         targetEnemy.GetDamage(damage.Item1, damage.Item2, isKnockBack, stunTime > 0, true, knockBackPower, stunTime);
+
+        return damage;
     }
-    public void Mag_GiveDamage(ICanGetDamagableEnemy targetEnemy, float minDamage, float maxDamage, float magnification, float stunTime = 1, float knockBackPower = 20, bool isKnockBack = true)
+    public (float, bool) Mag_GiveDamage(ICanGetDamagableEnemy targetEnemy, float minDamage, float maxDamage, float magnification, float stunTime = 1, float knockBackPower = 20, bool isKnockBack = true)
     {
         (float, bool) damage;
         damage.Item1 = Random.Range(minDamage, maxDamage + 1);
@@ -349,6 +351,8 @@ public class Player : MonoBehaviour
         damage.Item1 = (int)(damage.Item1 * magnification);
 
         targetEnemy.GetDamage(damage.Item1, damage.Item2, isKnockBack, stunTime > 0, true, knockBackPower, stunTime);
+
+        return damage;
     }
     public (float, bool) CriticalCheck(float damage)
     {
