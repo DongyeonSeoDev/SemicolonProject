@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerBodySlap : PlayerSkill
 {
     private Stat playerStat = null;
+
     [SerializeField]
     private LayerMask canCrashLayer;
     [SerializeField]
@@ -79,6 +80,9 @@ public class PlayerBodySlap : PlayerSkill
     private LineRenderer bodySlapLine = null;
 
     [SerializeField]
+    private PlayerEffectScript bodySlapChargingEffect = null;
+
+    [SerializeField]
     private float bodySlapLineLength = 1f;
 
     [SerializeField]
@@ -139,6 +143,7 @@ public class PlayerBodySlap : PlayerSkill
         {
             canBodySlap = false;
 
+            bodySlapChargingEffect.gameObject.SetActive(true);
             bodySlapLine.gameObject.SetActive(true);
 
             playerState.Chargning = true;
@@ -163,6 +168,7 @@ public class PlayerBodySlap : PlayerSkill
     }
     private void DoBodySlap()
     {
+        bodySlapChargingEffect.gameObject.SetActive(false);
         bodySlapLine.gameObject.SetActive(false);
 
         playerState.Chargning = false;
@@ -245,6 +251,7 @@ public class PlayerBodySlap : PlayerSkill
 
         canBodySlap = true;
 
+        bodySlapChargingEffect.gameObject.SetActive(false);
         bodySlapLine.gameObject.SetActive(false);
 
         playerState.Chargning = false;

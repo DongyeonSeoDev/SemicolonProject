@@ -112,7 +112,7 @@ public class BodyPoint : MonoBehaviour
 
         if (!isMiddlePoint)
         {
-            middlePoint = transform.parent.GetComponent<MiddlePoint>();
+            middlePoint = transform.parent.parent.GetComponent<MiddlePoint>();
         }
 
         bodyPointCrashCheckCollider = transform.GetComponentInChildren<BodyPointCrashCheckCollider>();
