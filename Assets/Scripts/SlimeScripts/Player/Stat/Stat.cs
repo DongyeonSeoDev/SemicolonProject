@@ -73,6 +73,7 @@ public class StatElement
     public float upStatValue; // 특정 스탯 포인트를 투자했을 때 오를 스탯의 값
     public bool isUnlock;  //획득한 스탯인가
     public int statLv;  //스탯 레벨 (이 스탯을 몇 번 올렸는지) (Stat클래스의 eternalStat에서만 쓰일듯함)
+    public int maxStatLv; // 스탯 최대 레벨
 
     public StatElement() { }
 

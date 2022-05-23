@@ -10,4 +10,5 @@ public static class SVector3
     public static Vector3 zeroPointSeven => new Vector3(0.7f, 0.7f, 0.7f);
     public static Vector3 zeroPointThree => new Vector3(0.3f, 0.3f, 0.3f);
     public static Vector3 Z90 => new Vector3(0, 0, 90);
+    public static Vector3 Y0 => new Vector3(1, 0, 1);
 }

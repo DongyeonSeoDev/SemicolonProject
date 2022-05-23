@@ -542,9 +542,11 @@ public partial class UIManager : MonoSingleton<UIManager>
                     TimeManager.TimePause();
                 break;
             case UIType.STAT:  //스탯 UI 업데이트
-                playerStatUI.UpdateAllStatUI();
-                playerStatUI.UpdateStatExp(false);
-                playerStatUI.UpdateCurStatPoint(false);
+                if (!Util.IsActiveGameUI(type))
+                {
+                    playerStatUI.UpdateStat();
+                }
+                    
                 //UpdateStatUI();
                 EffectManager.Instance.OnTopRightBtnEffect(UIType.STAT, false);
                 break;
@@ -709,6 +711,9 @@ public partial class UIManager : MonoSingleton<UIManager>
                 break;
             case UIType.MENU:
                 TimeManager.TimeResume();
+                break;
+            case UIType.STAT:
+                playerStatUI.CloseChoiceDetail();
                 break;
         }
     }
