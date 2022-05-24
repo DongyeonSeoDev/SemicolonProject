@@ -33,20 +33,30 @@ public class StartPhase : TutorialPhase
     {
         if (!complete)
         {
-            if (Input.GetMouseButtonUp(0))
+            if (Input.GetMouseButtonDown(0))  // 아무곳이나 터치하면
             {
-                currentCount++;
-                if (needCount == currentCount)
-                {
-                    complete = true;
-                    
-                    EffectManager.Instance.OnTouchEffect();
-                    light.DOInnerRadius(2, 1.5f, true);
-                    light.DOOuterRadius(4, 1.6f, true, () => End());
-                }
+                AnyKeyEvent();
+            }
+            else if(Input.anyKeyDown)  //아무 키나 누르면
+            {
+                AnyKeyEvent();
+                EffectManager.Instance.SpawnEffect(PoolManager.GetItem("TouchEffect1"), Util.ScreenToWorldPosForScrSpace(new Vector3(500,500)), 1f, true);
             }
         }
        
+    }
+
+    private void AnyKeyEvent()
+    {
+        currentCount++;
+        if (needCount == currentCount)
+        {
+            complete = true;
+
+            EffectManager.Instance.OnTouchEffect();
+            light.DOInnerRadius(2, 1.5f, true);
+            light.DOOuterRadius(4, 1.6f, true, () => End());
+        }
     }
 
     public override void End()

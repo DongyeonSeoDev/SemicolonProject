@@ -13,6 +13,9 @@ public class EnterLobbyEvent : MapEventSO
             NGlobal.playerStatUI.StatUnlock(NGlobal.playerStatUI.PlayerStat.eternalStat.maxHp);
             NGlobal.playerStatUI.StatUnlock(NGlobal.playerStatUI.PlayerStat.eternalStat.minDamage);
             NGlobal.playerStatUI.StatUnlock(NGlobal.playerStatUI.PlayerStat.eternalStat.maxDamage);
+            NGlobal.playerStatUI.StatOpen(NGlobal.MaxHpID, true);
+            NGlobal.playerStatUI.StatOpen(NGlobal.MinDamageID, true);
+            NGlobal.playerStatUI.StatOpen(NGlobal.MaxDamageID, true);
         }
 
         

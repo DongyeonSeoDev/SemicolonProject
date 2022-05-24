@@ -21,6 +21,12 @@ public static partial class Util
     public static bool IsActiveGameUI(UIType type) => UIManager.Instance.gameUIList[(int)type].gameObject.activeSelf;
 
     public static Vector3 ScreenToWorldPos(Vector3 screenPos) => MainCam.ScreenToWorldPoint(screenPos);
+    public static Vector3 ScreenToWorldPosForScrSpace(Vector3 scrPos)
+    {
+        Vector3 v = ScreenToWorldPos(scrPos);
+        v.z = Global.cameraPlaneDistance;
+        return v;
+    }
 
     //이것을 쓸거면 Anchor가 Left Bottom으로 설정되어있어야 함
     public static Vector3 WorldToScreenPosForScreenSpace(Vector3 point) => RectTransformUtility.WorldToScreenPoint(MainCam, point);  //camera일때

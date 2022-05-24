@@ -74,6 +74,7 @@ public class StatInfoElement : UITransition
         if (!info.isUnlock)
         {
             statNameTxt.text = "???";
+            statLvTxt.text = "?";
             statUpBtn.gameObject.SetActive(false);
         }
         else if (info.statLv == 0)

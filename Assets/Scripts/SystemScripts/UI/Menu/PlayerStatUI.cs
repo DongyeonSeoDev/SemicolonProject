@@ -191,13 +191,20 @@ public class PlayerStatUI : MonoBehaviour
         //eternalStatDic[id].second.statValue += stat.upStatValue;
 
     }
-    public void StatOpen(ushort id)
+    public void StatOpen(ushort id, bool free = false)
     {
-        
-        StatElement stat = eternalStatDic[id].first;
-        playerStat.currentStatPoint -= statOpenCost;
-        stat.statLv = 1;
-        UpdateCurStatPoint(false);
+        if (eternalStatDic.ContainsKey(id))
+        {
+            if (!free)
+            {
+                if (playerStat.currentStatPoint < statOpenCost) return;
+                playerStat.currentStatPoint -= statOpenCost;
+            }
+            StatElement stat = eternalStatDic[id].first;
+            stat.statLv = 1;
+
+            UpdateCurStatPoint(false);
+        }
     }
 
     public void AddPlayerStatPointExp(float value)
