@@ -78,7 +78,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
     {
         foreach(var item in choiceDataList)
         {
-            choiceDataDict.Add(item.id, item);
+            choiceDataDict.Add(item.id.ToLower(), item);
         }
     }
     private void OnEnable()
