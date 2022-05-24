@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Stat
 {
     public int currentStatPoint;   //현재 가지고 있는 스탯 포인트
-    public int accumulateStatPoint;  //지금까지 모은 누적 스탯포인트
+    public int accumulateStatPoint;  //지금까지 모은 누적 스탯포인트(정확히는 스탯 올리는데 쓴 비용) -> 스탯 개방에 쓴 포인트는 더하지 않음
     public float currentHp;  //현재 체력
     public float currentExp;  //현재 스탯 포인트 경험치
     public float maxExp; //최대 스탯포인트 경험치
@@ -17,9 +17,11 @@ public class Stat
     {
         currentStatPoint += accumulateStatPoint;
         accumulateStatPoint = 0;
+        currentExp = 0;
         additionalEternalStat = new EternalStat();
-        choiceStat = new ChoiceStat();
+        //choiceStat = new ChoiceStat();
         eternalStat.Reset();
+        choiceStat.Reset();
     }
 
     #region default stat + additional stat  property
@@ -66,7 +68,7 @@ public class Stat
 }
 
 [Serializable]
-public class StatElement
+public class StatElement  //스탯은 0렙부터 시작. 0렙일 때는 스탯을 개방하지 못한거고 1렙부터 레벨 올릴 경우 스탯 오름 0에서 1은 스탯만 개방하고 스탯 오르진않음
 {
     public ushort id;
     public float statValue;  //일단 정수만 쓰이더라도 타입은 다 float으로 해준다
@@ -75,7 +77,19 @@ public class StatElement
     public int statLv;  //스탯 레벨 (이 스탯을 몇 번 올렸는지) (Stat클래스의 eternalStat에서만 쓰일듯함)
     public int maxStatLv; // 스탯 최대 레벨
 
+    public int upStatCount => statLv - 1;  //스탯 올리는 짓을 몇 번 했는지
+    public bool isOpenStat => statLv > 0;
+
     public StatElement() { }
+
+    public void Reset()
+    {
+        if (statLv > 1)
+        {
+            statValue -= upStatCount * upStatValue;
+            statLv = 1;
+        }
+    }
 
 }
 
@@ -127,25 +141,15 @@ public class EternalStat
 
     public void Reset()
     {
-        maxHp.statValue -= maxHp.statLv * maxHp.upStatValue;
-        minDamage.statValue -= minDamage.statLv * minDamage.upStatValue;
-        maxDamage.statValue -= maxDamage.statLv * maxDamage.upStatValue;
-        defense.statValue -= defense.statLv * defense.upStatValue;
-        intellect.statValue -= intellect.statLv * intellect.upStatValue;
-        speed.statValue -= speed.statLv * speed.upStatValue;
-        attackSpeed.statValue -= attackSpeed.statLv * attackSpeed.upStatValue;
-        criticalRate.statValue -= criticalRate.statLv * criticalRate.upStatValue;
-        criticalDamage.statValue -= criticalDamage.statLv * criticalDamage.upStatValue;
-
-        maxHp.statLv = 0;
-        minDamage.statLv = 0;
-        maxDamage.statLv = 0;
-        defense.statLv = 0;
-        intellect.statLv = 0;
-        speed.statLv = 0;
-        attackSpeed.statLv = 0;
-        criticalRate.statLv = 0;
-        criticalDamage.statLv = 0;
+        maxHp.Reset();
+        minDamage.Reset();
+        maxDamage.Reset();
+        defense.Reset();
+        intellect.Reset();
+        speed.Reset();
+        attackSpeed.Reset();
+        criticalRate.Reset();
+        criticalDamage.Reset();
     }
 
 }
@@ -172,4 +176,12 @@ public class ChoiceStat
     //public float landCreatureFitness; // 지상생물 적합력
 
     //public float cookingAbility;
+
+    public void Reset()
+    {
+        patience.Reset();
+        momentom.Reset();
+        endurance.Reset();
+    }
+
 }

@@ -28,6 +28,7 @@ public class ChoiceStatInfoElement : MonoBehaviour
 
     public void UpdateUI()
     {
-
+        BGStatLvTxt.text = NGlobal.playerStatUI.choiceStatDic[id].statLv.ToString();
+        BGStatExplanationTxt.text = NGlobal.GetChoiceStatAbilExplanation(id);
     }
 }

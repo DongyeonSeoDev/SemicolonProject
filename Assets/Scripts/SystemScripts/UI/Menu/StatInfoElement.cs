@@ -11,6 +11,7 @@ public class StatInfoElement : UITransition
     [SerializeField] private Text curStatTxt;
     [SerializeField] private Text statNameTxt;
     [SerializeField] private Button statUpBtn;
+    private NameInfoFollowingCursor nifc;
 
     protected override void Awake()
     {
@@ -26,6 +27,8 @@ public class StatInfoElement : UITransition
 
         eventTrigger.triggers.Add(entry1);
         eventTrigger.triggers.Add(entry2);
+
+        nifc = statUpBtn.GetComponent<NameInfoFollowingCursor>();
     }
 
     public void InitSet(StatElement info)
@@ -34,14 +37,30 @@ public class StatInfoElement : UITransition
         statNameTxt.text = NGlobal.playerStatUI.GetStatSOData(id).statName;
         statUpBtn.onClick.AddListener(() =>
         {
-            if (NGlobal.playerStatUI.CanStatUp(id))
+            if (NGlobal.playerStatUI.eternalStatDic[id].first.isOpenStat)
             {
-                NGlobal.playerStatUI.StatUp(id);
-                UpdateUI();
+                if (NGlobal.playerStatUI.CanStatUp(id))
+                {
+                    NGlobal.playerStatUI.StatUp(id);
+                    UpdateUI();
+                }
+                else
+                {
+                    UIManager.Instance.RequestSystemMsg("스탯 포인트가 부족합니다.");
+                }
             }
             else
             {
-                UIManager.Instance.RequestSystemMsg("스탯 포인트가 부족합니다.");
+                if (NGlobal.playerStatUI.CanStatOpen())
+                {
+                    NGlobal.playerStatUI.StatOpen(id);
+                    statNameTxt.text = NGlobal.playerStatUI.GetStatSOData(id).statName;
+                    UpdateUI();
+                }
+                else
+                {
+                    UIManager.Instance.RequestSystemMsg("스탯 포인트가 부족합니다.");
+                }
             }
 
             if (isEnter)
@@ -50,7 +69,19 @@ public class StatInfoElement : UITransition
             }
         });
 
-        gameObject.SetActive(info.isUnlock);
+        if (!info.isUnlock)
+        {
+            statNameTxt.text = "???";
+            statUpBtn.gameObject.SetActive(false);
+        }
+        else if (info.statLv == 0)
+        {
+            UnlockStat();
+        }
+        else
+        {
+            nifc.explanation = "스탯 레벨업";
+        }
     }
 
     public override void Transition(bool on) //스탯 증가 버튼에 마우스 댈 때
@@ -59,7 +90,7 @@ public class StatInfoElement : UITransition
         if (on)
         {
             StatElement el = NGlobal.playerStatUI.eternalStatDic[id].first;
-            NGlobal.playerStatUI.OnMouseEnterStatUpBtn((int)Mathf.Pow(2, el.statLv));  //2^지금까지 스탯을 올린 횟수 = 스탯올리기 위해 필요한 포인트 양
+            NGlobal.playerStatUI.OnMouseEnterStatUpBtn(el.isOpenStat ? (int)Mathf.Pow(2, el.upStatCount) : -5);  //2^지금까지 스탯을 올린 횟수 = 스탯올리기 위해 필요한 포인트 양
             UpdatePlusStat(true);
         }
         else
@@ -77,7 +108,15 @@ public class StatInfoElement : UITransition
 
     public void UpdatePlusStat(bool enter)  //스탯 포인트 소모하고 계속 마우스가 enter상태인지 체크해서 UI 갱신
     {
+        if (enter && !NGlobal.playerStatUI.eternalStatDic[id].first.isOpenStat) return;
+
         curStatTxt.text = enter ? string.Concat(NGlobal.playerStatUI.GetCurrentPlayerStat(id), "<color=green>(+", NGlobal.playerStatUI.eternalStatDic[id].first.upStatValue, ")</color>") : NGlobal.playerStatUI.GetCurrentPlayerStat(id).ToString();
     }
 
+    public void UnlockStat() //해당 스탯을 얻음. 하지만 아직 개방상태는 아님
+    {
+        statNameTxt.text = "<color=#980D0D>" + NGlobal.playerStatUI.GetStatSOData(id).statName + "</color>";
+        statUpBtn.gameObject.SetActive(true);
+        nifc.explanation = "개방하기";
+    }
 }

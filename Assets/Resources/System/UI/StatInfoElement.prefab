@@ -250,6 +250,8 @@ GameObject:
   - component: {fileID: 8268666278075833771}
   - component: {fileID: 8268666278075833770}
   - component: {fileID: 8607258303998384096}
+  - component: {fileID: 6644559797539365195}
+  - component: {fileID: 2337628235435377037}
   m_Layer: 5
   m_Name: StatUpButton
   m_TagString: Untagged
@@ -371,6 +373,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates: []
+--- !u!114 &6644559797539365195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8268666278075833768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f277daceb9cb25e49a71316302b10da9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionEnable: 1
+  transitionTime: 0.2
+  targetScale: {x: 1.1, y: 1.1, z: 1.1}
+  useSound: 0
+  soundId: UIMouseEnterSFX4
+--- !u!114 &2337628235435377037
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8268666278075833768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e667567d014ea8844a7a61bc1ea7229c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionEnable: 1
+  explanation: 
+  fontSize: 30
 --- !u!1 &8268666278276601052
 GameObject:
   m_ObjectHideFlags: 0

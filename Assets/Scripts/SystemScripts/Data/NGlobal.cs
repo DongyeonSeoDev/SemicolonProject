@@ -14,11 +14,32 @@ public static class NGlobal
 
     public const ushort EStatStartID = 5;
     public const ushort EStatEndID = 45;
-    public const ushort EStatIDOffset = 5;
+    public const ushort StatIDOffset = 5;
 
+    public const ushort PatienceID = 100;
+    public const ushort MomentomID = 105;
+    public const ushort EnduranceID = 110;
 
+    public const ushort CStatStartID = 100;
+    public const ushort CStatEndID = 125; //나중에 값 바꿔야 함
 
     public static PlayerStatUI playerStatUI => UIManager.Instance.playerStatUI;
+
+
+    public static string GetChoiceStatAbilExplanation(ushort id)
+    {
+        switch(id)
+        {
+            case PatienceID:
+                return "인내";
+            case MomentomID:
+                return "추진력";
+            case EnduranceID:
+                return "맷집";
+        }
+
+        return string.Empty;
+    }
 }
 
 

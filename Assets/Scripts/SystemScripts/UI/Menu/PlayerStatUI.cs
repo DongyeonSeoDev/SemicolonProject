@@ -29,6 +29,8 @@ public class PlayerStatUI : MonoBehaviour
 
     private int needStatPoint; //(고정)스탯 올리기 버튼에 마우스 댈 때 올리기 위해서 필요한 스탯 포인트 저장
 
+    [SerializeField] private int statOpenCost = 2; //스탯을 얻고나서 스탯을 개방하기 위해서 필요한 스탯 포인트
+
     private Dictionary<ushort, StatSO> statDataDic;
 
     public StatSO GetStatSOData(ushort id)
@@ -99,9 +101,9 @@ public class PlayerStatUI : MonoBehaviour
         }
 
         //선택 스탯 저장
-        choiceStatDic.Add(100, playerStat.choiceStat.patience);
-        choiceStatDic.Add(105, playerStat.choiceStat.momentom);
-        choiceStatDic.Add(110, playerStat.choiceStat.endurance);
+        choiceStatDic.Add(NGlobal.PatienceID, playerStat.choiceStat.patience);
+        choiceStatDic.Add(NGlobal.MomentomID, playerStat.choiceStat.momentom);
+        choiceStatDic.Add(NGlobal.EnduranceID, playerStat.choiceStat.endurance);
 
         //선택 스탯 UI 생성
         foreach(ushort key in choiceStatDic.Keys)
@@ -163,23 +165,35 @@ public class PlayerStatUI : MonoBehaviour
 
     public void OnMouseEnterStatUpBtn(int needStatPoint)  //어떤 스탯의 스탯 올리기 버튼에 마우스대거나 뗄 때
     {
+        if (needStatPoint == -5) needStatPoint = statOpenCost;
+
         this.needStatPoint = needStatPoint;
         UpdateCurStatPoint(needStatPoint != -1);
     }
 
-    public bool CanStatUp(ushort id) => Mathf.Pow(2, eternalStatDic[id].first.statLv) <= playerStat.currentStatPoint;
+    public bool CanStatUp(ushort id) => Mathf.Pow(2, eternalStatDic[id].first.upStatCount) <= playerStat.currentStatPoint;
+    public bool CanStatOpen() => statOpenCost <= playerStat.currentStatPoint;
 
     public void StatUp(ushort id)
     {
-        UpdateCurStatPoint(false);
+        
         StatElement stat = eternalStatDic[id].first;
-        int value = (int)Mathf.Pow(2, stat.statLv);
+        int value = (int)Mathf.Pow(2, stat.upStatCount);
         playerStat.currentStatPoint -= value;
         playerStat.accumulateStatPoint += value;
         stat.statLv++;
         stat.statValue += stat.upStatValue;
+        UpdateCurStatPoint(false);
         //eternalStatDic[id].second.statValue += stat.upStatValue;
 
+    }
+    public void StatOpen(ushort id)
+    {
+        
+        StatElement stat = eternalStatDic[id].first;
+        playerStat.currentStatPoint -= statOpenCost;
+        stat.statLv = 1;
+        UpdateCurStatPoint(false);
     }
 
     public void AddPlayerStatPointExp(float value)
@@ -196,12 +210,33 @@ public class PlayerStatUI : MonoBehaviour
     public void StatUnlock(StatElement se)
     {
         se.isUnlock = true;
-        statInfoUIDic[se.id].gameObject.SetActive(true);
+        if (statInfoUIDic.ContainsKey(se.id))   //고정 스탯 획득
+        {
+            statInfoUIDic[se.id].UnlockStat();
+        }
+        else  //선택 스탯 획득
+        {
+            choiceStatInfoUIDic[se.id].gameObject.SetActive(true);
+        }
+        UIManager.Instance.RequestLogMsg("[" + GetStatSOData(se.id).statName + "] 획득");
     }
 
     public void DetailViewChoiceStatInfo(ushort id)
     {
-        if (selectedChoiceBtnId == id) return;  //아니면 창을 꺼야하나? 일단 누른거 또 누르면 아무 일도 발생하지 않게 함
+        if (selectedChoiceBtnId == id)
+        {
+            selectedChoiceBtnId = 9999;
+            choiceStatDetailPanel.transform.DOKill();
+            choiceStatDetailPanel.transform.DOScale(SVector3.Y0, 0.5f).OnComplete(() =>
+            {
+                for (int i = 0; i < invisibleChoiceStatUICount; i++)
+                {
+                    invisibleChoiceStatUIList[i].gameObject.SetActive(false);
+                }
+                choiceStatDetailPanel.SetActive(false);
+            }).SetUpdate(true);
+            return;
+        }
 
         selectedChoiceBtnId = id;
 
@@ -221,13 +256,15 @@ public class PlayerStatUI : MonoBehaviour
                 invisibleChoiceStatUIList[i].gameObject.SetActive(true);
                 invisibleChoiceStatUIList[i].transform.SetSiblingIndex(curIdx + i + 1);
             }
-        });
+        }).SetUpdate(true);
        
 
         ChoiceStatSO data = GetStatSOData<ChoiceStatSO>(id);
-        //choiceDetailAbil.text = 
+        choiceDetailAbil.text = NGlobal.GetChoiceStatAbilExplanation(selectedChoiceBtnId);
         choiceDetailGrowth.text = data.growthWay;
         choiceDetailAcq.text = data.acquisitionWay;
+
+        choiceStatDetailPanel.transform.SetParent(choiceStatInfoUIDic[id].transform);
     }
 
     public void CloseChoiceDetail()
