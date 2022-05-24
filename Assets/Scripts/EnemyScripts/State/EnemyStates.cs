@@ -210,6 +210,7 @@ namespace Enemy
                 for (int i = 0; i < enemyCount - 1; i++)
                 {
                     bossCloneArray[i].MovePosition(enemyData.moveVector * moveSpeed);
+                    attackBoss1CloneArray[i].direction = enemyData.moveVector;
                 }
 
                 // 끝에 도달했는지 확인

@@ -207,7 +207,15 @@ namespace Enemy
         }
 
         // 적 데미지 받는 코드
-        public void GetDamage(float damage, bool critical, bool isKnockBack, bool isStun, bool isShowText = true, float knockBackPower = 20f, float stunTime = 1f, Vector2? direction = null)
+        public void GetDamage(float damage, bool critical, bool isKnockBack, bool isStun, Vector2 effectPosition, Vector2 direction, float knockBackPower = 20f, float stunTime = 1f, Vector3? effectSize = null)
+        {
+            if (AttackInit(damage, isKnockBack, isStun, direction, knockBackPower, stunTime))
+            {
+                EffectManager.Instance.OnDamaged(damage, critical, true, transform.position, effectPosition, direction, effectSize);
+            }
+        }
+
+        public bool AttackInit(float damage, bool isKnockBack, bool isStun, Vector2? direction = null, float knockBackPower = 20f, float stunTime = 1f)
         {
             if (enemyData.isEnemyMove && !enemyData.isDamaged)
             {
@@ -221,11 +229,10 @@ namespace Enemy
 
                 enemyData.knockBackDirection = direction;
 
-                if (isShowText)
-                {
-                    EffectManager.Instance.OnDamaged(damage, critical, true, transform.position);
-                }
+                return true;
             }
+
+            return false;
         }
 
         // 적이 죽었을때 발동되는 코드

@@ -42,7 +42,7 @@ namespace Enemy
             }
         }
 
-        public virtual void GetDamage(float damage, bool critical, bool isKnockBack, bool isStun, bool isShowText = true, float knockBackPower = 20, float stunTime = 1, Vector2? direction = null)
+        public virtual void GetDamage(float damage, bool critical, bool isKnockBack, bool isStun, Vector2 effectPosition, Vector2 direction, float knockBackPower = 20f, float stunTime = 1f, Vector3? effectSize = null)
         {
         }
 

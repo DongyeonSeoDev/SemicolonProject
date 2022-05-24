@@ -73,7 +73,7 @@ public class PlayerProjectile : MonoBehaviour
 
                 if (enemy != null)
                 {
-                    SlimeGameManager.Instance.Player.GiveDamage(enemy, SlimeGameManager.Instance.Player.PlayerStat.MinDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, 0f, knockBackPower, true);
+                    SlimeGameManager.Instance.Player.GiveDamage(enemy, SlimeGameManager.Instance.Player.PlayerStat.MinDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, transform.position, moveVec, true, knockBackPower, 0f);
 
                     EventManager.TriggerEvent("OnEnemyAttack");
                 }

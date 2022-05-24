@@ -431,7 +431,7 @@ namespace Enemy
                 }
             }
 
-            EnemyPoolManager.Instance.GetPoolObject(Type.DeadEffect, enemyObject.transform.position).GetComponent<EnemyEffect>().Play(enemyColor);
+            EnemyPoolManager.Instance.GetPoolObject(Type.DeadEffect, enemyObject.transform.position).GetComponent<EnemyDeadEffect>().Play(enemyColor);
 
             enemyObject.GetComponent<Enemy>().EnemyDestroy();
         }

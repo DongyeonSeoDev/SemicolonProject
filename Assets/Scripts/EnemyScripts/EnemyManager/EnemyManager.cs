@@ -44,6 +44,9 @@ namespace Enemy
 
         public int enemyCount;
 
+        public LayerMask whatIsEnemy;
+        public LayerMask whatIsPlayer;
+
         public Dictionary<string, List<Enemy>> enemyDictionary = new Dictionary<string, List<Enemy>>();
 
         private static GameObject player;
