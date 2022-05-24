@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4326188739679044236}
   - component: {fileID: 2077825644370281958}
   m_Layer: 0
-  m_Name: MeshParticleSystem
+  m_Name: MeshParticleManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -116,6 +116,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abf0725566add3c4c9e0742f17423b68, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  minSize: 0.1
+  maxSize: 0.2
+  minSpeed: 0.5
+  maxSpeed: 1
+  minCount: 3
+  maxCount: 5
 --- !u!1 &3635639919268219725
 GameObject:
   m_ObjectHideFlags: 0
@@ -162,10 +168,10 @@ MonoBehaviour:
   enemyCount: 0
   whatIsEnemy:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   whatIsPlayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
 --- !u!1 &6423039109439716261
 GameObject:
   m_ObjectHideFlags: 0
