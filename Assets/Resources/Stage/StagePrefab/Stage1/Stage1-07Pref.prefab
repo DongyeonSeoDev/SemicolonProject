@@ -43,17 +43,7 @@ Tilemap:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 265844239362495298}
   m_Enabled: 1
-  m_Tiles:
-  - first: {x: -6, y: 0, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 8
-      m_TileSpriteIndex: 23
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1
+  m_Tiles: {}
   m_AnimatedTiles: {}
   m_TileAssetArray:
   - m_RefCount: 0
@@ -72,8 +62,8 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: 11400000, guid: e8a78b04b15a8274aa7909bd09069c79, type: 2}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
   - m_RefCount: 0
@@ -151,30 +141,30 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
-  - m_RefCount: 1
-    m_Data: {fileID: 6402236287381416977, guid: 7ea70e1baed15c343a361053025c2123, type: 3}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_TileMatrixArray:
-  - m_RefCount: 1
+  - m_RefCount: 0
     m_Data:
-      e00: 1
-      e01: 0
-      e02: 0
-      e03: 0
-      e10: 0
-      e11: 1
-      e12: 0
-      e13: 0
-      e20: 0
-      e21: 0
-      e22: 1
-      e23: 0
+      e00: 1.084227e-19
+      e01: 8.429619e-17
+      e02: -2.3480988
+      e03: -5.5261726
+      e10: 4.9e-43
+      e11: 4.5904e-41
+      e12: 4.92e-43
+      e13: 4.89e-43
+      e20: 6e-45
+      e21: -1.35278e-39
+      e22: -1.351547e-39
+      e23: -1.351547e-39
       e30: 0
-      e31: 0
-      e32: 0
-      e33: 1
+      e31: 5.5e-44
+      e32: 5.5e-44
+      e33: 5.5e-44
   m_TileColorArray:
-  - m_RefCount: 1
-    m_Data: {r: 1, g: 1, b: 1, a: 1}
+  - m_RefCount: 0
+    m_Data: {r: 1.79461e-40, g: 1.79461e-40, b: 1.79461e-40, a: 1.79461e-40}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -678,10 +668,10 @@ PolygonCollider2D:
   m_AutoTiling: 0
   m_Points:
     m_Paths:
-    - - {x: -15.988834, y: 19.980816}
-      - {x: -15.97526, y: -6.9822683}
-      - {x: 16.998724, y: -6.9463415}
-      - {x: 16.962425, y: 20.02896}
+    - - {x: -17.030796, y: 21.022778}
+      - {x: -16.987516, y: -8.009579}
+      - {x: 17.996264, y: -8.0062275}
+      - {x: 17.98593, y: 21.024033}
 --- !u!1 &4094476692390022644
 GameObject:
   m_ObjectHideFlags: 0
