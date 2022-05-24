@@ -4,7 +4,7 @@ namespace Enemy
 {
     public class MeshParticleSystem : MonoBehaviour
     {
-        private const int LIMIT_MAX_PARTICLE_COUNT = 1000;
+        private const int MAX_QUAD_COUNT = 1000;
 
         [System.Serializable]
         public struct UVPixel
@@ -31,6 +31,7 @@ namespace Enemy
         private Vector2[] uv;
         private int[] triangles;
 
+        private int quadIndex = 0;
         private bool updateVertices = false;
         private bool updateUV = false;
         private bool updateTriangles = false;
@@ -41,9 +42,9 @@ namespace Enemy
             meshFilter = GetComponent<MeshFilter>();
             meshRenderer = GetComponent<MeshRenderer>();
 
-            vertices = new Vector3[LIMIT_MAX_PARTICLE_COUNT * 4];
-            uv = new Vector2[LIMIT_MAX_PARTICLE_COUNT * 4];
-            triangles = new int[LIMIT_MAX_PARTICLE_COUNT * 6];
+            vertices = new Vector3[MAX_QUAD_COUNT * 4];
+            uv = new Vector2[MAX_QUAD_COUNT * 4];
+            triangles = new int[MAX_QUAD_COUNT * 6];
 
             mesh.vertices = vertices;
             mesh.uv = uv;
@@ -70,7 +71,7 @@ namespace Enemy
                 };
             }
 
-            //TestMesh();
+            //UpdateQuad(transform.position, 0f, Vector3.one);
         }
 
         private void LateUpdate()
@@ -94,28 +95,52 @@ namespace Enemy
             }
         }
 
-        private void TestMesh()
+        public int GetRandomBloodUVIndex() => Random.Range(0, 4);
+
+        public void AddQuad(Vector3 position, float rotation, Vector3 size)
         {
-            vertices[0] = new Vector3(0f, 0f, 0f);
-            vertices[1] = new Vector3(0f, 1f, 0f);
-            vertices[2] = new Vector3(1f, 0f, 0f);
-            vertices[3] = new Vector3(1f, 1f, 0f);
+            UpdateQuad(position, rotation, size);
 
-            uv[0] = uvArray[0].uv00;
-            uv[1] = new Vector2(uvArray[0].uv00.x, uvArray[0].uv11.y);
-            uv[2] = new Vector2(uvArray[0].uv11.x, uvArray[0].uv00.y);
-            uv[3] = uvArray[0].uv11;
+            quadIndex = (quadIndex + 1) % MAX_QUAD_COUNT;
+        }
 
-            triangles[0] = 0;
-            triangles[1] = 1;
-            triangles[2] = 2;
-            triangles[3] = 2;
-            triangles[4] = 1;
-            triangles[5] = 3;
+        public void UpdateQuad(Vector3 position, float rotation, Vector3 size)
+        {
+            int index0 = quadIndex * 4;
+            int index1 = index0 + 1;
+            int index2 = index0 + 2;
+            int index3 = index0 + 3;
+
+            vertices[index0] = position + Quaternion.Euler(0f, 0f, rotation - 180) * size;
+            vertices[index1] = position + Quaternion.Euler(0f, 0f, rotation - 270) * size;
+            vertices[index2] = position + Quaternion.Euler(0f, 0f, rotation - 90) * size;
+            vertices[index3] = position + Quaternion.Euler(0f, 0f, rotation - 0) * size;
+
+            UVCoords uvCoord = uvArray[GetRandomBloodUVIndex()];
+
+            uv[index0] = uvCoord.uv00;
+            uv[index1] = new Vector2(uvCoord.uv00.x, uvCoord.uv11.y);
+            uv[index2] = new Vector2(uvCoord.uv11.x, uvCoord.uv00.y);
+            uv[index3] = uvCoord.uv11;
+
+            int trianglesIndex = quadIndex * 6;
+
+            triangles[trianglesIndex] = index0;
+            triangles[trianglesIndex + 1] = index1;
+            triangles[trianglesIndex + 2] = index2;
+            triangles[trianglesIndex + 3] = index2;
+            triangles[trianglesIndex + 4] = index1;
+            triangles[trianglesIndex + 5] = index3;
 
             updateVertices = true;
             updateUV = true;
             updateTriangles = true;
+        }
+
+        public void ClearAllQuad()
+        {
+            System.Array.Clear(vertices, 0, vertices.Length);
+            updateVertices = true;
         }
     }
 }
