@@ -238,6 +238,8 @@ public class EffectManager : MonoSingleton<EffectManager>
             effect.transform.localScale = effectSize == null ? Vector3.one : effectSize.Value;
 
             effect.Play();
+
+            MeshParticleManager.Instance.SpawnBloodEffect(effectPosition);
         }
     }
     /*public void OnDamaged(float damage, Vector2 pos, Vector3 scale, VertexGradient textColor)

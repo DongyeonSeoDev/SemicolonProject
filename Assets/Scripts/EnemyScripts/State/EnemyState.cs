@@ -1,3 +1,5 @@
+using UnityEngine;
+
 namespace Enemy
 {
     public partial class EnemyState // 利 惑怕 包府 何葛 内靛

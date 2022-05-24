@@ -6,8 +6,8 @@ namespace Enemy
         {
             base.OnEnable();
 
-            enemyData.maxHP = 50;
-            enemyData.hp = 50;
+            enemyData.maxHP = 30;
+            enemyData.hp = 30;
 
             enemyData.playerAnimationTime = 0.85f;
             enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance); // MoveCommand Ãß°¡
