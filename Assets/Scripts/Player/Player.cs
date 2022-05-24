@@ -329,7 +329,7 @@ public class Player : MonoBehaviour
             UIManager.Instance.UpdatePlayerHPUI(true);
         }
     }
-    public void GiveDamage(ICanGetDamagableEnemy targetEnemy, float minDamage, float maxDamage, Vector2 effectPosition, Vector2 direction, bool isKnockBack = true, float knockBackPower = 20, float stunTime = 1, Vector3? effectSize = null)
+    public (float, bool) GiveDamage(ICanGetDamagableEnemy targetEnemy, float minDamage, float maxDamage, Vector2 effectPosition, Vector2 direction, bool isKnockBack = true, float knockBackPower = 20, float stunTime = 1, Vector3? effectSize = null)
     {
         (float, bool) damage;
         damage.Item1 = Random.Range(minDamage, maxDamage + 1);
@@ -338,6 +338,8 @@ public class Player : MonoBehaviour
         damage = CriticalCheck(damage.Item1);
 
         targetEnemy.GetDamage(damage.Item1, damage.Item2, isKnockBack, stunTime > 0, effectPosition, direction, knockBackPower, stunTime, effectSize);
+
+        return damage;
     }
 
     public void Mag_GiveDamage(ICanGetDamagableEnemy targetEnemy, float minDamage, float maxDamage, Vector2 effectPosition, Vector2 direction, float magnification, bool isKnockBack = true, float knockBackPower = 20, float stunTime = 1, Vector3? effectSize = null)

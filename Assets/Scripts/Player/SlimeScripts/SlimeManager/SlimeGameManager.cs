@@ -155,21 +155,19 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
     public void PlayerBodyChange(string bodyId, bool isDead = false)
     {
         #region 예외처리
-        if (isDead)
+        if (!isDead)
         {
-            return;
-        }
+            if (bodyId == "" || !canBodyChange)
+            {
+                return;
+            }
 
-        if (bodyId == "" || !canBodyChange)
-        {
-            return;
-        }
+            if (bodyId == currentBodyId)
+            {
+                Debug.Log("이미 해당 Body로 변신중입니다.");
 
-        if (bodyId == currentBodyId)
-        {
-            Debug.Log("이미 해당 Body로 변신중입니다.");
-
-            return;
+                return;
+            }
         }
 
         if (player.PlayerState.IsDrain)

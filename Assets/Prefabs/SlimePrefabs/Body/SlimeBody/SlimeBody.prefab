@@ -633,6 +633,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BodySlapChargingEffect
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 4640568994fb3cb439b1fe344d04d2dc, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: 4640568994fb3cb439b1fe344d04d2dc, type: 3}
       propertyPath: m_RootOrder
       value: 0
