@@ -141,6 +141,8 @@ public class PlayerBodySlap : PlayerSkill
 
         if (canBodySlap)
         {
+            StopBodySlap();
+
             canBodySlap = false;
 
             bodySlapChargingEffect.gameObject.SetActive(true);
@@ -154,6 +156,7 @@ public class PlayerBodySlap : PlayerSkill
             maxCharging = false;
 
             currentChargingTimer = 0f;
+            moveTargetPos = Vector2.zero;
         }
     }
 
@@ -276,6 +279,9 @@ public class PlayerBodySlap : PlayerSkill
 
         bodySlapStart = false;
         playerState.BodySlapping = false;
+
+        bodySlapTimer = bodySlapTime;
+        moveTargetPos = Vector2.zero;
     }
     private void CheckChargeTime()
     {
