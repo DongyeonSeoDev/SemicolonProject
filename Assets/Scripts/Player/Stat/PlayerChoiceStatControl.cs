@@ -151,7 +151,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
         if (pastePatienceNum == 0)
         {
-            if (attackMissedNum >= 100)
+            if (attackMissedNum >= unlockPatienceStatValue)
             {
                 // √≥¿Ω ¿Ã Ω∫≈»¿Ã ª˝±Ë
 
@@ -171,8 +171,8 @@ public class PlayerChoiceStatControl : MonoBehaviour
         SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.minDamage.statValue -= upDamagePerPatience * pastePatienceNum;
         SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxDamage.statValue -= upDamagePerPatience * pastePatienceNum;
 
-        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.minDamage.statValue = upDamagePerPatience * num;
-        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxDamage.statValue = upDamagePerPatience * num;
+        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.minDamage.statValue += upDamagePerPatience * num;
+        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxDamage.statValue += upDamagePerPatience * num;
     }
     private void AttackNumReset()
     {
