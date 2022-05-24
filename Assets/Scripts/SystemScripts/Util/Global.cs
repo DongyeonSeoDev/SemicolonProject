@@ -128,5 +128,12 @@ public static partial class Global
 
     public static string AlternateIfEmpty(this string str, string replace) => !string.IsNullOrEmpty(str) ? str : replace;  // ??사용은 string 값이 ""가 아니라 null일 때
 
-   
+    public static string ToColorStr(this string str, string colorCode)
+    {
+        return string.Format("<color={0}>{1}</color>", colorCode, str);
+    }
+    public static string ToColorStr(this string str, string colorCode, Func<bool> condition)
+    {
+        return condition() ? string.Format("<color={0}>{1}</color>", colorCode, str) : str;
+    }
 }
