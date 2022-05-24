@@ -1,35 +1,124 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class StatInfoElement : UITransition
 {
     private ushort id;
+    private bool isEnter;
 
-    [SerializeField] private Text usedStatPointTxt;
+    [SerializeField] private Text statLvTxt;
     [SerializeField] private Text curStatTxt;
     [SerializeField] private Text statNameTxt;
     [SerializeField] private Button statUpBtn;
+    private NameInfoFollowingCursor nifc;
 
-    public void InitSet(StatElement info)
+    protected override void Awake()
     {
-        id = info.id;
-        statNameTxt.text = info.statName;
-        statUpBtn.onClick.AddListener(() =>
-        {
-            //올릴 수 있는지 체크하고 스탯 올리고 UI 업데이트
-            UpdateUI();
-        });
-    }
+        EventTrigger eventTrigger = statUpBtn.GetComponent<EventTrigger>();
 
-    public override void Transition(bool on)
-    {
+        EventTrigger.Entry entry1 = new EventTrigger.Entry();
+        entry1.eventID = EventTriggerType.PointerEnter;
+        entry1.callback.AddListener(eventData => Transition(true));
+
+        EventTrigger.Entry entry2 = new EventTrigger.Entry();
+        entry2.eventID = EventTriggerType.PointerExit;
+        entry2.callback.AddListener(eventData => Transition(false));
+
+        eventTrigger.triggers.Add(entry1);
+        eventTrigger.triggers.Add(entry2);
+
         
     }
 
-    public void UpdateUI()
+    public void InitSet(StatElement info)
     {
-        //누적 스탯 포인트 사용 횟수랑 현재 스탯 갱신
+        nifc = statUpBtn.GetComponent<NameInfoFollowingCursor>();
+
+        id = info.id;
+        statNameTxt.text = NGlobal.playerStatUI.GetStatSOData(id).statName;
+        statUpBtn.onClick.AddListener(() =>
+        {
+            if (NGlobal.playerStatUI.eternalStatDic[id].first.isOpenStat)
+            {
+                if (NGlobal.playerStatUI.CanStatUp(id))
+                {
+                    NGlobal.playerStatUI.StatUp(id);
+                    UpdateUI();
+                }
+                else
+                {
+                    UIManager.Instance.RequestSystemMsg("스탯 포인트가 부족합니다.");
+                }
+            }
+            else
+            {
+                if (NGlobal.playerStatUI.CanStatOpen())
+                {
+                    NGlobal.playerStatUI.StatOpen(id);
+                    statNameTxt.text = NGlobal.playerStatUI.GetStatSOData(id).statName;
+                    UpdateUI();
+                }
+                else
+                {
+                    UIManager.Instance.RequestSystemMsg("스탯 포인트가 부족합니다.");
+                }
+            }
+
+            if (isEnter)
+            {
+                Transition(true);
+            }
+        });
+
+        if (!info.isUnlock)
+        {
+            statNameTxt.text = "???";
+            statUpBtn.gameObject.SetActive(false);
+        }
+        else if (info.statLv == 0)
+        {
+            UnlockStat();
+        }
+        else
+        {
+            nifc.explanation = "스탯 레벨업";
+        }
     }
 
+    public override void Transition(bool on) //스탯 증가 버튼에 마우스 댈 때
+    {
+        isEnter = on;
+        if (on)
+        {
+            StatElement el = NGlobal.playerStatUI.eternalStatDic[id].first;
+            NGlobal.playerStatUI.OnMouseEnterStatUpBtn(el.isOpenStat ? (int)Mathf.Pow(2, el.upStatCount) : -5);  //2^지금까지 스탯을 올린 횟수 = 스탯올리기 위해 필요한 포인트 양
+            UpdatePlusStat(true);
+        }
+        else
+        {
+            NGlobal.playerStatUI.OnMouseEnterStatUpBtn(-1);
+            UpdatePlusStat(false);
+        }
+    }
 
+    public void UpdateUI() //현재 스탯과 사용된 횟수 업뎃
+    {
+        curStatTxt.text = NGlobal.playerStatUI.GetCurrentPlayerStat(id).ToString();
+        statLvTxt.text = NGlobal.playerStatUI.eternalStatDic[id].first.statLv.ToString();
+    }
+
+    public void UpdatePlusStat(bool enter)  //스탯 포인트 소모하고 계속 마우스가 enter상태인지 체크해서 UI 갱신
+    {
+        if (enter && !NGlobal.playerStatUI.eternalStatDic[id].first.isOpenStat) return;
+
+        curStatTxt.text = enter ? string.Concat(NGlobal.playerStatUI.GetCurrentPlayerStat(id), "<color=green>(+", NGlobal.playerStatUI.eternalStatDic[id].first.upStatValue, ")</color>") : NGlobal.playerStatUI.GetCurrentPlayerStat(id).ToString();
+    }
+
+    public void UnlockStat() //해당 스탯을 얻음. 하지만 아직 개방상태는 아님
+    {
+        statNameTxt.text = "<color=#980D0D>" + NGlobal.playerStatUI.GetStatSOData(id).statName + "</color>";
+        statUpBtn.gameObject.SetActive(true);
+        nifc.explanation = "개방하기"; //이 값이 안들가는 버그
+    }
 }

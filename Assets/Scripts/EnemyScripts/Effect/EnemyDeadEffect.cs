@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace Enemy
 {
-    public class EnemyEffect : EnemyPoolData
+    public class EnemyDeadEffect : EnemyPoolData
     {
         private SpriteRenderer spriteRenderer = null;
         private Animator animator = null;

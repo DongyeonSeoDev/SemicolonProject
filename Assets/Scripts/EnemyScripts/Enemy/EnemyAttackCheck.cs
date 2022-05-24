@@ -103,19 +103,21 @@ namespace Enemy
 
             if (eEnemyController == EnemyController.AI && collision.CompareTag("Player"))
             {
-                SlimeGameManager.Instance.Player.GetDamage(gameObject, UnityEngine.Random.Range(attackPower - 5, attackPower + 6));
                 attackObject.Add(collision.gameObject);
 
                 var enemy = collision.GetComponent<Enemy>();
+                var hit = Physics2D.Raycast(transform.position, (collision.transform.position - transform.position).normalized, Vector2.Distance(collision.transform.position, transform.position), EnemyManager.Instance.whatIsPlayer);
 
                 if (isUseKnockBack)
                 {
+                    SlimeGameManager.Instance.Player.GetDamage(gameObject, UnityEngine.Random.Range(attackPower - 5, attackPower + 6), hit.point, positionCheckData.position, new Vector3(1.5f, 1.5f, 1.5f));
+
                     enemyRigidbody.velocity = Vector2.zero;
                     enemyRigidbody.angularVelocity = 0f;
 
                     if (enemy != null)
                     {
-                        enemy.GetDamage(0, false, true, true, false, 30f, 1f, positionCheckData.position);
+                        enemy.AttackInit(0, true, true, positionCheckData.position, 30f, 0.7f);
                     }
                     else
                     {
@@ -127,21 +129,27 @@ namespace Enemy
                 {
                     if (enemy != null)
                     {
-                        enemy.GetDamage(0, false, false, false, false);
+                        SlimeGameManager.Instance.Player.GetDamage(gameObject, UnityEngine.Random.Range(attackPower - 5, attackPower + 6), hit.point, enemy.transform.position - this.enemy.transform.position);
+                        enemy.AttackInit(0, false, false);
+                    }
+                    else
+                    {
+                        SlimeGameManager.Instance.Player.GetDamage(gameObject, UnityEngine.Random.Range(attackPower - 5, attackPower + 6), hit.point, EnemyManager.Player.transform.position - this.enemy.transform.position);
                     }
                 }
             }
             else if (eEnemyController == EnemyController.PLAYER)
             {
                 Enemy enemy = collision.gameObject.GetComponent<Enemy>();
+                var hit = Physics2D.Raycast(transform.position, (collision.transform.position - transform.position).normalized, Vector2.Distance(collision.transform.position, transform.position), EnemyManager.Instance.whatIsEnemy);
 
                 if (enemy != null && enemy != this.enemy)
                 {
                     (float, bool) damage;
-                    damage.Item1 = UnityEngine.Random.Range(SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage + 1);
+                    damage.Item1 = UnityEngine.Random.Range(SlimeGameManager.Instance.Player.PlayerStat.MinDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage + 1);
                     damage = SlimeGameManager.Instance.Player.CriticalCheck(damage.Item1);
                     
-                    enemy.GetDamage(damage.Item1, damage.Item2, false, false);
+                    enemy.GetDamage(damage.Item1, damage.Item2, false, false, hit.point, enemy.transform.position - this.enemy.transform.position);
                     attackObject.Add(collision.gameObject);
 
                     EventManager.TriggerEvent("OnEnemyAttack");

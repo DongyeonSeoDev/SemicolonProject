@@ -30,9 +30,9 @@ namespace Enemy
             base.Update();
         }
 
-        public override void GetDamage(float damage, bool critical, bool isKnockBack, bool isStun, bool isShowText = true, float knockBackPower = 20, float stunTime = 1, Vector2? direction = null)
+        public override void GetDamage(float damage, bool critical, bool isKnockBack, bool isStun, Vector2 effectPosition, Vector2 direction, float knockBackPower = 20f, float stunTime = 1f, Vector3? effectSize = null)
         {
-            base.GetDamage(damage, critical, isKnockBack, isStun, isShowText, knockBackPower, stunTime, direction);
+            base.GetDamage(damage, critical, isKnockBack, isStun, effectPosition, direction, knockBackPower, stunTime, effectSize);
 
             hp -= damage;
 
@@ -41,7 +41,7 @@ namespace Enemy
                 hp = 0;
             }
 
-            EffectManager.Instance.OnDamaged(damage, critical, true, transform.position);
+            EffectManager.Instance.OnDamaged(damage, critical, true, transform.position, effectPosition, direction, effectSize);
 
             SetHP(true);
         }

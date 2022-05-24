@@ -126,5 +126,7 @@ public static partial class Global
         }
     }
 
-    public static string AlternateIfEmpty(this string str, string replace) => !string.IsNullOrEmpty(str) ? str : replace;
+    public static string AlternateIfEmpty(this string str, string replace) => !string.IsNullOrEmpty(str) ? str : replace;  // ??사용은 string 값이 ""가 아니라 null일 때
+
+   
 }

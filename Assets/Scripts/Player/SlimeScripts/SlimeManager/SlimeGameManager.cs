@@ -325,8 +325,6 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             //}
 
             SetCanBodyChangeFalse();
-
-            // TODO: PlayerBody로서의 처리
         }
         else
         {

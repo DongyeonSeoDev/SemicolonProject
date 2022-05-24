@@ -218,7 +218,7 @@ public class Player : MonoBehaviour
 
         return true;
     }
-    public void GetDamage(float damage, bool critical = false, bool stateAbnormality = false)
+    public void GetDamage(float damage, Vector2 effectPosition, Vector2 direction, Vector3? effectSize = null, bool critical = false, bool stateAbnormality = false)
     {
         if ((playerState.BodySlapping && !stateAbnormality) ||
             (playerState.IsDrain && !stateAbnormality) ||
@@ -262,7 +262,7 @@ public class Player : MonoBehaviour
                 }
             }
 
-            EffectManager.Instance.OnDamaged(dm, critical, false, SlimeGameManager.Instance.CurrentPlayerBody.transform.position);
+            EffectManager.Instance.OnDamaged(dm, critical, false, SlimeGameManager.Instance.CurrentPlayerBody.transform.position, effectPosition, direction, effectSize);
             UIManager.Instance.UpdatePlayerHPUI(true);
         }
     }
@@ -273,7 +273,8 @@ public class Player : MonoBehaviour
     /// <param name="damage"></param>
     /// <param name="critical"></param>
     /// <param name="stateAbnormality"></param>
-    public void GetDamage(GameObject attacker, float damage, bool critical = false, bool stateAbnormality = false)
+    
+    public void GetDamage(GameObject attacker, float damage, Vector2 effectPosition, Vector2 direction, Vector3? effectSize = null, bool critical = false, bool stateAbnormality = false)
     {
         if ((playerState.BodySlapping && !stateAbnormality) ||
             (playerState.IsDrain && !stateAbnormality) ||
@@ -324,11 +325,11 @@ public class Player : MonoBehaviour
                 }
             }
 
-            EffectManager.Instance.OnDamaged(dm, critical, false, SlimeGameManager.Instance.CurrentPlayerBody.transform.position);
+            EffectManager.Instance.OnDamaged(dm, critical, false, SlimeGameManager.Instance.CurrentPlayerBody.transform.position, effectPosition, direction, effectSize);
             UIManager.Instance.UpdatePlayerHPUI(true);
         }
-    } 
-    public (float, bool) GiveDamage(ICanGetDamagableEnemy targetEnemy, float minDamage, float maxDamage, float stunTime = 1, float knockBackPower = 20, bool isKnockBack = true)
+    }
+    public void GiveDamage(ICanGetDamagableEnemy targetEnemy, float minDamage, float maxDamage, Vector2 effectPosition, Vector2 direction, bool isKnockBack = true, float knockBackPower = 20, float stunTime = 1, Vector3? effectSize = null)
     {
         (float, bool) damage;
         damage.Item1 = Random.Range(minDamage, maxDamage + 1);
@@ -336,11 +337,10 @@ public class Player : MonoBehaviour
 
         damage = CriticalCheck(damage.Item1);
 
-        targetEnemy.GetDamage(damage.Item1, damage.Item2, isKnockBack, stunTime > 0, true, knockBackPower, stunTime);
-
-        return damage;
+        targetEnemy.GetDamage(damage.Item1, damage.Item2, isKnockBack, stunTime > 0, effectPosition, direction, knockBackPower, stunTime, effectSize);
     }
-    public (float, bool) Mag_GiveDamage(ICanGetDamagableEnemy targetEnemy, float minDamage, float maxDamage, float magnification, float stunTime = 1, float knockBackPower = 20, bool isKnockBack = true)
+
+    public void Mag_GiveDamage(ICanGetDamagableEnemy targetEnemy, float minDamage, float maxDamage, Vector2 effectPosition, Vector2 direction, float magnification, bool isKnockBack = true, float knockBackPower = 20, float stunTime = 1, Vector3? effectSize = null)
     {
         (float, bool) damage;
         damage.Item1 = Random.Range(minDamage, maxDamage + 1);
@@ -350,9 +350,7 @@ public class Player : MonoBehaviour
 
         damage.Item1 = (int)(damage.Item1 * magnification);
 
-        targetEnemy.GetDamage(damage.Item1, damage.Item2, isKnockBack, stunTime > 0, true, knockBackPower, stunTime);
-
-        return damage;
+        targetEnemy.GetDamage(damage.Item1, damage.Item2, isKnockBack, stunTime > 0, effectPosition, direction, knockBackPower, stunTime, effectSize);
     }
     public (float, bool) CriticalCheck(float damage)
     {

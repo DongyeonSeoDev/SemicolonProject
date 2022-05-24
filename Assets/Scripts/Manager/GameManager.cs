@@ -64,11 +64,14 @@ public partial class GameManager : MonoSingleton<GameManager>
     {
         MonsterCollection.Instance.Save();
         KeyActionManager.Instance.SaveKey();
+        NGlobal.playerStatUI.Save();
         saveData.Save();
     }
 
     public void Save()
     {
+        Debug.Log("Save Start");
+
         SaveData();
 
         savedJson = JsonUtility.ToJson(saveData);
@@ -80,6 +83,8 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     public void Load()
     {
+        Debug.Log("Load Start");
+
         if (File.Exists(filePath))
         {
             string code = File.ReadAllText(filePath);
@@ -90,6 +95,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         }
 
         saveData.Load();
+        //UtilEditor.PauseEditor();
         SetData();
     }
 
@@ -120,10 +126,8 @@ public partial class GameManager : MonoSingleton<GameManager>
                 saveData.ResetAfterTuto();
             }
         }
-        //슬라임에게 스탯 데이터 넣기
-        //옵션 설정 내용 넣기 
-        //아이템 정보 불러오기  --> Inventory 스크립트에서 처리
-        //몬스터 동화율 정보 불러오기 --> MonsterCollection 스크립트에서 처리
+
+        //UtilEditor.PauseEditor();
     }
 
    /* private IEnumerator SetUIActiveDicFalseUI()
