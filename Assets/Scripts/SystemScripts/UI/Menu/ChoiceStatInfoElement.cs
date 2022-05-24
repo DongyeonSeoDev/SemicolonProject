@@ -4,6 +4,7 @@ using UnityEngine;
 public class ChoiceStatInfoElement : MonoBehaviour
 {
     private ushort id;
+    private StatElement choice;
     private ChoiceStatSO statData;
 
     public Text BGStatNameTxt;
@@ -15,8 +16,11 @@ public class ChoiceStatInfoElement : MonoBehaviour
     public void InitSet(StatElement stat)
     {
         id = stat.id;
+        choice = stat;
         statData = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id);
+
         BGStatNameTxt.text = statData.statName;
+        BGStatExplanationTxt.text = statData.simpleAbilExplanation;
 
         btn.onClick.AddListener(() =>
         {
@@ -28,7 +32,6 @@ public class ChoiceStatInfoElement : MonoBehaviour
 
     public void UpdateUI()
     {
-        BGStatLvTxt.text = NGlobal.playerStatUI.choiceStatDic[id].statLv.ToString();
-        BGStatExplanationTxt.text = NGlobal.GetChoiceStatAbilExplanation(id);
+        BGStatLvTxt.text = choice.statLv.ToString();
     }
 }
