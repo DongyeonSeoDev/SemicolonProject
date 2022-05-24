@@ -21,6 +21,8 @@ public class PlayerStatUI : MonoBehaviour
     //선택 스탯 스크롤뷰 안에 있어서 스크롤에 포함된 것처럼 보이게 하기 위해서 현재 선택된 버튼 밑에 안보이는 선택 스탯 버튼을 몇 개(변수) 둬서 그렇게 보이도록 할지. 어케할지 몰라서 일단 이렇게 꼼수로 함
     private List<Transform> invisibleChoiceStatUIList = new List<Transform>(); //위 주석에서 말하는 안보이는 선택 스탯 요소 버튼. 안에 들갈 프리팹 위에 있다
 
+    private Transform choiceDetailPar;
+    private Vector2 choiceDetailStartPos;
 
     public GameObject choiceStatDetailPanel; // 선택 스탯 자세히 보기창
     public Text choiceDetailAbil, choiceDetailGrowth, choiceDetailAcq;  //선택 스탯 자세히 보기창에 있는 능력, 성장방법, 획득방법 설명 텍스트 
@@ -59,6 +61,8 @@ public class PlayerStatUI : MonoBehaviour
         {
             statDataDic.Add(so.statId, so);
         }
+        choiceDetailPar = choiceStatDetailPanel.transform.parent;
+        choiceDetailStartPos = choiceStatDetailPanel.GetComponent<RectTransform>().anchoredPosition;
     }
 
     private void Start()
@@ -227,7 +231,7 @@ public class PlayerStatUI : MonoBehaviour
         {
             selectedChoiceBtnId = 9999;
             choiceStatDetailPanel.transform.DOKill();
-            choiceStatDetailPanel.transform.DOScale(SVector3.Y0, 0.5f).OnComplete(() =>
+            choiceStatDetailPanel.transform.DOScale(SVector3.Y0, 0.3f).OnComplete(() =>
             {
                 for (int i = 0; i < invisibleChoiceStatUICount; i++)
                 {
@@ -235,34 +239,41 @@ public class PlayerStatUI : MonoBehaviour
                 }
                 choiceStatDetailPanel.SetActive(false);
             }).SetUpdate(true);
+
             return;
         }
 
         selectedChoiceBtnId = id;
 
+        choiceStatDetailPanel.transform.parent = choiceDetailPar;
+        choiceStatDetailPanel.GetComponent<RectTransform>().anchoredPosition = choiceDetailStartPos;
+
+        for (int i = 0; i < invisibleChoiceStatUICount; i++)
+        {
+            invisibleChoiceStatUIList[i].transform.SetAsLastSibling();
+        }
+
         RectTransform rt = choiceStatInfoUIDic[id].GetComponent<RectTransform>();
         Vector2 v = choiceStatDetailPanel.GetComponent<RectTransform>().anchoredPosition;
+
+        int curIdx = rt.transform.GetSiblingIndex();
+        for (int i = 0; i < invisibleChoiceStatUICount; i++)
+        {
+            invisibleChoiceStatUIList[i].gameObject.SetActive(true);
+            invisibleChoiceStatUIList[i].transform.SetSiblingIndex(curIdx + i + 1);
+        }
 
         choiceStatDetailPanel.transform.DOKill();
         choiceStatDetailPanel.transform.localScale = SVector3.Y0;
         choiceStatDetailPanel.SetActive(true);
         choiceStatDetailPanel.GetComponent<RectTransform>().anchoredPosition = new Vector2(v.x,
-            rt.anchoredPosition.y - rt.rect.height * 0.5f - 5f);
-        choiceStatDetailPanel.transform.DOScale(Vector3.one, 0.5f).OnComplete(() =>
-        {
-            int curIdx = rt.transform.GetSiblingIndex();
-            for (int i = 0; i < invisibleChoiceStatUICount; i++)
-            {
-                invisibleChoiceStatUIList[i].gameObject.SetActive(true);
-                invisibleChoiceStatUIList[i].transform.SetSiblingIndex(curIdx + i + 1);
-            }
-        }).SetUpdate(true);
-       
+            rt.anchoredPosition.y - rt.rect.height * 0.5f - 2f);
+        choiceStatDetailPanel.transform.DOScale(Vector3.one, 0.3f).SetUpdate(true);
 
         ChoiceStatSO data = GetStatSOData<ChoiceStatSO>(id);
-        choiceDetailAbil.text = NGlobal.GetChoiceStatAbilExplanation(selectedChoiceBtnId);
-        choiceDetailGrowth.text = data.growthWay;
-        choiceDetailAcq.text = data.acquisitionWay;
+        choiceDetailAbil.text = "능력 : " + NGlobal.GetChoiceStatAbilExplanation(selectedChoiceBtnId);
+        choiceDetailGrowth.text = "성장방법 : " + data.growthWay;
+        choiceDetailAcq.text = "획득방법 : " + data.acquisitionWay;
 
         choiceStatDetailPanel.transform.SetParent(choiceStatInfoUIDic[id].transform);
     }

@@ -28,11 +28,13 @@ public class StatInfoElement : UITransition
         eventTrigger.triggers.Add(entry1);
         eventTrigger.triggers.Add(entry2);
 
-        nifc = statUpBtn.GetComponent<NameInfoFollowingCursor>();
+        
     }
 
     public void InitSet(StatElement info)
     {
+        nifc = statUpBtn.GetComponent<NameInfoFollowingCursor>();
+
         id = info.id;
         statNameTxt.text = NGlobal.playerStatUI.GetStatSOData(id).statName;
         statUpBtn.onClick.AddListener(() =>
@@ -117,6 +119,6 @@ public class StatInfoElement : UITransition
     {
         statNameTxt.text = "<color=#980D0D>" + NGlobal.playerStatUI.GetStatSOData(id).statName + "</color>";
         statUpBtn.gameObject.SetActive(true);
-        nifc.explanation = "개방하기";
+        nifc.explanation = "개방하기"; //이 값이 안들가는 버그
     }
 }
