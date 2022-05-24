@@ -38,11 +38,12 @@ public class PlayerMomentomScript : MonoBehaviour
     private void StartMomentom()
     {
         momentomStarted = true;
-        momentomTimer = momentomTime;
+        momentomTimer = momentomTime + 
+            playerChoiceStatControl.ChoiceDataDict["momentom"].upTargetStatPerChoiceStat * SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.statValue;
 
         // 추진력 사용 이펙트 넣을것
         // 이전값 저장해서 추진력 끝나면 그 값 빼기
-        lastUpSpeed = playerChoiceStatControl.UpMomentomSpeedPerMomentom * SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.statValue;
+        lastUpSpeed = 1;
         SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.speed.statValue += lastUpSpeed;
 
         Debug.Log("추진력!!!!!!!!" + lastUpSpeed + " 만큼 이속 상승");

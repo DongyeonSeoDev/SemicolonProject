@@ -1,47 +1,31 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[Serializable]
+public struct ChoiceStatData
+{
+    public string id; // 스탯 기획 문서에 작성된 변수 명으로 작성한다.
+    public string name; // UI에 뜰 한글 이름
+    public string targetStat; // 이 ChocieStat에 의해 오르게 될 스탯의 Name 값
+
+    public int firstValue; // 초기값
+    public int unlockStatValue; // 이 스탯을 휙듣하기 위한 해당 값의 양
+
+    public int upAmount; // 특정 값이 upAmount이상일 때 마다 스탯 수치 상승
+    public float upTargetStatPerChoiceStat; // 이 ChoiceStat의 값 1 당 오르는 대상 스탯의 값
+}
 public class PlayerChoiceStatControl : MonoBehaviour
 {
-    [Header("맷집 스탯의 초기값")]
     [SerializeField]
-    private int firstEnduranceValue = 1;
-    [Header("인내 스탯의 초기값")]
-    [SerializeField]
-    private int firstPatienceValue = 1;
-    [Header("추진력 스탯의 초기값")]
-    [SerializeField]
-    private int firstMomentomValue = 1;
+    private List<ChoiceStatData> choiceDataList = new List<ChoiceStatData>();
 
-    [Header("맷집 스탯을 휙득하기 위한 해당 값의 양")]
-    [SerializeField]
-    private int unlockEnduranceStatValue = 100;
-    [Header("인내 스탯을 휙득하기 위한 해당 값의 양")]
-    [SerializeField]
-    private int unlockPatienceStatValue = 100;
-    [Header("추진력 스탯을 휙득하기 위한 해당 값의 양")]
-    [SerializeField]
-    private int unlockMomentomStatValue = 150;
-
-
-    [Header("누적 피해량이 이 값 이상일 때 마다 맷집값이 상승함")]
-    [SerializeField]
-    private int enduranceUpAmount = 100;
-
-    [Header("1 맷집당 오르는 최대체력의 양")]
-    [SerializeField]
-    private float upMaxHpPerEnduranceUpAmount = 5f;
-
-
-    [Header("공격 횟수가 이 값 이상일 때 마다 인내 수치 상승")]
-    [SerializeField]
-    private int patienceUpAmount = 100;
-
-    [Header("1 인내당 오르는 공격력의 양")]
-    [SerializeField]
-    private int upDamagePerPatience = 1;
-
+    private Dictionary<string, ChoiceStatData> choiceDataDict = new Dictionary<string, ChoiceStatData>();
+    public Dictionary<string, ChoiceStatData> ChoiceDataDict
+    {
+        get { return choiceDataDict; }
+    }
 
     [SerializeField]
     private int avoidInMomentomNum = 0;
@@ -50,19 +34,6 @@ public class PlayerChoiceStatControl : MonoBehaviour
         get { return avoidInMomentomNum; }
         set { avoidInMomentomNum = value; }
     }
-
-    [Header("회피 횟수가 이 값 이상일 때 추진력 스탯 상승")]
-    [SerializeField]
-    private int momentomAmount = 10;
-
-    [Header("1 추진력당 오르는 추진력 사용 시의 추가 이동속도 값")]
-    [SerializeField]
-    private float upMomentomSpeedPerMomentom = 0.2f;
-    public float UpMomentomSpeedPerMomentom
-    {
-        get { return upMomentomSpeedPerMomentom; }
-    }
-
 
     private float totalDamage = 0f;
     /// <summary>
@@ -103,7 +74,13 @@ public class PlayerChoiceStatControl : MonoBehaviour
         get { return bodySlapNum; }
         set { bodySlapNum = value; }
     }
-
+    private void Start()
+    {
+        foreach(var item in choiceDataList)
+        {
+            choiceDataDict.Add(item.id, item);
+        }
+    }
     private void OnEnable()
     {
         EventManager.StartListening("OnEnemyAttack", UpAttackNum);
@@ -128,7 +105,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
     public void CheckEndurance()
     {
         float pasteEndurance = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance.statValue;
-        int num = (int)totalDamage / enduranceUpAmount;
+        int num = (int)totalDamage / choiceDataDict["endurance"].upAmount;
 
         if (pasteEndurance != num && num > 0)
         {
@@ -136,12 +113,12 @@ public class PlayerChoiceStatControl : MonoBehaviour
             {
                 // 처음 이 스탯이 생김
                 SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance.isUnlock = true;
-                num = firstEnduranceValue;
+                num = choiceDataDict["endurance"].firstValue;
             }
 
             SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance.statValue = num;
 
-            SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxHp.statValue += upMaxHpPerEnduranceUpAmount * (num - pasteEndurance);
+            SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxHp.statValue += choiceDataDict["endurance"].upTargetStatPerChoiceStat * (num - pasteEndurance);
         }
     }
     public void CheckPatience()
@@ -151,11 +128,11 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
         if (pastePatienceNum == 0)
         {
-            if (attackMissedNum >= unlockPatienceStatValue)
+            if (attackMissedNum >= choiceDataDict["patience"].unlockStatValue)
             {
                 // 처음 이 스탯이 생김
 
-                num = firstPatienceValue;
+                num = choiceDataDict["patience"].firstValue;
                 SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.isUnlock = true;
 
                 AttackNumReset();
@@ -163,16 +140,16 @@ public class PlayerChoiceStatControl : MonoBehaviour
         }
         else
         {
-            num = ((attackNum + attackMissedNum) / patienceUpAmount) + firstPatienceValue;
+            num = ((attackNum + attackMissedNum) / choiceDataDict["patience"].upAmount) + choiceDataDict["patience"].firstValue;
         }
 
         SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.statValue = num;
 
-        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.minDamage.statValue -= upDamagePerPatience * pastePatienceNum;
-        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxDamage.statValue -= upDamagePerPatience * pastePatienceNum;
+        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.minDamage.statValue -= choiceDataDict["patience"].upTargetStatPerChoiceStat * pastePatienceNum;
+        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxDamage.statValue -= choiceDataDict["patience"].upTargetStatPerChoiceStat * pastePatienceNum;
 
-        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.minDamage.statValue += upDamagePerPatience * num;
-        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxDamage.statValue += upDamagePerPatience * num;
+        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.minDamage.statValue += choiceDataDict["patience"].upTargetStatPerChoiceStat * num;
+        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxDamage.statValue += choiceDataDict["patience"].upTargetStatPerChoiceStat * num;
     }
     private void AttackNumReset()
     {
@@ -187,18 +164,18 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
         if(pasteMomentomNum == 0)
         {
-            if(bodySlapNum >= unlockMomentomStatValue)
+            if(bodySlapNum >= choiceDataDict["momentom"].unlockStatValue)
             {
                 // 이 스탯이 처음 생김
                 Debug.Log("Momentom True Wireless Earbuds 2"); // 추진력 해금 체크용 코드 // 참고로 좋은 무선이어폰임 추천함
-                num = firstMomentomValue;
+                num = choiceDataDict["momentom"].firstValue;
 
                 SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.isUnlock = true;
             }
         }
         else
         {
-            num = (avoidInMomentomNum / momentomAmount) + firstMomentomValue;
+            num = (avoidInMomentomNum / choiceDataDict["momentom"].upAmount) + choiceDataDict["momentom"].firstValue;
         }
 
         SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.statValue = num;

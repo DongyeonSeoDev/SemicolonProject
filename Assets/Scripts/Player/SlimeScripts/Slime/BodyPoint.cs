@@ -253,7 +253,6 @@ public class BodyPoint : MonoBehaviour
     }
     private void SetMoveToMiddleTimer()
     {
-        Debug.Log("aaaa");
         moveToMiddleTimer = moveToMiddleTime;
     }
     private void SetMoveToMiddleTimerZero()

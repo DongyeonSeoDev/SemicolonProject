@@ -62,7 +62,7 @@ MonoBehaviour:
       maxHp:
         id: 5
         statValue: 100
-        upStatValue: 0
+        upStatValue: 5
         isUnlock: 0
         usedStatPoint: 0
         statName: "\uCD5C\uB300\uCCB4\uB825"
@@ -70,7 +70,7 @@ MonoBehaviour:
       minDamage:
         id: 10
         statValue: 8
-        upStatValue: 0
+        upStatValue: 1
         isUnlock: 0
         usedStatPoint: 0
         statName: "\uCD5C\uC18C\uACF5\uACA9\uB825"
@@ -78,7 +78,7 @@ MonoBehaviour:
       maxDamage:
         id: 15
         statValue: 12
-        upStatValue: 0
+        upStatValue: 1
         isUnlock: 0
         usedStatPoint: 0
         statName: "\uCD5C\uB300\uACF5\uACA9\uB825"
@@ -86,7 +86,7 @@ MonoBehaviour:
       defense:
         id: 20
         statValue: 2
-        upStatValue: 0
+        upStatValue: 1
         isUnlock: 0
         usedStatPoint: 0
         statName: "\uBC29\uC5B4\uB825"
@@ -94,7 +94,7 @@ MonoBehaviour:
       intellect:
         id: 25
         statValue: 0
-        upStatValue: 0
+        upStatValue: 1
         isUnlock: 0
         usedStatPoint: 0
         statName: "\uC9C0\uB2A5"
@@ -102,7 +102,7 @@ MonoBehaviour:
       speed:
         id: 30
         statValue: 8
-        upStatValue: 0
+        upStatValue: 1
         isUnlock: 0
         usedStatPoint: 0
         statName: "\uC774\uB3D9\uC18D\uB3C4"
@@ -110,7 +110,7 @@ MonoBehaviour:
       attackSpeed:
         id: 35
         statValue: 1
-        upStatValue: 0
+        upStatValue: 1
         isUnlock: 0
         usedStatPoint: 0
         statName: "\uACF5\uACA9\uC18D\uB3C4"
@@ -118,7 +118,7 @@ MonoBehaviour:
       criticalRate:
         id: 40
         statValue: 50
-        upStatValue: 0
+        upStatValue: 1
         isUnlock: 0
         usedStatPoint: 0
         statName: "\uD06C\uB9AC\uD2F0\uCEEC\uD655\uB960"
@@ -126,7 +126,7 @@ MonoBehaviour:
       criticalDamage:
         id: 45
         statValue: 10
-        upStatValue: 0
+        upStatValue: 2
         isUnlock: 0
         usedStatPoint: 0
         statName: "\uD06C\uB9AC\uD2F0\uCEEC\uB370\uBBF8\uC9C0"
@@ -206,7 +206,7 @@ MonoBehaviour:
         emotionRangeList: []
     choiceStat:
       patience:
-        id: 0
+        id: 100
         statValue: 0
         upStatValue: 0
         isUnlock: 0
@@ -214,7 +214,7 @@ MonoBehaviour:
         statName: 
         emotionRangeList: []
       momentom:
-        id: 0
+        id: 105
         statValue: 0
         upStatValue: 0
         isUnlock: 0
@@ -222,7 +222,7 @@ MonoBehaviour:
         statName: 
         emotionRangeList: []
       endurance:
-        id: 0
+        id: 110
         statValue: 0
         upStatValue: 0
         isUnlock: 0
@@ -316,19 +316,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddaeeb1615f267e449c6c8b96a25a1cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstEnduranceValue: 1
-  firstPatienceValue: 1
-  firstMomentomValue: 1
-  unlockEnduranceStatValue: 100
-  unlockPatienceStatValue: 100
-  unlockMomentomStatValue: 150
-  enduranceUpAmount: 100
-  upMaxHpPerEnduranceUpAmount: 5
-  patienceUpAmount: 100
-  upDamagePerPatience: 1
+  choiceDataList:
+  - id: Endurance
+    name: "\uB9F7\uC9D1"
+    targetStat: "\uCCB4\uB825"
+    firstValue: 1
+    unlockStatValue: 100
+    upAmount: 100
+    upTargetStatPerChoiceStat: 5
+  - id: Patience
+    name: "\uC778\uB0B4"
+    targetStat: "\uACF5\uACA9\uB825"
+    firstValue: 1
+    unlockStatValue: 100
+    upAmount: 100
+    upTargetStatPerChoiceStat: 1
+  - id: Momentom
+    name: "\uCD94\uC9C4\uB825"
+    targetStat: "\uCD94\uC9C4\uB825"
+    firstValue: 1
+    unlockStatValue: 150
+    upAmount: 10
+    upTargetStatPerChoiceStat: 0.2
   avoidInMomentomNum: 0
-  momentomAmount: 10
-  upMomentomSpeedPerMomentom: 0.2
 --- !u!114 &9036656189394809005
 MonoBehaviour:
   m_ObjectHideFlags: 0
