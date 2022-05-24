@@ -333,7 +333,7 @@ MonoBehaviour:
     upTargetStatPerChoiceStat: 1
   - id: Momentom
     name: "\uCD94\uC9C4\uB825"
-    targetStat: "\uCD94\uC9C4\uB825"
+    targetStat: "\uCD94\uC9C4\uB825, \uC774\uB3D9\uC18D\uB3C4"
     firstValue: 1
     unlockStatValue: 150
     upAmount: 10

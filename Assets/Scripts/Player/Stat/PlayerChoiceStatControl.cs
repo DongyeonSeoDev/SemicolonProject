@@ -42,7 +42,6 @@ public class PlayerChoiceStatControl : MonoBehaviour
     public float TotalDamage
     {
         get { return totalDamage; }
-        set { totalDamage = value; }
     }
 
     private int attackMissedNum = 0;
@@ -52,7 +51,6 @@ public class PlayerChoiceStatControl : MonoBehaviour
     public int AttackMissedNum
     {
         get { return attackMissedNum; }
-        set { attackMissedNum = value; }
     }
 
     private int attackNum = 0;
@@ -62,7 +60,6 @@ public class PlayerChoiceStatControl : MonoBehaviour
     public int AttackNum
     {
         get { return attackNum; }
-        set { attackNum = value; }
     }
 
     private int bodySlapNum = 0;
@@ -72,7 +69,6 @@ public class PlayerChoiceStatControl : MonoBehaviour
     public int BodySlapNum
     {
         get { return bodySlapNum; }
-        set { bodySlapNum = value; }
     }
     private void Start()
     {
@@ -184,13 +180,23 @@ public class PlayerChoiceStatControl : MonoBehaviour
     {
         // 몬스터 외의 것들을 때렸을 경우
 
+        if (!SlimeGameManager.Instance.Player.PlayerStat.eternalStat.minDamage.isUnlock)
+        {
+            return;
+        }
+
         attackMissedNum++;
     }
     public void UpAttackNum()
     {
         // 몬스터를 때렸을 경우
 
-        if (SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.isUnlock)
+        if(!SlimeGameManager.Instance.Player.PlayerStat.eternalStat.minDamage.isUnlock)
+        {
+            return;
+        }
+
+        if (!SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.isUnlock)
         {
             attackMissedNum = 0;
 
@@ -201,7 +207,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
     }
     public void UpAvoidInMomentomNum()
     {
-        if(!SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.isUnlock)
+        if(!SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.isUnlock || !SlimeGameManager.Instance.Player.PlayerStat.eternalStat.speed.isUnlock)
         {
             return;
         }
@@ -210,6 +216,20 @@ public class PlayerChoiceStatControl : MonoBehaviour
     }
     public void UpBodySlapNum()
     {
+        if(!SlimeGameManager.Instance.Player.PlayerStat.eternalStat.speed.isUnlock)
+        {
+            return;
+        }
+
         bodySlapNum++;
+    }
+    public void UpTotalDamage(float value)
+    {
+        if(!SlimeGameManager.Instance.Player.PlayerStat.eternalStat.maxHp.isUnlock)
+        {
+            return;
+        }
+
+        totalDamage += value;
     }
 }

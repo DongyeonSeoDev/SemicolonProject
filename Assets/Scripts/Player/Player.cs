@@ -243,7 +243,7 @@ public class Player : MonoBehaviour
             }
             else
             {
-                playerChoiceStatControl.TotalDamage += dm;
+                playerChoiceStatControl.UpTotalDamage(dm);
             }
 
             playerStat.currentHp -= dm;
@@ -305,7 +305,7 @@ public class Player : MonoBehaviour
             }
             else
             {
-                playerChoiceStatControl.TotalDamage += dm;
+                playerChoiceStatControl.UpTotalDamage(dm);
             }
 
             playerStat.currentHp -= dm;
