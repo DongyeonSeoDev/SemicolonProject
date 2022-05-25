@@ -193,28 +193,28 @@ MonoBehaviour:
         upStatValue: 0
         isUnlock: 0
         statLv: 0
-        maxStatLv: 0
+        maxStatLv: 20
       momentom:
         id: 105
         statValue: 0
         upStatValue: 0
         isUnlock: 0
         statLv: 0
-        maxStatLv: 0
+        maxStatLv: 10
       endurance:
         id: 110
         statValue: 0
         upStatValue: 0
         isUnlock: 0
         statLv: 0
-        maxStatLv: 0
+        maxStatLv: 10
   playerInput: {fileID: 0}
   playerChoiceStatControl: {fileID: 0}
   playerOrderInLayerController: {fileID: 0}
   maxEnergy: 10
   energyRegenSpeed: 1
-  energyRegenSpeedWhenNotAttack: 1.5
-  upMountingPercentageValueWhenEnemyDead: 2
+  energyRegenSpeedWhenNotAttack: 3
+  upMountingPercentageValueWhenEnemyDead: 5
   upUnderstandingRateValueWhenEnemyDead: 1
   upUnderstandingRateValueWhenEnemyDeadAfterBodyChanged: 3
 --- !u!114 &5427881869486345104

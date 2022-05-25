@@ -116,6 +116,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
             }
 
             SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance.statValue = num;
+            SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance.statLv = num;
 
             SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxHp.statValue += choiceDataDict["endurance"].upTargetStatPerChoiceStat * (num - pasteEndurance);
         }
@@ -146,6 +147,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
         }
 
         SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.statValue = num;
+        SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.statLv = num;
 
         SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.minDamage.statValue += choiceDataDict["patience"].upTargetStatPerChoiceStat * (num- pastePatienceNum);
         SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxDamage.statValue += choiceDataDict["patience"].upTargetStatPerChoiceStat * (num - pastePatienceNum);
@@ -181,6 +183,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
         }
 
         SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.statValue = num;
+        SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.statLv = num;
     }
     public void UpAttackMissedNum()
     {

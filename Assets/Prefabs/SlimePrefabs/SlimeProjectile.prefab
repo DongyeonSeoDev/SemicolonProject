@@ -99,14 +99,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   onCrashEffect: {fileID: 5849933449466126942, guid: 30be908edd7366b49801e2d58796386c, type: 3}
-  onCrashEffectSound: {fileID: 1753194670404615220, guid: 4860f657d1cefdb4fad34853f4be201b, type: 3}
-  onCrashCriticalEffectSound: {fileID: 1753194670404615220, guid: 9514be5462faca745afc2f1f69ab63d1, type: 3}
   whatIsCrashable:
     serializedVersion: 2
     m_Bits: 2097344
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 2097280
+  damageMagnificationOfShoot: 0.3
   moveTime: 3
   knockBackPower: 5
 --- !u!50 &8223448895546236960
