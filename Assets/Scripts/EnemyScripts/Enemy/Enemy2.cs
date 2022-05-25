@@ -15,8 +15,8 @@ namespace Enemy
             enemyData.minRunAwayTime = 2f;
             enemyData.maxRunAwayTime = 4f;
             enemyData.playerAnimationTime = 1.05f;
-            enemyData.maxHP = 39;
-            enemyData.hp = 39;
+            enemyData.maxHP = 20;
+            enemyData.hp = 20;
 
             enemyData.enemyMoveCommand = new EnemyRandomMoveCommand(enemyData, positionCheckData); // MoveCommand »ý¼º
             enemyData.enemySpriteRotateCommand = new EnemySpriteRotateCommand(enemyData);

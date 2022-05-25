@@ -141,6 +141,7 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
         else
         {
             Debug.LogWarning("The key '" + key + "' is not Contain.");
+            playerEnemyUnderStandingRateDict.Add(key, 0);
 
             return 0;
         }

@@ -50,6 +50,7 @@ public class MiddlePoint : BodyPoint
     public List<GameObject> WillCrashList
     {
         get { return willCrashList; }
+        set { willCrashList = value; }
     }
     private void Start()
     {

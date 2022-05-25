@@ -21,6 +21,10 @@ public class PlayerProjectile : MonoBehaviour
     private Vector2 moveVec = Vector2.zero;
     private Vector2 lastMoveVec = Vector2.zero;
 
+    [Header("Shoot이 기본 데미지의 몇배의 데미지를 줄 것인가에 대한 값")]
+    [SerializeField]
+    private float damageMagnificationOfShoot = 0.2f;
+
     private float moveSpeed = 1f;
 
     [SerializeField]
@@ -75,7 +79,7 @@ public class PlayerProjectile : MonoBehaviour
 
                 if (enemy != null)
                 {
-                    SlimeGameManager.Instance.Player.GiveDamage(enemy, SlimeGameManager.Instance.Player.PlayerStat.MinDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, transform.position, moveVec, true, knockBackPower, 0f);
+                    SlimeGameManager.Instance.Player.Mag_GiveDamage(enemy, SlimeGameManager.Instance.Player.PlayerStat.MinDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, transform.position, moveVec, damageMagnificationOfShoot, true, knockBackPower, 0f);
 
                     EventManager.TriggerEvent("OnEnemyAttack");
                 }
