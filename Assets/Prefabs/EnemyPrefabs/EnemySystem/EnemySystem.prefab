@@ -12,8 +12,9 @@ GameObject:
   - component: {fileID: 4244137908729150201}
   - component: {fileID: 3595872929467939231}
   - component: {fileID: 4326188739679044236}
+  - component: {fileID: 2077825644370281958}
   m_Layer: 0
-  m_Name: MeshParticleSystem
+  m_Name: MeshParticleManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31,7 +32,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 9150467390875036816}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &4244137908729150201
 MeshFilter:
@@ -103,6 +104,24 @@ MonoBehaviour:
     uv11Pixel: {x: 64, y: 32}
   - uv00Pixel: {x: 32, y: 32}
     uv11Pixel: {x: 64, y: 64}
+--- !u!114 &2077825644370281958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1878430884738652123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abf0725566add3c4c9e0742f17423b68, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  minSize: 0.1
+  maxSize: 0.2
+  minSpeed: 0.5
+  maxSpeed: 1
+  minCount: 3
+  maxCount: 5
 --- !u!1 &3635639919268219725
 GameObject:
   m_ObjectHideFlags: 0
@@ -149,10 +168,10 @@ MonoBehaviour:
   enemyCount: 0
   whatIsEnemy:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   whatIsPlayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8
 --- !u!1 &6423039109439716261
 GameObject:
   m_ObjectHideFlags: 0
@@ -243,7 +262,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 9150467390875036816}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &6423039109790018453
 MonoBehaviour:
@@ -367,8 +386,8 @@ Transform:
   - {fileID: 6423039109439716283}
   - {fileID: 6423039109952031425}
   - {fileID: 2689929799447808379}
-  - {fileID: 6423039109790018538}
   - {fileID: 7667964163374119274}
+  - {fileID: 6423039109790018538}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -70,8 +70,6 @@ namespace Enemy
                     uv11 = new Vector2(uvPixelArray[i].uv11Pixel.x / textureWidth, uvPixelArray[i].uv11Pixel.y / textureHeight)
                 };
             }
-
-            //UpdateQuad(transform.position, 0f, Vector3.one);
         }
 
         private void LateUpdate()
@@ -97,14 +95,18 @@ namespace Enemy
 
         public int GetRandomBloodUVIndex() => Random.Range(0, 4);
 
-        public void AddQuad(Vector3 position, float rotation, Vector3 size)
+        public int AddQuad(Vector3 position, float rotation, Vector3 size, int uvIndex)
         {
-            UpdateQuad(position, rotation, size);
+            UpdateQuad(position, rotation, size, uvIndex, quadIndex);
+
+            var index = quadIndex;
 
             quadIndex = (quadIndex + 1) % MAX_QUAD_COUNT;
+
+            return index;
         }
 
-        public void UpdateQuad(Vector3 position, float rotation, Vector3 size)
+        public void UpdateQuad(Vector3 position, float rotation, Vector3 size, int uvIndex, int quadIndex)
         {
             int index0 = quadIndex * 4;
             int index1 = index0 + 1;
@@ -116,7 +118,7 @@ namespace Enemy
             vertices[index2] = position + Quaternion.Euler(0f, 0f, rotation - 90) * size;
             vertices[index3] = position + Quaternion.Euler(0f, 0f, rotation - 0) * size;
 
-            UVCoords uvCoord = uvArray[GetRandomBloodUVIndex()];
+            UVCoords uvCoord = uvArray[uvIndex];
 
             uv[index0] = uvCoord.uv00;
             uv[index1] = new Vector2(uvCoord.uv00.x, uvCoord.uv11.y);
@@ -140,6 +142,7 @@ namespace Enemy
         public void ClearAllQuad()
         {
             System.Array.Clear(vertices, 0, vertices.Length);
+            quadIndex = 0;
             updateVertices = true;
         }
     }

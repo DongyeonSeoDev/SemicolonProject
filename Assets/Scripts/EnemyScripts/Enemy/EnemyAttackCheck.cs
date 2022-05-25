@@ -106,7 +106,7 @@ namespace Enemy
                 attackObject.Add(collision.gameObject);
 
                 var enemy = collision.GetComponent<Enemy>();
-                var hit = Physics2D.Raycast(transform.position, (collision.transform.position - transform.position).normalized, Vector2.Distance(collision.transform.position, transform.position), EnemyManager.Instance.whatIsPlayer);
+                var hit = Physics2D.Raycast(transform.position, (collision.transform.position - transform.position).normalized, Vector2.Distance(collision.transform.position, transform.position) + 1f, EnemyManager.Instance.whatIsPlayer);
 
                 if (isUseKnockBack)
                 {
@@ -141,7 +141,7 @@ namespace Enemy
             else if (eEnemyController == EnemyController.PLAYER)
             {
                 Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-                var hit = Physics2D.Raycast(transform.position, (collision.transform.position - transform.position).normalized, Vector2.Distance(collision.transform.position, transform.position), EnemyManager.Instance.whatIsEnemy);
+                var hit = Physics2D.Raycast(transform.position, (collision.transform.position - transform.position).normalized, Vector2.Distance(collision.transform.position, transform.position) + 1f, EnemyManager.Instance.whatIsEnemy);
 
                 if (enemy != null && enemy != this.enemy)
                 {
