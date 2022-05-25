@@ -100,12 +100,21 @@ public class PlayerChoiceStatControl : MonoBehaviour
     public void CheckEndurance()
     {
         float pasteEndurance = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance.statValue;
-        int num = (int)totalDamage / choiceDataDict["endurance"].upAmount;
+        int num = 0;
         StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance;
 
-        if (!stat.isUnlock && num > 0)
+        if(stat.isUnlock)
         {
-            if(!SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance.isUnlock)
+            num = (int)totalDamage / choiceDataDict["endurance"].upAmount + choiceDataDict["endurance"].firstValue;
+        }
+        else
+        {
+            num = (int)totalDamage / choiceDataDict["endurance"].unlockStatValue;
+        }
+
+        if (num > 0)
+        {
+            if(!stat.isUnlock && !SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance.isUnlock)
             {
                 // √≥¿Ω ¿Ã Ω∫≈»¿Ã ª˝±Ë
                 stat.isUnlock = true;

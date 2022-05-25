@@ -312,7 +312,7 @@ MonoBehaviour:
   bodySlapMoveSpeed: 30
   offsetBodySlapMovePos: 10
   bodySlapTime: 0.15
-  stopBodySlapTime: 1
+  stopBodySlapTime: 0.2
   stopBodySlapOffset: 5
   bodySlapLine: {fileID: 0}
   bodySlapChargingEffect: {fileID: 2606951786414368301}

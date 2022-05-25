@@ -51,7 +51,7 @@ public class PlayerKnockBack : MonoBehaviour
     }
     private void OnKnockBack(Vector2 direction, float moveDistance, float moveTime)
     {
-        if(SlimeGameManager.Instance.Player.PlayerState.IsDrain || SlimeGameManager.Instance.GameClear)
+        if(SlimeGameManager.Instance.Player.PlayerState.IsDrain || SlimeGameManager.Instance.Player.PlayerState.IsDead || SlimeGameManager.Instance.GameClear)
         {
             return;
         }

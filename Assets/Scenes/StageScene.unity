@@ -130,9 +130,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2350465298370833841, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
+      propertyPath: m_CornerAngleThreshold
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 3420212902346404783, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
       propertyPath: distanceToMiddle
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3966382012738421239, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
+      propertyPath: choiceDataList.Array.data[0].unlockStatValue
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3966382012738421239, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
+      propertyPath: choiceDataList.Array.data[1].unlockStatValue
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3966382012738421239, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
+      propertyPath: choiceDataList.Array.data[2].unlockStatValue
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5427881869486345068, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
       propertyPath: m_Name
@@ -184,7 +200,35 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5427881869486345104, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
       propertyPath: isPauseByTuto
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5427881869486345105, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
+      propertyPath: playerStat.eternalStat.maxHp.isUnlock
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5427881869486345105, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
+      propertyPath: playerStat.eternalStat.speed.isUnlock
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5427881869486345105, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
+      propertyPath: playerStat.eternalStat.maxHp.statValue
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5427881869486345105, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
+      propertyPath: playerStat.eternalStat.maxDamage.isUnlock
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5427881869486345105, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
+      propertyPath: playerStat.eternalStat.minDamage.isUnlock
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5969261799166203317, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5969261799184430453, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
+      propertyPath: m_SortingLayer
+      value: 6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
@@ -2679,7 +2723,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5950706611391763827, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: isTestMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5950706611391763837, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_IsActive
@@ -2780,6 +2824,18 @@ PrefabInstance:
     - target: {fileID: 7779646850773830854, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -28.659912
+      objectReference: {fileID: 0}
+    - target: {fileID: 7866888038278762106, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 52.19995
+      objectReference: {fileID: 0}
+    - target: {fileID: 7866888038806958615, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -55.505615
+      objectReference: {fileID: 0}
+    - target: {fileID: 7866888039858790992, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -55.505615
       objectReference: {fileID: 0}
     - target: {fileID: 7935931417652812614, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: mainLight

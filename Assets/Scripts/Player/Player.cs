@@ -417,6 +417,8 @@ public class Player : MonoBehaviour
             //Debug.Log("우오옷 동화율이 오른다앗");
             PlayerEnemyUnderstandingRateManager.Instance.UpUnderstandingRate(SlimeGameManager.Instance.CurrentBodyId, upUnderstandingRateValueWhenEnemyDeadAfterBodyChanged);
         }
+
+        SlimeGameManager.Instance.Player.PlayerStat.currentExp += 100;
     }
     private void StartPlayerSlow()
     {
