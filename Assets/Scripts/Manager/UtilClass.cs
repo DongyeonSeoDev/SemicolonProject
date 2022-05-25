@@ -43,6 +43,7 @@ public static partial class Global
 
     private static Dictionary<string, ActionGroup> stringToActionDict = new Dictionary<string, ActionGroup>();
 
+#if UNITY_EDITOR
     public static void SetResordEventKey()
     {
         foreach(string key in stringToActionDict.Keys)
@@ -50,6 +51,7 @@ public static partial class Global
             GameManager.Instance.checkGameStringKeys.eventKeyList.Add(new Pair<string, EventKeyCheck>(key, stringToActionDict[key].ekc));
         }
     }
+#endif
 
     private static Sprite[] itemTypeSprites = new Sprite[EnumCount<ItemType>()];
 }
