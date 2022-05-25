@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -59,7 +60,7 @@ public class BodyPointCrashCheckCollider : MonoBehaviour
         }
         else
         {
-            if (bodyPoint.MiddlePoint != null && !bodyPoint.MiddlePoint.WillCrashList.Contains(obj))
+            if (bodyPoint.MiddlePoint != null)
             {
                 bodyPoint.MiddlePoint.WillCrashList.Add(obj);
             }
@@ -75,7 +76,7 @@ public class BodyPointCrashCheckCollider : MonoBehaviour
             bodyPoint.IsWall = false;
         }
 
-        if(bodyPoint.MiddlePoint != null && bodyPoint.MiddlePoint.WillCrashList.Contains(obj))
+        if(bodyPoint.MiddlePoint != null)
         {
             bodyPoint.MiddlePoint.WillCrashList.Remove(obj);
         }
@@ -84,6 +85,8 @@ public class BodyPointCrashCheckCollider : MonoBehaviour
     {
         if (bodyPoint.MiddlePoint != null)
         {
+            bodyPoint.MiddlePoint.WillCrashList = bodyPoint.MiddlePoint.WillCrashList.Distinct().ToList();
+
             foreach (var item in bodyPoint.MiddlePoint.WillCrashList)
             {
                 EventManager.TriggerEvent("BodyPointCrash", item);
