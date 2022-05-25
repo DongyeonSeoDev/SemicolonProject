@@ -399,8 +399,10 @@ public class Player : MonoBehaviour
 
         EventManager.TriggerEvent("PlayerSetActiveFalse");
     }
-    private void EnemyDead(string objId)
+    private void EnemyDead(GameObject enemyObj, string objId)
     {
+        Enemy.Enemy enemy = enemyObj.GetComponent<Enemy.Enemy>();
+
         if (SlimeGameManager.Instance.CurrentBodyId == "origin")
         {
             if (PlayerEnemyUnderstandingRateManager.Instance.CheckMountObjIdContain(objId))
@@ -418,7 +420,7 @@ public class Player : MonoBehaviour
             PlayerEnemyUnderstandingRateManager.Instance.UpUnderstandingRate(SlimeGameManager.Instance.CurrentBodyId, upUnderstandingRateValueWhenEnemyDeadAfterBodyChanged);
         }
 
-        SlimeGameManager.Instance.Player.PlayerStat.currentExp += 100;
+        UIManager.Instance.playerStatUI.AddPlayerStatPointExp(enemy.AddExperience);
     }
     private void StartPlayerSlow()
     {

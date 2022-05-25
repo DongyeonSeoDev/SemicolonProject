@@ -143,7 +143,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
                 }
             }
         });
-        EventManager.StartListening("EnemyDead", id =>
+        EventManager.StartListening("EnemyDead", (obj, id) =>
         {
             if (!mobLearningInfoDic[id].kill)
             {

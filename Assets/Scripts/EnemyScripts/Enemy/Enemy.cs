@@ -252,7 +252,7 @@ namespace Enemy
 
             EnemyManager.Instance.EnemyDestroy();
 
-            EventManager.TriggerEvent("EnemyDead", enemyData.enemyType.ToString());
+            EventManager.TriggerEvent("EnemyDead", gameObject, enemyData.enemyType.ToString());
         }
 
         // 적 컨트롤러를 다른것으로 바꿈
