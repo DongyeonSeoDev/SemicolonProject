@@ -77,7 +77,6 @@ public class StatInfoElement : UITransition
         if (!info.isUnlock)
         {
             statNameTxt.text = "???";
-            statLvTxt.text = "?";
             statUpBtn.gameObject.SetActive(false);
         }
         else if (info.statLv == 0)
@@ -109,7 +108,7 @@ public class StatInfoElement : UITransition
     {
         //curStatTxt.text = NGlobal.playerStatUI.GetCurrentPlayerStat(id).ToString();
         int curStatValue = Mathf.RoundToInt(NGlobal.playerStatUI.GetCurrentPlayerStat(id));
-        curStatTxt.text = curStatValue.ToString().ToColorStr("#980D0D", () => eternal.statLv == 0 && eternal.isUnlock);
+        curStatTxt.text = eternal.isUnlock ? curStatValue.ToString().ToColorStr("#980D0D", () => eternal.statLv == 0 && eternal.isUnlock) : "?" ;
         statLvTxt.text = eternal.statLv.ToString();
     }
 
@@ -125,5 +124,11 @@ public class StatInfoElement : UITransition
         statNameTxt.text = NGlobal.playerStatUI.GetStatSOData(id).statName.ToColorStr("#980D0D");
         statUpBtn.gameObject.SetActive(true);
         nifc.explanation = "개방하기"; //이 값이 안들가는 버그
+    }
+
+    public void OpenStat()
+    {
+        statNameTxt.text = NGlobal.playerStatUI.GetStatSOData(id).statName;
+        nifc.explanation = "스탯 레벨업";
     }
 }

@@ -68,6 +68,13 @@ public class PlayerStatUI : MonoBehaviour
     private void Start()
     {
         InitSet();
+        EventManager.StartListening("PlayerDead", () =>
+        {
+            foreach(ChoiceStatInfoElement ui in choiceStatInfoUIDic.Values)
+            {
+                ui.gameObject.SetActive(false);
+            }
+        });
     }
 
     private void InitSet()
@@ -202,6 +209,7 @@ public class PlayerStatUI : MonoBehaviour
             }
             StatElement stat = eternalStatDic[id].first;
             stat.statLv = 1;
+            statInfoUIDic[id].OpenStat();
 
             UpdateCurStatPoint(false);
         }
