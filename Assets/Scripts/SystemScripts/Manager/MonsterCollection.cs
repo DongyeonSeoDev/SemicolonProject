@@ -47,7 +47,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     [Space(15)]
     [SerializeField] private List<ChangeBodySlot> changeBodySlots;
 
-    //Bottom Top Save Body UI List
+    //Top Left Save Body UI List
     [Space(15)]
     [SerializeField] private List<ChangeableBody> savedBodys;
     [SerializeField] private int maxSavedBodyCount = 3;
@@ -403,7 +403,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
     #endregion
 
-    #region ChangeableBodyList Bottom Left
+    #region ChangeableBodyList Top Left
 
     public void UpdateSavedBodyChangeKeyCodeTxt()
     {
@@ -421,10 +421,12 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             TutorialManager.Instance.GetBodyChangeSlot();
         }
 
+        int si = 0;
         if (slotNumber == -1) 
         {
             for (int i = 0; i < savedBodys.Count; i++)
             {
+                si++;
                 if(!savedBodys[i].Registered)
                 {
                     savedBodys[i].Register(id);
@@ -442,11 +444,14 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             savedBodys[slotNumber-1].Register(id);  
         }
 
-        EffectManager.Instance.OnTopRightBtnEffect(UIType.MONSTER_COLLECTION, true);
-        UIManager.Instance.RequestLogMsg(GetMonsterInfo(id).bodyName + "(를)을 완전히 흡수하였습니다.");
-        UIManager.Instance.InsertNoticeQueue(GetMonsterInfo(id).bodyName + " 몸체 획득", 53);
-        mobIdToSlot[id].MarkAcqBody(true);
-        ChangeLearningStateAssimilation(id, true);
+        if (si < changeBodySlots.Count)  //슬롯이 다 꽉차서 제거할 슬롯 고를 때 임시로 현재 흡수한 몹을 보여주기 위해서 목록에 넣었는지 체크함. 그냥 평범하게 몸체 저장한거면 밑의 코드 실행
+        {
+            EffectManager.Instance.OnTopRightBtnEffect(UIType.MONSTER_COLLECTION, true);
+            UIManager.Instance.RequestLogMsg(GetMonsterInfo(id).bodyName + "(를)을 완전히 흡수하였습니다.");
+            UIManager.Instance.InsertNoticeQueue(GetMonsterInfo(id).bodyName + " 몸체 획득", 53);
+            mobIdToSlot[id].MarkAcqBody(true);
+            ChangeLearningStateAssimilation(id, true);
+        }
     }
 
     public void RemoveSavedBody(int slotNumber)

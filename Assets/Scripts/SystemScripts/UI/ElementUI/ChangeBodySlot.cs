@@ -9,6 +9,7 @@ public class ChangeBodySlot : MonoBehaviour  //클래스명 뭐라할지 애매하네
     public bool Registered => !string.IsNullOrEmpty(bodyID);
 
     public Pair<Image, Text> monsterImgName;
+    public Text assimilationRateTxt;
     public Button changeBtn;
 
 
@@ -20,9 +21,14 @@ public class ChangeBodySlot : MonoBehaviour  //클래스명 뭐라할지 애매하네
         {
             UIManager.Instance.RequestWarningWindow(() =>
             {
-                PlayerEnemyUnderstandingRateManager.Instance.SetMountObj(MonsterCollection.Instance.IDToSave, SlotNumber - 1);
+                if (MonsterCollection.Instance.IDToSave != bodyID)
+                {
+                    PlayerEnemyUnderstandingRateManager.Instance.SetMountObj(MonsterCollection.Instance.IDToSave, SlotNumber - 1);
+                }
+         
                 UIManager.Instance.OnUIInteract(UIType.CHANGEABLEMOBLIST, true);
                 TimeManager.TimeResume();
+
             }, "선택된 흡수한 몸을 제거하시겠습니까?");
         });
     }
@@ -33,6 +39,7 @@ public class ChangeBodySlot : MonoBehaviour  //클래스명 뭐라할지 애매하네
 
         monsterImgName.first.sprite = Global.GetMonsterBodySprite(bodyID);
         monsterImgName.second.text = Global.GetMonsterName(bodyID);
+        assimilationRateTxt.text = string.Concat("동화율 : " , PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(bodyID).ToString().ToColorStr("#375B89"), '%');
 
         changeBtn.interactable = true;
         changeBtn.GetComponent<UIScale>().transitionEnable = true;
@@ -44,6 +51,7 @@ public class ChangeBodySlot : MonoBehaviour  //클래스명 뭐라할지 애매하네
 
         monsterImgName.first.sprite = MonsterCollection.Instance.notExistBodySpr;
         monsterImgName.second.text = string.Empty;
+        assimilationRateTxt.text = string.Empty;
         changeBtn.interactable = false;
         changeBtn.GetComponent<UIScale>().transitionEnable = false;
     }

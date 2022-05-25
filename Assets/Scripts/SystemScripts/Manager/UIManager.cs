@@ -41,9 +41,9 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     public void Notice()
     {
-        if(rightMoveNoticeMsg.noticeCheckElapsed < Time.time)
+        if(rightMoveNoticeMsg.noticeCheckElapsed < Time.unscaledTime)
         {
-            rightMoveNoticeMsg.noticeCheckElapsed = Time.time + 0.25f;
+            rightMoveNoticeMsg.noticeCheckElapsed = Time.unscaledTime + 0.25f;
 
             if(rightMoveNoticeMsg.noticeQueue.Count > 0 && !rightMoveNoticeMsg.isNoticing)
             {
