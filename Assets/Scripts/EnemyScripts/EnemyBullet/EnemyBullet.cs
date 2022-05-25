@@ -16,6 +16,7 @@ namespace Enemy
         private float angle;
         private bool isStop = false;
         private bool isDelete = false;
+        private bool isDamage = false;
 
         public Vector2 limitMaxPosition;
         public Vector2 limitMinPosition;
@@ -86,12 +87,16 @@ namespace Enemy
                 EnemyPoolManager.Instance.GetPoolObject(Type.BulletEffect, transform.position).GetComponent<BulletEffect>().Play(angle);
             }
 
+            isDamage = true;
             gameObject.SetActive(false);
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (isDelete)
+            Debug.Log(GetInstanceID());
+            Debug.Log(collision.name);
+
+            if (isDelete || isDamage)
             {
                 return;
             }
@@ -177,6 +182,8 @@ namespace Enemy
             attackDamage = damage;
             targetDirection = direction;
             this.enemy = enemy;
+
+            isDamage = false;
 
             angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0f, 0f, angle + addAngle);
