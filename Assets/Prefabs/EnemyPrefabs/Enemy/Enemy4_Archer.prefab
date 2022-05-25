@@ -177,7 +177,9 @@ MonoBehaviour:
   hpTweenTime: 0.1
   hpTweenDelayTime: 0.3
   damageHPTweenTime: 0.2
+  addExperience: 50
   shotPosition: {fileID: 7183627689166967377}
+  moveDelay: 1
 --- !u!114 &1075523691416201837
 MonoBehaviour:
   m_ObjectHideFlags: 0

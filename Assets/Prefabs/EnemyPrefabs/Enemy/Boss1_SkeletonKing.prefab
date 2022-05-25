@@ -1318,6 +1318,7 @@ MonoBehaviour:
   hpTweenTime: 0.1
   hpTweenDelayTime: 0.3
   damageHPTweenTime: 0.2
+  addExperience: 50
   specialAttack3HPPercent:
   - 60
   - 30
@@ -1325,6 +1326,7 @@ MonoBehaviour:
   playableDirector: {fileID: 7559260690231365845}
   fireCount: 9
   maxAttackCount: 7
+  bossHP: 2000
   specialAttackTime: 6
   bossAttackMoveSpeed: 30
   fireDistance: 2
@@ -1334,7 +1336,6 @@ MonoBehaviour:
   startSpeed: 7
   speedUpValue: 0.5
   speedUpTime: 0.5
-  bossHP: 2000
   fireLimitDistance: 1.5
   fireLimitSpawnDistance: 0.5
   limitMinPosition: {x: 0, y: 0}

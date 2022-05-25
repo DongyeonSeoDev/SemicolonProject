@@ -342,6 +342,7 @@ MonoBehaviour:
   hpTweenTime: 0.1
   hpTweenDelayTime: 0.3
   damageHPTweenTime: 0.2
+  addExperience: 50
 --- !u!114 &4321371500878039892
 MonoBehaviour:
   m_ObjectHideFlags: 0

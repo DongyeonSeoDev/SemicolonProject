@@ -42,6 +42,16 @@ namespace Enemy
         private float isDamageCurrentTime = 0f;
         protected bool isStop = false;
 
+        [SerializeField]
+        private float addExperience;
+        public float AddExperience
+        { 
+            get
+            {
+                return addExperience;
+            }
+        }
+
         protected virtual void Awake()
         {
             // GetComponent
