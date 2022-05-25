@@ -49,6 +49,10 @@ namespace Enemy
             }
         }
 
-        public void ClearAllParticle() => mesh.ClearAllQuad();
+        public void ClearAllParticle()
+        {
+            particleList.Clear();
+            mesh.ClearAllQuad();
+        }
     }
 }
