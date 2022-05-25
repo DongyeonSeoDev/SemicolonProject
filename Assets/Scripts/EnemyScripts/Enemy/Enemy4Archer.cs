@@ -18,8 +18,8 @@ namespace Enemy
             enemyData.attackDelay = 0.42f;
             enemyData.playerAnimationTime = 0.45f;
             enemyData.isAttackPlayerDistance = 12f;
-            enemyData.maxHP = 50;
-            enemyData.hp = 50;
+            enemyData.maxHP = 35;
+            enemyData.hp = 35;
             enemyData.attackPower = 15;
             enemyData.playerAnimationDelay = 0.2f;
             enemyData.playerAnimationSpeed = 1.0f;

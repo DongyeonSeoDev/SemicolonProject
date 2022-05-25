@@ -14,6 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statId: 100
   statName: "\uC778\uB0B4"
-  growthWay: 
-  acquisitionWay: 
+  simpleAbilExplanation: "\uACF5\uACA9\uC744 \uC77C\uC815\uD69F\uC218 \uD560 \uACBD\uC6B0
+    \uACF5\uACA9\uB825 \uC0C1\uC2B9"
+  growthWay: "\uBC18\uBCF5\uC801\uC778 \uACF5\uACA9 \uC2DC\uB3C4 \uC2DC \uC2A4\uD0EF
+    \uC0C1\uC2B9"
+  acquisitionWay: "\uBAAC\uC2A4\uD130\uAC00 \uC544\uB2CC \uACF3\uC5D0 100\uD68C \uACF5\uACA9\uC744
+    \uC2DC\uB3C4\uD588\uC744 \uB54C \uD68D\uB4DD(\uBAAC\uC2A4\uD130 \uACF5\uACA9
+    \uC2DC \uD69F\uC218 \uCD08\uAE30\uD654)"
   emotionRangeList: []

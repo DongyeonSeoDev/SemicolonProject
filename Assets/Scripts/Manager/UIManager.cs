@@ -6,6 +6,7 @@ using TMPro;
 using Water;
 using System;
 using UnityEngine.Audio;
+using UnityEngine.EventSystems;
 
 public partial class UIManager : MonoSingleton<UIManager>
 {
@@ -29,6 +30,8 @@ public partial class UIManager : MonoSingleton<UIManager>
     private bool isOnCursorInfo = false;  //마우스 따라다니는 정보 텍스트 활성화 상태인가
     private float sw; //cursorImgRectTrm의 처음 너비(최소 너비)
     public float widthOffset = 39;  //마우스 따라다니는 정보 텍스트에서 이미지 너비 키울때 글자당 키울 길이
+
+    private float checkCursorOverUITime; 
 
     public Image mouseOverTimeCheckImg; //어떤 UI에 마우스를 대고 있으면 몇 초 후에 UI뜨는데 그 UI의 필을 표시할 이미지
     private float moTime, moElapsed;
@@ -312,6 +315,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     {
         UserInput();
         CursorInfo();
+        CheckCursorOverUI();
         UIDelayImgUpdate();
         Notice();
         DelayHPFill();
@@ -715,6 +719,9 @@ public partial class UIManager : MonoSingleton<UIManager>
             case UIType.STAT:
                 playerStatUI.CloseChoiceDetail();
                 break;
+            case UIType.CHANGEABLEMOBLIST:
+                MonsterCollection.Instance.RemoveBody(3);
+                break;
         }
     }
 
@@ -788,6 +795,18 @@ public partial class UIManager : MonoSingleton<UIManager>
     {
         cursorInfoImg.gameObject.SetActive(false);
         isOnCursorInfo = false;
+    }
+
+    private void CheckCursorOverUI()
+    {
+        if(checkCursorOverUITime < Time.unscaledTime)
+        {
+            checkCursorOverUITime = Time.unscaledTime + 1.5f;
+            if(isOnCursorInfo && !EventSystem.current.IsPointerOverGameObject())
+            {
+                OffCursorInfoUI();
+            }
+        }
     }
 
     private void UIDelayImgUpdate()

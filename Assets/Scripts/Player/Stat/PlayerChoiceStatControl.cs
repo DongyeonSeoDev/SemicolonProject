@@ -32,7 +32,6 @@ public class PlayerChoiceStatControl : MonoBehaviour
     public int AvoidInMomentomNum
     {
         get { return avoidInMomentomNum; }
-        set { avoidInMomentomNum = value; }
     }
 
     private float totalDamage = 0f;
@@ -62,14 +61,14 @@ public class PlayerChoiceStatControl : MonoBehaviour
         get { return attackNum; }
     }
 
-    private int bodySlapNum = 0;
-    /// <summary>
-    /// 돌진한 횟수
-    /// </summary>
-    public int BodySlapNum
-    {
-        get { return bodySlapNum; }
-    }
+    //private int bodySlapNum = 0;
+    ///// <summary>
+    ///// 돌진한 횟수
+    ///// </summary>
+    //public int BodySlapNum
+    //{
+    //    get { return bodySlapNum; }
+    //}
     private void Start()
     {
         foreach(var item in choiceDataList)
@@ -83,7 +82,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
         EventManager.StartListening("OnAttackMiss", UpAttackMissedNum);
 
         EventManager.StartListening("OnAvoidInMomentom", UpAvoidInMomentomNum);
-        EventManager.StartListening("OnBodySlap", UpBodySlapNum);
+        //EventManager.StartListening("OnBodySlap", UpBodySlapNum);
     }
     private void OnDisable()
     {
@@ -91,7 +90,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
         EventManager.StopListening("OnAttackMiss", UpAttackMissedNum);
 
         EventManager.StopListening("OnAvoidInMomentom", UpAvoidInMomentomNum);
-        EventManager.StopListening("OnBodySlap", UpBodySlapNum);
+        //EventManager.StopListening("OnBodySlap", UpBodySlapNum);
     }
     private void Update()
     {
@@ -102,17 +101,22 @@ public class PlayerChoiceStatControl : MonoBehaviour
     {
         float pasteEndurance = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance.statValue;
         int num = (int)totalDamage / choiceDataDict["endurance"].upAmount;
+        StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance;
 
-        if (pasteEndurance != num && num > 0)
+        if (!stat.isUnlock && num > 0)
         {
-            if(pasteEndurance == 0)
+            if(!SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance.isUnlock)
             {
                 // 처음 이 스탯이 생김
-                SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance.isUnlock = true;
+                stat.isUnlock = true;
+
+                UIManager.Instance.playerStatUI.StatUnlock(stat);
+
                 num = choiceDataDict["endurance"].firstValue;
             }
 
             SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance.statValue = num;
+            SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance.statLv = num;
 
             SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxHp.statValue += choiceDataDict["endurance"].upTargetStatPerChoiceStat * (num - pasteEndurance);
         }
@@ -122,14 +126,17 @@ public class PlayerChoiceStatControl : MonoBehaviour
         float pastePatienceNum = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.statValue;
         int num = 0;
 
-        if (pastePatienceNum == 0)
+        if (!SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.isUnlock)
         {
             if (attackMissedNum >= choiceDataDict["patience"].unlockStatValue)
             {
                 // 처음 이 스탯이 생김
 
                 num = choiceDataDict["patience"].firstValue;
-                SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.isUnlock = true;
+                StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience;
+                stat.isUnlock = true;
+
+                UIManager.Instance.playerStatUI.StatUnlock(stat);
 
                 AttackNumReset();
             }
@@ -140,12 +147,10 @@ public class PlayerChoiceStatControl : MonoBehaviour
         }
 
         SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.statValue = num;
+        SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.statLv = num;
 
-        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.minDamage.statValue -= choiceDataDict["patience"].upTargetStatPerChoiceStat * pastePatienceNum;
-        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxDamage.statValue -= choiceDataDict["patience"].upTargetStatPerChoiceStat * pastePatienceNum;
-
-        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.minDamage.statValue += choiceDataDict["patience"].upTargetStatPerChoiceStat * num;
-        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxDamage.statValue += choiceDataDict["patience"].upTargetStatPerChoiceStat * num;
+        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.minDamage.statValue += choiceDataDict["patience"].upTargetStatPerChoiceStat * (num- pastePatienceNum);
+        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxDamage.statValue += choiceDataDict["patience"].upTargetStatPerChoiceStat * (num - pastePatienceNum);
     }
     private void AttackNumReset()
     {
@@ -155,18 +160,21 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
     public void CheckMomentom()
     {
-        float pasteMomentomNum = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.statValue;
         int num = 0;
 
-        if(pasteMomentomNum == 0)
+        if(!SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.isUnlock)
         {
-            if(bodySlapNum >= choiceDataDict["momentom"].unlockStatValue)
+            if(PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(Enemy.EnemyType.Rat_02.ToString())
+                >= choiceDataDict["momentom"].unlockStatValue)
             {
                 // 이 스탯이 처음 생김
                 Debug.Log("Momentom True Wireless Earbuds 2"); // 추진력 해금 체크용 코드 // 참고로 좋은 무선이어폰임 추천함
                 num = choiceDataDict["momentom"].firstValue;
 
-                SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.isUnlock = true;
+                StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom;
+                stat.isUnlock = true;
+
+                UIManager.Instance.playerStatUI.StatUnlock(stat);
             }
         }
         else
@@ -175,6 +183,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
         }
 
         SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.statValue = num;
+        SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.statLv = num;
     }
     public void UpAttackMissedNum()
     {
@@ -214,15 +223,15 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
         avoidInMomentomNum++;
     }
-    public void UpBodySlapNum()
-    {
-        if(!SlimeGameManager.Instance.Player.PlayerStat.eternalStat.speed.isUnlock)
-        {
-            return;
-        }
+    //public void UpBodySlapNum()
+    //{
+    //    if(!SlimeGameManager.Instance.Player.PlayerStat.eternalStat.speed.isUnlock)
+    //    {
+    //        return;
+    //    }
 
-        bodySlapNum++;
-    }
+    //    bodySlapNum++;
+    //}
     public void UpTotalDamage(float value)
     {
         if(!SlimeGameManager.Instance.Player.PlayerStat.eternalStat.maxHp.isUnlock)

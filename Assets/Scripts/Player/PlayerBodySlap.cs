@@ -141,6 +141,8 @@ public class PlayerBodySlap : PlayerSkill
 
         if (canBodySlap)
         {
+            StopBodySlap();
+
             canBodySlap = false;
 
             bodySlapChargingEffect.gameObject.SetActive(true);
@@ -154,6 +156,7 @@ public class PlayerBodySlap : PlayerSkill
             maxCharging = false;
 
             currentChargingTimer = 0f;
+            moveTargetPos = Vector2.zero;
         }
     }
 
@@ -221,7 +224,7 @@ public class PlayerBodySlap : PlayerSkill
 
                 if (enemy != null)
                 {
-                    SlimeGameManager.Instance.Player.Mag_GiveDamage(enemy, SlimeGameManager.Instance.Player.PlayerStat.MinDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, transform.position, bodySlapMoveVec, damageMagnificationOfBodySlap, effectSize: new Vector3(1.5f, 1.5f, 1.5f));
+                    SlimeGameManager.Instance.Player.Mag_GiveDamage(enemy, SlimeGameManager.Instance.Player.PlayerStat.MinDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, enemy.GetTransform().position, bodySlapMoveVec, damageMagnificationOfBodySlap, effectSize: new Vector3(1.5f, 1.5f, 1.5f));
 
                     EventManager.TriggerEvent("OnEnemyAttack");
                 }
@@ -276,6 +279,9 @@ public class PlayerBodySlap : PlayerSkill
 
         bodySlapStart = false;
         playerState.BodySlapping = false;
+
+        bodySlapTimer = bodySlapTime;
+        moveTargetPos = Vector2.zero;
     }
     private void CheckChargeTime()
     {

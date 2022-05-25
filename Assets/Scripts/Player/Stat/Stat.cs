@@ -91,6 +91,13 @@ public class StatElement  //스탯은 0렙부터 시작. 0렙일 때는 스탯을 개방하지 못한
         }
     }
 
+    public void ResetComplete()
+    {
+        statValue = 1;
+        statLv = 0;
+        isUnlock = false;
+    }
+
 }
 
 [Serializable]
@@ -179,9 +186,9 @@ public class ChoiceStat
 
     public void Reset()
     {
-        patience.Reset();
-        momentom.Reset();
-        endurance.Reset();
+        patience.ResetComplete();
+        momentom.ResetComplete();
+        endurance.ResetComplete();
     }
 
 }
