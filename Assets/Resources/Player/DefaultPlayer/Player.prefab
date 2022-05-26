@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 4322804713794740887}
   - component: {fileID: 3966382012738421239}
   - component: {fileID: 9036656189394809005}
+  - component: {fileID: 4245379043714901352}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -224,6 +225,7 @@ MonoBehaviour:
         maxStatLv: 0
   playerInput: {fileID: 0}
   playerChoiceStatControl: {fileID: 0}
+  playerReflectionScript: {fileID: 0}
   playerOrderInLayerController: {fileID: 0}
   maxEnergy: 10
   energyRegenSpeed: 1
@@ -231,6 +233,10 @@ MonoBehaviour:
   upMountingPercentageValueWhenEnemyDead: 5
   upUnderstandingRateValueWhenEnemyDead: 1
   upUnderstandingRateValueWhenEnemyDeadAfterBodyChanged: 3
+  bodySlapReflection:
+    projectile: {fileID: 8223448895546236962, guid: 6188b8fe7b7eef448a7491f9bdb9599e, type: 3}
+    projectileSpeed: 40
+    shootPosOffset: 0.6
 --- !u!114 &5427881869486345104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -338,6 +344,13 @@ MonoBehaviour:
     unlockStatValue: 100
     upAmount: 0
     upTargetStatPerChoiceStat: 0
+  - id: Reflection
+    name: "\uBC18\uC0AC"
+    targetStat: 
+    firstValue: 1
+    unlockStatValue: 100
+    upAmount: 0
+    upTargetStatPerChoiceStat: 0
   avoidInMomentomNum: 0
 --- !u!114 &9036656189394809005
 MonoBehaviour:
@@ -352,6 +365,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   momentomTime: 3
+--- !u!114 &4245379043714901352
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5427881869486345068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c665eff1b79c8b84fb95740691ab8231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &9040924975962532946
 GameObject:
   m_ObjectHideFlags: 0

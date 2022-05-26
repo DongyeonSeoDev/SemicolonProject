@@ -99,6 +99,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
         CheckPatience();
         CheckMomentom();
         CheckFrenzy();
+        CheckReflection();
     }
     public void CheckEndurance()
     {
@@ -208,6 +209,24 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
             stat.statValue = choiceDataDict["frenzy"].firstValue;
             stat.statLv = choiceDataDict["frenzy"].firstValue;
+
+            stat.isUnlock = true;
+
+            //UIManager.Instance.playerStatUI.StatUnlock(stat);
+        }
+    }
+
+    public void CheckReflection()
+    {
+        if (!SlimeGameManager.Instance.Player.PlayerStat.choiceStat.reflection.isUnlock &&
+            PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(Enemy.EnemyType.Slime_01.ToString())
+                >= choiceDataDict["reflection"].unlockStatValue)
+        {
+            Debug.Log("¹Â¤Ì¾ßÈ£");
+            StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.reflection;
+
+            stat.statValue = choiceDataDict["reflection"].firstValue;
+            stat.statLv = choiceDataDict["reflection"].firstValue;
 
             stat.isUnlock = true;
 
