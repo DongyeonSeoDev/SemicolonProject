@@ -200,27 +200,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5427881869486345104, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
       propertyPath: isPauseByTuto
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5427881869486345105, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
       propertyPath: playerStat.eternalStat.maxHp.isUnlock
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5427881869486345105, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
       propertyPath: playerStat.eternalStat.speed.isUnlock
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5427881869486345105, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
-      propertyPath: playerStat.eternalStat.maxHp.statValue
-      value: 20
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5427881869486345105, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
       propertyPath: playerStat.eternalStat.maxDamage.isUnlock
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5427881869486345105, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
       propertyPath: playerStat.eternalStat.minDamage.isUnlock
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5969261799166203317, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
       propertyPath: m_IsActive
@@ -2723,7 +2719,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5950706611391763827, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: isTestMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5950706611391763837, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_IsActive
