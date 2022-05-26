@@ -208,6 +208,20 @@ MonoBehaviour:
         isUnlock: 0
         statLv: 0
         maxStatLv: 10
+      frenzy:
+        id: 115
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        statLv: 0
+        maxStatLv: 0
+      reflection:
+        id: 120
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        statLv: 0
+        maxStatLv: 0
   playerInput: {fileID: 0}
   playerChoiceStatControl: {fileID: 0}
   playerOrderInLayerController: {fileID: 0}
@@ -317,6 +331,13 @@ MonoBehaviour:
     unlockStatValue: 100
     upAmount: 10
     upTargetStatPerChoiceStat: 0.2
+  - id: Frenzy
+    name: "\uBA48\uCD94\uC9C0 \uC54A\uB294 \uB3CC\uC9C4"
+    targetStat: 
+    firstValue: 1
+    unlockStatValue: 100
+    upAmount: 0
+    upTargetStatPerChoiceStat: 0
   avoidInMomentomNum: 0
 --- !u!114 &9036656189394809005
 MonoBehaviour:

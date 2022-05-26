@@ -98,6 +98,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
     {
         CheckPatience();
         CheckMomentom();
+        CheckFrenzy();
     }
     public void CheckEndurance()
     {
@@ -195,6 +196,23 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
         SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.statValue = num;
         SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.statLv = num;
+    }
+
+    public void CheckFrenzy()
+    {
+        if(!SlimeGameManager.Instance.Player.PlayerStat.choiceStat.frenzy.isUnlock && 
+            PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(Enemy.EnemyType.Slime_03.ToString())
+                >= choiceDataDict["frenzy"].unlockStatValue)
+        {
+            StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.frenzy;
+
+            stat.statValue = choiceDataDict["frenzy"].firstValue;
+            stat.statLv = choiceDataDict["frenzy"].firstValue;
+
+            stat.isUnlock = true;
+
+            //UIManager.Instance.playerStatUI.StatUnlock(stat);
+        }
     }
     public void UpAttackMissedNum()
     {

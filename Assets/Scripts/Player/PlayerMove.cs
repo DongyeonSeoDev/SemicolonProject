@@ -10,8 +10,6 @@ public class PlayerMove : PlayerAction
         get { return lastMoveVec; }
     }
 
-    private Stat playerStat = null;
-
     [SerializeField]
     private float bodyPointMovePower = 1f;
     [Header("바디포인트의 localPosition의 x, y 각각의 값은 처음의 위치에서 이 값 이상 멀어지지 못한다.")]
@@ -20,8 +18,6 @@ public class PlayerMove : PlayerAction
 
     public override void Awake()
     {
-        playerStat = SlimeGameManager.Instance.Player.PlayerStat;
-
         base.Awake();
     }
 
@@ -34,7 +30,7 @@ public class PlayerMove : PlayerAction
     {
         if (!(playerState.BodySlapping || playerInput.IsPauseByCutScene || playerState.IsDrain))
         {
-            Vector2 moveVec = playerInput.MoveVector * (playerStat.Speed);
+            Vector2 moveVec = playerInput.MoveVector * (SlimeGameManager.Instance.Player.PlayerStat.Speed);
 
             if (!(playerState.CantMove || playerState.CantChangeDir))
             {
@@ -44,7 +40,7 @@ public class PlayerMove : PlayerAction
                 }
                 else
                 {
-                    lastMoveVec = Vector2.Lerp(lastMoveVec, Vector2.zero, Time.fixedDeltaTime * playerStat.Speed / 2f); // 움직임이 멈췄을 때 갑자기 멈추는 것을 방지
+                    lastMoveVec = Vector2.Lerp(lastMoveVec, Vector2.zero, Time.fixedDeltaTime * SlimeGameManager.Instance.Player.PlayerStat.Speed / 2f); // 움직임이 멈췄을 때 갑자기 멈추는 것을 방지
                 }
 
                 rigid.velocity = lastMoveVec;

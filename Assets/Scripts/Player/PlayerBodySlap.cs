@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerBodySlap : PlayerSkill
 {
-    private Stat playerStat = null;
-
     [SerializeField]
     private LayerMask canCrashLayer;
     [SerializeField]
@@ -93,7 +91,6 @@ public class PlayerBodySlap : PlayerSkill
     public override void Awake()
     {
         base.Awake();
-        playerStat = SlimeGameManager.Instance.Player.PlayerStat;
     }
     private void Start()
     {
@@ -203,7 +200,7 @@ public class PlayerBodySlap : PlayerSkill
     }
     private void BodyPointCrash(GameObject targetObject) // BodyPoint가 특정 오브젝트와 충돌했을 때 호출
     {   
-        if (canCrashLayer.CompareGameObjectLayer(targetObject) && playerState.BodySlapping)
+        if ((canCrashLayer.CompareGameObjectLayer(targetObject) || whatIsEnemy.CompareGameObjectLayer(targetObject)) && playerState.BodySlapping)
         {
             if(hitWhenBodySlap.Contains(targetObject))
             {
@@ -233,7 +230,8 @@ public class PlayerBodySlap : PlayerSkill
                     EventManager.TriggerEvent("OnAttackMiss");
                 }
 
-                if (!bodyStopBodySlapTimerStart)
+                    Debug.Log(SlimeGameManager.Instance.Player.PlayerStat.choiceStat.frenzy.isUnlock);
+                if (!bodyStopBodySlapTimerStart && !SlimeGameManager.Instance.Player.PlayerStat.choiceStat.frenzy.isUnlock)
                 {
                     StopBodySlap();
 

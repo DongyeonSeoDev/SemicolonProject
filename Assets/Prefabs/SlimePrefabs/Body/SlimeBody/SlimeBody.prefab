@@ -292,7 +292,7 @@ MonoBehaviour:
   skillIdx: 1
   canCrashLayer:
     serializedVersion: 2
-    m_Bits: 10617024
+    m_Bits: 8519744
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 2097280
