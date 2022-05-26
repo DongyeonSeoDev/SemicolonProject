@@ -33,7 +33,7 @@ public class PlayerReflectionScript : MonoBehaviour
 
         SoundManager.Instance.PlaySoundBox("SlimeSkill0");
         EventManager.TriggerEvent("PlayerShoot");
-    } // 이 코드 Reflection으로
+    }
 
     public void DoReflection(PlayerReflectionProjectileData projectileData, Vector2 direction)
     {
@@ -56,5 +56,5 @@ public class PlayerReflectionScript : MonoBehaviour
 
         SoundManager.Instance.PlaySoundBox("SlimeSkill0");
         EventManager.TriggerEvent("PlayerShoot");
-    } // 이 코드 Reflection으로
+    }
 }

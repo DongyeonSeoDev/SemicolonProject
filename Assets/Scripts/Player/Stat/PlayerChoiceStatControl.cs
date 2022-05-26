@@ -222,7 +222,6 @@ public class PlayerChoiceStatControl : MonoBehaviour
             PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(Enemy.EnemyType.Slime_01.ToString())
                 >= choiceDataDict["reflection"].unlockStatValue)
         {
-            Debug.Log("¹Â¤Ì¾ßÈ£");
             StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.reflection;
 
             stat.statValue = choiceDataDict["reflection"].firstValue;

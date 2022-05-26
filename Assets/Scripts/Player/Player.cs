@@ -243,7 +243,16 @@ public class Player : MonoBehaviour
         {
             if (playerStat.choiceStat.reflection.isUnlock)
             {
-                playerReflectionScript.DoReflection(bodySlapReflection, new Vector2(direction.x, -direction.y));// 여긴 추후에 수정하자
+                if ((direction.x).Abs() > (direction.y).Abs())
+                {
+                    direction.x = -direction.x;
+                }
+                else
+                {
+                    direction.y = -direction.y;
+                }
+
+                playerReflectionScript.DoReflection(bodySlapReflection, direction);
             }
 
             return;
@@ -308,7 +317,16 @@ public class Player : MonoBehaviour
         {
             if (playerStat.choiceStat.reflection.isUnlock)
             {
-                playerReflectionScript.DoReflection(bodySlapReflection, new Vector2(direction.x, -direction.y));// 여긴 추후에 수정하자
+                if ((direction.x).Abs() > (direction.y).Abs())
+                {
+                    direction.x = -direction.x;
+                }
+                else
+                {
+                    direction.y = -direction.y;
+                }
+
+                playerReflectionScript.DoReflection(bodySlapReflection, direction);
             }
 
             return;
