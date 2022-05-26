@@ -34,7 +34,7 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     public PickupCheck pickupCheckGame;
 
-    [HideInInspector] public List<Item> droppedItemList = new List<Item>();
+    public List<Item> droppedItemList = new List<Item>();
 
     public int InventoryItemCount
     { get => savedData.userInfo.userItems.keyValueDic.Keys.Count; }
@@ -205,6 +205,14 @@ public partial class GameManager : MonoSingleton<GameManager>
         EventManager.StartListening("PlayerDead", PlayerDead);
         EventManager.StartListening("PlayerRespawn", PlayerRespawnEvent);
         //EventManager.StartListening("StageClear", UpdateItemBattleRestCount);
+
+        EventManager.StartListening("StageClear", () =>
+        {
+            /*for(int i=0; i<droppedItemList.Count; i++)
+            {
+                Inventory.Instance.GetItem(droppedItemList[i]);
+            }*/ //이렇게하면 전부 제대로 실행이 안된다.(계산하는 양이 많아서인지) 다른 방법을 써보자.
+        });
     }
 
     private void Start()
@@ -225,6 +233,8 @@ public partial class GameManager : MonoSingleton<GameManager>
                 checkItrObjDic.Add(new Pair<string, InteractionObj>(key, ObjectManager.Instance.itrObjDic[key]));
             }
         });
+
+       
 #endif
 
         slimeFollowObj = PoolManager.GetItem("EmptyObject").transform;
