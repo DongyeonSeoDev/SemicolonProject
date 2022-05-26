@@ -78,6 +78,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
     }
     private void OnEnable()
     {
+        EventManager.StartListening("PlayerDead", ChoiceStatControlReset);
         EventManager.StartListening("OnEnemyAttack", UpAttackNum);
         EventManager.StartListening("OnAttackMiss", UpAttackMissedNum);
 
@@ -86,6 +87,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
     }
     private void OnDisable()
     {
+        EventManager.StopListening("PlayerDead", ChoiceStatControlReset);
         EventManager.StopListening("OnEnemyAttack", UpAttackNum);
         EventManager.StopListening("OnAttackMiss", UpAttackMissedNum);
 
@@ -249,5 +251,12 @@ public class PlayerChoiceStatControl : MonoBehaviour
         }
 
         totalDamage += value;
+    }
+    public void ChoiceStatControlReset()
+    {
+        avoidInMomentomNum = 0;
+        totalDamage = 0;
+        attackMissedNum = 0;
+        attackNum = 0;
     }
 }
