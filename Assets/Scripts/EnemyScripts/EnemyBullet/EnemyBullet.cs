@@ -93,9 +93,6 @@ namespace Enemy
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            Debug.Log(GetInstanceID());
-            Debug.Log(collision.name);
-
             if (isDelete || isDamage)
             {
                 return;
