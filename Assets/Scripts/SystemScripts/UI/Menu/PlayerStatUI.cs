@@ -161,7 +161,8 @@ public class PlayerStatUI : MonoBehaviour
         float rate = playerStat.currentExp / playerStat.maxExp;
         if(tweening)
         {
-            statExpPair.first.DOFillAmount(rate, 0.3f).SetUpdate(true);
+            
+            statExpPair.first.DOFillAmount(rate, 0.4f).SetUpdate(true);
         }
         else
         {
@@ -223,6 +224,8 @@ public class PlayerStatUI : MonoBehaviour
             int point = Mathf.FloorToInt(playerStat.currentExp / playerStat.maxExp);
             playerStat.currentExp -= point * playerStat.maxExp;
             playerStat.currentStatPoint += point;
+
+            UIManager.Instance.InsertNoticeQueue($"Ω∫≈»∆˜¿Œ∆Æ {point} »πµÊ");
         }
     }
 
@@ -319,12 +322,14 @@ public class PlayerStatUI : MonoBehaviour
     public void UpdateStat()
     {
         UpdateAllStatUI();
-        UpdateStatExp(false);
+        //UpdateStatExp(false);
         UpdateCurStatPoint(false);
+        statExpPair.first.fillAmount = 0f;
 
         UpdateAllChoiceStatUI();
     }
 
+ 
     public void Save()
     {
         //∆©≈‰∏ÆæÛ¿Ã ≥°≥µ¥Ÿ∏È «√∑π¿ÃæÓ¿« Ω∫≈»¡§∫∏∏¶ ¿˙¿Â

@@ -668,6 +668,9 @@ public partial class UIManager : MonoSingleton<UIManager>
             case UIType.MONSTER_COLLECTION:
                 EffectManager.Instance.OnTopRightBtnEffect(UIType.MONSTER_COLLECTION, false);
                 break;
+            case UIType.STAT:
+                playerStatUI.UpdateStatExp(true);
+                break;
             /*case UIType.SETTING:
                 TimeManager.TimePause();
                 setting.SetChildImgs(false);
