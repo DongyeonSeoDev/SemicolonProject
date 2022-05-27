@@ -34,7 +34,8 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     public PickupCheck pickupCheckGame;
 
-    public List<Item> droppedItemList = new List<Item>();
+    [HideInInspector] public List<Item> droppedItemList = new List<Item>();
+    private Dictionary<string, int> droppedItemTempDict = new Dictionary<string, int>();
 
     public int InventoryItemCount
     { get => savedData.userInfo.userItems.keyValueDic.Keys.Count; }
@@ -206,13 +207,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         EventManager.StartListening("PlayerRespawn", PlayerRespawnEvent);
         //EventManager.StartListening("StageClear", UpdateItemBattleRestCount);
 
-        EventManager.StartListening("StageClear", () =>
-        {
-            /*for(int i=0; i<droppedItemList.Count; i++)
-            {
-                Inventory.Instance.GetItem(droppedItemList[i]);
-            }*/ //이렇게하면 전부 제대로 실행이 안된다.(계산하는 양이 많아서인지) 다른 방법을 써보자.
-        });
+        EventManager.StartListening("StageClear", AbsorbCurMapAllItems);
     }
 
     private void Start()
@@ -233,8 +228,12 @@ public partial class GameManager : MonoSingleton<GameManager>
                 checkItrObjDic.Add(new Pair<string, InteractionObj>(key, ObjectManager.Instance.itrObjDic[key]));
             }
         });
+       /*testKeyInputActionDict.Add(KeyCode.F6, () =>
+        {
+            BattleUIManager.Instance.InsertAbsorptionInfo(Enemy.EnemyType.Rat_02.ToString(), 22, 0);
+        });*/
+      
 
-       
 #endif
 
         slimeFollowObj = PoolManager.GetItem("EmptyObject").transform;
@@ -327,6 +326,33 @@ public partial class GameManager : MonoSingleton<GameManager>
         droppedItemList.Clear();
     }
 
+    public void AbsorbCurMapAllItems()
+    {
+        droppedItemTempDict.Clear();
+        for (int i = 0; i < droppedItemList.Count; i++)
+        {
+            if (droppedItemTempDict.ContainsKey(droppedItemList[i].itemData.id))
+            {
+                droppedItemTempDict[droppedItemList[i].itemData.id] += droppedItemList[i].DroppedCnt;
+            }
+            else
+            {
+                droppedItemTempDict.Add(droppedItemList[i].itemData.id, droppedItemList[i].DroppedCnt);
+            }
+        }
+        foreach (string key in droppedItemTempDict.Keys)
+        {
+            Inventory.Instance.GetItem(new ItemInfo(key, droppedItemTempDict[key]));
+        }
+
+        //드랍템들 흡수하고 list를 비우고 드랍템들 꺼줘야함. 이 때 만약 맵 이동하면 바로 list 비우고 드랍템들 꺼줌
+
+        /*for(int i=0; i<droppedItemList.Count; i++)
+        {
+            Inventory.Instance.GetItem(droppedItemList[i]);
+        }*/ //이렇게하면 전부 제대로 실행이 안된다.(계산하는 양이 많아서인지) 다른 방법을 써보자.
+    }
+
     /*public void UpdateItemBattleRestCount() //교전 수가 정해진 아이템들 현재 교전 수 1 증가하고 최대치인 것은 삭제
     {
         List<Triple<string, int, int>> sList = new List<Triple<string, int, int>>();
@@ -359,7 +385,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         }
     }*/
 
-#endregion
+    #endregion
 
     public void RespawnPlayer()
     {

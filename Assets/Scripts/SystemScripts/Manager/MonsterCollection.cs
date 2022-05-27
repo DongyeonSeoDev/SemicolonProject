@@ -231,6 +231,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             DetailItem();
         if (UIManager.Instance.gameUIList[(int)UIType.MONSTERINFO_DETAIL_STAT].gameObject.activeSelf)
             DetailStat();
+        if (UIManager.Instance.gameUIList[(int)UIType.MONSTERINFO_DETAIL_FEATURE].gameObject.activeSelf)
+            DetailFeature();
 
         Util.SetSlotMark(slotSelectedImg.transform, slot.MobImgBg);
     }

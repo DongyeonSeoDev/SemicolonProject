@@ -126,5 +126,12 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
         endedAbspNoticeQueue.Enqueue(ui);
     }
 
-    public bool HasBody(string id) => PlayerEnemyUnderstandingRateManager.Instance.ChangalbeBodyDict.ContainsKey(id);
+    public bool HasBody(string id)
+    {
+        foreach(string key in PlayerEnemyUnderstandingRateManager.Instance.MountedObjList)
+        {
+            if (id == key) return true;
+        }
+        return false;
+    }
 }

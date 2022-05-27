@@ -549,6 +549,7 @@ public partial class UIManager : MonoSingleton<UIManager>
                 if (!Util.IsActiveGameUI(type))
                 {
                     playerStatUI.UpdateStat();
+                    playerStatUI.CloseChoiceDetail();
                 }
                     
                 //UpdateStatUI();
@@ -560,7 +561,7 @@ public partial class UIManager : MonoSingleton<UIManager>
             case UIType.MONSTERINFO_DETAIL_ITEM:  //몹 자세히 보기에서 드랍템 정보 UI 업뎃
                 MonsterCollection.Instance.DetailItem();
                 break;
-            case UIType.MONSTERINFO_DETAIL_FEATURE:
+            case UIType.MONSTERINFO_DETAIL_FEATURE:   //몹 자세히 보기에서 특성 정보 UI 업뎃
                 MonsterCollection.Instance.DetailFeature();
                 break;
             case UIType.CHEF_FOODS_PANEL:
@@ -718,9 +719,6 @@ public partial class UIManager : MonoSingleton<UIManager>
                 break;
             case UIType.MENU:
                 TimeManager.TimeResume();
-                break;
-            case UIType.STAT:
-                playerStatUI.CloseChoiceDetail();
                 break;
             case UIType.CHANGEABLEMOBLIST:
                 MonsterCollection.Instance.RemoveBody(3);
