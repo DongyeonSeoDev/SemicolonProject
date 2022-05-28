@@ -47,6 +47,7 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
 
     #endregion
 
+    //흡수율 표시창에서 비어있는 다음 칸과 인덱스 가져옴
     public (int, RectTransform) NextEmptyNoticeSlot
     {
         get
@@ -116,17 +117,17 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
         }
     }
 
-    public void InsertAbsorptionInfo(string id, float absorptionRate, float assimilationRate)
+    public void InsertAbsorptionInfo(string id, float absorptionRate, float assimilationRate)  //새로 흡수율 알림 UI를 보여줄 정보를 큐에 넣어줌
     {
         absorptionDataQueue.Enqueue(new AbsorptionData(id, absorptionRate, assimilationRate));
     }
 
-    public void InsertEndedNotice(AbsorptionNotice ui)
+    public void InsertEndedNotice(AbsorptionNotice ui)  //흡수율 표시창에서 이제 알림을 사라지게 할 요소를 큐에 넣어줌
     {
         endedAbspNoticeQueue.Enqueue(ui);
     }
 
-    public bool HasBody(string id)
+    public bool HasBody(string id)  //어떤 몬스터의 몸을 가지고 있는 상태인가? (변신할 수 있는 몹 슬롯에 넣어져있는지)
     {
         foreach(string key in PlayerEnemyUnderstandingRateManager.Instance.MountedObjList)
         {

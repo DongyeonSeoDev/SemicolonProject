@@ -184,9 +184,9 @@ public class PlayerStatUI : MonoBehaviour
     }
 
     public bool CanStatUp(ushort id) => Mathf.Pow(2, eternalStatDic[id].first.upStatCount) <= playerStat.currentStatPoint;
-    public bool CanStatOpen() => statOpenCost <= playerStat.currentStatPoint;
+    public bool CanStatOpen() => statOpenCost <= playerStat.currentStatPoint;  
 
-    public void StatUp(ushort id)
+    public void StatUp(ushort id)  //특정 스탯을 레벨업 함
     {
         
         StatElement stat = eternalStatDic[id].first;
@@ -199,7 +199,7 @@ public class PlayerStatUI : MonoBehaviour
         //eternalStatDic[id].second.statValue += stat.upStatValue;
 
     }
-    public void StatOpen(ushort id, bool free = false)
+    public void StatOpen(ushort id, bool free = false)  //특정 스탯을 '개방'함 (스탯 레벨 1로 함)  -> 고정스탯 전용
     {
         if (eternalStatDic.ContainsKey(id))
         {
@@ -216,7 +216,7 @@ public class PlayerStatUI : MonoBehaviour
         }
     }
 
-    public void AddPlayerStatPointExp(float value)
+    public void AddPlayerStatPointExp(float value)  //플레이어 스탯포인트 경험치를 획득함
     {
         playerStat.currentExp += value;
         if(playerStat.currentExp >= playerStat.maxExp)
@@ -229,7 +229,7 @@ public class PlayerStatUI : MonoBehaviour
         }
     }
 
-    public void StatUnlock(StatElement se)
+    public void StatUnlock(StatElement se)  //특정 스탯을 '발견'함
     {
         se.isUnlock = true;
         if (statInfoUIDic.ContainsKey(se.id))   //고정 스탯 획득
@@ -243,9 +243,9 @@ public class PlayerStatUI : MonoBehaviour
         UIManager.Instance.RequestLogMsg("[" + GetStatSOData(se.id).statName + "] 획득");
     }
 
-    public void DetailViewChoiceStatInfo(ushort id)
+    public void DetailViewChoiceStatInfo(ushort id)  //선택 스탯 UI 클릭 후 자세히 보기
     {
-        if (selectedChoiceBtnId == id)
+        if (selectedChoiceBtnId == id)  // 같은 거 클릭하면 자세히 보기창 닫아줌 (트위닝 적용)
         {
             selectedChoiceBtnId = 9999;
             choiceStatDetailPanel.transform.DOKill();
@@ -296,7 +296,7 @@ public class PlayerStatUI : MonoBehaviour
         choiceStatDetailPanel.transform.SetParent(choiceStatInfoUIDic[id].transform);
     }
 
-    public void CloseChoiceDetail()
+    public void CloseChoiceDetail()  //선택 스탯 클릭해서 자세히보기 창 열린거 닫아준다. (트위닝 없이 그냥)
     {
         selectedChoiceBtnId = 9999;
         choiceStatDetailPanel.transform.DOKill();
@@ -307,19 +307,19 @@ public class PlayerStatUI : MonoBehaviour
         }
     }
     
-    public void UpdateAllChoiceStatUI()
+    public void UpdateAllChoiceStatUI()  //모든 선택 스탯 UI 갱신
     {
         foreach(ChoiceStatInfoElement csie in choiceStatInfoUIDic.Values)
         {
             csie.UpdateUI();
         }
     }
-    public void UpdateChoiceStatUI(ushort id)
+    public void UpdateChoiceStatUI(ushort id)  //특정 선택 스탯 UI 갱신
     {
         choiceStatInfoUIDic[id].UpdateUI();
     }
 
-    public void UpdateStat()
+    public void UpdateStat() //스탯창 열고 스탯 정보 UI들 새로 갱신
     {
         UpdateAllStatUI();
         //UpdateStatExp(false);
@@ -330,7 +330,7 @@ public class PlayerStatUI : MonoBehaviour
     }
 
  
-    public void Save()
+    public void Save()  //안쓰면 나중에 지울 것
     {
         //튜토리얼이 끝났다면 플레이어의 스탯정보를 저장
         /*if (GameManager.Instance.savedData.tutorialInfo.isEnded)
