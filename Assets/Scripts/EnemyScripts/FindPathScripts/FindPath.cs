@@ -1,9 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public class FindPath : MonoBehaviour
 {
     public Tilemap[] tilemap;
+
     public Vector2Int limitMinPosition;
     public Vector2Int limitMaxPosition;
 
@@ -12,15 +14,8 @@ public class FindPath : MonoBehaviour
     public int offsetX;
     public int offsetY;
 
-    private void Start()
-    {
-        SetStageData();
-    }
-
     private void SetStageData()
     {
-        ResetStageData();
-
         for (int i = 0; i < tilemap.Length; i++)
         {
             BoundsInt cellBounds = tilemap[i].cellBounds;
@@ -47,6 +42,7 @@ public class FindPath : MonoBehaviour
 
         stageData = new bool[stageWidth * (limitMaxPosition.y - limitMinPosition.y + 1)];
     }
-    
+
+    public bool IsPassable(int x, int y) => stageData[GetBoolPosition(x, y)];
     private int GetBoolPosition(int x, int y) => (x + offsetX) + (stageWidth * (y + offsetY));
 }
