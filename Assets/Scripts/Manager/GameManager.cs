@@ -208,6 +208,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         //EventManager.StartListening("StageClear", UpdateItemBattleRestCount);
 
         EventManager.StartListening("StageClear", AbsorbCurMapAllItems);
+        EventManager.StartListening("ExitCurrentMap", () => PoolManager.PoolObjSetActiveFalse("ItemFollowEffect"));
     }
 
     private void Start()
@@ -328,7 +329,7 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     public void AbsorbCurMapAllItems()
     {
-        droppedItemTempDict.Clear();
+        
         for (int i = 0; i < droppedItemList.Count; i++)
         {
             if (droppedItemTempDict.ContainsKey(droppedItemList[i].itemData.id))
@@ -339,12 +340,14 @@ public partial class GameManager : MonoSingleton<GameManager>
             {
                 droppedItemTempDict.Add(droppedItemList[i].itemData.id, droppedItemList[i].DroppedCnt);
             }
+            droppedItemList[i].FollowEffect();
         }
         foreach (string key in droppedItemTempDict.Keys)
         {
             Inventory.Instance.GetItem(new ItemInfo(key, droppedItemTempDict[key]));
         }
 
+        droppedItemTempDict.Clear();
         //드랍템들 흡수하고 list를 비우고 드랍템들 꺼줘야함. 이 때 만약 맵 이동하면 바로 list 비우고 드랍템들 꺼줌
 
         /*for(int i=0; i<droppedItemList.Count; i++)
@@ -353,6 +356,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         }*/ //이렇게하면 전부 제대로 실행이 안된다.(계산하는 양이 많아서인지) 다른 방법을 써보자.
     }
 
+    #region 주석
     /*public void UpdateItemBattleRestCount() //교전 수가 정해진 아이템들 현재 교전 수 1 증가하고 최대치인 것은 삭제
     {
         List<Triple<string, int, int>> sList = new List<Triple<string, int, int>>();
@@ -384,6 +388,7 @@ public partial class GameManager : MonoSingleton<GameManager>
             }
         }
     }*/
+    #endregion
 
     #endregion
 
