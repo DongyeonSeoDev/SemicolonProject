@@ -3,9 +3,11 @@ using UnityEngine.Tilemaps;
 
 public static class FindPath
 {
-    public static void SetStageData(StageData stageData, Tilemap[] tilemap, Vector2Int limitMinPosition, Vector2Int limitMaxPosition)
+    public static StageData SetStageData(Tilemap[] tilemap, Vector2Int limitMinPosition, Vector2Int limitMaxPosition, string name)
     {
-        ResetStageData(stageData, limitMinPosition, limitMaxPosition);
+        StageData stageData = new StageData();
+
+        ResetStageData(stageData, limitMinPosition, limitMaxPosition, name);
 
         for (int i = 0; i < tilemap.Length; i++)
         {
@@ -22,10 +24,25 @@ public static class FindPath
                 }
             }
         }
+
+        return stageData;
     }
 
-    private static void ResetStageData(StageData stageData, Vector2Int limitMinPosition, Vector2Int limitMaxPosition)
+    public static bool IsPass(StageData stageData, int x, int y)
     {
+        if (stageData.limitMinPosition.x > x || stageData.limitMinPosition.y > y 
+            || stageData.limitMaxPosition.x < x || stageData.limitMaxPosition.y < y)
+        {
+            return false;
+        }
+
+        return !stageData.isWall[GetBoolPosition(stageData, x, y)];
+    }
+
+    private static void ResetStageData(StageData stageData, Vector2Int limitMinPosition, Vector2Int limitMaxPosition, string name)
+    {
+        stageData.stageName = name;
+
         stageData.limitMinPosition = limitMinPosition;
         stageData.limitMaxPosition = limitMaxPosition;
 
