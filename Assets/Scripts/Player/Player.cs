@@ -243,16 +243,10 @@ public class Player : MonoBehaviour
         {
             if (playerStat.choiceStat.reflection.isUnlock)
             {
-                if ((direction.x).Abs() > (direction.y).Abs())
-                {
-                    direction.x = -direction.x;
-                }
-                else
-                {
-                    direction.y = -direction.y;
-                }
+                Vector2 dir1 = -(direction.normalized);
+                Vector2 dir2 = playerInput.LastBodySlapVector;
 
-                playerReflectionScript.DoReflection(bodySlapReflection, direction);
+                playerReflectionScript.DoReflection(bodySlapReflection, (dir1 + dir2).normalized);
             }
 
             return;
@@ -317,16 +311,13 @@ public class Player : MonoBehaviour
         {
             if (playerStat.choiceStat.reflection.isUnlock)
             {
-                if ((direction.x).Abs() > (direction.y).Abs())
+                if (attacker.GetComponent<Enemy.EnemyBullet>() != null)
                 {
-                    direction.x = -direction.x;
-                }
-                else
-                {
-                    direction.y = -direction.y;
-                }
+                    Vector2 dir1 = -(direction.normalized);
+                    Vector2 dir2 = playerInput.LastBodySlapVector;
 
-                playerReflectionScript.DoReflection(bodySlapReflection, direction);
+                    playerReflectionScript.DoReflection(bodySlapReflection, (dir1 + dir2).normalized);
+                }
             }
 
             return;

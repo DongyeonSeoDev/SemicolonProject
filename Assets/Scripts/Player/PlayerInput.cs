@@ -18,6 +18,13 @@ public class PlayerInput : MonoBehaviour
     {
         get { return lastMoveVector; }
     }
+    private Vector2 lastBodySlapVector = Vector2.zero;
+    public Vector2 LastBodySlapVector
+    {
+        get { return lastBodySlapVector; }
+        set { lastBodySlapVector = value; }
+    }
+
     private Vector2 mousePosition = Vector2.zero;
     public Vector2 MousePosition
     {
@@ -29,6 +36,7 @@ public class PlayerInput : MonoBehaviour
         get { return attackMousePosition; }
         set { attackMousePosition = value; }
     }
+
     private bool isInteraction = false;
     public bool IsInterraction
     {

@@ -304,6 +304,7 @@ public class PlayerBodySlap : PlayerSkill
             matNum = (int)((currentChargingTimer / maxChargingTime) * (materials.Count - 1));
 
             bodySlapMoveVec = (playerInput.MousePosition - (Vector2)transform.position).normalized;
+            playerInput.LastBodySlapVector = bodySlapMoveVec;
 
             moveTargetPos = (Vector2)transform.position + bodySlapTime * offsetBodySlapMovePos * bodySlapMoveVec +
 chargingNum * targetPosFarPerCharge * bodySlapMoveVec;
