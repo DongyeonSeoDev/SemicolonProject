@@ -45,6 +45,9 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
     private Vector2 noticeDeletePos;
     private TweenCallback noticeEndTCB;
 
+    private Dictionary<string, List<Pair<float, bool>>> assimNoticeCheckDic = new Dictionary<string, List<Pair<float, bool>>>();
+    [SerializeField] private float assimNoticeInterval = 10f;
+
     #endregion
 
     //흡수율 표시창에서 비어있는 다음 칸과 인덱스 가져옴
@@ -81,6 +84,32 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
             }
             isMoving = false;
         };
+
+        EventManager.StartListening("PlayerDead", () =>
+        {
+            int i;
+            foreach(List<Pair<float,bool>> assimChkList in assimNoticeCheckDic.Values)
+            {
+                for(i=0; i< assimChkList.Count; i++)
+                {
+                    assimChkList[i].second = false;
+                }
+            }
+        });
+    }
+
+    private void Start()
+    {
+        float i, maxAssimRate = PlayerEnemyUnderstandingRateManager.Instance.MaxUnderstandingRate;
+        foreach(Enemy.EnemyType type in Global.GetEnumArr<Enemy.EnemyType>())
+        {
+            List<Pair<float, bool>> li = new List<Pair<float, bool>>();
+            for(i = assimNoticeInterval; i<= maxAssimRate; i+= assimNoticeInterval)
+            {
+                li.Add(new Pair<float, bool>(i, false));
+            }
+            assimNoticeCheckDic.Add(type.ToString(), li);
+        }
     }
 
     private void Update()
@@ -119,6 +148,22 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
 
     public void InsertAbsorptionInfo(string id, float absorptionRate, float assimilationRate)  //새로 흡수율 알림 UI를 보여줄 정보를 큐에 넣어줌
     {
+        if(assimilationRate > 0f && assimilationRate <= PlayerEnemyUnderstandingRateManager.Instance.MaxUnderstandingRate)
+        {
+            bool needMsg = false;
+            if (assimilationRate >= assimNoticeInterval)
+            {
+                int index = (int)(assimilationRate / assimNoticeInterval) - 1;
+                if (!assimNoticeCheckDic[id][index].second)
+                {
+                    assimNoticeCheckDic[id][index].second = true;
+                    needMsg = true;
+                }
+            }
+            
+            if (!needMsg) return;
+        }
+
         absorptionDataQueue.Enqueue(new AbsorptionData(id, absorptionRate, assimilationRate));
     }
 

@@ -34,7 +34,7 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     public PickupCheck pickupCheckGame;
 
-    [HideInInspector] public List<Item> droppedItemList = new List<Item>();
+    public List<Item> droppedItemList = new List<Item>();
     private Dictionary<string, int> droppedItemTempDict = new Dictionary<string, int>();
 
     public int InventoryItemCount
@@ -229,12 +229,16 @@ public partial class GameManager : MonoSingleton<GameManager>
                 checkItrObjDic.Add(new Pair<string, InteractionObj>(key, ObjectManager.Instance.itrObjDic[key]));
             }
         });
-       /*testKeyInputActionDict.Add(KeyCode.F6, () =>
-        {
-            BattleUIManager.Instance.InsertAbsorptionInfo(Enemy.EnemyType.Rat_02.ToString(), 22, 0);
-        });*/
-      
+        /*testKeyInputActionDict.Add(KeyCode.F6, () =>
+         {
+             BattleUIManager.Instance.InsertAbsorptionInfo(Enemy.EnemyType.Rat_02.ToString(), 22, 0);
+         });
+         testKeyInputActionDict.Add(KeyCode.F5, () =>
+         {
+             BattleUIManager.Instance.InsertAbsorptionInfo(Enemy.EnemyType.Slime_03.ToString(), 0, 21);
+         });*/
 
+        
 #endif
 
         slimeFollowObj = PoolManager.GetItem("EmptyObject").transform;
@@ -341,6 +345,7 @@ public partial class GameManager : MonoSingleton<GameManager>
                 droppedItemTempDict.Add(droppedItemList[i].itemData.id, droppedItemList[i].DroppedCnt);
             }
             droppedItemList[i].FollowEffect();
+            droppedItemList[i].gameObject.SetActive(false);
         }
         foreach (string key in droppedItemTempDict.Keys)
         {
@@ -348,6 +353,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         }
 
         droppedItemTempDict.Clear();
+        droppedItemList.Clear();
         //드랍템들 흡수하고 list를 비우고 드랍템들 꺼줘야함. 이 때 만약 맵 이동하면 바로 list 비우고 드랍템들 꺼줌
 
         /*for(int i=0; i<droppedItemList.Count; i++)

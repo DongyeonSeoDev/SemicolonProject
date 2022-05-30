@@ -47,16 +47,24 @@ public class AbsorptionNotice : MonoBehaviour
         absorptionResultTriple.first.fillAmount = 0f;
         absorptionResultTriple.second.text = "0%";
 
-        bool suc = BattleUIManager.Instance.HasBody(data.mobId);
-        if (suc)
+        if (data.assimilationRate == 0)  //아직 슬롯에 없는 몹 흡수함
         {
-            absorptionResultTriple.third.text = "성공";
-            absorptionResultTriple.third.color = Color.green;
+            bool suc = BattleUIManager.Instance.HasBody(data.mobId);
+            if (suc)
+            {
+                absorptionResultTriple.third.text = "성공";
+                absorptionResultTriple.third.color = Color.green;
+            }
+            else
+            {
+                absorptionResultTriple.third.text = "실패";
+                absorptionResultTriple.third.color = Color.red;
+            } 
         }
-        else
+        else  //슬롯에 있는 몹 조지고 동화율 오름
         {
-            absorptionResultTriple.third.text = "실패";
-            absorptionResultTriple.third.color = Color.red;
+            absorptionResultTriple.third.text = "동화율 상승";
+            absorptionResultTriple.third.color = Color.green;
         }
 
         moveTime = 0f;
@@ -89,13 +97,27 @@ public class AbsorptionNotice : MonoBehaviour
             absorptionResultTriple.first.fillAmount += Time.deltaTime * 0.4f;
             absorptionResultTriple.second.text = string.Concat((int)curRate, '%');
 
-            if (curRate >= currentAbpData.absorptionRate)
+            if (currentAbpData.assimilationRate > 0f)  //동화율 알림창이면
             {
-                absorptionResultTriple.first.fillAmount = currentAbpData.absorptionRate * 0.01f;
-                absorptionResultTriple.second.text = $"{currentAbpData.absorptionRate}%";
-                isTweening = false;
+                if(curRate >= currentAbpData.assimilationRate)
+                {
+                    absorptionResultTriple.first.fillAmount = currentAbpData.assimilationRate * 0.01f;
+                    absorptionResultTriple.second.text = $"{currentAbpData.assimilationRate}%";
+                    isTweening = false;
 
-                Util.DelayFunc(Exit, 2f, this, false, false);
+                    Util.DelayFunc(Exit, 2f, this, false, false);
+                }
+            }
+            else  //흡수율 알림창이면
+            {
+                if (curRate >= currentAbpData.absorptionRate)
+                {
+                    absorptionResultTriple.first.fillAmount = currentAbpData.absorptionRate * 0.01f;
+                    absorptionResultTriple.second.text = $"{currentAbpData.absorptionRate}%";
+                    isTweening = false;
+
+                    Util.DelayFunc(Exit, 2f, this, false, false);
+                }
             }
         }
     }

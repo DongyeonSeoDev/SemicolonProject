@@ -219,6 +219,7 @@ public class PlayerStatUI : MonoBehaviour
     public void AddPlayerStatPointExp(float value)  //«√∑π¿ÃæÓ Ω∫≈»∆˜¿Œ∆Æ ∞Ê«Ëƒ°∏¶ »πµÊ«‘
     {
         playerStat.currentExp += value;
+        UIManager.Instance.RequestLogMsg($"∞Ê«Ëƒ°∏¶ »πµÊ«ﬂΩ¿¥œ¥Ÿ. (+{value})");
         if(playerStat.currentExp >= playerStat.maxExp)
         {
             int point = Mathf.FloorToInt(playerStat.currentExp / playerStat.maxExp);
@@ -226,6 +227,7 @@ public class PlayerStatUI : MonoBehaviour
             playerStat.currentStatPoint += point;
 
             UIManager.Instance.InsertNoticeQueue($"Ω∫≈»∆˜¿Œ∆Æ {point} »πµÊ");
+            UIManager.Instance.RequestLogMsg($"Ω∫≈»∆˜¿Œ∆Æ∏¶ »πµÊ«ﬂΩ¿¥œ¥Ÿ. (+{point})");
         }
     }
 
