@@ -50,7 +50,7 @@ public class ImprecationObj : InteractionObj
         ResetActionList();
 
         UIManager.Instance.RequestSelectionWindow("이곳은 저주구역입니다.\n어떤 효과를 적용하시겠습니까?", imprecationActions, new List<string>() { "DescHp", "RandAntiBuff", "RandItemRm" }, true,
-            new List<Func<bool>>() {null, null, () => Inventory.Instance.ActiveSlotCount > 0}, true);
+            new List<Func<bool>>() {()=>Global.CurrentPlayer.PlayerStat.currentHp>=1.5f, null, () => Inventory.Instance.ActiveSlotCount > 0}, true);
         canInteract = false;
     }
 
