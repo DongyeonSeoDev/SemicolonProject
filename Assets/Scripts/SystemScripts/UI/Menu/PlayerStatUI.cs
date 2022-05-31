@@ -9,6 +9,7 @@ public class PlayerStatUI : MonoBehaviour
     public Stat PlayerStat => playerStat;
 
     public Pair<Image,Text> statExpPair; // 1: 스탯포인트 경험치 게이지바, 2: 가지고 있는 스탯포인트 텍스트
+    public Text statExpText;  // 스탯 포인트 경험치 텍스트
     public Pair<GameObject, Transform> statInfoUIPair, choiceStatInfoUIPair;  //고정 스탯 UI 프리팹과 부모, 선택스탯 UI 프리팹과 부모
     public GameObject invisibleChoiceStatUIPrefab;
 
@@ -330,6 +331,7 @@ public class PlayerStatUI : MonoBehaviour
         //UpdateStatExp(false);
         UpdateCurStatPoint(false);
         statExpPair.first.fillAmount = 0f;
+        statExpText.text = string.Format("{0} / {1}", playerStat.currentExp, playerStat.maxExp);
 
         UpdateAllChoiceStatUI();
 
