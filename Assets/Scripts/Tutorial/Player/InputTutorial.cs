@@ -42,6 +42,7 @@ public class InputTutoData
                 isClear = true;
                 timerStarted = false;
                 pressTimer = -1f;
+                UIManager.Instance.RequestLogMsg("'" + key.ToString() + "' Å°¸¦(À») È¹µæÇÏ¿´½À´Ï´Ù.");
             }
         }
     }
