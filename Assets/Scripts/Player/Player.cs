@@ -448,6 +448,9 @@ public class Player : MonoBehaviour
             if (PlayerEnemyUnderstandingRateManager.Instance.CheckMountObjIdContain(objId))
             {
                 PlayerEnemyUnderstandingRateManager.Instance.UpUnderstandingRate(objId, upUnderstandingRateValueWhenEnemyDead);
+
+                BattleUIManager.Instance.InsertAbsorptionInfo(objId, PlayerEnemyUnderstandingRateManager.Instance.GetDrainProbabilityDict(objId),
+PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(objId));
             }
             else
             {
@@ -458,10 +461,10 @@ public class Player : MonoBehaviour
         {
             //Debug.Log("우오옷 동화율이 오른다앗");
             PlayerEnemyUnderstandingRateManager.Instance.UpUnderstandingRate(SlimeGameManager.Instance.CurrentBodyId, upUnderstandingRateValueWhenEnemyDeadAfterBodyChanged);
-        }
 
-        BattleUIManager.Instance.InsertAbsorptionInfo(objId, PlayerEnemyUnderstandingRateManager.Instance.GetDrainProbabilityDict(objId),
-            PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(objId));
+            BattleUIManager.Instance.InsertAbsorptionInfo(SlimeGameManager.Instance.CurrentBodyId, PlayerEnemyUnderstandingRateManager.Instance.GetDrainProbabilityDict(SlimeGameManager.Instance.CurrentBodyId),
+    PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(SlimeGameManager.Instance.CurrentBodyId));
+        }
 
         UIManager.Instance.playerStatUI.AddPlayerStatPointExp(enemy.AddExperience);
     }
