@@ -450,7 +450,7 @@ public class Player : MonoBehaviour
                 PlayerEnemyUnderstandingRateManager.Instance.UpUnderstandingRate(objId, upUnderstandingRateValueWhenEnemyDead);
 
                 BattleUIManager.Instance.InsertAbsorptionInfo(objId, PlayerEnemyUnderstandingRateManager.Instance.GetDrainProbabilityDict(objId),
-PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(objId));
+                    PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(objId), KillNoticeType.UNDERSTANDING);
             }
             else
             {
@@ -463,7 +463,7 @@ PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(objId));
             PlayerEnemyUnderstandingRateManager.Instance.UpUnderstandingRate(SlimeGameManager.Instance.CurrentBodyId, upUnderstandingRateValueWhenEnemyDeadAfterBodyChanged);
 
             BattleUIManager.Instance.InsertAbsorptionInfo(SlimeGameManager.Instance.CurrentBodyId, PlayerEnemyUnderstandingRateManager.Instance.GetDrainProbabilityDict(SlimeGameManager.Instance.CurrentBodyId),
-    PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(SlimeGameManager.Instance.CurrentBodyId));
+                PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(SlimeGameManager.Instance.CurrentBodyId), KillNoticeType.UNDERSTANDING);
         }
 
         UIManager.Instance.playerStatUI.AddPlayerStatPointExp(enemy.AddExperience);
