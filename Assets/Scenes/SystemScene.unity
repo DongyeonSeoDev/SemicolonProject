@@ -9090,8 +9090,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bodyChangeTime: 10
-  understadingRatePercentageWhenUpStat: 10
-  upStatPercentage: 0.2
 --- !u!4 &590838782
 Transform:
   m_ObjectHideFlags: 0
@@ -52267,6 +52265,20 @@ MonoBehaviour:
             isUnlock: 0
             statLv: 0
             maxStatLv: 0
+          frenzy:
+            id: 0
+            statValue: 0
+            upStatValue: 0
+            isUnlock: 0
+            statLv: 0
+            maxStatLv: 0
+          reflection:
+            id: 0
+            statValue: 0
+            upStatValue: 0
+            isUnlock: 0
+            statLv: 0
+            maxStatLv: 0
       currentBodyID: 
       userItems:
         keyList: []
@@ -59931,6 +59943,7 @@ MonoBehaviour:
   abspNoticeStartOffset: {x: 464, y: -124}
   absorptionNoticeDelay: 0.2
   absorptionNoticeTime: 2
+  assimNoticeInterval: 10
 --- !u!1 &3478393042681825650
 GameObject:
   m_ObjectHideFlags: 0

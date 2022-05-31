@@ -26,22 +26,6 @@ public static class NGlobal
     public const ushort CStatEndID = 125; //나중에 값 바꿔야 함
 
     public static PlayerStatUI playerStatUI => UIManager.Instance.playerStatUI;
-
-
-    public static string GetChoiceStatAbilExplanation(ushort id)
-    {
-        switch(id)
-        {
-            case PatienceID:
-                return "인내";
-            case MomentomID:
-                return "추진력";
-            case EnduranceID:
-                return "맷집";
-        }
-
-        return string.Empty;
-    }
 }
 
 
