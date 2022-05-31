@@ -33,6 +33,13 @@ public class Player : MonoBehaviour
     }
 
     [SerializeField]
+    private PlayerReflectionScript playerReflectionScript = null;
+    public PlayerReflectionScript PlayerReflectionScript
+    {
+        get { return playerReflectionScript; }
+    }
+
+    [SerializeField]
     private OrderInLayerConroller playerOrderInLayerController = null;
     public OrderInLayerConroller PlayerOrderInLayerController
     {
@@ -130,11 +137,17 @@ public class Player : MonoBehaviour
     private float originAdditionalSpeed = 0f;
     private bool speedSlowStart = false;
 
+    #region 반사 발사체 데이터들
+    [SerializeField]
+    private PlayerReflectionProjectileData bodySlapReflection;
+    #endregion
+
     private void Awake()
     {
         playerState = GetComponent<PlayerState>();
         playerInput = GetComponent<PlayerInput>();
         playerChoiceStatControl = GetComponent<PlayerChoiceStatControl>();
+        playerReflectionScript = GetComponent<PlayerReflectionScript>();
 
         playerOrderInLayerController = GetComponentInChildren<OrderInLayerConroller>();
     }
@@ -147,7 +160,7 @@ public class Player : MonoBehaviour
         playerStat.currentHp = playerStat.MaxHp;
         currentEnergy = maxEnergy;
 
-        UIManager.Instance.UpdatePlayerHPUI();
+        ////UIManager.Instance.UpdatePlayerHPUI();
     }
     private void OnEnable()
     {
@@ -220,10 +233,22 @@ public class Player : MonoBehaviour
     }
     public void GetDamage(float damage, Vector2 effectPosition, Vector2 direction, Vector3? effectSize = null, bool critical = false, bool stateAbnormality = false)
     {
-        if ((playerState.BodySlapping && !stateAbnormality) ||
-            (playerState.IsDrain && !stateAbnormality) ||
+        if ((playerState.IsDrain && !stateAbnormality) ||
             SlimeGameManager.Instance.GameClear)
         {
+            return;
+        }
+
+        if((playerState.BodySlapping && !stateAbnormality))
+        {
+            if (playerStat.choiceStat.reflection.isUnlock)
+            {
+                Vector2 dir1 = -(direction.normalized);
+                Vector2 dir2 = playerInput.LastBodySlapVector;
+
+                playerReflectionScript.DoReflection(bodySlapReflection, (dir1 + dir2).normalized);
+            }
+
             return;
         }
 
@@ -276,10 +301,25 @@ public class Player : MonoBehaviour
     
     public void GetDamage(GameObject attacker, float damage, Vector2 effectPosition, Vector2 direction, Vector3? effectSize = null, bool critical = false, bool stateAbnormality = false)
     {
-        if ((playerState.BodySlapping && !stateAbnormality) ||
-            (playerState.IsDrain && !stateAbnormality) ||
+        if ((playerState.IsDrain && !stateAbnormality) ||
             SlimeGameManager.Instance.GameClear)
         {
+            return;
+        }
+
+        if((playerState.BodySlapping && !stateAbnormality))
+        {
+            if (playerStat.choiceStat.reflection.isUnlock)
+            {
+                if (attacker.GetComponent<Enemy.EnemyBullet>() != null)
+                {
+                    Vector2 dir1 = -(direction.normalized);
+                    Vector2 dir2 = playerInput.LastBodySlapVector;
+
+                    playerReflectionScript.DoReflection(bodySlapReflection, (dir1 + dir2).normalized);
+                }
+            }
+
             return;
         }
 

@@ -80,6 +80,7 @@ public class PlayerShoot : PlayerSkill
 
         //playerInput.IsDoSkill0 = false;
     }
+
     public override void WhenSkillDelayTimerZero()
     {
         base.WhenSkillDelayTimerZero();

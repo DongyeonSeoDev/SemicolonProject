@@ -292,7 +292,7 @@ MonoBehaviour:
   skillIdx: 1
   canCrashLayer:
     serializedVersion: 2
-    m_Bits: 10617024
+    m_Bits: 8519744
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 2097280
@@ -355,6 +355,7 @@ MonoBehaviour:
   skillDelay: 5
   skillIdx: 2
   drainCollider: {fileID: 6491635181836223920}
+  drainSpeedWhenNone: 2
   upMountingPercentageValue: 3
   upUnderstandingRateValue: 1
   drainTutorial: 0

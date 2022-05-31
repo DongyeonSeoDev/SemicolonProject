@@ -78,6 +78,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
     }
     private void OnEnable()
     {
+        EventManager.StartListening("PlayerDead", ChoiceStatControlReset);
         EventManager.StartListening("OnEnemyAttack", UpAttackNum);
         EventManager.StartListening("OnAttackMiss", UpAttackMissedNum);
 
@@ -86,6 +87,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
     }
     private void OnDisable()
     {
+        EventManager.StopListening("PlayerDead", ChoiceStatControlReset);
         EventManager.StopListening("OnEnemyAttack", UpAttackNum);
         EventManager.StopListening("OnAttackMiss", UpAttackMissedNum);
 
@@ -96,6 +98,8 @@ public class PlayerChoiceStatControl : MonoBehaviour
     {
         CheckPatience();
         CheckMomentom();
+        CheckFrenzy();
+        CheckReflection();
     }
     public void CheckEndurance()
     {
@@ -194,6 +198,40 @@ public class PlayerChoiceStatControl : MonoBehaviour
         SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.statValue = num;
         SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.statLv = num;
     }
+
+    public void CheckFrenzy()
+    {
+        if(!SlimeGameManager.Instance.Player.PlayerStat.choiceStat.frenzy.isUnlock && 
+            PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(Enemy.EnemyType.Slime_03.ToString())
+                >= choiceDataDict["frenzy"].unlockStatValue)
+        {
+            StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.frenzy;
+
+            stat.statValue = choiceDataDict["frenzy"].firstValue;
+            stat.statLv = choiceDataDict["frenzy"].firstValue;
+
+            stat.isUnlock = true;
+
+            //UIManager.Instance.playerStatUI.StatUnlock(stat);
+        }
+    }
+
+    public void CheckReflection()
+    {
+        if (!SlimeGameManager.Instance.Player.PlayerStat.choiceStat.reflection.isUnlock &&
+            PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(Enemy.EnemyType.Slime_01.ToString())
+                >= choiceDataDict["reflection"].unlockStatValue)
+        {
+            StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.reflection;
+
+            stat.statValue = choiceDataDict["reflection"].firstValue;
+            stat.statLv = choiceDataDict["reflection"].firstValue;
+
+            stat.isUnlock = true;
+
+            //UIManager.Instance.playerStatUI.StatUnlock(stat);
+        }
+    }
     public void UpAttackMissedNum()
     {
         // 몬스터 외의 것들을 때렸을 경우
@@ -249,5 +287,12 @@ public class PlayerChoiceStatControl : MonoBehaviour
         }
 
         totalDamage += value;
+    }
+    public void ChoiceStatControlReset()
+    {
+        avoidInMomentomNum = 0;
+        totalDamage = 0;
+        attackMissedNum = 0;
+        attackNum = 0;
     }
 }

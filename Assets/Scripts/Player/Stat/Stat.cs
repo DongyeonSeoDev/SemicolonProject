@@ -171,6 +171,10 @@ public class ChoiceStat
 
     public StatElement endurance = new StatElement(); // 맷집
 
+    public StatElement frenzy = new StatElement(); // 멈추지 않는 돌진
+
+    public StatElement reflection = new StatElement(); // 반사
+
     //public int luck; // 운
 
     //public float viscosity; // 점성
@@ -189,6 +193,8 @@ public class ChoiceStat
         patience.ResetComplete();
         momentom.ResetComplete();
         endurance.ResetComplete();
+        frenzy.ResetComplete();
+        reflection.ResetComplete();
     }
 
 }

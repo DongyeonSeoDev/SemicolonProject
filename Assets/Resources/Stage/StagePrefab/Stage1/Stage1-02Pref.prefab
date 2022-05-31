@@ -130,6 +130,12 @@ MonoBehaviour:
   - {fileID: 2903864314925138834}
   - {fileID: 2111183138866665230}
   plants: []
+  isEnemyStage: 1
+  noPassTilemap:
+  - {fileID: 7962605175659546557}
+  - {fileID: 2813824099966149253}
+  limitMinPosition: {x: -13, y: -6}
+  limitMaxPosition: {x: 14, y: 17}
 --- !u!1 &3553275141150440558
 GameObject:
   m_ObjectHideFlags: 0
@@ -27873,6 +27879,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StageDoor_Front (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 8604531944747639587, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8604531944747639599, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -27957,6 +27967,10 @@ PrefabInstance:
     - target: {fileID: 8604531944747639587, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
       propertyPath: m_Name
       value: StageDoor_Front
+      objectReference: {fileID: 0}
+    - target: {fileID: 8604531944747639587, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8604531944747639599, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
       propertyPath: m_RootOrder
@@ -28075,6 +28089,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: InvisibleOutWall
       objectReference: {fileID: 0}
+    - target: {fileID: 7563399904900757094, guid: 282716b886e7e4f49ae55ecfe29b9972, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 282716b886e7e4f49ae55ecfe29b9972, type: 3}
 --- !u!4 &1849271865062017686 stripped
@@ -28120,6 +28138,10 @@ PrefabInstance:
     - target: {fileID: 8604531944747639587, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
       propertyPath: m_Name
       value: StageDoor_Front (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8604531944747639587, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8604531944747639599, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
       propertyPath: m_RootOrder
@@ -28225,6 +28247,10 @@ PrefabInstance:
     - target: {fileID: 8604531944747639587, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
       propertyPath: m_Name
       value: StageDoor_Front (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8604531944747639587, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8604531944747639599, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
       propertyPath: m_RootOrder

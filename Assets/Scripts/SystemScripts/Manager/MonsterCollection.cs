@@ -73,7 +73,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         //Water.PoolManager.CreatePool(trfAbleTxtPref, mobInfoUIPair.second, 2, "CanTrfMark");
 
         mobInfoUIPair.second.GetComponent<GridLayoutGroup>().constraintCount = Mathf.Clamp(urmg.ChangableBodyList.Count / 3 + 1, 6, 10000);
-        statIncrRatePerAssim.text = "[동화율 10%당 " + (SlimeGameManager.Instance.UpStatPercentage * 100f).ToString() + "%씩 스탯 상승]";
+        statIncrRatePerAssim.text = "[동화율 " + (PlayerEnemyUnderstandingRateManager.Instance.UnderstandingRatePercentageWhenUpStat).ToString()  + "%당 "
+            + (PlayerEnemyUnderstandingRateManager.Instance.UpStatPercentage * 100f).ToString() + "%씩 스탯 상승]";
         changeBodySlots.ForEach(x => x.SetSlotNumber());
 
         //모든 몹 정보 가져와서 UI생성하고 값 넣음
@@ -275,7 +276,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         if (mobLearningInfoDic[selectedDetailMobId].assimilation)
         {
             EternalStat stat = mobIdToSlot[selectedDetailMobId].BodyData.additionalBodyStat;
-            EternalStat addiStat = SlimeGameManager.Instance.GetExtraUpStat(selectedDetailMobId);
+            EternalStat addiStat = PlayerEnemyUnderstandingRateManager.Instance.GetExtraUpStat(selectedDetailMobId);
 
             statText[0].text = MinusException(stat.maxHp.statValue) + AdditionalStat(addiStat.maxHp.statValue);
             statText[1].text = MinusException(stat.maxDamage.statValue) + AdditionalStat(addiStat.maxDamage.statValue);  //maxDamage만큼 min/max 데미지를 올려준다

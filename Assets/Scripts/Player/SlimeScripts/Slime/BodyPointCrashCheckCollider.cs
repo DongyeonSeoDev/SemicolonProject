@@ -46,12 +46,9 @@ public class BodyPointCrashCheckCollider : MonoBehaviour
         GameObject obj = other.gameObject;
         if (whatIsWall.CompareGameObjectLayer(obj))
         {
-            if(bodyPoint.IsWall)
-            {
-                return;
-            }
-
             bodyPoint.IsWall = true;
+
+            return;
         }
 
         if (SlimeGameManager.Instance.Player.PlayerState.BodySlapping)

@@ -78,6 +78,7 @@ public class PlayerDrainCollider : MonoBehaviour
         if (drainTimer > 0f)
         {
             List<ICanGetDamagableEnemy> removeList = new List<ICanGetDamagableEnemy>();
+
             drainTimer -= Time.deltaTime;
 
             if (drainTimer <= 0f)
@@ -91,7 +92,6 @@ public class PlayerDrainCollider : MonoBehaviour
                         EventManager.TriggerEvent("OnDrain", item.GetGameObject(), item.GetTransform().position, 1); // 여기의 param은 임시 값
                     }
                 }
-
 
                 foreach (var item in removeList)
                 {

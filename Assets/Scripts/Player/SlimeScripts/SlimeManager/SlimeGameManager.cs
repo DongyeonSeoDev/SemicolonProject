@@ -61,7 +61,6 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
     private EternalStat pasteBodyAdditionalStat = new EternalStat();
     // pasteExtraStat
-    private Dictionary<string, EternalStat> currentExtraStatDict = new Dictionary<string, EternalStat>();// 
 
     private bool canBodyChange = true;
 
@@ -94,17 +93,6 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
     public bool[] SkillDelayTimerZero
     {
         get { return skillDelayTimerZero; }
-    }
-
-    [Header("동화율 몇퍼당 변신시 능력치가 오를지를 정하는 변수")]
-    [SerializeField]
-    private int understadingRatePercentageWhenUpStat = 10;
-    [Header("동화율 'understadingRatePercentageWhenUpStat'퍼당 변신시 오르게되는 능력치가 오르게 되는 수치(배율)")]
-    [SerializeField]
-    private float upStatPercentage = 0.05f;
-    public float UpStatPercentage
-    {
-        get { return upStatPercentage; }
     }
 
     private void Awake()
@@ -253,30 +241,6 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
             pasteBodyAdditionalStat = newBodyData.Item2;
 
-            #region 변신한 몸체의 동화율에의한 슬라임 스탯 증가 처리
-
-            EternalStat extraStat = GetExtraUpStat(bodyId);
-
-            if (currentExtraStatDict.ContainsKey(bodyId))
-            {
-                if (currentExtraStatDict[bodyId] != extraStat)
-                {
-                    Player.PlayerStat.additionalEternalStat -= currentExtraStatDict[bodyId];
-
-                    currentExtraStatDict[bodyId] = extraStat;
-
-                    Player.PlayerStat.additionalEternalStat += currentExtraStatDict[bodyId];
-                }
-            }
-            else
-            {
-                currentExtraStatDict.Add(bodyId, extraStat);
-
-                Player.PlayerStat.additionalEternalStat += currentExtraStatDict[bodyId];
-            }
-
-            #endregion
-
             Player.PlayerStat.additionalEternalStat += pasteBodyAdditionalStat;
 
             //player.CurrentHp = (player.PlayerStat.MaxHp * hpPercentage).Round();
@@ -330,27 +294,6 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             Debug.Log("Body Id: '" + bodyId + "' 로의 Body Change에 실패했습니다.");
         }
         #endregion
-    }
-    public EternalStat GetExtraUpStat(string objId)
-    {
-        EternalStat result = new EternalStat();
-        EternalStat upStat = playerEnemyUnderstandingRateManager.ChangalbeBodyDict[objId].Item2;
-
-        if (PlayerEnemyUnderstandingRateManager.Instance.ChangalbeBodyDict.ContainsKey(objId))
-        {
-            int upNewBodyStat = (playerEnemyUnderstandingRateManager.GetUnderstandingRate(objId) / understadingRatePercentageWhenUpStat);
-
-            if (upNewBodyStat >= 1) // this code is "imsi" code that inserted "imsi" values.
-            {
-                result = (upStat * upNewBodyStat * upStatPercentage);// 10% 마다 upStatPercentage배씩 상승
-            }
-        }
-        else
-        {
-            Debug.LogWarning(objId + " is not on the changableBodyList!");
-        }
-
-        return result;
     }
 
     private void SetCanBodyChangeFalse()

@@ -14,6 +14,10 @@ public class PlayerDrain : PlayerSkill
         get { return playerDrainCol; }
     }
 
+    [Header("흡수를 진행할 때 흡수하는 적이 없을 때 흡수가 얼마나 빠르게 진행되는가")]
+    [SerializeField]
+    private float drainSpeedWhenNone = 2f;
+
     [Header("흡수를 했을 때의 장착 확률을 올려주는 수치")]
     [SerializeField]
     private float upMountingPercentageValue = 5f;
@@ -108,7 +112,7 @@ public class PlayerDrain : PlayerSkill
 
         SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = SlimeGameManager.Instance.SkillDelays[skillIdx];
 
-        EventManager.TriggerEvent("SetDrainTime", playerDrainCol.DrainTime);
+        EventManager.TriggerEvent("SetDrainTime", playerDrainCol.DrainTime / drainSpeedWhenNone);
         EventManager.TriggerEvent("EnemyStop");
         EventManager.TriggerEvent("PlayerStop");
 
