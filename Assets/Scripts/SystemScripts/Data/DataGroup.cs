@@ -183,6 +183,27 @@ public class Single<T>
     }
 }
 
+public class AbsorptionData
+{
+    public string mobId;
+
+    public float absorptionRate;
+    public float assimilationRate;
+
+    public KillNoticeType killNoticeType;
+
+    //public string resMsg;
+
+    public AbsorptionData(string id, float absorption, float assimilation, KillNoticeType type)
+    {
+        mobId = id;
+        absorptionRate = absorption;
+        assimilationRate = assimilation;
+        killNoticeType = type;
+        //resMsg = msg;
+    }
+}
+
 
 [Serializable]
 public class CheckGameStringKeys

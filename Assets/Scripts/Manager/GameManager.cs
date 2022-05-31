@@ -229,16 +229,27 @@ public partial class GameManager : MonoSingleton<GameManager>
                 checkItrObjDic.Add(new Pair<string, InteractionObj>(key, ObjectManager.Instance.itrObjDic[key]));
             }
         });
-        /*testKeyInputActionDict.Add(KeyCode.F6, () =>
-         {
-             BattleUIManager.Instance.InsertAbsorptionInfo(Enemy.EnemyType.Rat_02.ToString(), 22, 0);
-         });
-         testKeyInputActionDict.Add(KeyCode.F5, () =>
-         {
-             BattleUIManager.Instance.InsertAbsorptionInfo(Enemy.EnemyType.Slime_03.ToString(), 0, 21);
-         });*/
+        testKeyInputActionDict.Add(KeyCode.F1, () =>
+        {
+            BattleUIManager.Instance.InsertAbsorptionInfo(Enemy.EnemyType.Slime_01.ToString(), 100, 0, KillNoticeType.FAIL);
+        });
+        testKeyInputActionDict.Add(KeyCode.F2, () =>
+        {
+            BattleUIManager.Instance.InsertAbsorptionInfo(Enemy.EnemyType.Slime_01.ToString(), 100, 0, KillNoticeType.SUCCESS);
+        });
+        testKeyInputActionDict.Add(KeyCode.F3, () =>
+        {
+            BattleUIManager.Instance.InsertAbsorptionInfo(Enemy.EnemyType.Slime_03.ToString(), 12, 0, KillNoticeType.ALREADY);
+        });
+        testKeyInputActionDict.Add(KeyCode.F4, () =>
+        {
+            BattleUIManager.Instance.InsertAbsorptionInfo(Enemy.EnemyType.Rat_02.ToString(), 0, 15, KillNoticeType.UNDERSTANDING);
+        });
+        testKeyInputActionDict.Add(KeyCode.F5, () =>
+        {
+            BattleUIManager.Instance.InsertAbsorptionInfo(Enemy.EnemyType.Rat_02.ToString(), 0, 150, KillNoticeType.UNDERSTANDING);
+        });
 
-        
 #endif
 
         slimeFollowObj = PoolManager.GetItem("EmptyObject").transform;

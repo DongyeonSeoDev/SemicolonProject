@@ -1,3 +1,12 @@
+
+public enum KillNoticeType
+{
+    FAIL,  //흡수하고 장착 실패
+    SUCCESS,  //흡수하고 장착 성공
+    ALREADY,  //흡수했는데 이미 장착된 놈
+    UNDERSTANDING  //동화율 n%마다 알리는 놈
+}
+
 public enum ItemType
 {
     EQUIP,
