@@ -141,6 +141,7 @@ public class PlayerDrain : PlayerSkill
         if (PlayerEnemyUnderstandingRateManager.Instance.CheckMountObjIdContain(objId))
         {
             PlayerEnemyUnderstandingRateManager.Instance.UpUnderstandingRate(objId, upUnderstandingRateValue);
+            BattleUIManager.Instance.InsertAbsorptionInfo(objId, 0f, PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(objId));
         }
         else
         {
@@ -150,10 +151,11 @@ public class PlayerDrain : PlayerSkill
             PlayerEnemyUnderstandingRateManager.Instance.UpDrainProbabilityDict(objId, upMountingPercentageValue);
             (drain, drainPercentage) = PlayerEnemyUnderstandingRateManager.Instance.CheckMountingEnemy(objId, upUnderstandingRateValue);
 
-            if(!drain)
-            {
-                UIManager.Instance.RequestLogMsg(objName + "(를)을 흡수하는데 실패하셨습니다. (확률: " + drainPercentage + "%)");
-            }
+            BattleUIManager.Instance.InsertAbsorptionInfo(objId, drainPercentage, PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(objId));
+            //if(!drain)
+            //{
+            //    UIManager.Instance.RequestLogMsg(objName + "(를)을 흡수하는데 실패하셨습니다. (확률: " + drainPercentage + "%)");
+            //}
         }
 
         if (enemy != null)

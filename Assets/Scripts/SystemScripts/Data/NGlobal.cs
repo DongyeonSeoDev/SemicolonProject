@@ -19,6 +19,8 @@ public static class NGlobal
     public const ushort PatienceID = 100;
     public const ushort MomentomID = 105;
     public const ushort EnduranceID = 110;
+    public const ushort FrenzyID = 115;
+    public const ushort ReflectionID = 120;
 
     public const ushort CStatStartID = 100;
     public const ushort CStatEndID = 125; //나중에 값 바꿔야 함
