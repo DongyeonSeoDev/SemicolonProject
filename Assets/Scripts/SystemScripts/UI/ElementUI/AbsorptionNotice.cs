@@ -21,6 +21,7 @@ public class AbsorptionNotice : MonoBehaviour
     private bool isTweening;
 
     private int slotIdx;
+    private bool isAssimNotice;
 
     private void Awake()
     {
@@ -46,10 +47,11 @@ public class AbsorptionNotice : MonoBehaviour
         absorptionResultTriple.first.fillAmount = 0f;
         absorptionResultTriple.second.text = "0%";
 
-        if (data.assimilationRate == 0)  //아직 슬롯에 없는 몹 흡수함
+        isAssimNotice = BattleUIManager.Instance.HasBody(data.mobId);
+
+        if (!isAssimNotice)  //아직 슬롯에 없는 몹 흡수함
         {
-            bool suc = BattleUIManager.Instance.HasBody(data.mobId);
-            if (suc)
+            if (data.absorptionSuccess)
             {
                 absorptionResultTriple.third.text = "성공";
                 absorptionResultTriple.third.color = Color.green;
@@ -96,7 +98,7 @@ public class AbsorptionNotice : MonoBehaviour
             absorptionResultTriple.first.fillAmount += Time.deltaTime * 0.4f;
             absorptionResultTriple.second.text = string.Concat((int)curRate, '%');
 
-            if (currentAbpData.assimilationRate > 0f)  //동화율 알림창이면
+            if (isAssimNotice)  //동화율 알림창이면
             {
                 if(curRate >= currentAbpData.assimilationRate)
                 {

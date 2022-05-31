@@ -141,7 +141,7 @@ public class PlayerStatUI : MonoBehaviour
     {
         if(isFastChangingExpTxt)
         {
-
+            statExpText.text = string.Format("{0} / {1}", (int)(statExpPair.first.fillAmount * playerStat.maxExp), playerStat.maxExp);
         }
     }
 
