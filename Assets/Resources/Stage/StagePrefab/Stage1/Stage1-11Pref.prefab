@@ -132,6 +132,12 @@ MonoBehaviour:
   plants:
   - {fileID: 1465203237849709593}
   - {fileID: 7009900251956685891}
+  isEnemyStage: 1
+  noPassTilemap:
+  - {fileID: 7628133081404410334}
+  - {fileID: 8853764063689377915}
+  limitMinPosition: {x: -13, y: -6}
+  limitMaxPosition: {x: 14, y: 17}
 --- !u!1 &1950022470659903127
 GameObject:
   m_ObjectHideFlags: 0
@@ -27649,7 +27655,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6055699711794977415
 Transform:
   m_ObjectHideFlags: 0

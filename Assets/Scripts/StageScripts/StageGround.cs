@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.Tilemaps;
 
 public class StageGround : MonoBehaviour
 {
@@ -15,6 +16,17 @@ public class StageGround : MonoBehaviour
     //[SerializeField] private bool autoInsertPlants;
     public Pick[] plants;
 
+    #region 적 이동 관련 변수
+    [Header("적이 나오는 스테이지면 True")]
+    public bool isEnemyStage;
+
+    [Header("적이 지나갈 수 없는 타일맵 넣기 (벽 제외)")]
+    public Tilemap[] noPassTilemap;
+
+    [Header("적이 지나갈 수 있는 스테이지 최대 위치, 최소 위치 넣기")]
+    public Vector2Int limitMinPosition;
+    public Vector2Int limitMaxPosition;
+    #endregion
 
     private void OnEnable()
     {
