@@ -14,7 +14,9 @@ public class ChoiceStatData
     public int unlockStatValue; // 이 스탯을 휙듣하기 위한 해당 값의 양
 
     public int upAmount; // 특정 값이 upAmount이상일 때 마다 스탯 수치 상승
+    public int addUpAmountPerLv; // 레벨 1당 upAmount값이 오르는 값
     public float upTargetStatPerChoiceStat; // 이 ChoiceStat의 값 1 당 오르는 대상 스탯의 값
+
 }
 public class PlayerChoiceStatControl : MonoBehaviour
 {
@@ -161,7 +163,10 @@ public class PlayerChoiceStatControl : MonoBehaviour
         }
         else
         {
-            num = ((attackNum + attackMissedNum) / choiceDataDict[NGlobal.PatienceID].upAmount) + choiceDataDict[NGlobal.PatienceID].firstValue;
+            num = ((attackNum + attackMissedNum) / choiceDataDict[NGlobal.PatienceID].upAmount +
+                choiceDataDict[NGlobal.PatienceID].addUpAmountPerLv *
+                (SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.statLv - 1)) 
+                + choiceDataDict[NGlobal.PatienceID].firstValue;
         }
 
         SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.statValue = num;
@@ -197,7 +202,10 @@ public class PlayerChoiceStatControl : MonoBehaviour
         }
         else
         {
-            num = (avoidInMomentomNum / choiceDataDict[NGlobal.MomentomID].upAmount) + choiceDataDict[NGlobal.MomentomID].firstValue;
+            num = (avoidInMomentomNum / choiceDataDict[NGlobal.MomentomID].upAmount +
+                choiceDataDict[NGlobal.MomentomID].addUpAmountPerLv *
+                (SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.statLv - 1))
+                + choiceDataDict[NGlobal.MomentomID].firstValue;
         }
 
         SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.statValue = num;
