@@ -147,6 +147,7 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
             if (!needMsg) return;
         }
 
+        absorptionRate = Mathf.Clamp(absorptionRate, 0f, 100f);
         absorptionDataQueue.Enqueue(new AbsorptionData(id, absorptionRate, assimilationRate, type));
     }
 

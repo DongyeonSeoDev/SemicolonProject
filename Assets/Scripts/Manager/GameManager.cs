@@ -229,7 +229,7 @@ public partial class GameManager : MonoSingleton<GameManager>
                 checkItrObjDic.Add(new Pair<string, InteractionObj>(key, ObjectManager.Instance.itrObjDic[key]));
             }
         });
-        testKeyInputActionDict.Add(KeyCode.F1, () =>
+        /*testKeyInputActionDict.Add(KeyCode.F1, () =>
         {
             BattleUIManager.Instance.InsertAbsorptionInfo(Enemy.EnemyType.Slime_01.ToString(), 100, 0, KillNoticeType.FAIL);
         });
@@ -248,7 +248,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         testKeyInputActionDict.Add(KeyCode.F5, () =>
         {
             BattleUIManager.Instance.InsertAbsorptionInfo(Enemy.EnemyType.Rat_02.ToString(), 0, 150, KillNoticeType.UNDERSTANDING);
-        });
+        });*/
 
 #endif
 
