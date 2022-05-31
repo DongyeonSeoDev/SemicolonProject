@@ -487,6 +487,7 @@ public class StageManager : MonoSingleton<StageManager>
                     break;
             }
 
+            SetEnemyManagerStageData(id);
 
             EventManager.TriggerEvent(Global.EnterNextMap);  //해당 방 입장 후에 필요한 이벤트들 처리
         }
@@ -713,5 +714,17 @@ public class StageManager : MonoSingleton<StageManager>
         GameManager.Instance.savedData.stageInfo.currentStageID = stageId;
         GameManager.Instance.savedData.stageInfo.passDoorDir = PassDir;
         startStageID = stageId;
+    }
+
+    private void SetEnemyManagerStageData(string stageId)
+    {
+        if (stageDataDictionary.ContainsKey(stageId))
+        {
+            Enemy.EnemyManager.SetCurrentStageData(stageDataDictionary[stageId]);
+        }
+        else
+        {
+            Enemy.EnemyManager.SetCurrentStageData(null);
+        }
     }
 }
