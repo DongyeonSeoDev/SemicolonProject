@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public struct ChoiceStatData
+public class ChoiceStatData
 {
-    public string id; // 스탯 기획 문서에 작성된 변수 명으로 작성한다.
+    public ushort id; // 스탯 기획 문서에 작성된 변수 명으로 작성한다.
     public string name; // UI에 뜰 한글 이름
     public string targetStat; // 이 ChocieStat에 의해 오르게 될 스탯의 Name 값
 
@@ -21,8 +21,8 @@ public class PlayerChoiceStatControl : MonoBehaviour
     [SerializeField]
     private List<ChoiceStatData> choiceDataList = new List<ChoiceStatData>();
 
-    private Dictionary<string, ChoiceStatData> choiceDataDict = new Dictionary<string, ChoiceStatData>();
-    public Dictionary<string, ChoiceStatData> ChoiceDataDict
+    private Dictionary<ushort, ChoiceStatData> choiceDataDict = new Dictionary<ushort, ChoiceStatData>();
+    public Dictionary<ushort, ChoiceStatData> ChoiceDataDict
     {
         get { return choiceDataDict; }
     }
@@ -71,9 +71,14 @@ public class PlayerChoiceStatControl : MonoBehaviour
     //}
     private void Start()
     {
-        foreach(var item in choiceDataList)
+        for(int i = 0; i < choiceDataList.Count; i++)
         {
-            choiceDataDict.Add(item.id.ToLower(), item);
+            choiceDataList[i].id = (ushort)(100 + i * 5);
+        }
+
+        foreach (var item in choiceDataList)
+        {
+            choiceDataDict.Add(item.id, item);
         }
     }
     private void OnEnable()
@@ -109,11 +114,11 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
         if(stat.isUnlock)
         {
-            num = (int)totalDamage / choiceDataDict["endurance"].upAmount + choiceDataDict["endurance"].firstValue;
+            num = (int)totalDamage / choiceDataDict[NGlobal.EnduranceID].upAmount + choiceDataDict[NGlobal.EnduranceID].firstValue;
         }
         else
         {
-            num = (int)totalDamage / choiceDataDict["endurance"].unlockStatValue;
+            num = (int)totalDamage / choiceDataDict[NGlobal.EnduranceID].unlockStatValue;
         }
 
         if (num > 0)
@@ -125,13 +130,13 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
                 UIManager.Instance.playerStatUI.StatUnlock(stat);
 
-                num = choiceDataDict["endurance"].firstValue;
+                num = choiceDataDict[NGlobal.EnduranceID].firstValue;
             }
 
             SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance.statValue = num;
             SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance.statLv = num;
 
-            SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxHp.statValue += choiceDataDict["endurance"].upTargetStatPerChoiceStat * (num - pasteEndurance);
+            SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxHp.statValue += choiceDataDict[NGlobal.EnduranceID].upTargetStatPerChoiceStat * (num - pasteEndurance);
         }
     }
     public void CheckPatience()
@@ -141,11 +146,11 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
         if (!SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.isUnlock)
         {
-            if (attackMissedNum >= choiceDataDict["patience"].unlockStatValue)
+            if (attackMissedNum >= choiceDataDict[NGlobal.PatienceID].unlockStatValue)
             {
                 // 처음 이 스탯이 생김
 
-                num = choiceDataDict["patience"].firstValue;
+                num = choiceDataDict[NGlobal.PatienceID].firstValue;
                 StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience;
                 stat.isUnlock = true;
 
@@ -156,14 +161,14 @@ public class PlayerChoiceStatControl : MonoBehaviour
         }
         else
         {
-            num = ((attackNum + attackMissedNum) / choiceDataDict["patience"].upAmount) + choiceDataDict["patience"].firstValue;
+            num = ((attackNum + attackMissedNum) / choiceDataDict[NGlobal.PatienceID].upAmount) + choiceDataDict[NGlobal.PatienceID].firstValue;
         }
 
         SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.statValue = num;
         SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.statLv = num;
 
-        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.minDamage.statValue += choiceDataDict["patience"].upTargetStatPerChoiceStat * (num- pastePatienceNum);
-        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxDamage.statValue += choiceDataDict["patience"].upTargetStatPerChoiceStat * (num - pastePatienceNum);
+        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.minDamage.statValue += choiceDataDict[NGlobal.PatienceID].upTargetStatPerChoiceStat * (num- pastePatienceNum);
+        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxDamage.statValue += choiceDataDict[NGlobal.PatienceID].upTargetStatPerChoiceStat * (num - pastePatienceNum);
     }
     private void AttackNumReset()
     {
@@ -178,11 +183,11 @@ public class PlayerChoiceStatControl : MonoBehaviour
         if(!SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.isUnlock)
         {
             if(PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(Enemy.EnemyType.Rat_02.ToString())
-                >= choiceDataDict["momentom"].unlockStatValue)
+                >= choiceDataDict[NGlobal.MomentomID].unlockStatValue)
             {
                 // 이 스탯이 처음 생김
-                Debug.Log("Momentom True Wireless Earbuds 2"); // 추진력 해금 체크용 코드 // 참고로 좋은 무선이어폰임 추천함
-                num = choiceDataDict["momentom"].firstValue;
+                Debug.Log("Momentom True Wireless Earbuds 3"); // 추진력 해금 체크용 코드 // 참고로 좋은 무선이어폰임 추천함
+                num = choiceDataDict[NGlobal.MomentomID].firstValue;
 
                 StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom;
                 stat.isUnlock = true;
@@ -192,7 +197,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
         }
         else
         {
-            num = (avoidInMomentomNum / choiceDataDict["momentom"].upAmount) + choiceDataDict["momentom"].firstValue;
+            num = (avoidInMomentomNum / choiceDataDict[NGlobal.MomentomID].upAmount) + choiceDataDict[NGlobal.MomentomID].firstValue;
         }
 
         SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.statValue = num;
@@ -203,12 +208,12 @@ public class PlayerChoiceStatControl : MonoBehaviour
     {
         if(!SlimeGameManager.Instance.Player.PlayerStat.choiceStat.frenzy.isUnlock && 
             PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(Enemy.EnemyType.Slime_03.ToString())
-                >= choiceDataDict["frenzy"].unlockStatValue)
+                >= choiceDataDict[NGlobal.FrenzyID].unlockStatValue)
         {
             StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.frenzy;
 
-            stat.statValue = choiceDataDict["frenzy"].firstValue;
-            stat.statLv = choiceDataDict["frenzy"].firstValue;
+            stat.statValue = choiceDataDict[NGlobal.FrenzyID].firstValue;
+            stat.statLv = choiceDataDict[NGlobal.FrenzyID].firstValue;
 
             stat.isUnlock = true;
 
@@ -220,12 +225,12 @@ public class PlayerChoiceStatControl : MonoBehaviour
     {
         if (!SlimeGameManager.Instance.Player.PlayerStat.choiceStat.reflection.isUnlock &&
             PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(Enemy.EnemyType.Slime_01.ToString())
-                >= choiceDataDict["reflection"].unlockStatValue)
+                >= choiceDataDict[NGlobal.ReflectionID].unlockStatValue)
         {
             StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.reflection;
 
-            stat.statValue = choiceDataDict["reflection"].firstValue;
-            stat.statLv = choiceDataDict["reflection"].firstValue;
+            stat.statValue = choiceDataDict[NGlobal.ReflectionID].firstValue;
+            stat.statLv = choiceDataDict[NGlobal.ReflectionID].firstValue;
 
             stat.isUnlock = true;
 
