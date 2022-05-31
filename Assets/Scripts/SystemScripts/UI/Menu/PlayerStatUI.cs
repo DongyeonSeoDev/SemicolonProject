@@ -291,9 +291,9 @@ public class PlayerStatUI : MonoBehaviour
         choiceStatDetailPanel.transform.DOScale(Vector3.one, 0.3f).SetUpdate(true);
 
         ChoiceStatSO data = GetStatSOData<ChoiceStatSO>(id);
-        choiceDetailAbil.text = "능력 : " + NGlobal.GetChoiceStatAbilExplanation(selectedChoiceBtnId);
-        choiceDetailGrowth.text = "성장방법 : " + data.growthWay;
-        choiceDetailAcq.text = "획득방법 : " + data.acquisitionWay;
+        choiceDetailAbil.text = "<b>능력 : </b>" + string.Format(data.detailAbilExplanation, 1);  //1은 임시 값이고 나중에 머지 후에 바꿀 것이다
+        choiceDetailGrowth.text = "<b>성장방법 : </b>" + data.growthWay;
+        choiceDetailAcq.text = "<b>획득방법 : </b>" + data.acquisitionWay;
 
         choiceStatDetailPanel.transform.SetParent(choiceStatInfoUIDic[id].transform);
     }
@@ -329,8 +329,14 @@ public class PlayerStatUI : MonoBehaviour
         statExpPair.first.fillAmount = 0f;
 
         UpdateAllChoiceStatUI();
+
+        
     }
 
+    public ChoiceStatData GetChoiceStatDataInPlayer(ushort id)
+    {
+        return new ChoiceStatData();
+    }
  
     public void Save()  //안쓰면 나중에 지울 것
     {

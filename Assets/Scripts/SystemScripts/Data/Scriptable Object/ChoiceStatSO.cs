@@ -6,6 +6,8 @@ public class ChoiceStatSO : StatSO
 {
     public string simpleAbilExplanation;
     [TextArea]
+    public string detailAbilExplanation;
+    [TextArea]
     public string growthWay;
     [TextArea]
     public string acquisitionWay;

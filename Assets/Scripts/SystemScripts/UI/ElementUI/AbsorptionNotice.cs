@@ -32,12 +32,11 @@ public class AbsorptionNotice : MonoBehaviour
     {
         currentAbpData = data;
         startPos = start;
+        this.target = target;
+        rightAnglePos = Global.GetRightAngleCoord(target, start, true);
         slotIdx = index;
 
         rt.anchoredPosition = start;
-        this.target = target;
-        rightAnglePos = Global.GetRightAngleCoord(target, start, true);
-
         cvsg.alpha = 0f;
         cvsg.DOFade(1f, 0.3f);
 

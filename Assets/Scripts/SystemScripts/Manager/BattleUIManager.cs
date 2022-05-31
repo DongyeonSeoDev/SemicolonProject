@@ -45,7 +45,8 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
     private Vector2 noticeDeletePos;
     private TweenCallback noticeEndTCB;
 
-    private Dictionary<string, List<Pair<float, bool>>> assimNoticeCheckDic = new Dictionary<string, List<Pair<float, bool>>>();
+    //private Dictionary<string, List<Pair<float, bool>>> assimNoticeCheckDic = new Dictionary<string, List<Pair<float, bool>>>();
+    private Dictionary<string, List<bool>> assimNoticeCheckDic = new Dictionary<string, List<bool>>();
     [SerializeField] private float assimNoticeInterval = 10f;
 
     #endregion
@@ -88,11 +89,11 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
         EventManager.StartListening("PlayerDead", () =>
         {
             int i;
-            foreach(List<Pair<float,bool>> assimChkList in assimNoticeCheckDic.Values)
+            foreach(List<bool> assimChkList in assimNoticeCheckDic.Values)
             {
                 for(i=0; i< assimChkList.Count; i++)
                 {
-                    assimChkList[i].second = false;
+                    assimChkList[i] = false;
                 }
             }
         });
@@ -103,10 +104,10 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
         float i, maxAssimRate = PlayerEnemyUnderstandingRateManager.Instance.MaxUnderstandingRate;
         foreach(Enemy.EnemyType type in Global.GetEnumArr<Enemy.EnemyType>())
         {
-            List<Pair<float, bool>> li = new List<Pair<float, bool>>();
+            List<bool> li = new List<bool>();
             for(i = assimNoticeInterval; i<= maxAssimRate; i+= assimNoticeInterval)
             {
-                li.Add(new Pair<float, bool>(i, false));
+                li.Add(false);
             }
             assimNoticeCheckDic.Add(type.ToString(), li);
         }
@@ -154,9 +155,9 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
             if (assimilationRate >= assimNoticeInterval)
             {
                 int index = (int)(assimilationRate / assimNoticeInterval) - 1;
-                if (!assimNoticeCheckDic[id][index].second)
+                if (!assimNoticeCheckDic[id][index])
                 {
-                    assimNoticeCheckDic[id][index].second = true;
+                    assimNoticeCheckDic[id][index] = true;
                     needMsg = true;
                 }
             }
