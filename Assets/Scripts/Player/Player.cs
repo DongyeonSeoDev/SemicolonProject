@@ -246,7 +246,7 @@ public class Player : MonoBehaviour
                 Vector2 dir1 = -(direction.normalized);
                 Vector2 dir2 = playerInput.LastBodySlapVector;
 
-                playerReflectionScript.DoReflection(bodySlapReflection, (dir1 + dir2).normalized);
+                playerReflectionScript.DoReflection(bodySlapReflection, (dir1 + dir2).normalized, damage);
             }
 
             return;
@@ -316,7 +316,7 @@ public class Player : MonoBehaviour
                     Vector2 dir1 = -(direction.normalized);
                     Vector2 dir2 = playerInput.LastBodySlapVector;
 
-                    playerReflectionScript.DoReflection(bodySlapReflection, (dir1 + dir2).normalized);
+                    playerReflectionScript.DoReflection(bodySlapReflection, (dir1 + dir2).normalized, damage);
                 }
             }
 

@@ -10,6 +10,8 @@ public class PlayerMomentomScript : MonoBehaviour
 
     [SerializeField]
     private float momentomTime = 3f;
+    [SerializeField]
+    private float momentomSpeed = 3f;
     private float momentomTimer = 0f;
 
     private bool momentomStarted = false;
@@ -43,7 +45,7 @@ public class PlayerMomentomScript : MonoBehaviour
 
         // 추진력 사용 이펙트 넣을것
         // 이전값 저장해서 추진력 끝나면 그 값 빼기
-        lastUpSpeed = 1;
+        lastUpSpeed = momentomSpeed;
         SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.speed.statValue += lastUpSpeed;
 
         Debug.Log("추진력!!!!!!!!" + lastUpSpeed + " 만큼 이속 상승");

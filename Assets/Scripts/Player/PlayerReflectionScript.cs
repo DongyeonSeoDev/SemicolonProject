@@ -12,7 +12,7 @@ public struct PlayerReflectionProjectileData
 }
 public class PlayerReflectionScript : MonoBehaviour
 {
-    public void DoReflection(GameObject projectile, float projectileSpeed, Vector2 direction, float shootPosOffset)
+    public void DoReflection(GameObject projectile, float projectileSpeed, Vector2 direction, float shootPosOffset, float projectileDamage)
     {
         GameObject temp = null;
         bool findInDic = false;
@@ -29,13 +29,13 @@ public class PlayerReflectionScript : MonoBehaviour
         }
 
         temp.transform.position = (Vector2)SlimeGameManager.Instance.CurrentPlayerBody.transform.position + (direction * shootPosOffset);
-        temp.GetComponent<PlayerProjectile>().OnSpawn(direction, projectileSpeed);
+        temp.GetComponent<PlayerProjectile>().OnSpawn(direction, projectileSpeed, projectileDamage);
 
         SoundManager.Instance.PlaySoundBox("SlimeSkill0");
         EventManager.TriggerEvent("PlayerShoot");
     }
 
-    public void DoReflection(PlayerReflectionProjectileData projectileData, Vector2 direction)
+    public void DoReflection(PlayerReflectionProjectileData projectileData, Vector2 direction, float projectileDamage)
     {
         GameObject temp = null;
         bool findInDic = false;
@@ -52,7 +52,7 @@ public class PlayerReflectionScript : MonoBehaviour
         }
 
         temp.transform.position = (Vector2)SlimeGameManager.Instance.CurrentPlayerBody.transform.position + (direction * projectileData.shootPosOffset);
-        temp.GetComponent<PlayerProjectile>().OnSpawn(direction, projectileData.projectileSpeed);
+        temp.GetComponent<PlayerProjectile>().OnSpawn(direction, projectileData.projectileSpeed, projectileDamage);
 
         SoundManager.Instance.PlaySoundBox("SlimeSkill0");
         EventManager.TriggerEvent("PlayerShoot");
