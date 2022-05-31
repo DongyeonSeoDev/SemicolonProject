@@ -6,7 +6,7 @@ using UnityEngine;
 public class SetStageDataEditor : Editor
 {
     public static string getStagePath = Path.Combine("Stage", "StagePrefab", "Stage1");
-    public static string stageSavePath = Path.Combine(Application.dataPath, "Resources", "Enemy", "StageData", "Stage1Data");
+    public static string stageSavePath = Path.Combine(Application.dataPath, "Resources", "Enemy", "StageData", "Stage1Data.txt");
 
     [MenuItem("EnemyWindow/SetStageData")]
     public static void Click()

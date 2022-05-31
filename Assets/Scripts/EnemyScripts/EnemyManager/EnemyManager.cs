@@ -49,6 +49,8 @@ namespace Enemy
 
         public Dictionary<string, List<Enemy>> enemyDictionary = new Dictionary<string, List<Enemy>>();
 
+        private static StageData currentStageData = null;
+
         private static GameObject player;
         public static GameObject Player
         {
@@ -212,5 +214,8 @@ namespace Enemy
                 StageManager.Instance.NextEnemy();
             }
         }
+
+        public static void SetCurrentStageData(StageData stageData) => currentStageData = stageData;
+        public static bool IsPass(int x, int y) => FindPath.IsPass(currentStageData, x, y);
     }
 }

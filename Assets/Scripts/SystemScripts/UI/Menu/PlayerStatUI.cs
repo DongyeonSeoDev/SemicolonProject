@@ -9,6 +9,7 @@ public class PlayerStatUI : MonoBehaviour
     public Stat PlayerStat => playerStat;
 
     public Pair<Image,Text> statExpPair; // 1: 스탯포인트 경험치 게이지바, 2: 가지고 있는 스탯포인트 텍스트
+    public Text statExpText;  // 스탯 포인트 경험치 텍스트
     public Pair<GameObject, Transform> statInfoUIPair, choiceStatInfoUIPair;  //고정 스탯 UI 프리팹과 부모, 선택스탯 UI 프리팹과 부모
     public GameObject invisibleChoiceStatUIPrefab;
 
@@ -115,6 +116,8 @@ public class PlayerStatUI : MonoBehaviour
         choiceStatDic.Add(NGlobal.PatienceID, playerStat.choiceStat.patience);
         choiceStatDic.Add(NGlobal.MomentomID, playerStat.choiceStat.momentom);
         choiceStatDic.Add(NGlobal.EnduranceID, playerStat.choiceStat.endurance);
+        choiceStatDic.Add(NGlobal.FrenzyID, playerStat.choiceStat.frenzy);
+        choiceStatDic.Add(NGlobal.ReflectionID, playerStat.choiceStat.reflection);
 
         //선택 스탯 UI 생성
         foreach(ushort key in choiceStatDic.Keys)
@@ -291,7 +294,8 @@ public class PlayerStatUI : MonoBehaviour
         choiceStatDetailPanel.transform.DOScale(Vector3.one, 0.3f).SetUpdate(true);
 
         ChoiceStatSO data = GetStatSOData<ChoiceStatSO>(id);
-        choiceDetailAbil.text = "<b>능력 : </b>" + string.Format(data.detailAbilExplanation, 1);  //1은 임시 값이고 나중에 머지 후에 바꿀 것이다
+        choiceDetailAbil.text = "<b>능력 : </b>" + string.Format(data.detailAbilExplanation, 
+            Global.CurrentPlayer.GetComponent<PlayerChoiceStatControl>().ChoiceDataDict[selectedChoiceBtnId].upTargetStatPerChoiceStat);
         choiceDetailGrowth.text = "<b>성장방법 : </b>" + data.growthWay;
         choiceDetailAcq.text = "<b>획득방법 : </b>" + data.acquisitionWay;
 
@@ -327,6 +331,7 @@ public class PlayerStatUI : MonoBehaviour
         //UpdateStatExp(false);
         UpdateCurStatPoint(false);
         statExpPair.first.fillAmount = 0f;
+        statExpText.text = string.Format("{0} / {1}", playerStat.currentExp, playerStat.maxExp);
 
         UpdateAllChoiceStatUI();
 

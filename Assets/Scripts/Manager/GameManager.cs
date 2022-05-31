@@ -247,9 +247,6 @@ public partial class GameManager : MonoSingleton<GameManager>
         StoredData.SetGameObjectKey("Slime Follow Obj", slimeFollowObj.gameObject);
 
         //WDUtil.PrintStructSize(typeof(StageFork));
-
-        string s = "test test 2 {0} ff {1}ffccccc";
-        Debug.Log(string.Format(s, 6.7, 5.5));
     }
 
     private void Update()
