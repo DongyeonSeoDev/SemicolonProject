@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System;
 using Water;
 using FkTweening;
+using System.IO;
 
 public class StageManager : MonoSingleton<StageManager>
 {
@@ -62,6 +63,10 @@ public class StageManager : MonoSingleton<StageManager>
     private string CurrentMonstersOrderID => currentStageData.stageMonsterBundleCount < currentStageMonsterBundleOrder ? string.Empty : currentStageData.stageMonsterBundleID[currentStageMonsterBundleOrder - 1];
 
     private Dictionary<int, List<RandomRoomType>> randomZoneTypeListDic = new Dictionary<int, List<RandomRoomType>>(); //랜덤 구역에서 나올 구역 타입들을 미리 넣어놓음
+
+    private Dictionary<string, StageData> stageDataDictionary = new Dictionary<string, StageData>();
+    private string stageDataPath = Path.Combine("Enemy", "StageData", "Stage1Data");
+
     //private int prevRandRoomType = -1;  // 이전 랜덤 구역의 타입
 
     //public bool IsLastStage { get; set; } 
@@ -83,6 +88,14 @@ public class StageManager : MonoSingleton<StageManager>
         {
             idToStageFloorDict.Add(data.id, data);
             data.SetStageDic();
+        }
+
+        string jsonData = Resources.Load(stageDataPath).ToString();
+        var stageData = JsonUtility.FromJson<JsonParse<StageData>>(jsonData);
+
+        for (int i = 0; i < stageData.jsonData.Count; i++)
+        {
+            stageDataDictionary.Add(stageData.jsonData[i].stageName, stageData.jsonData[i]);
         }
 
         int cnt = Global.EnumCount<AreaType>();
