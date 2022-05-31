@@ -239,6 +239,8 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
             {
                 //EventManager.TriggerEvent("TimePause");
                 UIManager.Instance.OnUIInteract(UIType.CHANGEABLEMOBLIST, true);
+                MonsterCollection.Instance.AddBody(objId);
+                return;
             }
             MonsterCollection.Instance.AddSavedBody(objId);
             MonsterCollection.Instance.AddBody(objId);

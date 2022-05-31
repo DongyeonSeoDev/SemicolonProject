@@ -25,6 +25,10 @@ public class ChangeBodySlot : MonoBehaviour  //클래스명 뭐라할지 애매하네
                 {
                     PlayerEnemyUnderstandingRateManager.Instance.SetMountObj(MonsterCollection.Instance.IDToSave, SlotNumber - 1);
                 }
+                else
+                {
+                    PlayerEnemyUnderstandingRateManager.Instance.SetDrainProbabilityDict(MonsterCollection.Instance.IDToSave, 0);
+                }
          
                 UIManager.Instance.OnUIInteract(UIType.CHANGEABLEMOBLIST, true);
                 TimeManager.TimeResume();

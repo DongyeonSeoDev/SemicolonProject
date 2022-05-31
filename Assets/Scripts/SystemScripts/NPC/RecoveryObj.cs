@@ -9,6 +9,7 @@ public class RecoveryObj : InteractionObj
 {
     [SerializeField] private Light2D recoveryLight;
     private List<Action> recoveryActions = new List<Action>();
+    private List<Func<bool>> iconActiveConditions = new List<Func<bool>>();
     //public FakeSpriteOutline fsOut;
     private OutlineCtrl outlineCtrl;
 
@@ -22,6 +23,12 @@ public class RecoveryObj : InteractionObj
 
     private void ResetActionList()
     {
+        if(iconActiveConditions.Count == 0)
+        {
+            iconActiveConditions.Add(() => !StateManager.Instance.IsPlayerFullHP);
+            iconActiveConditions.Add(() => !StateManager.Instance.IsPlayerNoImpr);
+        }
+
         recoveryActions.Clear();  //초기화하는 이유는 매개변수로 List<Action>을 전달하고 그 함수 내에서 또 어떤 함수를 추가하게 되는데 Clear를 안하면 그 추가된 함수가 또 추가되고 이게 쌓이게 된다.
 
         recoveryActions.Add(() => RecoveryPlayerHP(30));
@@ -77,7 +84,7 @@ public class RecoveryObj : InteractionObj
 
         ResetActionList();  
 
-        UIManager.Instance.RequestSelectionWindow("이곳은 회복구역입니다.\n어떤 효과를 받으시겠습니까?", recoveryActions, new List<string>() { "AscHp", "AntiBuffRm" }, true, null, true);
+        UIManager.Instance.RequestSelectionWindow("이곳은 회복구역입니다.\n어떤 효과를 받으시겠습니까?", recoveryActions, new List<string>() { "AscHp", "AntiBuffRm" }, true, iconActiveConditions, true);
         canInteract = false;
     }
 

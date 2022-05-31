@@ -12,13 +12,16 @@ public class AbsorptionData
     public float absorptionRate;
     public float assimilationRate;
 
+    public bool absorptionSuccess;  //흡수 성공?
+
     //public string resMsg;
 
-    public AbsorptionData(string id , float absorption , float assimilation)
+    public AbsorptionData(string id , float absorption , float assimilation, bool absorptionSuc)
     {
         mobId = id;
         absorptionRate = absorption;
         assimilationRate = assimilation;
+        absorptionSuccess = absorptionSuc;
         //resMsg = msg;
     }
 }
@@ -147,9 +150,9 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
         }
     }
 
-    public void InsertAbsorptionInfo(string id, float absorptionRate, float assimilationRate)  //새로 흡수율 알림 UI를 보여줄 정보를 큐에 넣어줌
+    public void InsertAbsorptionInfo(string id, float absorptionRate, float assimilationRate, bool drainSuc = false)  //새로 흡수율 알림 UI를 보여줄 정보를 큐에 넣어줌
     {
-        if(assimilationRate > 0f && assimilationRate <= PlayerEnemyUnderstandingRateManager.Instance.MaxUnderstandingRate)
+        if( HasBody(id) && assimilationRate <= PlayerEnemyUnderstandingRateManager.Instance.MaxUnderstandingRate)
         {
             bool needMsg = false;
             if (assimilationRate >= assimNoticeInterval)
@@ -165,7 +168,7 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
             if (!needMsg) return;
         }
 
-        absorptionDataQueue.Enqueue(new AbsorptionData(id, absorptionRate, assimilationRate));
+        absorptionDataQueue.Enqueue(new AbsorptionData(id, absorptionRate, assimilationRate, drainSuc));
     }
 
     public void InsertEndedNotice(AbsorptionNotice ui)  //흡수율 표시창에서 이제 알림을 사라지게 할 요소를 큐에 넣어줌

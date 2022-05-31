@@ -13,6 +13,8 @@ public class PlayerStatUI : MonoBehaviour
     public Pair<GameObject, Transform> statInfoUIPair, choiceStatInfoUIPair;  //고정 스탯 UI 프리팹과 부모, 선택스탯 UI 프리팹과 부모
     public GameObject invisibleChoiceStatUIPrefab;
 
+    private bool isFastChangingExpTxt = false;  //스탯창 열고 스탯포인트 경험치 텍스트가 빠르게 현재 경험치까지 오르는 중인지 (그냥 효과)
+
     private Dictionary<ushort, StatInfoElement> statInfoUIDic = new Dictionary<ushort, StatInfoElement>();  //고정 스탯 UI옵젝들 담음
     private Dictionary<ushort, ChoiceStatInfoElement> choiceStatInfoUIDic = new Dictionary<ushort, ChoiceStatInfoElement>(); //선택 스탯 UI 옵젝들 담음
     public Dictionary<ushort, Pair<StatElement,StatElement>> eternalStatDic = new Dictionary<ushort, Pair<StatElement, StatElement>>(); // 1: 디폴트, 2: 추가
@@ -137,6 +139,14 @@ public class PlayerStatUI : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if(isFastChangingExpTxt)
+        {
+            statExpText.text = string.Format("{0} / {1}", (int)(statExpPair.first.fillAmount * playerStat.maxExp), playerStat.maxExp);
+        }
+    }
+
     public float GetCurrentPlayerStat(ushort id)  //해당 스탯의 최종 수치를 반환  
     {
         if(eternalStatDic.ContainsKey(id))
@@ -166,8 +176,12 @@ public class PlayerStatUI : MonoBehaviour
         float rate = playerStat.currentExp / playerStat.maxExp;
         if(tweening)
         {
-            
-            statExpPair.first.DOFillAmount(rate, 0.4f).SetUpdate(true);
+            isFastChangingExpTxt = true;
+            statExpPair.first.DOFillAmount(rate, 0.4f).SetUpdate(true).OnComplete(()=>
+            {
+                isFastChangingExpTxt = false;
+                statExpText.text = string.Format("{0} / {1}", playerStat.currentExp, playerStat.maxExp);
+            });
         }
         else
         {
@@ -333,7 +347,8 @@ public class PlayerStatUI : MonoBehaviour
         //UpdateStatExp(false);
         UpdateCurStatPoint(false);
         statExpPair.first.fillAmount = 0f;
-        statExpText.text = string.Format("{0} / {1}", playerStat.currentExp, playerStat.maxExp);
+        statExpText.text = string.Concat("0 / ", playerStat.maxExp);
+        //statExpText.text = string.Format("{0} / {1}", playerStat.currentExp, playerStat.maxExp);
 
         UpdateAllChoiceStatUI();
 
