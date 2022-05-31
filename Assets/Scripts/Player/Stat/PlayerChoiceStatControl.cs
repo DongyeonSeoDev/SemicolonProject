@@ -14,7 +14,6 @@ public class ChoiceStatData
     public int unlockStatValue; // 이 스탯을 휙듣하기 위한 해당 값의 양
 
     public int upAmount; // 특정 값이 upAmount이상일 때 마다 스탯 수치 상승
-    public int addUpAmountPerLv; // 레벨 1당 upAmount값이 오르는 값
     public float upTargetStatPerChoiceStat; // 이 ChoiceStat의 값 1 당 오르는 대상 스탯의 값
 
 }
@@ -27,6 +26,11 @@ public class PlayerChoiceStatControl : MonoBehaviour
     public Dictionary<ushort, ChoiceStatData> ChoiceDataDict
     {
         get { return choiceDataDict; }
+    }
+    private Dictionary<ushort, ChoiceStatData> originChoiceDataDict = new Dictionary<ushort, ChoiceStatData>();
+    public Dictionary<ushort, ChoiceStatData> OriginChoiceDataDict
+    {
+        get { return originChoiceDataDict; }
     }
 
     [SerializeField]
@@ -81,6 +85,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
         foreach (var item in choiceDataList)
         {
             choiceDataDict.Add(item.id, item);
+            originChoiceDataDict.Add(item.id, item);
         }
     }
     private void OnEnable()
@@ -163,17 +168,23 @@ public class PlayerChoiceStatControl : MonoBehaviour
         }
         else
         {
-            num = ((attackNum + attackMissedNum) / choiceDataDict[NGlobal.PatienceID].upAmount +
-                choiceDataDict[NGlobal.PatienceID].addUpAmountPerLv *
-                (SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.statLv - 1)) 
-                + choiceDataDict[NGlobal.PatienceID].firstValue;
+            num = ((attackNum + attackMissedNum) / (choiceDataDict[NGlobal.PatienceID].upAmount *
+                (SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.statLv)));
         }
 
-        SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.statValue = num;
-        SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.statLv = num;
+        if (num != 0)
+        {
+            SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.statValue += num;
+            SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.statLv += num;
 
-        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.minDamage.statValue += choiceDataDict[NGlobal.PatienceID].upTargetStatPerChoiceStat * (num- pastePatienceNum);
-        SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxDamage.statValue += choiceDataDict[NGlobal.PatienceID].upTargetStatPerChoiceStat * (num - pastePatienceNum);
+            attackNum = 0;
+            attackMissedNum = 0;
+
+            choiceDataDict[NGlobal.PatienceID].upAmount = originChoiceDataDict[NGlobal.PatienceID].upAmount * num;
+
+            SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.minDamage.statValue += choiceDataDict[NGlobal.PatienceID].upTargetStatPerChoiceStat * (num - pastePatienceNum);
+            SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxDamage.statValue += choiceDataDict[NGlobal.PatienceID].upTargetStatPerChoiceStat * (num - pastePatienceNum);
+        }
     }
     private void AttackNumReset()
     {
@@ -202,14 +213,18 @@ public class PlayerChoiceStatControl : MonoBehaviour
         }
         else
         {
-            num = (avoidInMomentomNum / choiceDataDict[NGlobal.MomentomID].upAmount +
-                choiceDataDict[NGlobal.MomentomID].addUpAmountPerLv *
-                (SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.statLv - 1))
-                + choiceDataDict[NGlobal.MomentomID].firstValue;
+            num = (avoidInMomentomNum / (choiceDataDict[NGlobal.MomentomID].upAmount));
         }
 
-        SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.statValue = num;
-        SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.statLv = num;
+        if (0 != num)
+        {
+            SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.statValue += num;
+            SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.statLv += num;
+
+            avoidInMomentomNum = 0;
+
+            choiceDataDict[NGlobal.MomentomID].upAmount += originChoiceDataDict[NGlobal.MomentomID].upAmount * num;
+        }
     }
 
     public void CheckFrenzy()

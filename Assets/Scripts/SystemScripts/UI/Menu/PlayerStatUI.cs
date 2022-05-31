@@ -58,10 +58,12 @@ public class PlayerStatUI : MonoBehaviour
     private void Awake()
     {
         statDataDic = new Dictionary<ushort, StatSO>(); 
+
         foreach(StatSO so in Resources.LoadAll<StatSO>("System/StatData/"))
         {
             statDataDic.Add(so.statId, so);
         }
+
         choiceDetailPar = choiceStatDetailPanel.transform.parent;
         choiceDetailStartPos = choiceStatDetailPanel.GetComponent<RectTransform>().anchoredPosition;
     }
