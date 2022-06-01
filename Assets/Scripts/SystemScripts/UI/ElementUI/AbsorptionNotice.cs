@@ -21,7 +21,7 @@ public class AbsorptionNotice : MonoBehaviour
 
     private bool isTweening;  //게이지 차고 있냐
 
-    private int slotIdx;
+    //private int slotIdx;
 
     private KillNoticeType killNoticeType;
 
@@ -31,13 +31,13 @@ public class AbsorptionNotice : MonoBehaviour
         cvsg = GetComponent<CanvasGroup>();
     }
 
-    public void ShowNotice(Vector2 start, Vector2 target, AbsorptionData data, int index)
+    public void ShowNotice(Vector2 start, Vector2 target, AbsorptionData data)
     {
         currentAbpData = data;
         startPos = start;
         this.target = target;
         rightAnglePos = Global.GetRightAngleCoord(target, start, true);
-        slotIdx = index;
+        //slotIdx = index;
 
         rt.anchoredPosition = start;
         cvsg.alpha = 0f;

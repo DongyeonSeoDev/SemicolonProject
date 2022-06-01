@@ -34,7 +34,7 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
     #endregion
 
     //흡수율 표시창에서 비어있는 다음 칸과 인덱스 가져옴
-    public (int, RectTransform) NextEmptyNoticeSlot
+    public RectTransform NextEmptyNoticeSlot
     {
         get
         {
@@ -43,10 +43,10 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
                 if (!absorptionNoticeRTList[i].gameObject.activeSelf)
                 {
                     absorptionNoticeRTList[i].gameObject.SetActive(true);
-                    return (i, absorptionNoticeRTList[i]);
+                    return absorptionNoticeRTList[i];
                 }
             }
-            return (-1, null);
+            return null;
         }
     }
 
@@ -103,10 +103,10 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
             if(absorptionDataQueue.Count > 0 && !absorptionNoticeRTList[absorptionNoticeRTList.Count - 1].gameObject.activeSelf && !isMoving)
             {
                 isMoving = true;
-                (int, RectTransform) slot = NextEmptyNoticeSlot;
+                RectTransform slot = NextEmptyNoticeSlot;
                 AbsorptionNotice an = PoolManager.GetItem<AbsorptionNotice>("ApsorptionNotice");
                 curNoticeList.Add(an);
-                an.ShowNotice(slot.Item2.anchoredPosition + abspNoticeStartOffset, slot.Item2.anchoredPosition, absorptionDataQueue.Dequeue(), slot.Item1);
+                an.ShowNotice(slot.anchoredPosition + abspNoticeStartOffset, slot.anchoredPosition, absorptionDataQueue.Dequeue());
             }
         }
 
@@ -156,12 +156,12 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
         endedAbspNoticeQueue.Enqueue(ui);
     }
 
-    public bool HasBody(string id)  //어떤 몬스터의 몸을 가지고 있는 상태인가? (변신할 수 있는 몹 슬롯에 넣어져있는지)
+    /*public bool HasBody(string id)  //어떤 몬스터의 몸을 가지고 있는 상태인가? (변신할 수 있는 몹 슬롯에 넣어져있는지)
     {
         foreach(string key in PlayerEnemyUnderstandingRateManager.Instance.MountedObjList)
         {
             if (id == key) return true;
         }
         return false;
-    }
+    }*/
 }
