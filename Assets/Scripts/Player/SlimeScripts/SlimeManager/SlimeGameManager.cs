@@ -185,6 +185,11 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
         bool found = false;
 
+        if(pasteBodyAdditionalStat != null)
+        {
+            Debug.Log(pasteBodyAdditionalStat.minDamage.statValue);
+        }
+
         #region 원래의 모습으로 변신
         if (bodyId == "origin")
         {
