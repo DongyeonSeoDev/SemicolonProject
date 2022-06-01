@@ -20,7 +20,7 @@ namespace Enemy
             enemyData.hp = 30;
             enemyData.playerAnimationTime = 1f;
 
-            enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed, enemyData.isMinAttackPlayerDistance);
+            enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed);
             enemyAttackCommand = new EnemyAddForceCommand(rb, this, enemyData.rushForce, positionCheckData);
             enemyData.enemySpriteRotateCommand = new EnemySpriteFlipCommand(enemyData);
         }

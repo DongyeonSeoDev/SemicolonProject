@@ -216,6 +216,13 @@ namespace Enemy
         }
 
         public static void SetCurrentStageData(StageData stageData) => currentStageData = stageData;
-        public static bool IsPass(int x, int y) => FindPath.IsPass(currentStageData, x, y);
+
+        public static Vector2Int NextPosition(Vector2 startPosition, Vector2 endPosition)
+        {
+            Vector2Int start = new Vector2Int(Mathf.RoundToInt(startPosition.x), Mathf.RoundToInt(startPosition.y));
+            Vector2Int end = new Vector2Int(Mathf.RoundToInt(endPosition.x), Mathf.RoundToInt(endPosition.y));
+
+            return FindPath.NextPosition(currentStageData, start, end);
+        }
     }
 }
