@@ -115,7 +115,7 @@ public static class FindPath
             count++;
             currentAStarData.f = MAX_F_VALUE;
 
-            if (currentPosition == endPosition)
+            if (Vector2Int.Distance(currentPosition, endPosition) < 1.5f)
             {
                 while (positionList.Count > 1)
                 {
