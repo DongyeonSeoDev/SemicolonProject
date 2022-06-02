@@ -147,7 +147,7 @@ namespace Enemy
                 {
                     PlayerProjectile playerBullet = collision.gameObject.GetComponent<PlayerProjectile>();
 
-                    if (playerBullet != null)
+                    if (playerBullet != null || playerBullet.MoveVec != Vector2.zero)
                     {
                         var enemyBullet = EnemyPoolManager.Instance.GetPoolObject(Type.Bullet, playerBullet.transform.position).GetComponent<EnemyBullet>();
                         enemyBullet.Init(EnemyController.AI, -playerBullet.MoveVec, 0f, Color.magenta);
@@ -182,6 +182,7 @@ namespace Enemy
 
                     if (enemyBullet != null && !enemyBullet.isDamage && !enemyBullet.isDamage)
                     {
+                        enemyBullet.isReflection = true;
                         enemyBullet.RemoveBullet();
                         var playerBullet = EnemyPoolManager.Instance.GetPoolObject(Type.Bullet, enemyBullet.transform.position).GetComponent<EnemyBullet>();
                         playerBullet.Init(EnemyController.PLAYER, -enemyBullet.targetDirection, enemyBullet.attackDamage, Color.green, this.enemy);

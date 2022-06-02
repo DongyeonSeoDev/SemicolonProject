@@ -17,6 +17,7 @@ namespace Enemy
         private bool isStop = false;
         public bool isDelete = false;
         public bool isDamage = false;
+        public bool isReflection = false;
 
         public Vector2 limitMaxPosition;
         public Vector2 limitMinPosition;
@@ -96,7 +97,7 @@ namespace Enemy
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (isDelete || isDamage)
+            if (isDelete || isDamage || isReflection)
             {
                 return;
             }
@@ -172,6 +173,7 @@ namespace Enemy
         public void RemoveBullet()
         {
             gameObject.SetActive(false);
+            isReflection = false;
             StopAllCoroutines();
             ResetBullet();
         }
