@@ -10,6 +10,8 @@ namespace Enemy
         private EnemyCommand enemyAttackCommand;
         private EnemyCommand enemyAttackPlayerCommand;
 
+        public Color playerAttackColor;
+
         protected override void OnEnable()
         {
             base.OnEnable();
@@ -30,7 +32,7 @@ namespace Enemy
             enemyData.enemyMoveCommand = new EnemyLongDistanceFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed, enemyData.isAttackPlayerDistance - 2f, moveDelay);
             enemyData.enemySpriteRotateCommand = new EnemySpriteRotateCommand(enemyData);
 
-            enemyAttackPlayerCommand = new PlayerlongRangeAttackCommand(transform, shotPosition, this, Type.Arrow, enemyData.attackPower);
+            enemyAttackPlayerCommand = new PlayerlongRangeAttackCommand(transform, shotPosition, this, Type.Arrow, enemyData.attackPower, playerAttackColor);
             enemyAttackCommand = new EnemylongRangeAttackCommand(this, enemyData.enemyObject.transform, Type.Arrow, shotPosition, enemyData.attackPower);
         }
 

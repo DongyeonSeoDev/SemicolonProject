@@ -180,6 +180,7 @@ MonoBehaviour:
   addExperience: 50
   shotPosition: {fileID: 7183627689166967377}
   moveDelay: 1
+  playerAttackColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &1075523691416201837
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,9 +1,13 @@
+using UnityEngine;
+
 namespace Enemy
 {
     public class Enemy2 : Enemy // 두번째 적
     {
         private EnemyCommand enemyAttackCommand;
         private EnemyCommand enemyAttackPlayerCommand;
+
+        public Color playerAttackColor;
 
         protected override void OnEnable()
         {
@@ -20,7 +24,7 @@ namespace Enemy
 
             enemyData.enemyMoveCommand = new EnemyRandomMoveCommand(enemyData, positionCheckData); // MoveCommand 생성
             enemyData.enemySpriteRotateCommand = new EnemySpriteRotateCommand(enemyData);
-            enemyAttackPlayerCommand = new PlayerlongRangeAttackCommand(transform, transform, this, Type.Bullet, enemyData.attackPower);
+            enemyAttackPlayerCommand = new PlayerlongRangeAttackCommand(transform, transform, this, Type.Bullet, enemyData.attackPower, playerAttackColor);
             enemyAttackCommand = new EnemylongRangeAttackCommand(this, enemyData.enemyObject.transform, Type.Bullet, transform, enemyData.attackPower);
         }
 

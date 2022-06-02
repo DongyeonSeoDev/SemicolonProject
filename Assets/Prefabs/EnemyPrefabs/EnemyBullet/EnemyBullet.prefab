@@ -148,6 +148,9 @@ MonoBehaviour:
   count: 10
   speed: 5
   addAngle: -90
+  removeBulletTime: 0
+  fadeTime: 0
   isBulletEffect: 1
+  isRemainBullet: 0
   limitMaxPosition: {x: 100, y: 100}
   limitMinPosition: {x: -100, y: -100}
