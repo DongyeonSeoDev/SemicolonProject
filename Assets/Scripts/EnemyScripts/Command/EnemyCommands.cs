@@ -477,7 +477,7 @@ namespace Enemy
         {
             EnemyPoolData spawnObject = EnemyPoolManager.Instance.GetPoolObject(objectType, shotTransform.position);
 
-            spawnObject.GetComponent<EnemyBullet>().Init(enemy.GetEnemyController(), (EnemyManager.Player.transform.position - enemyTransform.position).normalized, attackDamage, null, color);
+            spawnObject.GetComponent<EnemyBullet>().Init(enemy.GetEnemyController(), (EnemyManager.Player.transform.position - enemyTransform.position).normalized, attackDamage, Color.white, null);
         }
     }
 
@@ -489,11 +489,11 @@ namespace Enemy
         private Enemy enemy;
 
         private Type objectType;
-        private Color? color;
+        private Color color;
 
         private float attackDamage;
 
-        public PlayerlongRangeAttackCommand(Transform transform, Transform shotTransform, Enemy enemy, Type objectType, float attackDamage, Color? color = null)
+        public PlayerlongRangeAttackCommand(Transform transform, Transform shotTransform, Enemy enemy, Type objectType, float attackDamage, Color color)
         {
             playerInput = SlimeGameManager.Instance.Player.GetComponent<PlayerInput>();
 
@@ -509,7 +509,7 @@ namespace Enemy
         {
             EnemyPoolData spawnObject = EnemyPoolManager.Instance.GetPoolObject(objectType, shotTransform.position);
 
-            spawnObject.GetComponent<EnemyBullet>().Init(enemy.GetEnemyController(), (playerInput.AttackMousePosition - (Vector2)transform.position).normalized, attackDamage, enemy, color);
+            spawnObject.GetComponent<EnemyBullet>().Init(enemy.GetEnemyController(), (playerInput.AttackMousePosition - (Vector2)transform.position).normalized, attackDamage, color, enemy);
         }
     }
 

@@ -20,6 +20,7 @@ namespace Enemy
 
         private bool isAttackInit = false;
         private bool isUseKnockBack = false;
+        private bool isParrying = false;
         private float attackPower = 0;
 
         public Action<EnemyController> enemyControllerChange = null;
@@ -64,6 +65,7 @@ namespace Enemy
             enemy = GetComponentInParent<Enemy>();
 
             isUseKnockBack = enemy.GetIsKnockBack();
+            isParrying = enemy.GetIsParrying();
             positionCheckData = enemy.positionCheckData;
             eEnemyController = enemy.GetEnemyController();
             attackPower = enemy.GetEnemyAttackPower() + addAttackValue;
@@ -87,7 +89,8 @@ namespace Enemy
 
                 Init();
             }
-            else if (attackObject.Find(x => x == collision.gameObject) != null)
+            
+            if (attackObject.Find(x => x == collision.gameObject) != null)
             {
                 return;
             }
@@ -101,40 +104,56 @@ namespace Enemy
                 positionCheckData.oppositeDirectionWall = (collision.transform.position - transform.position).normalized;
             }
 
-            if (eEnemyController == EnemyController.AI && collision.CompareTag("Player"))
+            if (eEnemyController == EnemyController.AI)
             {
-                attackObject.Add(collision.gameObject);
-
-                var enemy = collision.GetComponent<Enemy>();
-                var hit = Physics2D.Raycast(transform.position, (collision.transform.position - transform.position).normalized, Vector2.Distance(collision.transform.position, transform.position) + 1f, EnemyManager.Instance.whatIsPlayer);
-
-                if (isUseKnockBack)
+                if (collision.CompareTag("Player"))
                 {
-                    SlimeGameManager.Instance.Player.GetDamage(gameObject, UnityEngine.Random.Range(attackPower - 5, attackPower + 6), hit.point, positionCheckData.position, new Vector3(1.5f, 1.5f, 1.5f));
+                    attackObject.Add(collision.gameObject);
 
-                    enemyRigidbody.velocity = Vector2.zero;
-                    enemyRigidbody.angularVelocity = 0f;
+                    var enemy = collision.GetComponent<Enemy>();
+                    var hit = Physics2D.Raycast(transform.position, (collision.transform.position - transform.position).normalized, Vector2.Distance(collision.transform.position, transform.position) + 1f, EnemyManager.Instance.whatIsPlayer);
 
-                    if (enemy != null)
+                    if (isUseKnockBack)
                     {
-                        enemy.AttackInit(0, true, true, positionCheckData.position, 30f, 0.7f);
+                        SlimeGameManager.Instance.Player.GetDamage(gameObject, UnityEngine.Random.Range(attackPower - 5, attackPower + 6), hit.point, positionCheckData.position, new Vector3(1.5f, 1.5f, 1.5f));
+
+                        enemyRigidbody.velocity = Vector2.zero;
+                        enemyRigidbody.angularVelocity = 0f;
+
+                        if (enemy != null)
+                        {
+                            enemy.AttackInit(0, true, true, positionCheckData.position, 30f, 0.7f);
+                        }
+                        else
+                        {
+                            playerStatusEffect.KnockBack(positionCheckData.position, 50f, 0.1f);
+                            playerStatusEffect.Sturn(stunTime);
+                        }
                     }
                     else
                     {
-                        playerStatusEffect.KnockBack(positionCheckData.position, 50f, 0.1f);
-                        playerStatusEffect.Sturn(stunTime);
+                        if (enemy != null)
+                        {
+                            SlimeGameManager.Instance.Player.GetDamage(gameObject, UnityEngine.Random.Range(attackPower - 5, attackPower + 6), hit.point, enemy.transform.position - this.enemy.transform.position);
+                            enemy.AttackInit(0, false, false);
+                        }
+                        else
+                        {
+                            SlimeGameManager.Instance.Player.GetDamage(gameObject, UnityEngine.Random.Range(attackPower - 5, attackPower + 6), hit.point, EnemyManager.Player.transform.position - this.enemy.transform.position);
+                        }
                     }
                 }
-                else
+                else if (isParrying) //플레이어 총알 확인
                 {
-                    if (enemy != null)
+                    PlayerProjectile playerBullet = collision.gameObject.GetComponent<PlayerProjectile>();
+
+                    if (playerBullet != null)
                     {
-                        SlimeGameManager.Instance.Player.GetDamage(gameObject, UnityEngine.Random.Range(attackPower - 5, attackPower + 6), hit.point, enemy.transform.position - this.enemy.transform.position);
-                        enemy.AttackInit(0, false, false);
-                    }
-                    else
-                    {
-                        SlimeGameManager.Instance.Player.GetDamage(gameObject, UnityEngine.Random.Range(attackPower - 5, attackPower + 6), hit.point, EnemyManager.Player.transform.position - this.enemy.transform.position);
+                        var enemyBullet = EnemyPoolManager.Instance.GetPoolObject(Type.Bullet, playerBullet.transform.position).GetComponent<EnemyBullet>();
+                        enemyBullet.Init(EnemyController.AI, -playerBullet.MoveVec, 0f, Color.magenta);
+                        playerBullet.Despawn();
+
+                        return;
                     }
                 }
             }
@@ -153,11 +172,25 @@ namespace Enemy
                     attackObject.Add(collision.gameObject);
 
                     EventManager.TriggerEvent("OnEnemyAttack");
+
+                    return;
                 }
-                else
+
+                if (isParrying) //적 총알 확인
                 {
-                    EventManager.TriggerEvent("OnAttackMiss");
+                    EnemyBullet enemyBullet = collision.gameObject.GetComponent<EnemyBullet>();
+
+                    if (enemyBullet != null && !enemyBullet.isDamage && !enemyBullet.isDamage)
+                    {
+                        enemyBullet.RemoveBullet();
+                        var playerBullet = EnemyPoolManager.Instance.GetPoolObject(Type.Bullet, enemyBullet.transform.position).GetComponent<EnemyBullet>();
+                        playerBullet.Init(EnemyController.PLAYER, -enemyBullet.targetDirection, enemyBullet.attackDamage, Color.green, this.enemy);
+
+                        return;
+                    }
                 }
+
+                EventManager.TriggerEvent("OnAttackMiss");
             }
         }
     }

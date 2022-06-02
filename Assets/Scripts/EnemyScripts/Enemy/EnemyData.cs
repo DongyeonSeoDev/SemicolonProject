@@ -88,6 +88,7 @@ namespace Enemy
         public bool isNoKnockback = false;
         public bool isNoStun = false;
         public bool isNoAttack = false;
+        public bool isParrying = false;
 
         public int minAttackCount = 0;
         public int maxAttackCount = 0;

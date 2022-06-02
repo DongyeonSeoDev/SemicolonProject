@@ -355,5 +355,6 @@ namespace Enemy
         public float GetKnockBackPower() => enemyData.knockBackPower; // 적이 넉백 공격을 할 수 있는지를 가져옴
         public float GetEnemyAttackPower() => enemyData.attackPower; // 적 공격력을 가져옴
         public bool GetIsKnockBack() => enemyData.isUseKnockBack; // 적이 넉백 공격을 할 수 있는지를 가져옴
+        public bool GetIsParrying() => enemyData.isParrying;
     }
 }
