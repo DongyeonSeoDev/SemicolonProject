@@ -525,6 +525,11 @@ public partial class UIManager : MonoSingleton<UIManager>
                 invenHpEffMaskInfo.first.localScale = new Vector3(invenHpEffMaskInfo.second*invenHpInfo.first.fillAmount, invenHpEffMaskInfo.second, invenHpEffMaskInfo.second);
                 break;
             case UIType.KEYSETTING:
+                if (!gm.savedData.tutorialInfo.isEnded) //튜토리얼 안끝났다면 키세팅 창 못열게
+                {
+                    UIManager.Instance.RequestSystemMsg("아직 사용할 수 없는 기능입니다.");
+                    return true;
+                }
                 if (KeyActionManager.Instance.IsChangingKeySetting)  //키세팅 변경 중에는 esc로 키세팅 UI 안꺼지게
                     return true;
                 break;
