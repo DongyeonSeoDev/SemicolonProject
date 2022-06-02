@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using DG.Tweening;
+using FkTweening;
 
 public class KeyActionManager : MonoSingleton<KeyActionManager>
 {
@@ -37,6 +38,8 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
     private float headImgFullTime = -1f;
     private float keyInputFillElapsed;
     private KeyAction tutoInputKeyAction;
+
+    public bool IsNoticingGetMove => headImgFullTime > 0f;
     #endregion
 
     private void Awake()
@@ -302,13 +305,18 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         {
             headImg.color = Color.clear;
             headFillImg.sprite = keyActionDataDic[tutoInputKeyAction].keySprite;
-            headFillImg.transform.DOScale(SVector3.onePointThree, 0.4f).SetEase(Ease.Linear);
-            headFillImg.DOColor(Color.clear, 0.4f).SetEase(Ease.Linear).OnComplete(() =>
+
+            DOUtil.StartCo("Move Key Get UI", Util.DelayFuncCo(() =>
             {
-                headImg.gameObject.SetActive(false);
-                headFillImg.gameObject.SetActive(false);
-                headImgFullTime = -1f;
-            });
+                headFillImg.transform.DOScale(SVector3.onePointThree, 0.4f).SetEase(Ease.Linear);
+                headFillImg.DOColor(Color.clear, 0.4f).SetEase(Ease.Linear).OnComplete(() =>
+                {
+                    headImg.gameObject.SetActive(false);
+                    headFillImg.gameObject.SetActive(false);
+                    headImgFullTime = -1f;
+                });
+            }, 1f, false, false), this);
+            
         }
     }
 
