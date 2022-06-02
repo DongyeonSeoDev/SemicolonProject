@@ -177,8 +177,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
             SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.statValue += num;
             SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.statLv += num;
 
-            attackNum = 0;
-            attackMissedNum = 0;
+            AttackNumReset();
 
             choiceDataDict[NGlobal.PatienceID].upAmount = originChoiceDataDict[NGlobal.PatienceID].upAmount * num;
 

@@ -215,6 +215,7 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
         }
 
         mountedObjList.Clear();
+        currentExtraStatDict.Clear();
     }
     public bool CheckCanMountObj()
     {
