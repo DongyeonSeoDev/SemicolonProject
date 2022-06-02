@@ -543,7 +543,10 @@ public partial class UIManager : MonoSingleton<UIManager>
                 break; 
             case UIType.CHANGEABLEMOBLIST:      //몸 제거창 뜨면 일시정지
                 if (!gameUIList[(int)UIType.CHANGEABLEMOBLIST].gameObject.activeSelf)
+                {
                     TimeManager.TimePause();
+                    MonsterCollection.Instance.UpdateAllChangeableBody();
+                }
                 break;
             case UIType.STAT:  //스탯 UI 업데이트
                 if (!Util.IsActiveGameUI(type))
