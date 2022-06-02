@@ -331,7 +331,7 @@ public partial class UIManager : MonoSingleton<UIManager>
                 return true;
             }
 
-            KeyActionManager.Instance.SetPlayerHeadText("?", 0.5f);
+            //KeyActionManager.Instance.SetPlayerHeadText("?", 0.5f);
             return false;
         }
 

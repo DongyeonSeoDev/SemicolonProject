@@ -20,42 +20,60 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
 
     #region Head Text
     [SerializeField] private Text playerHeadTxt; //플레이어 머리 위에 뜨는 독백(?) 텍스트
-    private RectTransform phtRectTr;
     public Vector3 playerHeadTextOffset;
-    private Vector3 playerHeadTextCurOffset;
-    private float phtOffTime;
-    private bool twComp;  //사라지는 tween 적용중인가
+    private HeadUIData headTextInfo;
+    #endregion
+
+    #region Head KeyInput Image
+    public Image headImg, headFillImg;
+    public Sprite question, exclamation, empty;
+
+    [SerializeField] private List<KeyActionData> keyActionDataList = new List<KeyActionData>();
+    private Dictionary<KeyAction, KeyActionData> keyActionDataDic = new Dictionary<KeyAction, KeyActionData>();
+
+    public Vector3 headImgOffset;
+    private HeadUIData headImgUIInfo;
+
+    private float headImgFullTime = -1f;
+    private float keyInputFillElapsed;
+    private KeyAction tutoInputKeyAction;
     #endregion
 
     private void Awake()
     {
         KeySetting.SetFixedKeySetting();
-        phtRectTr = playerHeadTxt.GetComponent<RectTransform>();
+
+        headTextInfo = new HeadUIData(playerHeadTxt.GetComponent<RectTransform>(), playerHeadTextOffset);
+        headImgUIInfo = new HeadUIData(headImg.GetComponent<RectTransform>(), headImgOffset, 1.7f);
+
+        for (int i = 0; i < keyActionDataList.Count; i++)
+        {
+            keyActionDataDic.Add(keyActionDataList[i].keyAction, keyActionDataList[i]);
+        }
     }
 
     private void Start()
     {
-        if(TutorialManager.Instance.IsTutorialStage)
+        if (TutorialManager.Instance.IsTutorialStage)
         {
             playerHeadTxt.GetComponent<CanvasGroup>().alpha = 0;
             StoredData.SetGameObjectKey("PlayerHeadTxtObj", playerHeadTxt.gameObject);
         }
 
-        foreach(KeyAction action in KeySetting.fixedKeyDict.Keys)
+        foreach (KeyAction action in KeySetting.fixedKeyDict.Keys)
         {
             Instantiate(keyInfoPair.first, keyInfoPair.second).GetComponent<KeyInfoUI>()
-            .SetFixedKey(action, KeyCodeToString.GetString( KeySetting.fixedKeyDict[action] ));
+            .SetFixedKey(action, KeyCodeToString.GetString(KeySetting.fixedKeyDict[action]));
         }
-        foreach(KeyAction action in KeySetting.keyDict.Keys)
+        foreach (KeyAction action in KeySetting.keyDict.Keys)
         {
             KeyInfoUI keyUI = Instantiate(keyInfoPair.first, keyInfoPair.second).GetComponent<KeyInfoUI>();
-            keyUI.Set(action, KeySetting.keyDict[action], ()=>ChangeUserCustomKey((int)action, keyUI.ID));
+            keyUI.Set(action, KeySetting.keyDict[action], () => ChangeUserCustomKey((int)action, keyUI.ID));
             keyInfoDic.Add(keyUI.ID, keyUI);
         }
         //SkillUIManager.Instance.UpdateSkillKeyCode();
         MonsterCollection.Instance.UpdateSavedBodyChangeKeyCodeTxt();
 
-        
     }
 
     private void Update()
@@ -64,13 +82,14 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         {
             CancelKeySetting();
         }
-        
-        
     }
 
     private void FixedUpdate()
     {
-        FollowPlayerHeadText();
+        //플레이어가 FixedUpdate에서 움직이므로 여기서 돌려야 UI가 안떨림
+        headTextInfo.Update();
+        headImgUIInfo.Update();
+        KeyInputUIFillUpdate();
     }
 
     private void OnGUI()
@@ -80,7 +99,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         {
             if (keyEvent.keyCode == KeyCode.Escape) return;  //esc는 메시지 남기면 안되므로 따로 처리함
 
-            if(!CanChangeKey(keyEvent.keyCode))
+            if (!CanChangeKey(keyEvent.keyCode))
             {
                 UIManager.Instance.RequestSystemMsg("해당 키로는 변경할 수 없습니다.");
                 CancelKeySetting();
@@ -110,7 +129,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
 
     private bool CanChangeKey(KeyCode keyCode) //해당 키로 변경할 수 있는지 (방향키와 esc 제외시킴)
     {
-        switch(keyCode) 
+        switch (keyCode)
         {
             case KeyCode.W:
                 return false;
@@ -128,32 +147,32 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
                 return false;
 
 
-           /*case KeyCode.UpArrow:
-                return false;
-            case KeyCode.LeftArrow:
-                return false;
-            case KeyCode.RightArrow:
-                return false;
-            case KeyCode.DownArrow:
-                return false;*/
+                /*case KeyCode.UpArrow:
+                     return false;
+                 case KeyCode.LeftArrow:
+                     return false;
+                 case KeyCode.RightArrow:
+                     return false;
+                 case KeyCode.DownArrow:
+                     return false;*/
                 /*case KeyCode.Escape:
                     return false;*/
         }
         return true;
     }
 
-    private (KeyAction,int) CheckExistSameKey(KeyCode keyCode)  //중복되는 키가 있는지 체크
+    private (KeyAction, int) CheckExistSameKey(KeyCode keyCode)  //중복되는 키가 있는지 체크
     {
-        foreach(KeyAction key in KeySetting.keyDict.Keys)
+        foreach (KeyAction key in KeySetting.keyDict.Keys)
         {
             if (KeySetting.keyDict[key] == keyCode)
             {
                 selectedAndAlreadyID.second = (int)key;
-                return (key,(int)key);
+                return (key, (int)key);
             }
         }
 
-        return (KeyAction.NONE,-1);
+        return (KeyAction.NONE, -1);
     }
 
     public void ChangeUserCustomKey(int key, int id) //키셋 변경 버튼 클릭
@@ -184,57 +203,126 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
 
     public void SaveKey()
     {
-        foreach(KeyAction key in KeySetting.keyDict.Keys)
+        foreach (KeyAction key in KeySetting.keyDict.Keys)
         {
             GameManager.Instance.savedData.option.keyInputDict[key] = KeySetting.keyDict[key];
         }
     }
 
-    private void FollowPlayerHeadText()
+    private void ClearHeadText()
     {
-        if(playerHeadTxt.gameObject.activeSelf)
-        {
-            Transform target = SlimeGameManager.Instance.CurrentPlayerBody.transform;  //변신 시 플레이어가 잠깐 사라져서 이렇게 받아서 함
-            if (target)
-            {
-                phtRectTr.anchoredPosition = Util.WorldToScreenPosForScreenSpace(target.position + playerHeadTextCurOffset, Util.WorldCvs);
-            }
-
-            if(!twComp && Time.time > phtOffTime)
-            {
-                twComp = true;
-                playerHeadTxt.DOColor(Color.clear, 0.3f).OnComplete(()=>playerHeadTxt.gameObject.SetActive(false));
-            }
-
-            /*if (playerHeadTextCurOffset.y < playerHeadTextOffset.y)
-            {
-                playerHeadTextCurOffset.y += Time.deltaTime * (!twComp ? 3f : -3f);
-            }*/
-            playerHeadTextCurOffset.y += Time.deltaTime * (!twComp ? 1.5f : -1.5f);
-            playerHeadTextCurOffset.y = Mathf.Clamp(playerHeadTextCurOffset.y, 1, playerHeadTextOffset.y);
-        }
+        playerHeadTxt.DOColor(Color.clear, 0.3f).OnComplete(() => playerHeadTxt.gameObject.SetActive(false));
     }
 
     public void SetPlayerHeadText(string msg, float duration = -1f, int fontSize = 22)
     {
         playerHeadTxt.DOKill();
         playerHeadTxt.color = Color.clear;
-        playerHeadTextCurOffset = new Vector2(0, 1);
-        twComp = false;
 
         playerHeadTxt.text = msg;
         playerHeadTxt.fontSize = fontSize;
-        playerHeadTxt.gameObject.SetActive(true);
-
+        
         playerHeadTxt.DOColor(Color.black, 0.4f);
 
-        if(duration > 0f)
+        if(duration <= 0f)
         {
-            phtOffTime = Time.time + duration;
+            duration = Mathf.Clamp(msg.Length * 0.3f, 1f, 25f);
+        }
+
+        headTextInfo.Set(duration, new Vector2(0, 1), ClearHeadText);
+    }
+
+    private void ResetHeadImg()
+    {
+        headFillImg.gameObject.SetActive(false);
+        headImg.DOKill();
+
+        headImg.color = Color.clear;
+
+        headImg.DOColor(Color.white, 0.3f);
+    }
+
+    private void ClearHeadImg()
+    {
+        headImg.DOColor(Color.clear, 0.3f).OnComplete(() =>
+        {
+            headImg.gameObject.SetActive(false);
+            headFillImg.gameObject.SetActive(false);
+        });
+    }
+
+    public void ShowQuestionMark()
+    {
+        if (headImgFullTime > 0f) return;
+
+        ResetHeadImg();
+        headImg.sprite = question;
+        headImgUIInfo.Set(0.75f, new Vector2(0, 1), ClearHeadImg);
+    }
+    public void ShowExclamationMark()
+    {
+        if (headImgFullTime > 0f) return;
+
+        ResetHeadImg();
+        headImg.sprite = exclamation;
+        headImgUIInfo.Set(0.75f, new Vector2(0, 1), ClearHeadImg);
+    }
+
+    public void ExclamationCharging(float fullTime, KeyAction keyAction)
+    {
+        if (headImgFullTime > 0f) return;
+
+        headImgFullTime = fullTime;
+        tutoInputKeyAction = keyAction;
+        keyInputFillElapsed = 0f;
+
+        headImg.color = Color.white;
+        headImg.SetAlpha(0.2f);
+        headImg.sprite = exclamation;
+        headImg.gameObject.SetActive(true);
+
+        headFillImg.fillAmount = 0f;
+        headFillImg.transform.localScale = Vector3.one;
+        headFillImg.color = Color.white;
+        headFillImg.sprite = exclamation;
+        headFillImg.gameObject.SetActive(true);
+    }
+
+    public void EndExclamationCharging(bool isSuccess)
+    {
+        if (headImgFullTime < 0f) return;
+
+        if(!isSuccess)
+        {
+            headImg.gameObject.SetActive(false);
+            headFillImg.gameObject.SetActive(false);
+            headImgFullTime = -1f;
         }
         else
         {
-            phtOffTime = Time.time + Mathf.Clamp( msg.Length * 0.3f, 1f, 30f);
+            headImg.color = Color.clear;
+            headFillImg.sprite = keyActionDataDic[tutoInputKeyAction].keySprite;
+            headFillImg.transform.DOScale(SVector3.onePointThree, 0.4f).SetEase(Ease.Linear);
+            headFillImg.DOColor(Color.clear, 0.4f).SetEase(Ease.Linear).OnComplete(() =>
+            {
+                headImg.gameObject.SetActive(false);
+                headFillImg.gameObject.SetActive(false);
+                headImgFullTime = -1f;
+            });
+        }
+    }
+
+    private void KeyInputUIFillUpdate()
+    {
+        if (headImgFullTime > 0f)
+        {
+            Transform target = Global.GetSlimePos;
+            if (target)
+            {
+                headImg.GetComponent<RectTransform>().anchoredPosition = Util.WorldToScreenPosForScreenSpace(target.position + new Vector3(0,1.25f), Util.WorldCvs);
+            }
+            keyInputFillElapsed += Time.fixedDeltaTime;
+            headFillImg.fillAmount = keyInputFillElapsed / headImgFullTime;
         }
     }
 }

@@ -204,6 +204,67 @@ public class AbsorptionData
     }
 }
 
+[Serializable]
+public class KeyActionData
+{
+    public KeyAction keyAction;
+    public Sprite keySprite;
+}
+
+public class HeadUIData
+{
+    private Vector3 offset;  //플레이어 머리로부터 얼마큼까지 떨어져있을지
+    private Vector3 curOffset;  //현재 떨어져있는 offset
+    private RectTransform headRt;  //UI RectTrm  
+
+    private bool twComp; // true면 사라지고 있는 상태
+    private float headUIOffTime;  //머리 위 UI가 사라지는 시간
+
+    private float moveSpeed;
+
+    private event Action uiOffEvent; 
+
+    public void Update()
+    {
+        if (headRt.gameObject.activeSelf)
+        {
+            Transform target = Global.GetSlimePos;
+            if (target)
+            {
+                headRt.anchoredPosition = Util.WorldToScreenPosForScreenSpace(target.position + curOffset, Util.WorldCvs);
+            }
+
+            if (!twComp && Time.time > headUIOffTime)
+            {
+                twComp = true;
+                uiOffEvent?.Invoke();
+            }
+
+            curOffset.y += Time.deltaTime * (!twComp ? moveSpeed : -moveSpeed);
+            curOffset.y = Mathf.Clamp(curOffset.y, 1, offset.y);
+        }
+    }
+
+    public HeadUIData(RectTransform rt, Vector3 offset, float speed = 1.5f)
+    {
+        this.offset = offset;
+        headRt = rt;
+        moveSpeed = speed;
+    }
+
+    public void Set(float duration, Vector2 startOffset, Action compAction)
+    {
+        headUIOffTime = Time.time + duration;
+        curOffset = startOffset;
+        twComp = false;
+
+        uiOffEvent = compAction;
+        headRt.gameObject.SetActive(true);
+    }
+}
+
+
+
 
 [Serializable]
 public class CheckGameStringKeys
