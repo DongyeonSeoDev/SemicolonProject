@@ -139,11 +139,6 @@ public class Player : MonoBehaviour
     private float originAdditionalSpeed = 0f;
     private bool speedSlowStart = false;
 
-    #region 반사 발사체 데이터들
-    [SerializeField]
-    private PlayerReflectionProjectileData bodySlapReflection;
-    #endregion
-
     private void Awake()
     {
         playerState = GetComponent<PlayerState>();
@@ -314,12 +309,14 @@ public class Player : MonoBehaviour
         {
             if (playerStat.choiceStat.reflection.isUnlock)
             {
-                if (attacker.GetComponent<Enemy.EnemyBullet>() != null)
+                var bullet = attacker.GetComponent<Enemy.EnemyBullet>();
+
+                if (bullet != null)
                 {
                     Vector2 dir1 = -(direction.normalized);
                     Vector2 dir2 = playerInput.LastBodySlapVector;
 
-                    playerReflectionScript.DoReflection(bodySlapReflection, (dir1 + dir2).normalized, damage);
+                    playerReflectionScript.DoReflection(bullet.poolType, (dir1 + dir2).normalized, damage);
                 }
             }
 
