@@ -20,6 +20,7 @@ public partial class EventManager
     private static Dictionary<string, Action<GameObject>> gmo_EventDictionary = new Dictionary<string, Action<GameObject>>();
     private static Dictionary<string, Action<GameObject, string>> gmo_str_EventDictionary = new Dictionary<string, Action<GameObject, string>>();
     private static Dictionary<string, Action<GameObject, int>> gmo_int_EventDictionary = new Dictionary<string, Action<GameObject, int>>();
+    private static Dictionary<string, Action<GameObject, string, bool>> gmo_str_bool_EventDictionary = new Dictionary<string, Action<GameObject, string, bool>>();
     private static Dictionary<string, Action<GameObject, Vector2, int>> gmo_vec2_int_EventDictionary = new Dictionary<string, Action<GameObject, Vector2, int>>();
     #endregion
 
@@ -233,6 +234,20 @@ public partial class EventManager
         else
         {
             gmo_int_EventDictionary.Add(eventName, listener);
+        }
+    }
+    public static void StartListening(string eventName, Action<GameObject, string, bool> listener)
+    {
+        Action<GameObject, string, bool> thisEvent;
+
+        if (gmo_str_bool_EventDictionary.TryGetValue(eventName, out thisEvent)) // ���� �̸��� DIctionary�ִ��� üũ
+        {
+            thisEvent += listener;                   // ���� �̸����� �� ����
+            gmo_str_bool_EventDictionary[eventName] = thisEvent;
+        }
+        else
+        {
+            gmo_str_bool_EventDictionary.Add(eventName, listener);
         }
     }
     public static void StartListening(string eventName, Action<GameObject, Vector2, int> listener)
@@ -461,6 +476,20 @@ public partial class EventManager
             gmo_int_EventDictionary.Remove(eventName);
         }
     }
+    public static void StopListening(string eventName, Action<GameObject, string, bool> listener)
+    {
+        Action<GameObject, string, bool> thisEvent;
+
+        if (gmo_str_bool_EventDictionary.TryGetValue(eventName, out thisEvent))
+        {
+            thisEvent -= listener;
+            gmo_str_bool_EventDictionary[eventName] = thisEvent;
+        }
+        else
+        {
+            gmo_str_bool_EventDictionary.Remove(eventName);
+        }
+    }
     public static void StopListening(string eventName, Action<GameObject, Vector2, int> listener)
     {
         Action<GameObject, Vector2, int> thisEvent;
@@ -666,6 +695,19 @@ public partial class EventManager
         if (gmo_int_EventDictionary.TryGetValue(eventName, out thisEvent))
         {
             thisEvent?.Invoke(gmo_param, int_param);
+        }
+        else
+        {
+            Debug.LogWarning("The Linked ActionsNum is zero of The '" + eventName + "' Event but you tried 'TriggerEvent'");
+        }
+    }
+    public static void TriggerEvent(string eventName, GameObject gmo_param, string str_param, bool bool_param)
+    {
+        Action<GameObject, string, bool> thisEvent;
+
+        if (gmo_str_bool_EventDictionary.TryGetValue(eventName, out thisEvent))
+        {
+            thisEvent?.Invoke(gmo_param, str_param, bool_param);
         }
         else
         {
