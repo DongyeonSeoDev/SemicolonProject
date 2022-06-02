@@ -53,73 +53,64 @@ MonoBehaviour:
         statValue: 100
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: "\uCD5C\uB300\uCCB4\uB825"
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       minDamage:
         id: 10
         statValue: 8
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: "\uCD5C\uC18C\uACF5\uACA9\uB825"
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       maxDamage:
         id: 15
         statValue: 8
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: "\uCD5C\uB300\uACF5\uACA9\uB825"
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       defense:
         id: 20
         statValue: 2
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: "\uBC29\uC5B4\uB825"
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       intellect:
         id: 25
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: "\uC9C0\uB2A5"
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       speed:
         id: 30
         statValue: 4
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: "\uC774\uB3D9\uC18D\uB3C4"
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       attackSpeed:
         id: 35
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: "\uACF5\uACA9\uC18D"
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       criticalRate:
         id: 40
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: "\uD06C\uB9AC\uD2F0\uCEEC\uD655\uB960"
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       criticalDamage:
         id: 45
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: "\uD06C\uB9AC\uD2F0\uCEEC\uB370\uBBF8\uC9C0"
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
     bodyImg: {fileID: 21300000, guid: d28dff12c2591a84c9cbea9bd1f40fa2, type: 3}
     dropItem: {fileID: 11400000, guid: 06dd51cfab1cb904b9bbbedef6545d02, type: 2}
     bodyExplanation: "\uC5B4\uB514\uC11C\uB098 \uBCFC \uC218 \uC788\uB294 \uC2AC\uB77C\uC784\uC73C\uB85C
@@ -135,73 +126,64 @@ MonoBehaviour:
         statValue: -20
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: "\uCD5C\uB300\uCCB4\uB825"
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       minDamage:
         id: 10
         statValue: 5
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: "\uCD5C\uC18C\uACF5\uACA9\uB825"
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       maxDamage:
         id: 15
         statValue: 5
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: "\uCD5C\uB300\uACF5\uACA9\uB825"
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       defense:
         id: 20
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: "\uBC29\uC5B4\uB825"
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       intellect:
         id: 25
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: "\uC9C0\uB2A5"
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       speed:
         id: 30
         statValue: 6
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: "\uC774\uB3D9\uC18D\uB3C4"
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       attackSpeed:
         id: 35
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: "\uACF5\uACA9\uC18D"
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       criticalRate:
         id: 40
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: "\uD06C\uB9AC\uD2F0\uCEEC\uD655\uB960"
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       criticalDamage:
         id: 45
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: "\uD06C\uB9AC\uD2F0\uCEEC\uB370\uBBF8\uC9C0"
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
     bodyImg: {fileID: 21300000, guid: dc4b2010e28bb6b4e946bacb9864068a, type: 3}
     dropItem: {fileID: 11400000, guid: ac78587e7a385054a9d1150a539d138b, type: 2}
     bodyExplanation: "\uC0DD\uC950\uC758 \uBAA8\uC591\uC744 \uD558\uACE0 \uC788\uC73C\uBA70
@@ -217,160 +199,143 @@ MonoBehaviour:
         statValue: 150
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: "\uCD5C\uB300\uCCB4\uB825"
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       minDamage:
         id: 10
         statValue: 5
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: "\uCD5C\uC18C\uACF5\uACA9\uB825"
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       maxDamage:
         id: 15
         statValue: 5
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: "\uCD5C\uB300\uACF5\uACA9\uB825"
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       defense:
         id: 20
         statValue: 3
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: "\uBC29\uC5B4\uB825"
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       intellect:
         id: 25
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: "\uC9C0\uB2A5"
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       speed:
         id: 30
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: "\uC774\uB3D9\uC18D\uB3C4"
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       attackSpeed:
         id: 35
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: "\uACF5\uACA9\uC18D"
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       criticalRate:
         id: 40
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: "\uD06C\uB9AC\uD2F0\uCEEC\uD655\uB960"
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       criticalDamage:
         id: 45
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: "\uD06C\uB9AC\uD2F0\uCEEC\uB370\uBBF8\uC9C0"
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
     bodyImg: {fileID: 21300000, guid: 238a27f12e439d942aa76ea5098ad18d, type: 3}
     dropItem: {fileID: 11400000, guid: 06dd51cfab1cb904b9bbbedef6545d02, type: 2}
     bodyExplanation: "\uC5B4\uCA4C\uBA74 \uB098\uC640 \uB2EE\uC558\uC744\uC9C0\uB3C4?"
     featureExplanation: "\uB3CC\uC9C4\uC744 \uD560 \uC218 \uC788\uC73C\uBA70 \uCCB4\uB825\uC774
       \uB192\uB2E4."
     hint: "\uD558\uC218\uAD6C\uC5D0\uC11C \uB4F1\uC7A5\uD55C\uB2E4."
-  - bodyName: "SkeletonArcher_04 (\uC784\uC2DC)"
+  - bodyName: "\uC2A4\uCF08\uB808\uD1A4 \uAD81\uC218"
     bodyId: 3
     body: {fileID: 7363181102221842606, guid: e62341af4ab0f6c449dc8e41b66968d7, type: 3}
     additionalBodyStat:
       maxHp:
-        id: 0
+        id: 5
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: 
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       minDamage:
-        id: 0
+        id: 10
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: 
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       maxDamage:
-        id: 0
+        id: 15
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: 
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       defense:
-        id: 0
+        id: 20
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: 
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       intellect:
-        id: 0
+        id: 25
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: 
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       speed:
-        id: 0
+        id: 30
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: 
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       attackSpeed:
-        id: 0
+        id: 35
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: 
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       criticalRate:
-        id: 0
-        statValue: 0
+        id: 40
+        statValue: 10
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: 
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       criticalDamage:
-        id: 0
-        statValue: 0
+        id: 45
+        statValue: 30
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: 
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
     bodyImg: {fileID: 21300000, guid: 1e73fa0328b566a4787a35162592c611, type: 3}
     dropItem: {fileID: 11400000, guid: c2607854e0183b7409b93f098da0e3fb, type: 2}
-    bodyExplanation: 
-    featureExplanation: 
-    hint: 
+    bodyExplanation: "\uC5B4\uB5A4 \uAD70\uB300\uC758 \uBCD1\uC0AC\uC600\uB358 \uAC78\uB85C
+      \uBCF4\uC778\uB2E4."
+    featureExplanation: "\uBE60\uB978 \uACF5\uACA9\uC744 \uAC00\uC9C0\uACE0 \uC788\uB2E4."
+    hint: "\uD558\uC218\uAD6C\uC5D0\uC11C \uB4F1\uC7A5\uD55C\uB2E4."
   - bodyName: "Boss_SkeletonKing_01 (\uC784\uC2DC)"
     bodyId: 4
     body: {fileID: 8919641663643523178, guid: ed89bbd8246da2f489396f41f0f95a05, type: 3}
@@ -380,73 +345,64 @@ MonoBehaviour:
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: 
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       minDamage:
         id: 0
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: 
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       maxDamage:
         id: 0
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: 
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       defense:
         id: 0
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: 
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       intellect:
         id: 0
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: 
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       speed:
         id: 0
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: 
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       attackSpeed:
         id: 0
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: 
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       criticalRate:
         id: 0
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: 
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
       criticalDamage:
         id: 0
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        usedStatPoint: 0
-        statName: 
-        emotionRangeList: []
+        statLv: 0
+        maxStatLv: 0
     bodyImg: {fileID: 21300000, guid: 33d21dfdf94441840a5075a7df757d2c, type: 3}
     dropItem: {fileID: 0}
     bodyExplanation: 
@@ -454,3 +410,5 @@ MonoBehaviour:
     hint: 
   canMountObjNum: 2
   maxUnderstandingRate: 200
+  understandingRatePercentageWhenUpStat: 10
+  upStatPercentage: 0.05
