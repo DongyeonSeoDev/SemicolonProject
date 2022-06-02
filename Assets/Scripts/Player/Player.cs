@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
         set { playerStat = value; }
     }
 
+    private float pasteAttackSpeed = 0f;
+
     [SerializeField]
     private PlayerInput playerInput = null;
     public PlayerInput PlayerInput
@@ -176,6 +178,14 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
+        if(pasteAttackSpeed != playerStat.AttackSpeed)
+        {
+
+            pasteAttackSpeed = playerStat.AttackSpeed;
+
+            EventManager.TriggerEvent("OnAttackSpeedChage");
+        }
+
         if (Input.GetKey(KeyCode.RightControl))
         {
             Debug.Log("RightControl");
