@@ -26,15 +26,22 @@ public abstract class PlayerSkill : PlayerAction
     {
         WhenChangeSkill();
 
+        EventManager.StartListening("OnAttackSpeedChage", OnAttackSpeedChange);
         EventManager.StartListening("StartSkill" + skillIdx, DoSkill);
         EventManager.StartListening("SkillButtonUp" + skillIdx, SkillButtonUp);
         EventManager.StartListening("SkillCancel" + skillIdx, SkillCancel);
     }
     public virtual void OnDisable()
     {
+        EventManager.StopListening("OnAttackSpeedChage", OnAttackSpeedChange);
         EventManager.StopListening("StartSkill" + skillIdx, DoSkill);
         EventManager.StopListening("SkillButtonUp" + skillIdx, SkillButtonUp);
         EventManager.StopListening("SkillCancel" + skillIdx, SkillCancel);
+    }
+
+    public void OnAttackSpeedChange()
+    {
+        SlimeGameManager.Instance.SetSkillDelay(skillIdx, skillDelay);
     }
 
     public void WhenChangeSkill()

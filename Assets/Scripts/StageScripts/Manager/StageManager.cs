@@ -656,11 +656,15 @@ public class StageManager : MonoSingleton<StageManager>
             case RandomRoomType.IMPRECATION: //历林 备开
                 currentArea = AreaType.IMPRECATION;
                 EventManager.TriggerEvent(Global.EnterNextMap);
-                Environment.Instance.OnEnteredOrExitImprecationArea(true);
+
                 SoundManager.Instance.SetBGMPitchByLerp(1, -0.7f, 1f);
                 ImprecationObj io = PoolManager.GetItem<ImprecationObj>("ImprecationObjPref1");
                 io.transform.position = currentStage.objSpawnPos.position;
-                Util.DelayFunc(() => io.Interaction(), 4.5f);
+                Util.DelayFunc(() => 
+                {
+                    Environment.Instance.OnEnteredOrExitImprecationArea(true);
+                    io.Interaction();
+                }, 4.5f);
                 break;
 
             case RandomRoomType.MONSTER:  //阁胶磐 备开
@@ -673,17 +677,24 @@ public class StageManager : MonoSingleton<StageManager>
             case RandomRoomType.RECOVERY:  //雀汗 备开
                 currentArea = AreaType.RECOVERY;
                 EventManager.TriggerEvent(Global.EnterNextMap);
-                Environment.Instance.OnEnteredOrExitRecoveryArea(true);
+
                 RecoveryObj ro = PoolManager.GetItem<RecoveryObj>("RecoveryObjPrefObjPref1");
                 ro.transform.position = currentStage.objSpawnPos.position;
                 
                 if (StateManager.Instance.IsPlayerFullHP && StateManager.Instance.IsPlayerNoImpr)
                 {
                     SetClearStage();
+                    Environment.Instance.OnEnteredOrExitRecoveryArea(true);
+                    ro.ActiveRecovLight();
                 }
                 else
                 {
-                    Util.DelayFunc(() => ro.Interaction(), 4.5f);
+                    Util.DelayFunc(() =>
+                    {
+                        Environment.Instance.OnEnteredOrExitRecoveryArea(true);
+                        ro.ActiveRecovLight();
+                        ro.Interaction();
+                    }, 4.5f);
                 }
                 break;
         }

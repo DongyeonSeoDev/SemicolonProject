@@ -69,6 +69,8 @@ public class PlayerProjectile : MonoBehaviour
     }
     private void OnDisable()
     {
+        projectileDamage = 0f;
+
         EventManager.StopListening("PlayerStart", PlayerStart);
         EventManager.StopListening("PlayerStop", PlayerStop);
         EventManager.StopListening("PlayerDead", Despawn);

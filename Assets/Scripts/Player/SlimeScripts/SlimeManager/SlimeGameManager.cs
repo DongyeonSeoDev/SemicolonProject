@@ -350,14 +350,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
     {
         try
         {
-            if (skillIdx == 0) // skillIdx가 0이면 그거슨 기본공격
-            {
-                currentSkillDelay[skillIdx] = delayTime / Player.PlayerStat.AttackSpeed;
-            }
-            else
-            {
-                currentSkillDelay[skillIdx] = delayTime;
-            }
+            currentSkillDelay[skillIdx] = delayTime / Player.PlayerStat.AttackSpeed;
         }
         catch (Exception ex)
         {

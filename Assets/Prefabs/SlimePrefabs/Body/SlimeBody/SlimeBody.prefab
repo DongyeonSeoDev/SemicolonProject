@@ -334,7 +334,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1c80f6fc8486f5b4b9226d543d4ed142, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skillDelay: 0.15
+  skillDelay: 0.2
   skillIdx: 0
   projectile: {fileID: 8223448895546236962, guid: 6188b8fe7b7eef448a7491f9bdb9599e, type: 3}
   shootPosOffset: 0.6
@@ -356,7 +356,7 @@ MonoBehaviour:
   skillIdx: 2
   drainCollider: {fileID: 6491635181836223920}
   drainSpeedWhenNone: 2
-  upMountingPercentageValue: 3
+  upMountingPercentageValue: 8
   upUnderstandingRateValue: 1
   drainTutorial: 0
   drainTutorialDone: 0
