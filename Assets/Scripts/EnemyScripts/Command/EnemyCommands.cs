@@ -260,20 +260,35 @@ namespace Enemy
         private Rigidbody2D rigid;
         private Transform enemyTransform;
         private Vector2 targetPosition;
+#if USE_ASTAR
+        private Vector2? nextPosition;
+#endif
         private float followSpeed;
 
-        public EnemyFollowPlayerCommand(EnemyData data, Transform enemyTransform, Rigidbody2D rigid, float followSpeed, float followDistance, EnemyPositionCheckData positionCheckData = null)
+        public EnemyFollowPlayerCommand(EnemyData data, Transform enemyTransform, Rigidbody2D rigid, float followSpeed)
         {
             enemyData = data;
             this.enemyTransform = enemyTransform;
             this.rigid = rigid;
 
             this.followSpeed = followSpeed;
+#if USE_ASTAR
+            nextPosition = null;
+#endif
         }
 
         public override void Execute()
         {
-            targetPosition = (EnemyManager.Player.transform.position - enemyTransform.position).normalized;
+#if USE_ASTAR
+            if (nextPosition == null || Vector2.Distance(enemyTransform.position, nextPosition.Value) < 0.1f)
+            {
+                nextPosition = EnemyManager.NextPosition(enemyTransform.position, EnemyManager.Player.transform.position);
+            }
+
+            targetPosition = (new Vector3(nextPosition.Value.x, nextPosition.Value.y, enemyTransform.position.z) - enemyTransform.position).normalized;
+#else
+            targetPosition = (new Vector3(EnemyManager.Player.transform.position.x, EnemyManager.Player.transform.position.y, enemyTransform.position.z) - enemyTransform.position).normalized;
+#endif
             targetPosition *= followSpeed;
             
             enemyData.moveVector = targetPosition;
