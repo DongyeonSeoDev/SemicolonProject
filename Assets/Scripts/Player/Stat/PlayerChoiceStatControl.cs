@@ -239,7 +239,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
             stat.isUnlock = true;
 
-            //UIManager.Instance.playerStatUI.StatUnlock(stat);
+            UIManager.Instance.playerStatUI.StatUnlock(stat);
         }
     }
 
@@ -256,7 +256,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
             stat.isUnlock = true;
 
-            //UIManager.Instance.playerStatUI.StatUnlock(stat);
+            UIManager.Instance.playerStatUI.StatUnlock(stat);
         }
     }
     public void UpAttackMissedNum()

@@ -43,8 +43,7 @@ public class ChangeBodySlot : MonoBehaviour  //클래스명 뭐라할지 애매하네
 
         monsterImgName.first.sprite = Global.GetMonsterBodySprite(bodyID);
         monsterImgName.second.text = Global.GetMonsterName(bodyID);
-        assimilationRateTxt.text = string.Concat("동화율 : " , PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(bodyID).ToString().ToColorStr("#375B89"), '%');
-
+       
         changeBtn.interactable = true;
         changeBtn.GetComponent<UIScale>().transitionEnable = true;
     }
@@ -60,5 +59,10 @@ public class ChangeBodySlot : MonoBehaviour  //클래스명 뭐라할지 애매하네
         changeBtn.GetComponent<UIScale>().transitionEnable = false;
     }
 
-    
+    public void UpdateUI()
+    {
+        assimilationRateTxt.text = string.Concat("동화율 : ", PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(bodyID).ToString().ToColorStr("#375B89"), '%');
+    }
+
+
 }

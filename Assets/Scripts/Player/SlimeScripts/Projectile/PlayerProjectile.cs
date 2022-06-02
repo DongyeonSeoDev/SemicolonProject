@@ -19,6 +19,12 @@ public class PlayerProjectile : MonoBehaviour
     private LayerMask whatIsEnemy;
 
     private Vector2 moveVec = Vector2.zero;
+
+    public Vector2 MoveVec
+    {
+        get => moveVec;
+    }
+
     private Vector2 lastMoveVec = Vector2.zero;
 
     [Header("Shoot이 기본 데미지의 몇배의 데미지를 줄 것인가에 대한 값")]
@@ -63,6 +69,8 @@ public class PlayerProjectile : MonoBehaviour
     }
     private void OnDisable()
     {
+        projectileDamage = 0f;
+
         EventManager.StopListening("PlayerStart", PlayerStart);
         EventManager.StopListening("PlayerStop", PlayerStop);
         EventManager.StopListening("PlayerDead", Despawn);
@@ -164,7 +172,7 @@ public class PlayerProjectile : MonoBehaviour
             }
         }
     }
-    private void Despawn()
+    public void Despawn()
     {
         moveSpeed = 0f;
         moveVec = Vector2.zero;

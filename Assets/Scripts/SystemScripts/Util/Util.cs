@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System;
@@ -190,6 +191,13 @@ public static partial class Util
         List<T> itemList = list.ToList();
         if (itemList.Count < 2) return itemList[0];
         return itemList[UnityEngine.Random.Range(0, itemList.Count)];
+    }
+
+    public static void SetAlpha(this Image img, float a)
+    {
+        Color c = img.color;
+        c.a = a;
+        img.color = c;
     }
 }
 

@@ -343,6 +343,7 @@ MonoBehaviour:
   hpTweenDelayTime: 0.3
   damageHPTweenTime: 0.2
   addExperience: 50
+  playerAttackColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &4321371500878039892
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -15,8 +15,8 @@ namespace Enemy
 
         private float angle;
         private bool isStop = false;
-        private bool isDelete = false;
-        private bool isDamage = false;
+        public bool isDelete = false;
+        public bool isDamage = false;
 
         public Vector2 limitMaxPosition;
         public Vector2 limitMinPosition;
@@ -29,11 +29,17 @@ namespace Enemy
 
         private EnemyController eEnemyController;
 
-        private Vector3 targetDirection;
+        public Vector3 targetDirection;
 
-        private float attackDamage;
+        public float attackDamage;
 
         private Enemy enemy;
+
+        private void Awake()
+        {
+            sr = GetComponent<SpriteRenderer>();
+            col = GetComponent<BoxCollider2D>();
+        }
 
         private void Start()
         {
@@ -58,10 +64,7 @@ namespace Enemy
                 isStop = true;
             });
 
-            sr = GetComponent<SpriteRenderer>();
-            col = GetComponent<BoxCollider2D>();
             ws = new WaitForSeconds(removeBulletTime);
-            currentColor = sr.color;
         }
 
         private void Update()
@@ -166,14 +169,14 @@ namespace Enemy
             sr.color = currentColor;
         }
 
-        private void RemoveBullet()
+        public void RemoveBullet()
         {
             gameObject.SetActive(false);
             StopAllCoroutines();
             ResetBullet();
         }
 
-        public void Init(EnemyController controller, Vector3 direction, float damage, Enemy enemy = null)
+        public void Init(EnemyController controller, Vector3 direction, float damage, Color color, Enemy enemy = null)
         {
             eEnemyController = controller;
             attackDamage = damage;
@@ -184,6 +187,9 @@ namespace Enemy
 
             angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0f, 0f, angle + addAngle);
+
+            sr.color = color;
+            currentColor = color;
 
             if (controller == EnemyController.AI)
             {

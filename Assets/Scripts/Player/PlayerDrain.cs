@@ -168,7 +168,7 @@ public class PlayerDrain : PlayerSkill
 
         if (enemy != null)
         {
-            enemy.EnemyDestroy();
+            enemy.EnemyDrain();
         }
     }
     private void EnemyStop()

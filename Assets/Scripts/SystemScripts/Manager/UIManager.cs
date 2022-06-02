@@ -54,9 +54,9 @@ public partial class UIManager : MonoSingleton<UIManager>
             }
         }
 
-        if(topCenterNoticeMsg.noticeCheckElapsed < Time.time)
+        if(topCenterNoticeMsg.noticeCheckElapsed < Time.unscaledTime)
         {
-            topCenterNoticeMsg.noticeCheckElapsed = Time.time + 0.1f;
+            topCenterNoticeMsg.noticeCheckElapsed = Time.unscaledTime + 0.1f;
             
             if(topCenterNoticeMsg.noticeQueue.Count > 0 && !topCenterNoticeMsg.isNoticing)
             {
@@ -75,7 +75,7 @@ public partial class UIManager : MonoSingleton<UIManager>
                     Util.DelayFunc(() =>
                     {
                         topCenterMsgTMP.DOColor(Color.clear, 0.5f).OnComplete(() => nus.endAction()).SetUpdate(true);
-                    }, nus.existTime, this, true);
+                    }, nus.existTime, this, true, false);
                 }).SetUpdate(true);
                 //topCenterMsgTMPCvsg.DOFade();
             }

@@ -459,23 +459,25 @@ namespace Enemy
         private Enemy enemy;
 
         private Type objectType;
+        private Color? color;
 
         private float attackDamage;
 
-        public EnemylongRangeAttackCommand(Enemy enemy, Transform enemyPosition, Type objectType, Transform shotTransform, float damage)
+        public EnemylongRangeAttackCommand(Enemy enemy, Transform enemyPosition, Type objectType, Transform shotTransform, float damage, Color? color = null)
         {
             this.enemy = enemy;
             enemyTransform = enemyPosition;
             this.objectType = objectType;
             this.shotTransform = shotTransform;
             attackDamage = damage;
+            this.color = color;
         }
 
         public override void Execute()
         {
             EnemyPoolData spawnObject = EnemyPoolManager.Instance.GetPoolObject(objectType, shotTransform.position);
 
-            spawnObject.GetComponent<EnemyBullet>().Init(enemy.GetEnemyController(), (EnemyManager.Player.transform.position - enemyTransform.position).normalized, attackDamage);
+            spawnObject.GetComponent<EnemyBullet>().Init(enemy.GetEnemyController(), (EnemyManager.Player.transform.position - enemyTransform.position).normalized, attackDamage, Color.white, null);
         }
     }
 
@@ -487,10 +489,11 @@ namespace Enemy
         private Enemy enemy;
 
         private Type objectType;
+        private Color color;
 
         private float attackDamage;
 
-        public PlayerlongRangeAttackCommand(Transform transform, Transform shotTransform, Enemy enemy, Type objectType, float attackDamage)
+        public PlayerlongRangeAttackCommand(Transform transform, Transform shotTransform, Enemy enemy, Type objectType, float attackDamage, Color color)
         {
             playerInput = SlimeGameManager.Instance.Player.GetComponent<PlayerInput>();
 
@@ -499,13 +502,14 @@ namespace Enemy
             this.attackDamage = attackDamage;
             this.enemy = enemy;
             this.objectType = objectType;
+            this.color = color;
         }
 
         public override void Execute()
         {
             EnemyPoolData spawnObject = EnemyPoolManager.Instance.GetPoolObject(objectType, shotTransform.position);
 
-            spawnObject.GetComponent<EnemyBullet>().Init(enemy.GetEnemyController(), (playerInput.AttackMousePosition - (Vector2)transform.position).normalized, attackDamage, enemy);
+            spawnObject.GetComponent<EnemyBullet>().Init(enemy.GetEnemyController(), (playerInput.AttackMousePosition - (Vector2)transform.position).normalized, attackDamage, color, enemy);
         }
     }
 

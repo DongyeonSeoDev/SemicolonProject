@@ -45,7 +45,7 @@ public class RecoveryObj : InteractionObj
         StageManager.Instance.SetClearStage();
         EffectManager.Instance.CallFollowTargetGameEffect("RecoveryEff", GameManager.Instance.slimeFollowObj, effOffset, 3f);
         SoundManager.Instance.PlaySoundBox("GetBuffSFX");
-        recoveryLight.DOIntensity(0, 1f, true, () => recoveryLight.gameObject.SetActive(false));
+        //recoveryLight.DOIntensity(0, 1f, true, () => recoveryLight.gameObject.SetActive(false));
     }
 
     private void OnEnable()
@@ -56,7 +56,7 @@ public class RecoveryObj : InteractionObj
 
             //recoveryLight = PoolManager.GetItem<Light2D>("NormalPointLight2D");
             recoveryLight.transform.position = StageManager.Instance.CurrentStageGround.objSpawnPos.position;
-            recoveryLight.gameObject.SetActive(true);
+            //recoveryLight.gameObject.SetActive(true);
             recoveryLight.intensity = 0.4f;
             /*recoveryLight.GetFieldInfo<Light2D>("m_ApplyToSortingLayers").SetValue(recoveryLight, new int[3]
             {
@@ -64,6 +64,12 @@ public class RecoveryObj : InteractionObj
             });*/
         }
     }
+
+    public void ActiveRecovLight()
+    {
+        recoveryLight.gameObject.SetActive(true);
+    }
+
     private void OnDisable()
     {
         if (StageManager.Instance.CurrentAreaType == AreaType.RECOVERY)

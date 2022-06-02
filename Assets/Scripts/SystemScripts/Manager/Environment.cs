@@ -107,6 +107,8 @@ public class Environment : MonoSingleton<Environment>
             };
 
             EventManager.StartListening(Global.EnterNextMap, action);
+
+            UIManager.Instance.InsertTopCenterNoticeQueue("雀汗 备开");
         }
     }
 
@@ -129,6 +131,8 @@ public class Environment : MonoSingleton<Environment>
             };
 
             EventManager.StartListening(Global.EnterNextMap, action);
+
+            UIManager.Instance.InsertTopCenterNoticeQueue("历林 备开");
         }
     }
 

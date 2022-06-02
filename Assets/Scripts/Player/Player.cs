@@ -18,6 +18,8 @@ public class Player : MonoBehaviour
         set { playerStat = value; }
     }
 
+    private float pasteAttackSpeed = 0f;
+
     [SerializeField]
     private PlayerInput playerInput = null;
     public PlayerInput PlayerInput
@@ -176,6 +178,14 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
+        if(pasteAttackSpeed != playerStat.AttackSpeed)
+        {
+
+            pasteAttackSpeed = playerStat.AttackSpeed;
+
+            EventManager.TriggerEvent("OnAttackSpeedChage");
+        }
+
         if (Input.GetKey(KeyCode.RightControl))
         {
             Debug.Log("RightControl");
@@ -241,14 +251,6 @@ public class Player : MonoBehaviour
 
         if((playerState.BodySlapping && !stateAbnormality))
         {
-            if (playerStat.choiceStat.reflection.isUnlock)
-            {
-                Vector2 dir1 = -(direction.normalized);
-                Vector2 dir2 = playerInput.LastBodySlapVector;
-
-                playerReflectionScript.DoReflection(bodySlapReflection, (dir1 + dir2).normalized, damage);
-            }
-
             return;
         }
 
@@ -298,7 +300,8 @@ public class Player : MonoBehaviour
     /// <param name="damage"></param>
     /// <param name="critical"></param>
     /// <param name="stateAbnormality"></param>
-    
+    /// 
+    // 투사체가 플레이어에게 데미지를 줄때는 무조건 attacker를 매개변수로 보내줘야한다.
     public void GetDamage(GameObject attacker, float damage, Vector2 effectPosition, Vector2 direction, Vector3? effectSize = null, bool critical = false, bool stateAbnormality = false)
     {
         if ((playerState.IsDrain && !stateAbnormality) ||
@@ -439,22 +442,25 @@ public class Player : MonoBehaviour
 
         EventManager.TriggerEvent("PlayerSetActiveFalse");
     }
-    private void EnemyDead(GameObject enemyObj, string objId)
+    private void EnemyDead(GameObject enemyObj, string objId, bool isDrained)
     {
         Enemy.Enemy enemy = enemyObj.GetComponent<Enemy.Enemy>();
 
         if (SlimeGameManager.Instance.CurrentBodyId == "origin")
         {
-            if (PlayerEnemyUnderstandingRateManager.Instance.CheckMountObjIdContain(objId))
+            if (!isDrained)
             {
-                PlayerEnemyUnderstandingRateManager.Instance.UpUnderstandingRate(objId, upUnderstandingRateValueWhenEnemyDead);
+                if (PlayerEnemyUnderstandingRateManager.Instance.CheckMountObjIdContain(objId))
+                {
+                    PlayerEnemyUnderstandingRateManager.Instance.UpUnderstandingRate(objId, upUnderstandingRateValueWhenEnemyDead);
 
-                BattleUIManager.Instance.InsertAbsorptionInfo(objId, PlayerEnemyUnderstandingRateManager.Instance.GetDrainProbabilityDict(objId),
-                    PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(objId), KillNoticeType.UNDERSTANDING);
-            }
-            else
-            {
-                PlayerEnemyUnderstandingRateManager.Instance.UpDrainProbabilityDict(objId, upMountingPercentageValueWhenEnemyDead);
+                    BattleUIManager.Instance.InsertAbsorptionInfo(objId, PlayerEnemyUnderstandingRateManager.Instance.GetDrainProbabilityDict(objId),
+                        PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(objId), KillNoticeType.UNDERSTANDING);
+                }
+                else
+                {
+                    PlayerEnemyUnderstandingRateManager.Instance.UpDrainProbabilityDict(objId, upMountingPercentageValueWhenEnemyDead);
+                }
             }
         }
         else

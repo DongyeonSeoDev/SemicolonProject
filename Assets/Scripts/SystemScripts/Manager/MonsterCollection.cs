@@ -501,6 +501,14 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         changeBodySlots[slotNumber - 1].Unregister();
     }
 
+    public void UpdateAllChangeableBody()
+    {
+        for(int i=0; i< changeBodySlots.Count; i++)
+        {
+            changeBodySlots[i].UpdateUI();
+        }
+    }
+
     #endregion
 
     #region save and load
