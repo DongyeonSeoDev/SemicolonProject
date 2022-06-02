@@ -268,6 +268,7 @@ public class BodyPoint : MonoBehaviour
     }
     private void PlayerDrain(float drainTime)
     {
+        transform.localPosition = originLocalPosition;
         isFarByPlayerByDrain = true;
 
         StartFarByMiddleTimer(drainTime);

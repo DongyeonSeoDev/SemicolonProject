@@ -42,6 +42,7 @@ public class InputTutoData
                 isClear = true;
                 timerStarted = false;
                 pressTimer = -1f;
+                KeyActionManager.Instance.EndExclamationCharging(true);
                 UIManager.Instance.RequestLogMsg("'" + key.ToString() + "' 키를(을) 획득하였습니다.");
             }
         }
@@ -85,7 +86,7 @@ public class InputTutorial : MonoBehaviour
     {
         #region 이동관련
 #if UNITY_EDITOR
-        float moveTutoWaitTime = 0.2f;
+        float moveTutoWaitTime = 3f;
 #else
         float moveTutoWaitTime = 3f;
 #endif
@@ -214,11 +215,19 @@ public class InputTutorial : MonoBehaviour
             return;
         }
 
-        if (Input.GetKey(KeySetting.fixedKeyDict[keyAction]))
+        if (Input.GetKeyDown(KeySetting.fixedKeyDict[keyAction]))
         {
             if (inputTutoDataDict.ContainsKey(keyAction) && !inputTutoDataDict[keyAction].timerStarted)
             {
-                KeyActionManager.Instance.SetPlayerHeadText("?", 0.5f);
+                //KeyActionManager.Instance.SetPlayerHeadText("?", 0.5f);
+                if (KeyAction.ATTACK == keyAction)
+                {
+                    KeyActionManager.Instance.ShowQuestionMark();
+                }
+                else
+                {
+                    KeyActionManager.Instance.ExclamationCharging(inputTutoDataDict[keyAction].pressTime, keyAction);
+                }
             }
 
             if (KeyAction.ATTACK == keyAction)
@@ -230,9 +239,11 @@ public class InputTutorial : MonoBehaviour
 
             keyNotPressed = false;
         }
-        else
+        
+        if(Input.GetKeyUp(KeySetting.fixedKeyDict[keyAction]))
         {
             SetTimerStartedFalse(keyAction);
+            KeyActionManager.Instance.EndExclamationCharging(false);
         }
     }
     private void CheckKey(KeyAction keyAction)
