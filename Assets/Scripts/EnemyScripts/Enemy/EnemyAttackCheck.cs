@@ -147,10 +147,10 @@ namespace Enemy
                 {
                     PlayerProjectile playerBullet = collision.gameObject.GetComponent<PlayerProjectile>();
 
-                    if (playerBullet != null || playerBullet.MoveVec != Vector2.zero)
+                    if (playerBullet != null && playerBullet.MoveVec != Vector2.zero)
                     {
                         var enemyBullet = EnemyPoolManager.Instance.GetPoolObject(Type.Bullet, playerBullet.transform.position).GetComponent<EnemyBullet>();
-                        enemyBullet.Init(EnemyController.AI, -playerBullet.MoveVec, attackPower, Color.magenta);
+                        enemyBullet.Init(EnemyController.AI, -playerBullet.MoveVec, attackPower, Color.magenta, null, 2);
                         playerBullet.Despawn();
 
                         return;
@@ -185,7 +185,7 @@ namespace Enemy
                         enemyBullet.isReflection = true;
                         enemyBullet.RemoveBullet();
                         var playerBullet = EnemyPoolManager.Instance.GetPoolObject(Type.Bullet, enemyBullet.transform.position).GetComponent<EnemyBullet>();
-                        playerBullet.Init(EnemyController.PLAYER, -enemyBullet.targetDirection, enemyBullet.attackDamage, Color.green, this.enemy);
+                        playerBullet.Init(EnemyController.PLAYER, -enemyBullet.targetDirection, enemyBullet.attackDamage, Color.green, this.enemy, 2);
 
                         return;
                     }

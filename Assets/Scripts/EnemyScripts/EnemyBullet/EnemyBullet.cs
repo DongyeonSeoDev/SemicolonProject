@@ -7,6 +7,7 @@ namespace Enemy
     public class EnemyBullet : EnemyPoolData
     {
         public float speed;
+        public float multipleSpeed;
         public float addAngle;
         public float removeBulletTime;
         public float fadeTime;
@@ -75,7 +76,7 @@ namespace Enemy
                 return;
             }
 
-            transform.position += targetDirection * speed * Time.deltaTime;
+            transform.position += targetDirection * speed * multipleSpeed * Time.deltaTime;
 
             if (transform.position.x < limitMinPosition.x || transform.position.x > limitMaxPosition.x 
                 || transform.position.y < limitMinPosition.y || transform.position.y > limitMaxPosition.y)
@@ -178,12 +179,13 @@ namespace Enemy
             ResetBullet();
         }
 
-        public void Init(EnemyController controller, Vector3 direction, float damage, Color color, Enemy enemy = null)
+        public void Init(EnemyController controller, Vector3 direction, float damage, Color color, Enemy enemy = null, float multipleSpeed = 1f)
         {
             eEnemyController = controller;
             attackDamage = damage;
             targetDirection = direction;
             this.enemy = enemy;
+            this.multipleSpeed = multipleSpeed;
 
             isDamage = false;
 
