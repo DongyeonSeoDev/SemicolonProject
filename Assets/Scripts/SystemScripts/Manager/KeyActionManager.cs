@@ -76,7 +76,6 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         }
         //SkillUIManager.Instance.UpdateSkillKeyCode();
         MonsterCollection.Instance.UpdateSavedBodyChangeKeyCodeTxt();
-
     }
 
     private void Update()
@@ -84,6 +83,16 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             CancelKeySetting();
+        }
+
+        //Test Code
+        if (Input.GetKeyDown(KeyCode.N))
+        {
+            ExclamationCharging(3f, KeyAction.UP);
+        }
+        if (Input.GetKeyUp(KeyCode.N))
+        {
+            EndExclamationCharging(true);
         }
     }
 
@@ -308,14 +317,17 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
 
             DOUtil.StartCo("Move Key Get UI", Util.DelayFuncCo(() =>
             {
-                headFillImg.transform.DOScale(SVector3.onePointThree, 0.4f).SetEase(Ease.Linear);
-                headFillImg.DOColor(Color.clear, 0.4f).SetEase(Ease.Linear).OnComplete(() =>
+                Sequence seq = DOTween.Sequence();
+                seq.Append(headFillImg.transform.DOScale(Vector3.one * 1.5f, 0.4f).SetEase(Ease.Linear));
+                seq.Append(headFillImg.transform.DOScale(SVector3.onePointThree, 0.26f).SetLoops(3, LoopType.Yoyo));
+                seq.Append(headFillImg.DOColor(Color.clear, 0.33f).SetEase(Ease.Linear));
+                seq.AppendCallback(() =>
                 {
                     headImg.gameObject.SetActive(false);
                     headFillImg.gameObject.SetActive(false);
                     headImgFullTime = -1f;
-                });
-            }, 1f, false, false), this);
+                }).Play();
+            }, 0.5f, false, false), this);
             
         }
     }
