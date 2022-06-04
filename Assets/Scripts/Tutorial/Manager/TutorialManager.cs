@@ -188,6 +188,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                                 Vector3 startPos = GetUITutorialReady(skillUIArr[0].GetComponent<RectTransform>(), new Vector2(918, 393)); //몬스터 위치(의 스크린 좌표)로
                                
                                 Vector3 orgEnergeEffMaskScl = StoredData.GetValueData<Vector3>("orgEnergeEffMaskScl");
+                                StoredData.DeleteValueKey("orgEnergeEffMaskScl");
                                 SkillUIManager sum = SkillUIManager.Instance;
                                 sum.IsAutoFitEnergeBar = false;
                                 sum.energeFill.fillAmount = 0;

@@ -155,6 +155,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     private GameManager gm;
     private SlimeGameManager sgm;
     private SoundManager sm;
+    private MonsterCollection mc;
 
     #region Init
     private void Awake()
@@ -222,6 +223,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         gm = GameManager.Instance;
         sgm = SlimeGameManager.Instance;
         sm = SoundManager.Instance;
+        mc = MonsterCollection.Instance;
     }
 
     private void Start()
@@ -533,7 +535,7 @@ public partial class UIManager : MonoSingleton<UIManager>
             case UIType.KEYSETTING:
                 if (!gm.savedData.tutorialInfo.isEnded) //튜토리얼 안끝났다면 키세팅 창 못열게
                 {
-                    UIManager.Instance.RequestSystemMsg("아직 사용할 수 없는 기능입니다.");
+                    RequestSystemMsg("아직 사용할 수 없는 기능입니다.");
                     return true;
                 }
                 if (KeyActionManager.Instance.IsChangingKeySetting)  //키세팅 변경 중에는 esc로 키세팅 UI 안꺼지게
@@ -556,7 +558,7 @@ public partial class UIManager : MonoSingleton<UIManager>
                 if (!gameUIList[(int)UIType.CHANGEABLEMOBLIST].gameObject.activeSelf)
                 {
                     TimeManager.TimePause();
-                    MonsterCollection.Instance.UpdateAllChangeableBody();
+                    mc.UpdateAllChangeableBody();
                 }
                 break;
             case UIType.STAT:  //스탯 UI 업데이트
@@ -570,13 +572,13 @@ public partial class UIManager : MonoSingleton<UIManager>
                 EffectManager.Instance.OnTopRightBtnEffect(UIType.STAT, false);
                 break;
             case UIType.MONSTERINFO_DETAIL_STAT: //몹 자세히 보기에서 추가 스탯 정보 UI 업뎃
-                MonsterCollection.Instance.DetailStat();
+                mc.DetailStat();
                 break;
             case UIType.MONSTERINFO_DETAIL_ITEM:  //몹 자세히 보기에서 드랍템 정보 UI 업뎃
-                MonsterCollection.Instance.DetailItem();
+                mc.DetailItem();
                 break;
             case UIType.MONSTERINFO_DETAIL_FEATURE:   //몹 자세히 보기에서 특성 정보 UI 업뎃
-                MonsterCollection.Instance.DetailFeature();
+                mc.DetailFeature();
                 break;
             case UIType.CHEF_FOODS_PANEL:
                 if (gameUIList[(int)type].gameObject.activeSelf)  //만들 요리 고르는 창 닫으려는데 음식 제작 패널 켜져있으면 그걸 먼저 닫아줌
@@ -589,7 +591,7 @@ public partial class UIManager : MonoSingleton<UIManager>
                 }
                 break;
             case UIType.MINIGAME_PICKUP:
-                if (GameManager.Instance.pickupCheckGame.IsGameStart) return true; //미니게임 하고 있으면 상호작용 안함
+                if (gm.pickupCheckGame.IsGameStart) return true; //미니게임 하고 있으면 상호작용 안함
                 break;
             case UIType.UIOFFCONFIRM:
                 if (Util.IsActiveGameUI(UIType.UIOFFCONFIRM)) CurrentReConfirmUI.IsCloseable = false;
@@ -720,7 +722,7 @@ public partial class UIManager : MonoSingleton<UIManager>
             case UIType.KEYSETTING:  //키세팅 창 닫히면 상호작용 표시, 스킬 슬롯, 몸 저장 슬롯 등 키코드가 나오는 UI들을 다시 업데이트함
                 itrNoticeList.ForEach(x => x.Set());
                 SkillUIManager.Instance.UpdateSkillKeyCode();
-                MonsterCollection.Instance.UpdateSavedBodyChangeKeyCodeTxt();
+                mc.UpdateSavedBodyChangeKeyCodeTxt();
                 break;
             case UIType.CHEF_FOODS_PANEL:
                 TimeManager.TimeResume();
@@ -735,7 +737,7 @@ public partial class UIManager : MonoSingleton<UIManager>
                 TimeManager.TimeResume();
                 break;
             case UIType.CHANGEABLEMOBLIST:
-                MonsterCollection.Instance.RemoveBody(3);
+                mc.RemoveBody(3);
                 break;
         }
     }
@@ -972,7 +974,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     {
         mobSaveWindowActiveDic[id] = false;
         EventManager.TriggerEvent("PlayerBodySet", id, true);
-        MonsterCollection.Instance.IDToSave = id;
+        mc.IDToSave = id;
     }
     #endregion
 

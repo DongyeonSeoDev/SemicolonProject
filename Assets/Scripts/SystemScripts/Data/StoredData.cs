@@ -19,23 +19,41 @@ public static class StoredData
             valueDataDic[key] = data;
     }
 
-    public static object GetValueData(string key)
+    public static object GetValueData(string key, bool afterDeleteKey = false)
     {
         if(valueDataDic.ContainsKey(key))
         {
-            return valueDataDic[key];
+            if (!afterDeleteKey)
+            {
+                return valueDataDic[key];
+            }
+            else
+            {
+                object data = valueDataDic[key];
+                DeleteValueKey(key);
+                return data;
+            }
         }
-        Debug.Log("키가 없다 : " + key);
+        Debug.Log("Not Exist Key : " + key);
         return null;
     }
 
-    public static T GetValueData<T>(string key)
+    public static T GetValueData<T>(string key, bool afterDeleteKey = false)
     {
         if (valueDataDic.ContainsKey(key))
         {
-            return (T)valueDataDic[key];
+            if (!afterDeleteKey)
+            {
+                return (T)valueDataDic[key];
+            }
+            else
+            {
+                T t = (T)valueDataDic[key];
+                DeleteValueKey(key);
+                return t;
+            }
         }
-        Debug.Log("키가 없다 : " + key);
+        Debug.Log("Not Exist Key : " + key);
         return default;
     }
 
@@ -61,23 +79,33 @@ public static class StoredData
             gameObjectDataDic[key] = data;
     }
 
-    public static GameObject GetGameObjectData(string key)
+    public static GameObject GetGameObjectData(string key, bool afterDeleteKey = false)
     {
         if (gameObjectDataDic.ContainsKey(key))
         {
-            return gameObjectDataDic[key];
+            if(!afterDeleteKey)
+                return gameObjectDataDic[key];
+
+            GameObject data = gameObjectDataDic[key];
+            DeleteGameObjectKey(key);
+            return data;
         }
-        Debug.Log("키가 없다 : " + key);
+        Debug.Log("Not Exist Key : " + key);
         return null;
     }
 
-    public static T GetGameObjectData<T>(string key)
+    public static T GetGameObjectData<T>(string key, bool afterDeleteKey = false)
     {
         if (gameObjectDataDic.ContainsKey(key))
         {
-            return gameObjectDataDic[key].GetComponent<T>();
+            if(!afterDeleteKey)
+                return gameObjectDataDic[key].GetComponent<T>();
+
+            T data = gameObjectDataDic[key].GetComponent<T>();
+            DeleteGameObjectKey(key);
+            return data;
         }
-        Debug.Log("키가 없다 : " + key);
+        Debug.Log("Not Exist Key : " + key);
         return default;
     }
 
@@ -91,7 +119,7 @@ public static class StoredData
 
     public static bool HasGameObjectKey(string key) => gameObjectDataDic.ContainsKey(key);
 
-    public static bool TryGetGameObject(string key, out GameObject obj)
+    /*public static bool TryGetGameObject(string key, out GameObject obj)
     {
         obj = gameObjectDataDic.ContainsKey(key) ? gameObjectDataDic[key] : null;
         return obj != null;
@@ -101,7 +129,7 @@ public static class StoredData
     {
         obj = gameObjectDataDic.ContainsKey(key) ? gameObjectDataDic[key].GetComponent<T>() : default;
         return obj != null;
-    }
+    }*/
 
     #endregion
 }

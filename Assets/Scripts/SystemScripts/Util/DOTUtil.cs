@@ -13,58 +13,42 @@ namespace FkTweening
         private static Dictionary<string, IEnumerator> tweeningDict = new Dictionary<string, IEnumerator>();
 
         #region DO
-        public static CTween DOIntensity(this Light2D light, float endValue, float duration, bool setUpdate = false, Action onComplete = null)
+        public static void DOIntensity(this Light2D light, float endValue, float duration, bool setUpdate = false, Action onComplete = null)
         {
-            string key = "DOT_Light2D_Intensity_" + light.name;
-            Action act = () => ExecuteTweening(key, DOIntensityCo(light, endValue, duration, setUpdate, onComplete), light);
-            act();
-            CTween t = new CTween(key, act);
-            return t;
+            //string key = "DOT_Light2D_Intensity_" + light.name;
+            ExecuteTweening("DOT_Light2D_Intensity_" + light.name, DOIntensityCo(light, endValue, duration, setUpdate, onComplete), light);
+           
         }
 
-        public static CTween DOVignetteColor(this Vignette vig, Color endValue, float duration, bool setUpdate = false, Action onComplete = null)
+        public static void DOVignetteColor(this Vignette vig, Color endValue, float duration, bool setUpdate = false, Action onComplete = null)
         {
             string key = "DOT_Vignette_Color_" + vig.name;
-            Action act = () => ExecuteTweening(key, DOVignetteColorCo(vig, endValue, duration, setUpdate, onComplete), Environment.Instance);
-            act();
-            CTween t = new CTween(key, act);
-            return t;
+            ExecuteTweening(key, DOVignetteColorCo(vig, endValue, duration, setUpdate, onComplete), Environment.Instance);
+            
         }
 
-        public static CTween DOVignetteIntensity(this Vignette vig, float endValue, float duration, bool setUpdate = false, Action onComplete = null)
+        public static void DOVignetteIntensity(this Vignette vig, float endValue, float duration, bool setUpdate = false, Action onComplete = null)
         {
-            string key = "DOT_Vignette_Intensity_" + vig.name;
-            Action act = () => ExecuteTweening(key, DOVignetteIntensityCo(vig, endValue, duration, setUpdate, onComplete), Environment.Instance);
-            act();
-            CTween t = new CTween(key, act);
-            return t;
+            ExecuteTweening("DOT_Vignette_Intensity_" + vig.name, DOVignetteIntensityCo(vig, endValue, duration, setUpdate, onComplete), Environment.Instance);
         }
 
-        public static CTween DOChromIntensity(this ChromaticAberration CA, float endValue, float duration, bool setUpdate = false, Action onComplete = null)
+        public static void DOChromIntensity(this ChromaticAberration CA, float endValue, float duration, bool setUpdate = false, Action onComplete = null)
         {
-            string key = "DOT_ChromaticAberration_Intensity_" + CA.name;
-            Action act = () => ExecuteTweening(key, DOChromIntensityCo(CA, endValue, duration, setUpdate, onComplete), Environment.Instance);
-            act();
-            CTween t = new CTween(key, act);
-            return t;
+            ExecuteTweening("DOT_ChromaticAberration_Intensity_" + CA.name, DOChromIntensityCo(CA, endValue, duration, setUpdate, onComplete), Environment.Instance);
         }
 
-        public static CTween DOInnerRadius(this Light2D light, float endValue, float duration, bool setUpdate = false, Action onComplete = null)
+        public static void DOInnerRadius(this Light2D light, float endValue, float duration, bool setUpdate = false, Action onComplete = null)
         {
-            string key = "DOT_Light2D_InnerRadius_" + light.name;
-            Action act = () => ExecuteTweening(key, DOInnerRadiusCo(light, endValue, duration, setUpdate, onComplete), light);
-            act();
-
-            return new CTween(key, act);
+            ExecuteTweening("DOT_Light2D_InnerRadius_" + light.name, DOInnerRadiusCo(light, endValue, duration, setUpdate, onComplete), light);
         }
 
-        public static CTween DOOuterRadius(this Light2D light, float endValue, float duration, bool setUpdate = false, Action onComplete = null)
+        public static void DOOuterRadius(this Light2D light, float endValue, float duration, bool setUpdate = false, Action onComplete = null)
         {
-            string key = "DOT_Light2D_OuterRadius_" + light.name;
-            Action act = () => ExecuteTweening(key, DOOuterRadiusCo(light, endValue, duration, setUpdate, onComplete), light);
-            act();
-
-            return new CTween(key, act);
+            //string key = "DOT_Light2D_OuterRadius_" + light.name;
+            ExecuteTweening("DOT_Light2D_OuterRadius_" + light.name, DOOuterRadiusCo(light, endValue, duration, setUpdate, onComplete), light);
+            //Action act = () => ExecuteTweening(key, DOOuterRadiusCo(light, endValue, duration, setUpdate, onComplete), light);
+            //act();
+            //return new CTween(key, act);
         }
 
         #endregion
@@ -275,7 +259,7 @@ namespace FkTweening
         #endregion
     }
 
-    public class CTween
+    /*public class CTween
     {
         public string key;
         public Action tween;
@@ -291,5 +275,5 @@ namespace FkTweening
             this.tween = tween;
             this.key = key;
         }
-    }
+    }*/
 }
