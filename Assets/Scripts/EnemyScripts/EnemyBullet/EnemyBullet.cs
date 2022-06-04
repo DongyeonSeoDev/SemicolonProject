@@ -35,6 +35,8 @@ namespace Enemy
 
         public float attackDamage;
 
+        public Type bulletEffectType;
+
         private Enemy enemy;
 
         private void Awake()
@@ -45,28 +47,23 @@ namespace Enemy
 
         private void Start()
         {
-            EventManager.StartListening("AfterPlayerRespawn", () =>
-            {
-                RemoveBullet();
-            });
-
-
-            EventManager.StartListening("ExitCurrentMap", () =>
-            {
-                RemoveBullet();
-            });
-
-            EventManager.StartListening("EnemyStart", () =>
-            {
-                isStop = false;
-            });
-
-            EventManager.StartListening("EnemyStop", () =>
-            {
-                isStop = true;
-            });
-
             ws = new WaitForSeconds(removeBulletTime);
+        }
+
+        private void OnEnable()
+        {
+            EventManager.StartListening("AfterPlayerRespawn", RemoveBullet);
+            EventManager.StartListening("ExitCurrentMap", RemoveBullet);
+            EventManager.StartListening("EnemyStart", IsStopFalse);
+            EventManager.StartListening("EnemyStop", IsStopTrue);
+        }
+
+        private void OnDisable()
+        {
+            EventManager.StopListening("AfterPlayerRespawn", RemoveBullet);
+            EventManager.StopListening("ExitCurrentMap", RemoveBullet);
+            EventManager.StopListening("EnemyStart", IsStopFalse);
+            EventManager.StopListening("EnemyStop", IsStopTrue);
         }
 
         private void Update()
@@ -89,7 +86,15 @@ namespace Enemy
         {
             if (isBulletEffect)
             {
-                EnemyPoolManager.Instance.GetPoolObject(Type.BulletEffect, transform.position).GetComponent<BulletEffect>().Play(angle);
+                switch (bulletEffectType)
+                {
+                    case Type.BulletEffect:
+                        EnemyPoolManager.Instance.GetPoolObject(bulletEffectType, transform.position).GetComponent<BulletEffect>().Play(angle);
+                        break;
+                    case Type.ReflectionBulletEffect:
+                        EnemyPoolManager.Instance.GetPoolObject(bulletEffectType, transform.position).transform.rotation = Quaternion.Euler(0f, 0f, angle);
+                        break;
+                }
             }
 
             isDamage = true;
@@ -204,5 +209,8 @@ namespace Enemy
                 gameObject.layer = LayerMask.NameToLayer("PLAYERPROJECTILE");
             }
         }
+
+        private void IsStopTrue() => isStop = true;
+        private void IsStopFalse() => isStop = false;
     }
 }
