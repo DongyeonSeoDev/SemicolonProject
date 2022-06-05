@@ -25,6 +25,7 @@ namespace Enemy
 
         private SpriteRenderer sr;
         private BoxCollider2D col;
+        private Animator anim;
         private WaitForSeconds ws;
 
         private Color currentColor;
@@ -43,6 +44,7 @@ namespace Enemy
         {
             sr = GetComponent<SpriteRenderer>();
             col = GetComponent<BoxCollider2D>();
+            anim = GetComponent<Animator>();
         }
 
         private void Start()
@@ -56,6 +58,8 @@ namespace Enemy
             EventManager.StartListening("ExitCurrentMap", RemoveBullet);
             EventManager.StartListening("EnemyStart", IsStopFalse);
             EventManager.StartListening("EnemyStop", IsStopTrue);
+
+            IsStopFalse();
         }
 
         private void OnDisable()
@@ -210,7 +214,24 @@ namespace Enemy
             }
         }
 
-        private void IsStopTrue() => isStop = true;
-        private void IsStopFalse() => isStop = false;
+        private void IsStopTrue()
+        {
+            isStop = true;
+
+            if (anim != null)
+            {
+                anim.speed = 0f;
+            }
+        }
+
+        private void IsStopFalse()
+        {
+            isStop = false;
+
+            if (anim != null)
+            {
+                anim.speed = 1f;
+            }
+        }
     }
 }

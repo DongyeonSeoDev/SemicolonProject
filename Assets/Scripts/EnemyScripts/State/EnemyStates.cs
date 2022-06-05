@@ -136,6 +136,11 @@ namespace Enemy
         {
             EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Attack, enemyData.enemyAnimator, TriggerType.ResetTrigger);
             EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.AttackEnd, enemyData.enemyAnimator, TriggerType.SetTrigger);
+
+            if (enemyData.endAttack != null)
+            {
+                enemyData.endAttack.Invoke();
+            }
         }
     }
 
