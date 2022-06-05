@@ -41,7 +41,7 @@ public static partial class Global
 
     public static int EnumCount<T>() => Enum.GetValues(typeof(T)).Length;
 
-    private static Dictionary<string, ActionGroup> stringToActionDict = new Dictionary<string, ActionGroup>();
+    private static Dictionary<string, Water.ActionGroup> stringToActionDict = new Dictionary<string, Water.ActionGroup>();
 
 #if UNITY_EDITOR
     public static void SetResordEventKey()
@@ -89,14 +89,14 @@ public static partial class Global
         if (stringToActionDict.ContainsKey(key))
             stringToActionDict[key].monoAction += action;
         else
-            stringToActionDict.Add(key, new ActionGroup(action));
+            stringToActionDict.Add(key, new Water.ActionGroup(action));
     }
     public static void AddAction(string key, Action<object> action)
     {
         if (stringToActionDict.ContainsKey(key))
             stringToActionDict[key].objAction += action;
         else
-            stringToActionDict.Add(key, new ActionGroup(action));
+            stringToActionDict.Add(key, new Water.ActionGroup(action));
     }
 
     public static void RemoveMonoAction(string key, Action<MonoBehaviour> action)

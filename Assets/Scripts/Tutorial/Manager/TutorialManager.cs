@@ -100,8 +100,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                 changeableBodysUIArr[0].GetComponent<CanvasGroup>().alpha = 0;  //alpha만 0으로 하고 켜줌
                 changeableBodysUIArr[0].gameObject.SetActive(true);
 
-                float hpFillEffectMaskCenterInitScale = StoredData.GetValueData<float>("hpFillEffectMaskCenterInitScale");
-                StoredData.DeleteValueKey("hpFillEffectMaskCenterInitScale");
+                float hpFillEffectMaskCenterInitScale = StoredData.GetValueData<float>("hpFillEffectMaskCenterInitScale", true);
 
                 UIManager.Instance.playerHPInfo.first.fillAmount = 0;
                 UIManager.Instance.playerHPInfo.third.fillAmount = 0;
@@ -187,8 +186,8 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                                 //Init
                                 Vector3 startPos = GetUITutorialReady(skillUIArr[0].GetComponent<RectTransform>(), new Vector2(918, 393)); //몬스터 위치(의 스크린 좌표)로
                                
-                                Vector3 orgEnergeEffMaskScl = StoredData.GetValueData<Vector3>("orgEnergeEffMaskScl");
-                                StoredData.DeleteValueKey("orgEnergeEffMaskScl");
+                                Vector3 orgEnergeEffMaskScl = StoredData.GetValueData<Vector3>("orgEnergeEffMaskScl", true);
+                                //StoredData.DeleteValueKey("orgEnergeEffMaskScl");
                                 SkillUIManager sum = SkillUIManager.Instance;
                                 sum.IsAutoFitEnergeBar = false;
                                 sum.energeFill.fillAmount = 0;

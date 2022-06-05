@@ -265,46 +265,47 @@ public class HeadUIData
 
 
 
-
-[Serializable]
-public class CheckGameStringKeys
-{
-    public List<string> poolKeyList = new List<string>();
-    public List<Pair<string,EventKeyCheck>> eventKeyList = new List<Pair<string, EventKeyCheck>>();
-}
-
-public class ActionGroup
-{
-    public Action<MonoBehaviour> monoAction;
-    public Action<object> objAction;
-
-    public EventKeyCheck ekc;
-
-   
-    public ActionGroup(Action<MonoBehaviour> monoAction)
-    {
-        this.monoAction = monoAction;
-        ekc = EventKeyCheck.MONO;
-    }
-    public ActionGroup(Action<object> objAction)
-    {
-        this.objAction = objAction;
-        ekc = EventKeyCheck.OBJECT;
-    }
-
-    
-    public void ActionTrigger(MonoBehaviour mono)
-    {
-        monoAction?.Invoke(mono);
-    }
-    public void ActionTrigger(object obj)
-    {
-        objAction?.Invoke(obj);
-    }
-}
-
 namespace Water
 {
+
+    [Serializable]
+    public class CheckGameStringKeys
+    {
+        public List<string> poolKeyList = new List<string>();
+        public List<Pair<string, EventKeyCheck>> eventKeyList = new List<Pair<string, EventKeyCheck>>();
+    }
+
+    public class ActionGroup
+    {
+        public Action<MonoBehaviour> monoAction;
+        public Action<object> objAction;
+
+        public EventKeyCheck ekc;
+
+
+        public ActionGroup(Action<MonoBehaviour> monoAction)
+        {
+            this.monoAction = monoAction;
+            ekc = EventKeyCheck.MONO;
+        }
+        public ActionGroup(Action<object> objAction)
+        {
+            this.objAction = objAction;
+            ekc = EventKeyCheck.OBJECT;
+        }
+
+
+        public void ActionTrigger(MonoBehaviour mono)
+        {
+            monoAction?.Invoke(mono);
+        }
+        public void ActionTrigger(object obj)
+        {
+            objAction?.Invoke(obj);
+        }
+    }
+
+
     [Serializable]
     public class PoolBaseData
     {

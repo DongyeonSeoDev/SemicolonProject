@@ -301,6 +301,8 @@ public partial class UIManager : MonoSingleton<UIManager>
         EventManager.StartListening("PickupMiniGame", (Action<bool>)(start =>
         {
             normalPanelCanvasg.DOFade(start ? 0 : 1, 0.25f).SetUpdate(true);
+            //menuCvsg.alpha = start ? 0 : 1;
+            //CanInteractUI = !start;
         }));
         EventManager.StartListening("StartCutScene", () =>
         {
@@ -501,6 +503,11 @@ public partial class UIManager : MonoSingleton<UIManager>
         {
             if(!Util.IsActiveGameUI(UIType.MENU)) //메뉴창이 꺼져있으면
             {
+                if (gm.pickupCheckGame.IsActivePickGame)
+                {
+                    return true;  // 채집 미니게임창이 켜져있으면 메뉴 못열음
+                }
+
                 OnUIInteractSetActive(UIType.MENU, true, true);  //메뉴창을 띄움
                 MenuBtnSelectedMark(type);
                 selectedMenuType = type;

@@ -66,7 +66,7 @@ public class CookingManager : MonoSingleton<CookingManager>
         countPlusBtn.GetComponent<ButtonHoldEvent>().CanContinue += () => countPlusBtn.interactable;
         countMinusBtn.GetComponent<ButtonHoldEvent>().CanContinue += () => countMinusBtn.interactable;
 
-        Global.AddMonoAction(Global.TalkWithChef, x => ShowFoodList((Chef)x));
+        //Global.AddMonoAction(Global.TalkWithChef, x => ShowFoodList((Chef)x));
 
         Global.AddAction(Global.MakeFood, item =>
         {

@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
+using Water;
 
 public partial class GameManager : MonoSingleton<GameManager>  
 {

@@ -26,6 +26,7 @@ public class PickupCheck : MonoBehaviour
     private bool isReady = false; //미니게임 UI가 다 나왔는지
     private bool isGameStart = false; //미니 게임을 시작했는지
     public bool IsGameStart => isGameStart;
+    public bool IsActivePickGame => isReady || isGameStart;
 
     private Vector3 tweeningMove = new Vector3(50, 0, 0);
     private WaitForSecondsRealtime wsr = new WaitForSecondsRealtime(0.4f);
