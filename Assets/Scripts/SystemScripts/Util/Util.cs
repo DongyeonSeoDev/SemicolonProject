@@ -158,10 +158,11 @@ public static partial class Util
             }
         }
 
+        int ran1, ran2;
         for (int i = 0; i < randomScale; i++)
         {
-            int ran1 = UnityEngine.Random.Range(0, itemList.Count);
-            int ran2 = UnityEngine.Random.Range(0, itemList.Count);
+            ran1 = UnityEngine.Random.Range(0, itemList.Count);
+            ran2 = UnityEngine.Random.Range(0, itemList.Count);
             T temp = itemList[ran1];
             itemList[ran1] = itemList[ran2];
             itemList[ran2] = temp;
@@ -175,10 +176,11 @@ public static partial class Util
         List<T> itemList = list.ToList();
         if (itemList.Count < 2) return itemList;
 
+        int ran1, ran2;
         for (int i = 0; i < randomScale; i++)
         {
-            int ran1 = UnityEngine.Random.Range(0, itemList.Count);
-            int ran2 = UnityEngine.Random.Range(0, itemList.Count);
+            ran1 = UnityEngine.Random.Range(0, itemList.Count);
+            ran2 = UnityEngine.Random.Range(0, itemList.Count);
             T temp = itemList[ran1];
             itemList[ran1] = itemList[ran2];
             itemList[ran2] = temp;
