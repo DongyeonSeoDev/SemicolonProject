@@ -345,6 +345,8 @@ public class StageManager : MonoSingleton<StageManager>
 
         foreach (AreaType type in Enum.GetValues(typeof(AreaType)))
         {
+            if (type == AreaType.START) continue;
+
             randomRoomDict[floor][type] = randomRoomDict[floor][type].ToRandomList();
         }
     }
