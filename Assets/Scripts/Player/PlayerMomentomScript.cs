@@ -71,7 +71,6 @@ public class PlayerMomentomScript : MonoBehaviour
     }
     private void PlayerDead()
     {
-        Debug.Log("aaaa");
         momentomStarted = false;
 
         momentomTimer = 0f;

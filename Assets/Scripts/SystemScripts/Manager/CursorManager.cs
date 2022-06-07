@@ -15,6 +15,8 @@ public class CursorManager : MonoSingleton<CursorManager>
     }
 
     private Texture2D cursorTexture;
+    private Dictionary<string, Texture2D> cursorTextureDict = new Dictionary<string, Texture2D>();
+
     private readonly Vector2 cursorOffset = new Vector2(26f, 26f);
 
     private bool isOnEnemy = false;
@@ -83,12 +85,24 @@ public class CursorManager : MonoSingleton<CursorManager>
 #if !UNITY_EDITOR
         Util.DelayFunc(() => Cursor.lockState = CursorLockMode.Confined, 5);
 #endif
+        cursorTextureDict.Add("DefaultCursor", GetCursor("DefaultCursor"));
+        cursorTextureDict.Add("DefaultClickedCursor", GetCursor("DefaultClickedCursor"));
+        cursorTextureDict.Add("OnEnemyCursor", GetCursor("OnEnemyCursor"));
+        cursorTextureDict.Add("OnEnemyClickedCursor", GetCursor("OnEnemyClickedCursor"));
+
         SetCursor("DefaultCursor");
     }
+    private Texture2D GetCursor(string cursorFileName)
+    { 
+        Texture2D texture2D = Resources.Load<Texture2D>("System/Sprites/Cursor/" + cursorFileName);
 
+        return texture2D;
+    }
     private void SetCursor(string cursorFileName)
     {
-        cursorTexture = Resources.Load<Texture2D>("System/Sprites/Cursor/" + cursorFileName);
-        Cursor.SetCursor(cursorTexture, cursorOffset, CursorMode.ForceSoftware);
+        if (cursorTextureDict.TryGetValue(cursorFileName, out cursorTexture))
+        {
+            Cursor.SetCursor(cursorTexture, cursorOffset, CursorMode.ForceSoftware);
+        }
     }
 }
