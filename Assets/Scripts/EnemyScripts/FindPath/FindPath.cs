@@ -128,7 +128,14 @@ public static class FindPath
 
                 while (positionList.Count > 0)
                 {
-                    dataStack.Push(positionList.Pop());
+                    var a = positionList.Pop();
+
+                    if (positionList.Count != 0)
+                    {
+                        Debug.DrawLine(new Vector3(a.x, a.y, 0f), new Vector3(positionList.Peek().x, positionList.Peek().y, 0f), Color.red, 5f);
+                    }
+
+                    dataStack.Push(a);
                 }
 
                 return dataStack;
