@@ -206,7 +206,7 @@ public class PlayerInput : MonoBehaviour
         if (!(isPauseByTuto || isPause || isPauseByCutScene || gameClear) &&
             !(playerState.IsDead || playerState.IsStun || playerState.IsKnockBack || playerState.IsDrain))
         {
-            if (!playerState.Chargning)
+            if (!playerState.Chargning && !playerState.BodySlapping)
             {
                 moveVector.x = Input.GetAxisRaw("Horizontal");
                 moveVector.y = Input.GetAxisRaw("Vertical");
@@ -257,15 +257,6 @@ public class PlayerInput : MonoBehaviour
 
                         playerStopStayTimer = playerStopStayTime;
                     }
-                }
-
-                if (playerState.BodySlapping)
-                {
-                    moveVector = Vector2.zero;
-                }
-                else if (moveVector != Vector2.zero)
-                {
-                    lastMoveVector = moveVector;
                 }
 
                 // ContainKeyüũ

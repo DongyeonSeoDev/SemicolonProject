@@ -374,6 +374,7 @@ public class BodyPoint : MonoBehaviour
         else if(isFarByPlayerByDrain)
         {
             farByMiddleMax = true;
+
             farMaxPos = transform.position;
         }
     }
