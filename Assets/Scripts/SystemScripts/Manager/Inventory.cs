@@ -14,7 +14,7 @@ public class Inventory : MonoSingleton<Inventory>
 
     [SerializeField] private int maxItemSlotCount = 20;
 
-    public GameObject invenUseActionImg;
+    public GameObject invenUseActionImg, invenQuikActionImg;
 
     #region Drag
     private ItemSlot beginSlot;
@@ -304,6 +304,12 @@ public class Inventory : MonoSingleton<Inventory>
         }
 
         return list;
+    }
+
+    public void SetActiveUseableMark(bool useable)
+    {
+        invenUseActionImg.SetActive(useable);
+        invenQuikActionImg.SetActive(useable);
     }
 
     #region Á¤·Ä

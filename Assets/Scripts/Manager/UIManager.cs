@@ -162,6 +162,8 @@ public partial class UIManager : MonoSingleton<UIManager>
     {
         InitData();
         CreatePool();
+
+        EventManager.StartListening("UpdateKeyCodeUI", () => itrNoticeList.ForEach(x => x.Set()));
     }
 
     private void InitData()
@@ -294,6 +296,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         });
         EventManager.StartListening("PlayerRespawn", () => {
             CanInteractUI = true;
+            KeyActionManager.Instance.UnregisterQuikSlot();
         });
         EventManager.StartListening("GameClear", () => OnUIInteract(UIType.CLEAR, true));
         EventManager.StartListening("StageClear", () =>InsertNoticeQueue("Clear", clearNoticeMsgVGrd, 90));
@@ -415,6 +418,13 @@ public partial class UIManager : MonoSingleton<UIManager>
                     OnClickItemUseBtn();
                 }
             }
+            else if(Input.GetKeyDown(KeyCode.F) && Util.IsActiveGameUI(UIType.ITEM_DETAIL))
+            {
+                if (selectedItemSlot)
+                {
+                    KeyActionManager.Instance.RegisterQuikSlot(selectedItemId);
+                }
+            }
         }
 
 #if UNITY_EDITOR
@@ -533,7 +543,7 @@ public partial class UIManager : MonoSingleton<UIManager>
             case UIType.INVENTORY:
                 if(!Util.IsActiveGameUI(type))
                 {
-                    Inventory.Instance.invenUseActionImg.SetActive(false);
+                    Inventory.Instance.SetActiveUseableMark(false);
                 }
                 invenHpInfo.first.fillAmount = (float)sgm.Player.PlayerStat.currentHp / sgm.Player.PlayerStat.MaxHp;
                 invenHpInfo.second.text = string.Concat("HP : ",Mathf.Ceil(Mathf.Clamp(sgm.Player.PlayerStat.currentHp, 0, sgm.Player.PlayerStat.MaxHp)), '/', Mathf.Ceil(sgm.Player.PlayerStat.MaxHp));
@@ -727,9 +737,7 @@ public partial class UIManager : MonoSingleton<UIManager>
                 TimeManager.TimeResume();
                 break;*/
             case UIType.KEYSETTING:  //키세팅 창 닫히면 상호작용 표시, 스킬 슬롯, 몸 저장 슬롯 등 키코드가 나오는 UI들을 다시 업데이트함
-                itrNoticeList.ForEach(x => x.Set());
-                SkillUIManager.Instance.UpdateSkillKeyCode();
-                mc.UpdateSavedBodyChangeKeyCodeTxt();
+                EventManager.TriggerEvent("UpdateKeyCodeUI");
                 break;
             case UIType.CHEF_FOODS_PANEL:
                 TimeManager.TimeResume();
@@ -889,8 +897,8 @@ public partial class UIManager : MonoSingleton<UIManager>
         //itemUseBtn.gameObject.SetActive(data.itemType != ItemType.ETC);
         //if (data.itemType == ItemType.ETC && ((Ingredient)data).isUseable) itemUseBtn.gameObject.SetActive(true);
 
-        Inventory.Instance.invenUseActionImg.SetActive(data.itemType != ItemType.ETC);
-        if (data.itemType == ItemType.ETC && ((Ingredient)data).isUseable) Inventory.Instance.invenUseActionImg.SetActive(true);
+        Inventory.Instance.SetActiveUseableMark(data.itemType != ItemType.ETC);
+        if (data.itemType == ItemType.ETC && ((Ingredient)data).isUseable) Inventory.Instance.SetActiveUseableMark(true);
     }
 
     /*public void UpdateInventoryItemCount(string id)
@@ -1079,7 +1087,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         {
             OnUIInteract(UIType.ITEM_DETAIL, true);
             selectedImg.gameObject.SetActive(false);
-            Inventory.Instance.invenUseActionImg.SetActive(false);
+            Inventory.Instance.SetActiveUseableMark(false);
         }
     }
     #endregion

@@ -137,6 +137,11 @@ public static partial class Global
         return condition() ? string.Format("<color={0}>{1}</color>", colorCode, str) : str;
     }
 
+    public static void UpdateSizeDelay(this CustomContentsSizeFilter filter)
+    {
+        Util.DelayFunc(() => filter.UpdateSize(), 0.1f, null, true, false);
+    }
+
     public static Vector2 GetRightAngleCoord(Vector2 p1, Vector2 p2, bool p1PosXMaintain)
     {
         Vector2 p3 = new Vector2();

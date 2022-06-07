@@ -65,6 +65,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             savedBodyPosList.Add(savedBodys[i].RectTrm.anchoredPosition);
         }
         currentBodySlotScale = savedBodys[0].transform.localScale;
+
+        EventManager.StartListening("UpdateKeyCodeUI", UpdateSavedBodyChangeKeyCodeTxt);
     }
 
     private void Start()

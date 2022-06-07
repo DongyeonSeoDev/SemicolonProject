@@ -108,6 +108,7 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
 
         EventManager.StartListening("StartCutScene", () => SetActiveSlimeEnergeEffect(false));
         EventManager.StartListening("EndCutScene", () => SetActiveSlimeEnergeEffect(true));
+        EventManager.StartListening("UpdateKeyCodeUI", UpdateSkillKeyCode);
     }
 
     void SetActiveSlimeEnergeEffect(bool active) => energeParticleEff.gameObject.SetActive(active);

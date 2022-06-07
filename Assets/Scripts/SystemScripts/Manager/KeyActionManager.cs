@@ -46,9 +46,11 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
 
     #region Quik Slot
 
+    public CanvasGroup quikCvsg;
     public Image quikItemImg;
     public Text quikItemCountTxt;
     public Text quikKeyCodeTxt;
+    private CustomContentsSizeFilter quikSlotCcsf;
     private string quikItemId;
     public string QuikItemId => quikItemId;
 
@@ -60,11 +62,14 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
 
         headTextInfo = new HeadUIData(playerHeadTxt.GetComponent<RectTransform>(), playerHeadTextOffset);
         headImgUIInfo = new HeadUIData(headImg.GetComponent<RectTransform>(), headImgOffset, 1.7f);
+        quikSlotCcsf = quikKeyCodeTxt.transform.parent.GetComponent<CustomContentsSizeFilter>();    
 
         for (int i = 0; i < keyActionDataList.Count; i++)
         {
             keyActionDataDic.Add(keyActionDataList[i].keyAction, keyActionDataList[i]);
         }
+
+        EventManager.StartListening("UpdateKeyCodeUI", UpdateQuikKeyCode);
     }
 
     private void Start()
@@ -86,8 +91,8 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
             keyUI.Set(action, KeySetting.keyDict[action], () => ChangeUserCustomKey((int)action, keyUI.ID));
             keyInfoDic.Add(keyUI.ID, keyUI);
         }
-        //SkillUIManager.Instance.UpdateSkillKeyCode();
-        MonsterCollection.Instance.UpdateSavedBodyChangeKeyCodeTxt();
+
+        EventManager.TriggerEvent("UpdateKeyCodeUI");
     }
 
     private void Update()
@@ -118,15 +123,21 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         if (quikItemId == id) return;
 
         quikItemId = id;
+        quikItemCountTxt.gameObject.SetActive(true);
+        quikItemImg.gameObject.SetActive(true);
         quikItemImg.sprite = GameManager.Instance.GetItemData(id).GetSprite();
         quikItemCountTxt.text = GameManager.Instance.GetItemCount(id).ToString();
+
+        quikCvsg.alpha = 1;
     }
 
     public void UnregisterQuikSlot()
     {
-        quikItemCountTxt.text = string.Empty;
+        quikItemCountTxt.gameObject.SetActive(false);
         quikItemImg.gameObject.SetActive(false);
         quikItemId = string.Empty;
+
+        quikCvsg.alpha = 0.5f;
     }
 
     private void UpdateQuikSlot()
@@ -142,6 +153,13 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
             quikItemCountTxt.text = count.ToString();
         }
     }
+
+    public void UpdateQuikKeyCode()
+    {
+        quikKeyCodeTxt.text = KeyCodeToString.GetString(KeySetting.keyDict[KeyAction.ITEM_QUIKSLOT]);
+        quikSlotCcsf.UpdateSizeDelay();
+    }
+
     #endregion
 
     private void FixedUpdate()
