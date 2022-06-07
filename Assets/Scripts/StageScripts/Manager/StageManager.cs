@@ -61,6 +61,8 @@ public class StageManager : MonoSingleton<StageManager>
     public bool IsStageClear { get; set; }
     public Vector3 MapCenterPoint { get; private set; }
 
+    public event Action NextStagePreEvent;
+
     private string CurrentMonstersOrderID => currentStageData.stageMonsterBundleCount < currentStageMonsterBundleOrder ? string.Empty : currentStageData.stageMonsterBundleID[currentStageMonsterBundleOrder - 1];
 
     private Dictionary<int, List<RandomRoomType>> randomZoneTypeListDic = new Dictionary<int, List<RandomRoomType>>(); //랜덤 구역에서 나올 구역 타입들을 미리 넣어놓음
@@ -463,7 +465,6 @@ public class StageManager : MonoSingleton<StageManager>
                     else
                     {
                         IsStageClear = false;
-                        currentStageData.mapEvent.OnEnterEvent();
                     }
 
                     break;
@@ -572,12 +573,16 @@ public class StageManager : MonoSingleton<StageManager>
 
     public void StartNextStage()
     {
-        if (currentArea == AreaType.MONSTER || currentArea == AreaType.BOSS)
+        NextStagePreEvent();
+
+        if (currentArea == AreaType.MONSTER || currentArea == AreaType.BOSS) //전투구역이면 적 소환
         {
             NextEnemy();
         }
-        EventManager.TriggerEvent("StartBGM", currentStageData.stageID);
 
+        EventManager.TriggerEvent("StartBGM", currentStageData.stageID); //BGM
+
+        //구역 이름을 띄워줌
         string str = string.IsNullOrEmpty(currentStageData.stageName) ? Global.AreaTypeToString(currentArea) : currentStageData.stageName;
         if (currentArea != AreaType.BOSS)
         {
@@ -585,7 +590,13 @@ public class StageManager : MonoSingleton<StageManager>
         }
         else
         {
-            UIManager.Instance.InsertTopCenterNoticeQueue(str, UIManager.Instance.bossNoticeMsgVGrd);
+            UIManager.Instance.InsertTopCenterNoticeQueue(str, UIManager.Instance.bossNoticeMsgVGrd); 
+        }
+
+        //맵 입장 이벤트가 있으면 실행
+        if(currentStageData.mapEvent != null)
+        {
+            currentStageData.mapEvent.OnEnterEvent();
         }
     }
 

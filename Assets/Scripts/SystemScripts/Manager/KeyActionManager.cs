@@ -54,6 +54,8 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
     private string quikItemId;
     public string QuikItemId => quikItemId;
 
+    private bool isUseableQuik = true;
+
     #endregion
 
     private void Awake()
@@ -70,6 +72,18 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         }
 
         EventManager.StartListening("UpdateKeyCodeUI", UpdateQuikKeyCode);
+        EventManager.StartListening("GotoNextStage_LoadingStart", () =>
+        {
+            isUseableQuik = false;
+        });
+    }
+
+    private void OnEnable()
+    {
+        StageManager.Instance.NextStagePreEvent += () =>
+        {
+            isUseableQuik = true;
+        };
     }
 
     private void Start()
@@ -78,6 +92,10 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         {
             playerHeadTxt.GetComponent<CanvasGroup>().alpha = 0;
             StoredData.SetGameObjectKey("PlayerHeadTxtObj", playerHeadTxt.gameObject);
+
+            CanvasGroup cvsg = headImg.transform.parent.GetComponent<CanvasGroup>();
+            cvsg.alpha = 0;
+            StoredData.SetGameObjectKey("PlayerHeadImgParent", cvsg.gameObject);
         }
 
         foreach (KeyAction action in KeySetting.fixedKeyDict.Keys)
@@ -90,6 +108,18 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
             KeyInfoUI keyUI = Instantiate(keyInfoPair.first, keyInfoPair.second).GetComponent<KeyInfoUI>();
             keyUI.Set(action, KeySetting.keyDict[action], () => ChangeUserCustomKey((int)action, keyUI.ID));
             keyInfoDic.Add(keyUI.ID, keyUI);
+        }
+
+        {  // 저장된 퀵 슬롯 불러옴
+            string qid = GameManager.Instance.savedData.userInfo.quikSlotItemID;
+            if (string.IsNullOrEmpty(qid))
+            {
+                UnregisterQuikSlot();
+            }
+            else
+            {
+                RegisterQuikSlot(qid);
+            }
         }
 
         EventManager.TriggerEvent("UpdateKeyCodeUI");
@@ -111,7 +141,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
     #region Quik Slot
     private void UseQuikSlotItem()
     {
-        if(!string.IsNullOrEmpty(quikItemId))
+        if(!string.IsNullOrEmpty(quikItemId) && isUseableQuik)
         {
             GameManager.Instance.UseItem(quikItemId);
             UpdateQuikSlot();
@@ -331,7 +361,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
 
     public void ShowQuestionMark() // 플레이어 머리 위에 ? 표시 띄워줌
     {
-        if (headImgFullTime > 0f) return;
+        if (IsNoticingGetMove) return;
 
         ResetHeadImg();
         headImg.sprite = question;
@@ -339,7 +369,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
     }
     public void ShowExclamationMark()  // 플레이어 머리 위에 ! 표시 띄워줌
     {
-        if (headImgFullTime > 0f) return;
+        if (IsNoticingGetMove) return;
 
         ResetHeadImg();
         headImg.sprite = exclamation;
@@ -348,18 +378,20 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
 
     public void ExclamationCharging(float fullTime, KeyAction keyAction)  // 플레이어 머리 위에 ! 표시 띄워주고 게이지 차는 효과 시작
     {
-        if (headImgFullTime > 0f) return;
+        if (IsNoticingGetMove) return;
 
         headImgFullTime = fullTime;
         tutoInputKeyAction = keyAction;
         keyInputFillElapsed = 0f;
 
+        headImg.DOKill();
         headImg.color = Color.white;
         headImg.SetAlpha(0.2f);
         headImg.sprite = exclamation;
         headImg.gameObject.SetActive(true);
 
         headFillImg.fillAmount = 0f;
+        headFillImg.DOKill();
         headFillImg.transform.localScale = Vector3.one;
         headFillImg.color = Color.white;
         headFillImg.sprite = exclamation;

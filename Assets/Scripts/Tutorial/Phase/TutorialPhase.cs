@@ -63,8 +63,8 @@ public class StartPhase : TutorialPhase
     {
         SlimeGameManager.Instance.Player.PlayerInput.IsPauseByTuto = false;
 
-        StoredData.GetGameObjectData("PlayerHeadTxtObj").GetComponent<CanvasGroup>().alpha = 1;
-        StoredData.DeleteGameObjectKey("PlayerHeadTxtObj");
+        StoredData.GetGameObjectData("PlayerHeadTxtObj", true).GetComponent<CanvasGroup>().alpha = 1;
+        StoredData.GetGameObjectData<CanvasGroup>("PlayerHeadImgParent", true).alpha = 1;
 
         base.End();
     }

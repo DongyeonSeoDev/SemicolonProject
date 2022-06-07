@@ -312,13 +312,27 @@ public partial class UIManager : MonoSingleton<UIManager>
             SetUIAlpha(0f);
             CanInteractUI = false;
             Cursor.visible = false;
+            Time.timeScale = 1f;
+            
         });
         EventManager.StartListening("EndCutScene", () =>
         {
             SetUIAlpha(1f);
             CanInteractUI = true;
             Cursor.visible = true;
+            Time.timeScale = TimeManager.IsTimePaused ? 0f : TimeManager.CurrentTimeScale;
         });
+        EventManager.StartListening("GotoNextStage_LoadingStart", () =>
+        {
+            CanInteractUI = false;
+            Global.CurrentPlayer.GetComponent<PlayerInput>().IsPauseByCutScene = true;
+        }); //다음 스테이지로 넘어가기 전의 처리 (로딩 시작하기 전에 처리한다)
+
+        StageManager.Instance.NextStagePreEvent += () =>
+        {
+            CanInteractUI = true;
+            Global.CurrentPlayer.GetComponent<PlayerInput>().IsPauseByCutScene = false;
+        };
     }
 
     #endregion

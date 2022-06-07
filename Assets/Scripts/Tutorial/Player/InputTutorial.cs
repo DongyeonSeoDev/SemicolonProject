@@ -217,7 +217,7 @@ public class InputTutorial : MonoBehaviour
 
         if (Input.GetKeyDown(KeySetting.fixedKeyDict[keyAction]))
         {
-            if (inputTutoDataDict.ContainsKey(keyAction) && !inputTutoDataDict[keyAction].timerStarted)
+            if (inputTutoDataDict.ContainsKey(keyAction) && !inputTutoDataDict[keyAction].timerStarted && !KeyActionManager.Instance.IsNoticingGetMove)
             {
                 //KeyActionManager.Instance.SetPlayerHeadText("?", 0.5f);
                 if (KeyAction.ATTACK == keyAction)

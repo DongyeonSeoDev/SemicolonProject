@@ -74,6 +74,7 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
             {
                 isEnter = true;
                 StageManager.Instance.PassDir = dirType;
+                EventManager.TriggerEvent("GotoNextStage_LoadingStart");
                 UIManager.Instance.StartLoading(() => StageManager.Instance.NextStage(nextStageData.stageID), () => EventManager.TriggerEvent("StartNextStage"));
             }
         }

@@ -16,6 +16,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     //처음에 안보일 UI들 (KeyAction으로 처리하지 않을 것들)
     public Transform hpUI, energeBarUI;
+    public Transform quikSlotUI;
     public Transform[] skillUIArr;
     public Transform[] changeableBodysUIArr;
 
@@ -250,6 +251,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         //Init Etc UI Active
         hpUI.gameObject.SetActive(active);
         energeBarUI.gameObject.SetActive(active);
+        quikSlotUI.gameObject.SetActive(active); //퀵슬롯 UI 처리 => 이 부분 얻는 튜토에 대해서는 나중에 다시 정해야 함. 일단 임시로 여기에
         
         for (int i = 0; i < skillUIArr.Length; i++)
         {
