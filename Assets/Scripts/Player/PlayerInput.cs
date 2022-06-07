@@ -206,7 +206,7 @@ public class PlayerInput : MonoBehaviour
         if (!(isPauseByTuto || isPause || isPauseByCutScene || gameClear) &&
             !(playerState.IsDead || playerState.IsStun || playerState.IsKnockBack || playerState.IsDrain))
         {
-            if (!playerState.Chargning)
+            if (!playerState.Chargning && !playerState.BodySlapping)
             {
                 moveVector.x = Input.GetAxisRaw("Horizontal");
                 moveVector.y = Input.GetAxisRaw("Vertical");

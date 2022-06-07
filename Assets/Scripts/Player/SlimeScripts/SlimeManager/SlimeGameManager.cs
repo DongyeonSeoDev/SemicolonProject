@@ -299,6 +299,8 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             Debug.Log("Body Id: '" + bodyId + "' 로의 Body Change에 실패했습니다.");
         }
         #endregion
+
+        EventManager.TriggerEvent("OnAttackSpeedChage");
     }
 
     private void SetCanBodyChangeFalse()
@@ -357,6 +359,19 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             Debug.LogException(ex);
         }
     }
+
+    public void AddSkillDelay(int skillIdx, float delayTime)
+    {
+        try
+        {
+            currentSkillDelay[skillIdx] += delayTime;
+        }
+        catch (Exception ex)
+        {
+            Debug.LogException(ex);
+        }
+    }
+
     public Vector2 PosCantCrossWall(LayerMask crashableLayer, Vector2 startPos, Vector2 targetPos)
     {
         RaycastHit2D hit = Physics2D.Raycast(startPos, (targetPos - startPos).normalized, Vector2.Distance(startPos, targetPos), crashableLayer);

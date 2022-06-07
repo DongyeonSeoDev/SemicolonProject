@@ -101,6 +101,8 @@ public class BodyPoint : MonoBehaviour
 
     private bool isDownBodyPoint = false;
     #endregion
+
+    private Vector3 farByMiddleDir = Vector3.zero;
     private void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
@@ -268,6 +270,7 @@ public class BodyPoint : MonoBehaviour
     }
     private void PlayerDrain(float drainTime)
     {
+        transform.localPosition = originLocalPosition;
         isFarByPlayerByDrain = true;
 
         StartFarByMiddleTimer(drainTime);
@@ -275,9 +278,14 @@ public class BodyPoint : MonoBehaviour
 
     private void StartFarByMiddleTimer(float drainTime)
     {
+        rigid.velocity = Vector3.zero;
+        transform.localPosition = originLocalPosition;
+
         farByMiddleTime = drainTime;
         farByMiddleMax = false;
         farByMiddleTimer = 0f;
+
+        farByMiddleDir = (transform.position - middlePoint.transform.position).normalized;
     }
 
     private void MoveToMiddleTimerCheck()
@@ -357,17 +365,16 @@ public class BodyPoint : MonoBehaviour
     }
     private void FarByMiddle()
     {
-        Vector3 dir = (transform.position - middlePoint.transform.position).normalized;
         float distance = Vector2.Distance(transform.position, middlePoint.transform.position);
-        //float distance = Vector2.Distance(transform.localPosition, originLocalPosition);
 
         if (distance < middlePoint.MaxDisWithBodyPoints)
         {
-            transform.position = Vector2.Lerp(transform.position, transform.position + dir * farByMiddleSpeed  * farByMiddleTime, farByMiddleTimer / farByMiddleTime);
+            transform.position = Vector2.Lerp(transform.position, transform.position + farByMiddleDir * farByMiddleSpeed  * farByMiddleTime, farByMiddleTimer / farByMiddleTime);
         }
         else if(isFarByPlayerByDrain)
         {
             farByMiddleMax = true;
+
             farMaxPos = transform.position;
         }
     }

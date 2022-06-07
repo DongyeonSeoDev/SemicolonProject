@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
         set { playerStat = value; }
     }
 
-    private float pasteAttackSpeed = 0f;
+    private float prevAttackSpeed = 0f;
 
     [SerializeField]
     private PlayerInput playerInput = null;
@@ -139,11 +139,6 @@ public class Player : MonoBehaviour
     private float originAdditionalSpeed = 0f;
     private bool speedSlowStart = false;
 
-    #region 반사 발사체 데이터들
-    [SerializeField]
-    private PlayerReflectionProjectileData bodySlapReflection;
-    #endregion
-
     private void Awake()
     {
         playerState = GetComponent<PlayerState>();
@@ -178,10 +173,9 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
-        if(pasteAttackSpeed != playerStat.AttackSpeed)
+        if(prevAttackSpeed != playerStat.AttackSpeed)
         {
-
-            pasteAttackSpeed = playerStat.AttackSpeed;
+            prevAttackSpeed = playerStat.AttackSpeed;
 
             EventManager.TriggerEvent("OnAttackSpeedChage");
         }
@@ -314,12 +308,14 @@ public class Player : MonoBehaviour
         {
             if (playerStat.choiceStat.reflection.isUnlock)
             {
-                if (attacker.GetComponent<Enemy.EnemyBullet>() != null)
+                var bullet = attacker.GetComponent<Enemy.EnemyBullet>();
+
+                if (bullet != null && !bullet.isReflection)
                 {
                     Vector2 dir1 = -(direction.normalized);
                     Vector2 dir2 = playerInput.LastBodySlapVector;
 
-                    playerReflectionScript.DoReflection(bodySlapReflection, (dir1 + dir2).normalized, damage);
+                    playerReflectionScript.DoReflection(bullet.poolType, (dir1 + dir2).normalized, damage);
                 }
             }
 
