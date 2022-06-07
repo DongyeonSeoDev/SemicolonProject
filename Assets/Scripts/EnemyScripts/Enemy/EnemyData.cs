@@ -69,7 +69,7 @@ namespace Enemy
         public float maxRunAwayTime;
         public float currentRunAwayTime = 1f;
         public float playerAnimationTime;
-        public float playerAnimationDelay = 1f;
+        public float playerAnimationDelay = 0.5f;
         public float playerAnimationSpeed = 1.2f;
         public float startAttackDelay = 0f;
         public float noAttackTime = 2f;
