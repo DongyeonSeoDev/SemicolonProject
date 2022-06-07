@@ -7,6 +7,7 @@ namespace Enemy
     public class EnemyBullet : EnemyPoolData
     {
         public float speed;
+        public float multipleSpeed;
         public float addAngle;
         public float removeBulletTime;
         public float fadeTime;
@@ -17,12 +18,15 @@ namespace Enemy
         private bool isStop = false;
         public bool isDelete = false;
         public bool isDamage = false;
+        public bool isComplete = false;
+        public bool isReflection = false;
 
         public Vector2 limitMaxPosition;
         public Vector2 limitMinPosition;
 
         private SpriteRenderer sr;
         private BoxCollider2D col;
+        private Animator anim;
         private WaitForSeconds ws;
 
         private Color currentColor;
@@ -33,38 +37,38 @@ namespace Enemy
 
         public float attackDamage;
 
+        public Type bulletEffectType;
+
         private Enemy enemy;
 
         private void Awake()
         {
             sr = GetComponent<SpriteRenderer>();
             col = GetComponent<BoxCollider2D>();
+            anim = GetComponent<Animator>();
         }
 
         private void Start()
         {
-            EventManager.StartListening("AfterPlayerRespawn", () =>
-            {
-                RemoveBullet();
-            });
-
-
-            EventManager.StartListening("ExitCurrentMap", () =>
-            {
-                RemoveBullet();
-            });
-
-            EventManager.StartListening("EnemyStart", () =>
-            {
-                isStop = false;
-            });
-
-            EventManager.StartListening("EnemyStop", () =>
-            {
-                isStop = true;
-            });
-
             ws = new WaitForSeconds(removeBulletTime);
+        }
+
+        private void OnEnable()
+        {
+            EventManager.StartListening("AfterPlayerRespawn", RemoveBullet);
+            EventManager.StartListening("ExitCurrentMap", RemoveBullet);
+            EventManager.StartListening("EnemyStart", IsStopFalse);
+            EventManager.StartListening("EnemyStop", IsStopTrue);
+
+            IsStopFalse();
+        }
+
+        private void OnDisable()
+        {
+            EventManager.StopListening("AfterPlayerRespawn", RemoveBullet);
+            EventManager.StopListening("ExitCurrentMap", RemoveBullet);
+            EventManager.StopListening("EnemyStart", IsStopFalse);
+            EventManager.StopListening("EnemyStop", IsStopTrue);
         }
 
         private void Update()
@@ -74,7 +78,7 @@ namespace Enemy
                 return;
             }
 
-            transform.position += targetDirection * speed * Time.deltaTime;
+            transform.position += targetDirection * speed * multipleSpeed * Time.deltaTime;
 
             if (transform.position.x < limitMinPosition.x || transform.position.x > limitMaxPosition.x 
                 || transform.position.y < limitMinPosition.y || transform.position.y > limitMaxPosition.y)
@@ -87,7 +91,15 @@ namespace Enemy
         {
             if (isBulletEffect)
             {
-                EnemyPoolManager.Instance.GetPoolObject(Type.BulletEffect, transform.position).GetComponent<BulletEffect>().Play(angle);
+                switch (bulletEffectType)
+                {
+                    case Type.BulletEffect:
+                        EnemyPoolManager.Instance.GetPoolObject(bulletEffectType, transform.position).GetComponent<BulletEffect>().Play(angle);
+                        break;
+                    case Type.ReflectionBulletEffect:
+                        EnemyPoolManager.Instance.GetPoolObject(bulletEffectType, transform.position).transform.rotation = Quaternion.Euler(0f, 0f, angle);
+                        break;
+                }
             }
 
             isDamage = true;
@@ -96,7 +108,7 @@ namespace Enemy
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (isDelete || isDamage)
+            if (isDelete || isDamage || isComplete)
             {
                 return;
             }
@@ -172,18 +184,22 @@ namespace Enemy
         public void RemoveBullet()
         {
             gameObject.SetActive(false);
+
             StopAllCoroutines();
             ResetBullet();
         }
 
-        public void Init(EnemyController controller, Vector3 direction, float damage, Color color, Enemy enemy = null)
+        public void Init(EnemyController controller, Vector3 direction, float damage, Color color, Enemy enemy = null, float multipleSpeed = 1f)
         {
             eEnemyController = controller;
             attackDamage = damage;
             targetDirection = direction;
             this.enemy = enemy;
+            this.multipleSpeed = multipleSpeed;
 
             isDamage = false;
+            isComplete = false;
+            isReflection = false;
 
             angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0f, 0f, angle + addAngle);
@@ -198,6 +214,26 @@ namespace Enemy
             else if (controller == EnemyController.PLAYER)
             {
                 gameObject.layer = LayerMask.NameToLayer("PLAYERPROJECTILE");
+            }
+        }
+
+        private void IsStopTrue()
+        {
+            isStop = true;
+
+            if (anim != null)
+            {
+                anim.speed = 0f;
+            }
+        }
+
+        private void IsStopFalse()
+        {
+            isStop = false;
+
+            if (anim != null)
+            {
+                anim.speed = 1f;
             }
         }
     }

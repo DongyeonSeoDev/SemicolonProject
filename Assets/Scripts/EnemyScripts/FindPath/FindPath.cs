@@ -98,7 +98,7 @@ public static class FindPath
         }
     }
 
-    public static Vector2Int NextPosition(StageData stageData, Vector2Int startPosition, Vector2Int endPosition)
+    public static Stack<Vector2> NextPosition(StageData stageData, Vector2Int startPosition, Vector2Int endPosition)
     {
         currentPosition = startPosition;
         currentMoveValue = 0;
@@ -117,12 +117,21 @@ public static class FindPath
 
             if (Vector2Int.Distance(currentPosition, endPosition) < 1.5f)
             {
-                while (positionList.Count > 1)
+                var positionCount = positionList.Count / 2;
+
+                for (int i = 0; i < positionCount; i++)
                 {
                     positionList.Pop();
                 }
 
-                return positionList.Pop();
+                Stack<Vector2> dataStack = new Stack<Vector2>();
+
+                while (positionList.Count > 0)
+                {
+                    dataStack.Push(positionList.Pop());
+                }
+
+                return dataStack;
             }
 
             #region 방향 확인
@@ -153,6 +162,6 @@ public static class FindPath
             }
         }
 
-        return startPosition;
+        return new Stack<Vector2>();
     }
 }

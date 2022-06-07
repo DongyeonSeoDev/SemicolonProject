@@ -13,6 +13,8 @@ namespace Enemy
             enemyData.playerAnimationTime = 0.85f;
             enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed); // MoveCommand 추가
             enemyData.enemySpriteRotateCommand = new EnemySpriteFlipCommand(enemyData);
+
+            GetComponentInChildren<BulletCheck>().Init(enemyData);
         }
 
         public void ReadyAttack() // 애니메이션에서 실행

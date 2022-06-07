@@ -260,10 +260,12 @@ namespace Enemy
         private Rigidbody2D rigid;
         private Transform enemyTransform;
         private Vector2 targetPosition;
-#if USE_ASTAR
-        private Vector2? nextPosition;
-#endif
+        private Vector2? position;
+
+        private Stack<Vector2> nextPosition = new Stack<Vector2>();
+
         private float followSpeed;
+        private int moveCount = 0;
 
         public EnemyFollowPlayerCommand(EnemyData data, Transform enemyTransform, Rigidbody2D rigid, float followSpeed)
         {
@@ -272,27 +274,38 @@ namespace Enemy
             this.rigid = rigid;
 
             this.followSpeed = followSpeed;
-#if USE_ASTAR
+
             nextPosition = null;
-#endif
+            position = null;
         }
 
         public override void Execute()
         {
-#if USE_ASTAR
-            if (nextPosition == null || Vector2.Distance(enemyTransform.position, nextPosition.Value) < 0.1f)
+            if (moveCount > 100 || nextPosition == null || nextPosition.Count < 1)
             {
                 nextPosition = EnemyManager.NextPosition(enemyTransform.position, EnemyManager.Player.transform.position);
+                position = null;
             }
 
-            targetPosition = (new Vector3(nextPosition.Value.x, nextPosition.Value.y, enemyTransform.position.z) - enemyTransform.position).normalized;
-#else
-            targetPosition = (new Vector3(EnemyManager.Player.transform.position.x, EnemyManager.Player.transform.position.y, enemyTransform.position.z) - enemyTransform.position).normalized;
-#endif
+            if (position == null || Vector2.Distance(new Vector2(enemyTransform.position.x, enemyTransform.position.y), position.Value) < 0.1f)
+            {
+                if (nextPosition.Count < 1)
+                {
+                    return;
+                }
+                else
+                {
+                    position = nextPosition.Pop();
+                    moveCount = 0;
+                }
+            }
+
+            targetPosition = (new Vector3(position.Value.x, position.Value.y, enemyTransform.position.z) - enemyTransform.position).normalized;
             targetPosition *= followSpeed;
-            
             enemyData.moveVector = targetPosition;
             rigid.velocity = targetPosition;
+
+            moveCount++;
         }
     }
 

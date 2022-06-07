@@ -22,7 +22,9 @@ namespace Enemy
         Boss1Clone,
         EnemyAfterImage,
         Arrow,
-        HitEffect
+        HitEffect,
+        ReflectionBullet,
+        ReflectionBulletEffect
     }
 
     public class EnemyPoolManager : MonoBehaviour

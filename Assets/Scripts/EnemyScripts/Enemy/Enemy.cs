@@ -42,6 +42,8 @@ namespace Enemy
         private float isDamageCurrentTime = 0f;
         protected bool isStop = false;
 
+        private bool isUsePlayerSpeedEvent = false;
+
         [SerializeField]
         private float addExperience;
         public float AddExperience
@@ -74,6 +76,13 @@ namespace Enemy
             EventManager.StopListening("EnemyStart", EnemyStart);
             EventManager.StopListening("EnemyStop", EnemyStop);
             EventManager.StopListening("StartSkill0", StartAttack);
+
+            if (isUsePlayerSpeedEvent)
+            {
+                isUsePlayerSpeedEvent = false;
+
+                EventManager.StopListening("OnAttackSpeedChage", OnAttackSpeedChage);
+            }
         }
 
         private void EnemyStart()
@@ -303,6 +312,10 @@ namespace Enemy
                     }
                 }
             }
+
+            isUsePlayerSpeedEvent = true;
+
+            EventManager.StartListening("OnAttackSpeedChage", OnAttackSpeedChage);
         }
 
         protected virtual void SetHP(bool isUseTween)
@@ -361,6 +374,8 @@ namespace Enemy
         {
             sr.color = color;
         }
+
+        private void OnAttackSpeedChage() => SlimeGameManager.Instance.SetSkillDelay(0, enemyData.playerAnimationDelay + enemyData.playerAnimationTime);
 
         public EnemyController GetEnemyController() => enemyData.eEnemyController;
         public Vector2? GetKnockBackDirection() => enemyData.knockBackDirection; // 적이 넉백 공격을 할 수 있는지를 가져옴

@@ -147,11 +147,26 @@ namespace Enemy
                 {
                     PlayerProjectile playerBullet = collision.gameObject.GetComponent<PlayerProjectile>();
 
-                    if (playerBullet != null)
+                    if (playerBullet != null && playerBullet.MoveVec != Vector2.zero)
                     {
-                        var enemyBullet = EnemyPoolManager.Instance.GetPoolObject(Type.Bullet, playerBullet.transform.position).GetComponent<EnemyBullet>();
-                        enemyBullet.Init(EnemyController.AI, -playerBullet.MoveVec, 0f, Color.magenta);
+                        var enemyBullet = EnemyPoolManager.Instance.GetPoolObject(Type.ReflectionBullet, playerBullet.transform.position).GetComponent<EnemyBullet>();
+                        enemyBullet.Init(EnemyController.AI, -playerBullet.MoveVec, attackPower, Color.magenta, null, 2);
+                        enemyBullet.isReflection = true;
                         playerBullet.Despawn();
+
+                        return;
+                    }
+
+                    EnemyBullet getBullet = collision.gameObject.GetComponent<EnemyBullet>();
+
+                    if (getBullet != null && !getBullet.isDelete && !getBullet.isDamage && !getBullet.isReflection)
+                    {
+                        getBullet.isComplete = true;
+                        getBullet.RemoveBullet();
+
+                        var bullet = EnemyPoolManager.Instance.GetPoolObject(Type.Bullet, getBullet.transform.position).GetComponent<EnemyBullet>();
+                        bullet.Init(EnemyController.AI, -getBullet.targetDirection, getBullet.attackDamage, Color.magenta, null, 2);
+                        bullet.isReflection = true;
 
                         return;
                     }
@@ -180,11 +195,14 @@ namespace Enemy
                 {
                     EnemyBullet enemyBullet = collision.gameObject.GetComponent<EnemyBullet>();
 
-                    if (enemyBullet != null && !enemyBullet.isDamage && !enemyBullet.isDamage)
+                    if (enemyBullet != null && !enemyBullet.isDelete && !enemyBullet.isDamage && !enemyBullet.isReflection)
                     {
+                        enemyBullet.isComplete = true;
                         enemyBullet.RemoveBullet();
+
                         var playerBullet = EnemyPoolManager.Instance.GetPoolObject(Type.Bullet, enemyBullet.transform.position).GetComponent<EnemyBullet>();
-                        playerBullet.Init(EnemyController.PLAYER, -enemyBullet.targetDirection, enemyBullet.attackDamage, Color.green, this.enemy);
+                        playerBullet.Init(EnemyController.PLAYER, -enemyBullet.targetDirection, enemyBullet.attackDamage, Color.green, this.enemy, 2);
+                        playerBullet.isReflection = true;
 
                         return;
                     }

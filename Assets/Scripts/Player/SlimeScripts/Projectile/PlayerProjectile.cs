@@ -78,6 +78,11 @@ public class PlayerProjectile : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
+        if (moveVec == Vector2.zero)
+        {
+            return;
+        }
+
         bool isCritical = false;
 
         if (whatIsCrashable.CompareGameObjectLayer(other.gameObject))

@@ -136,6 +136,11 @@ namespace Enemy
         {
             EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Attack, enemyData.enemyAnimator, TriggerType.ResetTrigger);
             EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.AttackEnd, enemyData.enemyAnimator, TriggerType.SetTrigger);
+
+            if (enemyData.endAttack != null)
+            {
+                enemyData.endAttack.Invoke();
+            }
         }
     }
 
@@ -460,13 +465,8 @@ namespace Enemy
 
         public EnemyPlayerControllerAttackState(EnemyData enemyData) : base(eState.ATTACK, enemyData) { }
 
-        //private void OnAttackSpeedChage()
-        //{
-        //    SlimeGameManager.Instance.SetSkillDelay(0, enemyData.playerAnimationDelay + enemyData.playerAnimationTime);
-        //}
         protected override void Start()
         {
-            //EventManager.StartListening("OnAttackSpeedChage", OnAttackSpeedChage);
             EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.AttackEnd, enemyData.enemyAnimator, TriggerType.ResetTrigger);
 
             if (SlimeGameManager.Instance.CurrentSkillDelayTimer[0] <= 0) // 공격 쿨타임 확인
