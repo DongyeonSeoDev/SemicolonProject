@@ -234,7 +234,7 @@ public class HeadUIData
                 headRt.anchoredPosition = Util.WorldToScreenPosForScreenSpace(target.position + curOffset, Util.WorldCvs);
             }
 
-            if (!twComp && Time.time > headUIOffTime)
+            if (!twComp && Time.time > headUIOffTime && !KeyActionManager.Instance.IsNoticingGetMove)
             {
                 twComp = true;
                 uiOffEvent?.Invoke();

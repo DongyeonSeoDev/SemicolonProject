@@ -76,6 +76,9 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         {
             isUseableQuik = false;
         });
+
+        Global.AddAction("ItemUse", UpdateQuikSlotUI);
+        Global.AddAction("GetItem", UpdateQuikSlotUI);
     }
 
     private void OnEnable()
@@ -123,6 +126,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         }
 
         EventManager.TriggerEvent("UpdateKeyCodeUI");
+
     }
 
     private void Update()
@@ -144,7 +148,6 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         if(!string.IsNullOrEmpty(quikItemId) && isUseableQuik)
         {
             GameManager.Instance.UseItem(quikItemId);
-            UpdateQuikSlot();
         }
     }
 
@@ -181,6 +184,14 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         else
         {
             quikItemCountTxt.text = count.ToString();
+        }
+    }
+
+    private void UpdateQuikSlotUI(object id)
+    {
+        if ((string)id == quikItemId)
+        {
+            UpdateQuikSlot();
         }
     }
 
