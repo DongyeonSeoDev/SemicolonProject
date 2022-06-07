@@ -42,13 +42,13 @@ public class Player : MonoBehaviour
     }
 
     [SerializeField]
-    private OrderInLayerConroller playerOrderInLayerController = null;
-    public OrderInLayerConroller PlayerOrderInLayerController
+    private OrderInLayerController playerOrderInLayerController = null;
+    public OrderInLayerController PlayerOrderInLayerController
     {
         get {
             if(playerOrderInLayerController == null)
             {
-                playerOrderInLayerController = GetComponentInChildren<OrderInLayerConroller>();
+                playerOrderInLayerController = GetComponentInChildren<OrderInLayerController>();
             }
 
             return playerOrderInLayerController;
@@ -146,7 +146,7 @@ public class Player : MonoBehaviour
         playerChoiceStatControl = GetComponent<PlayerChoiceStatControl>();
         playerReflectionScript = GetComponent<PlayerReflectionScript>();
 
-        playerOrderInLayerController = GetComponentInChildren<OrderInLayerConroller>();
+        playerOrderInLayerController = GetComponentInChildren<OrderInLayerController>();
     }
     private void Start()
     {
@@ -206,7 +206,7 @@ public class Player : MonoBehaviour
     }
     private void OnChangeBody()
     {
-        playerOrderInLayerController = GetComponentInChildren<OrderInLayerConroller>();
+        playerOrderInLayerController = GetComponentInChildren<OrderInLayerController>();
     }
     private void UpEnergy()
     {
