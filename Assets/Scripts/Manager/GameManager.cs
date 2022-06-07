@@ -10,16 +10,19 @@ using FkTweening;
 
 public partial class GameManager : MonoSingleton<GameManager>
 {
+    #region Save
     private string savedJson, filePath;
     private string cryptoText;
     private readonly string cryptoKey = "XHUooeUjJzMKdt";
 
     [SerializeField] private SaveData saveData;
     public SaveData savedData { get { return saveData; } }
+    #endregion
 
+    #region Game Data
     private Dictionary<string, ItemSO> itemDataDic = new Dictionary<string, ItemSO>();
     public Dictionary<string, ItemSO> ItemDataDic => itemDataDic;
-
+    #endregion
 
     //private List<Triple<string, int, int>> limitedBattleCntItems = new List<Triple<string, int, int>>(); //n교전 후에 사라지는 아이템들 리스트 (아이디, 현재 교전 수, 최대 교전 수(가 되면 사라짐))
 
@@ -32,21 +35,29 @@ public partial class GameManager : MonoSingleton<GameManager>
     public PoolBaseData[] poolBaseDatas;
     #endregion
 
+    #region Mini Game
     public PickupCheck pickupCheckGame;
+    #endregion
 
+    #region Dropped Items
     public List<Item> droppedItemList = new List<Item>();
     private Dictionary<string, int> droppedItemTempDict = new Dictionary<string, int>();
+    #endregion
 
-    public int InventoryItemCount
-    { get => savedData.userInfo.userItems.keyValueDic.Keys.Count; }
-
+    #region Util
     public Transform slimeFollowObj { get; private set; }
+    #endregion
 
+    #region event and Action
     public event Action gameQuitEvent;
+    public event Action UpdateEvent;
+    private Dictionary<string, Action> updateActionDic = new Dictionary<string, Action>();
+    #endregion
 
 #if UNITY_EDITOR
     public Dictionary<KeyCode, Action> testKeyInputActionDict = new Dictionary<KeyCode, Action>();
 #endif
+
 
     private void Awake()
     {
@@ -131,21 +142,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         //UtilEditor.PauseEditor();
     }
 
-   /* private IEnumerator SetUIActiveDicFalseUI()
-    {
-        //따로 처리할 것들
-        saveData.userInfo.uiActiveDic[UIType.QUIT] = false;
-
-        while (UIManager.Instance == null) yield return null;
-
-        for(int i=0; i<UIManager.Instance.acqUIList.Count; i++)
-        {
-            saveData.userInfo.uiActiveDic[UIManager.Instance.acqUIList[i].uiType] = false;
-        }
-
-        StoredData.SetObjectKey("SetUIAcqState", true);
-    }*/
-
+   
 #endregion
 
     private void Init()
@@ -182,15 +179,15 @@ public partial class GameManager : MonoSingleton<GameManager>
             Global.ActionTrigger("GetItem", ((Item)item).itemData.id);
         });
 
-        Global.AddAction("GetItem", _id =>
+        /*Global.AddAction("GetItem", _id =>
         {
-            /*string id = (string)_id;
+            *//*string id = (string)_id;
             int limitedBattleCount = itemDataDic[id].existBattleCount;
             if (limitedBattleCount > 0)
             {
                 limitedBattleCntItems.Add(new Triple<string, int, int>(id, 0, limitedBattleCount));
-            }*/
-        });
+            }*//*
+        });*/
 
         //풀 생성
         PoolManager.CreatePool(itemPrefab, transform, 6, "Item");
@@ -229,26 +226,6 @@ public partial class GameManager : MonoSingleton<GameManager>
                 checkItrObjDic.Add(new Pair<string, InteractionObj>(key, ObjectManager.Instance.itrObjDic[key]));
             }
         });
-        /*testKeyInputActionDict.Add(KeyCode.F1, () =>
-        {
-            BattleUIManager.Instance.InsertAbsorptionInfo(Enemy.EnemyType.Slime_01.ToString(), 100, 0, KillNoticeType.FAIL);
-        });
-        testKeyInputActionDict.Add(KeyCode.F2, () =>
-        {
-            BattleUIManager.Instance.InsertAbsorptionInfo(Enemy.EnemyType.Slime_01.ToString(), 100, 0, KillNoticeType.SUCCESS);
-        });
-        testKeyInputActionDict.Add(KeyCode.F3, () =>
-        {
-            BattleUIManager.Instance.InsertAbsorptionInfo(Enemy.EnemyType.Slime_03.ToString(), 12, 0, KillNoticeType.ALREADY);
-        });
-        testKeyInputActionDict.Add(KeyCode.F4, () =>
-        {
-            BattleUIManager.Instance.InsertAbsorptionInfo(Enemy.EnemyType.Rat_02.ToString(), 0, 15, KillNoticeType.UNDERSTANDING);
-        });
-        testKeyInputActionDict.Add(KeyCode.F5, () =>
-        {
-            BattleUIManager.Instance.InsertAbsorptionInfo(Enemy.EnemyType.Rat_02.ToString(), 0, 150, KillNoticeType.UNDERSTANDING);
-        });*/
 
 #endif
 
@@ -260,12 +237,44 @@ public partial class GameManager : MonoSingleton<GameManager>
         //WDUtil.PrintStructSize(typeof(StageFork));
     }
 
+    public void AddUpdateAction(string key, Action action)
+    {
+        if (!updateActionDic.ContainsKey(key))
+        {
+            updateActionDic.Add(key, action);   
+        }
+        else
+        {
+            updateActionDic[key] += action;
+        }
+    }
+
+    public void RemoveUpdateAction(string key, Action action)
+    {
+        if(updateActionDic.ContainsKey(key))
+           updateActionDic[key] -= action;
+    }
+
+    public void RemoveUpdateAction(string key)
+    {
+        updateActionDic.Remove(key);
+    }
+
     private void Update()
     {
 
+        UpdateEvent?.Invoke();
+
+        if(updateActionDic.Count > 0)
+        {
+            foreach(Action action in updateActionDic.Values)
+            {
+                action?.Invoke();
+            }
+        }
 
 #if UNITY_EDITOR
-        foreach(KeyCode key in testKeyInputActionDict.Keys)
+        foreach (KeyCode key in testKeyInputActionDict.Keys)
         {
             if(Input.GetKeyDown(key))
             {
@@ -288,6 +297,7 @@ public partial class GameManager : MonoSingleton<GameManager>
 #region Item
 
     public ItemSO GetItemData(string id) => itemDataDic[id];
+    public T GetItemData<T>(string id) where T : ItemSO => itemDataDic[id] as T;
     public bool ExistItem(string id) => itemDataDic.ContainsKey(id);
 
     public int GetItemCount(string id) //보유중인 해당 id의 아이템 개수 가져옴 
@@ -319,6 +329,24 @@ public partial class GameManager : MonoSingleton<GameManager>
         {
             Debug.Log("버리려는 아이템 개수가 보유 중인 아이템 개수보다 많음");
         }
+    }
+
+    public bool UseItem(string id)
+    {
+        ItemSO data = GetItemData(id);
+        if (data.itemType == ItemType.ETC && !((Ingredient)data).isUseable) return false;
+        if (GetItemCount(id) <= 0)
+        {
+            Debug.Log("아이템 수가 0 이하인데 사용하려 함!! - ID : " + id);
+            return false;
+        }
+
+        data.Use();
+        Inventory.Instance.RemoveItem(id, 1, "아이템을 소모했습니다.");
+        SoundManager.Instance.PlaySoundBox("UseItemSFX");
+        Global.ActionTrigger("ItemUse", id);
+
+        return true;
     }
 
     void PlayerRespawnEvent()

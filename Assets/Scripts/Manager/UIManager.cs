@@ -1073,12 +1073,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     {
         if (selectedItemSlot.itemInfo == null) return;
 
-        ItemSO data = gm.GetItemData(selectedItemId);
-        if ( (data.itemType == ItemType.ETC && !((Ingredient)data).isUseable)) return;
-
-        data.Use();
-        Inventory.Instance.RemoveItem(selectedItemId, 1, "아이템을 소모했습니다.");
-        SoundManager.Instance.PlaySoundBox("UseItemSFX");
+        if(!gm.UseItem(selectedItemId)) return;
 
         if (selectedItemSlot.itemInfo == null)
         {
@@ -1086,8 +1081,6 @@ public partial class UIManager : MonoSingleton<UIManager>
             selectedImg.gameObject.SetActive(false);
             Inventory.Instance.invenUseActionImg.SetActive(false);
         }
-
-        Global.ActionTrigger("ItemUse", selectedItemId);
     }
     #endregion
 

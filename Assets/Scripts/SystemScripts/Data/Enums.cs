@@ -70,6 +70,7 @@ public enum KeyAction
     CHANGE_SLIME,
     CHANGE_MONSTER1,
     CHANGE_MONSTER2,
+    ITEM_QUIKSLOT,
 
     NONE  //아무것도 없는 값
 
@@ -134,12 +135,6 @@ public enum DoorDirType
     RIGHT,
     LEFT,
     BACK
-}
-
-public enum MapEffectType
-{
-    IMPRECATION1,
-    RECOVERY1
 }
 
 public enum EnemySpecies

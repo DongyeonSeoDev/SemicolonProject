@@ -6,6 +6,7 @@ using FkTweening;
 
 public class KeyActionManager : MonoSingleton<KeyActionManager>
 {
+    #region Input User key
     private Dictionary<int, KeyInfoUI> keyInfoDic = new Dictionary<int, KeyInfoUI>();
     private Pair<int, int> selectedAndAlreadyID = new Pair<int, int>();  //선택된 키, 이미 존재하는 키
 
@@ -18,6 +19,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
     [SerializeField] private GameObject clickPrevPanel;
 
     public Pair<GameObject, Transform> keyInfoPair;
+    #endregion
 
     #region Head Text
     [SerializeField] private Text playerHeadTxt; //플레이어 머리 위에 뜨는 독백(?) 텍스트
@@ -40,6 +42,16 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
     private KeyAction tutoInputKeyAction;
 
     public bool IsNoticingGetMove => headImgFullTime > 0f;
+    #endregion
+
+    #region Quik Slot
+
+    public Image quikItemImg;
+    public Text quikItemCountTxt;
+    public Text quikKeyCodeTxt;
+    private string quikItemId;
+    public string QuikItemId => quikItemId;
+
     #endregion
 
     private void Awake()
@@ -85,16 +97,52 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
             CancelKeySetting();
         }
 
-        //Test Code
-        if (Input.GetKeyDown(KeyCode.N))
+        if(Input.GetKeyDown(KeySetting.keyDict[KeyAction.ITEM_QUIKSLOT]))
         {
-            ExclamationCharging(3f, KeyAction.UP);
-        }
-        if (Input.GetKeyUp(KeyCode.N))
-        {
-            EndExclamationCharging(true);
+            UseQuikSlotItem();
         }
     }
+
+    #region Quik Slot
+    private void UseQuikSlotItem()
+    {
+        if(!string.IsNullOrEmpty(quikItemId))
+        {
+            GameManager.Instance.UseItem(quikItemId);
+            UpdateQuikSlot();
+        }
+    }
+
+    public void RegisterQuikSlot(string id)
+    {
+        if (quikItemId == id) return;
+
+        quikItemId = id;
+        quikItemImg.sprite = GameManager.Instance.GetItemData(id).GetSprite();
+        quikItemCountTxt.text = GameManager.Instance.GetItemCount(id).ToString();
+    }
+
+    public void UnregisterQuikSlot()
+    {
+        quikItemCountTxt.text = string.Empty;
+        quikItemImg.gameObject.SetActive(false);
+        quikItemId = string.Empty;
+    }
+
+    private void UpdateQuikSlot()
+    {
+        int count = GameManager.Instance.GetItemCount(quikItemId);
+        
+        if(count == 0)
+        {
+            UnregisterQuikSlot();
+        }
+        else
+        {
+            quikItemCountTxt.text = count.ToString();
+        }
+    }
+    #endregion
 
     private void FixedUpdate()
     {
@@ -263,7 +311,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         });
     }
 
-    public void ShowQuestionMark()
+    public void ShowQuestionMark() // 플레이어 머리 위에 ? 표시 띄워줌
     {
         if (headImgFullTime > 0f) return;
 
@@ -271,7 +319,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         headImg.sprite = question;
         headImgUIInfo.Set(0.75f, new Vector2(0, 1), ClearHeadImg);
     }
-    public void ShowExclamationMark()
+    public void ShowExclamationMark()  // 플레이어 머리 위에 ! 표시 띄워줌
     {
         if (headImgFullTime > 0f) return;
 
@@ -280,7 +328,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         headImgUIInfo.Set(0.75f, new Vector2(0, 1), ClearHeadImg);
     }
 
-    public void ExclamationCharging(float fullTime, KeyAction keyAction)
+    public void ExclamationCharging(float fullTime, KeyAction keyAction)  // 플레이어 머리 위에 ! 표시 띄워주고 게이지 차는 효과 시작
     {
         if (headImgFullTime > 0f) return;
 
@@ -300,7 +348,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         headFillImg.gameObject.SetActive(true);
     }
 
-    public void EndExclamationCharging(bool isSuccess)
+    public void EndExclamationCharging(bool isSuccess)  // 플레이어 머리 위의 ! 표시 게이지 차는 효과 끝냄 (매개변수 - 게이지를 끝까지 채웠는가)
     {
         if (headImgFullTime < 0f) return;
 
@@ -332,7 +380,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         }
     }
 
-    private void KeyInputUIFillUpdate()
+    private void KeyInputUIFillUpdate()  
     {
         if (headImgFullTime > 0f)
         {
