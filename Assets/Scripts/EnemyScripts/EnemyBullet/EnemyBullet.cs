@@ -18,6 +18,7 @@ namespace Enemy
         private bool isStop = false;
         public bool isDelete = false;
         public bool isDamage = false;
+        public bool isComplete = false;
         public bool isReflection = false;
 
         public Vector2 limitMaxPosition;
@@ -107,7 +108,7 @@ namespace Enemy
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (isDelete || isDamage || isReflection)
+            if (isDelete || isDamage || isComplete)
             {
                 return;
             }
@@ -183,7 +184,7 @@ namespace Enemy
         public void RemoveBullet()
         {
             gameObject.SetActive(false);
-            isReflection = false;
+
             StopAllCoroutines();
             ResetBullet();
         }
@@ -197,6 +198,8 @@ namespace Enemy
             this.multipleSpeed = multipleSpeed;
 
             isDamage = false;
+            isComplete = false;
+            isReflection = false;
 
             angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg;
             transform.rotation = Quaternion.Euler(0f, 0f, angle + addAngle);

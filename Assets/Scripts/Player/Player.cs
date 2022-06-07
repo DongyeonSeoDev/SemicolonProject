@@ -311,7 +311,7 @@ public class Player : MonoBehaviour
             {
                 var bullet = attacker.GetComponent<Enemy.EnemyBullet>();
 
-                if (bullet != null)
+                if (bullet != null && !bullet.isReflection)
                 {
                     Vector2 dir1 = -(direction.normalized);
                     Vector2 dir2 = playerInput.LastBodySlapVector;
