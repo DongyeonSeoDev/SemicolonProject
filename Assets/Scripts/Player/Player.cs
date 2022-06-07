@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
         set { playerStat = value; }
     }
 
-    private float pasteAttackSpeed = 0f;
+    private float prevAttackSpeed = 0f;
 
     [SerializeField]
     private PlayerInput playerInput = null;
@@ -173,10 +173,9 @@ public class Player : MonoBehaviour
     }
     private void Update()
     {
-        if(pasteAttackSpeed != playerStat.AttackSpeed)
+        if(prevAttackSpeed != playerStat.AttackSpeed)
         {
-
-            pasteAttackSpeed = playerStat.AttackSpeed;
+            prevAttackSpeed = playerStat.AttackSpeed;
 
             EventManager.TriggerEvent("OnAttackSpeedChage");
         }

@@ -299,6 +299,8 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             Debug.Log("Body Id: '" + bodyId + "' 로의 Body Change에 실패했습니다.");
         }
         #endregion
+
+        EventManager.TriggerEvent("OnAttackSpeedChage");
     }
 
     private void SetCanBodyChangeFalse()

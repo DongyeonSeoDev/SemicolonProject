@@ -259,6 +259,15 @@ public class PlayerInput : MonoBehaviour
                     }
                 }
 
+                if (playerState.BodySlapping)
+                {
+                    moveVector = Vector2.zero;
+                }
+                else if (moveVector != Vector2.zero)
+                {
+                    lastMoveVector = moveVector;
+                }
+
                 // ContainKeyüũ
                 if (inputTutorial == null || (!inputTutorial.InputTutoDataDict.ContainsKey(KeyAction.INTERACTION) ||
                     inputTutorial.InputTutoDataDict[KeyAction.INTERACTION].isClear))
