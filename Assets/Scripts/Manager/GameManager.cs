@@ -77,7 +77,7 @@ public partial class GameManager : MonoSingleton<GameManager>
     {
         MonsterCollection.Instance.Save();
         KeyActionManager.Instance.SaveKey();
-        NGlobal.playerStatUI.Save();
+        //NGlobal.playerStatUI.Save();
         saveData.Save();
     }
 

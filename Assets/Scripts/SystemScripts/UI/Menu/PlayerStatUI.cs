@@ -356,17 +356,12 @@ public class PlayerStatUI : MonoBehaviour
         
     }
 
-    public ChoiceStatData GetChoiceStatDataInPlayer(ushort id)
-    {
-        return new ChoiceStatData();
-    }
- 
-    public void Save()  //안쓰면 나중에 지울 것
+   /* public void Save()  //안쓰면 나중에 지울 것
     {
         //튜토리얼이 끝났다면 플레이어의 스탯정보를 저장
-        /*if (GameManager.Instance.savedData.tutorialInfo.isEnded)
+        *//*if (GameManager.Instance.savedData.tutorialInfo.isEnded)
         {
             GameManager.Instance.savedData.userInfo.playerStat = playerStat;
-        }*/
-    }
+        }*//*
+    }*/
 }
