@@ -175,6 +175,7 @@ MonoBehaviour:
   isRemainBullet: 0
   isDelete: 0
   isDamage: 0
+  isComplete: 0
   isReflection: 0
   limitMaxPosition: {x: 100, y: 100}
   limitMinPosition: {x: -100, y: -100}

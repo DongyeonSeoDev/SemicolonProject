@@ -150,7 +150,7 @@ namespace Enemy
                     if (playerBullet != null && playerBullet.MoveVec != Vector2.zero)
                     {
                         var enemyBullet = EnemyPoolManager.Instance.GetPoolObject(Type.ReflectionBullet, playerBullet.transform.position).GetComponent<EnemyBullet>();
-                        enemyBullet.Init(EnemyController.AI, -playerBullet.MoveVec, attackPower, Color.magenta, null, 2);
+                        enemyBullet.Init(EnemyController.AI, -playerBullet.MoveVec, attackPower, Util.Change255To1Color(255f, 120f, 255f), null, 2);
                         enemyBullet.isReflection = true;
                         playerBullet.Despawn();
 
