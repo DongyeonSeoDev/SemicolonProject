@@ -137,6 +137,14 @@ public class Player : MonoBehaviour
 
     private float originEternalSpeed = 0f;
     private float originAdditionalSpeed = 0f;
+
+    private float fakePercentage = 0f;
+    public float FakePercentage
+    {
+        get { return fakePercentage; }
+        set { fakePercentage = value; }
+    }
+
     private bool speedSlowStart = false;
 
     private void Awake()
@@ -150,7 +158,7 @@ public class Player : MonoBehaviour
     }
     private void Start()
     {
-        playerStat.additionalEternalStat = new EternalStat();
+        playerStat.additionalEternalStat.ResetAdditional();
 
         playerState.IsDead = false;
 
@@ -368,6 +376,26 @@ public class Player : MonoBehaviour
             UIManager.Instance.UpdatePlayerHPUI(true);
         }
     }
+    public bool CheckFake()
+    {
+        if(!playerStat.choiceStat.fake.isUnlock)
+        {
+            return false;
+        }
+
+        float value = 0f;
+
+        value = Random.Range(0f, 100f);
+
+        if(value <= fakePercentage)
+        {
+            playerChoiceStatControl.UpFakeNum();
+
+            return true;
+        }
+
+        return false;
+    }
     public (float, bool) GiveDamage(ICanGetDamagableEnemy targetEnemy, float minDamage, float maxDamage, Vector2 effectPosition, Vector2 direction, bool isKnockBack = true, float knockBackPower = 20, float stunTime = 1, Vector3? effectSize = null)
     {
         (float, bool) damage;
@@ -434,7 +462,7 @@ public class Player : MonoBehaviour
     }
     private void PlayerDead()
     {
-        playerStat.additionalEternalStat = new EternalStat();
+        playerStat.additionalEternalStat.ResetAdditional();
 
         EventManager.TriggerEvent("PlayerSetActiveFalse");
     }
@@ -499,7 +527,7 @@ public class Player : MonoBehaviour
     }
     public void WhenRespawn()
     {
-        playerStat.additionalEternalStat = new EternalStat();
+        playerStat.additionalEternalStat.ResetAdditional();
 
         playerState.IsDead = false;
         playerStat.currentHp = playerStat.MaxHp;

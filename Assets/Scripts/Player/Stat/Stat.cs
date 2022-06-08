@@ -18,7 +18,7 @@ public class Stat
         currentStatPoint += accumulateStatPoint;
         accumulateStatPoint = 0;
         currentExp = 0;
-        additionalEternalStat = new EternalStat();
+        additionalEternalStat.ResetAdditional();
         //choiceStat = new ChoiceStat();
         eternalStat.Reset();
         choiceStat.Reset();
@@ -159,6 +159,18 @@ public class EternalStat
         criticalDamage.Reset();
     }
 
+    public void ResetAdditional()
+    {
+        maxHp.statValue = 0;
+        minDamage.statValue = 0;
+        maxDamage.statValue = 0;
+        defense.statValue = 0;
+        intellect.statValue = 0;
+        speed.statValue = 0;
+        attackSpeed.statValue = 0;
+        criticalRate.statValue = 0;
+        criticalDamage.statValue = 0;
+    }
 }
 
 [Serializable]
@@ -200,5 +212,6 @@ public class ChoiceStat
         frenzy.ResetComplete();
         reflection.ResetComplete();
     }
+
 
 }

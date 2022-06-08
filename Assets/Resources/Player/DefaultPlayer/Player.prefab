@@ -230,6 +230,13 @@ MonoBehaviour:
         isUnlock: 0
         statLv: 0
         maxStatLv: 0
+      fake:
+        id: 130
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        statLv: 0
+        maxStatLv: 0
   playerInput: {fileID: 0}
   playerChoiceStatControl: {fileID: 0}
   playerReflectionScript: {fileID: 0}
@@ -323,6 +330,7 @@ MonoBehaviour:
     name: "\uC778\uB0B4"
     targetStat: "\uACF5\uACA9\uB825"
     firstValue: 1
+    checkStartValue: 0
     unlockStatValue: 100
     upAmount: 100
     upTargetStatPerChoiceStat: 1
@@ -330,6 +338,7 @@ MonoBehaviour:
     name: "\uCD94\uC9C4\uB825"
     targetStat: "\uCD94\uC9C4\uB825, \uC774\uB3D9\uC18D\uB3C4"
     firstValue: 1
+    checkStartValue: 0
     unlockStatValue: 100
     upAmount: 10
     upTargetStatPerChoiceStat: 0.2
@@ -337,6 +346,7 @@ MonoBehaviour:
     name: "\uB9F7\uC9D1"
     targetStat: "\uCCB4\uB825"
     firstValue: 1
+    checkStartValue: 0
     unlockStatValue: 100
     upAmount: 100
     upTargetStatPerChoiceStat: 5
@@ -344,6 +354,7 @@ MonoBehaviour:
     name: "\uBA48\uCD94\uC9C0 \uC54A\uB294 \uB3CC\uC9C4"
     targetStat: 
     firstValue: 1
+    checkStartValue: 0
     unlockStatValue: 100
     upAmount: 0
     upTargetStatPerChoiceStat: 0
@@ -351,9 +362,11 @@ MonoBehaviour:
     name: "\uBC18\uC0AC"
     targetStat: 
     firstValue: 1
+    checkStartValue: 0
     unlockStatValue: 100
     upAmount: 0
     upTargetStatPerChoiceStat: 0
+  avoidNum: 0
   avoidInMomentomNum: 0
 --- !u!114 &9036656189394809005
 MonoBehaviour:

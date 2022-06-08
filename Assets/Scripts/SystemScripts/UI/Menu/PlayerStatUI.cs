@@ -117,7 +117,7 @@ public class PlayerStatUI : MonoBehaviour
         }
 
         //선택 스탯 저장
-        choiceStatDic.Add(NGlobal.PatienceID, playerStat.choiceStat.patience);
+        choiceStatDic.Add(NGlobal.ProficiencyID, playerStat.choiceStat.proficiency);
         choiceStatDic.Add(NGlobal.MomentomID, playerStat.choiceStat.momentom);
         choiceStatDic.Add(NGlobal.EnduranceID, playerStat.choiceStat.endurance);
         choiceStatDic.Add(NGlobal.FrenzyID, playerStat.choiceStat.frenzy);
