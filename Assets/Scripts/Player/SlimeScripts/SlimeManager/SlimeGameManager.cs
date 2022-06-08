@@ -124,7 +124,16 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
     }
     private void PlayerBodySpawn()
     {
-        Debug.Log(player.PlayerState.BodySlapping + " " + player.PlayerState.IsKnockBack);
+        bodyChangeTimer = 0f;
+        canBodyChange = true;
+
+        for(int i = 0; i < 3; i++)
+        {
+            currentSkillDelayTimer[i] = 0f;
+
+            skillDelayTimerZero[i] = true;
+        }
+
         Player.gameObject.SetActive(true);
 
         if (currentPlayerBody != null)

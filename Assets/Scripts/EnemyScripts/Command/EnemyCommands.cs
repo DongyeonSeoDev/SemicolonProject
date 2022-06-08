@@ -9,7 +9,6 @@ namespace Enemy
         private PlayerInput playerInput = null;
         private Stat playerStat = null;
         private float lastSpeed = 0f;
-        private int wallCheck = LayerMask.GetMask("WALL");
 
         public EnemyMovePlayerControllerCommand(EnemyData data)
         {
@@ -36,18 +35,7 @@ namespace Enemy
                 lastSpeed = Mathf.Lerp(lastSpeed, 0f, Time.deltaTime * playerStat.Speed / 2f);
             }
 
-            var ray = Physics2D.Raycast(enemyData.enemyRigidbody2D.transform.position, playerInput.MoveVector, lastSpeed / 10f, wallCheck);
-
-            if (ray.collider != null)
-            {
-                float distance = Vector2.Distance(ray.point, enemyData.enemyRigidbody2D.transform.position) * 10f;
-                enemyData.enemyRigidbody2D.velocity = playerInput.MoveVector * distance;
-            }
-            else
-            {
-                enemyData.enemyRigidbody2D.velocity = playerInput.LastMoveVector * lastSpeed;
-            }
-
+            enemyData.enemyRigidbody2D.velocity = playerInput.LastMoveVector * lastSpeed;
             enemyData.moveVector = playerInput.MoveVector;
         }
     }
@@ -561,18 +549,7 @@ namespace Enemy
             }
 
             direction = direction.Value.normalized;
-
-            var ray = Physics2D.Raycast(rigidboyd2D.transform.position, direction.Value, GetForce() / 10f, wallCheck);
-
-            if (ray.collider != null)
-            {
-                float distance = Vector2.Distance(ray.point, rigidboyd2D.transform.position) * 10f;
-                rigidboyd2D.AddForce(direction.Value * distance, ForceMode2D.Impulse);
-            }
-            else
-            {
-                rigidboyd2D.AddForce(direction.Value * GetForce(), ForceMode2D.Impulse);
-            }
+            rigidboyd2D.AddForce(direction.Value * GetForce(), ForceMode2D.Impulse);
         }
 
         private float GetForce() => force == 0 ? enemy.GetKnockBackPower() : force;

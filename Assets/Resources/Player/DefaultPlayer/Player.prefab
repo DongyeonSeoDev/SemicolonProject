@@ -188,13 +188,13 @@ MonoBehaviour:
         statLv: 0
         maxStatLv: 0
     choiceStat:
-      patience:
+      proficiency:
         id: 100
         statValue: 0
         upStatValue: 0
         isUnlock: 0
         statLv: 0
-        maxStatLv: 20
+        maxStatLv: 0
       momentom:
         id: 105
         statValue: 0
@@ -223,6 +223,20 @@ MonoBehaviour:
         isUnlock: 0
         statLv: 0
         maxStatLv: 0
+      mucusRecharge:
+        id: 125
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        statLv: 0
+        maxStatLv: 0
+      fake:
+        id: 130
+        statValue: 0
+        upStatValue: 0
+        isUnlock: 0
+        statLv: 0
+        maxStatLv: 0
   playerInput: {fileID: 0}
   playerChoiceStatControl: {fileID: 0}
   playerReflectionScript: {fileID: 0}
@@ -233,10 +247,6 @@ MonoBehaviour:
   upMountingPercentageValueWhenEnemyDead: 5
   upUnderstandingRateValueWhenEnemyDead: 1
   upUnderstandingRateValueWhenEnemyDeadAfterBodyChanged: 3
-  bodySlapReflection:
-    projectile: {fileID: 8223448895546236962, guid: 6188b8fe7b7eef448a7491f9bdb9599e, type: 3}
-    projectileSpeed: 40
-    shootPosOffset: 0.6
 --- !u!114 &5427881869486345104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -320,42 +330,43 @@ MonoBehaviour:
     name: "\uC778\uB0B4"
     targetStat: "\uACF5\uACA9\uB825"
     firstValue: 1
+    checkStartValue: 0
     unlockStatValue: 100
     upAmount: 100
-    addUpAmountPerLv: 100
     upTargetStatPerChoiceStat: 1
   - id: 105
     name: "\uCD94\uC9C4\uB825"
     targetStat: "\uCD94\uC9C4\uB825, \uC774\uB3D9\uC18D\uB3C4"
     firstValue: 1
+    checkStartValue: 0
     unlockStatValue: 100
     upAmount: 10
-    addUpAmountPerLv: 10
     upTargetStatPerChoiceStat: 0.2
   - id: 110
     name: "\uB9F7\uC9D1"
     targetStat: "\uCCB4\uB825"
     firstValue: 1
+    checkStartValue: 0
     unlockStatValue: 100
     upAmount: 100
-    addUpAmountPerLv: 0
     upTargetStatPerChoiceStat: 5
   - id: 115
     name: "\uBA48\uCD94\uC9C0 \uC54A\uB294 \uB3CC\uC9C4"
     targetStat: 
     firstValue: 1
+    checkStartValue: 0
     unlockStatValue: 100
     upAmount: 0
-    addUpAmountPerLv: 0
     upTargetStatPerChoiceStat: 0
   - id: 120
     name: "\uBC18\uC0AC"
     targetStat: 
     firstValue: 1
+    checkStartValue: 0
     unlockStatValue: 100
     upAmount: 0
-    addUpAmountPerLv: 0
     upTargetStatPerChoiceStat: 0
+  avoidNum: 0
   avoidInMomentomNum: 0
 --- !u!114 &9036656189394809005
 MonoBehaviour:
@@ -370,6 +381,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   momentomTime: 3
+  momentomSpeed: 3
 --- !u!114 &4245379043714901352
 MonoBehaviour:
   m_ObjectHideFlags: 0

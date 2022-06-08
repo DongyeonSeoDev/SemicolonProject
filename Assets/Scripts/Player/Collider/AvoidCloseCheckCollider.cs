@@ -45,6 +45,8 @@ public abstract class AvoidCloseCheckCollider : MonoBehaviour
                 {
                     EventManager.TriggerEvent("OnAvoidInMomentom");
                 }
+
+                 EventManager.TriggerEvent("Avoid");
             }
         }
 

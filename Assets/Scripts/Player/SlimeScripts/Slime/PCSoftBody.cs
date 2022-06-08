@@ -168,10 +168,10 @@ public class PCSoftBody : SoftBody
 
     private void SetJoints(int i)
     {
-        int upNotMiddleBodyPointNum = (i - 1).Limit(0, notMiddlePoints.Count - 1);
+        //int upNotMiddleBodyPointNum = (i - 1).Limit(0, notMiddlePoints.Count - 1);
         int downNotMiddleBodyPointnum = (i + 1).Limit(0, notMiddlePoints.Count - 1);
 
-        Transform upPoint = notMiddlePoints[upNotMiddleBodyPointNum];
+        //Transform upPoint = notMiddlePoints[upNotMiddleBodyPointNum];
         Transform downPoint = notMiddlePoints[downNotMiddleBodyPointnum];
 
         RelativeJoint2D notMiddleRelativeJoint2D = null;

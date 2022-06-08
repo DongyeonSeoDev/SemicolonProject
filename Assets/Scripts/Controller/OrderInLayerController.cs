@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.U2D;
 
-public class OrderInLayerConroller : MonoBehaviour
+public class OrderInLayerController : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer = null;
     private SpriteShapeRenderer spriteShapeRenderer = null;
@@ -41,12 +41,12 @@ public class OrderInLayerConroller : MonoBehaviour
     {
         if (spriteRenderer == null)
         {
-            spriteShapeRenderer.sortingOrder = offest - (int)Mathf.Round(transform.position.y);
+            spriteShapeRenderer.sortingOrder = offest - (int)Mathf.Round(transform.position.y * 2);
 
             return;
         }
         
-        spriteRenderer.sortingOrder = offest - (int)Mathf.Round(transform.position.y);
+        spriteRenderer.sortingOrder = offest - (int)Mathf.Round(transform.position.y * 2);
     }
     public void SetOrderInLayer(string sortingLayerName, int orderInLayer)
     {

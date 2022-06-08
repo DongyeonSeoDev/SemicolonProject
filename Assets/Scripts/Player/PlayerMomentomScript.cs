@@ -16,6 +16,14 @@ public class PlayerMomentomScript : MonoBehaviour
 
     private bool momentomStarted = false;
 
+    private void OnEnable()
+    {
+        EventManager.StartListening("PlayerDead", PlayerDead);
+    }
+    private void OnDisable()
+    {
+        EventManager.StopListening("PlayerDead", PlayerDead);
+    }
     private void Start()
     {
         playerChoiceStatControl = GetComponent<PlayerChoiceStatControl>();
@@ -26,7 +34,7 @@ public class PlayerMomentomScript : MonoBehaviour
         {
             momentomTimer -= Time.deltaTime;
 
-            if(momentomTimer < 0f)
+            if(momentomTimer <= 0f)
             {
                 EndMomentom();
             }
@@ -59,6 +67,13 @@ public class PlayerMomentomScript : MonoBehaviour
         momentomTimer = 0f;
 
         Debug.Log("추진력 멈춰!" + lastUpSpeed + "만큼 이동속도 감소");
+        lastUpSpeed = 0f;
+    }
+    private void PlayerDead()
+    {
+        momentomStarted = false;
+
+        momentomTimer = 0f;
         lastUpSpeed = 0f;
     }
 }

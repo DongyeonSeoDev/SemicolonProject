@@ -18,7 +18,7 @@ public class Stat
         currentStatPoint += accumulateStatPoint;
         accumulateStatPoint = 0;
         currentExp = 0;
-        additionalEternalStat = new EternalStat();
+        additionalEternalStat.ResetAdditional();
         //choiceStat = new ChoiceStat();
         eternalStat.Reset();
         choiceStat.Reset();
@@ -159,13 +159,25 @@ public class EternalStat
         criticalDamage.Reset();
     }
 
+    public void ResetAdditional()
+    {
+        maxHp.statValue = 0;
+        minDamage.statValue = 0;
+        maxDamage.statValue = 0;
+        defense.statValue = 0;
+        intellect.statValue = 0;
+        speed.statValue = 0;
+        attackSpeed.statValue = 0;
+        criticalRate.statValue = 0;
+        criticalDamage.statValue = 0;
+    }
 }
 
 [Serializable]
 public class ChoiceStat
 {
     //public int overweight; // 과체중
-    public StatElement patience = new StatElement(); // 인내력
+    public StatElement proficiency = new StatElement(); // 숙련도
 
     public StatElement momentom = new StatElement(); // 추진력
 
@@ -174,6 +186,10 @@ public class ChoiceStat
     public StatElement frenzy = new StatElement(); // 멈추지 않는 돌진
 
     public StatElement reflection = new StatElement(); // 반사
+
+    public StatElement mucusRecharge = new StatElement() ; // 점액 재충전
+
+    public StatElement fake = new StatElement(); // 맞은척
 
     //public int luck; // 운
 
@@ -190,11 +206,12 @@ public class ChoiceStat
 
     public void Reset()
     {
-        patience.ResetComplete();
+        proficiency.ResetComplete();
         momentom.ResetComplete();
         endurance.ResetComplete();
         frenzy.ResetComplete();
         reflection.ResetComplete();
     }
+
 
 }

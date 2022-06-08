@@ -104,6 +104,7 @@ public class PlayerState : MonoBehaviour
     private void OnEnable()
     {
         EventManager.StartListening("PlayerDead", PlayerReset);
+        EventManager.StartListening("PlayerDead", () => isInMomentom = false);
         EventManager.StartListening("ChangeBody", PlayerReset);
         EventManager.StartListening("PlayerStop", PlayerStop);
         EventManager.StartListening("PlayerStart", PlayerStart);

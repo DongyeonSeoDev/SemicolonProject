@@ -23,7 +23,7 @@ namespace Enemy
             enemyData.maxHP = 35;
             enemyData.hp = 35;
             enemyData.attackPower = 15;
-            enemyData.playerAnimationDelay = 0.2f;
+            enemyData.playerAnimationDelay = 0.1f;
             enemyData.playerAnimationSpeed = 1.0f;
             enemyData.startAttackDelay = 0.5f;
             enemyData.minAttackCount = 3;

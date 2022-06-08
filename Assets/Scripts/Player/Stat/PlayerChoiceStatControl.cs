@@ -11,7 +11,8 @@ public class ChoiceStatData
     public string targetStat; // 이 ChocieStat에 의해 오르게 될 스탯의 Name 값
 
     public int firstValue; // 초기값
-    public int unlockStatValue; // 이 스탯을 휙듣하기 위한 해당 값의 양
+    public int checkStartValue; // 해당 스탯을 얻는 조건을 체크하기 시작한 시점
+    public int unlockStatValue; // 이 스탯을 휙득하기 위해 checkStartValue에서 때 부터 얻어야하는 해당 값의 양
 
     public int upAmount; // 특정 값이 upAmount이상일 때 마다 스탯 수치 상승
     public float upTargetStatPerChoiceStat; // 이 ChoiceStat의 값 1 당 오르는 대상 스탯의 값
@@ -31,6 +32,13 @@ public class PlayerChoiceStatControl : MonoBehaviour
     public Dictionary<ushort, ChoiceStatData> OriginChoiceDataDict
     {
         get { return originChoiceDataDict; }
+    }
+
+    [SerializeField]
+    private int avoidNum = 0;
+    public int AvoidNum
+    {
+        get { return avoidNum; }
     }
 
     [SerializeField]
@@ -94,6 +102,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
         EventManager.StartListening("OnEnemyAttack", UpAttackNum);
         EventManager.StartListening("OnAttackMiss", UpAttackMissedNum);
 
+        EventManager.StartListening("Avoid", UpAvoidNum);
         EventManager.StartListening("OnAvoidInMomentom", UpAvoidInMomentomNum);
         //EventManager.StartListening("OnBodySlap", UpBodySlapNum);
     }
@@ -103,6 +112,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
         EventManager.StopListening("OnEnemyAttack", UpAttackNum);
         EventManager.StopListening("OnAttackMiss", UpAttackMissedNum);
 
+        EventManager.StopListening("Avoid", UpAvoidNum);
         EventManager.StopListening("OnAvoidInMomentom", UpAvoidInMomentomNum);
         //EventManager.StopListening("OnBodySlap", UpBodySlapNum);
     }
@@ -121,11 +131,11 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
         if(stat.isUnlock)
         {
-            num = (int)totalDamage / choiceDataDict[NGlobal.EnduranceID].upAmount + choiceDataDict[NGlobal.EnduranceID].firstValue;
+            num = ((int)totalDamage - choiceDataDict[NGlobal.EnduranceID].checkStartValue) / choiceDataDict[NGlobal.EnduranceID].upAmount;
         }
         else
         {
-            num = (int)totalDamage / choiceDataDict[NGlobal.EnduranceID].unlockStatValue;
+            num = ((int)totalDamage - choiceDataDict[NGlobal.EnduranceID].checkStartValue) / choiceDataDict[NGlobal.EnduranceID].unlockStatValue;
         }
 
         if (num > 0)
@@ -140,55 +150,60 @@ public class PlayerChoiceStatControl : MonoBehaviour
                 num = choiceDataDict[NGlobal.EnduranceID].firstValue;
             }
 
-            SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance.statValue = num;
-            SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance.statLv = num;
+            SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance.statValue += num;
+            SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance.statLv += num;
 
-            SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxHp.statValue += choiceDataDict[NGlobal.EnduranceID].upTargetStatPerChoiceStat * (num - pasteEndurance);
+            SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxHp.statValue += choiceDataDict[NGlobal.EnduranceID].upTargetStatPerChoiceStat * (num);
+
+            EnduranceCheckValueReset();
         }
+    }
+    public void EnduranceCheckValueReset()
+    {
+        choiceDataDict[NGlobal.EnduranceID].checkStartValue = (int)totalDamage;
     }
     public void CheckPatience()
     {
-        float pastePatienceNum = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.statValue;
+        float pastePatienceNum = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.proficiency.statValue;
         int num = 0;
 
-        if (!SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.isUnlock)
+        if (!SlimeGameManager.Instance.Player.PlayerStat.choiceStat.proficiency.isUnlock)
         {
-            if (attackMissedNum >= choiceDataDict[NGlobal.PatienceID].unlockStatValue)
+            if (attackMissedNum - choiceDataDict[NGlobal.PatienceID].checkStartValue >= choiceDataDict[NGlobal.PatienceID].unlockStatValue)
             {
                 // 처음 이 스탯이 생김
 
                 num = choiceDataDict[NGlobal.PatienceID].firstValue;
-                StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience;
+                StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.proficiency;
                 stat.isUnlock = true;
 
                 UIManager.Instance.playerStatUI.StatUnlock(stat);
 
-                AttackNumReset();
+                ProficiencyCheckValueReset();
             }
         }
         else
         {
-            num = ((attackNum + attackMissedNum) / (choiceDataDict[NGlobal.PatienceID].upAmount *
-                (SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.statLv)));
+            num = ((attackNum + attackMissedNum - choiceDataDict[NGlobal.PatienceID].checkStartValue) / (choiceDataDict[NGlobal.PatienceID].upAmount *
+                (SlimeGameManager.Instance.Player.PlayerStat.choiceStat.proficiency.statLv)));
         }
 
         if (num != 0)
         {
-            SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.statValue += num;
-            SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.statLv += num;
+            SlimeGameManager.Instance.Player.PlayerStat.choiceStat.proficiency.statValue += num;
+            SlimeGameManager.Instance.Player.PlayerStat.choiceStat.proficiency.statLv += num;
 
-            AttackNumReset();
+            ProficiencyCheckValueReset();
 
             choiceDataDict[NGlobal.PatienceID].upAmount = originChoiceDataDict[NGlobal.PatienceID].upAmount * num;
 
-            SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.minDamage.statValue += choiceDataDict[NGlobal.PatienceID].upTargetStatPerChoiceStat * (num - pastePatienceNum);
-            SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxDamage.statValue += choiceDataDict[NGlobal.PatienceID].upTargetStatPerChoiceStat * (num - pastePatienceNum);
+            SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.minDamage.statValue += choiceDataDict[NGlobal.PatienceID].upTargetStatPerChoiceStat * (num);
+            SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxDamage.statValue += choiceDataDict[NGlobal.PatienceID].upTargetStatPerChoiceStat * (num);
         }
     }
-    private void AttackNumReset()
+    private void ProficiencyCheckValueReset()
     {
-        attackMissedNum = 0;
-        attackNum = 0;
+        choiceDataDict[NGlobal.PatienceID].checkStartValue = attackNum + attackMissedNum;
     }
 
     public void CheckMomentom()
@@ -207,12 +222,14 @@ public class PlayerChoiceStatControl : MonoBehaviour
                 StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom;
                 stat.isUnlock = true;
 
+                MomentomCheckValueReset();
+
                 UIManager.Instance.playerStatUI.StatUnlock(stat);
             }
         }
         else
         {
-            num = (avoidInMomentomNum / (choiceDataDict[NGlobal.MomentomID].upAmount));
+            num = ((avoidInMomentomNum - choiceDataDict[NGlobal.MomentomID].checkStartValue) / (choiceDataDict[NGlobal.MomentomID].upAmount));
         }
 
         if (0 != num)
@@ -220,10 +237,15 @@ public class PlayerChoiceStatControl : MonoBehaviour
             SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.statValue += num;
             SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.statLv += num;
 
-            avoidInMomentomNum = 0;
+            MomentomCheckValueReset();
 
             choiceDataDict[NGlobal.MomentomID].upAmount += originChoiceDataDict[NGlobal.MomentomID].upAmount * num;
         }
+    }
+
+    public void MomentomCheckValueReset()
+    {
+        choiceDataDict[NGlobal.MomentomID].checkStartValue = avoidInMomentomNum;
     }
 
     public void CheckFrenzy()
@@ -279,14 +301,18 @@ public class PlayerChoiceStatControl : MonoBehaviour
             return;
         }
 
-        if (!SlimeGameManager.Instance.Player.PlayerStat.choiceStat.patience.isUnlock)
+        if (!SlimeGameManager.Instance.Player.PlayerStat.choiceStat.proficiency.isUnlock)
         {
-            attackMissedNum = 0;
+            ProficiencyCheckValueReset();
 
             return;
         }
 
         attackNum++;
+    }
+    public void UpAvoidNum()
+    {
+        avoidNum++;
     }
     public void UpAvoidInMomentomNum()
     {
