@@ -425,14 +425,14 @@ public partial class UIManager : MonoSingleton<UIManager>
             {
                 OnUIInteract(UIType.QUIT);
             }*/
-            else if (Input.GetKeyDown(KeyCode.E) && Util.IsActiveGameUI(UIType.ITEM_DETAIL))
+            else if (Input.GetKeyDown(KeyCode.E) && Util.IsActiveGameUI(UIType.ITEM_DETAIL))  //인벤에서 템 사용
             {
                 if (selectedItemSlot)
                 {
                     OnClickItemUseBtn();
                 }
             }
-            else if(Input.GetKeyDown(KeyCode.F) && Util.IsActiveGameUI(UIType.ITEM_DETAIL))
+            else if(Input.GetKeyDown(KeyCode.F) && Util.IsActiveGameUI(UIType.ITEM_DETAIL))  //인벤에서 퀵슬롯 등록
             {
                 if (selectedItemSlot)
                 {
@@ -911,8 +911,8 @@ public partial class UIManager : MonoSingleton<UIManager>
         //itemUseBtn.gameObject.SetActive(data.itemType != ItemType.ETC);
         //if (data.itemType == ItemType.ETC && ((Ingredient)data).isUseable) itemUseBtn.gameObject.SetActive(true);
 
-        Inventory.Instance.SetActiveUseableMark(data.itemType != ItemType.ETC);
-        if (data.itemType == ItemType.ETC && ((Ingredient)data).isUseable) Inventory.Instance.SetActiveUseableMark(true);
+        Inventory.Instance.SetActiveUseableMark(data.itemType != ItemType.ETC, selectedItemId);
+        if (data.itemType == ItemType.ETC && ((Ingredient)data).isUseable) Inventory.Instance.SetActiveUseableMark(true, selectedItemId);
     }
 
     /*public void UpdateInventoryItemCount(string id)

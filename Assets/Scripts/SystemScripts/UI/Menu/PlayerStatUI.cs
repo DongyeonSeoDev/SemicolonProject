@@ -215,6 +215,7 @@ public class PlayerStatUI : MonoBehaviour
         stat.statLv++;
         stat.statValue += stat.upStatValue;
         UpdateCurStatPoint(false);
+        UIManager.Instance.UpdatePlayerHPUI();
         //eternalStatDic[id].second.statValue += stat.upStatValue;
 
     }

@@ -153,7 +153,12 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
 
     public void RegisterQuikSlot(string id)
     {
-        if (quikItemId == id) return;
+        if (quikItemId == id)
+        {
+            UnregisterQuikSlot();
+            Inventory.Instance.SetActiveUseableMark(true, id);
+            return;
+        }
 
         quikItemId = id;
         quikItemCountTxt.gameObject.SetActive(true);
@@ -162,6 +167,8 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         quikItemCountTxt.text = GameManager.Instance.GetItemCount(id).ToString();
 
         quikCvsg.alpha = 1;
+
+        Inventory.Instance.SetActiveUseableMark(true, id);
     }
 
     public void UnregisterQuikSlot()

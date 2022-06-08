@@ -15,6 +15,7 @@ public class Inventory : MonoSingleton<Inventory>
     [SerializeField] private int maxItemSlotCount = 20;
 
     public GameObject invenUseActionImg, invenQuikActionImg;
+    public Text quikSlotTxt;
 
     #region Drag
     private ItemSlot beginSlot;
@@ -306,10 +307,15 @@ public class Inventory : MonoSingleton<Inventory>
         return list;
     }
 
-    public void SetActiveUseableMark(bool useable)
+    public void SetActiveUseableMark(bool useable, string id = "_NONE_")  //useable이 false일 때는 굳이 id를 매개변수로 안보내도 됨
     {
         invenUseActionImg.SetActive(useable);
         invenQuikActionImg.SetActive(useable);
+
+        if(useable)
+        {
+            quikSlotTxt.text = id == KeyActionManager.Instance.QuikItemId ? "퀵슬롯 해제" : "퀵슬롯 등록";
+        }
     }
 
     #region 정렬
