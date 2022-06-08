@@ -180,7 +180,6 @@ public class StageManager : MonoSingleton<StageManager>
 
             if (canNextStage != null) canNextStage = null;
         });
-        EventManager.TriggerEvent("StartBGM", startStageID);
         EventManager.StartListening("PlayerRespawn", Respawn);
         EventManager.StartListening("StartNextStage", StartNextStage);
         EventManager.StartListening("PickupMiniGame", (Action<bool>)(start => currentStage.StageLightActive(!start)));
@@ -188,6 +187,7 @@ public class StageManager : MonoSingleton<StageManager>
         {
             Debug.Log("Game Clear : " + currentFloor + "-" + currentStageNumber);
         });
+        EventManager.TriggerEvent("StartBGM", startStageID);
     }
 
     private void SetRandomAreaRandomIncounter()  //일단 리펙토링 나중에 해야할 듯
@@ -327,26 +327,16 @@ public class StageManager : MonoSingleton<StageManager>
             floorInitSet[floor] = true; 
             StageBundleDataSO bundle = idToStageFloorDict[FloorToFloorID(floor)]; //층 정보 받음
 
-            foreach (AreaType type in Enum.GetValues(typeof(AreaType)))  //기존 랜덤 맵 초기화
+            foreach (AreaType type in Enum.GetValues(typeof(AreaType)))  //기존 랜덤 맵 초기화  (안해도 되긴하지만 일단 걍 함)
             {
                 randomRoomDict[floor][type].Clear();
             }
 
-            Dictionary<AreaType, List<string>> areaDic = new Dictionary<AreaType, List<string>>();
-            for (int i = 0; i < Global.EnumCount<AreaType>(); i++) areaDic.Add((AreaType)i, new List<string>());
             for (int i = 0; i < bundle.stages.Count; i++)
             {
-                areaDic[bundle.stages[i].areaType].Add(bundle.stages[i].stageID);
+                randomRoomDict[floor][bundle.stages[i].areaType].Add(idToStageDataDict[bundle.stages[i].stageID]);
             }
-
-            foreach (AreaType key in areaDic.Keys)
-            {
-                for (int i = 0; i < areaDic[key].Count; i++)
-                {
-                    randomRoomDict[floor][key].Add(idToStageDataDict[areaDic[key][i]]);
-                }
-            }
-        }  //end of init
+        }  
 
         foreach (AreaType type in Enum.GetValues(typeof(AreaType)))
         {
