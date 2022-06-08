@@ -269,23 +269,24 @@ public class InputTutorial : MonoBehaviour
             return;
         }
 
-        if (Input.GetKey(KeySetting.keyDict[keyAction]))
+        if (Input.GetKeyDown(KeySetting.keyDict[keyAction]))
         {
-            if (inputTutoDataDict.ContainsKey(keyAction) && !inputTutoDataDict[keyAction].timerStarted)
-            {
-                KeyActionManager.Instance.SetPlayerHeadText("?", 0.5f);
-            }
-
             if (KeyAction.SPECIALATTACK1 == keyAction || KeyAction.SPECIALATTACK2 == keyAction)
             {
                 return;
+            }
+
+            if (inputTutoDataDict.ContainsKey(keyAction) && !inputTutoDataDict[keyAction].timerStarted)
+            {
+                KeyActionManager.Instance.SetPlayerHeadText("?", 0.5f);
             }
 
             CheckStartTimer(keyAction);
 
             keyNotPressed = false;
         }
-        else
+
+        if (Input.GetKeyUp(KeySetting.keyDict[keyAction]))
         {
             SetTimerStartedFalse(keyAction);
         }
