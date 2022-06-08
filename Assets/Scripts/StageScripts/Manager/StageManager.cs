@@ -58,6 +58,8 @@ public class StageManager : MonoSingleton<StageManager>
     public Func<bool> canNextStage = null;  //다음 스테이지를 갈 때 이게 null이면 가지고 무언가 값이 있으면 그것을 실행해서 true면 지나가짐
 
     public DoorDirType PassDir { get; set; } //전 스테이지에서 지나간 문 방향
+    public bool IsBattleArea => currentArea == AreaType.MONSTER || currentArea == AreaType.BOSS;
+    public bool IsFighting => IsBattleArea && !IsStageClear;
     public bool IsStageClear { get; set; }
     public Vector3 MapCenterPoint { get; private set; }
 

@@ -411,7 +411,14 @@ public partial class UIManager : MonoSingleton<UIManager>
             }
             else if (CheckInputAndActive(KeyAction.INVENTORY))
             {
-                OnUIInteract(UIType.INVENTORY);
+                if (!StageManager.Instance.IsFighting)
+                {
+                    OnUIInteract(UIType.INVENTORY);
+                }
+                else
+                {
+                    RequestSystemMsg("전투중에는 인벤토리를 열 수 없습니다.", 40);
+                }
             }
             else if (CheckInputAndActive(KeyAction.STAT))
             {
@@ -495,6 +502,12 @@ public partial class UIManager : MonoSingleton<UIManager>
     public void OnClickMenuBtn(UIType type) //메뉴에서 버튼 눌렀을 때
     {
         if (activeUIQueue.Count > 0) return;
+
+        if(type==UIType.INVENTORY && StageManager.Instance.IsFighting)
+        {
+            RequestSystemMsg("전투중에는 인벤토리를 열 수 없습니다.", 40);
+            return;
+        }
 
         MenuBtnSelectedMark(type);
 
