@@ -403,10 +403,10 @@ public partial class UIManager : MonoSingleton<UIManager>
                     {
                         OnUIInteract(UIType.SETTING);
                     }
-                    else
+                    /*else
                     {
                         KeyActionManager.Instance.SetPlayerHeadText("?", 0.5f);
-                    }
+                    }*/
                 }
             }
             else if (CheckInputAndActive(KeyAction.INVENTORY))

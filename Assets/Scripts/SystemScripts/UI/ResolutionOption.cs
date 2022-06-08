@@ -55,12 +55,20 @@ public class ResolutionOption : MonoBehaviour
             InsertResolution();
         }*/
 
+        //비율 이상한거는 리스트에서 지워줌
+        for(int i = 0; i < whResolutionList.Count; i++)
+        {
+            if ((float)whResolutionList[i].first / whResolutionList[i].second < limWidthDivHeightRate)
+            {
+                whResolutionList.RemoveAt(i);
+                i--;
+            }
+        }
+
         //현재 내 상태에 맞게 UI세팅하고 드롭다운 업데이트
         int optionNum = 0, w = Screen.width, h = Screen.height;
         for(int i = 0; i < whResolutionList.Count; i++)
         {
-            //if ((float)whResolutionList[i].first / whResolutionList[i].second < limWidthDivHeightRate) continue;
-
             Dropdown.OptionData option = new Dropdown.OptionData();
             option.text = whResolutionList[i].first + " x " + whResolutionList[i].second;
             resolutionDd.options.Add(option);
