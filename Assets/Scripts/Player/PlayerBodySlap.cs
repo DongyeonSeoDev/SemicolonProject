@@ -211,9 +211,25 @@ public class PlayerBodySlap : PlayerSkill
 
             IDamageableBySlimeBodySlap damagableByBodySlap = targetObject.GetComponent<IDamageableBySlimeBodySlap>();
 
+            Debug.Log(targetObject.name + "n");
+            Debug.Log(damagableByBodySlap);
+
             if (damagableByBodySlap != null)
             {
                 damagableByBodySlap.GetDamage(1, currentChargingTimer);// 여기에 매개변수 추가
+
+                if (!bodyStopBodySlapTimerStart && !SlimeGameManager.Instance.Player.PlayerStat.choiceStat.frenzy.isUnlock)
+                {
+                    TutorialStageDoor tutoStageDoor = targetObject.GetComponent<TutorialStageDoor>();
+
+                    if (tutoStageDoor == null)
+                    {
+                        StopBodySlap();
+
+                        bodyStopBodySlapTimerStart = true;
+                        stopBodySlapTimer = stopBodySlapTime;
+                    }
+                }
             }
             else
             {
@@ -232,16 +248,16 @@ public class PlayerBodySlap : PlayerSkill
 
                 Debug.Log(SlimeGameManager.Instance.Player.PlayerStat.choiceStat.frenzy.isUnlock);
 
+                if (!bodyStopBodySlapTimerStart && !SlimeGameManager.Instance.Player.PlayerStat.choiceStat.frenzy.isUnlock)
+                {
+                    StopBodySlap();
+
+                    bodyStopBodySlapTimerStart = true;
+                    stopBodySlapTimer = stopBodySlapTime;
+                }
+
                 SoundManager.Instance.PlaySoundBox("SlimeSkill1Crash");
                 CinemachineCameraScript.Instance.Shake(whenBodySlapCrashShakeData);
-            }
-
-            if (!bodyStopBodySlapTimerStart && !SlimeGameManager.Instance.Player.PlayerStat.choiceStat.frenzy.isUnlock)
-            {
-                StopBodySlap();
-
-                bodyStopBodySlapTimerStart = true;
-                stopBodySlapTimer = stopBodySlapTime;
             }
         }
     }
