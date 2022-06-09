@@ -10,13 +10,26 @@ public class ChoiceStatData
     public string name; // UI에 뜰 한글 이름
     public string targetStat; // 이 ChocieStat에 의해 오르게 될 스탯의 Name 값
 
+    public int unlockStatValue; // 이 스탯을 휙득하기 위해 checkStartValue에서 때 부터 얻어야하는 해당 값의 양
     public int firstValue; // 초기값
     public int checkStartValue; // 해당 스탯을 얻는 조건을 체크하기 시작한 시점
-    public int unlockStatValue; // 이 스탯을 휙득하기 위해 checkStartValue에서 때 부터 얻어야하는 해당 값의 양
 
     public int upAmount; // 특정 값이 upAmount이상일 때 마다 스탯 수치 상승
     public float upTargetStatPerChoiceStat; // 이 ChoiceStat의 값 1 당 오르는 대상 스탯의 값
 
+    public void DataCpy(ChoiceStatData stat)
+    {
+        id = stat.id;
+        name = stat.name;
+        targetStat = stat.targetStat;
+
+        unlockStatValue = stat.unlockStatValue;
+        firstValue = stat.firstValue;
+        checkStartValue = stat.checkStartValue;
+
+        upAmount = stat.upAmount;
+        upTargetStatPerChoiceStat = stat.upTargetStatPerChoiceStat;
+    }
 }
 public class PlayerChoiceStatControl : MonoBehaviour
 {
@@ -48,13 +61,14 @@ public class PlayerChoiceStatControl : MonoBehaviour
         get { return avoidInMomentomNum; }
     }
 
-    //[SerializeField]
+    [SerializeField]
     private int fakeNum = 0;
     public int FakeNum
     {
         get { return fakeNum; }
     }
 
+    [SerializeField]
     private float totalDamage = 0f;
     /// <summary>
     /// 지금까지 받은 총 데미지
@@ -64,6 +78,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
         get { return totalDamage; }
     }
 
+    [SerializeField]
     private int attackMissedNum = 0;
     /// <summary>
     /// 공격이 빗나간 횟수
@@ -73,6 +88,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
         get { return attackMissedNum; }
     }
 
+    [SerializeField]
     private int attackNum = 0;
     /// <summary>
     /// 공격이 적중한 횟수
@@ -97,10 +113,15 @@ public class PlayerChoiceStatControl : MonoBehaviour
             choiceDataList[i].id = (ushort)(100 + i * 5);
         }
 
+        ChoiceStatData choiceStatData;
         foreach (var item in choiceDataList)
         {
             choiceDataDict.Add(item.id, item);
-            originChoiceDataDict.Add(item.id, item);
+
+            choiceStatData = new ChoiceStatData();
+            choiceStatData.DataCpy(item);
+
+            originChoiceDataDict.Add(item.id, choiceStatData);
         }
     }
     private void OnEnable()
@@ -125,6 +146,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
     }
     private void Update()
     {
+        CheckEndurance();
         CheckProficiency();
         CheckMomentom();
         CheckFrenzy();
@@ -132,31 +154,11 @@ public class PlayerChoiceStatControl : MonoBehaviour
     }
     public void CheckEndurance()
     {
-        float pasteEndurance = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance.statValue;
-        int num = 0;
         StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance;
 
-        if(!stat.isUnlock)
+        if(stat.isUnlock)
         {
-            if(!SlimeGameManager.Instance.Player.PlayerStat.eternalStat.maxHp.isUnlock)
-            {
-                return;
-            }
-
-            if(((int)totalDamage - choiceDataDict[NGlobal.EnduranceID].checkStartValue) >= choiceDataDict[NGlobal.EnduranceID].upAmount)
-            {
-                // 처음 이 스탯이 생김
-                stat.isUnlock = true;
-
-                UIManager.Instance.playerStatUI.StatUnlock(stat);
-
-                stat.statValue = choiceDataDict[NGlobal.EnduranceID].firstValue;
-                stat.statLv = choiceDataDict[NGlobal.EnduranceID].firstValue;
-            }
-        }
-        else
-        {
-            if((int)totalDamage - choiceDataDict[NGlobal.EnduranceID].checkStartValue >= choiceDataDict[NGlobal.EnduranceID].unlockStatValue)
+            if ((int)totalDamage - choiceDataDict[NGlobal.EnduranceID].checkStartValue >= choiceDataDict[NGlobal.EnduranceID].upAmount)
             {
                 if (stat.statLv >= stat.maxStatLv)
                 {
@@ -166,52 +168,61 @@ public class PlayerChoiceStatControl : MonoBehaviour
                 stat.statValue++;
                 stat.statLv++;
 
-                SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxHp.statValue += choiceDataDict[NGlobal.EnduranceID].upTargetStatPerChoiceStat * (num);
+                SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxHp.statValue += choiceDataDict[NGlobal.EnduranceID].upTargetStatPerChoiceStat;
 
-                EnduranceCheckValueReset();
+                EnduranceCheckValueReset(false);
             }
         }
+        else
+        {
+            if (!SlimeGameManager.Instance.Player.PlayerStat.eternalStat.maxHp.isUnlock)
+            {
+                return;
+            }
 
-        //if (num > 0)
-        //{            
-        //    if (stat.statLv >= stat.maxStatLv)
-        //    {
-        //        return;
-        //    }
+            if (((int)totalDamage - choiceDataDict[NGlobal.EnduranceID].checkStartValue) >= choiceDataDict[NGlobal.EnduranceID].unlockStatValue)
+            {
+                // 처음 이 스탯이 생김
+                stat.isUnlock = true;
 
-        //    SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance.statValue += num;
-        //    SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance.statLv += num;
+                UIManager.Instance.playerStatUI.StatUnlock(stat);
 
-        //    SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxHp.statValue += choiceDataDict[NGlobal.EnduranceID].upTargetStatPerChoiceStat * (num);
+                stat.statValue = choiceDataDict[NGlobal.EnduranceID].firstValue;
+                stat.statLv = choiceDataDict[NGlobal.EnduranceID].firstValue;
 
-        //    EnduranceCheckValueReset();
-        //}
+                EnduranceCheckValueReset(true);
+            }
+        }
     }
-    public void EnduranceCheckValueReset()
+    public void EnduranceCheckValueReset(bool aboutUnlock) // unlock체크에 쓰이는 값이랑 upAmount관련 체크에 쓰이는 값이 같으면, 이런식으로 해준다.
     {
-        choiceDataDict[NGlobal.EnduranceID].checkStartValue = (int)totalDamage;
+        if (aboutUnlock)
+        {
+            choiceDataDict[NGlobal.EnduranceID].checkStartValue += choiceDataDict[NGlobal.EnduranceID].unlockStatValue;
+        }
+        else
+        {
+            choiceDataDict[NGlobal.EnduranceID].checkStartValue += choiceDataDict[NGlobal.EnduranceID].upAmount;
+        }
     }
     public void CheckProficiency()
     {
         //float pastePatienceNum = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.proficiency.statValue;
-        int num = 0;
         StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.proficiency;
 
         if (SlimeGameManager.Instance.Player.PlayerStat.choiceStat.proficiency.isUnlock)
         {
-            num = (attackNum + attackMissedNum - choiceDataDict[NGlobal.ProficiencyID].checkStartValue) / (choiceDataDict[NGlobal.ProficiencyID].upAmount);
-
-            if (num != 0)
+            if ((attackNum + attackMissedNum - choiceDataDict[NGlobal.ProficiencyID].checkStartValue) >= (choiceDataDict[NGlobal.ProficiencyID].upAmount))
             {
                 if (stat.statLv >= stat.maxStatLv)
                 {
                     return;
                 }
 
-                stat.statValue += num;
-                stat.statLv += num;
+                stat.statValue++;
+                stat.statLv++;
 
-                ProficiencyCheckValueReset();
+                ProficiencyCheckValueReset(false);
 
                 choiceDataDict[NGlobal.ProficiencyID].upAmount = originChoiceDataDict[NGlobal.ProficiencyID].upAmount * (int)stat.statValue;
 
@@ -232,13 +243,20 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
                 UIManager.Instance.playerStatUI.StatUnlock(stat);
 
-                ProficiencyCheckValueReset();
+                ProficiencyCheckValueReset(true);
             }
         }
     }
-    private void ProficiencyCheckValueReset()
+    private void ProficiencyCheckValueReset(bool aboutUnlock)
     {
-        choiceDataDict[NGlobal.ProficiencyID].checkStartValue = attackNum + attackMissedNum;
+        if (aboutUnlock)
+        {
+            choiceDataDict[NGlobal.ProficiencyID].checkStartValue += choiceDataDict[NGlobal.ProficiencyID].unlockStatValue;
+        }
+        else
+        {
+            choiceDataDict[NGlobal.ProficiencyID].checkStartValue += choiceDataDict[NGlobal.ProficiencyID].upAmount;
+        }
     }
 
     public void CheckMomentom()
@@ -247,21 +265,19 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
         if (SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.isUnlock)
         {
-            int num = ((avoidInMomentomNum - choiceDataDict[NGlobal.MomentomID].checkStartValue) / (choiceDataDict[NGlobal.MomentomID].upAmount));
-
-            if (0 != num)
+            if (((avoidInMomentomNum - choiceDataDict[NGlobal.MomentomID].checkStartValue) >= (choiceDataDict[NGlobal.MomentomID].upAmount)))
             {
                 if (stat.statLv >= stat.maxStatLv)
                 {
                     return;
                 }
 
-                stat.statValue += num;
-                stat.statLv += num;
+                stat.statValue++;
+                stat.statLv++;
 
                 MomentomCheckValueReset();
 
-                choiceDataDict[NGlobal.MomentomID].upAmount += originChoiceDataDict[NGlobal.MomentomID].upAmount * num;
+                choiceDataDict[NGlobal.MomentomID].upAmount += originChoiceDataDict[NGlobal.MomentomID].upAmount;
             }
         }
         else
@@ -286,7 +302,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
     public void MomentomCheckValueReset()
     {
-        choiceDataDict[NGlobal.MomentomID].checkStartValue = avoidInMomentomNum;
+        choiceDataDict[NGlobal.MomentomID].checkStartValue += choiceDataDict[NGlobal.MomentomID].upAmount;
     }
 
     public void CheckFrenzy()
@@ -328,17 +344,15 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
         if (SlimeGameManager.Instance.Player.PlayerStat.choiceStat.fake.isUnlock)
         {
-            int num = (fakeNum - choiceDataDict[NGlobal.FakeID].checkStartValue) / choiceDataDict[NGlobal.FakeID].upAmount;
-
-            if (num != 0)
+            if ((fakeNum - choiceDataDict[NGlobal.FakeID].checkStartValue) >= choiceDataDict[NGlobal.FakeID].upAmount)
             {
                 if (stat.statLv >= stat.maxStatLv)
                 {
                     return;
                 }
 
-                stat.statValue += num;
-                stat.statLv += num;
+                stat.statValue++;
+                stat.statLv++;
 
                 SlimeGameManager.Instance.Player.FakePercentage = stat.statValue * choiceDataDict[NGlobal.FakeID].upTargetStatPerChoiceStat;
 
@@ -360,7 +374,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
     }
     public void FakeCheckValueReset()
     {
-        choiceDataDict[NGlobal.FakeID].checkStartValue = fakeNum;
+        choiceDataDict[NGlobal.FakeID].checkStartValue = choiceDataDict[NGlobal.FakeID].upAmount;
     }
     public void UpAttackMissedNum()
     {
@@ -384,7 +398,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
         if (!SlimeGameManager.Instance.Player.PlayerStat.choiceStat.proficiency.isUnlock)
         {
-            ProficiencyCheckValueReset();
+            ProficiencyCheckValueReset(true);
 
             return;
         }

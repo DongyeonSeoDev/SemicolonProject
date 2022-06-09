@@ -277,8 +277,6 @@ public class Player : MonoBehaviour
 
             playerStat.currentHp -= dm;
 
-            SlimeGameManager.Instance.Player.PlayerChoiceStatControl.CheckEndurance();
-
             if (playerStat.currentHp <= 0)
             {
                 if (stateAbnormality)
@@ -357,8 +355,6 @@ public class Player : MonoBehaviour
             }
 
             playerStat.currentHp -= dm;
-
-            SlimeGameManager.Instance.Player.PlayerChoiceStatControl.CheckEndurance();
 
             if (playerStat.currentHp <= 0)
             {
