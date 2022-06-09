@@ -86,9 +86,9 @@ public class InputTutorial : MonoBehaviour
     {
         #region 이동관련
 #if UNITY_EDITOR
-        float moveTutoWaitTime = 3f;
+        float moveTutoWaitTime = 0.5f;
 #else
-        float moveTutoWaitTime = 3f;
+        float moveTutoWaitTime = 2f;
 #endif
         inputTutoDatas.Add(new InputTutoData(KeyAction.LEFT, moveTutoWaitTime));
         inputTutoDatas.Add(new InputTutoData(KeyAction.RIGHT, moveTutoWaitTime));
