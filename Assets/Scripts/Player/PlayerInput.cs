@@ -280,20 +280,22 @@ public class PlayerInput : MonoBehaviour
 
                 if (skill0TutoClear)
                 {
-                    if (!EventSystem.current.IsPointerOverGameObject() &&
+                    if (
                     (inputTutorial == null || (!inputTutorial.InputTutoDataDict.ContainsKey(KeyAction.ATTACK) ||
                     inputTutorial.InputTutoDataDict[KeyAction.ATTACK].isClear))
                     && !cantPlaySkill0) // mouse 0
                     {
-                        isDoSkill0 = Input.GetMouseButton(0);
+                        //isDoSkill0 = Input.GetMouseButton(0);
 
-                        if (Input.GetMouseButtonDown(0))
+                        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
                         {
+                            isDoSkill0 = true;
                             skill0ButtonDowned = true;
                         }
 
                         if (Input.GetMouseButtonUp(0))
                         {
+                            isDoSkill0 = false;
                             skill0ButtonDowned = false;
 
                             EventManager.TriggerEvent("SkillButtonUp0");
@@ -301,6 +303,7 @@ public class PlayerInput : MonoBehaviour
 
                         if((skill0ButtonDowned && !Input.GetMouseButton(0)))
                         {
+                            isDoSkill0 = false;
                             skill0ButtonDowned = false;
 
                             EventManager.TriggerEvent("SkillCancel0");
