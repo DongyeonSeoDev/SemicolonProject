@@ -48,7 +48,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
         get { return avoidInMomentomNum; }
     }
 
-    [SerializeField]
+    //[SerializeField]
     private int fakeNum = 0;
     public int FakeNum
     {
@@ -193,11 +193,33 @@ public class PlayerChoiceStatControl : MonoBehaviour
     }
     public void CheckProficiency()
     {
+        //float pastePatienceNum = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.proficiency.statValue;
         int num = 0;
-        float pastePatienceNum = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.proficiency.statValue;
         StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.proficiency;
 
-        if (!SlimeGameManager.Instance.Player.PlayerStat.choiceStat.proficiency.isUnlock)
+        if (SlimeGameManager.Instance.Player.PlayerStat.choiceStat.proficiency.isUnlock)
+        {
+            num = (attackNum + attackMissedNum - choiceDataDict[NGlobal.ProficiencyID].checkStartValue) / (choiceDataDict[NGlobal.ProficiencyID].upAmount);
+
+            if (num != 0)
+            {
+                if (stat.statLv >= stat.maxStatLv)
+                {
+                    return;
+                }
+
+                stat.statValue += num;
+                stat.statLv += num;
+
+                ProficiencyCheckValueReset();
+
+                choiceDataDict[NGlobal.ProficiencyID].upAmount = originChoiceDataDict[NGlobal.ProficiencyID].upAmount * (int)stat.statValue;
+
+                SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.minDamage.statValue += choiceDataDict[NGlobal.ProficiencyID].upTargetStatPerChoiceStat;
+                SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxDamage.statValue += choiceDataDict[NGlobal.ProficiencyID].upTargetStatPerChoiceStat;
+            }
+        }
+        else
         {
             if (attackMissedNum - choiceDataDict[NGlobal.ProficiencyID].checkStartValue >= choiceDataDict[NGlobal.ProficiencyID].unlockStatValue)
             {
@@ -213,26 +235,6 @@ public class PlayerChoiceStatControl : MonoBehaviour
                 ProficiencyCheckValueReset();
             }
         }
-        else
-        {
-            if ((attackNum + attackMissedNum - choiceDataDict[NGlobal.ProficiencyID].checkStartValue) >= (choiceDataDict[NGlobal.ProficiencyID].upAmount))
-            {
-                if (stat.statLv >= stat.maxStatLv)
-                {
-                    return;
-                }
-
-                stat.statValue++;
-                stat.statLv++;
-
-                ProficiencyCheckValueReset();
-
-                choiceDataDict[NGlobal.ProficiencyID].upAmount = originChoiceDataDict[NGlobal.ProficiencyID].upAmount * stat.statLv;
-
-                SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.minDamage.statValue += choiceDataDict[NGlobal.ProficiencyID].upTargetStatPerChoiceStat * (num);
-                SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxDamage.statValue += choiceDataDict[NGlobal.ProficiencyID].upTargetStatPerChoiceStat * (num);
-            }
-        }
     }
     private void ProficiencyCheckValueReset()
     {
@@ -241,17 +243,37 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
     public void CheckMomentom()
     {
-        int num = 0;
         StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom;
 
-        if (!SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.isUnlock)
+        if (SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.isUnlock)
         {
-            if(PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(Enemy.EnemyType.Rat_02.ToString())
+            int num = ((avoidInMomentomNum - choiceDataDict[NGlobal.MomentomID].checkStartValue) / (choiceDataDict[NGlobal.MomentomID].upAmount));
+
+            if (0 != num)
+            {
+                if (stat.statLv >= stat.maxStatLv)
+                {
+                    return;
+                }
+
+                stat.statValue += num;
+                stat.statLv += num;
+
+                MomentomCheckValueReset();
+
+                choiceDataDict[NGlobal.MomentomID].upAmount += originChoiceDataDict[NGlobal.MomentomID].upAmount * num;
+            }
+        }
+        else
+        {
+            if (PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(Enemy.EnemyType.Rat_02.ToString())
                 >= choiceDataDict[NGlobal.MomentomID].unlockStatValue)
             {
                 // 이 스탯이 처음 생김
                 Debug.Log("Momentom True Wireless Earbuds 3"); // 추진력 해금 체크용 코드 // 참고로 좋은 무선이어폰임 추천함
-                num = choiceDataDict[NGlobal.MomentomID].firstValue;
+
+                stat.statValue = choiceDataDict[NGlobal.MomentomID].firstValue;
+                stat.statLv = choiceDataDict[NGlobal.MomentomID].firstValue;
 
                 stat.isUnlock = true;
 
@@ -259,25 +281,6 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
                 UIManager.Instance.playerStatUI.StatUnlock(stat);
             }
-        }
-        else
-        {
-            num = ((avoidInMomentomNum - choiceDataDict[NGlobal.MomentomID].checkStartValue) / (choiceDataDict[NGlobal.MomentomID].upAmount));
-        }
-
-        if (0 != num)
-        {
-            if (stat.statLv >= stat.maxStatLv)
-            {
-                return;
-            }
-
-            stat.statValue += num;
-            stat.statLv += num;
-
-            MomentomCheckValueReset();
-
-            choiceDataDict[NGlobal.MomentomID].upAmount += originChoiceDataDict[NGlobal.MomentomID].upAmount * num;
         }
     }
 
@@ -323,7 +326,28 @@ public class PlayerChoiceStatControl : MonoBehaviour
     {
         StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.fake;
 
-        if (!SlimeGameManager.Instance.Player.PlayerStat.choiceStat.fake.isUnlock)
+        if (SlimeGameManager.Instance.Player.PlayerStat.choiceStat.fake.isUnlock)
+        {
+            int num = (fakeNum - choiceDataDict[NGlobal.FakeID].checkStartValue) / choiceDataDict[NGlobal.FakeID].upAmount;
+
+            if (num != 0)
+            {
+                if (stat.statLv >= stat.maxStatLv)
+                {
+                    return;
+                }
+
+                stat.statValue += num;
+                stat.statLv += num;
+
+                SlimeGameManager.Instance.Player.FakePercentage = stat.statValue * choiceDataDict[NGlobal.FakeID].upTargetStatPerChoiceStat;
+
+                choiceDataDict[NGlobal.FakeID].upAmount *= 2;
+
+                FakeCheckValueReset();
+            }
+        }
+        else
         {
             if (avoidNum >= choiceDataDict[NGlobal.FakeID].unlockStatValue)
             {
@@ -331,25 +355,6 @@ public class PlayerChoiceStatControl : MonoBehaviour
                 stat.statLv = choiceDataDict[NGlobal.FakeID].firstValue;
 
                 stat.isUnlock = true;
-            }
-        }
-        else
-        {
-            if(fakeNum - choiceDataDict[NGlobal.FakeID].checkStartValue >= choiceDataDict[NGlobal.FakeID].upAmount)
-            {
-                if(stat.statLv >= stat.maxStatLv)
-                {
-                    return;
-                }
-
-                stat.statValue++;
-                stat.statLv++;
-
-                SlimeGameManager.Instance.Player.FakePercentage = stat.statValue * choiceDataDict[NGlobal.FakeID].upTargetStatPerChoiceStat;
-
-                choiceDataDict[NGlobal.FakeID].upAmount *= 2;
-
-                FakeCheckValueReset();
             }
         }
     }
