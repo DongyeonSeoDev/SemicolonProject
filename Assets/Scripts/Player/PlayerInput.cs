@@ -287,7 +287,7 @@ public class PlayerInput : MonoBehaviour
                     {
                         //isDoSkill0 = Input.GetMouseButton(0);
 
-                        if (Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+                        if (Input.GetMouseButtonDown(0))
                         {
                             isDoSkill0 = true;
                             skill0ButtonDowned = true;
