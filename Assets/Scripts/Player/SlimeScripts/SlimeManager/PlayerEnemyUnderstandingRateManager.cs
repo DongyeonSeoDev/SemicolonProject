@@ -163,7 +163,7 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
         {
             if (currentExtraStatDict[key] != extraStat)
             {
-                SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.Gap(currentExtraStatDict[key]);
+                SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.Sub(currentExtraStatDict[key]);
 
                 currentExtraStatDict[key] = extraStat;
 

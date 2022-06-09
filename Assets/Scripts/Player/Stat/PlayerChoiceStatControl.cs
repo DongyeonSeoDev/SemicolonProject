@@ -411,7 +411,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
     }
     public void UpAvoidInMomentomNum()
     {
-        if(!SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.isUnlock || !SlimeGameManager.Instance.Player.PlayerStat.eternalStat.speed.isUnlock)
+        if(!SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.isUnlock)
         {
             return;
         }

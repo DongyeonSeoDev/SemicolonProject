@@ -204,7 +204,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
         {
             if (prevBodyAdditionalStat != null && !isDead)
             {
-                Player.PlayerStat.additionalEternalStat.Gap(prevBodyAdditionalStat);
+                Player.PlayerStat.additionalEternalStat.Sub(prevBodyAdditionalStat);
 
                 //player.CurrentHp = (player.PlayerStat.MaxHp * hpPercentage).Round();
                 Player.PlayerStat.currentHp = Player.PlayerStat.MaxHp * hpPercentage;
@@ -248,7 +248,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
             if (prevBodyAdditionalStat != null && !isDead)
             {
-                Player.PlayerStat.additionalEternalStat.Gap(prevBodyAdditionalStat);
+                Player.PlayerStat.additionalEternalStat.Sub(prevBodyAdditionalStat);
 
                 prevBodyAdditionalStat = new EternalStat();
             }

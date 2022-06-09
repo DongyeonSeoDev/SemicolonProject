@@ -185,7 +185,7 @@ public class EternalStat
         criticalDamage.statValue += a.criticalDamage.statValue;
     }
 
-    public void Gap(EternalStat a)
+    public void Sub(EternalStat a)
     {
         maxHp.statValue -= a.maxHp.statValue;
         minDamage.statValue -= a.minDamage.statValue;
