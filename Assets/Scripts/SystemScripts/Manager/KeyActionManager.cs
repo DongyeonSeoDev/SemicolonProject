@@ -56,6 +56,8 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
 
     private bool isUseableQuik = true;
 
+    private bool isAutoQuik = true;
+
     #endregion
 
     private void Awake()
@@ -78,7 +80,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         });
 
         Global.AddAction("ItemUse", UpdateQuikSlotUI);
-        Global.AddAction("GetItem", UpdateQuikSlotUI);
+        Global.AddAction("GetItem", CheckGetHealItem);
     }
 
     private void OnEnable()
@@ -87,6 +89,9 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         {
             isUseableQuik = true;
         };
+
+        if (Time.unscaledTime > 3f)
+            UpdateQuikKeyCode();
     }
 
     private void Start()
@@ -126,7 +131,6 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         }
 
         EventManager.TriggerEvent("UpdateKeyCodeUI");
-
     }
 
     private void Update()
@@ -145,7 +149,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
     #region Quik Slot
     private void UseQuikSlotItem()
     {
-        if(!string.IsNullOrEmpty(quikItemId) && isUseableQuik && !TimeManager.IsTimePaused)
+        if(!string.IsNullOrEmpty(quikItemId) && isUseableQuik && !TimeManager.IsTimePaused && !Util.IsActiveGameUI(UIType.MENU))
         {
             GameManager.Instance.UseItem(quikItemId);
         }
@@ -153,7 +157,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
 
     public void RegisterQuikSlot(string id)
     {
-        if (!GameManager.Instance.GetItemData(id).isHealItem) return;
+        if (string.IsNullOrEmpty(id) || !GameManager.Instance.GetItemData(id).isHealItem) return;
 
         if (quikItemId == id)
         {
@@ -188,7 +192,19 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         
         if(count == 0)
         {
-            UnregisterQuikSlot();
+            if (isAutoQuik)
+            {
+                string id = Inventory.Instance.FirstHealItem;
+                if(!string.IsNullOrEmpty(id))
+                {
+                    SetAutoQuikSlotItem(id);
+                }
+                else
+                    UnregisterQuikSlot();
+            }
+            else
+                UnregisterQuikSlot();
+            
         }
         else
         {
@@ -204,10 +220,40 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         }
     }
 
+    private void CheckGetHealItem(object id)
+    {
+        UpdateQuikSlotUI(id);
+
+        string sid = (string)id;
+        if(GameManager.Instance.GetItemData(sid).isHealItem && isAutoQuik && string.IsNullOrEmpty(quikItemId))
+        {
+            RegisterQuikSlot(sid);
+        }
+    }
+
     public void UpdateQuikKeyCode()
     {
+        //Debug.Log(KeySetting.keyDict.ContainsKey(KeyAction.ITEM_QUIKSLOT));  OnEnable에서 이거 찍으면 false뜸. keyDict세팅하는건 Awake..
         quikKeyCodeTxt.text = KeyCodeToString.GetString(KeySetting.keyDict[KeyAction.ITEM_QUIKSLOT]);
         quikSlotCcsf.UpdateSizeDelay();
+    }
+
+    public void SetAutoQuikSlot()
+    {
+        isAutoQuik = !isAutoQuik;
+    }
+
+    public void SetAutoQuikSlotItem(string aid = "")
+    {
+        if (string.IsNullOrEmpty(aid) && isAutoQuik && string.IsNullOrEmpty(quikItemId))
+        {
+            string id = Inventory.Instance.FirstHealItem;
+            RegisterQuikSlot(id);
+        }
+        else if(!string.IsNullOrEmpty(aid))
+        {
+            RegisterQuikSlot(aid);
+        }
     }
 
     #endregion

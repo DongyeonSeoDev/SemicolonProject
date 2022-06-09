@@ -302,6 +302,7 @@ public class GameUI : MonoBehaviour
                 UIManager.Instance.gameUIList[(int)UIType.MONSTERINFO_DETAIL].gameObject.SetActive(false);
                 UIManager.Instance.gameUIList[(int)UIType.MONSTERINFO_DETAIL_ITEM].gameObject.SetActive(false);
                 UIManager.Instance.gameUIList[(int)UIType.MONSTERINFO_DETAIL_STAT].gameObject.SetActive(false);
+                UIManager.Instance.gameUIList[(int)UIType.MONSTERINFO_DETAIL_FEATURE].gameObject.SetActive(false);
                 break;
         }
     }

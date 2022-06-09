@@ -432,14 +432,16 @@ public partial class UIManager : MonoSingleton<UIManager>
             {
                 OnUIInteract(UIType.QUIT);
             }*/
-            else if (Input.GetKeyDown(KeyCode.E) && Util.IsActiveGameUI(UIType.ITEM_DETAIL))  //인벤에서 템 사용
+
+            //메뉴에서 쓰는 고정키들
+            else if (Input.GetKeyDown(KeyCode.E) && Util.IsActiveGameUI(UIType.ITEM_DETAIL) && activeUIQueue.Count == 0)  //인벤에서 템 사용
             {
                 if (selectedItemSlot)
                 {
                     OnClickItemUseBtn();
                 }
             }
-            else if(Input.GetKeyDown(KeyCode.F) && Util.IsActiveGameUI(UIType.ITEM_DETAIL))  //인벤에서 퀵슬롯 등록
+            else if(Input.GetKeyDown(KeyCode.F) && Util.IsActiveGameUI(UIType.ITEM_DETAIL) && activeUIQueue.Count == 0)  //인벤에서 퀵슬롯 등록
             {
                 if (selectedItemSlot)
                 {
@@ -642,30 +644,13 @@ public partial class UIManager : MonoSingleton<UIManager>
                 if (Util.IsActiveGameUI(UIType.UIOFFCONFIRM)) CurrentReConfirmUI.IsCloseable = false;
                 break;
             case UIType.MENU:
-
-                if(Util.IsActiveGameUI(UIType.MONSTERINFO_DETAIL_ITEM))
-                {
-                    OnUIInteract(UIType.MONSTERINFO_DETAIL_ITEM);
-                    return true;
-                }
-                else if(Util.IsActiveGameUI(UIType.MONSTERINFO_DETAIL_STAT))
-                {
-                    OnUIInteract(UIType.MONSTERINFO_DETAIL_STAT);
-                    return true;
-                }
-                else if (Util.IsActiveGameUI(UIType.MONSTERINFO_DETAIL_FEATURE))
-                {
-                    OnUIInteract(UIType.MONSTERINFO_DETAIL_FEATURE);
-                    return true;
-                }
-
                 if (!Util.IsActiveGameUI(UIType.MENU))
                 {
                     TimeManager.TimePause();
                 }
                 else
                 {
-                    
+                    KeyActionManager.Instance.SetAutoQuikSlotItem();
                 }
                 break;
         }

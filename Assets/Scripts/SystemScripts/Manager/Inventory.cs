@@ -36,6 +36,23 @@ public class Inventory : MonoSingleton<Inventory>
         }
     }
 
+    public string FirstHealItem
+    {
+        get
+        {
+            ItemSlot slot = null;
+            for(int i= 0; i < itemSlotParent.childCount; i++)
+            {
+                slot = itemSlotParent.GetChild(i).GetComponent<ItemSlot>();
+                if(slot.ExistItem && GameManager.Instance.GetItemData(slot.itemInfo.id).isHealItem)
+                {
+                    return slot.itemInfo.id;
+                }
+            }
+            return string.Empty;
+        }
+    }
+
     private void Awake()
     {
         for (int i = 0; i < maxItemSlotCount; i++)

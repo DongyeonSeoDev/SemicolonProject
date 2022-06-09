@@ -67,7 +67,7 @@ public class SkillInfoImage : MonoBehaviour
     public void UpdateKeyCode()
     {
         keyCodeTxt.text = KeyCodeToString.GetString(KeySetting.GetKeyCode(Util.EnumParse<KeyAction>(skillType.ToString())));
-        Util.DelayFunc(() => ccsf.UpdateSize(), 0.1f);
+        ccsf.UpdateSizeDelay();
     }
 
     private void Update()
@@ -80,6 +80,7 @@ public class SkillInfoImage : MonoBehaviour
 
     private void OnEnable()
     {
-        UpdateKeyCode();
+        if (Time.unscaledTime > 3f)
+            UpdateKeyCode();
     }
 }
