@@ -148,7 +148,11 @@ public class StageManager : MonoSingleton<StageManager>
         currentFloor = GetStageData(startStageID).stageFloor.floor;
         InsertRandomMaps(currentFloor);
         SetRandomAreaRandomIncounter();
-        Util.DelayFunc(() => NextStage(startStageID), 0.2f);
+        Util.DelayFunc(() =>
+        {
+            NextStage(startStageID);
+            UIManager.Instance.StartLoadingIn();
+        }, 0.2f);
         //respawnPos = idToStageDataDict[startStageID].stage.GetComponent<StageGround>().playerSpawnPoint.position;
 
         PoolManager.CreatePool(recoveryObjPref, npcParent, 1, "RecoveryObjPrefObjPref1");
@@ -565,15 +569,16 @@ public class StageManager : MonoSingleton<StageManager>
 
     public void StartNextStage()
     {
+        Debug.Log("Start Next Stage");
         NextStagePreEvent();
 
         if (currentArea == AreaType.MONSTER || currentArea == AreaType.BOSS) //전투구역이면 적 소환
         {
             NextEnemy();
         }
-
+        
         EventManager.TriggerEvent("StartBGM", currentStageData.stageID); //BGM
-
+       
         //구역 이름을 띄워줌
         string str = string.IsNullOrEmpty(currentStageData.stageName) ? Global.AreaTypeToString(currentArea) : currentStageData.stageName;
         if (currentArea != AreaType.BOSS)
@@ -584,7 +589,7 @@ public class StageManager : MonoSingleton<StageManager>
         {
             UIManager.Instance.InsertTopCenterNoticeQueue(str, UIManager.Instance.bossNoticeMsgVGrd); 
         }
-
+        
         //맵 입장 이벤트가 있으면 실행
         if(currentStageData.mapEvent != null)
         {

@@ -310,11 +310,15 @@ public class Inventory : MonoSingleton<Inventory>
     public void SetActiveUseableMark(bool useable, string id = "_NONE_")  //useable이 false일 때는 굳이 id를 매개변수로 안보내도 됨
     {
         invenUseActionImg.SetActive(useable);
-        invenQuikActionImg.SetActive(useable);
 
         if(useable)
         {
+            invenQuikActionImg.SetActive(GameManager.Instance.GetItemData(id).isHealItem);
             quikSlotTxt.text = id == KeyActionManager.Instance.QuikItemId ? "퀵슬롯 해제" : "퀵슬롯 등록";
+        }
+        else
+        {
+            invenQuikActionImg.SetActive(false);
         }
     }
 

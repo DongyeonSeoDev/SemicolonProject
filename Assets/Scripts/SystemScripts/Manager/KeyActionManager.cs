@@ -145,7 +145,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
     #region Quik Slot
     private void UseQuikSlotItem()
     {
-        if(!string.IsNullOrEmpty(quikItemId) && isUseableQuik)
+        if(!string.IsNullOrEmpty(quikItemId) && isUseableQuik && !TimeManager.IsTimePaused)
         {
             GameManager.Instance.UseItem(quikItemId);
         }
@@ -153,6 +153,8 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
 
     public void RegisterQuikSlot(string id)
     {
+        if (!GameManager.Instance.GetItemData(id).isHealItem) return;
+
         if (quikItemId == id)
         {
             UnregisterQuikSlot();

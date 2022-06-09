@@ -298,7 +298,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             }));
         }
 
-        um.StartLoadingIn();
+        //um.StartLoadingIn();
     }
 
     /*private void ShowTargetSortingLayers() //Test

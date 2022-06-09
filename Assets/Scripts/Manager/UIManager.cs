@@ -565,16 +565,17 @@ public partial class UIManager : MonoSingleton<UIManager>
             }
         }
 
-        switch (type)
+        switch (type)  
         {
             case UIType.INVENTORY:
                 if(!Util.IsActiveGameUI(type))
                 {
                     Inventory.Instance.SetActiveUseableMark(false);
+                    invenHpInfo.first.fillAmount = (float)sgm.Player.PlayerStat.currentHp / sgm.Player.PlayerStat.MaxHp;
+                    invenHpInfo.second.text = string.Concat("HP : ", Mathf.Ceil(Mathf.Clamp(sgm.Player.PlayerStat.currentHp, 0, sgm.Player.PlayerStat.MaxHp)), '/', Mathf.Ceil(sgm.Player.PlayerStat.MaxHp));
+                    invenHpEffMaskInfo.first.localScale = new Vector3(invenHpEffMaskInfo.second * invenHpInfo.first.fillAmount, invenHpEffMaskInfo.second, invenHpEffMaskInfo.second);
                 }
-                invenHpInfo.first.fillAmount = (float)sgm.Player.PlayerStat.currentHp / sgm.Player.PlayerStat.MaxHp;
-                invenHpInfo.second.text = string.Concat("HP : ",Mathf.Ceil(Mathf.Clamp(sgm.Player.PlayerStat.currentHp, 0, sgm.Player.PlayerStat.MaxHp)), '/', Mathf.Ceil(sgm.Player.PlayerStat.MaxHp));
-                invenHpEffMaskInfo.first.localScale = new Vector3(invenHpEffMaskInfo.second*invenHpInfo.first.fillAmount, invenHpEffMaskInfo.second, invenHpEffMaskInfo.second);
+                //여기서 else는 안먹힘 (현재 켜져있는 상태인지 체크하는거) 
                 break;
             case UIType.KEYSETTING:
                 if (!gm.savedData.tutorialInfo.isEnded) //튜토리얼 안끝났다면 키세팅 창 못열게
@@ -641,6 +642,7 @@ public partial class UIManager : MonoSingleton<UIManager>
                 if (Util.IsActiveGameUI(UIType.UIOFFCONFIRM)) CurrentReConfirmUI.IsCloseable = false;
                 break;
             case UIType.MENU:
+
                 if(Util.IsActiveGameUI(UIType.MONSTERINFO_DETAIL_ITEM))
                 {
                     OnUIInteract(UIType.MONSTERINFO_DETAIL_ITEM);
@@ -660,6 +662,10 @@ public partial class UIManager : MonoSingleton<UIManager>
                 if (!Util.IsActiveGameUI(UIType.MENU))
                 {
                     TimeManager.TimePause();
+                }
+                else
+                {
+                    
                 }
                 break;
         }
@@ -740,10 +746,11 @@ public partial class UIManager : MonoSingleton<UIManager>
         }
     }
 
-    public void InActiveSpecialProcess(UIType type)//UI 닫힐 때의 특별한 처리
+    public void InActiveSpecialProcess(UIType type)//UI 닫힐 때의 특별한 처리 , 메뉴에 있는 것들은 여기 안거침
     {
         switch (type)
         {
+ 
             case UIType.PRODUCTION_PANEL:
                 CookingManager.Instance.MakeFoodInfoUIReset();  //음식 선택 표시 없애기
                 break;

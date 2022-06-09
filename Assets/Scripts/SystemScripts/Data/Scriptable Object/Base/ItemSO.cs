@@ -8,6 +8,8 @@ public abstract class ItemSO : ScriptableObject
 
     public ItemType itemType;
 
+    public bool isHealItem;
+
     //public bool isUseable = true;
 
     public string id => name;  //원래는 int형이고 변수형태였음
