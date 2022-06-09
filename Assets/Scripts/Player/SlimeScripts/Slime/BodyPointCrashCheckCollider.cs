@@ -82,9 +82,9 @@ public class BodyPointCrashCheckCollider : MonoBehaviour
     {
         if (bodyPoint.MiddlePoint != null)
         {
-            bodyPoint.MiddlePoint.WillCrashList = bodyPoint.MiddlePoint.WillCrashList.Distinct().ToList();
+            List<GameObject> objList = bodyPoint.MiddlePoint.WillCrashList.Distinct().ToList();
 
-            foreach (var item in bodyPoint.MiddlePoint.WillCrashList)
+            foreach (var item in objList)
             {
                 EventManager.TriggerEvent("BodyPointCrash", item);
             }
