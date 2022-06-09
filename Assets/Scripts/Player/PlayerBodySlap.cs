@@ -230,17 +230,18 @@ public class PlayerBodySlap : PlayerSkill
                     EventManager.TriggerEvent("OnAttackMiss");
                 }
 
-                    Debug.Log(SlimeGameManager.Instance.Player.PlayerStat.choiceStat.frenzy.isUnlock);
-                if (!bodyStopBodySlapTimerStart && !SlimeGameManager.Instance.Player.PlayerStat.choiceStat.frenzy.isUnlock)
-                {
-                    StopBodySlap();
-
-                    bodyStopBodySlapTimerStart = true;
-                    stopBodySlapTimer = stopBodySlapTime;
-                }
+                Debug.Log(SlimeGameManager.Instance.Player.PlayerStat.choiceStat.frenzy.isUnlock);
 
                 SoundManager.Instance.PlaySoundBox("SlimeSkill1Crash");
                 CinemachineCameraScript.Instance.Shake(whenBodySlapCrashShakeData);
+            }
+
+            if (!bodyStopBodySlapTimerStart && !SlimeGameManager.Instance.Player.PlayerStat.choiceStat.frenzy.isUnlock)
+            {
+                StopBodySlap();
+
+                bodyStopBodySlapTimerStart = true;
+                stopBodySlapTimer = stopBodySlapTime;
             }
         }
     }
