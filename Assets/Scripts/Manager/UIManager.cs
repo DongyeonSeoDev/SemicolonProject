@@ -612,7 +612,7 @@ public partial class UIManager : MonoSingleton<UIManager>
                 if (!Util.IsActiveGameUI(type))
                 {
                     playerStatUI.UpdateStat();
-                    playerStatUI.CloseChoiceDetail();
+                    //playerStatUI.CloseChoiceDetail();
                 }
                     
                 //UpdateStatUI();
@@ -769,6 +769,7 @@ public partial class UIManager : MonoSingleton<UIManager>
                 break;
             case UIType.MENU:
                 TimeManager.TimeResume();
+                playerStatUI.CloseStatPanel();
                 break;
             case UIType.CHANGEABLEMOBLIST:
                 mc.RemoveBody(3);

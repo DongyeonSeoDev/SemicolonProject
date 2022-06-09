@@ -52,6 +52,8 @@ public partial class GameManager : MonoSingleton<GameManager>
     public event Action gameQuitEvent;
     public event Action UpdateEvent;
     private Dictionary<string, Action> updateActionDic = new Dictionary<string, Action>();
+    private Queue<(string, Action)> updateActionAddQueue = new Queue<(string, Action)>();
+    private Queue<(string, Action, bool)> updateActionRemoveQueue = new Queue<(string, Action, bool)>(); //키 , 함수 , 키를 삭제시킬지
     #endregion
 
 #if UNITY_EDITOR
@@ -240,25 +242,17 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     public void AddUpdateAction(string key, Action action)
     {
-        if (!updateActionDic.ContainsKey(key))
-        {
-            updateActionDic.Add(key, action);   
-        }
-        else
-        {
-            updateActionDic[key] += action;
-        }
+        updateActionAddQueue.Enqueue((key, action));
     }
 
     public void RemoveUpdateAction(string key, Action action)
     {
-        if(updateActionDic.ContainsKey(key))
-           updateActionDic[key] -= action;
+        updateActionRemoveQueue.Enqueue((key, action, false));
     }
 
     public void RemoveUpdateAction(string key)
     {
-        updateActionDic.Remove(key);
+        updateActionRemoveQueue.Enqueue((key, null, true));
     }
 
     private void Update()
@@ -266,11 +260,37 @@ public partial class GameManager : MonoSingleton<GameManager>
 
         UpdateEvent?.Invoke();
 
-        if(updateActionDic.Count > 0)
+        while(updateActionAddQueue.Count > 0)
         {
-            foreach(Action action in updateActionDic.Values)
+            (string, Action) ua = updateActionAddQueue.Dequeue();
+            
+            if (!updateActionDic.ContainsKey(ua.Item1))
             {
-                action?.Invoke();
+                updateActionDic.Add(ua.Item1, ua.Item2);
+            }
+            else
+            {
+                updateActionDic[ua.Item1] += ua.Item2;
+            }
+        }
+
+        foreach (Action action in updateActionDic.Values)
+        {
+            action?.Invoke();
+        }
+
+        while (updateActionRemoveQueue.Count > 0)
+        {
+            (string, Action, bool) ur = updateActionRemoveQueue.Dequeue();
+            if(ur.Item3)
+            {
+                if (updateActionDic.ContainsKey(ur.Item1))
+                    updateActionDic.Remove(ur.Item1);
+            }
+            else
+            {
+                if (updateActionDic.ContainsKey(ur.Item1))
+                    updateActionDic[ur.Item1] -= ur.Item2;
             }
         }
 
@@ -283,8 +303,6 @@ public partial class GameManager : MonoSingleton<GameManager>
             }
         }
 #endif
-
-
     }
 
     void PlayerDead()

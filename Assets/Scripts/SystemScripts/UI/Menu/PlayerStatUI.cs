@@ -13,7 +13,9 @@ public class PlayerStatUI : MonoBehaviour
     public Pair<GameObject, Transform> statInfoUIPair, choiceStatInfoUIPair;  //고정 스탯 UI 프리팹과 부모, 선택스탯 UI 프리팹과 부모
     public GameObject invisibleChoiceStatUIPrefab;
 
-    private float prevConfirmExp = 0f; //마지막으로 스탯창 열어서 경험치 확인했을 때의 경험치 양
+    private int expFullCount = 0; //마지막으로 스탯창 열고 경험치 확인한 후로부터 스탯포인트 경험치가 꽉차서 포인트를 얻은 것이 몇 회 있었는지
+    private float prevConfirmExpRate = 0f; //마지막으로 스탯창 열어서 경험치 확인했을 때의 경험치 양
+    private float targetExpFillRate;
     private bool isFastChangingExpTxt = false;  //스탯창 열고 스탯포인트 경험치 텍스트가 빠르게 현재 경험치까지 오르는 중인지 (그냥 효과)
 
     private Dictionary<ushort, StatInfoElement> statInfoUIDic = new Dictionary<ushort, StatInfoElement>();  //고정 스탯 UI옵젝들 담음
@@ -80,7 +82,8 @@ public class PlayerStatUI : MonoBehaviour
             {
                 ui.gameObject.SetActive(false);
             }
-            prevConfirmExp = 0f;
+            prevConfirmExpRate = 0f;
+            expFullCount = 0;
         });
     }
 
@@ -141,14 +144,6 @@ public class PlayerStatUI : MonoBehaviour
         }
     }
 
-    private void Update()
-    {
-        if(isFastChangingExpTxt)
-        {
-            statExpText.text = string.Format("{0} / {1}", (int)(statExpPair.first.fillAmount * playerStat.maxExp), playerStat.maxExp);
-        }
-    }
-
     public float GetCurrentPlayerStat(ushort id)  //해당 스탯의 최종 수치를 반환  
     {
         if(eternalStatDic.ContainsKey(id))
@@ -175,20 +170,59 @@ public class PlayerStatUI : MonoBehaviour
 
     public void UpdateStatExp(bool tweening)  //스탯포인트 경험치바를 업뎃함
     {
-        float rate = playerStat.currentExp / playerStat.maxExp;
-        if(tweening)
+        targetExpFillRate = playerStat.currentExp / playerStat.maxExp;
+        if (tweening)
         {
+            if (targetExpFillRate == prevConfirmExpRate && expFullCount == 0) return;
+
             isFastChangingExpTxt = true;
-            statExpPair.first.DOFillAmount(rate, 0.4f).SetUpdate(true).OnComplete(()=>
-            {
-                isFastChangingExpTxt = false;
-                statExpText.text = string.Format("{0} / {1}", playerStat.currentExp, playerStat.maxExp);
-            });
+            FuncUpdater.Add("StatPointExpFillup", StatPointExpFillup);
         }
         else
         {
-            statExpPair.first.fillAmount = rate;
+            statExpPair.first.fillAmount = targetExpFillRate;
+            statExpText.text = string.Format("{0} / {1}", playerStat.currentExp, playerStat.maxExp);
         }
+    }
+
+    private void StatPointExpFillup()
+    {
+        if (isFastChangingExpTxt)
+        {
+            statExpPair.first.fillAmount += Time.unscaledDeltaTime * 1.3f;
+            statExpText.text = string.Format("{0} / {1}", (int)(statExpPair.first.fillAmount * playerStat.maxExp), playerStat.maxExp);
+
+            if(expFullCount > 0)
+            {
+                if(statExpPair.first.fillAmount >= 1)
+                {
+                    expFullCount--;
+                    statExpPair.first.fillAmount = 0;
+                }
+            }
+            else
+            {
+                if (statExpPair.first.fillAmount >= targetExpFillRate)
+                {
+                    statExpPair.first.fillAmount = targetExpFillRate;
+                    statExpText.text = string.Format("{0} / {1}", playerStat.currentExp, playerStat.maxExp);
+                    prevConfirmExpRate = targetExpFillRate;
+                    expFullCount = 0;
+                    isFastChangingExpTxt = false;
+                    FuncUpdater.Remove("StatPointExpFillup");
+                }
+            }
+        }
+    }
+
+    public void CloseStatPanel()
+    {
+        CloseChoiceDetail();
+
+        prevConfirmExpRate = targetExpFillRate;
+        expFullCount = 0;
+        isFastChangingExpTxt = false;
+        FuncUpdater.Remove("StatPointExpFillup");
     }
 
     public void UpdateCurStatPoint(bool statUpMark) //현재 가지고있는 스탯포인트 업뎃
@@ -247,6 +281,7 @@ public class PlayerStatUI : MonoBehaviour
             int point = Mathf.FloorToInt(playerStat.currentExp / playerStat.maxExp);
             playerStat.currentExp -= point * playerStat.maxExp;
             playerStat.currentStatPoint += point;
+            expFullCount += point;
 
             UIManager.Instance.InsertNoticeQueue($"스탯포인트 {point} 획득");
             UIManager.Instance.RequestLogMsg($"스탯포인트를 획득했습니다. (+{point})");
@@ -347,23 +382,9 @@ public class PlayerStatUI : MonoBehaviour
     public void UpdateStat() //스탯창 열고 스탯 정보 UI들 새로 갱신
     {
         UpdateAllStatUI();
-        //UpdateStatExp(false);
-        UpdateCurStatPoint(false);
-        statExpPair.first.fillAmount = 0f;
-        statExpText.text = string.Concat("0 / ", playerStat.maxExp);
-        //statExpText.text = string.Format("{0} / {1}", playerStat.currentExp, playerStat.maxExp);
-
         UpdateAllChoiceStatUI();
-
-        
+        UpdateCurStatPoint(false);
+        statExpText.text = $"{prevConfirmExpRate * playerStat.maxExp} / {playerStat.maxExp}";
+        statExpPair.first.fillAmount = prevConfirmExpRate;
     }
-
-   /* public void Save()  //안쓰면 나중에 지울 것
-    {
-        //튜토리얼이 끝났다면 플레이어의 스탯정보를 저장
-        *//*if (GameManager.Instance.savedData.tutorialInfo.isEnded)
-        {
-            GameManager.Instance.savedData.userInfo.playerStat = playerStat;
-        }*//*
-    }*/
 }
