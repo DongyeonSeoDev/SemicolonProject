@@ -39,7 +39,7 @@ namespace Enemy
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if (collision.CompareLayer(bulletLayer))
+            if (collision.CompareLayer(bulletLayer) && (collision.GetComponent<EnemyBullet>() != null || collision.GetComponent<PlayerProjectile>() != null))
             {
                 isCheck = true;
             }

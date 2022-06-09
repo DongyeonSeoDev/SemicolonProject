@@ -7,7 +7,7 @@ public class PlayerReflectionScript : MonoBehaviour
     {
         EnemyBullet enemyBullet = EnemyPoolManager.Instance.GetPoolObject(type, (Vector2)SlimeGameManager.Instance.CurrentPlayerBody.transform.position).GetComponent<EnemyBullet>();
         
-        enemyBullet.Init(EnemyController.PLAYER, direction, projectileDamage, Color.green);
+        enemyBullet.Init(EnemyController.PLAYER, direction, projectileDamage, Color.green, null, 2);
         enemyBullet.isReflection = true;
 
         SoundManager.Instance.PlaySoundBox("SlimeSkill0");
