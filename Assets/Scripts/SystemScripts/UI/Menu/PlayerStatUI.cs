@@ -13,6 +13,7 @@ public class PlayerStatUI : MonoBehaviour
     public Pair<GameObject, Transform> statInfoUIPair, choiceStatInfoUIPair;  //고정 스탯 UI 프리팹과 부모, 선택스탯 UI 프리팹과 부모
     public GameObject invisibleChoiceStatUIPrefab;
 
+    private float prevConfirmExp = 0f; //마지막으로 스탯창 열어서 경험치 확인했을 때의 경험치 양
     private bool isFastChangingExpTxt = false;  //스탯창 열고 스탯포인트 경험치 텍스트가 빠르게 현재 경험치까지 오르는 중인지 (그냥 효과)
 
     private Dictionary<ushort, StatInfoElement> statInfoUIDic = new Dictionary<ushort, StatInfoElement>();  //고정 스탯 UI옵젝들 담음
@@ -79,6 +80,7 @@ public class PlayerStatUI : MonoBehaviour
             {
                 ui.gameObject.SetActive(false);
             }
+            prevConfirmExp = 0f;
         });
     }
 

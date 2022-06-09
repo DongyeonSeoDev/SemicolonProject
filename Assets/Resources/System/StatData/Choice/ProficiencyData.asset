@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8065046aea5a0f3408bb64d2c52d9860, type: 3}
-  m_Name: PatienceData
+  m_Name: ProficiencyData
   m_EditorClassIdentifier: 
   statId: 100
   statName: "\uC219\uB828\uB3C4"

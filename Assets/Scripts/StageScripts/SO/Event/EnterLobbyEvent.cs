@@ -17,6 +17,8 @@ public class EnterLobbyEvent : MapEventSO
             NGlobal.playerStatUI.StatOpen(NGlobal.MaxHpID, true);
             NGlobal.playerStatUI.StatOpen(NGlobal.MinDamageID, true);
             NGlobal.playerStatUI.StatOpen(NGlobal.MaxDamageID, true);
+
+            TutorialManager.Instance.quikSlotUI.gameObject.SetActive(true);
         }
 
         StageManager.Instance.canNextStage = CanNextStage;
