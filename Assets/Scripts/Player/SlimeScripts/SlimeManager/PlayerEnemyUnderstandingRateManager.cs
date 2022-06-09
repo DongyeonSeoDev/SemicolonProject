@@ -163,12 +163,12 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
         {
             if (currentExtraStatDict[key] != extraStat)
             {
-                SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat -= currentExtraStatDict[key];
+                SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.Gap(currentExtraStatDict[key]);
 
                 currentExtraStatDict[key] = extraStat;
 
-                SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat += currentExtraStatDict[key];
-
+                SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.Sum(currentExtraStatDict[key]);
+                
                 if (pasteUpNewBodyStat != currentUpNewBodyStat[key])
                 {
                     UIManager.Instance.UpdatePlayerHPUI();
@@ -180,7 +180,7 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
         {
             currentExtraStatDict.Add(key, extraStat);
 
-            SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat += currentExtraStatDict[key];
+            SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.Sum(currentExtraStatDict[key]);
 
             if (currentUpNewBodyStat[key] > 0)
             {
@@ -342,6 +342,7 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
 
             if (upNewBodyStat >= 1) // this code is "imsi" code that inserted "imsi" values.
             {
+
                 result = (upStat * upNewBodyStat * upStatPercentage);// 10% 마다 upStatPercentage배씩 상승
             }
 

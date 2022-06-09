@@ -59,7 +59,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
         set { currentBodyId = value; }
     }
 
-    private EternalStat pasteBodyAdditionalStat = new EternalStat();
+    private EternalStat prevBodyAdditionalStat = new EternalStat();
     // pasteExtraStat
 
     private bool canBodyChange = true;
@@ -142,7 +142,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
         }
 
         //currentPlayerBody.transform.position = spawnPosition;
-        pasteBodyAdditionalStat = new EternalStat();
+        prevBodyAdditionalStat = new EternalStat();
 
         Player.WhenRespawn();
     }
@@ -194,22 +194,22 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
         bool found = false;
 
-        if(pasteBodyAdditionalStat != null)
+        if(prevBodyAdditionalStat != null)
         {
-            Debug.Log(pasteBodyAdditionalStat.minDamage.statValue);
+            Debug.Log(prevBodyAdditionalStat.minDamage.statValue);
         }
 
         #region 원래의 모습으로 변신
         if (bodyId == "origin")
         {
-            if (pasteBodyAdditionalStat != null && !isDead)
+            if (prevBodyAdditionalStat != null && !isDead)
             {
-                Player.PlayerStat.additionalEternalStat -= pasteBodyAdditionalStat;
+                Player.PlayerStat.additionalEternalStat.Gap(prevBodyAdditionalStat);
 
                 //player.CurrentHp = (player.PlayerStat.MaxHp * hpPercentage).Round();
                 Player.PlayerStat.currentHp = Player.PlayerStat.MaxHp * hpPercentage;
 
-                pasteBodyAdditionalStat = new EternalStat();
+                prevBodyAdditionalStat = new EternalStat();
 
                 SetCanBodyChangeFalse();
             }
@@ -246,16 +246,16 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             (GameObject, EternalStat) newBodyData = playerEnemyUnderstandingRateManager.ChangalbeBodyDict[bodyId];
             currentBodyId = bodyId;
 
-            if (pasteBodyAdditionalStat != null && !isDead)
+            if (prevBodyAdditionalStat != null && !isDead)
             {
-                Player.PlayerStat.additionalEternalStat -= pasteBodyAdditionalStat;
+                Player.PlayerStat.additionalEternalStat.Gap(prevBodyAdditionalStat);
 
-                pasteBodyAdditionalStat = new EternalStat();
+                prevBodyAdditionalStat = new EternalStat();
             }
 
-            pasteBodyAdditionalStat = newBodyData.Item2;
+            prevBodyAdditionalStat = newBodyData.Item2;
 
-            Player.PlayerStat.additionalEternalStat += pasteBodyAdditionalStat;
+            Player.PlayerStat.additionalEternalStat.Sum(prevBodyAdditionalStat);
 
             //player.CurrentHp = (player.PlayerStat.MaxHp * hpPercentage).Round();
             Player.PlayerStat.currentHp = Player.PlayerStat.MaxHp * hpPercentage;
