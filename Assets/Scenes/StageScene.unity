@@ -138,18 +138,6 @@ PrefabInstance:
       propertyPath: distanceToMiddle
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 3966382012738421239, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
-      propertyPath: choiceDataList.Array.data[0].unlockStatValue
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3966382012738421239, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
-      propertyPath: choiceDataList.Array.data[1].unlockStatValue
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 3966382012738421239, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
-      propertyPath: choiceDataList.Array.data[2].unlockStatValue
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 5427881869486345068, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
       propertyPath: m_Name
       value: Player
@@ -201,22 +189,6 @@ PrefabInstance:
     - target: {fileID: 5427881869486345104, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
       propertyPath: isPauseByTuto
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5427881869486345105, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
-      propertyPath: playerStat.eternalStat.maxHp.isUnlock
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5427881869486345105, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
-      propertyPath: playerStat.eternalStat.speed.isUnlock
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5427881869486345105, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
-      propertyPath: playerStat.eternalStat.maxDamage.isUnlock
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5427881869486345105, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
-      propertyPath: playerStat.eternalStat.minDamage.isUnlock
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5969261799166203317, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
       propertyPath: m_IsActive
@@ -387,52 +359,6 @@ MonoBehaviour:
         m_Calls: []
   m_LegacyBlendHint: 0
   m_ComponentOwner: {fileID: 349118892}
---- !u!1 &272235311
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 272235313}
-  - component: {fileID: 272235312}
-  m_Layer: 0
-  m_Name: SlimeGameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &272235312
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 272235311}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d6ebe2e143ce8af47b245defc60da8d8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bodyChangeTime: 10
-  understadingRatePercentageWhenUpStat: 10
-  upStatPercentage: 0.05
---- !u!4 &272235313
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 272235311}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 12
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &349118891
 GameObject:
   m_ObjectHideFlags: 3
@@ -557,8 +483,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bodyChangeTime: 10
-  understadingRatePercentageWhenUpStat: 10
-  upStatPercentage: 0.2
 --- !u!4 &354327371
 Transform:
   m_ObjectHideFlags: 0
@@ -604,7 +528,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whatIsEnemy:
     serializedVersion: 2
-    m_Bits: 128
+    m_Bits: 2097280
 --- !u!4 &753429172
 Transform:
   m_ObjectHideFlags: 0
@@ -2323,6 +2247,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1200683676907184207, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1327564224787390603, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1724668227825601345, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}

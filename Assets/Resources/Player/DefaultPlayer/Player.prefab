@@ -327,47 +327,51 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   choiceDataList:
   - id: 100
-    name: "\uC778\uB0B4"
+    name: "\uC219\uB828\uB3C4"
     targetStat: "\uACF5\uACA9\uB825"
+    unlockStatValue: 50
     firstValue: 1
     checkStartValue: 0
-    unlockStatValue: 100
     upAmount: 100
     upTargetStatPerChoiceStat: 1
   - id: 105
     name: "\uCD94\uC9C4\uB825"
     targetStat: "\uCD94\uC9C4\uB825, \uC774\uB3D9\uC18D\uB3C4"
+    unlockStatValue: 30
     firstValue: 1
     checkStartValue: 0
-    unlockStatValue: 100
-    upAmount: 10
+    upAmount: 2
     upTargetStatPerChoiceStat: 0.2
   - id: 110
     name: "\uB9F7\uC9D1"
     targetStat: "\uCCB4\uB825"
+    unlockStatValue: 10
     firstValue: 1
     checkStartValue: 0
-    unlockStatValue: 100
-    upAmount: 100
+    upAmount: 50
     upTargetStatPerChoiceStat: 5
   - id: 115
     name: "\uBA48\uCD94\uC9C0 \uC54A\uB294 \uB3CC\uC9C4"
     targetStat: 
+    unlockStatValue: 30
     firstValue: 1
     checkStartValue: 0
-    unlockStatValue: 100
     upAmount: 0
     upTargetStatPerChoiceStat: 0
   - id: 120
     name: "\uBC18\uC0AC"
     targetStat: 
+    unlockStatValue: 30
     firstValue: 1
     checkStartValue: 0
-    unlockStatValue: 100
     upAmount: 0
     upTargetStatPerChoiceStat: 0
   avoidNum: 0
   avoidInMomentomNum: 0
+  fakeNum: 0
+  totalDamage: 0
+  attackMissedNum: 0
+  attackNum: 0
 --- !u!114 &9036656189394809005
 MonoBehaviour:
   m_ObjectHideFlags: 0
