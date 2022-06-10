@@ -256,6 +256,13 @@ public class Player : MonoBehaviour
             return;
         }
 
+        if(playerStat.choiceStat.fake.isUnlock && !stateAbnormality && CheckFake())
+        {
+            Debug.Log("아하하하하하하핳하하ㅏㅎ하하하");
+
+            return;
+        }
+
         if (!playerState.IsDead)
         {
             float dm = damage;
@@ -329,6 +336,13 @@ public class Player : MonoBehaviour
 
         if (playerState.IsDrain && !stateAbnormality)
         {
+            return;
+        }
+
+        if (playerStat.choiceStat.fake.isUnlock && !stateAbnormality && CheckFake())
+        {
+            Debug.Log("아하하하하하하핳하하ㅏㅎ하하하");
+
             return;
         }
 

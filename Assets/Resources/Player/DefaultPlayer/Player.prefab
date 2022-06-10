@@ -235,8 +235,8 @@ MonoBehaviour:
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        statLv: 0
-        maxStatLv: 0
+        statLv: 1
+        maxStatLv: 1
   playerInput: {fileID: 0}
   playerChoiceStatControl: {fileID: 0}
   playerReflectionScript: {fileID: 0}
@@ -366,6 +366,22 @@ MonoBehaviour:
     checkStartValue: 0
     upAmount: 0
     upTargetStatPerChoiceStat: 0
+  - id: 125
+    name: "\uC810\uC561 \uC7AC\uCDA9\uC804"
+    targetStat: 
+    unlockStatValue: 0
+    firstValue: 1
+    checkStartValue: 0
+    upAmount: 0
+    upTargetStatPerChoiceStat: 0
+  - id: 130
+    name: "\uB9DE\uC740\uCC99"
+    targetStat: 
+    unlockStatValue: 440
+    firstValue: 1
+    checkStartValue: 0
+    upAmount: 5
+    upTargetStatPerChoiceStat: 1
   avoidNum: 0
   avoidInMomentomNum: 0
   fakeNum: 0
@@ -467,7 +483,7 @@ LineRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1646225281
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}

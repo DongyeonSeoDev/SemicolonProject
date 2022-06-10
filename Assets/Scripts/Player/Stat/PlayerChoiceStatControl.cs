@@ -151,6 +151,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
         CheckMomentom();
         CheckFrenzy();
         CheckReflection();
+        CheckFake();
     }
     public void CheckEndurance()
     {
@@ -367,6 +368,8 @@ public class PlayerChoiceStatControl : MonoBehaviour
             {
                 stat.statValue = choiceDataDict[NGlobal.FakeID].firstValue;
                 stat.statLv = choiceDataDict[NGlobal.FakeID].firstValue;
+
+                SlimeGameManager.Instance.Player.FakePercentage = stat.statValue * choiceDataDict[NGlobal.FakeID].upTargetStatPerChoiceStat;
 
                 stat.isUnlock = true;
             }
