@@ -79,7 +79,8 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
             isUseableQuik = false;
         });
 
-        Global.AddAction("ItemUse", UpdateQuikSlotUI);
+        //Global.AddAction("ItemUse", UpdateQuikSlotUI);
+        Global.AddAction("RemoveItem", UpdateQuikSlotUI);
         Global.AddAction("GetItem", CheckGetHealItem);
     }
 
@@ -212,9 +213,10 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         }
     }
 
-    private void UpdateQuikSlotUI(object id)
+    private void UpdateQuikSlotUI(object data)
     {
-        if ((string)id == quikItemId)
+        ItemInfo info = (ItemInfo)data;
+        if (info.id == quikItemId)
         {
             UpdateQuikSlot();
         }
@@ -222,9 +224,9 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
 
     private void CheckGetHealItem(object id)
     {
-        UpdateQuikSlotUI(id);
-
         string sid = (string)id;
+        UpdateQuikSlotUI(new ItemInfo(sid,0));
+
         if(GameManager.Instance.GetItemData(sid).isHealItem && isAutoQuik && string.IsNullOrEmpty(quikItemId))
         {
             RegisterQuikSlot(sid);

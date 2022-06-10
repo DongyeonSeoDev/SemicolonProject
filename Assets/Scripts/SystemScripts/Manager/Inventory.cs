@@ -288,6 +288,7 @@ public class Inventory : MonoSingleton<Inventory>
                 }
             }
 
+            Global.ActionTrigger("RemoveItem", new ItemInfo(id, count));
             //UIManager.Instance.UpdateInventoryItemCount(id);
         }
     }

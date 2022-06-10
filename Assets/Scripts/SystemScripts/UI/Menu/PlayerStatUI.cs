@@ -13,6 +13,7 @@ public class PlayerStatUI : MonoBehaviour
     public Pair<GameObject, Transform> statInfoUIPair, choiceStatInfoUIPair;  //고정 스탯 UI 프리팹과 부모, 선택스탯 UI 프리팹과 부모
     public GameObject invisibleChoiceStatUIPrefab;
 
+    private int prevStatPoint; //마지막으로 스탯창 닫았을 때의 스탯포인트 양
     private int expFullCount = 0; //마지막으로 스탯창 열고 경험치 확인한 후로부터 스탯포인트 경험치가 꽉차서 포인트를 얻은 것이 몇 회 있었는지
     private float prevConfirmExpRate = 0f; //마지막으로 스탯창 열어서 경험치 확인했을 때의 경험치 양
     private float targetExpFillRate;
@@ -198,6 +199,7 @@ public class PlayerStatUI : MonoBehaviour
                 {
                     expFullCount--;
                     statExpPair.first.fillAmount = 0;
+                    statExpPair.second.text = (++prevStatPoint).ToString();
                 }
             }
             else
@@ -219,6 +221,7 @@ public class PlayerStatUI : MonoBehaviour
     {
         CloseChoiceDetail();
 
+        prevStatPoint = playerStat.currentStatPoint;
         prevConfirmExpRate = targetExpFillRate;
         expFullCount = 0;
         isFastChangingExpTxt = false;
@@ -227,7 +230,10 @@ public class PlayerStatUI : MonoBehaviour
 
     public void UpdateCurStatPoint(bool statUpMark) //현재 가지고있는 스탯포인트 업뎃
     {
-        statExpPair.second.text = statUpMark ? string.Concat(playerStat.currentStatPoint, "<color=red>-", needStatPoint,"</color>") : playerStat.currentStatPoint.ToString();
+        if (!isFastChangingExpTxt)
+        {
+            statExpPair.second.text = statUpMark ? string.Concat(playerStat.currentStatPoint, "<color=red>-", needStatPoint, "</color>") : playerStat.currentStatPoint.ToString();
+        }
     }
 
     public void OnMouseEnterStatUpBtn(int needStatPoint)  //어떤 스탯의 스탯 올리기 버튼에 마우스대거나 뗄 때
@@ -383,8 +389,10 @@ public class PlayerStatUI : MonoBehaviour
     {
         UpdateAllStatUI();
         UpdateAllChoiceStatUI();
-        UpdateCurStatPoint(false);
+        //UpdateCurStatPoint(false);
+
         statExpText.text = $"{prevConfirmExpRate * playerStat.maxExp} / {playerStat.maxExp}";
         statExpPair.first.fillAmount = prevConfirmExpRate;
+        statExpPair.second.text = prevStatPoint.ToString();
     }
 }
