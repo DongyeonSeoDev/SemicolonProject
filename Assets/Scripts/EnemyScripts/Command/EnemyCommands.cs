@@ -520,7 +520,6 @@ namespace Enemy
         private EnemyPositionCheckData positionCheckData;
         private Enemy enemy;
         Vector2? direction;
-        private int wallCheck = LayerMask.GetMask("WALL");
         private float force;
 
         public EnemyAddForceCommand(Rigidbody2D rigid, Enemy enemy, float rushForce = 0f, EnemyPositionCheckData positionData = null)
