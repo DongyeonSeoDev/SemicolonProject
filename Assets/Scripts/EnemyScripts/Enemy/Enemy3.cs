@@ -6,7 +6,10 @@ namespace Enemy
     {
         public SpriteRenderer anotherImage;
 
+        public float downSpeed = 0f;
+
         private float moveSpeed = 0f;
+        private float currentDownSpeed = 0f;
 
         protected override void OnEnable()
         {
@@ -41,14 +44,14 @@ namespace Enemy
             {
                 rb.velocity = positionCheckData.position * moveSpeed;
 
-                Debug.Log(moveSpeed);
-
-                moveSpeed = Mathf.Lerp(moveSpeed, 0f, 0.05f);
+                moveSpeed = Mathf.Lerp(moveSpeed, 0f, currentDownSpeed);
 
                 if (moveSpeed < 1f)
                 {
                     moveSpeed = 0f;
                 }
+
+                currentDownSpeed += 0.005f;
             }
         }
 
@@ -74,7 +77,11 @@ namespace Enemy
             }
         }
 
-        private void AttackStart() => moveSpeed = 30f; // 애니메이션에서 실행
+        private void AttackStart() // 애니메이션에서 실행
+        {
+            moveSpeed = 30f;
+            currentDownSpeed = downSpeed;
+        }
 
         public override void ChangeColor(Color color)
         {
