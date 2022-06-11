@@ -174,7 +174,11 @@ public class PlayerStatUI : MonoBehaviour
         targetExpFillRate = playerStat.currentExp / playerStat.maxExp;
         if (tweening)
         {
-            if (targetExpFillRate == prevConfirmExpRate && expFullCount == 0) return;
+            if (targetExpFillRate == prevConfirmExpRate && expFullCount == 0)
+            {
+                SetAllEternalStatUIUpBtn(true);
+                return;
+            }
 
             isFastChangingExpTxt = true;
             FuncUpdater.Add("StatPointExpFillup", StatPointExpFillup);
@@ -211,6 +215,9 @@ public class PlayerStatUI : MonoBehaviour
                     prevConfirmExpRate = targetExpFillRate;
                     expFullCount = 0;
                     isFastChangingExpTxt = false;
+
+                    SetAllEternalStatUIUpBtn(true);
+
                     FuncUpdater.Remove("StatPointExpFillup");
                 }
             }
@@ -238,9 +245,8 @@ public class PlayerStatUI : MonoBehaviour
 
     public void OnMouseEnterStatUpBtn(int needStatPoint)  //어떤 스탯의 스탯 올리기 버튼에 마우스대거나 뗄 때
     {
-        if (needStatPoint == -5) needStatPoint = statOpenCost;
-
-        this.needStatPoint = needStatPoint;
+        if (needStatPoint == -5) this.needStatPoint = statOpenCost;
+        else this.needStatPoint = needStatPoint;
         UpdateCurStatPoint(needStatPoint != -1);
     }
 
@@ -280,6 +286,10 @@ public class PlayerStatUI : MonoBehaviour
 
     public void AddPlayerStatPointExp(float value)  //플레이어 스탯포인트 경험치를 획득함
     {
+        //test
+        value += 1200;
+        //end test
+
         playerStat.currentExp += value;
         UIManager.Instance.RequestLogMsg($"경험치를 획득했습니다. (+{value})");
         if(playerStat.currentExp >= playerStat.maxExp)
@@ -385,11 +395,20 @@ public class PlayerStatUI : MonoBehaviour
         choiceStatInfoUIDic[id].UpdateUI();
     }
 
+    public void SetAllEternalStatUIUpBtn(bool on)
+    {
+        foreach (StatInfoElement item in statInfoUIDic.Values)
+            item.SetEnableUpBtn(on);
+        
+    }
+
     public void UpdateStat() //스탯창 열고 스탯 정보 UI들 새로 갱신
     {
         UpdateAllStatUI();
         UpdateAllChoiceStatUI();
         //UpdateCurStatPoint(false);
+
+        SetAllEternalStatUIUpBtn(false);
 
         statExpText.text = $"{prevConfirmExpRate * playerStat.maxExp} / {playerStat.maxExp}";
         statExpPair.first.fillAmount = prevConfirmExpRate;

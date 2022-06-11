@@ -92,15 +92,18 @@ public class StatInfoElement : UITransition
     public override void Transition(bool on) //스탯 증가 버튼에 마우스 댈 때
     {
         isEnter = on;
-        if (on)
+        if (transitionEnable)
         {
-            NGlobal.playerStatUI.OnMouseEnterStatUpBtn(eternal.isOpenStat ? (int)Mathf.Pow(2, eternal.upStatCount) : -5);  //2^지금까지 스탯을 올린 횟수 = 스탯올리기 위해 필요한 포인트 양
-            UpdatePlusStat(true);
-        }
-        else
-        {
-            NGlobal.playerStatUI.OnMouseEnterStatUpBtn(-1);
-            UpdatePlusStat(false);
+            if (on)
+            {
+                NGlobal.playerStatUI.OnMouseEnterStatUpBtn(eternal.isOpenStat ? (int)Mathf.Pow(2, eternal.upStatCount) : -5);  //2^지금까지 스탯을 올린 횟수 = 스탯올리기 위해 필요한 포인트 양
+                UpdatePlusStat(true);
+            }
+            else
+            {
+                NGlobal.playerStatUI.OnMouseEnterStatUpBtn(-1);
+                UpdatePlusStat(false);
+            }
         }
     }
 
@@ -110,6 +113,20 @@ public class StatInfoElement : UITransition
         int curStatValue = Mathf.RoundToInt(NGlobal.playerStatUI.GetCurrentPlayerStat(id));
         curStatTxt.text = eternal.isUnlock ? curStatValue.ToString().ToColorStr("#980D0D", () => eternal.statLv == 0 && eternal.isUnlock) : "?" ;
         statLvTxt.text = eternal.statLv.ToString();
+    }
+
+    public void SetEnableUpBtn(bool on)  //켜져있는 업 버튼을 못누르게 함
+    {
+        if(statUpBtn.gameObject.activeSelf)
+        {
+            statUpBtn.interactable = on;
+            transitionEnable = on;
+
+            if(on && isEnter)
+            {
+                Transition(true);
+            }
+        }
     }
 
     public void UpdatePlusStat(bool enter)  //스탯 포인트 소모하고 계속 마우스가 enter상태인지 체크해서 UI 갱신
