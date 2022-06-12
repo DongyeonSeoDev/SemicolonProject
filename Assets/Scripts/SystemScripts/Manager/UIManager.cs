@@ -41,28 +41,20 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     public void Notice()
     {
-        if(rightMoveNoticeMsg.noticeCheckElapsed < Time.unscaledTime)
+        if(rightMoveNoticeMsg.IsCheckTime)
         {
-            rightMoveNoticeMsg.noticeCheckElapsed = Time.unscaledTime + 0.25f;
-
-            if(rightMoveNoticeMsg.noticeQueue.Count > 0 && !rightMoveNoticeMsg.isNoticing)
+            if (rightMoveNoticeMsg.CanMakeNotice)
             {
-                rightMoveNoticeMsg.isNoticing = true;
-                NoticeUISet nus = rightMoveNoticeMsg.noticeQueue.Dequeue();
-                nus.endAction += () => rightMoveNoticeMsg.isNoticing = false;
+                NoticeUISet nus = rightMoveNoticeMsg.NewNotice;
                 PoolManager.GetItem("NoticeMsg").GetComponent<NoticeMsg>().Set(nus);
             }
         }
 
-        if(topCenterNoticeMsg.noticeCheckElapsed < Time.unscaledTime)
+        if (topCenterNoticeMsg.IsCheckTime)
         {
-            topCenterNoticeMsg.noticeCheckElapsed = Time.unscaledTime + 0.1f;
-            
-            if(topCenterNoticeMsg.noticeQueue.Count > 0 && !topCenterNoticeMsg.isNoticing)
+            if (topCenterNoticeMsg.CanMakeNotice)
             {
-                topCenterNoticeMsg.isNoticing = true;
-                NoticeUISet nus = topCenterNoticeMsg.noticeQueue.Dequeue();
-                nus.endAction += () => topCenterNoticeMsg.isNoticing = false;
+                NoticeUISet nus = topCenterNoticeMsg.NewNotice;
 
                 //topCenterMsgTMPCvsg.alpha = 0;
                 topCenterMsgTMP.color = Color.clear;
@@ -70,11 +62,11 @@ public partial class UIManager : MonoSingleton<UIManager>
                 topCenterMsgTMP.text = nus.msg;
                 topCenterMsgTMP.fontSize = nus.fontSize;
                 topCenterMsgPanel.gameObject.SetActive(true);
-                topCenterMsgTMP.DOColor(Color.white, 0.5f).OnComplete(() =>
+                topCenterMsgTMP.DOColor(Color.white, 0.3f).OnComplete(() =>
                 {
                     Util.DelayFunc(() =>
                     {
-                        topCenterMsgTMP.DOColor(Color.clear, 0.5f).OnComplete(() => nus.endAction()).SetUpdate(true);
+                        topCenterMsgTMP.DOColor(Color.clear, 0.3f).OnComplete(() => nus.endAction()).SetUpdate(true);
                     }, nus.existTime, this, true, false);
                 }).SetUpdate(true);
                 //topCenterMsgTMPCvsg.DOFade();
@@ -88,9 +80,9 @@ public partial class UIManager : MonoSingleton<UIManager>
     public void InsertNoticeQueue(string msg,  VertexGradient vg, float fontSize = 47, Action endAction = null)
        => rightMoveNoticeMsg.noticeQueue.Enqueue(new NoticeUISet(msg, fontSize, vg, endAction));
 
-    public void InsertTopCenterNoticeQueue(string msg, float fontSize = 65, Action endAction = null, float time = 3f)
+    public void InsertTopCenterNoticeQueue(string msg, float fontSize = 65, Action endAction = null, float time = 2f)
        => topCenterNoticeMsg.noticeQueue.Enqueue(new NoticeUISet(msg, fontSize, endAction));
 
-    public void InsertTopCenterNoticeQueue(string msg, VertexGradient vg, float fontSize = 65, Action endAction = null, float time = 3f)
+    public void InsertTopCenterNoticeQueue(string msg, VertexGradient vg, float fontSize = 65, Action endAction = null, float time = 2f)
        => topCenterNoticeMsg.noticeQueue.Enqueue(new NoticeUISet(msg, fontSize, vg, endAction));
 }

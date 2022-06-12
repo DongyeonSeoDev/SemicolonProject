@@ -146,6 +146,32 @@ public class UIMsgQueue
     public bool isNoticing = false;
     public float noticeCheckElapsed;
     public VertexGradient defaultNoticeMsgVG;
+
+    public bool IsCheckTime
+    {
+        get
+        {
+            if (noticeCheckElapsed < Time.unscaledTime)
+            {
+                noticeCheckElapsed = Time.unscaledTime + 0.25f;
+                return true;
+            }
+            return false;
+        }
+    }
+
+    public bool CanMakeNotice => noticeQueue.Count > 0 && !isNoticing;
+
+    public NoticeUISet NewNotice
+    {
+        get
+        {
+            isNoticing = true;
+            NoticeUISet nus = noticeQueue.Dequeue();
+            nus.endAction += () => isNoticing = false;
+            return nus;
+        }
+    }
 }
 
 [Serializable]
