@@ -447,13 +447,17 @@ public class StageManager : MonoSingleton<StageManager>
         {
             //Last Stage
             Debug.Log("Last Stage");
-            currentStage.stageDoors.ForEach(door =>
+            if (currentFloor > 0 && currentStageData.areaType == AreaType.BOSS)
             {
-                if (!door.IsExitDoor)
+                Debug.Log("아 양진욱");
+                currentStage.stageDoors.ForEach(door =>
                 {
-                    door.gameObject.SetActive(false);
-                }
-            });
+                    if (!door.IsExitDoor)
+                    {
+                        door.gameObject.SetActive(false);
+                    }
+                });
+            }
         }
 
         if (currentStageData.isSaveStage)
@@ -602,6 +606,13 @@ public class StageManager : MonoSingleton<StageManager>
         if (currentArea != AreaType.BOSS)
         {
             UIManager.Instance.InsertTopCenterNoticeQueue(str);
+            if(currentStageData.stageID == "Stage0-06")  //임시로 한거임. 나중에 수정 필요
+            {
+                Debug.Log("뭐지");
+                currentStage.stageDoors[1].gameObject.SetActive(true);
+                Util.DelayFunc(() => SetClearStage(), 1);
+            }
+            
         }
         else
         {
@@ -613,6 +624,8 @@ public class StageManager : MonoSingleton<StageManager>
         {
             currentStageData.mapEvent.OnEnterEvent();
         }
+
+
     }
 
     public void StageClear()
