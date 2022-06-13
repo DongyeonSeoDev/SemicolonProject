@@ -20,6 +20,7 @@ public static class FindPath
     private static Stack<int> addMoveValueList = new Stack<int>();
 
     private static bool[] isWall;
+    private static bool[] isEnemyPosition;
     private static AStarData[] astarData;
 
     private static Vector2Int currentPosition;
@@ -54,7 +55,24 @@ public static class FindPath
             }
         }
 
+        for (int i = limitMinPosition.x; i <= limitMaxPosition.x; i++)
+        {
+            stageData.isWall[GetBoolPosition(stageData, i, limitMinPosition.y)] = true;
+            stageData.isWall[GetBoolPosition(stageData, i, limitMaxPosition.y)] = true;
+        }
+
+        for (int i = limitMinPosition.y; i <= limitMaxPosition.y; i++)
+        {
+            stageData.isWall[GetBoolPosition(stageData, limitMinPosition.x, i)] = true;
+            stageData.isWall[GetBoolPosition(stageData, limitMaxPosition.x, i)] = true;
+        }
+
         return stageData;
+    }
+
+    public static void SetEnemyPosition(StageData stageData, Vector2Int position, bool value)
+    {
+        isEnemyPosition[GetBoolPosition(stageData, position.x, position.y)] = value;
     }
 
     private static void ResetStageData(StageData stageData, Vector2Int limitMinPosition, Vector2Int limitMaxPosition, string name)
@@ -82,7 +100,7 @@ public static class FindPath
             return false;
         }
 
-        return !isWall[GetBoolPosition(stageData, x, y)];
+        return !isWall[GetBoolPosition(stageData, x, y)] && !isEnemyPosition[GetBoolPosition(stageData, x, y)];
     }
 
     private static AStarData GetAStarData(StageData data, Vector2Int pos, int gValue, int hValue, ushort moveValue)
@@ -116,7 +134,7 @@ public static class FindPath
         }
     }
 
-    public static Stack<Vector2> NextPosition(StageData stageData, Vector2Int startPosition, Vector2Int endPosition)
+    public static Stack<Vector2Int> NextPosition(StageData stageData, Vector2Int startPosition, Vector2Int endPosition)
     {
         currentPosition = startPosition;
         currentMoveValue = 0;
@@ -124,6 +142,7 @@ public static class FindPath
         currentAStarData.f = MAX_F_VALUE;
 
         isWall = new bool[stageData.isWall.Length];
+        isEnemyPosition = new bool[stageData.isWall.Length];
         astarData = new AStarData[stageData.isWall.Length];
 
         Array.Copy(stageData.isWall, isWall, stageData.isWall.Length);
@@ -152,7 +171,7 @@ public static class FindPath
                     positionList.Pop();
                 }
 
-                Stack<Vector2> dataStack = new Stack<Vector2>();
+                Stack<Vector2Int> dataStack = new Stack<Vector2Int>();
 
                 while (positionList.Count > 0)
                 {
@@ -217,6 +236,6 @@ public static class FindPath
             }
         }
 
-        return new Stack<Vector2>();
+        return new Stack<Vector2Int>();
     }
 }

@@ -248,9 +248,10 @@ namespace Enemy
         private Rigidbody2D rigid;
         private Transform enemyTransform;
         private Vector2 targetPosition;
-        private Vector2? position;
+        private Vector2Int? position;
+        private Vector2Int? pastPosition;
 
-        private Stack<Vector2> nextPosition = new Stack<Vector2>();
+        private Stack<Vector2Int> nextPosition = new Stack<Vector2Int>();
 
         private float followSpeed;
         private int moveCount = 0;
@@ -261,9 +262,10 @@ namespace Enemy
             this.enemyTransform = enemyTransform;
             this.rigid = rigid;
 
-            this.followSpeed = followSpeed;
+            this.followSpeed = Random.Range(followSpeed - 1f, followSpeed + 1f);
 
             nextPosition = null;
+            pastPosition = null;
             position = null;
         }
 
@@ -283,8 +285,19 @@ namespace Enemy
                 }
                 else
                 {
+                    pastPosition = position;
                     position = nextPosition.Pop();
                     moveCount = 0;
+
+                    if (pastPosition != null)
+                    {
+                        EnemyManager.SetEnemyData(pastPosition.Value, false);
+                    }
+
+                    if (position != null)
+                    {
+                        EnemyManager.SetEnemyData(position.Value, true);
+                    }
                 }
             }
 
