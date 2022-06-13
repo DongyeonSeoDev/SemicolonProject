@@ -3,10 +3,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using System.Collections;
+using System;
 
 public class TalkManager : MonoSingleton<TalkManager>
 {
     public CanvasGroup talkPanelCvsg;
+    public Button nextDialogBtn;
     [SerializeField] private Text talkText;
     [SerializeField] private TextMeshProUGUI nameTmp;
 
@@ -52,6 +54,12 @@ public class TalkManager : MonoSingleton<TalkManager>
             talkPanelCvsg.gameObject.SetActive(false);
             isEnding = false;
         }; //대화창 alpha가 0이 된 후에
+
+        EventManager.StartListening("TalkWithNPC", (Action<bool>) (talkStart =>
+        {
+            Global.CurrentPlayer.GetComponent<PlayerInput>().IsPauseByCutScene = talkStart;
+            nextDialogBtn.gameObject.SetActive(talkStart);
+        }));
     }
 
     private void Update()
@@ -122,11 +130,23 @@ public class TalkManager : MonoSingleton<TalkManager>
         }
     }
 
-    private void ShowAllCurrentDialog() //현재 출력되고 있는 대사 바로 다 출력되게 함
+    public void OnClickNextDialogBtn() //현재 출력되고 있는 대사 바로 다 출력되게 함
     {
-        talkText.DOKill();
-        talkText.text = CurNPCInfoData.talkContents[dialogSetIndex].value[dialogIndex].message;
-        isCompCurDialog = true;
+        if (!isCompCurDialog)
+        {
+            talkText.DOKill();
+            talkText.text = CurNPCInfoData.talkContents[dialogSetIndex].value[dialogIndex].message;
+            CurNPCInfoData.talkContents[dialogSetIndex].value[dialogIndex].talkEndEventKey.TriggerEvent();
+            DelayFunc(NextDialog, CurNPCInfoData.talkContents[dialogSetIndex].value[dialogIndex].message.Length * durationPerLit);
+
+            isCompCurDialog = true;
+        }
+        else
+        {
+            StopCoroutine(delayCoroutine);
+            delayCoroutine = null;
+            NextDialog();
+        }
     }
 
     public void CompulsoryEndTalk() //대화중에 다른 NPC와 대화를 해서 강제로 대화 종료
@@ -154,7 +174,7 @@ public class TalkManager : MonoSingleton<TalkManager>
         EventManager.TriggerEvent("TalkWithNPC", false);
     }
 
-    private void DelayFunc(System.Action func, float delay)
+    private void DelayFunc(Action func, float delay)
     {
         if(delayCoroutine != null)
         {
@@ -166,7 +186,7 @@ public class TalkManager : MonoSingleton<TalkManager>
         StartCoroutine(delayCoroutine);
     }
 
-    private IEnumerator DelayCo(System.Action func, float delay)
+    private IEnumerator DelayCo(Action func, float delay)
     {
         yield return new WaitForSeconds(delay);
         func();
