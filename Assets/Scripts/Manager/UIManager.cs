@@ -557,7 +557,6 @@ public partial class UIManager : MonoSingleton<UIManager>
                 if(selectedMenuType == type)
                 {
                     OnUIInteract(UIType.MENU);
-                    
                     return true;
                 }
                 else
@@ -698,12 +697,6 @@ public partial class UIManager : MonoSingleton<UIManager>
             case UIType.ITEM_DETAIL:
                 return;
             case UIType.MONSTERINFO_DETAIL:
-                return;
-            case UIType.MONSTERINFO_DETAIL_ITEM:
-                return;
-            case UIType.MONSTERINFO_DETAIL_STAT:
-                return;
-            case UIType.MONSTERINFO_DETAIL_FEATURE:
                 return;
         }
         if (add) activeUIList.Add(ui);

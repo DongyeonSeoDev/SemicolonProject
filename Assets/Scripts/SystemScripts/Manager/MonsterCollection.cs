@@ -275,6 +275,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
     public void DetailStat()
     {
+        if (string.IsNullOrEmpty(selectedDetailMobId)) return;
+
         if (mobLearningInfoDic[selectedDetailMobId].assimilation)
         {
             EternalStat stat = mobIdToSlot[selectedDetailMobId].BodyData.additionalBodyStat;
@@ -329,6 +331,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
     public void DetailItem()
     {
+        if (string.IsNullOrEmpty(selectedDetailMobId)) return;
+
         if (mobLearningInfoDic[selectedDetailMobId].kill)
         {
             ItemSO item = mobIdToSlot[selectedDetailMobId].BodyData.dropItem;
@@ -351,6 +355,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
     public void DetailFeature()
     {
+        if (string.IsNullOrEmpty(selectedDetailMobId)) return;
+
         featureTxt.text = mobLearningInfoDic[selectedDetailMobId].kill ? mobIdToSlot[selectedDetailMobId].BodyData.featureExplanation : "???";
     }
 

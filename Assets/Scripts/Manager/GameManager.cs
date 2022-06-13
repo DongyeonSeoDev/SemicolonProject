@@ -60,8 +60,6 @@ public partial class GameManager : MonoSingleton<GameManager>
     public Dictionary<KeyCode, Action> testKeyInputActionDict = new Dictionary<KeyCode, Action>();
 #endif
 
-    //해야할 것 : 선택 스탯 자세히 보기창 위치 버그 수정, 퀵슬롯 표시
-
     private void Awake()
     {
         filePath = Global.saveFileName_1.PersistentDataPath();

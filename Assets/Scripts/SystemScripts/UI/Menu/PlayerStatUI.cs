@@ -177,6 +177,7 @@ public class PlayerStatUI : MonoBehaviour
             if (targetExpFillRate == prevConfirmExpRate && expFullCount == 0)
             {
                 SetAllEternalStatUIUpBtn(true);
+                statExpPair.second.text = playerStat.currentStatPoint.ToString();
                 return;
             }
 

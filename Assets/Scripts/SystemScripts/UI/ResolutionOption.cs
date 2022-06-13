@@ -18,6 +18,7 @@ public class ResolutionOption : MonoBehaviour
 
     [SerializeField] private float limWidthDivHeightRate = 1.6f;
 
+    public (int, int) MinScrWH => (whResolutionList[0].first, whResolutionList[0].second);
     public (int, int) MaxScrWH => (whResolutionList[whResolutionList.Count-1].first, whResolutionList[whResolutionList.Count - 1].second);
 
     private void Start()
@@ -163,11 +164,12 @@ public class ResolutionOption : MonoBehaviour
             w = Screen.width;
             h = Screen.height;
 
-            if (w > MaxScrWH.Item1 || h > MaxScrWH.Item2)  //(float)w / h < limWidthDivHeightRate
+            if (w > MaxScrWH.Item1 || h > MaxScrWH.Item2 || w < MinScrWH.Item1 || h < MinScrWH.Item2)  //(float)w / h < limWidthDivHeightRate
             {
                 Screen.SetResolution(MaxScrWH.Item1, MaxScrWH.Item2, Screen.fullScreenMode);
                 OnResolutionUIUpdate();
             }
+
             yield return wsr;
         }
     }

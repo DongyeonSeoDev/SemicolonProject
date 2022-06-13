@@ -53,8 +53,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - _EnableExternalAlpha: 0
-    - _Intensity: 1
-    - _Speed: 0.25
+    - _Intensity: 0.6
+    - _Speed: 0.35
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _Distortion_Position: {r: 1, g: 1, b: 0, a: 0}

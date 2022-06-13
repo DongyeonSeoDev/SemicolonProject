@@ -200,15 +200,15 @@ public class EffectManager : MonoSingleton<EffectManager>
         {
             case UIType.INVENTORY:
                 inventoryBtnEffect.SetActive(on);
-                invenMSC.SetIntensity(on ? 0.4f : 0);
+                //invenMSC.SetIntensity(on ? 0.4f : 0);
                 break;
             case UIType.STAT:
                 statBtnEffect.SetActive(on);
-                statMSC.SetIntensity(on ? 0.7f : 0);
+                //statMSC.SetIntensity(on ? 0.7f : 0);
                 break;
             case UIType.MONSTER_COLLECTION:
                 monColBtnEffect.SetActive(on);
-                mobMSC.SetIntensity(on ? 1f : 0);
+                //mobMSC.SetIntensity(on ? 1f : 0);
                 break;
         }
     }
