@@ -4,8 +4,12 @@ namespace Enemy
 {
     public class Enemy3 : Enemy // 세번째 적
     {
-        private EnemyCommand enemyAttackCommand;
         public SpriteRenderer anotherImage;
+
+        public float downSpeed = 0f;
+
+        private float moveSpeed = 0f;
+        private float currentDownSpeed = 0f;
 
         protected override void OnEnable()
         {
@@ -21,8 +25,34 @@ namespace Enemy
             enemyData.playerAnimationTime = 1f;
 
             enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed);
-            enemyAttackCommand = new EnemyAddForceCommand(rb, this, enemyData.rushForce, positionCheckData);
             enemyData.enemySpriteRotateCommand = new EnemySpriteFlipCommand(enemyData);
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+
+            if (isStop)
+            {
+                return;
+            }
+        }
+
+        private void FixedUpdate()
+        {
+            if (moveSpeed > 0f)
+            {
+                rb.velocity = positionCheckData.position * moveSpeed;
+
+                moveSpeed = Mathf.Lerp(moveSpeed, 0f, currentDownSpeed);
+
+                if (moveSpeed < 1f)
+                {
+                    moveSpeed = 0f;
+                }
+
+                currentDownSpeed += 0.005f;
+            }
         }
 
         public void ReadyEnemyAttack() // 애니메이션에서 실행 - 적 공격 준비
@@ -47,9 +77,10 @@ namespace Enemy
             }
         }
 
-        public void EnemyAttack() // 애니메이션에서 실행 - 적 공격
+        private void AttackStart() // 애니메이션에서 실행
         {
-            enemyAttackCommand.Execute();
+            moveSpeed = 30f;
+            currentDownSpeed = downSpeed;
         }
 
         public override void ChangeColor(Color color)
