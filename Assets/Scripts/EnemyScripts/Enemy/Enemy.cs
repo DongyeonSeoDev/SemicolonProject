@@ -375,7 +375,11 @@ namespace Enemy
             sr.color = color;
         }
 
-        private void OnAttackSpeedChage() => SlimeGameManager.Instance.SetSkillDelay(0, enemyData.playerAnimationDelay + enemyData.playerAnimationTime);
+        private void OnAttackSpeedChage()
+        {
+            SlimeGameManager.Instance.SetSkillDelay(0, enemyData.playerAnimationDelay);
+            SlimeGameManager.Instance.AddSkillDelay(0, enemyData.playerAnimationTime);
+        }
 
         public EnemyController GetEnemyController() => enemyData.eEnemyController;
         public Vector2? GetKnockBackDirection() => enemyData.knockBackDirection; // 적이 넉백 공격을 할 수 있는지를 가져옴

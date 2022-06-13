@@ -29,7 +29,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3351713311786356783}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &6937043352860978746
 SpriteRenderer:
@@ -111,7 +111,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 3351713311786356783}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &3351713310871078104
 SpriteRenderer:
@@ -198,6 +198,7 @@ Transform:
   m_LocalPosition: {x: -6, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 4916023448725414156}
   - {fileID: 3351713310871078111}
   - {fileID: 2164340435103767007}
   - {fileID: 2029326398027099002}
@@ -370,6 +371,7 @@ MonoBehaviour:
   hpTweenDelayTime: 0.3
   damageHPTweenTime: 0.2
   addExperience: 50
+  shootPosition: {fileID: 4916023448725414156}
   playerAttackColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &4321371500878039892
 MonoBehaviour:
@@ -383,6 +385,36 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6342c7c7fa59ec4487950d6002c0ad7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &6637250382088781870
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4916023448725414156}
+  m_Layer: 7
+  m_Name: ShootPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4916023448725414156
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6637250382088781870}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.37, y: 0.055, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3351713311786356783}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &688433718241700482
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -408,7 +440,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1559462951835451896, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
       propertyPath: m_RootOrder
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1559462951835451896, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
       propertyPath: m_AnchorMax.x
