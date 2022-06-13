@@ -39,7 +39,7 @@ namespace Enemy
 
         private void Start()
         {
-            EventManager.StartListening("PlayerSetActiveFalse", PlayerDeadEvent);
+            EventManager.StartListening("PlayerRespawn", PlayerDeadEvent);
             EventManager.StartListening("BossDead", PlayerDeadEvent);
         }
 
