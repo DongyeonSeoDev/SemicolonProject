@@ -26129,8 +26129,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitionEnable: 1
   delayTimePair:
-    first: 0.8
-    second: 0.2
+    first: 0.5
+    second: 0.05
 --- !u!114 &343304309312573616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26145,8 +26145,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitionEnable: 1
   delayTimePair:
-    first: 0.8
-    second: 0.2
+    first: 0.5
+    second: 0.05
 --- !u!114 &355578890811180912
 MonoBehaviour:
   m_ObjectHideFlags: 0
