@@ -262,7 +262,7 @@ namespace Enemy
             this.enemyTransform = enemyTransform;
             this.rigid = rigid;
 
-            this.followSpeed = Random.Range(followSpeed - 1f, followSpeed + 1f);
+            this.followSpeed = followSpeed;
 
             nextPosition = null;
             pastPosition = null;
