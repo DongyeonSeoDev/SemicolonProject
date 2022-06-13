@@ -1119,7 +1119,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1646225281
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 2a3d71c189263fe44a9eedfccd65dda8, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1215,7 +1215,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1158705011
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 33d21dfdf94441840a5075a7df757d2c, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -1326,7 +1326,7 @@ MonoBehaviour:
   playableDirector: {fileID: 7559260690231365845}
   fireCount: 9
   maxAttackCount: 7
-  bossHP: 2000
+  bossHP: 1250
   specialAttackTime: 6
   bossAttackMoveSpeed: 30
   fireDistance: 2

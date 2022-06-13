@@ -35,7 +35,7 @@ namespace Enemy
             {
                 SlimeGameManager.Instance.Player.GetDamage(gameObject, Random.Range(attackPower - 5, attackPower + 6), transform.position, direction);
 
-                if (enemy != null)
+                if (enemy != null)             
                 {
                     enemy.AttackInit(0, false, false);
                 }

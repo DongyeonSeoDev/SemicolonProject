@@ -41,11 +41,15 @@ namespace Enemy
 
         private Enemy enemy;
 
+        private int wallLayer = 0;
+
         private void Awake()
         {
             sr = GetComponent<SpriteRenderer>();
             col = GetComponent<BoxCollider2D>();
             anim = GetComponent<Animator>();
+
+            wallLayer = LayerMask.NameToLayer("WALL");
         }
 
         private void Start()
@@ -142,7 +146,7 @@ namespace Enemy
                 }
             }
 
-            if (collision.CompareTag("Wall"))
+            if (collision.CompareLayer(wallLayer))
             {
                 if (eEnemyController == EnemyController.PLAYER)
                 {

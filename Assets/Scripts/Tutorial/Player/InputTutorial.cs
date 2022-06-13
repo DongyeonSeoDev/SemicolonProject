@@ -215,6 +215,11 @@ public class InputTutorial : MonoBehaviour
             return;
         }
 
+        if (SlimeGameManager.Instance.Player.PlayerInput.IsPauseByTuto)
+        {
+            return;
+        }
+
         if (Input.GetKey(KeySetting.fixedKeyDict[keyAction]))
         {
             if (inputTutoDataDict.ContainsKey(keyAction) && !inputTutoDataDict[keyAction].timerStarted && !KeyActionManager.Instance.IsNoticingGetMove)
@@ -265,6 +270,11 @@ public class InputTutorial : MonoBehaviour
         }
 
         if (inputTutoDataDict.ContainsKey(keyAction) && inputTutoDataDict[keyAction].isClear)
+        {
+            return;
+        }
+
+        if (SlimeGameManager.Instance.Player.PlayerInput.IsPauseByTuto)
         {
             return;
         }

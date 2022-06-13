@@ -7,6 +7,8 @@ namespace Enemy
         private EnemyCommand enemyAttackCommand;
         private EnemyCommand enemyAttackPlayerCommand;
 
+        public Transform shootPosition;
+
         public Color playerAttackColor;
 
         protected override void OnEnable()
@@ -24,7 +26,7 @@ namespace Enemy
 
             enemyData.enemyMoveCommand = new EnemyRandomMoveCommand(enemyData, positionCheckData); // MoveCommand »ý¼º
             enemyData.enemySpriteRotateCommand = new EnemySpriteRotateCommand(enemyData);
-            enemyAttackPlayerCommand = new PlayerlongRangeAttackCommand(transform, transform, this, Type.Bullet, enemyData.attackPower, playerAttackColor);
+            enemyAttackPlayerCommand = new PlayerlongRangeAttackCommand(transform, shootPosition, this, Type.Bullet, enemyData.attackPower, playerAttackColor);
             enemyAttackCommand = new EnemylongRangeAttackCommand(this, enemyData.enemyObject.transform, Type.Bullet, transform, enemyData.attackPower);
         }
 
