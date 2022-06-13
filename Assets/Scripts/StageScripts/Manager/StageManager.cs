@@ -446,14 +446,29 @@ public class StageManager : MonoSingleton<StageManager>
         else
         {
             //Last Stage
-            Debug.Log("Last Stage");
-            currentStage.stageDoors.ForEach(door =>
+            Debug.Log("Last Stage : " + currentStageData.stageID);
+            
+            //지금은 1스테이지까지만 있으므로 임시로 이렇게 함
+            if (currentFloor > 0)
             {
-                if (!door.IsExitDoor)
+                currentStage.stageDoors.ForEach(door =>
                 {
-                    door.gameObject.SetActive(false);
-                }
-            });
+                    if (!door.IsExitDoor)
+                    {
+                        door.gameObject.SetActive(false);
+                    }
+                });
+            }
+            else
+            {
+                currentStage.stageDoors.ForEach(door =>
+                {
+                    if (!door.gameObject.activeSelf)
+                    {
+                        door.gameObject.SetActive(true);
+                    }
+                });
+            }
         }
 
         if (currentStageData.isSaveStage)
@@ -544,7 +559,6 @@ public class StageManager : MonoSingleton<StageManager>
             {
                 if (!door.gameObject.activeSelf)
                 {
-                    Debug.Log(door.name);
                     door.gameObject.SetActive(true);
                 }
             });
@@ -613,6 +627,8 @@ public class StageManager : MonoSingleton<StageManager>
         {
             currentStageData.mapEvent.OnEnterEvent();
         }
+
+
     }
 
     public void StageClear()
