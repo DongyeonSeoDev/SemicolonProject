@@ -256,6 +256,13 @@ public class Player : MonoBehaviour
             return;
         }
 
+        if(playerStat.choiceStat.fake.isUnlock && !stateAbnormality && CheckFake())
+        {
+            Debug.Log("아하하하하하하핳하하ㅏㅎ하하하");
+
+            damage = 0f;
+        }
+
         if (!playerState.IsDead)
         {
             float dm = damage;
@@ -304,13 +311,12 @@ public class Player : MonoBehaviour
     // 투사체가 플레이어에게 데미지를 줄때는 무조건 attacker를 매개변수로 보내줘야한다.
     public void GetDamage(GameObject attacker, float damage, Vector2 effectPosition, Vector2 direction, Vector3? effectSize = null, bool critical = false, bool stateAbnormality = false)
     {
-        if ((playerState.IsDrain && !stateAbnormality) ||
-            SlimeGameManager.Instance.GameClear)
+        if (SlimeGameManager.Instance.GameClear)
         {
             return;
         }
 
-        if((playerState.BodySlapping && !stateAbnormality))
+        if ((playerState.BodySlapping && !stateAbnormality))
         {
             if (playerStat.choiceStat.reflection.isUnlock)
             {
@@ -326,6 +332,18 @@ public class Player : MonoBehaviour
             }
 
             return;
+        }
+
+        if (playerState.IsDrain && !stateAbnormality)
+        {
+            return;
+        }
+
+        if (playerStat.choiceStat.fake.isUnlock && !stateAbnormality && CheckFake())
+        {
+            Debug.Log("아하하하하하하핳하하ㅏㅎ하하하");
+
+            damage = 0f;
         }
 
         //SlimeGameManager.Instance.playerHitCheckDict.Add(attacker, false);

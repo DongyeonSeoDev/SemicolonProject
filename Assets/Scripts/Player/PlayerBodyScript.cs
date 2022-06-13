@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerBodyScript : MonoBehaviour
 {
-    private readonly string playerLayerName = "Player";
+    private readonly string playerLayerName = "Entity";
 
     private SpriteRenderer spriteRenderer = null;
     private void Awake()

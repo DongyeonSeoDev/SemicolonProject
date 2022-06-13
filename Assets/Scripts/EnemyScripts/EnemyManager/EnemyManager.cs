@@ -215,14 +215,15 @@ namespace Enemy
             }
         }
 
-        public static void SetCurrentStageData(StageData stageData) => currentStageData = stageData;
-
-        public static Stack<Vector2> NextPosition(Vector2 startPosition, Vector2 endPosition)
+        public static Stack<Vector2Int> NextPosition(Vector2 startPosition, Vector2 endPosition)
         {
             Vector2Int start = new Vector2Int(Mathf.RoundToInt(startPosition.x), Mathf.RoundToInt(startPosition.y));
             Vector2Int end = new Vector2Int(Mathf.RoundToInt(endPosition.x), Mathf.RoundToInt(endPosition.y));
 
             return FindPath.NextPosition(currentStageData, start, end);
         }
+
+        public static void SetCurrentStageData(StageData stageData) => currentStageData = stageData;
+        public static void SetEnemyData(Vector2Int targetPosition, bool value) => FindPath.SetEnemyPosition(currentStageData, targetPosition, value);
     }
 }

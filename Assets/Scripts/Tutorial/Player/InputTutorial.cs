@@ -86,9 +86,9 @@ public class InputTutorial : MonoBehaviour
     {
         #region 이동관련
 #if UNITY_EDITOR
-        float moveTutoWaitTime = 3f;
+        float moveTutoWaitTime = 0.5f;
 #else
-        float moveTutoWaitTime = 3f;
+        float moveTutoWaitTime = 2f;
 #endif
         inputTutoDatas.Add(new InputTutoData(KeyAction.LEFT, moveTutoWaitTime));
         inputTutoDatas.Add(new InputTutoData(KeyAction.RIGHT, moveTutoWaitTime));
@@ -215,7 +215,7 @@ public class InputTutorial : MonoBehaviour
             return;
         }
 
-        if (Input.GetKeyDown(KeySetting.fixedKeyDict[keyAction]))
+        if (Input.GetKey(KeySetting.fixedKeyDict[keyAction]))
         {
             if (inputTutoDataDict.ContainsKey(keyAction) && !inputTutoDataDict[keyAction].timerStarted && !KeyActionManager.Instance.IsNoticingGetMove)
             {
@@ -228,19 +228,19 @@ public class InputTutorial : MonoBehaviour
                 {
                     KeyActionManager.Instance.ExclamationCharging(inputTutoDataDict[keyAction].pressTime, keyAction);
                 }
+
+                if (KeyAction.ATTACK == keyAction)
+                {
+                    return;
+                }
+
+                CheckStartTimer(keyAction);
+
+                keyNotPressed = false;
             }
-
-            if (KeyAction.ATTACK == keyAction)
-            {
-                return;
-            }
-
-            CheckStartTimer(keyAction);
-
-            keyNotPressed = false;
         }
         
-        if(Input.GetKeyUp(KeySetting.fixedKeyDict[keyAction]))
+        if(inputTutoDataDict[keyAction].timerStarted && Input.GetKeyUp(KeySetting.fixedKeyDict[keyAction]))
         {
             SetTimerStartedFalse(keyAction);
             KeyActionManager.Instance.EndExclamationCharging(false);
@@ -269,7 +269,7 @@ public class InputTutorial : MonoBehaviour
             return;
         }
 
-        if (Input.GetKeyDown(KeySetting.keyDict[keyAction]))
+        if (Input.GetKey(KeySetting.keyDict[keyAction]))
         {
             if (KeyAction.SPECIALATTACK1 == keyAction || KeyAction.SPECIALATTACK2 == keyAction)
             {
@@ -278,7 +278,7 @@ public class InputTutorial : MonoBehaviour
 
             if (inputTutoDataDict.ContainsKey(keyAction) && !inputTutoDataDict[keyAction].timerStarted)
             {
-                KeyActionManager.Instance.SetPlayerHeadText("?", 0.5f);
+                KeyActionManager.Instance.ShowQuestionMark();
             }
 
             CheckStartTimer(keyAction);
@@ -286,7 +286,7 @@ public class InputTutorial : MonoBehaviour
             keyNotPressed = false;
         }
 
-        if (Input.GetKeyUp(KeySetting.keyDict[keyAction]))
+        if (inputTutoDataDict[keyAction].timerStarted && Input.GetKeyUp(KeySetting.keyDict[keyAction]))
         {
             SetTimerStartedFalse(keyAction);
         }

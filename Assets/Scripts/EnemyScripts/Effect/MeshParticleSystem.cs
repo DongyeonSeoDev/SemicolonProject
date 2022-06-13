@@ -53,7 +53,7 @@ namespace Enemy
 
             meshFilter.mesh = mesh;
 
-            meshRenderer.sortingLayerName = "Object";
+            meshRenderer.sortingLayerName = "BackgroundEffect";
             meshRenderer.sortingOrder = 0;
 
             Texture texture = meshRenderer.material.mainTexture;

@@ -55,6 +55,9 @@ TagManager:
   - name: Background
     uniqueID: 3073677409
     locked: 0
+  - name: BackgroundEffect
+    uniqueID: 785476259
+    locked: 0
   - name: Pick
     uniqueID: 573196299
     locked: 0
@@ -67,10 +70,10 @@ TagManager:
   - name: Object
     uniqueID: 2648742015
     locked: 0
-  - name: Player
+  - name: Entity
     uniqueID: 3136262285
     locked: 0
-  - name: FrontPlayer
+  - name: FrontEntity
     uniqueID: 521365507
     locked: 0
   - name: Canvas

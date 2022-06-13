@@ -15,6 +15,7 @@ public class EnemySpawnListWindow : EditorWindow
     private int selectSortIndex = 0;
     private int lastSelectSortIndex = 0;
     private bool isReadonly = true;
+    private bool isCreateBackUpFile = true;
     private bool isPlaying = false;
     private bool isSave = true;
 
@@ -96,21 +97,21 @@ public class EnemySpawnListWindow : EditorWindow
         }
     }
 
-    private void Save()
+    private void Save(bool isBackUp)
     {
         isSave = true;
 
         SaveList();
-        SaveCSV();
+        SaveCSV(isBackUp);
         FindText(findText);
         Sort(selectSortIndex);
     }
 
-    private void SaveCSV()
+    private void SaveCSV(bool isBackUp)
     {
         CSVEnemySpawn enemySpawn = new CSVEnemySpawn();
         enemySpawn.enemySpawnData = enemySpawnDataList;
-        enemySpawn.SetData();
+        enemySpawn.SetData(isBackUp);
     }
 
     private void Revert()
@@ -243,14 +244,14 @@ public class EnemySpawnListWindow : EditorWindow
 
         index = enemySpawn.enemySpawnData.FindIndex(x => x.name == data.name);
 
-        if (index <= -1)
+        if (index > -1)
         {
-            enemySpawnDataList.RemoveAt(index);
+            enemySpawn.enemySpawnData.RemoveAt(index);
         }
 
         index = backUpList.FindIndex(x => x.name == data.name);
 
-        if (index <= -1)
+        if (index > -1)
         {
             backUpList.RemoveAt(index);
         }
@@ -268,7 +269,7 @@ public class EnemySpawnListWindow : EditorWindow
         {
             if (EditorUtility.DisplayDialog("WARNING! NOT SAVE!", "If you don't save, all the modified data will be lost. Save it now?", "SAVE", "NOT SAVE"))
             {
-                Save();
+                Save(isCreateBackUpFile);
             }
         }
     }
@@ -342,13 +343,15 @@ public class EnemySpawnListWindow : EditorWindow
         findText = EditorGUILayout.TextField("Find Text", findText);
         EditorGUILayout.Space(2);
         isReadonly = EditorGUILayout.Toggle("Readonly", isReadonly);
+        EditorGUILayout.Space(2);
+        isCreateBackUpFile = EditorGUILayout.Toggle("CreateBackUpFile", isCreateBackUpFile);
         EditorGUILayout.Space(10);
 
         EditorGUILayout.BeginHorizontal();
 
         if (GUILayout.Button("Save"))
         {
-            Save();
+            Save(isCreateBackUpFile);
         }
 
         if (GUILayout.Button("Revert"))
