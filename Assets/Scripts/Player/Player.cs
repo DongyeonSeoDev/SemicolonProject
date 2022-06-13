@@ -260,7 +260,7 @@ public class Player : MonoBehaviour
         {
             Debug.Log("아하하하하하하핳하하ㅏㅎ하하하");
 
-            return;
+            damage = 0f;
         }
 
         if (!playerState.IsDead)
@@ -343,7 +343,7 @@ public class Player : MonoBehaviour
         {
             Debug.Log("아하하하하하하핳하하ㅏㅎ하하하");
 
-            return;
+            damage = 0f;
         }
 
         //SlimeGameManager.Instance.playerHitCheckDict.Add(attacker, false);

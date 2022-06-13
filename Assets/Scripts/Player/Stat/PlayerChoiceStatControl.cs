@@ -355,8 +355,6 @@ public class PlayerChoiceStatControl : MonoBehaviour
                 stat.statValue++;
                 stat.statLv++;
 
-                SlimeGameManager.Instance.Player.FakePercentage = stat.statValue * choiceDataDict[NGlobal.FakeID].upTargetStatPerChoiceStat;
-
                 choiceDataDict[NGlobal.FakeID].upAmount *= 2;
 
                 FakeCheckValueReset();
@@ -369,11 +367,11 @@ public class PlayerChoiceStatControl : MonoBehaviour
                 stat.statValue = choiceDataDict[NGlobal.FakeID].firstValue;
                 stat.statLv = choiceDataDict[NGlobal.FakeID].firstValue;
 
-                SlimeGameManager.Instance.Player.FakePercentage = stat.statValue * choiceDataDict[NGlobal.FakeID].upTargetStatPerChoiceStat;
-
                 stat.isUnlock = true;
             }
         }
+
+        SlimeGameManager.Instance.Player.FakePercentage = stat.statValue * choiceDataDict[NGlobal.FakeID].upTargetStatPerChoiceStat;
     }
     public void FakeCheckValueReset()
     {

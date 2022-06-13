@@ -235,8 +235,8 @@ MonoBehaviour:
         statValue: 0
         upStatValue: 0
         isUnlock: 0
-        statLv: 1
-        maxStatLv: 1
+        statLv: 0
+        maxStatLv: 5
   playerInput: {fileID: 0}
   playerChoiceStatControl: {fileID: 0}
   playerReflectionScript: {fileID: 0}
