@@ -101,7 +101,7 @@ public class StageCheatWindow : EditorWindow
 
                 GUILayout.BeginHorizontal();
 
-                if (GUILayout.Button("Current Stage Clear"))  //스테이지 강제 클리어
+                if (GUILayout.Button("Current Stage Clear (F10)"))  //스테이지 강제 클리어
                 {
                     CurrentStageClear();
                 }

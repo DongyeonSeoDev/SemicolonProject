@@ -138,6 +138,23 @@ public class StageManager : MonoSingleton<StageManager>
     {
         Init();
         DefineEvent();
+
+#if UNITY_EDITOR
+
+        GameManager.Instance.testKeyInputActionDict.Add(KeyCode.F10, () =>
+        {
+            if (IsStageClear)
+            {
+                UIManager.Instance.RequestSystemMsg("이미 문 열려있다");
+                return;
+            }
+
+            SetClearStage();
+            UIManager.Instance.RequestSystemMsg("강제로 문을 열음");
+            Enemy.EnemyManager.Instance.PlayerDeadEvent();
+        });
+
+#endif
     }
 
     private void Init()
@@ -429,11 +446,12 @@ public class StageManager : MonoSingleton<StageManager>
         else
         {
             //Last Stage
+            Debug.Log("Last Stage");
             currentStage.stageDoors.ForEach(door =>
             {
-                if (!door.gameObject.activeSelf)
+                if (!door.IsExitDoor)
                 {
-                    door.gameObject.SetActive(true);
+                    door.gameObject.SetActive(false);
                 }
             });
         }
@@ -674,8 +692,8 @@ public class StageManager : MonoSingleton<StageManager>
                 Util.DelayFunc(() => 
                 {
                     Environment.Instance.OnEnteredOrExitImprecationArea(true);
-                    io.Interaction();
-                }, 4.5f);
+                    Util.DelayFunc(() => io.Interaction(), Global.ImprAndRecoInteractDelay, this);
+                }, Global.ImprAndRecoEffDelay, this);
                 break;
 
             case RandomRoomType.MONSTER:  //몬스터 구역
@@ -694,9 +712,12 @@ public class StageManager : MonoSingleton<StageManager>
                 
                 if (StateManager.Instance.IsPlayerFullHP && StateManager.Instance.IsPlayerNoImpr)
                 {
-                    SetClearStage();
-                    Environment.Instance.OnEnteredOrExitRecoveryArea(true);
-                    ro.ActiveRecovLight();
+                    Util.DelayFunc(() =>
+                    {
+                        SetClearStage();
+                        Environment.Instance.OnEnteredOrExitRecoveryArea(true);
+                        ro.ActiveRecovLight();
+                    }, Global.ImprAndRecoEffDelay);
                 }
                 else
                 {
@@ -704,8 +725,8 @@ public class StageManager : MonoSingleton<StageManager>
                     {
                         Environment.Instance.OnEnteredOrExitRecoveryArea(true);
                         ro.ActiveRecovLight();
-                        ro.Interaction();
-                    }, 4.5f);
+                        Util.DelayFunc(() => ro.Interaction(), Global.ImprAndRecoInteractDelay, this);
+                    }, Global.ImprAndRecoEffDelay, this);
                 }
                 break;
         }

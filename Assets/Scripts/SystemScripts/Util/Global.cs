@@ -9,6 +9,12 @@ public static partial class Global
 
 public static partial class Global
 {
+    public const float ImprAndRecoEffDelay = 3.4f;
+    public const float ImprAndRecoInteractDelay = 0.4f;
+}
+
+public static partial class Global
+{
     public const string EnterNextMap = "EnterNextMap"; //다음 맵 갈 때 이벤트 키
 
     public const string OriginBodyID = "origin";

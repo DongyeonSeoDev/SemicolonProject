@@ -32,7 +32,7 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
 
     private float damageableTime = 0.0f;
 
-    public bool IsExitDoor { set => isExitDoor = value; }
+    public bool IsExitDoor { set => isExitDoor = value; get => isExitDoor; }
 
     public bool IsBlindState => StateManager.Instance.stateCountDict[StateAbnormality.Blind.ToString()] > 0;
 
