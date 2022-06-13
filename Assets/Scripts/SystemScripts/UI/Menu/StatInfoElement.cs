@@ -49,10 +49,6 @@ public class StatInfoElement : UITransition
                     NGlobal.playerStatUI.StatUp(id);
                     UpdateUI();
                 }
-                else
-                {
-                    UIManager.Instance.RequestSystemMsg("스탯 포인트가 부족합니다.");
-                }
             }
             else
             {

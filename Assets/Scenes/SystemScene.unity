@@ -43211,8 +43211,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitionEnable: 1
   delayTimePair:
-    first: 1.2
-    second: 0.3
+    first: 0.8
+    second: 0.2
 --- !u!114 &3726724738059360293
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43227,8 +43227,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitionEnable: 1
   delayTimePair:
-    first: 1.2
-    second: 0.3
+    first: 0.8
+    second: 0.2
 --- !u!224 &3729192947756019098 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4870787070711797213, guid: 692b4544f0658cf439a98ac37e586269, type: 3}

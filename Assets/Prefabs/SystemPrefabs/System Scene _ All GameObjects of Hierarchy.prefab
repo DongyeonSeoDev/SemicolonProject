@@ -9227,8 +9227,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitionEnable: 1
   delayTimePair:
-    first: 1.2
-    second: 0.3
+    first: 0.8
+    second: 0.2
 --- !u!1 &1200683676536213842
 GameObject:
   m_ObjectHideFlags: 0
@@ -11400,8 +11400,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitionEnable: 1
   delayTimePair:
-    first: 1.2
-    second: 0.3
+    first: 0.8
+    second: 0.2
 --- !u!1 &1200683677400287266
 GameObject:
   m_ObjectHideFlags: 0

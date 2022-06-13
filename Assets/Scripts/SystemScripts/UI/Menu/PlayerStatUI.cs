@@ -250,7 +250,21 @@ public class PlayerStatUI : MonoBehaviour
         UpdateCurStatPoint(needStatPoint != -1);
     }
 
-    public bool CanStatUp(ushort id) => Mathf.Pow(2, eternalStatDic[id].first.upStatCount) <= playerStat.currentStatPoint;
+    public bool CanStatUp(ushort id)
+    {
+        if(id==NGlobal.MinDamageID)
+        {
+            if(GetCurrentPlayerStat(id) + eternalStatDic[id].first.upStatValue >= GetCurrentPlayerStat(NGlobal.MaxDamageID))
+            {
+                UIManager.Instance.RequestSystemMsg("최소데미지가 최대데미지보다 높을 수 없습니다.");
+                return false;
+            }
+        }
+
+        if (Mathf.Pow(2, eternalStatDic[id].first.upStatCount) <= playerStat.currentStatPoint) return true;
+        UIManager.Instance.RequestSystemMsg("스탯 포인트가 부족합니다.");
+        return false;
+    }
     public bool CanStatOpen() => statOpenCost <= playerStat.currentStatPoint;  
 
     public void StatUp(ushort id)  //특정 스탯을 레벨업 함
@@ -286,10 +300,6 @@ public class PlayerStatUI : MonoBehaviour
 
     public void AddPlayerStatPointExp(float value)  //플레이어 스탯포인트 경험치를 획득함
     {
-        //test
-        value += 1200;
-        //end test
-
         playerStat.currentExp += value;
         UIManager.Instance.RequestLogMsg($"경험치를 획득했습니다. (+{value})");
         if(playerStat.currentExp >= playerStat.maxExp)

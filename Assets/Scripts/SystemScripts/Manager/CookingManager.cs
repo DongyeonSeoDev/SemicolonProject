@@ -37,11 +37,12 @@ public class CookingManager : MonoSingleton<CookingManager>
     #region 음식이나 재료 자세히 보기창
     public Image detailFoodImg;
     public Text detailNameTxt, explanationTxt, abilExplanationTxt;
-    [HideInInspector] public string detailID = string.Empty; //현재 자세히 보기중인 음식 혹은 재료의 아이디
+    public string detailID; //현재 자세히 보기중인 음식 혹은 재료의 아이디
     #endregion
 
     private void Start()
     {
+        detailID = string.Empty;
         gm = GameManager.Instance;
         SetData();
     }
