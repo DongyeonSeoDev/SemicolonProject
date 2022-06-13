@@ -47,9 +47,9 @@ namespace Water
         [MenuItem("File/Delete/SaveFile")]
         static void DeleteSaveFile()
         {
-            if(File.Exists(Global.saveFileName_1.PersistentDataPath()))
+            if(File.Exists(Global.GAME_SAVE_FILE.PersistentDataPath()))
             {
-                File.Delete(Global.saveFileName_1.PersistentDataPath());
+                File.Delete(Global.GAME_SAVE_FILE.PersistentDataPath());
             }
         }
 

@@ -17,9 +17,6 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     [SerializeField] private SaveData saveData;
     public SaveData savedData { get { return saveData; } }
-
-    private readonly string SAVE_FILE_1 = "SaveFile1";
-    private readonly string SAVE_FILE_2 = "SaveFile2";
     #endregion
 
     #region Game Data
@@ -66,7 +63,7 @@ public partial class GameManager : MonoSingleton<GameManager>
     private void Awake()
     {
         //filePath = "SaveFile1".PersistentDataPath();
-        filePath = SAVE_FILE_2.PersistentDataPath();
+        filePath = Global.GAME_SAVE_FILE.PersistentDataPath();
         saveData = new SaveData();   
         KeyCodeToString.Init();
         StateManager.Instance.Init();
