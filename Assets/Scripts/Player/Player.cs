@@ -218,8 +218,10 @@ public class Player : MonoBehaviour
     }
     private void UpEnergy()
     {
-        if(playerState.IsDrain)
+        if(playerState.IsDrain || SlimeGameManager.Instance.CurrentBodyId != "origin")
         {
+            playerChoiceStatControl.MucusChargeEnergyMax = false;
+
             return;
         }
 
@@ -228,6 +230,12 @@ public class Player : MonoBehaviour
         if (currentEnergy >= maxEnergy)
         {
             currentEnergy = maxEnergy;
+
+            playerChoiceStatControl.MucusChargeEnergyMax = true;
+        }
+        else if(playerChoiceStatControl.MucusChargeEnergyMax)
+        {
+            playerChoiceStatControl.MucusChargeEnergyMax = false;
         }
     }
     public void UseEnergy(float useEventAmount)
