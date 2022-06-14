@@ -74,6 +74,23 @@ public class PlayerStatUI : MonoBehaviour
         choiceDetailStartPos = choiceStatDetailPanel.GetComponent<RectTransform>().anchoredPosition;
     }
 
+    private void OnEnable()
+    {
+        //playerStat불러오기 및 세팅
+        playerStat = SlimeGameManager.Instance.Player.PlayerStat;
+
+        if (GameManager.Instance.savedData.tutorialInfo.isEnded)
+        {
+            playerStat = GameManager.Instance.savedData.userInfo.playerStat;
+            Debug.Log("Player Stat is Loaded");
+            SlimeGameManager.Instance.Player.PlayerStat = playerStat;
+        }
+        else
+        {
+            GameManager.Instance.savedData.userInfo.playerStat = playerStat;
+        }
+    }
+
     private void Start()
     {
         InitSet();
@@ -89,21 +106,7 @@ public class PlayerStatUI : MonoBehaviour
     }
 
     private void InitSet()
-    {
-        //playerStat불러오기 및 세팅
-        playerStat = SlimeGameManager.Instance.Player.PlayerStat;
-
-        if (GameManager.Instance.savedData.tutorialInfo.isEnded)
-        {
-            playerStat = GameManager.Instance.savedData.userInfo.playerStat;
-            Debug.Log("Player Stat is Loaded");
-            SlimeGameManager.Instance.Player.PlayerStat = playerStat;
-        }
-        else
-        {
-            GameManager.Instance.savedData.userInfo.playerStat = playerStat;
-        }
-
+    { 
         //고정 스탯 저장
         eternalStatDic.Add(NGlobal.MaxHpID, new Pair<StatElement, StatElement>(playerStat.eternalStat.maxHp, playerStat.additionalEternalStat.maxHp));
         eternalStatDic.Add(NGlobal.MinDamageID, new Pair<StatElement, StatElement>(playerStat.eternalStat.minDamage, playerStat.additionalEternalStat.minDamage));

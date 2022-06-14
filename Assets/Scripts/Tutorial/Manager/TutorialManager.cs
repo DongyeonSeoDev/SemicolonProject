@@ -368,7 +368,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
         AcquisitionDropIcon adi = PoolManager.GetItem<AcquisitionDropIcon>("AcqDropIcon");
         adi.Set(UIManager.Instance.GetInterfaceSprite(type),
-                startPos, 2.4f, new Vector2(-7, 7), () =>
+                startPos, 2.4f, ScriptHelper.RandomVector(new Vector2(-6.5f, 4f), new Vector2(6.5f, 7f)), () =>
                 {
                     UIOn(kt);
                     gm.savedData.userInfo.uiActiveDic[kt] = true;
