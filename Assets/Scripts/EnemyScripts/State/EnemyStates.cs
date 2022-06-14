@@ -557,6 +557,11 @@ namespace Enemy
         {
             enemyData.enemyRigidbody2D.velocity = Vector2.zero;
 
+            if (enemyData.deadEvent != null)
+            {
+                enemyData.deadEvent.Invoke();
+            }
+
             EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Reset, enemyData.enemyAnimator, TriggerType.ResetTrigger);
             EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Die, enemyData.enemyAnimator, TriggerType.SetTrigger);
 

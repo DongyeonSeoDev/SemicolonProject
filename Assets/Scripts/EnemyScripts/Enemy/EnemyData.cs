@@ -29,6 +29,8 @@ namespace Enemy
 
         public Action attackTypeCheckCondition = null;
         public Action endAttack = null;
+        public Action deadEvent = null;
+
         public Func<EnemyState> enemyChaseStateChangeCondition = null;
         public Func<EnemyState> addAIAttackStateChangeCondition = null;
         public Func<EnemyState> addChangeAttackCondition = null;
@@ -45,6 +47,7 @@ namespace Enemy
         public EnemyCommand playerControllerMove;
 
         public Vector2? knockBackDirection;
+        public Vector2? movePosition;
         public Vector2 moveVector;
 
         public Color normalColor;

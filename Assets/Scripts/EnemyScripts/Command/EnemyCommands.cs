@@ -269,9 +269,17 @@ namespace Enemy
 
         public override void Execute()
         {
+            if (enemyData.movePosition != null)
+            {
+                rigid.velocity = enemyData.movePosition.Value;
+
+                return;
+            }
+
             if (moveCount > 100 || nextPosition == null || nextPosition.Count < 1)
             {
                 nextPosition = EnemyManager.NextPosition(enemyTransform.position, EnemyManager.Player.transform.position);
+
                 position = null;
             }
 

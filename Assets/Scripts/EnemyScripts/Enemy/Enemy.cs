@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System.Collections;
 
 namespace Enemy
 {
@@ -44,6 +45,9 @@ namespace Enemy
 
         private bool isUsePlayerSpeedEvent = false;
 
+        private WaitForSeconds moveDelay;
+        private Coroutine currentCoroutine;
+
         [SerializeField]
         private float addExperience;
         public float AddExperience
@@ -60,6 +64,8 @@ namespace Enemy
             anim = GetComponent<Animator>();
             sr = GetComponent<SpriteRenderer>();
             rb = GetComponent<Rigidbody2D>();
+
+            moveDelay = new WaitForSeconds(0.2f);
 
             // CSV GetData
             CSVEnemyLoot.Instance.GetData();
@@ -223,6 +229,23 @@ namespace Enemy
                 positionCheckData.isWall = true;
                 positionCheckData.oppositeDirectionWall = collision.contacts[0].normal;
             }
+
+            var enemyCheck = collision.gameObject.GetComponent<Enemy>();
+
+            if (enemyCheck != null)
+            {
+                enemyData.movePosition = collision.contacts[0].normal;
+                currentCoroutine = StartCoroutine(ResetMove());
+
+                enemyCheck.EnemyMoveReset();
+            }
+        }
+
+        private IEnumerator ResetMove()
+        {
+            yield return moveDelay;
+
+            enemyData.movePosition = null;
         }
 
         // 적 데미지 받는 코드
@@ -381,6 +404,18 @@ namespace Enemy
             SlimeGameManager.Instance.AddSkillDelay(0, enemyData.playerAnimationTime);
         }
 
+        public void EnemyMoveReset()
+        {
+            if (currentCoroutine != null)
+            {
+                StopCoroutine(currentCoroutine);
+
+                currentCoroutine = null;
+            }
+            
+            enemyData.movePosition = null;
+        }
+            
         public EnemyController GetEnemyController() => enemyData.eEnemyController;
         public Vector2? GetKnockBackDirection() => enemyData.knockBackDirection; // 적이 넉백 공격을 할 수 있는지를 가져옴
         public Transform GetTransform() => transform;
