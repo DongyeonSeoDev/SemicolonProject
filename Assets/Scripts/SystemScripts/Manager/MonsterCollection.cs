@@ -16,6 +16,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     public Pair<GameObject, Transform> mobInfoUIPair;
     public GameObject trfAbleTxtPref;
 
+    private Dictionary<string, Sprite> changeableBodySprDic= new Dictionary<string, Sprite>();
+
     #region Detail View
     private string selectedDetailMobId;
     private MonsterInfoSlot selectedMobSlot;
@@ -66,6 +68,11 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         }
         currentBodySlotScale = savedBodys[0].transform.localScale;
 
+        foreach(Sprite spr in Resources.LoadAll<Sprite>("System/Sprites/MonsterBody/MonsterPlayer/"))
+        {
+            changeableBodySprDic.Add(spr.name, spr);
+        }
+
         EventManager.StartListening("UpdateKeyCodeUI", UpdateSavedBodyChangeKeyCodeTxt);
     }
 
@@ -75,8 +82,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         //Water.PoolManager.CreatePool(trfAbleTxtPref, mobInfoUIPair.second, 2, "CanTrfMark");
 
         mobInfoUIPair.second.GetComponent<GridLayoutGroup>().constraintCount = Mathf.Clamp(urmg.ChangableBodyList.Count / 3 + 1, 6, 10000);
-        statIncrRatePerAssim.text = "[동화율 " + (PlayerEnemyUnderstandingRateManager.Instance.UnderstandingRatePercentageWhenUpStat).ToString()  + "%당 "
-            + (PlayerEnemyUnderstandingRateManager.Instance.UpStatPercentage * 100f).ToString() + "%씩 스탯 상승]";
+        statIncrRatePerAssim.text = "[동화율 " + (urmg.UnderstandingRatePercentageWhenUpStat).ToString()  + "%당 "
+            + (urmg.UpStatPercentage * 100f).ToString() + "%씩 스탯 상승]";
         changeBodySlots.ForEach(x => x.SetSlotNumber());
 
         //모든 몹 정보 가져와서 UI생성하고 값 넣음
@@ -103,7 +110,6 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
         EventManager.StartListening("PlayerRespawn", () =>
         {
-            
             AllUpdateUnderstanding();
             AllUpdateDrainProbability();
 
@@ -261,6 +267,12 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         if (mobIdToSlot.ContainsKey(id)) return mobIdToSlot[id].BodyData;
         else if (id == Global.OriginBodyID) return defaultSlimeBodyData;
         else return new ChangeBodyData();
+    }
+
+    public Sprite GetPlayerMonsterSpr(string key)
+    {
+        if(changeableBodySprDic.ContainsKey(key)) return changeableBodySprDic[key];
+        return notExistBodySpr;
     }
 
     public void MarkAcqBodyFalse(string id)  //도감에서 변신가능 표시 끔

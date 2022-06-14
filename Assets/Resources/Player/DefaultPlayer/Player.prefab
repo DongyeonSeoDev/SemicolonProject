@@ -345,10 +345,10 @@ MonoBehaviour:
   - id: 110
     name: "\uB9F7\uC9D1"
     targetStat: "\uCCB4\uB825"
-    unlockStatValue: 10
+    unlockStatValue: 100
     firstValue: 1
     checkStartValue: 0
-    upAmount: 50
+    upAmount: 100
     upTargetStatPerChoiceStat: 5
   - id: 115
     name: "\uBA48\uCD94\uC9C0 \uC54A\uB294 \uB3CC\uC9C4"

@@ -91,7 +91,8 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
         }
 
         bodyID = id;
-        bodyImg.sprite = Global.GetMonsterBodySprite(id);
+        bodyImg.sprite = MonsterCollection.Instance.GetPlayerMonsterSpr(id);
+        //bodyImg.sprite = Global.GetMonsterBodySprite(id);
         cvsg.alpha = 1;
 
         if(SlimeGameManager.Instance.BodyChangeTimer > 0)
