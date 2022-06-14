@@ -34,7 +34,8 @@ public static class KeySetting
         fixedKeyDict[KeyAction.DOWN] = KeyCode.S;
         fixedKeyDict[KeyAction.LEFT] = KeyCode.A;
         fixedKeyDict[KeyAction.RIGHT] = KeyCode.D;
-        fixedKeyDict[KeyAction.ATTACK] = KeyCode.Mouse0;
+        fixedKeyDict[KeyAction.ATTACK] = KeyCode.Mouse0;        
+        fixedKeyDict[KeyAction.FIXED_SPECIALATTACK1] = KeyCode.Mouse1;        
         fixedKeyDict[KeyAction.SETTING] = KeyCode.Escape;
     }
 

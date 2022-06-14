@@ -54,6 +54,7 @@ public enum KeyAction
     LEFT,
     RIGHT,
     ATTACK,
+    FIXED_SPECIALATTACK1,
     SETTING,
     //여기까지가 고정키
 

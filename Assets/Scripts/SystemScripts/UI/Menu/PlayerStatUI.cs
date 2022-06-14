@@ -29,7 +29,7 @@ public class PlayerStatUI : MonoBehaviour
     private List<Transform> invisibleChoiceStatUIList = new List<Transform>(); //위 주석에서 말하는 안보이는 선택 스탯 요소 버튼. 안에 들갈 프리팹 위에 있다
 
     private Transform choiceDetailPar;
-    private Vector2 choiceDetailStartPos;
+    [SerializeField] private Vector2 choiceDetailStartPos;
 
     public GameObject choiceStatDetailPanel; // 선택 스탯 자세히 보기창
     public Text choiceDetailAbil, choiceDetailGrowth, choiceDetailAcq;  //선택 스탯 자세히 보기창에 있는 능력, 성장방법, 획득방법 설명 텍스트 
@@ -71,24 +71,7 @@ public class PlayerStatUI : MonoBehaviour
         }
 
         choiceDetailPar = choiceStatDetailPanel.transform.parent;
-        choiceDetailStartPos = choiceStatDetailPanel.GetComponent<RectTransform>().anchoredPosition;
-    }
-
-    private void OnEnable()
-    {
-        //playerStat불러오기 및 세팅
-        playerStat = SlimeGameManager.Instance.Player.PlayerStat;
-
-        if (GameManager.Instance.savedData.tutorialInfo.isEnded)
-        {
-            playerStat = GameManager.Instance.savedData.userInfo.playerStat;
-            Debug.Log("Player Stat is Loaded");
-            SlimeGameManager.Instance.Player.PlayerStat = playerStat;
-        }
-        else
-        {
-            GameManager.Instance.savedData.userInfo.playerStat = playerStat;
-        }
+        //choiceDetailStartPos = choiceStatDetailPanel.GetComponent<RectTransform>().anchoredPosition;
     }
 
     private void Start()
@@ -106,7 +89,22 @@ public class PlayerStatUI : MonoBehaviour
     }
 
     private void InitSet()
-    { 
+    {
+        //playerStat불러오기 및 세팅
+        playerStat = SlimeGameManager.Instance.Player.PlayerStat;
+
+        if (GameManager.Instance.savedData.tutorialInfo.isEnded)
+        {
+            playerStat = GameManager.Instance.savedData.userInfo.playerStat;
+            Debug.Log("Player Stat is Loaded");
+            SlimeGameManager.Instance.Player.PlayerStat = playerStat;
+            playerStat.currentHp = playerStat.MaxHp;
+        }
+        else
+        {
+            GameManager.Instance.savedData.userInfo.playerStat = playerStat;
+        }
+
         //고정 스탯 저장
         eternalStatDic.Add(NGlobal.MaxHpID, new Pair<StatElement, StatElement>(playerStat.eternalStat.maxHp, playerStat.additionalEternalStat.maxHp));
         eternalStatDic.Add(NGlobal.MinDamageID, new Pair<StatElement, StatElement>(playerStat.eternalStat.minDamage, playerStat.additionalEternalStat.minDamage));

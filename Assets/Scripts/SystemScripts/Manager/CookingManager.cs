@@ -28,6 +28,7 @@ public class CookingManager : MonoSingleton<CookingManager>
     public TextMeshProUGUI NpcNameTxt; 
     public Image foodImg;  //만드려는(선택한) 음식 이미지
     public Text makeFoodCountText; //만드려는(선택한) 음식 개수 텍스트
+    public Text foodAbilText;  //음식 능력 설명 텍스트
     public TextMeshProUGUI foodNameText; //음식이름
 
     public Button countPlusBtn, countMinusBtn, makeBtn; //음식 제작 개수 늘리기(줄이기) 버튼, 제작 버튼
@@ -159,6 +160,7 @@ public class CookingManager : MonoSingleton<CookingManager>
         foodImg.sprite = selectedFood.GetSprite();
         makeFoodCountText.text = "수량: 1개";
         foodNameText.text = selectedFood.itemName;
+        foodAbilText.text = selectedFood.abilExplanation;
 
         ingredientImages.ForEach(x => x.gameObject.SetActive(false));
         selectedFoodIngrImgs.Clear();
