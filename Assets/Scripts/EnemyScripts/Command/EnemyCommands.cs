@@ -249,7 +249,6 @@ namespace Enemy
         private Transform enemyTransform;
         private Vector2 targetPosition;
         private Vector2Int? position;
-        private Vector2Int? pastPosition;
 
         private Stack<Vector2Int> nextPosition = new Stack<Vector2Int>();
 
@@ -265,7 +264,6 @@ namespace Enemy
             this.followSpeed = followSpeed;
 
             nextPosition = null;
-            pastPosition = null;
             position = null;
         }
 
@@ -277,7 +275,7 @@ namespace Enemy
                 position = null;
             }
 
-            if (position == null || Vector2.Distance(new Vector2(enemyTransform.position.x, enemyTransform.position.y), position.Value) < 0.1f)
+            if (position == null || Vector2.Distance(new Vector2(enemyTransform.position.x, enemyTransform.position.y), position.Value) < 0.4f)
             {
                 if (nextPosition.Count < 1)
                 {
@@ -285,19 +283,8 @@ namespace Enemy
                 }
                 else
                 {
-                    pastPosition = position;
                     position = nextPosition.Pop();
                     moveCount = 0;
-
-                    if (pastPosition != null)
-                    {
-                        EnemyManager.SetEnemyData(pastPosition.Value, false);
-                    }
-
-                    if (position != null)
-                    {
-                        EnemyManager.SetEnemyData(position.Value, true);
-                    }
                 }
             }
 

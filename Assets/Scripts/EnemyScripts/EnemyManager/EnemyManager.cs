@@ -224,6 +224,5 @@ namespace Enemy
         }
 
         public static void SetCurrentStageData(StageData stageData) => currentStageData = stageData;
-        public static void SetEnemyData(Vector2Int targetPosition, bool value) => FindPath.SetEnemyPosition(currentStageData, targetPosition, value);
     }
 }
