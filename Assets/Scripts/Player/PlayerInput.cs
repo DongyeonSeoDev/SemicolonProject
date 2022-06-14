@@ -356,21 +356,21 @@ public class PlayerInput : MonoBehaviour
 
                 if (skill1TutoClear)
                 {
-                    if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.SPECIALATTACK1])) // left shift
+                    if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.SPECIALATTACK1]) || Input.GetMouseButtonDown(1)) // left shift
                     {
                         skill1ButtonDowned = true;
 
                         isDoSkill1 = true;
                     }
 
-                    if (Input.GetKeyUp(KeySetting.keyDict[KeyAction.SPECIALATTACK1]))
+                    if (Input.GetKeyUp(KeySetting.keyDict[KeyAction.SPECIALATTACK1]) || Input.GetMouseButtonUp(1))
                     {
                         skill1ButtonDowned = false;
 
                         EventManager.TriggerEvent("SkillButtonUp1");
                     }
 
-                    if((skill1ButtonDowned && !Input.GetKey(KeySetting.keyDict[KeyAction.SPECIALATTACK1])))
+                    if((skill1ButtonDowned && (!Input.GetKey(KeySetting.keyDict[KeyAction.SPECIALATTACK1]) && !Input.GetMouseButton(1))))
                     {
                         skill1ButtonDowned = false;
 
