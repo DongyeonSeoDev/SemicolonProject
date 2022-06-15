@@ -211,9 +211,6 @@ public class PlayerBodySlap : PlayerSkill
 
             IDamageableBySlimeBodySlap damagableByBodySlap = targetObject.GetComponent<IDamageableBySlimeBodySlap>();
 
-            Debug.Log(targetObject.name + "n");
-            Debug.Log(damagableByBodySlap);
-
             if (damagableByBodySlap != null)
             {
                 damagableByBodySlap.GetDamage(1, currentChargingTimer);// 여기에 매개변수 추가
@@ -245,8 +242,6 @@ public class PlayerBodySlap : PlayerSkill
                 {
                     EventManager.TriggerEvent("OnAttackMiss");
                 }
-
-                Debug.Log(SlimeGameManager.Instance.Player.PlayerStat.choiceStat.frenzy.isUnlock);
 
                 if (!bodyStopBodySlapTimerStart && !SlimeGameManager.Instance.Player.PlayerStat.choiceStat.frenzy.isUnlock)
                 {

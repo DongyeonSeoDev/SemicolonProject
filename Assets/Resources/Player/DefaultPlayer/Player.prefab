@@ -242,7 +242,8 @@ MonoBehaviour:
   playerReflectionScript: {fileID: 0}
   playerOrderInLayerController: {fileID: 0}
   maxEnergy: 10
-  energyRegenSpeed: 1
+  totalEnergyReganSpeed: 1
+  energyRegenSpeedAttack: 1
   energyRegenSpeedWhenNotAttack: 3
   upMountingPercentageValueWhenEnemyDead: 5
   upUnderstandingRateValueWhenEnemyDead: 1
@@ -379,7 +380,7 @@ MonoBehaviour:
     checkStartValue: 0
     upAmount: 60
     changeUpAmount: 120
-    upTargetStatPerChoiceStat: 0
+    upTargetStatPerChoiceStat: 0.2
   - id: 130
     name: "\uB9DE\uC740\uCC99"
     targetStat: 

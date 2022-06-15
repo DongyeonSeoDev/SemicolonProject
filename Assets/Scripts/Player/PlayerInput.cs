@@ -243,7 +243,6 @@ public class PlayerInput : MonoBehaviour
                         if (playerStopStayTimerStarted && playerStopStay)
                         {
                             // 추진력 실행 코드
-                            Debug.Log("이러석구나... 내가 멈췄던 것은 추진력을 얻기 위해서였다!!!");
                             playerState.IsInMomentom = true;
                         }
 

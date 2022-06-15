@@ -315,7 +315,6 @@ public class PlayerChoiceStatControl : MonoBehaviour
                 >= choiceDataDict[NGlobal.MomentomID].unlockStatValue)
             {
                 // 이 스탯이 처음 생김
-                Debug.Log("Momentom True Wireless Earbuds 3"); // 추진력 해금 체크용 코드 // 참고로 좋은 무선이어폰임 추천함
 
                 stat.statValue = choiceDataDict[NGlobal.MomentomID].firstValue;
                 stat.statLv = choiceDataDict[NGlobal.MomentomID].firstValue;
