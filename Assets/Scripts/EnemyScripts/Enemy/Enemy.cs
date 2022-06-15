@@ -11,6 +11,7 @@ namespace Enemy
     {
         public List<EnemyLootData> enemyLootListSO = new List<EnemyLootData>(); // 적 전리품 리스트
         public EnemyDataSO enemyDataSO; // 적 데이터 관리 ( 없으면 Scriptable Object에서 만들어야 함 )
+        public Image hpBarBackground; // 적 HP 바 배경
         public Image hpBarFillImage; // 적 HP 바 채워진것중 체력 확인용
         public Image hpBarDamageFillImage; // 적 HP 바 채워진것중 데미지 확인용
         public GameObject hpBar; // 적 HP 바 오브젝트 ( hpBarFillImage의 부모 캔버스 오브젝트 )
@@ -176,6 +177,11 @@ namespace Enemy
             {
                 enemyData.enemyCanvas = hpBar;
             }
+
+            if (hpBarBackground != null)
+            {
+                hpBarBackground.sprite = EnemyManager.Instance.nomalBarUI;
+            }
         }
 
         protected virtual void Update()
@@ -197,6 +203,14 @@ namespace Enemy
                 enemyData.hp -= enemyData.damagedValue;
 
                 SetHP(true);
+
+                if (EnemyHpPercent() > 0 && EnemyHpPercent() <= EnemyManager.CanDrainPercent())
+                {
+                    if (hpBarBackground != null)
+                    {
+                        hpBarBackground.sprite = EnemyManager.Instance.absorbableBarUI;
+                    }
+                }
 
                 enemyDamagedCommand.Execute();
 

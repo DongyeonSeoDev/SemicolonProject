@@ -73,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1646225281
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: d28dff12c2591a84c9cbea9bd1f40fa2, type: 3}
   m_Color: {r: 1, g: 0, b: 1, a: 1}
@@ -145,6 +145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHP: 40
   hp: 20
+  objName: 
   hpBarFillImage: {fileID: 7481955638417017616}
   hpBarDamageFillImage: {fileID: 4649332666783088291}
   hpBar: {fileID: 7481955638649562364}
@@ -250,6 +251,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1559462952483071911, guid: 1defdbc9dbd80d64ca150882476dfe06, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 6cdd73ec8d0ab764198524bfd1094ce0, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1defdbc9dbd80d64ca150882476dfe06, type: 3}
 --- !u!1 &7481955638649562364 stripped

@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Enemy
 {
@@ -49,6 +50,11 @@ namespace Enemy
 
         public Dictionary<string, List<Enemy>> enemyDictionary = new Dictionary<string, List<Enemy>>();
 
+        public Sprite nomalBarUI = null;
+        public Sprite absorbableBarUI = null;
+
+        private PlayerDrain playerDrain;
+
         private static StageData currentStageData = null;
 
         private static GameObject player;
@@ -77,6 +83,16 @@ namespace Enemy
             }
 
             instance = this;
+        }
+
+        private void Start()
+        {
+            playerDrain = SlimeGameManager.Instance.CurrentPlayerBody.GetComponent<PlayerDrain>();
+        }
+
+        public static float CanDrainPercent()
+        {
+            return instance.playerDrain.PlayerDrainCol.CanDrainHpPercentage;
         }
 
         public static bool IsAttackPlayer(EnemyData data)

@@ -363,6 +363,7 @@ MonoBehaviour:
   poolType: 2
   count: 6
   enemyDataSO: {fileID: 11400000, guid: 3ba44352f5ee2ad48b2b33a2e2052f51, type: 2}
+  hpBarBackground: {fileID: 2029326397227404581}
   hpBarFillImage: {fileID: 2029326397634872474}
   hpBarDamageFillImage: {fileID: 4285489458850296105}
   hpBar: {fileID: 2029326398027098998}
@@ -526,6 +527,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1559462951835451896, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
   m_PrefabInstance: {fileID: 688433718241700482}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2029326397227404581 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1559462952483071911, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
+  m_PrefabInstance: {fileID: 688433718241700482}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &4285489458850296105 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3671791750608935851, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
