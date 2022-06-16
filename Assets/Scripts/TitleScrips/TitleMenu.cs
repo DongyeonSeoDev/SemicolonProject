@@ -36,6 +36,23 @@ public class TitleMenu : MonoBehaviour
         CheckMenuIdx();
         DoMenuWork();
     }
+    public void SetMenuIdx(int idx)
+    {
+        if(idx < 0)
+        {
+            menuIdx = 0;
+
+            return;
+        }
+        else if(idx > maxMenuIdx)
+        {
+            menuIdx = maxMenuIdx;
+
+            return;
+        }
+
+        menuIdx = idx;
+    }
     private void DoMenuWork()
     {
         if(Input.GetKeyDown(KeyCode.Return))
