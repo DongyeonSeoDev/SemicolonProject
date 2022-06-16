@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using TMPro;
 
 public class LoadSceneManager : MonoSingleton<LoadSceneManager>
 {
     private string nextScene = "";
 
     public Image progressBar = null;
+    public TextMeshProUGUI progressText = null;
 
     void Start()
     {
@@ -22,6 +24,23 @@ public class LoadSceneManager : MonoSingleton<LoadSceneManager>
     public void LoadScene(Image progressBar, string sceneName)
     {
         this.progressBar = progressBar;
+
+        nextScene = sceneName;
+
+        StartCoroutine(LoadScenePregress());
+    }
+    public void LoadScene(Image progressBar, TextMeshProUGUI progressText, string sceneName)
+    {
+        this.progressBar = progressBar;
+        this.progressText = progressText;
+
+        nextScene = sceneName;
+
+        StartCoroutine(LoadScenePregress());
+    }
+    public void LoadScene(TextMeshProUGUI progressText, string sceneName)
+    {
+        this.progressText = progressText;
 
         nextScene = sceneName;
 
@@ -48,7 +67,7 @@ public class LoadSceneManager : MonoSingleton<LoadSceneManager>
             {
                 if (progressBar != null)
                 {
-                    progressBar.fillAmount = op.progress;
+                    progressBar.fillAmount = Mathf.Lerp(progressBar.fillAmount, op.progress, Time.unscaledDeltaTime);
                 }
             }
             else
@@ -58,12 +77,6 @@ public class LoadSceneManager : MonoSingleton<LoadSceneManager>
                 if (progressBar != null)
                 {
                     progressBar.fillAmount = Mathf.Lerp(0.9f, 1f, timer);
-
-                    if (progressBar.fillAmount >= 1f)
-                    {
-                        op.allowSceneActivation = true;
-                        yield break;
-                    }
                 }
                 else
                 {
@@ -71,6 +84,19 @@ public class LoadSceneManager : MonoSingleton<LoadSceneManager>
                     yield break;
                 }
             }
+
+            if(progressText != null)
+            {
+                progressText.text = string.Format("{0:0.00}%", progressBar.fillAmount * 100f);
+            }
+
+            if (progressBar.fillAmount >= 1f)
+            {
+                op.allowSceneActivation = true;
+                yield break;
+            }
+
+            yield return null;
         }
     }
 }
