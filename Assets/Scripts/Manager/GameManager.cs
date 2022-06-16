@@ -90,8 +90,6 @@ public partial class GameManager : MonoSingleton<GameManager>
 
         savedJson = JsonUtility.ToJson(saveData);
         cryptoText = Crypto.Encrypt(savedJson, cryptoKey);
-        //byte[] bytes = Encoding.UTF8.GetBytes(savedJson);
-        //string code = Convert.ToBase64String(bytes);
         File.WriteAllText(filePath, cryptoText);
     }
 
@@ -103,8 +101,6 @@ public partial class GameManager : MonoSingleton<GameManager>
         {
             string code = File.ReadAllText(filePath);
             savedJson = Crypto.Decrypt(code, cryptoKey);
-            //byte[] bytes = Convert.FromBase64String(code);
-            //savedJson = Encoding.UTF8.GetString(bytes);
             saveData = JsonUtility.FromJson<SaveData>(savedJson);
         }
 
@@ -235,8 +231,6 @@ public partial class GameManager : MonoSingleton<GameManager>
         slimeFollowObj.gameObject.AddComponent(typeof(SlimeFollowObj));
         slimeFollowObj.name = typeof(SlimeFollowObj).Name;
         StoredData.SetGameObjectKey("Slime Follow Obj", slimeFollowObj.gameObject);
-
-        //WDUtil.PrintStructSize(typeof(StageFork));
     }
 
     public void AddUpdateAction(string key, Action action)
@@ -309,7 +303,6 @@ public partial class GameManager : MonoSingleton<GameManager>
         PoolManager.PoolObjSetActiveFalse("ItemFollowEffect");
         //PoolManager.PoolObjSetActiveFalse("EmptyObject");
         StateManager.Instance.RemoveAllStateAbnormality(false);
-        saveData.userInfo.playerStat.ResetAfterRegame();
     }
 
 #region Item
@@ -370,12 +363,8 @@ public partial class GameManager : MonoSingleton<GameManager>
     void PlayerRespawnEvent()
     {
         ResetDroppedItems();
-
-        /*for(i=0; i<pickList.Count; i++)
-        {
-            if (!pickList[i].gameObject.activeSelf) pickList[i].gameObject.SetActive(true);
-        }*/
-
+        saveData.userInfo.playerStat.ResetAfterRegame();
+        NGlobal.playerStatUI.PlayerRespawnEvent();
         //limitedBattleCntItems.Clear();
     }
 
@@ -411,12 +400,6 @@ public partial class GameManager : MonoSingleton<GameManager>
 
         droppedItemTempDict.Clear();
         droppedItemList.Clear();
-        //드랍템들 흡수하고 list를 비우고 드랍템들 꺼줘야함. 이 때 만약 맵 이동하면 바로 list 비우고 드랍템들 꺼줌
-
-        /*for(int i=0; i<droppedItemList.Count; i++)
-        {
-            Inventory.Instance.GetItem(droppedItemList[i]);
-        }*/ //이렇게하면 전부 제대로 실행이 안된다.(계산하는 양이 많아서인지) 다른 방법을 써보자.
     }
 
     #region 주석

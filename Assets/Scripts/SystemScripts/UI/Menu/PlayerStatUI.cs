@@ -77,15 +77,17 @@ public class PlayerStatUI : MonoBehaviour
     private void Start()
     {
         InitSet();
-        EventManager.StartListening("PlayerDead", () =>
+    }
+
+    public void PlayerRespawnEvent()
+    {
+        foreach (ChoiceStatInfoElement ui in choiceStatInfoUIDic.Values)
         {
-            foreach(ChoiceStatInfoElement ui in choiceStatInfoUIDic.Values)
-            {
-                ui.gameObject.SetActive(false);
-            }
-            prevConfirmExpRate = 0f;
-            expFullCount = 0;
-        });
+            ui.gameObject.SetActive(false);
+        }
+        prevConfirmExpRate = 0f;
+        expFullCount = 0;
+        prevStatPoint = playerStat.currentStatPoint;
     }
 
     private void InitSet()
@@ -104,6 +106,8 @@ public class PlayerStatUI : MonoBehaviour
         {
             GameManager.Instance.savedData.userInfo.playerStat = playerStat;
         }
+
+        prevStatPoint = playerStat.currentStatPoint;
 
         //고정 스탯 저장
         eternalStatDic.Add(NGlobal.MaxHpID, new Pair<StatElement, StatElement>(playerStat.eternalStat.maxHp, playerStat.additionalEternalStat.maxHp));
@@ -129,6 +133,8 @@ public class PlayerStatUI : MonoBehaviour
         choiceStatDic.Add(NGlobal.EnduranceID, playerStat.choiceStat.endurance);
         choiceStatDic.Add(NGlobal.FrenzyID, playerStat.choiceStat.frenzy);
         choiceStatDic.Add(NGlobal.ReflectionID, playerStat.choiceStat.reflection);
+        choiceStatDic.Add(NGlobal.MucusRechargeID, playerStat.choiceStat.mucusRecharge);
+        choiceStatDic.Add(NGlobal.FakeID, playerStat.choiceStat.fake);
 
         //선택 스탯 UI 생성
         foreach(ushort key in choiceStatDic.Keys)

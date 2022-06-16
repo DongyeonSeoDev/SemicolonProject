@@ -442,6 +442,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         {
             GameManager.Instance.savedData.userInfo.isGainBodyChangeSlot = true;
             TutorialManager.Instance.GetBodyChangeSlot();
+            EventManager.TriggerEvent("UpdateKeyCodeUI");
         }
 
         if (slotNumber == -1) 

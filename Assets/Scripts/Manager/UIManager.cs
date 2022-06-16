@@ -593,8 +593,6 @@ public partial class UIManager : MonoSingleton<UIManager>
                     if (gameMenuList[i].gameObject.activeSelf)     //설정 속의 메뉴 UI가 켜져있는 중에는 설정창 못 끄게
                         return true;
                 }
-                //normalPanelCanvasg.DOFade(!gameUIList[(int)UIType.SETTING].gameObject.activeSelf ? 0:1, 0.3f);
-                //setting.SetChildImgs(true);
                 break;
             case UIType.MONSTERINFO_DETAIL:  //몹 드랍템 정보창이나 추가스탯 창 UI켜져있으면 몹 정보 자세히 보기 UI 상호작용 여닫기 X
                 if (Util.IsActiveGameUI(UIType.MONSTERINFO_DETAIL_ITEM) || Util.IsActiveGameUI(UIType.MONSTERINFO_DETAIL_STAT) || Util.IsActiveGameUI(UIType.MONSTERINFO_DETAIL_FEATURE))
@@ -716,11 +714,6 @@ public partial class UIManager : MonoSingleton<UIManager>
             case UIType.STAT:
                 playerStatUI.UpdateStatExp(true);
                 break;
-            /*case UIType.SETTING:
-                TimeManager.TimePause();
-                setting.SetChildImgs(false);
-                break;*/
-           
         }
     }
 
@@ -745,9 +738,6 @@ public partial class UIManager : MonoSingleton<UIManager>
                     selectedImg.gameObject.SetActive(false);
                 }
                 break;
-            /*case UIType.SETTING:
-                TimeManager.TimeResume();
-                break;*/
             case UIType.KEYSETTING:  //키세팅 창 닫히면 상호작용 표시, 스킬 슬롯, 몸 저장 슬롯 등 키코드가 나오는 UI들을 다시 업데이트함
                 EventManager.TriggerEvent("UpdateKeyCodeUI");
                 break;
@@ -989,8 +979,6 @@ public partial class UIManager : MonoSingleton<UIManager>
 
         EventManager.TriggerEvent(isShow ? "TimePause" : "TimeResume");
     }
-
-    
 
     public void CancelMonsterSaveChance(string id)  //변신 가능한 몬스터 저장 거절
     {

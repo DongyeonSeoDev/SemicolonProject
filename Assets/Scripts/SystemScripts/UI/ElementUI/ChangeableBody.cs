@@ -151,10 +151,4 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
             SlimeGameManager.Instance.PlayerBodyChange(bodyID);
         }
     }
-
-    private void OnEnable()
-    {
-        if(Time.unscaledTime > 3f)
-           UpdateKeyCodeTxt();
-    }
 }

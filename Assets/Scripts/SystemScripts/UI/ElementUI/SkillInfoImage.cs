@@ -77,10 +77,4 @@ public class SkillInfoImage : MonoBehaviour
             skillUICmd.Execute();
         }
     }
-
-    private void OnEnable()
-    {
-        if (Time.unscaledTime > 3f)
-            UpdateKeyCode();
-    }
 }

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using Water;
 using DG.Tweening;
 
@@ -33,6 +34,18 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
 
     #endregion
 
+    #region
+
+    public CanvasGroup missionCvsg;
+    public TextMeshProUGUI missionContent;
+    private RectTransform missionPanelRt;
+    private Vector2 missionPanelPos;
+    private Dictionary<short, Mission> allMissionsDic = new Dictionary<short, Mission>();
+    private List<Mission> currentMissions = new List<Mission>();
+
+    #endregion
+
+
     //흡수율 표시창에서 비어있는 다음 칸과 인덱스 가져옴
     public RectTransform NextEmptyNoticeSlot
     {
@@ -52,10 +65,13 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
 
     private void Awake()
     {
+        #region Value Setting
         curNoticeList = new List<AbsorptionNotice>();
         absorptionDataQueue = new Queue<AbsorptionData>();
         endedAbspNoticeQueue = new Queue<AbsorptionNotice>();
         noticeDeletePos = absorptionNoticeRTList[0].anchoredPosition + new Vector2(0, 200);
+        missionPanelRt = missionCvsg.GetComponent<RectTransform>();
+        missionPanelPos = missionPanelRt.anchoredPosition;
         noticeEndTCB = () =>
         {
             curNoticeList[0].gameObject.SetActive(false);
@@ -67,7 +83,9 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
             }
             isMoving = false;
         };
+        #endregion
 
+        #region Event Setting
         EventManager.StartListening("PlayerDead", () =>
         {
             int i;
@@ -79,6 +97,25 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
                 }
             }
         });
+        EventManager.StartListening("StartNextStage", EnteredMonsterArea);
+        EventManager.StartListening("GotoNextStage_LoadingStart", () =>
+        {
+            if (currentMissions.Count > 0)
+            {
+                for (int i = 0; i < currentMissions.Count; i++)
+                {
+                    currentMissions[i].End(true);
+                }
+                currentMissions.Clear();
+                DisableMission();
+            }
+        });
+        #endregion
+
+        #region Mission Setting
+        allMissionsDic.Add(5, new NormalMission(5, "모든 적을 처치하세요"));
+        allMissionsDic.Add(10, new SurvivalMission(10, "30초 동안 살아남으세요", 30f));
+        #endregion
     }
 
     private void Start()
@@ -127,6 +164,17 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
                 }
             }
         }
+
+        for(int i=0; i<currentMissions.Count; i++)
+        {
+            currentMissions[i].Update();
+            if(currentMissions[i].isEnd)
+            {
+                currentMissions[i].End();
+                DisableMission(i);
+                i--;
+            }
+        }
     }
 
     public void InsertAbsorptionInfo(string id, float absorptionRate, float assimilationRate, KillNoticeType type = KillNoticeType.FAIL)  //새로 흡수율 알림 UI를 보여줄 정보를 큐에 넣어줌
@@ -156,12 +204,31 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
         endedAbspNoticeQueue.Enqueue(ui);
     }
 
-    /*public bool HasBody(string id)  //어떤 몬스터의 몸을 가지고 있는 상태인가? (변신할 수 있는 몹 슬롯에 넣어져있는지)
+    
+    public void EnteredMonsterArea()
     {
-        foreach(string key in PlayerEnemyUnderstandingRateManager.Instance.MountedObjList)
+        if (StageManager.Instance.CurrentAreaType == AreaType.MONSTER)
         {
-            if (id == key) return true;
+            Mission ms = allMissionsDic[allMissionsDic.Keys.ToRandomElement()];
+            currentMissions.Add(ms);
+            ms.Start();
+
+            missionContent.text = ms.missionName;
+            missionCvsg.alpha = 0;
+            missionPanelRt.anchoredPosition = missionPanelPos + new Vector2(200, 0);
+            missionCvsg.gameObject.SetActive(true);
+
+            missionCvsg.DOFade(1, 0.4f);
+            missionPanelRt.DOAnchorPos(missionPanelPos, 0.4f).SetEase(Ease.OutQuart);
         }
-        return false;
-    }*/
+    }
+
+    public void DisableMission(int index = -1)
+    {
+        if(index >= 0)
+           currentMissions.RemoveAt(index);
+
+        missionCvsg.DOFade(0, 0.4f);
+        missionPanelRt.DOAnchorPos(missionPanelPos + new Vector2(200, 0), 0.4f).OnComplete(() => missionCvsg.gameObject.SetActive(false));
+    }
 }

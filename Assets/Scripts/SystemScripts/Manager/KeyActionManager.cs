@@ -90,9 +90,6 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         {
             isUseableQuik = true;
         };
-
-        if (Time.unscaledTime > 3f)
-            UpdateQuikKeyCode();
     }
 
     private void Start()
