@@ -29,6 +29,11 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
     public Image energeFill;
     private Vector3 orgEnergeEffMaskScl;
 
+    public Color slimeAtkEnergeColor, assimilationBarColor;  //에너지바 색상 : 슬라임일 때랑 변신한 몹일 때
+    public Color slimeEnergePsColor, assimPsColor; // 파티클 색상 : 슬라임일 때와 변신상태일 때
+    public Gradient slimeEnergeGd, assimGd; //파티클의 Color over Lifetime 값 : 슬라임일 때와 변신상태일 때
+    public Text curAssimText;  //동화율 최대치 표시 텍스트
+
     [Space(15)]
     //에너지바 일정 이하일 때 효과
     //public CanvasGroup energeBarCvsg;
@@ -97,13 +102,14 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
 
             if (org)
             {
-                energeBarAndEff.first.SetActive(true);
-                energeBarAndEff.first.transform.DOScaleX(1, 0.3f);
+                //energeBarAndEff.first.SetActive(true);
+                //energeBarAndEff.first.transform.DOScaleX(1, 0.3f);
             }
             else
             {
-                energeBarAndEff.first.transform.DOScaleX(0, 0.3f).OnComplete(() => energeBarAndEff.first.SetActive(false));
+                //energeBarAndEff.first.transform.DOScaleX(0, 0.3f).OnComplete(() => energeBarAndEff.first.SetActive(false));
             }
+            curAssimText.gameObject.SetActive(!org);
         });
 
         EventManager.StartListening("StartCutScene", () => SetActiveSlimeEnergeEffect(false));
