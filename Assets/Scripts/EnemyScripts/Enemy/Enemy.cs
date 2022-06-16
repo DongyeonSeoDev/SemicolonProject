@@ -39,7 +39,6 @@ namespace Enemy
 
         [SerializeField]
         private Animator hpEffectAnimation = null;
-        private readonly int hashIsStart = Animator.StringToHash("isStart");
 
         EnemyCommand enemyDamagedCommand;
         EnemyCommand enemyKnockBackCommand;
@@ -183,7 +182,7 @@ namespace Enemy
 
             if (hpEffectAnimation != null)
             {
-                hpEffectAnimation.SetBool(hashIsStart, false);
+                hpEffectAnimation.SetBool(EnemyManager.Instance.hashIsStart, false);
             }
         }
 
@@ -211,7 +210,7 @@ namespace Enemy
                 {
                     if (hpEffectAnimation != null)
                     {
-                        hpEffectAnimation.SetBool(hashIsStart, true);
+                        hpEffectAnimation.SetBool(EnemyManager.Instance.hashIsStart, true);
                     }
                 }
 

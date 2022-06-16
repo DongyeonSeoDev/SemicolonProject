@@ -52,6 +52,8 @@ namespace Enemy
 
         private PlayerDrain playerDrain;
 
+        public readonly int hashIsStart = Animator.StringToHash("isStart");
+
         private static StageData currentStageData = null;
 
         private static GameObject player;

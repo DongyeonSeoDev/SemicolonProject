@@ -27,7 +27,7 @@ RectTransform:
   m_GameObject: {fileID: 4636918046147924121}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_Children: []
   m_Father: {fileID: 7481955638287418030}
   m_RootOrder: 2
@@ -224,6 +224,7 @@ MonoBehaviour:
   hpBarFillImage: {fileID: 7481955638417017616}
   hpBarDamageFillImage: {fileID: 4649332666783088291}
   hpBar: {fileID: 7481955638649562364}
+  anim: {fileID: 3187495538265674985}
   hpTweenTime: 0.1
   hpTweenDelayTime: 0.3
   damageHPTweenTime: 0.2
@@ -254,7 +255,7 @@ RectTransform:
   m_GameObject: {fileID: 7216108577037055740}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.2, y: 0.2, z: 0.2}
+  m_LocalScale: {x: 0.15, y: 0.15, z: 0.15}
   m_Children: []
   m_Father: {fileID: 7481955638287418030}
   m_RootOrder: 3

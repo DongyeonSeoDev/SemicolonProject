@@ -510,6 +510,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0.3
       objectReference: {fileID: 0}
+    - target: {fileID: 1650834894933013901, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
+      propertyPath: sharedProfile
+      value: 
+      objectReference: {fileID: 11400000, guid: bb7ba6d844bf4e7448eef57a509d6516, type: 2}
     - target: {fileID: 3671791750608935851, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
       propertyPath: m_FillAmount
       value: 1
