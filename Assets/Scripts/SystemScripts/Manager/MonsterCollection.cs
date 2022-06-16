@@ -275,6 +275,21 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         return notExistBodySpr;
     }
 
+    public KeyAction GetCurBodyKeyAction()
+    {
+        for(int i=0; i<savedBodys.Count; i++)
+        {
+            if(savedBodys[i].BodyID == SlimeGameManager.Instance.CurrentBodyId)
+            {
+                return savedBodys[i].SlotKey;
+            }
+
+        }
+
+        Debug.LogError("착용중인 몹의 아이디가 현재 슬롯중에 존재하지않음");
+        return KeyAction.NONE;
+    }
+
     public void MarkAcqBodyFalse(string id)  //도감에서 변신가능 표시 끔
     {
         if(mobIdToSlot.ContainsKey(id))

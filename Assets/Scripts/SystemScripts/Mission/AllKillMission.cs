@@ -1,9 +1,9 @@
 using UnityEngine;
-public class NormalMission : Mission
+public class AllKillMission : Mission
 {
-    public NormalMission(short id, string title) : base(id, title)
+    public AllKillMission(string title) : base(title)
     {
-
+        missionType = MissionType.ALLKILL;
     }
     public override void End(bool breakDoor = false)
     {

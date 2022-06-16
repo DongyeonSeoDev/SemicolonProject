@@ -34,14 +34,15 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
 
     #endregion
 
-    #region
+    #region Mission
 
     public CanvasGroup missionCvsg;
     public TextMeshProUGUI missionContent;
     private RectTransform missionPanelRt;
     private Vector2 missionPanelPos;
-    private Dictionary<short, Mission> allMissionsDic = new Dictionary<short, Mission>();
+    private Dictionary<MissionType, Mission> allMissionsDic = new Dictionary<MissionType, Mission>();
     private List<Mission> currentMissions = new List<Mission>();
+    private Pair<MissionType, short> prevMission = new Pair<MissionType, short>(MissionType.NONE, 0);
 
     #endregion
 
@@ -88,6 +89,7 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
         #region Event Setting
         EventManager.StartListening("PlayerDead", () =>
         {
+            DeleteAllMissions();
             int i;
             foreach(List<bool> assimChkList in assimNoticeCheckDic.Values)
             {
@@ -98,23 +100,15 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
             }
         });
         EventManager.StartListening("StartNextStage", EnteredMonsterArea);
-        EventManager.StartListening("GotoNextStage_LoadingStart", () =>
-        {
-            if (currentMissions.Count > 0)
-            {
-                for (int i = 0; i < currentMissions.Count; i++)
-                {
-                    currentMissions[i].End(true);
-                }
-                currentMissions.Clear();
-                DisableMission();
-            }
-        });
+        EventManager.StartListening("GotoNextStage_LoadingStart", DeleteAllMissions);
         #endregion
 
         #region Mission Setting
-        allMissionsDic.Add(5, new NormalMission(5, "모든 적을 처치하세요"));
-        allMissionsDic.Add(10, new SurvivalMission(10, "30초 동안 살아남으세요", 30f));
+        allMissionsDic.Add(MissionType.ALLKILL, new AllKillMission("모든 적을 처치하세요"));
+        allMissionsDic.Add(MissionType.NOTRANSFORMATION, new NoTransformationMission("변신하지 않고 클리어하세요"));
+        allMissionsDic.Add(MissionType.NOQUIKSLOT, new NoQuikSlotMission("퀵슬롯을 사용하지 않고 클리어하세요"));
+        allMissionsDic.Add(MissionType.ALLABSORPTION, new AllAbsorptionMission("모든 적을 흡수하세요"));
+        //allMissionsDic.Add(MissionType.SURVIVAL, new SurvivalMission("30초 동안 살아남으세요", 30f));
         #endregion
     }
 
@@ -130,6 +124,8 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
             }
             assimNoticeCheckDic.Add(type.ToString(), li);
         }
+
+        
     }
 
     private void Update()
@@ -207,11 +203,28 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
     
     public void EnteredMonsterArea()
     {
-        if (StageManager.Instance.CurrentAreaType == AreaType.MONSTER)
+        if (StageManager.Instance.CurrentAreaType == AreaType.MONSTER && StageManager.Instance.CurrentStageData.missionTypes.Count > 0)
         {
-            Mission ms = allMissionsDic[allMissionsDic.Keys.ToRandomElement()];
+            Mission ms = allMissionsDic[StageManager.Instance.CurrentStageData.missionTypes[Random.Range(0, StageManager.Instance.CurrentStageData.missionTypes.Count)]];
+
+            //랜덤 인카운터
+            if (ms.missionType != prevMission.first)
+            {
+                prevMission.first = ms.missionType;
+                prevMission.second = 0;
+            }
+            else if(++prevMission.second >= 2)
+            {
+                if(StageManager.Instance.CurrentStageData.missionTypes.Count > 1)
+                {
+                    ms = allMissionsDic[StageManager.Instance.CurrentStageData.missionTypes.FindRandom(x=>x!=ms.missionType)];
+                }
+            }
+
             currentMissions.Add(ms);
             ms.Start();
+
+            missionPanelRt.DOKill();
 
             missionContent.text = ms.missionName;
             missionCvsg.alpha = 0;
@@ -228,7 +241,26 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
         if(index >= 0)
            currentMissions.RemoveAt(index);
 
+        missionPanelRt.DOKill();
         missionCvsg.DOFade(0, 0.4f);
         missionPanelRt.DOAnchorPos(missionPanelPos + new Vector2(200, 0), 0.4f).OnComplete(() => missionCvsg.gameObject.SetActive(false));
+    }
+
+    private void DeleteAllMissions()
+    {
+        if (currentMissions.Count > 0)
+        {
+            for (int i = 0; i < currentMissions.Count; i++)
+            {
+                currentMissions[i].End(true);
+            }
+            currentMissions.Clear();
+            DisableMission();
+        }
+    }
+
+    public void ShakeMissionPanel(float duration = 0.6f, float strength = 10f)
+    {
+        missionPanelRt.DOShakeAnchorPos(duration, strength);
     }
 }

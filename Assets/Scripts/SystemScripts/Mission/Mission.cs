@@ -2,14 +2,13 @@
 public abstract class Mission 
 {
     public bool isEnd;
-    public short id;
+    public MissionType missionType;
     public string missionName;
 
     public Mission() { }
-    public Mission(short id, string title)
+    public Mission(string title)
     {
         missionName = title;    
-        this.id = id;
     }
 
     public abstract void Start();

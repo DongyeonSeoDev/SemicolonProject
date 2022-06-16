@@ -21,6 +21,7 @@ public partial class StageDataSO : ScriptableObject
 
     public AreaType areaType;  //구역 타입
     public EnemySpecies enemySpeciesArea = EnemySpecies.NONE;
+    public List<MissionType> missionTypes; //나타날 수 있는 미션들 (몬스터 구역 한정)
 
     public GameObject mapNPC;
 

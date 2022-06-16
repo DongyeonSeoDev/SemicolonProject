@@ -147,7 +147,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
     #region Quik Slot
     private void UseQuikSlotItem()
     {
-        if(!string.IsNullOrEmpty(quikItemId) && isUseableQuik && !TimeManager.IsTimePaused && !Util.IsActiveGameUI(UIType.MENU))
+        if(!string.IsNullOrEmpty(quikItemId) && isUseableQuik && !TimeManager.IsTimePaused && !Util.IsActiveGameUI(UIType.MENU) && InteractionHandler.canUseQuikSlot)
         {
             GameManager.Instance.UseItem(quikItemId);
         }

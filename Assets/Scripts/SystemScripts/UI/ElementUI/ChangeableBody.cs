@@ -7,6 +7,7 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
     public int SlotNumber => slotNumber;
 
     [SerializeField] private KeyAction slotKey;
+    public KeyAction SlotKey => slotKey;    
 
     [SerializeField] private string bodyID = ""; //이 슬롯에 저장되어있는 몬스터 아이디   (monster id)
     public string BodyID => bodyID;
@@ -146,7 +147,7 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
             }
         }
 
-        if(Input.GetKeyDown(KeySetting.keyDict[slotKey]) && !TimeManager.IsTimePaused)
+        if(Input.GetKeyDown(KeySetting.keyDict[slotKey]) && !TimeManager.IsTimePaused && InteractionHandler.canTransformEnemy)
         {
             SlimeGameManager.Instance.PlayerBodyChange(bodyID);
         }

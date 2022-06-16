@@ -4,9 +4,10 @@ public class SurvivalMission : Mission
     private float survivalTime;
     private float survivalTimer;
 
-    public SurvivalMission(short id, string title, float survivalTime) : base(id, title)
+    public SurvivalMission(string title, float survivalTime) : base(title)
     {
-        this.survivalTime = survivalTime;  
+        this.survivalTime = survivalTime;
+        missionType = MissionType.SURVIVAL;
     }
 
     public override void End(bool breakDoor = false)

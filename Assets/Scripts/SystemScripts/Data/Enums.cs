@@ -1,4 +1,14 @@
 
+public enum MissionType
+{
+    ALLKILL,
+    SURVIVAL,
+    NOTRANSFORMATION,
+    NOQUIKSLOT,
+    ALLABSORPTION,
+    NONE
+}
+
 public enum KillNoticeType
 {
     FAIL,  //흡수하고 장착 실패
