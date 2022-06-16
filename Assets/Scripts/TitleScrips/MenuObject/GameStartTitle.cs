@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor.SceneManagement;
-
-public class GameStart : TitleObject
+using UnityEngine.UI;
+public class GameStartTitle : TitleObject
 {
+    public Image progressBar = null;
     public override void DoWork()
     {
         Debug.Log("DoWork! Num : " + curTitleObjIdx);
 
-        EditorSceneManager.LoadScene("StageScene");
+        LoadSceneManager.Instance.LoadScene(progressBar, "StageScene");
     }
 }

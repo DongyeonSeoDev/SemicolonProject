@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExitGame : TitleObject
+public class ExitGameTitle : TitleObject
 {
     public override void DoWork()
     {
