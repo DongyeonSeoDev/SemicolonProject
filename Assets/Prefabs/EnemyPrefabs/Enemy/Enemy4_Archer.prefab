@@ -197,7 +197,6 @@ MonoBehaviour:
   poolType: 4
   count: 5
   enemyDataSO: {fileID: 11400000, guid: 14e2ae94d70c56f438a4525ecb69fa25, type: 2}
-  hpBarBackground: {fileID: 1475373724039423640}
   hpBarFillImage: {fileID: 1475373724170006311}
   hpBarDamageFillImage: {fileID: 3686500840919751316}
   hpBar: {fileID: 1475373724039423642}
@@ -205,6 +204,7 @@ MonoBehaviour:
   hpTweenTime: 0.1
   hpTweenDelayTime: 0.3
   damageHPTweenTime: 0.2
+  hpEffectAnimation: {fileID: 8516383107406063678}
   addExperience: 50
   shotPosition: {fileID: 7183627689166967377}
   moveDelay: 1
@@ -348,7 +348,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1559462952483071910, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1.7
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 1559462952483071910, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -370,17 +370,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1559462952483071909, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
   m_PrefabInstance: {fileID: 134483325412835647}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1475373724039423640 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1559462952483071911, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
+--- !u!95 &8516383107406063678 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8641706813762398465, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
   m_PrefabInstance: {fileID: 134483325412835647}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1475373724039423642}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3686500840919751316 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 3671791750608935851, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}

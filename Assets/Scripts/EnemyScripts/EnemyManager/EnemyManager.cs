@@ -50,9 +50,6 @@ namespace Enemy
 
         public Dictionary<string, List<Enemy>> enemyDictionary = new Dictionary<string, List<Enemy>>();
 
-        public Sprite nomalBarUI = null;
-        public Sprite absorbableBarUI = null;
-
         private PlayerDrain playerDrain;
 
         private static StageData currentStageData = null;
