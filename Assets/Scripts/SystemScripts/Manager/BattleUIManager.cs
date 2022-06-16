@@ -101,6 +101,11 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
         });
         EventManager.StartListening("StartNextStage", EnteredMonsterArea);
         EventManager.StartListening("GotoNextStage_LoadingStart", DeleteAllMissions);
+        EventManager.StartListening("StageClear", () =>
+        {
+            for (int i = 0; i < currentMissions.Count; i++)
+                currentMissions[i].isEnd = true;
+        });
         #endregion
 
         #region Mission Setting

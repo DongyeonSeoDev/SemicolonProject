@@ -19,7 +19,7 @@ public class NoQuikSlotMission : Mission
 
     public override void Update()
     {
-        if(Input.GetKeyDown(KeySetting.keyDict[KeyAction.ITEM_QUIKSLOT]) && !TimeManager.IsTimePaused)
+        if(Input.GetKeyDown(KeySetting.keyDict[KeyAction.ITEM_QUIKSLOT]) && !TimeManager.IsTimePaused && !string.IsNullOrEmpty(KeyActionManager.Instance.QuikItemId))
         {
             BattleUIManager.Instance.ShakeMissionPanel();
         }

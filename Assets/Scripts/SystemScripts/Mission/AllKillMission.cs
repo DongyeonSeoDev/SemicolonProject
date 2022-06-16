@@ -7,13 +7,13 @@ public class AllKillMission : Mission
     }
     public override void End(bool breakDoor = false)
     {
-        EventManager.StopListening("StageClear", Clear);
+       
     }
 
     public override void Start()
     {
         isEnd = false;
-        EventManager.StartListening("StageClear", Clear);
+        
     }
 
     public override void Update()
@@ -21,8 +21,5 @@ public class AllKillMission : Mission
         
     }
 
-    private void Clear()
-    {
-        isEnd = true;
-    }
+
 }

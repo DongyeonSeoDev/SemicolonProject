@@ -31,7 +31,7 @@ public class NoTransformationMission : Mission
     {
         for(int i=0; i < cantChangeKeyActions.Count; i++)
         {
-            if(Input.GetKeyDown(KeySetting.keyDict[cantChangeKeyActions[i]]) && !TimeManager.IsTimePaused)
+            if(Input.GetKeyDown(KeySetting.keyDict[cantChangeKeyActions[i]]) && !TimeManager.IsTimePaused && MonsterCollection.Instance.HasBodySlot(cantChangeKeyActions[i]))
             {
                 BattleUIManager.Instance.ShakeMissionPanel();
             }

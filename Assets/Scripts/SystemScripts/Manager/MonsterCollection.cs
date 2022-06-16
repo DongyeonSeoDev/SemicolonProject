@@ -275,7 +275,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         return notExistBodySpr;
     }
 
-    public KeyAction GetCurBodyKeyAction()
+    public KeyAction GetCurBodyKeyAction() //현재 장착중인 몸의 변신키
     {
         for(int i=0; i<savedBodys.Count; i++)
         {
@@ -288,6 +288,19 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
         Debug.LogError("착용중인 몹의 아이디가 현재 슬롯중에 존재하지않음");
         return KeyAction.NONE;
+    }
+
+    public bool HasBodySlot(KeyAction key)  //해당 키의 변신 슬롯에 변신 가능한 몸이 있는지
+    {
+        for(int i=0; i<savedBodys.Count; i++)
+        {
+            if(savedBodys[i].SlotKey == key)
+            {
+                return !string.IsNullOrEmpty(savedBodys[i].BodyID);
+            }
+        }
+        Debug.LogWarning("해당 키로는 변신하지 않음 " + key.ToString());
+        return false;
     }
 
     public void MarkAcqBodyFalse(string id)  //도감에서 변신가능 표시 끔
