@@ -24,7 +24,7 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
     private Dictionary<string, SkillInfo[]> monsterSkillsDic = new Dictionary<string, SkillInfo[]>();
 
     //에너지바
-    public Pair<GameObject, GameObject> energeBarAndEff;
+    public Pair<GameObject, ParticleSystem> energeBarAndEff;
     public Transform energeEffMask;
     public Image energeFill;
     private Vector3 orgEnergeEffMaskScl;
@@ -80,6 +80,7 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
         EventManager.StartListening("ChangeBody", (str, dead) =>
         {
             if(dead){} //bool타입인걸 알리기위한
+
             skillInfoUIArr.ForEach(x => x.Unregister());
             SkillInfo[] skill = monsterSkillsDic[str];
             foreach(SkillInfo skillInfo in skill)
@@ -99,17 +100,13 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
             }
 
             bool org = str == Global.OriginBodyID;
-
-            if (org)
-            {
-                //energeBarAndEff.first.SetActive(true);
-                //energeBarAndEff.first.transform.DOScaleX(1, 0.3f);
-            }
-            else
-            {
-                //energeBarAndEff.first.transform.DOScaleX(0, 0.3f).OnComplete(() => energeBarAndEff.first.SetActive(false));
-            }
+            energeFill.color = org ? slimeAtkEnergeColor : assimilationBarColor;
             curAssimText.gameObject.SetActive(!org);
+
+            ParticleSystem.MainModule main = energeBarAndEff.second.main;
+            main.startColor = org ? slimeEnergePsColor : assimPsColor;
+            ParticleSystem.ColorOverLifetimeModule col = energeBarAndEff.second.colorOverLifetime;
+            col.color = org ? slimeEnergeGd : assimGd;
         });
 
         EventManager.StartListening("StartCutScene", () => SetActiveSlimeEnergeEffect(false));

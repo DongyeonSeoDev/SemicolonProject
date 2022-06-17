@@ -193,7 +193,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                                 sum.IsAutoFitEnergeBar = false;
                                 sum.energeFill.fillAmount = 0;
                                 sum.energeEffMask.localScale = new Vector3(0, orgEnergeEffMaskScl.y, orgEnergeEffMaskScl.z);
-                                sum.energeBarAndEff.second.SetActive(true);
+                                sum.energeBarAndEff.second.gameObject.SetActive(true);
                                 sum.energeBarAndEff.first.GetComponent<CanvasGroup>().alpha = 0;
                                 sum.energeBarAndEff.first.SetActive(true);
 
