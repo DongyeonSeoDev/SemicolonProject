@@ -51,8 +51,11 @@ namespace Enemy
         private WaitForSeconds moveDelay;
         private Coroutine currentCoroutine;
 
+        private bool isHpEffectAnimationPlay = false;
+
         [SerializeField]
         private float addExperience;
+
         public float AddExperience
         { 
             get
@@ -100,6 +103,11 @@ namespace Enemy
             {
                 isStop = false;
                 anim.speed = 1f;
+
+                if (hpEffectAnimation != null)
+                {
+                    hpEffectAnimation.speed = 1f;
+                }
             }
         }
 
@@ -109,6 +117,11 @@ namespace Enemy
             {
                 isStop = true;
                 anim.speed = 0f;
+
+                if (hpEffectAnimation != null)
+                {
+                    hpEffectAnimation.speed = 0f;
+                }
             }
         }
 
@@ -116,6 +129,8 @@ namespace Enemy
         {
             currentState = null;
             enemyData.enemyAnimator.enabled = false;
+
+            ChangeHpEffectAnimationPlay(false);
         }
 
         private void StartAttack() // (이벤트 용) 공격 시작했을때
@@ -180,10 +195,7 @@ namespace Enemy
                 enemyData.enemyCanvas = hpBar;
             }
 
-            if (hpEffectAnimation != null)
-            {
-                hpEffectAnimation.SetBool(EnemyManager.Instance.hashIsStart, false);
-            }
+            ChangeHpEffectAnimationPlay(false);
         }
 
         protected virtual void Update()
@@ -208,10 +220,11 @@ namespace Enemy
 
                 if (EnemyHpPercent() > 0 && EnemyHpPercent() <= EnemyManager.CanDrainPercent())
                 {
-                    if (hpEffectAnimation != null)
-                    {
-                        hpEffectAnimation.SetBool(EnemyManager.Instance.hashIsStart, true);
-                    }
+                    ChangeHpEffectAnimationPlay(true);
+                }
+                else
+                {
+                    ChangeHpEffectAnimationPlay(false);
                 }
 
                 enemyDamagedCommand.Execute();
@@ -430,6 +443,15 @@ namespace Enemy
             }
             
             enemyData.movePosition = null;
+        }
+
+        private void ChangeHpEffectAnimationPlay(bool isActive)
+        {
+            if (hpEffectAnimation != null && isHpEffectAnimationPlay != isActive)
+            {
+                isHpEffectAnimationPlay = isActive;
+                hpEffectAnimation.SetBool(EnemyManager.Instance.hashIsStart, isActive);
+            }
         }
             
         public EnemyController GetEnemyController() => enemyData.eEnemyController;
