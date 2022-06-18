@@ -522,46 +522,6 @@ namespace Enemy
         }
     }
 
-    public class EnemyAddForceCommand : EnemyCommand
-    {
-        private Rigidbody2D rigidboyd2D;
-        private EnemyPositionCheckData positionCheckData;
-        private Enemy enemy;
-        Vector2? direction;
-        private float force;
-
-        public EnemyAddForceCommand(Rigidbody2D rigid, Enemy enemy, float rushForce = 0f, EnemyPositionCheckData positionData = null)
-        {
-            rigidboyd2D = rigid;
-            this.enemy = enemy;
-            positionCheckData = positionData;
-
-            force = rushForce;
-        }
-
-        public override void Execute()
-        {
-            if (positionCheckData != null)
-            {
-                direction = positionCheckData.position;
-            }
-            else
-            {
-                direction = enemy.GetKnockBackDirection();
-
-                if (direction == null)
-                {
-                    direction = rigidboyd2D.transform.position - EnemyManager.Player.transform.position;
-                }
-            }
-
-            direction = direction.Value.normalized;
-            rigidboyd2D.AddForce(direction.Value * GetForce(), ForceMode2D.Impulse);
-        }
-
-        private float GetForce() => force == 0 ? enemy.GetKnockBackPower() : force;
-    }
-
     public class EnemySpriteFlipCommand : EnemyCommand
     {
         private EnemyData enemyData;

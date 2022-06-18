@@ -46,7 +46,6 @@ namespace Enemy
         public EnemyCommand enemySpriteRotateCommand;
         public EnemyCommand playerControllerMove;
 
-        public Vector2? knockBackDirection;
         public Vector2? movePosition;
         public Vector2 moveVector;
 
@@ -66,7 +65,6 @@ namespace Enemy
         public float attackDelay = 1f;
         public float damageDelay = 0.1f;
         public float rushForce = 50f;
-        public float knockBackPower;
         public float stunTime = 0f;
         public float minRunAwayTime;
         public float maxRunAwayTime;
