@@ -168,4 +168,9 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
             }
         }
     }
+
+    public void UpdateUnderstandingBar(string id)
+    {
+        energeFill.DOFillAmount((PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(id) % 51) * 0.02f, 0.3f);
+    }
 }
