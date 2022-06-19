@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class OptionPannel : TitlePopUpObject
 {
-    void Start()
+    public override void Awake()
     {
-        
+        base.Awake();
     }
 
-    void Update()
+    public override void Update()
     {
-        
+        base.Update();
     }
 }

@@ -10,11 +10,7 @@ public class EnableTitlePopUpObject : TitleObject
     {
         base.DoWork();
 
-        if(enableObj.gameObject.activeSelf)
-        {
-            Disable();
-        }
-        else
+        if(!enableObj.gameObject.activeSelf)
         {
             Enable();
         }
@@ -24,6 +20,8 @@ public class EnableTitlePopUpObject : TitleObject
     {
         if (enableObj != null)
         {
+            enableObj.lastEnabler = this;
+
             enableObj.gameObject.SetActive(true);
         }
     }
