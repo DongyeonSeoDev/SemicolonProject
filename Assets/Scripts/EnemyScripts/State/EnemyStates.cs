@@ -540,18 +540,10 @@ namespace Enemy
 
     public partial class EnemyDeadState : EnemyState // 죽었을때
     {
-        private EnemyCommand deadCommand;
-
         private float currentTime = 0f;
         private float deadTime = 1f;
 
-        public EnemyDeadState(EnemyData enemyData) : base(eState.DEAD, enemyData)
-        {
-            if (enemyData.eEnemyController == EnemyController.AI)
-            {
-                deadCommand = new EnemyDeadAIControllerCommand(enemyData.enemyObject, enemyData.enemyLootList, enemyData.enemyDeadEffectColor);
-            }
-        }
+        public EnemyDeadState(EnemyData enemyData) : base(eState.DEAD, enemyData) { }
 
         protected override void Start()
         {
@@ -587,7 +579,31 @@ namespace Enemy
             EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Die, enemyData.enemyAnimator, TriggerType.ResetTrigger);
             EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.IsDead, enemyData.enemyAnimator, true);
 
-            deadCommand.Execute();
+            if (enemyData.eEnemyController == EnemyController.AI)
+            {
+                EnemyDead();
+            }
+        }
+
+        private void EnemyDead()
+        {
+            for (int i = 0; i < enemyData.enemyLootList.Count; i++)
+            {
+                for (int j = 0; j < enemyData.enemyLootList[i].count; j++)
+                {
+                    if (CSVEnemyLoot.Instance.itemDictionary.ContainsKey(enemyData.enemyLootList[i].lootName))
+                    {
+                        Water.PoolManager.GetItem("Item").GetComponent<Item>().SetData(CSVEnemyLoot.Instance.itemDictionary[enemyData.enemyLootList[i].lootName].id, enemyData.enemyObject.transform.position);
+                    }
+                    else
+                    {
+                        Debug.LogError(enemyData.enemyLootList[i].lootName + "가 없습니다.");
+                    }
+                }
+            }
+
+            EnemyPoolManager.Instance.GetPoolObject(Type.DeadEffect, enemyData.enemyObject.transform.position).GetComponent<EnemyDeadEffect>().Play(enemyData.enemyDeadEffectColor);
+            enemyData.enemyObject.GetComponent<Enemy>().EnemyDestroy();
         }
     }
 }

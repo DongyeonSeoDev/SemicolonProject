@@ -424,43 +424,6 @@ namespace Enemy
         }
     }
 
-    public class EnemyDeadAIControllerCommand : EnemyCommand // 적이 죽음
-    {
-        private GameObject enemyObject;
-        private List<EnemyLootData> enemyLootList;
-
-        private Color enemyColor;
-
-        public EnemyDeadAIControllerCommand(GameObject enemyObj, List<EnemyLootData> lootList, Color color)
-        {
-            enemyObject = enemyObj;
-            enemyLootList = lootList;
-            enemyColor = color;
-        }
-
-        public override void Execute()
-        {
-            for (int i = 0; i < enemyLootList.Count; i++)
-            {
-                for (int j = 0; j < enemyLootList[i].count; j++)
-                {
-                    if (CSVEnemyLoot.Instance.itemDictionary.ContainsKey(enemyLootList[i].lootName))
-                    {
-                        Water.PoolManager.GetItem("Item").GetComponent<Item>().SetData(CSVEnemyLoot.Instance.itemDictionary[enemyLootList[i].lootName].id, enemyObject.transform.position);
-                    }
-                    else
-                    {
-                        Debug.LogError(enemyLootList[i].lootName + "가 없습니다.");
-                    }
-                }
-            }
-
-            EnemyPoolManager.Instance.GetPoolObject(Type.DeadEffect, enemyObject.transform.position).GetComponent<EnemyDeadEffect>().Play(enemyColor);
-
-            enemyObject.GetComponent<Enemy>().EnemyDestroy();
-        }
-    }
-
     public class EnemylongRangeAttackCommand : EnemyCommand // 적 공격
     {
         private Transform enemyTransform;
