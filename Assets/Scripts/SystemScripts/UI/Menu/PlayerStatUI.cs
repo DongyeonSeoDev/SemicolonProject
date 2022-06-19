@@ -198,14 +198,14 @@ public class PlayerStatUI : MonoBehaviour
         }
     }
 
-    private void StatPointExpFillup()
+    private void StatPointExpFillup()  //스탯포인트 경험치바 차오르는 효과 + 텍스트도 같은 수치로 변함. + 다 찰 때마다 스탯포인트 갱신
     {
         if (isFastChangingExpTxt)
         {
             statExpPair.first.fillAmount += Time.unscaledDeltaTime * 1.3f;
             statExpText.text = string.Format("{0} / {1}", (int)(statExpPair.first.fillAmount * playerStat.maxExp), playerStat.maxExp);
 
-            if(expFullCount > 0)
+            if(expFullCount > 0)  
             {
                 if(statExpPair.first.fillAmount >= 1)
                 {
@@ -413,7 +413,7 @@ public class PlayerStatUI : MonoBehaviour
         choiceStatInfoUIDic[id].UpdateUI();
     }
 
-    public void SetAllEternalStatUIUpBtn(bool on)
+    public void SetAllEternalStatUIUpBtn(bool on) //켜져있는 스탯 상승 버튼 누를 수 있는 상태인지에 대해서 정해줌
     {
         foreach (StatInfoElement item in statInfoUIDic.Values)
             item.SetEnableUpBtn(on);

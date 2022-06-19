@@ -619,12 +619,6 @@ public class StageManager : MonoSingleton<StageManager>
 
         EventManager.TriggerEvent("StageClear");
 
-        //CinemachineCameraScript.Instance.SetCinemachineConfiner(CinemachineCameraScript.Instance.boundingCollider);
-
-        /*if (IsLastStage)
-        {
-            EventManager.TriggerEvent("GameClear");
-        }*/
         if(currentArea==AreaType.BOSS)
         {
             EventManager.TriggerEvent("GameClear");

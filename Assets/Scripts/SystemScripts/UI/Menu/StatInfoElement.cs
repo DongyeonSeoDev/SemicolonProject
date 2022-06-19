@@ -111,7 +111,7 @@ public class StatInfoElement : UITransition
         statLvTxt.text = eternal.statLv.ToString();
     }
 
-    public void SetEnableUpBtn(bool on)  //켜져있는 업 버튼을 못누르게 함
+    public void SetEnableUpBtn(bool on)  //켜져있는 업 버튼을 못누르게 하거나 누를 수 있게 함
     {
         if(statUpBtn.gameObject.activeSelf)
         {
@@ -136,7 +136,7 @@ public class StatInfoElement : UITransition
     {
         statNameTxt.text = NGlobal.playerStatUI.GetStatSOData(id).statName.ToColorStr("#980D0D");
         statUpBtn.gameObject.SetActive(true);
-        nifc.explanation = "개방하기"; //이 값이 안들가는 버그
+        nifc.explanation = "개방하기"; 
     }
 
     public void OpenStat()

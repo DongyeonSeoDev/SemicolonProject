@@ -352,7 +352,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         return startPos;
     }
 
-    private RectTransform SetUIEmphasisEffect(Transform parent)
+    private RectTransform SetUIEmphasisEffect(Transform parent) //°­Á¶ UI ÀÌÆåÆ® Ç¥½Ã
     {
         RectTransform emphRectTr = PoolManager.GetItem<RectTransform>("UIEmphasisEff");
         emphRectTr.transform.parent = parent;
@@ -431,7 +431,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         
     }
 
-    public void GetBodyChangeSlot()
+    public void GetBodyChangeSlot()  //º¯½Å ½½·Ô È¹µæ(2,3¹øÂ°)  
     {
         for(int i=1; i<changeableBodysUIArr.Length; i++)
         {

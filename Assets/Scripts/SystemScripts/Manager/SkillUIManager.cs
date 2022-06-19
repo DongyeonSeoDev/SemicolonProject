@@ -81,6 +81,7 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
         {
             if(dead){} //bool타입인걸 알리기위한
 
+            //현재 스킬UI정보를 없애고 변신한 몸체의 스킬 정보 가져와서 세팅
             skillInfoUIArr.ForEach(x => x.Unregister());
             SkillInfo[] skill = monsterSkillsDic[str];
             foreach(SkillInfo skillInfo in skill)
@@ -99,6 +100,7 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
                 }
             }
 
+            //체력바 밑의 에너지바에서 슬라임이면 필색상과 이펙트 색상을 초록으로, 흡수한 몹이면 파란색으로
             bool org = str == Global.OriginBodyID;
             energeFill.color = org ? slimeAtkEnergeColor : assimilationBarColor;
             curAssimText.gameObject.SetActive(!org);
@@ -117,7 +119,7 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
     void SetActiveSlimeEnergeEffect(bool active) => energeParticleEff.gameObject.SetActive(active);
 
 
-    public void UpdateSkillKeyCode()
+    public void UpdateSkillKeyCode()  //스킬 슬롯들에 존재하는 상호작용 키를 현재 키세팅 상태에 맞게 갱신
     {
         for(int i=0; i<skillInfoUIArr.Length; i++)
         {
@@ -125,7 +127,7 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
         }
     }
 
-    public void OnClickSkillButton(Sprite spr, string sName, string ex)
+    public void OnClickSkillButton(Sprite spr, string sName, string ex)  //스킬 정보 자세히보기
     {
         UIManager.Instance.OnUIInteractSetActive(UIType.SKILLDETAIL, true);
 
@@ -139,7 +141,7 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
         UpdateEnergeBarUI();
     }
 
-    private void UpdateEnergeBarUI()
+    private void UpdateEnergeBarUI()  //현재 슬라임 상태일 때 공격 에너지 양 UI 갱신
     {
         if(energeBarAndEff.first.activeSelf && IsAutoFitEnergeBar)
         {
@@ -169,8 +171,8 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
         }
     }
 
-    public void UpdateUnderstandingBar(string id)
+    public void UpdateUnderstandingBar(string id) //현재 변신 상태의 몬스터 동화율 UI 갱신
     {
-        energeFill.DOFillAmount((PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(id) % 51) * 0.02f, 0.3f);
+        energeFill.DOFillAmount(PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(id) % 51 * 0.02f, 0.3f);
     }
 }
