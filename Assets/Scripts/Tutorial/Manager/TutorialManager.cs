@@ -193,7 +193,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                                 sum.IsAutoFitEnergeBar = false;
                                 sum.energeFill.fillAmount = 0;
                                 sum.energeEffMask.localScale = new Vector3(0, orgEnergeEffMaskScl.y, orgEnergeEffMaskScl.z);
-                                sum.energeBarAndEff.second.SetActive(true);
+                                sum.energeBarAndEff.second.gameObject.SetActive(true);
                                 sum.energeBarAndEff.first.GetComponent<CanvasGroup>().alpha = 0;
                                 sum.energeBarAndEff.first.SetActive(true);
 
@@ -352,7 +352,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         return startPos;
     }
 
-    private RectTransform SetUIEmphasisEffect(Transform parent)
+    private RectTransform SetUIEmphasisEffect(Transform parent) //°­Á¶ UI ÀÌÆåÆ® Ç¥½Ã
     {
         RectTransform emphRectTr = PoolManager.GetItem<RectTransform>("UIEmphasisEff");
         emphRectTr.transform.parent = parent;
@@ -368,7 +368,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
         AcquisitionDropIcon adi = PoolManager.GetItem<AcquisitionDropIcon>("AcqDropIcon");
         adi.Set(UIManager.Instance.GetInterfaceSprite(type),
-                startPos, 2.4f, new Vector2(-7, 7), () =>
+                startPos, 2.4f, ScriptHelper.RandomVector(new Vector2(-6.5f, 4f), new Vector2(6.5f, 7f)), () =>
                 {
                     UIOn(kt);
                     gm.savedData.userInfo.uiActiveDic[kt] = true;
@@ -431,7 +431,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         
     }
 
-    public void GetBodyChangeSlot()
+    public void GetBodyChangeSlot()  //º¯½Å ½½·Ô È¹µæ(2,3¹øÂ°)  
     {
         for(int i=1; i<changeableBodysUIArr.Length; i++)
         {

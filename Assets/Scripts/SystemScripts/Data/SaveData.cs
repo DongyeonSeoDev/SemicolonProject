@@ -95,6 +95,9 @@ public class Option
     public float masterSound = -5f;
     public float bgmSize = 0.8f;
     public float soundEffectSize = 0.8f;
+
+    //ÀÚµ¿Äü½½·Ô
+    public bool isAutoQuikSlot = true;
 }
 
 

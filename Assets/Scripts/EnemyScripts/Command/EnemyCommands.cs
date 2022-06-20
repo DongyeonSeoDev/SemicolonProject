@@ -249,7 +249,6 @@ namespace Enemy
         private Transform enemyTransform;
         private Vector2 targetPosition;
         private Vector2Int? position;
-        private Vector2Int? pastPosition;
 
         private Stack<Vector2Int> nextPosition = new Stack<Vector2Int>();
 
@@ -265,19 +264,26 @@ namespace Enemy
             this.followSpeed = followSpeed;
 
             nextPosition = null;
-            pastPosition = null;
             position = null;
         }
 
         public override void Execute()
         {
+            if (enemyData.movePosition != null)
+            {
+                rigid.velocity = enemyData.movePosition.Value;
+
+                return;
+            }
+
             if (moveCount > 100 || nextPosition == null || nextPosition.Count < 1)
             {
                 nextPosition = EnemyManager.NextPosition(enemyTransform.position, EnemyManager.Player.transform.position);
+
                 position = null;
             }
 
-            if (position == null || Vector2.Distance(new Vector2(enemyTransform.position.x, enemyTransform.position.y), position.Value) < 0.1f)
+            if (position == null || Vector2.Distance(new Vector2(enemyTransform.position.x, enemyTransform.position.y), position.Value) < 0.4f)
             {
                 if (nextPosition.Count < 1)
                 {
@@ -285,19 +291,8 @@ namespace Enemy
                 }
                 else
                 {
-                    pastPosition = position;
                     position = nextPosition.Pop();
                     moveCount = 0;
-
-                    if (pastPosition != null)
-                    {
-                        EnemyManager.SetEnemyData(pastPosition.Value, false);
-                    }
-
-                    if (position != null)
-                    {
-                        EnemyManager.SetEnemyData(position.Value, true);
-                    }
                 }
             }
 
@@ -429,43 +424,6 @@ namespace Enemy
         }
     }
 
-    public class EnemyDeadAIControllerCommand : EnemyCommand // 적이 죽음
-    {
-        private GameObject enemyObject;
-        private List<EnemyLootData> enemyLootList;
-
-        private Color enemyColor;
-
-        public EnemyDeadAIControllerCommand(GameObject enemyObj, List<EnemyLootData> lootList, Color color)
-        {
-            enemyObject = enemyObj;
-            enemyLootList = lootList;
-            enemyColor = color;
-        }
-
-        public override void Execute()
-        {
-            for (int i = 0; i < enemyLootList.Count; i++)
-            {
-                for (int j = 0; j < enemyLootList[i].count; j++)
-                {
-                    if (CSVEnemyLoot.Instance.itemDictionary.ContainsKey(enemyLootList[i].lootName))
-                    {
-                        Water.PoolManager.GetItem("Item").GetComponent<Item>().SetData(CSVEnemyLoot.Instance.itemDictionary[enemyLootList[i].lootName].id, enemyObject.transform.position);
-                    }
-                    else
-                    {
-                        Debug.LogError(enemyLootList[i].lootName + "가 없습니다.");
-                    }
-                }
-            }
-
-            EnemyPoolManager.Instance.GetPoolObject(Type.DeadEffect, enemyObject.transform.position).GetComponent<EnemyDeadEffect>().Play(enemyColor);
-
-            enemyObject.GetComponent<Enemy>().EnemyDestroy();
-        }
-    }
-
     public class EnemylongRangeAttackCommand : EnemyCommand // 적 공격
     {
         private Transform enemyTransform;
@@ -525,46 +483,6 @@ namespace Enemy
 
             spawnObject.GetComponent<EnemyBullet>().Init(enemy.GetEnemyController(), (playerInput.AttackMousePosition - (Vector2)transform.position).normalized, attackDamage, color, enemy);
         }
-    }
-
-    public class EnemyAddForceCommand : EnemyCommand
-    {
-        private Rigidbody2D rigidboyd2D;
-        private EnemyPositionCheckData positionCheckData;
-        private Enemy enemy;
-        Vector2? direction;
-        private float force;
-
-        public EnemyAddForceCommand(Rigidbody2D rigid, Enemy enemy, float rushForce = 0f, EnemyPositionCheckData positionData = null)
-        {
-            rigidboyd2D = rigid;
-            this.enemy = enemy;
-            positionCheckData = positionData;
-
-            force = rushForce;
-        }
-
-        public override void Execute()
-        {
-            if (positionCheckData != null)
-            {
-                direction = positionCheckData.position;
-            }
-            else
-            {
-                direction = enemy.GetKnockBackDirection();
-
-                if (direction == null)
-                {
-                    direction = rigidboyd2D.transform.position - EnemyManager.Player.transform.position;
-                }
-            }
-
-            direction = direction.Value.normalized;
-            rigidboyd2D.AddForce(direction.Value * GetForce(), ForceMode2D.Impulse);
-        }
-
-        private float GetForce() => force == 0 ? enemy.GetKnockBackPower() : force;
     }
 
     public class EnemySpriteFlipCommand : EnemyCommand

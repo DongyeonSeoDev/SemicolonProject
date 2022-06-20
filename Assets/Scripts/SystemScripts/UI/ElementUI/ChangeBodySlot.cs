@@ -41,7 +41,8 @@ public class ChangeBodySlot : MonoBehaviour  //클래스명 뭐라할지 애매하네
     {
         this.bodyID = bodyID;
 
-        monsterImgName.first.sprite = Global.GetMonsterBodySprite(bodyID);
+        monsterImgName.first.sprite = MonsterCollection.Instance.GetPlayerMonsterSpr(bodyID);
+        //monsterImgName.first.sprite = Global.GetMonsterBodySprite(bodyID);
         monsterImgName.second.text = Global.GetMonsterName(bodyID);
        
         changeBtn.interactable = true;

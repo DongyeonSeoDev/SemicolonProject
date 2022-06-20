@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System;
 
 public class SkillUIManager : MonoSingleton<SkillUIManager>
 {
@@ -24,10 +25,15 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
     private Dictionary<string, SkillInfo[]> monsterSkillsDic = new Dictionary<string, SkillInfo[]>();
 
     //에너지바
-    public Pair<GameObject, GameObject> energeBarAndEff;
+    public Pair<GameObject, ParticleSystem> energeBarAndEff;
     public Transform energeEffMask;
     public Image energeFill;
     private Vector3 orgEnergeEffMaskScl;
+
+    public Color slimeAtkEnergeColor, assimilationBarColor;  //에너지바 색상 : 슬라임일 때랑 변신한 몹일 때
+    public Color slimeEnergePsColor, assimPsColor; // 파티클 색상 : 슬라임일 때와 변신상태일 때
+    public Gradient slimeEnergeGd, assimGd; //파티클의 Color over Lifetime 값 : 슬라임일 때와 변신상태일 때
+    public Text curAssimText;  //동화율 최대치 표시 텍스트
 
     [Space(15)]
     //에너지바 일정 이하일 때 효과
@@ -40,11 +46,11 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
     private Gradient defaultEnergeGrad;
 
     public float lowEnergeRatePercent = 10f;
-    public ParticleSystem energeParticleEff;
     public Color lowEnergeColor;
     public Gradient lowEnergeGrad;
 
     public bool IsAutoFitEnergeBar { get; set; }
+    public bool IsOriginSlime { get; private set; }
 
     private void Awake()
     {
@@ -53,8 +59,8 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
         StoredData.SetValueKey("orgEnergeEffMaskScl", orgEnergeEffMaskScl);
 
         lowEnergeRate = lowEnergeRatePercent * 0.01f;
-        energeBarEffMainModule = energeParticleEff.main;
-        energePsCOLT = energeParticleEff.colorOverLifetime;
+        energeBarEffMainModule = energeBarAndEff.second.main;
+        energePsCOLT = energeBarAndEff.second.colorOverLifetime;
 
         energeDefaultColor = energeBarEffMainModule.startColor.color;
         energeImgDefaultColor = energeFill.color;
@@ -71,12 +77,15 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
         drain.Register(skillsSO.playerOriginBodySkills.second[2]);
 
         IsAutoFitEnergeBar = true;
+        IsOriginSlime = true;
 
-        EventManager.StartListening("ChangeBody", (str, dead) =>
+        EventManager.StartListening("ChangeBody", (id, dead) =>
         {
             if(dead){} //bool타입인걸 알리기위한
+
+            //현재 스킬UI정보를 없애고 변신한 몸체의 스킬 정보 가져와서 세팅
             skillInfoUIArr.ForEach(x => x.Unregister());
-            SkillInfo[] skill = monsterSkillsDic[str];
+            SkillInfo[] skill = monsterSkillsDic[id];
             foreach(SkillInfo skillInfo in skill)
             {
                 switch(skillInfo.skillType)
@@ -93,28 +102,30 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
                 }
             }
 
-            bool org = str == Global.OriginBodyID;
+            //체력바 밑의 에너지바에서 슬라임이면 필색상과 이펙트 색상을 초록으로, 흡수한 몹이면 파란색으로
+            bool org = id == Global.OriginBodyID;
+            IsOriginSlime = org;
+            energeFill.color = org ? slimeAtkEnergeColor : assimilationBarColor;
+            curAssimText.gameObject.SetActive(!org);
 
-            if (org)
-            {
-                energeBarAndEff.first.SetActive(true);
-                energeBarAndEff.first.transform.DOScaleX(1, 0.3f);
-            }
-            else
-            {
-                energeBarAndEff.first.transform.DOScaleX(0, 0.3f).OnComplete(() => energeBarAndEff.first.SetActive(false));
-            }
+            energeBarEffMainModule.startColor = org ? slimeEnergePsColor : assimPsColor;
+            energePsCOLT.color = org ? slimeEnergeGd : assimGd;
+
+            energeEffMask.DOKill();
+            energeFill.DOKill();
+            UpdateUnderstandingBar();
         });
 
         EventManager.StartListening("StartCutScene", () => SetActiveSlimeEnergeEffect(false));
         EventManager.StartListening("EndCutScene", () => SetActiveSlimeEnergeEffect(true));
+        EventManager.StartListening("EnemyDead", (Action<GameObject, string, bool>)((obj, id, dead) => UpdateUnderstandingBar()));
         EventManager.StartListening("UpdateKeyCodeUI", UpdateSkillKeyCode);
     }
 
-    void SetActiveSlimeEnergeEffect(bool active) => energeParticleEff.gameObject.SetActive(active);
+    void SetActiveSlimeEnergeEffect(bool active) => energeBarAndEff.second.gameObject.SetActive(active);
 
 
-    public void UpdateSkillKeyCode()
+    public void UpdateSkillKeyCode()  //스킬 슬롯들에 존재하는 상호작용 키를 현재 키세팅 상태에 맞게 갱신
     {
         for(int i=0; i<skillInfoUIArr.Length; i++)
         {
@@ -122,7 +133,7 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
         }
     }
 
-    public void OnClickSkillButton(Sprite spr, string sName, string ex)
+    public void OnClickSkillButton(Sprite spr, string sName, string ex)  //스킬 정보 자세히보기
     {
         UIManager.Instance.OnUIInteractSetActive(UIType.SKILLDETAIL, true);
 
@@ -136,9 +147,9 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
         UpdateEnergeBarUI();
     }
 
-    private void UpdateEnergeBarUI()
+    private void UpdateEnergeBarUI()  //현재 슬라임 상태일 때 공격 에너지 양 UI 갱신
     {
-        if(energeBarAndEff.first.activeSelf && IsAutoFitEnergeBar)
+        if(IsAutoFitEnergeBar && IsOriginSlime)
         {
             float rate = Global.CurrentPlayer.CurrentEnergy / Global.CurrentPlayer.MaxEnergy;
             energeFill.fillAmount = rate;
@@ -164,5 +175,15 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
                 //energeBarCvsg.alpha = 1;
             }
         }
+    }
+
+    public void UpdateUnderstandingBar() //현재 변신 상태의 몬스터 동화율 UI 갱신
+    {
+        if (IsOriginSlime) return;
+
+        float rate = PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(SlimeGameManager.Instance.CurrentBodyId) % 51 * 0.02f;
+        Debug.Log(rate);
+        energeFill.DOFillAmount(rate, 0.3f);
+        energeEffMask.DOScaleX(orgEnergeEffMaskScl.x * rate, 0.3f);
     }
 }

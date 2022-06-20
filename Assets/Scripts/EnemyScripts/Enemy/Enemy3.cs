@@ -26,6 +26,9 @@ namespace Enemy
 
             enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed);
             enemyData.enemySpriteRotateCommand = new EnemySpriteFlipCommand(enemyData);
+            enemyData.deadEvent = DeadEvent;
+
+            moveSpeed = 0f;
         }
 
         protected override void Update()
@@ -81,6 +84,11 @@ namespace Enemy
         {
             moveSpeed = 30f;
             currentDownSpeed = downSpeed;
+        }
+
+        private void DeadEvent()
+        {
+            moveSpeed = 0f;
         }
 
         public override void ChangeColor(Color color)

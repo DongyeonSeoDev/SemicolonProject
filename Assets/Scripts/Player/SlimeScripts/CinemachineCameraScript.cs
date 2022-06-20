@@ -32,6 +32,9 @@ public class CinemachineCameraScript : MonoSingleton<CinemachineCameraScript>
 
         SetCinemachineFollow(SlimeGameManager.Instance.CurrentPlayerBody.transform);
         SetCinemachineConfiner(boundingCollider);
+
+        cinemachineNoise.m_AmplitudeGain = 0;
+        cinemachineNoise.m_FrequencyGain = 0;
     }
 
     public void SetCinemachineFollow(Transform target)

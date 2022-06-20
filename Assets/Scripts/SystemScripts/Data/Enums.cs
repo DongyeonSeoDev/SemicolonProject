@@ -1,4 +1,14 @@
 
+public enum MissionType
+{
+    ALLKILL,
+    SURVIVAL,
+    NOTRANSFORMATION,
+    NOQUIKSLOT,
+    ALLABSORPTION,
+    NONE
+}
+
 public enum KillNoticeType
 {
     FAIL,  //흡수하고 장착 실패
@@ -54,6 +64,7 @@ public enum KeyAction
     LEFT,
     RIGHT,
     ATTACK,
+    FIXED_SPECIALATTACK1,
     SETTING,
     //여기까지가 고정키
 

@@ -37,9 +37,7 @@ public class StageManager : MonoSingleton<StageManager>
     #region Map Values
     [SerializeField] private int MaxStage;
     [SerializeField] private string startStageID;
-    //[HideInInspector] public Vector2 respawnPos;
 
-    //public Sprite openDoorSpr, closeDoorSpr;
     public Sprite[] doorSprites;
     public Dictionary<string, Sprite> doorSprDic = new Dictionary<string, Sprite>();
     private bool[] floorInitSet;
@@ -71,16 +69,6 @@ public class StageManager : MonoSingleton<StageManager>
 
     private Dictionary<string, StageData> stageDataDictionary = new Dictionary<string, StageData>();
     private string stageDataPath = Path.Combine("Enemy", "StageData", "Stage1Data");
-
-    //private int prevRandRoomType = -1;  // 이전 랜덤 구역의 타입
-
-    //public bool IsLastStage { get; set; } 
-
-    /* #region ValuableForEditor
-     [Header("Test")]
-     public string stageSOFolderName;
-     #endregion*/
-
 
     private void Awake()
     {
@@ -170,7 +158,6 @@ public class StageManager : MonoSingleton<StageManager>
             NextStage(startStageID);
             UIManager.Instance.StartLoadingIn();
         }, 0.2f);
-        //respawnPos = idToStageDataDict[startStageID].stage.GetComponent<StageGround>().playerSpawnPoint.position;
 
         PoolManager.CreatePool(recoveryObjPref, npcParent, 1, "RecoveryObjPrefObjPref1");
         PoolManager.CreatePool(imprecationObjPref, npcParent, 1, "ImprecationObjPref1");
@@ -372,7 +359,6 @@ public class StageManager : MonoSingleton<StageManager>
     {
         Debug.Log("Next Stage : " + id);
 
-        //EventManager.TriggerEvent("ExitStage");
         EventManager.TriggerEvent("ExitCurrentMap");
 
         //현재 스테이지 옵젝을 꺼주고 다음 스테이지를 불러와서 켜주고 스테이지 번호를 1 증가시킴
@@ -380,7 +366,6 @@ public class StageManager : MonoSingleton<StageManager>
 
         currentStageData = idToStageDataDict[id];
         currentArea = currentStageData.areaType;
-        //IsLastStage = currentStageData.endStage;
         currentStage = null;
         currentStageMonsterBundleOrder = 1;
 
@@ -498,7 +483,6 @@ public class StageManager : MonoSingleton<StageManager>
 
                     break;
                 case AreaType.MONSTER:
-                    //EventManager.TriggerEvent("SpawnEnemy", currentStageData.stageID);
                     SetMonsterStage();
                     break;
                 case AreaType.CHEF:
@@ -515,8 +499,6 @@ public class StageManager : MonoSingleton<StageManager>
                     return;   //랜덤 맵이면 함수를 빠져나간다.
                 case AreaType.BOSS:
                     SetMonsterStage();
-                    //EventManager.TriggerEvent("BossSpawn", CurrentMonstersOrderID);
-                    //currentStageMonsterBundleOrder++;
                     break;
             }
 
@@ -637,12 +619,6 @@ public class StageManager : MonoSingleton<StageManager>
 
         EventManager.TriggerEvent("StageClear");
 
-        //CinemachineCameraScript.Instance.SetCinemachineConfiner(CinemachineCameraScript.Instance.boundingCollider);
-
-        /*if (IsLastStage)
-        {
-            EventManager.TriggerEvent("GameClear");
-        }*/
         if(currentArea==AreaType.BOSS)
         {
             EventManager.TriggerEvent("GameClear");
@@ -653,9 +629,7 @@ public class StageManager : MonoSingleton<StageManager>
     {
         Debug.Log("Respawn : " + startStageID);
 
-        //prevRandRoomType = -1;
         currentStageNumber = 0;
-        //currentFloor--;
         PassDir = GameManager.Instance.savedData.stageInfo.passDoorDir;
         InsertRandomMaps(currentFloor);
         SetRandomAreaRandomIncounter();
@@ -713,7 +687,6 @@ public class StageManager : MonoSingleton<StageManager>
                 break;
 
             case RandomRoomType.MONSTER:  //몬스터 구역
-                //--currentStageNumber;
                 int targetStage = Mathf.Clamp(currentStageData.stageFloor.floor + UnityEngine.Random.Range(-1, 2), 1, MaxStage); //현재 층에서 몇 층을 더할지 정함
                 StageBundleDataSO sbData = idToStageFloorDict.Values.Find(x=>x.floor == targetStage); //현재 층에서 -1 or 0 or 1층을 더한 층을 가져온다
                 NextStage(sbData.stages.FindRandom(stage => stage.areaType == AreaType.MONSTER).stageID); //뽑은 층에서 몬스터 지역들중에 랜덤으로 가져온다

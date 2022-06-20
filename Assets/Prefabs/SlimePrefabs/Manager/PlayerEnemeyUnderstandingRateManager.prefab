@@ -85,7 +85,7 @@ MonoBehaviour:
         maxStatLv: 0
       speed:
         id: 30
-        statValue: 4
+        statValue: 0
         upStatValue: 0
         isUnlock: 0
         statLv: 0

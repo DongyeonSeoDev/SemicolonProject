@@ -20,7 +20,6 @@ public static class FindPath
     private static Stack<int> addMoveValueList = new Stack<int>();
 
     private static bool[] isWall;
-    private static bool[] isEnemyPosition;
     private static AStarData[] astarData;
 
     private static Vector2Int currentPosition;
@@ -70,11 +69,6 @@ public static class FindPath
         return stageData;
     }
 
-    public static void SetEnemyPosition(StageData stageData, Vector2Int position, bool value)
-    {
-        isEnemyPosition[GetBoolPosition(stageData, position.x, position.y)] = value;
-    }
-
     private static void ResetStageData(StageData stageData, Vector2Int limitMinPosition, Vector2Int limitMaxPosition, string name)
     {
         stageData.stageName = name;
@@ -100,7 +94,7 @@ public static class FindPath
             return false;
         }
 
-        return !isWall[GetBoolPosition(stageData, x, y)] && !isEnemyPosition[GetBoolPosition(stageData, x, y)];
+        return !isWall[GetBoolPosition(stageData, x, y)];
     }
 
     private static AStarData GetAStarData(StageData data, Vector2Int pos, int gValue, int hValue, ushort moveValue)
@@ -119,10 +113,15 @@ public static class FindPath
 
     private static int GetGValue(int currentPositionX, int currentPositionY, int targetPositionX, int targetPositionY) => (Mathf.Abs(currentPositionX - targetPositionX) + Mathf.Abs(currentPositionY - targetPositionY)) * 10;
 
-    private static void GetDirectionCheck(StageData stageData, int directionX, int directionY, Vector2Int endPosition, ushort moveValue)
+    private static void GetDirectionCheck(StageData stageData, int directionX, int directionY, Vector2Int endPosition, ushort moveValue, bool isDiagonal = false)
     {
         if (IsPass(stageData, directionX, directionY))
         {
+            if (isDiagonal && (!IsPass(stageData, directionX + 1, directionY) || !IsPass(stageData, directionX - 1, directionY) || !IsPass(stageData, directionX, directionY + 1) || !IsPass(stageData, directionX, directionY - 1)))
+            {
+                return;
+            }
+
             targetAStarData = GetAStarData(stageData, new Vector2Int(directionX, directionY), GetGValue(directionX, directionY, endPosition.x, endPosition.y), currentMoveValue + moveValue, moveValue);
 
             if (targetAStarData.f < currentAStarData.f)
@@ -142,10 +141,24 @@ public static class FindPath
         currentAStarData.f = MAX_F_VALUE;
 
         isWall = new bool[stageData.isWall.Length];
-        isEnemyPosition = new bool[stageData.isWall.Length];
         astarData = new AStarData[stageData.isWall.Length];
 
         Array.Copy(stageData.isWall, isWall, stageData.isWall.Length);
+
+        Vector2Int randomPosition = new Vector2Int();
+
+        for (int i = 0; i < 5; i++)
+        {
+            randomPosition.x = UnityEngine.Random.Range(endPosition.x - 2, endPosition.x + 2);
+            randomPosition.y = UnityEngine.Random.Range(endPosition.y - 2, endPosition.y + 2);
+
+            if (IsPass(stageData, randomPosition.x, randomPosition.y))
+            {
+                endPosition = randomPosition;
+
+                break;
+            }
+        }
 
         isWall[GetBoolPosition(stageData, currentPosition.x, currentPosition.y)] = true;
 
@@ -166,9 +179,12 @@ public static class FindPath
             {
                 var positionCount = positionList.Count / 2;
 
-                for (int i = 0; i < positionCount; i++)
+                if (positionCount > 5)
                 {
-                    positionList.Pop();
+                    for (int i = 0; i < positionCount; i++)
+                    {
+                        positionList.Pop();
+                    }
                 }
 
                 Stack<Vector2Int> dataStack = new Stack<Vector2Int>();
@@ -193,14 +209,19 @@ public static class FindPath
             GetDirectionCheck(stageData, currentPosition.x - 1, currentPosition.y, endPosition, 10);
             GetDirectionCheck(stageData, currentPosition.x, currentPosition.y + 1, endPosition, 10);
             GetDirectionCheck(stageData, currentPosition.x, currentPosition.y - 1, endPosition, 10);
-            GetDirectionCheck(stageData, currentPosition.x + 1, currentPosition.y + 1, endPosition, 14);
-            GetDirectionCheck(stageData, currentPosition.x - 1, currentPosition.y + 1, endPosition, 14);
-            GetDirectionCheck(stageData, currentPosition.x + 1, currentPosition.y - 1, endPosition, 14);
-            GetDirectionCheck(stageData, currentPosition.x - 1, currentPosition.y - 1, endPosition, 14);
+            GetDirectionCheck(stageData, currentPosition.x + 1, currentPosition.y + 1, endPosition, 14, true);
+            GetDirectionCheck(stageData, currentPosition.x - 1, currentPosition.y + 1, endPosition, 14, true);
+            GetDirectionCheck(stageData, currentPosition.x + 1, currentPosition.y - 1, endPosition, 14, true);
+            GetDirectionCheck(stageData, currentPosition.x - 1, currentPosition.y - 1, endPosition, 14, true);
             #endregion
 
             if (currentAStarData.f == MAX_F_VALUE)
             {
+                if (positionList.Count < 1)
+                {
+                    return new Stack<Vector2Int>();
+                }
+
                 currentPosition = positionList.Pop();
                 currentMoveValue -= addMoveValueList.Pop();
                 currentNumber--;

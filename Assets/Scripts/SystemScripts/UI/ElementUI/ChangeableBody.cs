@@ -7,6 +7,7 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
     public int SlotNumber => slotNumber;
 
     [SerializeField] private KeyAction slotKey;
+    public KeyAction SlotKey => slotKey;    
 
     [SerializeField] private string bodyID = ""; //이 슬롯에 저장되어있는 몬스터 아이디   (monster id)
     public string BodyID => bodyID;
@@ -91,7 +92,8 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
         }
 
         bodyID = id;
-        bodyImg.sprite = Global.GetMonsterBodySprite(id);
+        bodyImg.sprite = MonsterCollection.Instance.GetPlayerMonsterSpr(id);
+        //bodyImg.sprite = Global.GetMonsterBodySprite(id);
         cvsg.alpha = 1;
 
         if(SlimeGameManager.Instance.BodyChangeTimer > 0)
@@ -145,15 +147,9 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
             }
         }
 
-        if(Input.GetKeyDown(KeySetting.keyDict[slotKey]) && !TimeManager.IsTimePaused)
+        if(Input.GetKeyDown(KeySetting.keyDict[slotKey]) && !TimeManager.IsTimePaused && InteractionHandler.canTransformEnemy)
         {
             SlimeGameManager.Instance.PlayerBodyChange(bodyID);
         }
-    }
-
-    private void OnEnable()
-    {
-        if(Time.unscaledTime > 3f)
-           UpdateKeyCodeTxt();
     }
 }
