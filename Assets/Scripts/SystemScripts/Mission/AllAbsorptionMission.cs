@@ -14,6 +14,7 @@ public class AllAbsorptionMission : Mission
     public override void Start()
     {
         isEnd = false;
+        SlimeGameManager.Instance.PlayerBodyChange(Global.OriginBodyID);
     }
 
     public override void Update()
