@@ -163,7 +163,7 @@ namespace Enemy
         private int randomNum;
 
         private float moveSpeed = 35f;
-        private float attackDistance = 5.2f;
+        private float attackDistance = 6f;
         private float afterImageTime = 0.7f;
         private float spawnAfterImageTime = 0.07f;
 
