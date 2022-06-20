@@ -58,6 +58,7 @@ public abstract class TitlePopUpObject : MonoBehaviour
     {
         fadeInDone = false;
         float time = Global.fullAlphaTransitionTime04;
+
         transform.DOScale(SVector3.zeroPointSeven, time).SetEase(Ease.InBack).SetUpdate(true);
         cvsg.DOFade(0, time).SetUpdate(true).OnComplete(() => lastEnabler.Disable());
     }

@@ -14,6 +14,8 @@ public class TitleMenu : MonoBehaviour
     private int menuIdx = 0;
     private int maxMenuIdx = 0;
 
+    public bool canSetMenuIdx = true;
+
     void Start()
     {
         menus = GetComponentsInChildren<TitleObject>().ToList();
@@ -38,7 +40,12 @@ public class TitleMenu : MonoBehaviour
     }
     public void SetMenuIdx(int idx)
     {
-        if(idx < 0)
+        if (!canSetMenuIdx)
+        {
+            return;
+        }
+
+        if (idx < 0)
         {
             menuIdx = 0;
 
@@ -62,6 +69,11 @@ public class TitleMenu : MonoBehaviour
     }
     private void CheckMenuIdx()
     {
+        if(!canSetMenuIdx)
+        {
+            return;
+        }
+
         if(Input.GetKeyDown(KeyCode.UpArrow))
         {
             if(menuIdx <= 0)
