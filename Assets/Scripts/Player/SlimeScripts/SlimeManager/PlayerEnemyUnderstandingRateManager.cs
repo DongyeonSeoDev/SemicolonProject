@@ -209,10 +209,7 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
     }
     public void ResetDicts()
     {
-        for (int i = 0; i < playerEnemyUnderStandingRateDict .Count; i++)
-        {
-            playerEnemyUnderStandingRateDict [changableBodyList[i].bodyId.ToString()] = 0;
-        }
+        playerEnemyUnderStandingRateDict.Clear();
 
         mountedObjList.Clear();
         currentExtraStatDict.Clear();
