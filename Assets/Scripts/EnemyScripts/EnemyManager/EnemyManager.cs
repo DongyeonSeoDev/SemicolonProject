@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Enemy
 {
@@ -49,6 +50,10 @@ namespace Enemy
 
         public Dictionary<string, List<Enemy>> enemyDictionary = new Dictionary<string, List<Enemy>>();
 
+        private PlayerDrain playerDrain;
+
+        public readonly int hashIsStart = Animator.StringToHash("isStart");
+
         private static StageData currentStageData = null;
 
         private static GameObject player;
@@ -77,6 +82,16 @@ namespace Enemy
             }
 
             instance = this;
+        }
+
+        private void Start()
+        {
+            playerDrain = SlimeGameManager.Instance.CurrentPlayerBody.GetComponent<PlayerDrain>();
+        }
+
+        public static float CanDrainPercent()
+        {
+            return instance.playerDrain.PlayerDrainCol.CanDrainHpPercentage;
         }
 
         public static bool IsAttackPlayer(EnemyData data)
@@ -224,6 +239,5 @@ namespace Enemy
         }
 
         public static void SetCurrentStageData(StageData stageData) => currentStageData = stageData;
-        public static void SetEnemyData(Vector2Int targetPosition, bool value) => FindPath.SetEnemyPosition(currentStageData, targetPosition, value);
     }
 }

@@ -15,6 +15,7 @@ public class ChoiceStatData
     public int checkStartValue; // 해당 스탯을 얻는 조건을 체크하기 시작한 시점
 
     public int upAmount; // 특정 값이 upAmount이상일 때 마다 스탯 수치 상승
+    public int changeUpAmount; // upAmount 변동과 관련된 값, 사용하는 놈만 사용한다
     public float upTargetStatPerChoiceStat; // 이 ChoiceStat의 값 1 당 오르는 대상 스탯의 값
 
     public void DataCpy(ChoiceStatData stat)
@@ -98,6 +99,23 @@ public class PlayerChoiceStatControl : MonoBehaviour
         get { return attackNum; }
     }
 
+    private bool mucusChargeEnergyMax = false;
+    public bool MucusChargeEnergyMax
+    {
+        get { return mucusChargeEnergyMax; }
+        set { mucusChargeEnergyMax = value; }
+    }
+
+    [SerializeField]
+    private float mucusChargeEnergyMaxTime = 0;
+    public float MucusChargeEnergyMaxTime
+    {
+        get
+        {
+            return mucusChargeEnergyMaxTime;
+        }
+    }
+
     //private int bodySlapNum = 0;
     ///// <summary>
     ///// 돌진한 횟수
@@ -132,7 +150,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
         EventManager.StartListening("Avoid", UpAvoidNum);
         EventManager.StartListening("OnAvoidInMomentom", UpAvoidInMomentomNum);
-        //EventManager.StartListening("OnBodySlap", UpBodySlapNum);
+        //EventManager.StartListening("OnBodySlap", UpBodySlapNum); 
     }
     private void OnDisable()
     {
@@ -146,12 +164,22 @@ public class PlayerChoiceStatControl : MonoBehaviour
     }
     private void Update()
     {
+        CheckMucusMaxTime();
+
         CheckEndurance();
         CheckProficiency();
         CheckMomentom();
         CheckFrenzy();
         CheckReflection();
         CheckFake();
+        CheckMucusRecharge();
+    }
+    public void CheckMucusMaxTime()
+    {
+        if(mucusChargeEnergyMax)
+        {
+            mucusChargeEnergyMaxTime += Time.deltaTime;
+        }
     }
     public void CheckEndurance()
     {
@@ -287,7 +315,6 @@ public class PlayerChoiceStatControl : MonoBehaviour
                 >= choiceDataDict[NGlobal.MomentomID].unlockStatValue)
             {
                 // 이 스탯이 처음 생김
-                Debug.Log("Momentom True Wireless Earbuds 3"); // 추진력 해금 체크용 코드 // 참고로 좋은 무선이어폰임 추천함
 
                 stat.statValue = choiceDataDict[NGlobal.MomentomID].firstValue;
                 stat.statLv = choiceDataDict[NGlobal.MomentomID].firstValue;
@@ -339,6 +366,47 @@ public class PlayerChoiceStatControl : MonoBehaviour
             UIManager.Instance.playerStatUI.StatUnlock(stat);
         }
     }
+    public void CheckMucusRecharge()
+    {
+        StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.mucusRecharge;
+
+        if(stat.isUnlock)
+        {
+            if (mucusChargeEnergyMaxTime - choiceDataDict[NGlobal.MucusRechargeID].checkStartValue
+                >= choiceDataDict[NGlobal.MucusRechargeID].upAmount)
+            {
+                if (stat.statLv >= stat.maxStatLv)
+                {
+                    return;
+                }
+
+                stat.statValue++;
+                stat.statLv++;
+
+                MucusRechargeValueReset();
+
+                choiceDataDict[NGlobal.MucusRechargeID].upAmount += choiceDataDict[NGlobal.MucusRechargeID].changeUpAmount;
+            }
+        }
+        else
+        {
+            if (PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(Enemy.EnemyType.SkeletonArcher_04.ToString())
+                >= choiceDataDict[NGlobal.MucusRechargeID].unlockStatValue)
+            {
+                stat.statValue = choiceDataDict[NGlobal.MucusRechargeID].firstValue;
+                stat.statLv = choiceDataDict[NGlobal.MucusRechargeID].firstValue;
+
+                stat.isUnlock = true;
+
+                UIManager.Instance.playerStatUI.StatUnlock(stat);
+            }
+        }
+    }
+    public void MucusRechargeValueReset()
+    {
+        choiceDataDict[NGlobal.MucusRechargeID].checkStartValue += choiceDataDict[NGlobal.MucusRechargeID].upAmount;
+    }
+
     public void CheckFake()
     {
         StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.fake;
@@ -368,6 +436,8 @@ public class PlayerChoiceStatControl : MonoBehaviour
                 stat.statLv = choiceDataDict[NGlobal.FakeID].firstValue;
 
                 stat.isUnlock = true;
+                
+                UIManager.Instance.playerStatUI.StatUnlock(stat);
             }
         }
 

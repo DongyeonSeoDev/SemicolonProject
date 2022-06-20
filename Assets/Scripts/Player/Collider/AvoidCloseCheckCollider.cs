@@ -33,13 +33,11 @@ public abstract class AvoidCloseCheckCollider : MonoBehaviour
 
                 if (hitCheck) // 공격 회피를 못했으니 리턴
                 {
-                    Debug.Log("회피실패!");
 
                     continue;
                 }
 
                 // 회피 성공
-                Debug.Log("회피!");
 
                 if (SlimeGameManager.Instance.Player.PlayerState.IsInMomentom)
                 {

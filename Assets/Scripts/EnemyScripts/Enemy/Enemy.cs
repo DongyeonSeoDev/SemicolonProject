@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System.Collections;
 
 namespace Enemy
 {
@@ -36,16 +37,26 @@ namespace Enemy
         public float hpTweenDelayTime = 0.3f;
         public float damageHPTweenTime = 0.2f;
 
+        [SerializeField]
+        private Animator hpEffectAnimation = null;
+
         EnemyCommand enemyDamagedCommand;
-        EnemyCommand enemyKnockBackCommand;
 
         private float isDamageCurrentTime = 0f;
         protected bool isStop = false;
 
         private bool isUsePlayerSpeedEvent = false;
 
+        private WaitForSeconds moveDelay;
+        private Coroutine currentCoroutine;
+
+        private bool isHpEffectAnimationPlay = false;
+
+        private Vector2 knockBackDirection;
+
         [SerializeField]
         private float addExperience;
+
         public float AddExperience
         { 
             get
@@ -60,6 +71,8 @@ namespace Enemy
             anim = GetComponent<Animator>();
             sr = GetComponent<SpriteRenderer>();
             rb = GetComponent<Rigidbody2D>();
+
+            moveDelay = new WaitForSeconds(0.2f);
 
             // CSV GetData
             CSVEnemyLoot.Instance.GetData();
@@ -91,6 +104,11 @@ namespace Enemy
             {
                 isStop = false;
                 anim.speed = 1f;
+
+                if (hpEffectAnimation != null)
+                {
+                    hpEffectAnimation.speed = 1f;
+                }
             }
         }
 
@@ -100,6 +118,11 @@ namespace Enemy
             {
                 isStop = true;
                 anim.speed = 0f;
+
+                if (hpEffectAnimation != null)
+                {
+                    hpEffectAnimation.speed = 0f;
+                }
             }
         }
 
@@ -107,6 +130,8 @@ namespace Enemy
         {
             currentState = null;
             enemyData.enemyAnimator.enabled = false;
+
+            ChangeHpEffectAnimationPlay(false);
         }
 
         private void StartAttack() // (이벤트 용) 공격 시작했을때
@@ -134,7 +159,6 @@ namespace Enemy
             isDamageCurrentTime = 0f;
 
             enemyDamagedCommand = new EnemyGetDamagedCommand(enemyData);
-            enemyKnockBackCommand = new EnemyAddForceCommand(enemyData.enemyRigidbody2D, this);
 
             SetHP(false);
 
@@ -170,6 +194,8 @@ namespace Enemy
             {
                 enemyData.enemyCanvas = hpBar;
             }
+
+            ChangeHpEffectAnimationPlay(false);
         }
 
         protected virtual void Update()
@@ -192,12 +218,20 @@ namespace Enemy
 
                 SetHP(true);
 
+                if (EnemyHpPercent() > 0 && EnemyHpPercent() <= EnemyManager.CanDrainPercent())
+                {
+                    ChangeHpEffectAnimationPlay(true);
+                }
+                else
+                {
+                    ChangeHpEffectAnimationPlay(false);
+                }
+
                 enemyDamagedCommand.Execute();
 
                 if (!enemyData.isNoKnockback && enemyData.isKnockBack)
                 {
-                    enemyKnockBackCommand.Execute();
-
+                    EnemyKnockBack();
                     enemyData.isKnockBack = false;
                 }
 
@@ -223,6 +257,23 @@ namespace Enemy
                 positionCheckData.isWall = true;
                 positionCheckData.oppositeDirectionWall = collision.contacts[0].normal;
             }
+
+            var enemyCheck = collision.gameObject.GetComponent<Enemy>();
+
+            if (enemyCheck != null)
+            {
+                enemyData.movePosition = collision.contacts[0].normal;
+                currentCoroutine = StartCoroutine(ResetMove());
+
+                enemyCheck.EnemyMoveReset();
+            }
+        }
+
+        private IEnumerator ResetMove()
+        {
+            yield return moveDelay;
+
+            enemyData.movePosition = null;
         }
 
         // 적 데미지 받는 코드
@@ -240,18 +291,20 @@ namespace Enemy
             {
                 enemyData.isDamaged = true;
                 enemyData.damagedValue = damage;
-
                 enemyData.isKnockBack = isKnockBack;
-                enemyData.knockBackPower = knockBackPower;
-
                 enemyData.stunTime = isStun ? stunTime : 0;
 
-                enemyData.knockBackDirection = direction;
+                knockBackDirection = (direction == null ? Vector2.zero : direction.Value.normalized) * knockBackPower;
 
                 return true;
             }
 
             return false;
+        }
+
+        private void EnemyKnockBack()
+        {
+            rb.AddForce(knockBackDirection, ForceMode2D.Impulse);
         }
 
         // 적이 죽었을때 발동되는 코드
@@ -381,13 +434,32 @@ namespace Enemy
             SlimeGameManager.Instance.AddSkillDelay(0, enemyData.playerAnimationTime);
         }
 
+        public void EnemyMoveReset()
+        {
+            if (currentCoroutine != null)
+            {
+                StopCoroutine(currentCoroutine);
+
+                currentCoroutine = null;
+            }
+            
+            enemyData.movePosition = null;
+        }
+
+        private void ChangeHpEffectAnimationPlay(bool isActive)
+        {
+            if (hpEffectAnimation != null && isHpEffectAnimationPlay != isActive)
+            {
+                isHpEffectAnimationPlay = isActive;
+                hpEffectAnimation.SetBool(EnemyManager.Instance.hashIsStart, isActive);
+            }
+        }
+            
         public EnemyController GetEnemyController() => enemyData.eEnemyController;
-        public Vector2? GetKnockBackDirection() => enemyData.knockBackDirection; // 적이 넉백 공격을 할 수 있는지를 가져옴
         public Transform GetTransform() => transform;
         public GameObject GetGameObject() => gameObject;
         public string GetEnemyId() => enemyData.enemyType.ToString(); // 적 아이디를 가져옴
         public float EnemyHpPercent() => ((float)enemyData.hp / enemyData.maxHP) * 100f; // 적 체력 퍼센트를 가져옴
-        public float GetKnockBackPower() => enemyData.knockBackPower; // 적이 넉백 공격을 할 수 있는지를 가져옴
         public float GetEnemyAttackPower() => enemyData.attackPower; // 적 공격력을 가져옴
         public bool GetIsKnockBack() => enemyData.isUseKnockBack; // 적이 넉백 공격을 할 수 있는지를 가져옴
         public bool GetIsParrying() => enemyData.isParrying;

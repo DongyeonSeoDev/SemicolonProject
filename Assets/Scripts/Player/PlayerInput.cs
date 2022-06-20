@@ -243,7 +243,6 @@ public class PlayerInput : MonoBehaviour
                         if (playerStopStayTimerStarted && playerStopStay)
                         {
                             // 추진력 실행 코드
-                            Debug.Log("이러석구나... 내가 멈췄던 것은 추진력을 얻기 위해서였다!!!");
                             playerState.IsInMomentom = true;
                         }
 
@@ -356,21 +355,21 @@ public class PlayerInput : MonoBehaviour
 
                 if (skill1TutoClear)
                 {
-                    if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.SPECIALATTACK1])) // left shift
+                    if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.SPECIALATTACK1]) || Input.GetMouseButtonDown(1)) // left shift
                     {
                         skill1ButtonDowned = true;
 
                         isDoSkill1 = true;
                     }
 
-                    if (Input.GetKeyUp(KeySetting.keyDict[KeyAction.SPECIALATTACK1]))
+                    if (Input.GetKeyUp(KeySetting.keyDict[KeyAction.SPECIALATTACK1]) || Input.GetMouseButtonUp(1))
                     {
                         skill1ButtonDowned = false;
 
                         EventManager.TriggerEvent("SkillButtonUp1");
                     }
 
-                    if((skill1ButtonDowned && !Input.GetKey(KeySetting.keyDict[KeyAction.SPECIALATTACK1])))
+                    if((skill1ButtonDowned && (!Input.GetKey(KeySetting.keyDict[KeyAction.SPECIALATTACK1]) && !Input.GetMouseButton(1))))
                     {
                         skill1ButtonDowned = false;
 

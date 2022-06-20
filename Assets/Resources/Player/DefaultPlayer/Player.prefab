@@ -229,7 +229,7 @@ MonoBehaviour:
         upStatValue: 0
         isUnlock: 0
         statLv: 0
-        maxStatLv: 0
+        maxStatLv: 5
       fake:
         id: 130
         statValue: 0
@@ -242,7 +242,8 @@ MonoBehaviour:
   playerReflectionScript: {fileID: 0}
   playerOrderInLayerController: {fileID: 0}
   maxEnergy: 10
-  energyRegenSpeed: 1
+  totalEnergyReganSpeed: 1
+  energyRegenSpeedAttack: 1
   energyRegenSpeedWhenNotAttack: 3
   upMountingPercentageValueWhenEnemyDead: 5
   upUnderstandingRateValueWhenEnemyDead: 1
@@ -333,6 +334,7 @@ MonoBehaviour:
     firstValue: 1
     checkStartValue: 0
     upAmount: 100
+    changeUpAmount: 0
     upTargetStatPerChoiceStat: 1
   - id: 105
     name: "\uCD94\uC9C4\uB825"
@@ -341,14 +343,16 @@ MonoBehaviour:
     firstValue: 1
     checkStartValue: 0
     upAmount: 2
+    changeUpAmount: 0
     upTargetStatPerChoiceStat: 0.2
   - id: 110
     name: "\uB9F7\uC9D1"
     targetStat: "\uCCB4\uB825"
-    unlockStatValue: 100
+    unlockStatValue: 10
     firstValue: 1
     checkStartValue: 0
-    upAmount: 100
+    upAmount: 50
+    changeUpAmount: 0
     upTargetStatPerChoiceStat: 5
   - id: 115
     name: "\uBA48\uCD94\uC9C0 \uC54A\uB294 \uB3CC\uC9C4"
@@ -357,6 +361,7 @@ MonoBehaviour:
     firstValue: 1
     checkStartValue: 0
     upAmount: 0
+    changeUpAmount: 0
     upTargetStatPerChoiceStat: 0
   - id: 120
     name: "\uBC18\uC0AC"
@@ -365,15 +370,17 @@ MonoBehaviour:
     firstValue: 1
     checkStartValue: 0
     upAmount: 0
+    changeUpAmount: 0
     upTargetStatPerChoiceStat: 0
   - id: 125
     name: "\uC810\uC561 \uC7AC\uCDA9\uC804"
     targetStat: 
-    unlockStatValue: 0
+    unlockStatValue: 30
     firstValue: 1
     checkStartValue: 0
-    upAmount: 0
-    upTargetStatPerChoiceStat: 0
+    upAmount: 60
+    changeUpAmount: 120
+    upTargetStatPerChoiceStat: 0.2
   - id: 130
     name: "\uB9DE\uC740\uCC99"
     targetStat: 
@@ -381,6 +388,7 @@ MonoBehaviour:
     firstValue: 1
     checkStartValue: 0
     upAmount: 5
+    changeUpAmount: 0
     upTargetStatPerChoiceStat: 1
   avoidNum: 0
   avoidInMomentomNum: 0
@@ -388,6 +396,7 @@ MonoBehaviour:
   totalDamage: 0
   attackMissedNum: 0
   attackNum: 0
+  mucusChargeEnergyMaxTime: 0
 --- !u!114 &9036656189394809005
 MonoBehaviour:
   m_ObjectHideFlags: 0

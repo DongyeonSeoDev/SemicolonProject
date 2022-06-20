@@ -87,12 +87,20 @@ public class Player : MonoBehaviour
         get { return maxEnergy; }
     }
 
-    [Header("에너지가 다시 차는 속도")]
+    [Header("전체적인 에너지가 다시 차는 속도")]
     [SerializeField]
-    private float energyRegenSpeed = 1f;
-    public float EnergyRegenSpeed
+    private float totalEnergyReganSpeed = 1f;
+    public float TotalEnergyReganSpeed
     {
-        get { return energyRegenSpeed; }
+        get { return totalEnergyReganSpeed; }
+    }
+
+    [Header("공격할 때 에너지가 다시 차는 속도")]
+    [SerializeField]
+    private float energyRegenSpeedAttack = 1f;
+    public float EnergyRegenSpeedAttack
+    {
+        get { return energyRegenSpeedAttack; }
     }
     [Header("공격안할 때 에너지가 다시 차는 속도")]
     [SerializeField]
@@ -188,10 +196,7 @@ public class Player : MonoBehaviour
             EventManager.TriggerEvent("OnAttackSpeedChage");
         }
 
-        if (Input.GetKey(KeyCode.RightControl))
-        {
-            Debug.Log("RightControl");
-        }
+        CheckTotalEnergySpeed();
 
         if (playerStat.currentHp <= 0)
         {
@@ -218,16 +223,24 @@ public class Player : MonoBehaviour
     }
     private void UpEnergy()
     {
-        if(playerState.IsDrain)
+        if(playerState.IsDrain || SlimeGameManager.Instance.CurrentBodyId != "origin")
         {
+            playerChoiceStatControl.MucusChargeEnergyMax = false;
+
             return;
         }
 
-        currentEnergy += Time.deltaTime * (playerInput.IsDoSkill0 ? energyRegenSpeed : energyRegenSpeedWhenNotAttack);
+        currentEnergy += Time.deltaTime * (playerInput.IsDoSkill0 ? energyRegenSpeedAttack : energyRegenSpeedWhenNotAttack) * totalEnergyReganSpeed;
 
         if (currentEnergy >= maxEnergy)
         {
             currentEnergy = maxEnergy;
+
+            playerChoiceStatControl.MucusChargeEnergyMax = true;
+        }
+        else if(playerChoiceStatControl.MucusChargeEnergyMax)
+        {
+            playerChoiceStatControl.MucusChargeEnergyMax = false;
         }
     }
     public void UseEnergy(float useEventAmount)
@@ -258,8 +271,6 @@ public class Player : MonoBehaviour
 
         if(playerStat.choiceStat.fake.isUnlock && !stateAbnormality && CheckFake())
         {
-            Debug.Log("아하하하하하하핳하하ㅏㅎ하하하");
-
             damage = 0f;
         }
 
@@ -341,8 +352,6 @@ public class Player : MonoBehaviour
 
         if (playerStat.choiceStat.fake.isUnlock && !stateAbnormality && CheckFake())
         {
-            Debug.Log("아하하하하하하핳하하ㅏㅎ하하하");
-
             damage = 0f;
         }
 
@@ -409,6 +418,16 @@ public class Player : MonoBehaviour
         }
 
         return false;
+    }
+    public void CheckTotalEnergySpeed()
+    {
+        if(!playerStat.choiceStat.mucusRecharge.isUnlock)
+        {
+            return;
+        }
+
+        totalEnergyReganSpeed = playerStat.choiceStat.mucusRecharge.statValue 
+            * playerChoiceStatControl.ChoiceDataDict[NGlobal.MucusRechargeID].upTargetStatPerChoiceStat + 1f;
     }
     public (float, bool) GiveDamage(ICanGetDamagableEnemy targetEnemy, float minDamage, float maxDamage, Vector2 effectPosition, Vector2 direction, bool isKnockBack = true, float knockBackPower = 20, float stunTime = 1, Vector3? effectSize = null)
     {
