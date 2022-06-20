@@ -11,7 +11,7 @@ namespace Enemy
         public Image hpBarFillImage; // 적 HP 바 채워진것중 체력 확인용
         public Image hpBarDamageFillImage; // 적 HP 바 채워진것중 데미지 확인용
         public GameObject hpBar; // 적 HP 바 오브젝트 ( hpBarFillImage의 부모 캔버스 오브젝트 )
-        public Animator anim;
+        public Animator hpBarAnim;
 
         public float hpTweenTime = 0.1f;
         public float hpTweenDelayTime = 0.3f;
@@ -26,7 +26,7 @@ namespace Enemy
 
             SetHP(false);
 
-            anim.SetBool(EnemyManager.Instance.hashIsStart, true);
+            hpBarAnim.SetBool(EnemyManager.Instance.hashIsStart, true);
         }
         public override void Update()
         {

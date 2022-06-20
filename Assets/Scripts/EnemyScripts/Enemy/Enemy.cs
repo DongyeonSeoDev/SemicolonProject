@@ -216,6 +216,11 @@ namespace Enemy
                 isDamageCurrentTime = enemyData.damageDelay;
                 enemyData.hp -= enemyData.damagedValue;
 
+                if (EnemyManager.Instance.isOnlyAbsorption && enemyData.hp < 1)
+                {
+                    enemyData.hp = 1;
+                }
+
                 SetHP(true);
 
                 if (EnemyHpPercent() > 0 && EnemyHpPercent() <= EnemyManager.CanDrainPercent())
