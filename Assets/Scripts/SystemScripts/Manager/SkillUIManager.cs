@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using System;
 
 public class SkillUIManager : MonoSingleton<SkillUIManager>
 {
@@ -112,12 +113,12 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
 
             energeEffMask.DOKill();
             energeFill.DOKill();
-            UpdateUnderstandingBar(id);
+            UpdateUnderstandingBar();
         });
 
         EventManager.StartListening("StartCutScene", () => SetActiveSlimeEnergeEffect(false));
         EventManager.StartListening("EndCutScene", () => SetActiveSlimeEnergeEffect(true));
-        EventManager.StartListening("EnemyDead", (obj, id, dead) => UpdateUnderstandingBar(id));
+        EventManager.StartListening("EnemyDead", (Action<GameObject, string, bool>)((obj, id, dead) => UpdateUnderstandingBar()));
         EventManager.StartListening("UpdateKeyCodeUI", UpdateSkillKeyCode);
     }
 
@@ -176,11 +177,12 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
         }
     }
 
-    public void UpdateUnderstandingBar(string id) //현재 변신 상태의 몬스터 동화율 UI 갱신
+    public void UpdateUnderstandingBar() //현재 변신 상태의 몬스터 동화율 UI 갱신
     {
         if (IsOriginSlime) return;
 
-        float rate = PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(id) % 51 * 0.02f;
+        float rate = PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(SlimeGameManager.Instance.CurrentBodyId) % 51 * 0.02f;
+        Debug.Log(rate);
         energeFill.DOFillAmount(rate, 0.3f);
         energeEffMask.DOScaleX(orgEnergeEffMaskScl.x * rate, 0.3f);
     }
