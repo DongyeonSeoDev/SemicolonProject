@@ -514,9 +514,17 @@ PrefabInstance:
       propertyPath: sharedProfile
       value: 
       objectReference: {fileID: 11400000, guid: bb7ba6d844bf4e7448eef57a509d6516, type: 2}
+    - target: {fileID: 2747719838980990773, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3671791750608935851, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
       propertyPath: m_FillAmount
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7610639630491447280, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
+      propertyPath: m_Type
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
