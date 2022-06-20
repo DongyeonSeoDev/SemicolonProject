@@ -204,6 +204,7 @@ MonoBehaviour:
   hpTweenTime: 0.1
   hpTweenDelayTime: 0.3
   damageHPTweenTime: 0.2
+  hpEffectAnimation: {fileID: 8516383107406063678}
   addExperience: 50
   shotPosition: {fileID: 7183627689166967377}
   moveDelay: 1
@@ -347,7 +348,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1559462952483071910, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 1.7
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 1559462952483071910, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -367,6 +368,11 @@ RectTransform:
 --- !u!1 &1475373724039423642 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1559462952483071909, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
+  m_PrefabInstance: {fileID: 134483325412835647}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &8516383107406063678 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8641706813762398465, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
   m_PrefabInstance: {fileID: 134483325412835647}
   m_PrefabAsset: {fileID: 0}
 --- !u!114 &3686500840919751316 stripped
