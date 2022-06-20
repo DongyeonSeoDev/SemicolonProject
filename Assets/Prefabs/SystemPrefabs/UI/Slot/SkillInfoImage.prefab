@@ -280,11 +280,11 @@ MonoBehaviour:
     third: {fileID: 6728583794877495172}
   keyCodeTxt: {fileID: 9222979729389143912}
   nifc: {fileID: 250806574885566930}
-  skillBtn: {fileID: 250806574885566925}
   cvsg: {fileID: 4870787070711797190}
   skillEx: 
   skillType: 0
   ccsf: {fileID: 6023767009730862125}
+  UIInfoDelayScr: {fileID: 4747888290308321681}
 --- !u!114 &4747888290308321681
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -179,6 +179,9 @@ public class StageManager : MonoSingleton<StageManager>
                     currentMapNPCList.ForEach(x => x.gameObject.SetActive(false));
                     currentMapNPCList.Clear();
                     break;
+                case AreaType.BOSS:
+                    SkillUIManager.Instance.SetEnableSlot(SkillType.SPECIALATTACK2, true);
+                    break;
 
             }
 
@@ -499,6 +502,7 @@ public class StageManager : MonoSingleton<StageManager>
                     return;   //랜덤 맵이면 함수를 빠져나간다.
                 case AreaType.BOSS:
                     SetMonsterStage();
+                    SkillUIManager.Instance.SetEnableSlot(SkillType.SPECIALATTACK2, false);
                     break;
             }
 
@@ -676,7 +680,6 @@ public class StageManager : MonoSingleton<StageManager>
                 currentArea = AreaType.IMPRECATION;
                 EventManager.TriggerEvent(Global.EnterNextMap);
 
-                SoundManager.Instance.SetBGMPitchByLerp(1, -0.7f, 1f);
                 ImprecationObj io = PoolManager.GetItem<ImprecationObj>("ImprecationObjPref1");
                 io.transform.position = currentStage.objSpawnPos.position;
                 Util.DelayFunc(() => 
