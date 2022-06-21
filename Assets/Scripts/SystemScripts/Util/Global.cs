@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System;
+using System.IO;
 
 public static partial class Global
 {
@@ -167,5 +168,34 @@ public static partial class Global
         }
 
         return p3;
+    }
+}
+
+
+
+
+public static class SaveFileStream
+{
+    public static string currentSaveFileName;
+
+    public static void Delete(string path, bool onlyFileName)
+    {
+        if (onlyFileName)
+            path = path.PersistentDataPath();
+
+        if (File.Exists(path))
+        {
+            File.Delete(path);
+            Debug.Log("Delete Save File : " + path);
+        }
+        else
+        {
+            Debug.Log("Not Exist Path : " + path);
+        }
+    }
+
+    public static void Save(string path, string content)
+    {
+        File.WriteAllText(path, content);
     }
 }

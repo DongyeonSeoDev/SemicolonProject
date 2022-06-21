@@ -7,6 +7,8 @@ using System;
 
 public class TalkManager : MonoSingleton<TalkManager>
 {
+    #region NPC Talk Panel
+
     public CanvasGroup talkPanelCvsg;
     public Button nextDialogBtn;
     [SerializeField] private Text talkText;
@@ -29,9 +31,20 @@ public class TalkManager : MonoSingleton<TalkManager>
     private int dialogIndex;  //현재 대화의 인덱스
     private int dialogSetIndex; //현재 대화의 한 세트의 인덱스 (ID)
     private Transform talkingNPCTr;  //NPC의 Transform
-    private TweenCallback twcb1, twcb2; 
+    private TweenCallback twcb1, twcb2;
 
-    private IEnumerator delayCoroutine = null;
+    #endregion
+
+    #region Subtitle
+
+    public CanvasGroup subCvsg;
+    public Text subtitleText;
+    private Sequence seq;
+    private TweenCallback twcb3;
+
+    #endregion
+
+    private IEnumerator delayCoroutine1 = null, delayCoroutine2 = null;
 
     private void Awake()
     {
@@ -44,7 +57,7 @@ public class TalkManager : MonoSingleton<TalkManager>
             //CurNPCInfoData.talkContents[CurNPCInfoData.talkId].value[dialogIndex].talkEndEvent?.Invoke();
             isCompCurDialog = true;
             CurNPCInfoData.talkContents[dialogSetIndex].value[dialogIndex].talkEndEventKey.TriggerEvent();
-            DelayFunc(NextDialog, CurNPCInfoData.talkContents[dialogSetIndex].value[dialogIndex].message.Length * durationPerLit);
+            DelayFunc(NextDialog, CurNPCInfoData.talkContents[dialogSetIndex].value[dialogIndex].message.Length * durationPerLit, delayCoroutine1);
         }; //대화 텍스트가 다 출력된 후에
 
         twcb2 = () =>
@@ -54,6 +67,11 @@ public class TalkManager : MonoSingleton<TalkManager>
             talkPanelCvsg.gameObject.SetActive(false);
             isEnding = false;
         }; //대화창 alpha가 0이 된 후에
+
+        twcb3 = () =>
+        {
+            subCvsg.gameObject.SetActive(false);
+        }; //자막(정확히는 플레이어 독백 전용 대사창) 대사 다 끝나고 UI닫음  
 
         EventManager.StartListening("TalkWithNPC", (Action<bool>) (talkStart =>
         {
@@ -137,24 +155,24 @@ public class TalkManager : MonoSingleton<TalkManager>
             talkText.DOKill();
             talkText.text = CurNPCInfoData.talkContents[dialogSetIndex].value[dialogIndex].message;
             CurNPCInfoData.talkContents[dialogSetIndex].value[dialogIndex].talkEndEventKey.TriggerEvent();
-            DelayFunc(NextDialog, CurNPCInfoData.talkContents[dialogSetIndex].value[dialogIndex].message.Length * durationPerLit);
+            DelayFunc(NextDialog, CurNPCInfoData.talkContents[dialogSetIndex].value[dialogIndex].message.Length * durationPerLit, delayCoroutine1);
 
             isCompCurDialog = true;
         }
         else
         {
-            StopCoroutine(delayCoroutine);
-            delayCoroutine = null;
+            StopCoroutine(delayCoroutine1);
+            delayCoroutine1 = null;
             NextDialog();
         }
     }
 
     public void CompulsoryEndTalk() //대화중에 다른 NPC와 대화를 해서 강제로 대화 종료
     {
-        if (delayCoroutine != null)
+        if (delayCoroutine1 != null)
         {
-            StopCoroutine(delayCoroutine);
-            delayCoroutine = null;
+            StopCoroutine(delayCoroutine1);
+            delayCoroutine1 = null;
         }
 
         talkText.DOKill();
@@ -163,10 +181,10 @@ public class TalkManager : MonoSingleton<TalkManager>
 
     public void EndTalk()  //대화가 다 끝나거나 일정 거리를 벗어나서 대화종료
     {
-        if (delayCoroutine != null)
+        if (delayCoroutine1 != null)
         {
-            StopCoroutine(delayCoroutine);
-            delayCoroutine = null;
+            StopCoroutine(delayCoroutine1);
+            delayCoroutine1 = null;
         }
 
         isEnding = true;
@@ -174,16 +192,69 @@ public class TalkManager : MonoSingleton<TalkManager>
         EventManager.TriggerEvent("TalkWithNPC", false);
     }
 
-    private void DelayFunc(Action func, float delay)
+    #region Subtitle
+    public void SetSubtitle(string str)
     {
-        if(delayCoroutine != null)
+        ResetDialog();
+        DOTween.To(() => 0, a => subCvsg.alpha = a, 1, 0.3f);
+        seq.Append(subtitleText.DOText(str, secondPerLit * str.Length));
+        seq.AppendInterval(durationPerLit * str.Length);
+        seq.Append(subCvsg.DOFade(0f, 0.3f));
+        seq.AppendCallback(twcb3);
+        seq.Play();
+    }
+
+    public void SetSubtitle(string[] strs)
+    {
+        ResetDialog();
+        DOTween.To(() => 0, a => subCvsg.alpha = a, 1, 0.3f);
+
+        for(int i=0; i<strs.Length; i++)
         {
-            StopCoroutine(delayCoroutine);
-            delayCoroutine = null;
+            int si = i;
+            seq.Append(subtitleText.DOText(strs[si], secondPerLit * strs[si].Length));
+            seq.AppendInterval(durationPerLit*strs[si].Length);
+        }
+        seq.Append(subCvsg.DOFade(0f, 0.3f));
+        seq.AppendCallback(twcb3).Play();
+    }
+
+    private void ResetDialog()
+    {
+        subCvsg.DOKill();
+        subtitleText.DOKill();
+        if (delayCoroutine2 != null)
+        {
+            StopCoroutine(delayCoroutine2);
+            delayCoroutine2 = null;
         }
 
-        delayCoroutine = DelayCo(func, delay);
-        StartCoroutine(delayCoroutine);
+        if (seq != null)
+        {
+            DOTween.Kill("SubtitleDOT");
+            seq.Kill();
+        }
+        else
+        {
+            seq = DOTween.Sequence();
+            seq.SetId("SubtitleDOT");
+        }
+
+        subCvsg.gameObject.SetActive(true);
+    }
+
+    #endregion
+
+    private void DelayFunc(Action func, float delay, IEnumerator co)
+    {
+        if(co != null)
+        {
+            StopCoroutine(co);
+            co = null;
+        }
+
+        co = DelayCo(func, delay);
+        StartCoroutine(co);
     }
 
     private IEnumerator DelayCo(Action func, float delay)
