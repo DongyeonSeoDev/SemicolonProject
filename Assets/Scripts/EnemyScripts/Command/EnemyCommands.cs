@@ -431,18 +431,16 @@ namespace Enemy
         private Enemy enemy;
 
         private Type objectType;
-        private Color? color;
 
         private float attackDamage;
 
-        public EnemylongRangeAttackCommand(Enemy enemy, Transform enemyPosition, Type objectType, Transform shotTransform, float damage, Color? color = null)
+        public EnemylongRangeAttackCommand(Enemy enemy, Transform enemyPosition, Type objectType, Transform shotTransform, float damage)
         {
             this.enemy = enemy;
             enemyTransform = enemyPosition;
             this.objectType = objectType;
             this.shotTransform = shotTransform;
             attackDamage = damage;
-            this.color = color;
         }
 
         public override void Execute()
