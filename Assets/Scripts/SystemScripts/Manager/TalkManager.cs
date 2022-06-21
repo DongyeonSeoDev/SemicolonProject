@@ -44,7 +44,7 @@ public class TalkManager : MonoSingleton<TalkManager>
 
     #endregion
 
-    private IEnumerator delayCoroutine1 = null, delayCoroutine2 = null;
+    private IEnumerator delayCoroutine = null;
 
     private void Awake()
     {
@@ -57,7 +57,7 @@ public class TalkManager : MonoSingleton<TalkManager>
             //CurNPCInfoData.talkContents[CurNPCInfoData.talkId].value[dialogIndex].talkEndEvent?.Invoke();
             isCompCurDialog = true;
             CurNPCInfoData.talkContents[dialogSetIndex].value[dialogIndex].talkEndEventKey.TriggerEvent();
-            DelayFunc(NextDialog, CurNPCInfoData.talkContents[dialogSetIndex].value[dialogIndex].message.Length * durationPerLit, delayCoroutine1);
+            DelayFunc(NextDialog, CurNPCInfoData.talkContents[dialogSetIndex].value[dialogIndex].message.Length * durationPerLit);
         }; //대화 텍스트가 다 출력된 후에
 
         twcb2 = () =>
@@ -155,24 +155,24 @@ public class TalkManager : MonoSingleton<TalkManager>
             talkText.DOKill();
             talkText.text = CurNPCInfoData.talkContents[dialogSetIndex].value[dialogIndex].message;
             CurNPCInfoData.talkContents[dialogSetIndex].value[dialogIndex].talkEndEventKey.TriggerEvent();
-            DelayFunc(NextDialog, CurNPCInfoData.talkContents[dialogSetIndex].value[dialogIndex].message.Length * durationPerLit, delayCoroutine1);
+            DelayFunc(NextDialog, CurNPCInfoData.talkContents[dialogSetIndex].value[dialogIndex].message.Length * durationPerLit);
 
             isCompCurDialog = true;
         }
         else
         {
-            StopCoroutine(delayCoroutine1);
-            delayCoroutine1 = null;
+            StopCoroutine(delayCoroutine);
+            delayCoroutine = null;
             NextDialog();
         }
     }
 
     public void CompulsoryEndTalk() //대화중에 다른 NPC와 대화를 해서 강제로 대화 종료
     {
-        if (delayCoroutine1 != null)
+        if (delayCoroutine != null)
         {
-            StopCoroutine(delayCoroutine1);
-            delayCoroutine1 = null;
+            StopCoroutine(delayCoroutine);
+            delayCoroutine = null;
         }
 
         talkText.DOKill();
@@ -181,10 +181,10 @@ public class TalkManager : MonoSingleton<TalkManager>
 
     public void EndTalk()  //대화가 다 끝나거나 일정 거리를 벗어나서 대화종료
     {
-        if (delayCoroutine1 != null)
+        if (delayCoroutine != null)
         {
-            StopCoroutine(delayCoroutine1);
-            delayCoroutine1 = null;
+            StopCoroutine(delayCoroutine);
+            delayCoroutine = null;
         }
 
         isEnding = true;
@@ -209,11 +209,14 @@ public class TalkManager : MonoSingleton<TalkManager>
         ResetDialog();
         DOTween.To(() => 0, a => subCvsg.alpha = a, 1, 0.3f);
 
+        void SubTxtEmpty() => subtitleText.text = string.Empty;
+
         for(int i=0; i<strs.Length; i++)
         {
             int si = i;
             seq.Append(subtitleText.DOText(strs[si], secondPerLit * strs[si].Length));
             seq.AppendInterval(durationPerLit*strs[si].Length);
+            seq.AppendCallback(SubTxtEmpty);
         }
         seq.Append(subCvsg.DOFade(0f, 0.3f));
         seq.AppendCallback(twcb3).Play();
@@ -223,38 +226,28 @@ public class TalkManager : MonoSingleton<TalkManager>
     {
         subCvsg.DOKill();
         subtitleText.DOKill();
-        if (delayCoroutine2 != null)
-        {
-            StopCoroutine(delayCoroutine2);
-            delayCoroutine2 = null;
-        }
 
-        if (seq != null)
-        {
-            DOTween.Kill("SubtitleDOT");
-            seq.Kill();
-        }
-        else
-        {
-            seq = DOTween.Sequence();
-            seq.SetId("SubtitleDOT");
-        }
+        DOTween.Kill("SubtitleDOT");
+        seq = DOTween.Sequence();
+        seq.SetId("SubtitleDOT");
 
+        subtitleText.text = string.Empty;
         subCvsg.gameObject.SetActive(true);
     }
 
     #endregion
 
-    private void DelayFunc(Action func, float delay, IEnumerator co)
+    private void DelayFunc(Action func, float delay)
     {
-        if(co != null)
+        if(delayCoroutine != null)
         {
-            StopCoroutine(co);
-            co = null;
+            StopCoroutine(delayCoroutine);
+            delayCoroutine = null;
         }
 
-        co = DelayCo(func, delay);
-        StartCoroutine(co);
+        delayCoroutine = DelayCo(func, delay);
+
+        StartCoroutine(delayCoroutine);
     }
 
     private IEnumerator DelayCo(Action func, float delay)
