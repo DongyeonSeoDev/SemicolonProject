@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class TitleMenu : MonoBehaviour
 {
+    private readonly string effectSoundBoxName = "UIMouseEnterSFX4";
+
     [SerializeField]
     private List<TitleObject> menus = new List<TitleObject>();
 
@@ -32,6 +34,7 @@ public class TitleMenu : MonoBehaviour
 
         menuIdx = 0;
         maxMenuIdx = menus.Count - 1;
+        menuTitleObjectHighlighter.transform.position = menus[0].transform.position;
     }
     void Update()
     {
@@ -40,7 +43,7 @@ public class TitleMenu : MonoBehaviour
     }
     public void SetMenuIdx(int idx)
     {
-        if (!canSetMenuIdx)
+        if (!canSetMenuIdx || idx == menuIdx)
         {
             return;
         }
@@ -58,7 +61,9 @@ public class TitleMenu : MonoBehaviour
             return;
         }
 
+        SoundManager.Instance.PlaySoundBox(effectSoundBoxName);
         menuIdx = idx;
+        menuTitleObjectHighlighter.transform.position = menus[idx].transform.position;
     }
     private void DoMenuWork()
     {
@@ -74,30 +79,35 @@ public class TitleMenu : MonoBehaviour
             return;
         }
 
+        int idx = menuIdx;
+
         if(Input.GetKeyDown(KeyCode.UpArrow))
         {
-            if(menuIdx <= 0)
+            if(idx <= 0)
             {
-                menuIdx = 0;
+                idx = 0;
 
                 return;
             }
 
-            menuIdx--;
+            idx--;
         }
 
         if(Input.GetKeyDown(KeyCode.DownArrow))
         {
-            if(menuIdx >= maxMenuIdx)
+            if(idx >= maxMenuIdx)
             {
-                menuIdx = maxMenuIdx;
+                idx = maxMenuIdx;
 
                 return;
             }
 
-            menuIdx++;
+            idx++;
         }
 
-        menuTitleObjectHighlighter.transform.position = menus[menuIdx].transform.position;
+        if (menuIdx != idx)
+        {
+            SetMenuIdx(idx);
+        }
     }
 }

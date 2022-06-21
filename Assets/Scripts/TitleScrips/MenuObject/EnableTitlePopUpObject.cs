@@ -18,6 +18,7 @@ public class EnableTitlePopUpObject : TitleObject
 
         if (!enableObj.gameObject.activeSelf)
         {
+            PlayOnEnableSoundBox();
             Enable();
         }
     }
@@ -26,11 +27,6 @@ public class EnableTitlePopUpObject : TitleObject
     {
         if (enableObj != null)
         {
-            if(onEnableSoundBox != null)
-            {
-                SoundManager.Instance.PlaySoundBox(onEnableSoundBox);
-            }
-
             if(canSetMenuIdxFalseOnEnable)
             {
                 menu.canSetMenuIdx = false;
@@ -45,17 +41,26 @@ public class EnableTitlePopUpObject : TitleObject
     {
         if (enableObj != null)
         {
-            if (onDisableSoundBox != null)
-            {
-                SoundManager.Instance.PlaySoundBox(onDisableSoundBox);
-            }
-
             if (canSetMenuIdxFalseOnEnable)
             {
                 menu.canSetMenuIdx = true;
             }
 
             enableObj.gameObject.SetActive(false);
+        }
+    }
+    public void PlayOnEnableSoundBox()
+    {
+        if (onEnableSoundBox != null)
+        {
+            SoundManager.Instance.PlaySoundBox(onEnableSoundBox);
+        }
+    }
+    public void PlayOnDisableSoundBox()
+    {
+        if (onDisableSoundBox != null)
+        {
+            SoundManager.Instance.PlaySoundBox(onDisableSoundBox);
         }
     }
 }

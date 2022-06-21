@@ -4,13 +4,10 @@ using UnityEngine;
 
 public class TitleDataController : MonoBehaviour
 {
-
-
     private void Awake()
     {
         SaveFileStream.LoadOption();
     }
-
     private void OnApplicationQuit()
     {
         SaveFileStream.SaveOption();

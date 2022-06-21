@@ -60,6 +60,8 @@ public class ChildPopUpPannel : MonoBehaviour
         float time = Global.fullAlphaTransitionTime04;
 
         transform.DOScale(SVector3.zeroPointSeven, time).SetEase(Ease.InBack).SetUpdate(true);
+
+        lastEnabler.PlayOnDisableSoundBox();
         cvsg.DOFade(0, time).SetUpdate(true).OnComplete(() => lastEnabler.Disable());
     }
 }

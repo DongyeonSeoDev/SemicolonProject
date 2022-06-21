@@ -18,6 +18,7 @@ public class EnableObjdButton : PopUpsButtons
 
         if (!enableObj.gameObject.activeSelf)
         {
+            PlayOnEnableSoundBox();
             Enable();
         }
     }
@@ -25,11 +26,6 @@ public class EnableObjdButton : PopUpsButtons
     {
         if (enableObj != null)
         {
-            if (onEnableSoundBox != null)
-            {
-                SoundManager.Instance.PlaySoundBox(onEnableSoundBox);
-            }
-
             enableObj.lastEnabler = this;
 
             enableObj.gameObject.SetActive(true);
@@ -41,14 +37,23 @@ public class EnableObjdButton : PopUpsButtons
     {
         if (enableObj != null)
         {
-            if (onDisableSoundBox != null)
-            {
-                SoundManager.Instance.PlaySoundBox(onDisableSoundBox);
-            }
-
             enableObj.gameObject.SetActive(false);
 
             titlePopUpObject.canFadeOut = true;
+        }
+    }
+    public void PlayOnEnableSoundBox()
+    {
+        if (onEnableSoundBox != null)
+        {
+            SoundManager.Instance.PlaySoundBox(onEnableSoundBox);
+        }
+    }
+    public void PlayOnDisableSoundBox()
+    {
+        if (onDisableSoundBox != null)
+        {
+            SoundManager.Instance.PlaySoundBox(onDisableSoundBox);
         }
     }
 }
