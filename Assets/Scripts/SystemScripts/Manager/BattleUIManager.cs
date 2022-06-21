@@ -30,7 +30,7 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
 
     //private Dictionary<string, List<Pair<float, bool>>> assimNoticeCheckDic = new Dictionary<string, List<Pair<float, bool>>>();
     private Dictionary<string, List<bool>> assimNoticeCheckDic = new Dictionary<string, List<bool>>();
-    [SerializeField] private float assimNoticeInterval = 10f;
+    [SerializeField] private float assimNoticeInterval = 25f;
 
     #endregion
 

@@ -12,13 +12,13 @@ public class ChiScrollRect : ScrollRect, IPointerEnterHandler, IPointerExitHandl
 
     private static bool IsMouseWheelRolling => Input.GetAxis("Mouse ScrollWheel") != 0;
 
-    public static void SetAllChildRaycastTarget(Transform parent, bool active)
+    /*public static void SetAllChildRaycastTarget(Transform parent, bool active)
     {
         for (int i = 0; i < parent.childCount; i++)
         {
             parent.GetChild(i).GetComponent<Image>().raycastTarget = active;
         }
-    }
+    }*/
 
     public void OnPointerEnter(PointerEventData eventData)
     {

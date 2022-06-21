@@ -164,6 +164,7 @@ public partial class UIManager : MonoSingleton<UIManager>
         CreatePool();
 
         EventManager.StartListening("UpdateKeyCodeUI", () => itrNoticeList.ForEach(x => x.Set()));
+        EventManager.StartListening("OnChangedResolution", OnChangedResolution);
     }
 
     private void InitData()

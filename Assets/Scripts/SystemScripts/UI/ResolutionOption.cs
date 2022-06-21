@@ -104,7 +104,8 @@ public class ResolutionOption : MonoBehaviour
         screenMode = Screen.fullScreenMode;
         prevScrMode = screenMode;
 
-        UIManager.Instance.OnChangedResolution();
+        EventManager.TriggerEvent("OnChangedResolution");
+        //UIManager.Instance.OnChangedResolution();
     }
 
     public void ResolutionDdChanged(int num)
@@ -120,7 +121,8 @@ public class ResolutionOption : MonoBehaviour
     public void OnClickOKBtn()
     {
         Screen.SetResolution(whResolutionList[resolutionNum].first, whResolutionList[resolutionNum].second, screenMode);
-        UIManager.Instance.OnChangedResolution();
+        EventManager.TriggerEvent("OnChangedResolution");
+        //UIManager.Instance.OnChangedResolution();
         prevResolNum = resolutionNum;
         prevScrMode = screenMode;
     }
@@ -150,7 +152,8 @@ public class ResolutionOption : MonoBehaviour
         resolutionNum = resolutionDd.value;
         prevResolNum = resolutionNum;
 
-        UIManager.Instance.OnChangedResolution();
+        EventManager.TriggerEvent("OnChangedResolution");
+        //UIManager.Instance.OnChangedResolution();
     }
 
     private IEnumerator CheckOverResolutionCo() //1초마다 지원하는 해상도를 넘었는지 체크하고 넘었다고 지원하는 해상도중 최대사이즈로 바꿔줌
