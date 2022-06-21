@@ -291,8 +291,6 @@ namespace Enemy
         /// </summary>
         private void BossSpecialAttack1Position()
         {
-            Debug.Log(Mathf.CeilToInt((EnemyManager.Player.transform.position.y + 9) / 3f));
-
             if (Mathf.CeilToInt((EnemyManager.Player.transform.position.y + 9) / 3f) % 2 == 1)
             {
                 SetStartUpPosition();
