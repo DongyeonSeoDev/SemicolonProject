@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 
-public abstract class TitlePopUpObject : MonoBehaviour
+public class ChildPopUpPannel : MonoBehaviour
 {
-    public EnableTitlePopUpObject lastEnabler = null;
+    public EnableObjdButton lastEnabler = null;
 
     [SerializeField]
     protected CanvasGroup cvsg = null;
@@ -13,8 +13,7 @@ public abstract class TitlePopUpObject : MonoBehaviour
     public List<PopUpsObjs> popUpsObjsList = new List<PopUpsObjs>();
 
     protected bool fadeInDone = false;
-    public bool canFadeOut = true;
-    
+
     public virtual void Awake()
     {
         cvsg = GetComponent<CanvasGroup>();
@@ -35,11 +34,11 @@ public abstract class TitlePopUpObject : MonoBehaviour
     }
     public virtual void OnDisable()
     {
-       
+
     }
     public virtual void Update()
     {
-        if(canFadeOut && (fadeInDone && (Input.GetKeyUp(KeyCode.Escape) || Input.GetKeyUp(KeyCode.Return))))
+        if (fadeInDone && (Input.GetKeyUp(KeyCode.Escape) || Input.GetKeyUp(KeyCode.Return)))
         {
             FadeOut();
         }

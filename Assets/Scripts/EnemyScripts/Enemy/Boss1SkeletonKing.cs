@@ -107,7 +107,7 @@ namespace Enemy
             isSpecialAttack1 = false;
             isSpecialAttack3 = false;
 
-            whatIsWall = LayerMask.GetMask("WALL");
+            whatIsWall = LayerMask.GetMask("NOTMOVEZONE");
 
             #region SetLimitPosition
 
