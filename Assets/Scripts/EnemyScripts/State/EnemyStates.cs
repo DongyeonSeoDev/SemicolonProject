@@ -163,7 +163,7 @@ namespace Enemy
         private int randomNum;
 
         private float moveSpeed = 35f;
-        private float attackDistance = 6f;
+        private float attackDistance = 5.8f;
         private float afterImageTime = 0.7f;
         private float spawnAfterImageTime = 0.07f;
 
@@ -291,71 +291,38 @@ namespace Enemy
         /// </summary>
         private void BossSpecialAttack1Position()
         {
-            if (EnemyManager.Player.transform.position.y <= boss.limitMinPosition.y + attackDistance)
+            Debug.Log(Mathf.CeilToInt((EnemyManager.Player.transform.position.y + 9) / 3f));
+
+            if (Mathf.CeilToInt((EnemyManager.Player.transform.position.y + 9) / 3f) % 2 == 1)
             {
-                SetPosition(EnemyManager.Player.transform.position.y <= boss.limitMinPosition.y ? boss.limitMinPosition.y : EnemyManager.Player.transform.position.y, attackDistance);
-            }
-            else if (EnemyManager.Player.transform.position.y >= boss.limitMaxPosition.y - attackDistance)
-            {
-                SetPosition(EnemyManager.Player.transform.position.y >= boss.limitMaxPosition.y ? boss.limitMaxPosition.y : EnemyManager.Player.transform.position.y, -attackDistance);
+                SetStartUpPosition();
             }
             else
             {
-                SetMiddlePosition(EnemyManager.Player.transform.position.y, attackDistance);
+                SetStartDownPosition();
             }
         }
 
-        private void SetPosition(float defaultY, float addYValue)
+        private void SetStartUpPosition()
         {
             for (int i = 0; i < enemyCount; i++)
             {
-                bossPositionArray[i] = new Vector2(boss.transform.position.x, defaultY + (i * addYValue));
+                bossPositionArray[i] = new Vector2(boss.transform.position.x, boss.limitMaxPosition.y - (i * attackDistance));
             }
 
             SetRandomBossPosition();
         }
-        
-        private void SetMiddlePosition(float defaultY, float addValue)
+
+        private void SetStartDownPosition()
         {
-            if (enemyCount % 2 == 0)
+            for (int i = 0; i < enemyCount; i++)
             {
-                var current = -addValue * (Mathf.CeilToInt(enemyCount * 0.5f) - 1);
-
-                for (int i = 0; i < enemyCount - 1; i++)
-                {
-                    bossPositionArray[i] = new Vector2(boss.transform.position.x, defaultY + current);
-                    current += addValue;
-                }
-
-                if ((boss.limitMaxPosition.y + boss.limitMinPosition.y) / 2 > defaultY)
-                {
-                    bossPositionArray[enemyCount - 1] = new Vector2(boss.transform.position.x, defaultY + current);
-                }
-                else
-                {
-                    bossPositionArray[enemyCount - 1] = new Vector2(boss.transform.position.x, defaultY - current);
-                }
-            }
-            else
-            {
-                var middle = Mathf.CeilToInt(enemyCount * 0.5f);
-
-                for (int i = 1; i < middle; i++)
-                {
-                    bossPositionArray[i] = new Vector2(boss.transform.position.x, defaultY + (i * addValue));
-                }
-
-                bossPositionArray[0] = new Vector2(boss.transform.position.x, defaultY);
-
-                for (int i = middle; i < enemyCount; i++)
-                {
-                    bossPositionArray[i] = new Vector2(boss.transform.position.x, defaultY - ((i - middle + 1) * addValue));
-                }
+                bossPositionArray[i] = new Vector2(boss.transform.position.x, boss.limitMinPosition.y + (i * attackDistance));
             }
 
             SetRandomBossPosition();
         }
-        
+
         private void SetRandomBossPosition()
         {
             randomNum = Random.Range(0, enemyCount);
