@@ -182,8 +182,19 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
         if (IsOriginSlime) return;
 
         float rate = PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(SlimeGameManager.Instance.CurrentBodyId) % 51 * 0.02f;
-        Debug.Log(rate);
         energeFill.DOFillAmount(rate, 0.3f);
         energeEffMask.DOScaleX(orgEnergeEffMaskScl.x * rate, 0.3f);
+    }
+
+    public void SetEnableSlot(SkillType type, bool on)
+    {
+        for(int i= 0; i < skillInfoUIArr.Length; i++)
+        {
+            if(skillInfoUIArr[i]._SkillType == type)
+            {
+                skillInfoUIArr[i].SetEnableSlot(on);
+                break;
+            }
+        }
     }
 }

@@ -6,29 +6,31 @@ public class SkillInfoImage : MonoBehaviour
     public Triple<Image, Text, Image> skillImgCoolTxtImgTriple;
     public Text keyCodeTxt;
     public NameInfoFollowingCursor nifc;
-    [SerializeField] Button skillBtn;
     [SerializeField] CanvasGroup cvsg;
 
     [SerializeField] private string skillEx;
 
     [SerializeField] private SkillType skillType;
+    public SkillType _SkillType => skillType;
 
     public CustomContentsSizeFilter ccsf;
 
+    [SerializeField] private UIInfoDelay UIInfoDelayScr;
+
     private UICommand skillUICmd;
     public bool Registered { get; set; }
+    public bool DisableSlot { get; private set; }
 
 
     private void Awake()
     {
-        //skillBtn.onClick.AddListener(() => SkillUIManager.Instance.OnClickSkillButton(skillImgCoolTxtImgTriple.first.sprite, nifc.explanation, skillEx));
-        GetComponent<UIInfoDelay>().mouseOverEvent += () => SkillUIManager.Instance.OnClickSkillButton(skillImgCoolTxtImgTriple.first.sprite, nifc.explanation, skillEx);
+        UIInfoDelayScr.mouseOverEvent += () => SkillUIManager.Instance.OnClickSkillButton(skillImgCoolTxtImgTriple.first.sprite, nifc.explanation, skillEx);
     }
 
 
     public void Register(SkillInfo info)
     {
-        cvsg.alpha = 1;
+        cvsg.alpha = !DisableSlot ? 1 : 0.3f;
         skillImgCoolTxtImgTriple.first.sprite = info.skillSpr;
         string skillName = info.skillName;
         skillEx = info.skillExplanation;
@@ -53,6 +55,7 @@ public class SkillInfoImage : MonoBehaviour
 
         nifc.explanation = skillName;
         Registered = true;
+        UIInfoDelayScr.transitionEnable = true;
     }
 
     public void Unregister()
@@ -61,8 +64,17 @@ public class SkillInfoImage : MonoBehaviour
         skillImgCoolTxtImgTriple.second.gameObject.SetActive(false);
         skillImgCoolTxtImgTriple.third.fillAmount = 0;
         skillImgCoolTxtImgTriple.first.sprite = SkillUIManager.Instance.emptySkillSpr;
-        cvsg.alpha = 0.4f;
+        cvsg.alpha = !DisableSlot ? 0.4f : 0.3f;
+        UIInfoDelayScr.transitionEnable = false;
     }
+
+    public void SetEnableSlot(bool on) //해당 슬롯에 스킬이 활성화 되어있든 아니든 발동 못하게 반투명 처리
+    {
+        cvsg.alpha = on ? (Registered ? 1 : 0.4f) : 0.3f;
+        UIInfoDelayScr.transitionEnable = on;
+        DisableSlot = !on;
+    }
+
 
     public void UpdateKeyCode()
     {

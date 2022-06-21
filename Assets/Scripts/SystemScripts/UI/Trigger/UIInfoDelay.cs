@@ -14,7 +14,12 @@ public class UIInfoDelay : UITransition
     {
         if (isMouseOver)
         {
-            if(checkTime < Time.unscaledTime)
+            if(!transitionEnable)
+            {
+                Transition(false);
+                return;
+            }
+            if (checkTime < Time.unscaledTime)
             {
                 isMouseOver = false;
                 UIManager.Instance.OffUIDelayImg();
