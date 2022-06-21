@@ -47,7 +47,7 @@ public class ChiScrollRect : ScrollRect, IPointerEnterHandler, IPointerExitHandl
             Vector2 delta = Input.mousePosition - prevMousePos;
 
             PointerEventData pointerData = new PointerEventData(EventSystem.current);
-            pointerData.scrollDelta = new Vector2(0f, -delta.y * Time.deltaTime * 5f);
+            pointerData.scrollDelta = new Vector2(0f, -delta.y * 0.003f);
             OnScroll(pointerData);
 
             prevMousePos = Input.mousePosition;
