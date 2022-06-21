@@ -210,6 +210,7 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
     public void ResetDicts()
     {
         playerEnemyUnderStandingRateDict.Clear();
+        drainProbabilityDict.Clear();
 
         mountedObjList.Clear();
         currentExtraStatDict.Clear();
