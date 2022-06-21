@@ -55,13 +55,13 @@ public class InputTutorial : MonoBehaviour
     public bool isTestMode = false;
     public bool keyNotPressed = false;
 
-    private readonly float keyNotPressTime = 20f;
+    private readonly float keyNotPressTime = 5f;
 
     private readonly string[] keyNotPressStrArr = {
-            "뭐라도 눌러보면 뭐라도 될것이다.",
-            "라면 끓이러 간게 아닌이상, 뭐라도 눌러보자",
-            "이 게임을 킨 이상 뭐라도 눌러보자.",
-            "포기하지마! 맞서싸워!!! 뭐라도 누르라고!!!"
+            "으...",
+            "어둡다...",
+            "근처에 누가 없을까..?",
+            "왜 움직여지지 않는 거지"
         };
 
     public float keyNotPressTimer = 0f;
@@ -193,7 +193,7 @@ public class InputTutorial : MonoBehaviour
 
             if(keyNotPressTimer >= keyNotPressTime)
             {
-                KeyActionManager.Instance.SetPlayerHeadText(GetRandomNotPressedText());
+                TalkManager.Instance.SetSubtitle(keyNotPressStrArr);
 
                 keyNotPressTimer = 0f;
             }
@@ -343,10 +343,6 @@ public class InputTutorial : MonoBehaviour
         {
             inputTutoDataDict[keyAction].timerStarted = false;
         }
-    }
-    private string GetRandomNotPressedText()
-    {
-        return keyNotPressStrArr[UnityEngine.Random.Range(0, keyNotPressStrArr.Length)];
     }
     private void Skill0TutoClear()
     {
