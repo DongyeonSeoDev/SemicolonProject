@@ -44,6 +44,7 @@ namespace Enemy
         }
 
         public int enemyCount;
+        public bool isOnlyAbsorption = false;
 
         public LayerMask whatIsEnemy;
         public LayerMask whatIsPlayer;
