@@ -3,6 +3,15 @@ using System;
 using UnityEngine;
 
 [Serializable]
+public class EternalOptionData  //게임의 세이브 파일이 어떻든간에 해상도처럼 어디서든 값이 공용으로 쓰이는 세이브 데이터
+{
+    //볼륨
+    public float masterSound = -5f;
+    public float bgmSize = 0.8f;
+    public float soundEffectSize = 0.8f;
+}
+
+[Serializable]
 public class SaveData
 {
     public Option option = new Option();
@@ -86,15 +95,6 @@ public class UserInfo
 public class Option
 {
     public SaveDic<KeyAction, KeyCode> keyInputDict = new SaveDic<KeyAction, KeyCode>();  //키세팅
-
-    //해상도는 자동으로 저장됨
-    //public Pair<float, float> screenWidthHeight = new Pair<float, float>();
-    //public bool isFullScreen = true;
-    
-    //볼륨
-    public float masterSound = -5f;
-    public float bgmSize = 0.8f;
-    public float soundEffectSize = 0.8f;
 
     //자동퀵슬롯
     public bool isAutoQuikSlot = true;

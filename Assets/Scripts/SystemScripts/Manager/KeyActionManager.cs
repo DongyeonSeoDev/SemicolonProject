@@ -129,13 +129,6 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         }
 
         EventManager.TriggerEvent("UpdateKeyCodeUI");
-
-
-        GameManager.Instance.testKeyInputActionDict.Add(KeyCode.F8, () =>
-        {
-            TalkManager.Instance.SetSubtitle("테스트 자막 기달. ㅇㅇㅇㅇㅇ");
-            Util.DelayFunc(() => TalkManager.Instance.SetSubtitle(new string[3] { "fwewefwefwefwfwefewf", "ㄷㄷㄷㄷ        ㄹㄷㄹㄹ", "테스트 자맘 ㄴ기ㅏㄷㄱㄹ" }), 3f);
-        });
     }
 
     private void Update()

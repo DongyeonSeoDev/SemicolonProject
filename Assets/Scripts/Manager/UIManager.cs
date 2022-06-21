@@ -239,7 +239,7 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     public void Load()
     {
-        Option option = gm.savedData.option;
+        EternalOptionData option = SaveFileStream.SaveOptionData;
         masterSoundSlider.value = option.masterSound;
         BGMSlider.value = option.bgmSize;
         SFXSlider.value = option.soundEffectSize;
@@ -1185,21 +1185,21 @@ public partial class UIManager : MonoSingleton<UIManager>
     public void OnChangedMasterVolume()  // min : -40 , max : 0
     {
         float volume = masterSoundSlider.value;
-        gm.savedData.option.masterSound = volume;
+        SaveFileStream.SaveOptionData.masterSound = volume;
         masterAudioMixer.SetFloat("Master", volume != -40f ? volume : -80f);
     }
 
     public void OnChangedBGMVolume()  // min : -40 , max : 0
     {
         float volume = BGMSlider.value;
-        gm.savedData.option.bgmSize = volume;
+        SaveFileStream.SaveOptionData.bgmSize = volume;
         SoundManager.Instance.SetBGMVolume(volume);
     }
 
     public void OnChangedSFXVolume()  // min : -40 , max : 0
     {
         float volume = SFXSlider.value;
-        gm.savedData.option.soundEffectSize = volume;
+        SaveFileStream.SaveOptionData.soundEffectSize = volume;
         SoundManager.Instance.SetEffectSoundVolume(volume);
     }
 

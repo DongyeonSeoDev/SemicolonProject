@@ -193,18 +193,18 @@ public class TalkManager : MonoSingleton<TalkManager>
     }
 
     #region Subtitle
-    public void SetSubtitle(string str)
+    public void SetSubtitle(string str, float duration = -1)
     {
         ResetDialog();
         DOTween.To(() => 0, a => subCvsg.alpha = a, 1, 0.3f);
         seq.Append(subtitleText.DOText(str, secondPerLit * str.Length));
-        seq.AppendInterval(durationPerLit * str.Length);
+        seq.AppendInterval(duration < 0 ? durationPerLit * str.Length : duration);
         seq.Append(subCvsg.DOFade(0f, 0.3f));
         seq.AppendCallback(twcb3);
         seq.Play();
     }
 
-    public void SetSubtitle(string[] strs)
+    public void SetSubtitle(string[] strs, float[] durations = null)
     {
         ResetDialog();
         DOTween.To(() => 0, a => subCvsg.alpha = a, 1, 0.3f);
@@ -215,7 +215,7 @@ public class TalkManager : MonoSingleton<TalkManager>
         {
             int si = i;
             seq.Append(subtitleText.DOText(strs[si], secondPerLit * strs[si].Length));
-            seq.AppendInterval(durationPerLit*strs[si].Length);
+            seq.AppendInterval(durations == null ? durationPerLit * strs[si].Length : durations[si]);
             seq.AppendCallback(SubTxtEmpty);
         }
         seq.Append(subCvsg.DOFade(0f, 0.3f));

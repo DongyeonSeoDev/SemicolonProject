@@ -48,7 +48,10 @@ public class StartPhase : TutorialPhase
 
     private void AnyKeyEvent()
     {
-        currentCount++;
+        if(currentCount++ == 0)
+        {
+            TalkManager.Instance.SetSubtitle(new string[2] { "!", "누구세요?"}, new float[2] {2,2});
+        }
         if (needCount == currentCount)
         {
             complete = true;

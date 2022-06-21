@@ -16,7 +16,8 @@ public partial class GameManager : MonoSingleton<GameManager>
     private readonly string cryptoKey = "XHUooeUjJzMKdt";
 
     [SerializeField] private SaveData saveData;
-    public SaveData savedData { get { return saveData; } }
+    public SaveData savedData => saveData; 
+
     #endregion
 
     #region Game Data
@@ -64,7 +65,7 @@ public partial class GameManager : MonoSingleton<GameManager>
     {
         //filePath = SaveFileStream.currentSaveFileName.PersistentDataPath();
         filePath = Global.GAME_SAVE_FILE.PersistentDataPath();
-        saveData = new SaveData();   
+        saveData = new SaveData();
         KeyCodeToString.Init();
         StateManager.Instance.Init();
         
@@ -78,7 +79,6 @@ public partial class GameManager : MonoSingleton<GameManager>
     {
         MonsterCollection.Instance.Save();
         KeyActionManager.Instance.SaveKey();
-        //NGlobal.playerStatUI.Save();
         saveData.Save();
     }
 
@@ -91,6 +91,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         savedJson = JsonUtility.ToJson(saveData);
         cryptoText = Crypto.Encrypt(savedJson, cryptoKey);
         SaveFileStream.Save(filePath, cryptoText);
+        SaveFileStream.SaveOption();
     }
 
     public void Load()
@@ -102,6 +103,11 @@ public partial class GameManager : MonoSingleton<GameManager>
             string code = File.ReadAllText(filePath);
             savedJson = Crypto.Decrypt(code, cryptoKey);
             saveData = JsonUtility.FromJson<SaveData>(savedJson);
+        }
+
+        if(SaveFileStream.SaveOptionData==null)
+        {
+            SaveFileStream.LoadOption();
         }
 
         saveData.Load();
