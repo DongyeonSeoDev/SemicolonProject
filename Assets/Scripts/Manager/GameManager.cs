@@ -62,7 +62,7 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     private void Awake()
     {
-        //filePath = "SaveFile1".PersistentDataPath();
+        //filePath = SaveFileStream.currentSaveFileName.PersistentDataPath();
         filePath = Global.GAME_SAVE_FILE.PersistentDataPath();
         saveData = new SaveData();   
         KeyCodeToString.Init();
@@ -90,7 +90,7 @@ public partial class GameManager : MonoSingleton<GameManager>
 
         savedJson = JsonUtility.ToJson(saveData);
         cryptoText = Crypto.Encrypt(savedJson, cryptoKey);
-        File.WriteAllText(filePath, cryptoText);
+        SaveFileStream.Save(filePath, cryptoText);
     }
 
     public void Load()

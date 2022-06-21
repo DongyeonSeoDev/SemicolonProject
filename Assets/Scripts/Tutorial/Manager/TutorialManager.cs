@@ -151,6 +151,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                         Destroy(teHpBar.gameObject);
                         Destroy(cursorImg.gameObject);
                         EventManager.TriggerEvent("Skill2TutoClear");
+                        EventManager.TriggerEvent("UpdateKeyCodeUI");
                     });
                     seq.Play();
                 }, 3f);  //end of Util
@@ -214,6 +215,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
                                     um.RequestLogMsg("공격 에너지를 얻었습니다.");
                                     um.RequestLogMsg("기본 공격을 얻었습니다.");
+                                    EventManager.TriggerEvent("UpdateKeyCodeUI");
                                 });  
 
                             }, 2.5f, this); //end of util
@@ -408,6 +410,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             RectTransform emphRectTr = SetUIEmphasisEffect(skillUIArr[1].transform);
             tutorialPhases.Add(new RushTutorialPhase(emphRectTr.gameObject));
             um.RequestLogMsg("돌진을 얻었습니다.");
+            EventManager.TriggerEvent("UpdateKeyCodeUI");
         }).Play();
 
         StoredData.SetValueKey("GetRushAttack", true);
