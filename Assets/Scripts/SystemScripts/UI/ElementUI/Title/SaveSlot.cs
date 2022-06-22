@@ -4,6 +4,13 @@ using UnityEngine.UI;
 public class SaveSlot : MonoBehaviour
 {
     [SerializeField] private string saveFileName;
+    
+
+
+    public void Init()
+    {
+        
+    }
 
     public void OnStart()
     {
