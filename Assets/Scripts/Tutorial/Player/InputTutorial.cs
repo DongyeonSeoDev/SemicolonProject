@@ -42,9 +42,38 @@ public class InputTutoData
                 isClear = true;
                 timerStarted = false;
                 pressTimer = -1f;
+
+                PlaySubTitle();
+
                 KeyActionManager.Instance.EndExclamationCharging(true);
                 UIManager.Instance.RequestLogMsg("'" + key.ToString() + "' 키를(을) 획득하였습니다.");
             }
+        }
+    }
+    private void PlaySubTitle()
+    {
+        switch(key)
+        {
+            case KeyAction.LEFT:
+                {
+                    TalkManager.Instance.SetSubtitle("알았어, 왼쪽으로 갈게");
+                }
+                break;
+            case KeyAction.RIGHT:
+                {
+                    TalkManager.Instance.SetSubtitle("오른쪽으로 가라는 거지?");
+                }
+                break;
+            case KeyAction.UP:
+                {
+                    TalkManager.Instance.SetSubtitle("그래 위쪽으로 가자!");
+                }
+                break;
+            case KeyAction.DOWN:
+                {
+                    TalkManager.Instance.SetSubtitle("아래쪽! 맞지?");
+                }
+                break;
         }
     }
 }
@@ -55,16 +84,17 @@ public class InputTutorial : MonoBehaviour
     public bool isTestMode = false;
     public bool keyNotPressed = false;
 
-    private readonly float keyNotPressTime = 5f;
+    private readonly float keyNotPressTime = 300f;
 
-    private readonly string[] keyNotPressStrArr = {
+    public float keyNotPressTimer = 0f;
+
+    private readonly string[] firstStrArr = {
             "으...",
             "어둡다...",
             "근처에 누가 없을까..?",
             "왜 움직여지지 않는 거지"
         };
 
-    public float keyNotPressTimer = 0f;
 
 
     [SerializeField]
@@ -76,6 +106,7 @@ public class InputTutorial : MonoBehaviour
         get { return inputTutoDataDict; }
     }
 
+    private bool moveKeyClearAll = false;
     private bool moveKeyClear = false;
 
     private bool skill0Clear = false;
@@ -118,6 +149,7 @@ public class InputTutorial : MonoBehaviour
     {
         if (isTestMode)
         {
+            moveKeyClearAll = true;
             moveKeyClear = true;
 
             skill0Clear = true;
@@ -152,6 +184,8 @@ public class InputTutorial : MonoBehaviour
                 inputTutoDataDict[item.key] = item;
             }
         }
+
+        TalkManager.Instance.SetSubtitle(firstStrArr);
     }
 
 
@@ -185,15 +219,22 @@ public class InputTutorial : MonoBehaviour
             EventManager.TriggerEvent("Tuto_GainArrowKey");
             EventManager.TriggerEvent("StartBGM", tutoStageId);
         }
-#endregion
 
-        if(!moveKeyClear && keyNotPressed)
+        if ((CheckClear(KeyAction.LEFT) && CheckClear(KeyAction.RIGHT) && CheckClear(KeyAction.UP) && CheckClear(KeyAction.DOWN)) && !moveKeyClearAll)
+        {
+            TalkManager.Instance.SetSubtitle("신기하게 네가 말하니까 움직일 수 있었던 것 같아!");
+
+            moveKeyClearAll = true;
+        }
+            #endregion
+
+            if (!moveKeyClear && keyNotPressed && SlimeGameManager.Instance.Player.PlayerInput.IsPauseByTuto)
         {
             keyNotPressTimer += Time.deltaTime;
 
             if(keyNotPressTimer >= keyNotPressTime)
             {
-                TalkManager.Instance.SetSubtitle(keyNotPressStrArr);
+                TalkManager.Instance.SetSubtitle("거기 있는거 다 아니까 뭐라도 좀 눌러 ( ㄱ.ㄱ);;;");
 
                 keyNotPressTimer = 0f;
             }
