@@ -17,9 +17,16 @@ public class TitleSoundController : MonoBehaviour
 
     public void Start()
     {
-        OnChangedMasterVolume();
-        OnChangedBGMVolume();
-        OnChangedSFXVolume();
+        Init();
+    }
+
+    private void Init()
+    {
+        masterSoundSlider.value = SaveFileStream.SaveOptionData.masterSound;
+        BGMSlider.value = SaveFileStream.SaveOptionData.bgmSize;
+        SFXSlider.value = SaveFileStream.SaveOptionData.soundEffectSize;
+
+        masterAudioMixer.SetFloat("Master", SaveFileStream.SaveOptionData.masterSound != -40f ? SaveFileStream.SaveOptionData.masterSound : -80f);
     }
 
     public void OnChangedMasterVolume()  // min : -40 , max : 0
