@@ -16,7 +16,7 @@ namespace Enemy
         {
             base.OnEnable();
 
-            enemyData.chaseSpeed = 10f;
+            enemyData.chaseSpeed = 8f;
             enemyData.attackDelay = 0.42f;
             enemyData.playerAnimationTime = 0.45f;
             enemyData.isAttackPlayerDistance = 12f;
