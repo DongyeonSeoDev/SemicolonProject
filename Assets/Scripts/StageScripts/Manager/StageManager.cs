@@ -690,9 +690,9 @@ public class StageManager : MonoSingleton<StageManager>
                 break;
 
             case RandomRoomType.MONSTER:  //몬스터 구역
-                int targetStage = Mathf.Clamp(currentStageData.stageFloor.floor + UnityEngine.Random.Range(-1, 2), 1, MaxStage); //현재 층에서 몇 층을 더할지 정함
-                StageBundleDataSO sbData = idToStageFloorDict.Values.Find(x=>x.floor == targetStage); //현재 층에서 -1 or 0 or 1층을 더한 층을 가져온다
-                NextStage(sbData.stages.FindRandom(stage => stage.areaType == AreaType.MONSTER).stageID); //뽑은 층에서 몬스터 지역들중에 랜덤으로 가져온다
+                //int targetStage = Mathf.Clamp(currentStageData.stageFloor.floor + UnityEngine.Random.Range(-1, 2), 1, MaxStage); //현재 층에서 몇 층을 더할지 정함
+                //StageBundleDataSO sbData = idToStageFloorDict.Values.Find(x=>x.floor == targetStage); //현재 층에서 -1 or 0 or 1층을 더한 층을 가져온다
+                NextStage(GetStageBundleData(currentFloor).monsterStages.ToRandomElement().stageID); //뽑은 층에서 몬스터 지역들중에 랜덤으로 가져온다
                 break;
 
             case RandomRoomType.RECOVERY:  //회복 구역

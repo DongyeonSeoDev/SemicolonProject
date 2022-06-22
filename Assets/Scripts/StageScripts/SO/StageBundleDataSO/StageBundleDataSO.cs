@@ -8,7 +8,8 @@ public class StageBundleDataSO : ScriptableObject
 
     public int floor; 
     public string stageBundleName;
-    public List<StageDataSO> stages;
+    public List<StageDataSO> stages;  //여기에는 랜덤맵 전용 몬스터맵을 집어넣으면 안됨.
+    public List<StageDataSO> monsterStages;  //여기에는 랜덤맵 전용 몬스터맵들까지 다 넣어줌
     public List<StageFork> randomStageList;
 
     public int LastStageNumber => randomStageList.Count;

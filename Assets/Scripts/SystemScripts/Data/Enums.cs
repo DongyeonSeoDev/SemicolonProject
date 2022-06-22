@@ -150,9 +150,10 @@ public enum DoorDirType
 
 public enum EnemySpecies
 {
+    NONE,
     RAT,
     SLIME,
-    NONE
+    SKELETON
 }
 
 
