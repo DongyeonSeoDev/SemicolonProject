@@ -129,4 +129,12 @@ public class StateManager : SingletonClass<StateManager>
                 CreateOrUpdateBuffSlotUI(id);
         }
     }
+
+    public void Reset()
+    {
+        idToStateDataDic.Clear();
+        stateCountDict.Clear();
+        buffSlotDic.Clear();
+        stateStopDict.Clear();  
+    }
 }

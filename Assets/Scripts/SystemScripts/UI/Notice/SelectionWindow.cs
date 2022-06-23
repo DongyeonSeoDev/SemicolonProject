@@ -121,7 +121,8 @@ public class SelectionWindow : MonoBehaviour
         for (int i = 0; i < btnList.Count; i++)  //버튼 활성화 꺼주고 원래의 부모로 가고 리스트 초기화
         {
             btnList[i].gameObject.SetActive(false);
-            btnList[i].transform.SetParent(transform.parent);
+            if(transform.parent != null)  // 왜인지 버그는 안나지만 오류가 나서 예외처리를 해줌
+               btnList[i].transform.SetParent(transform.parent);
         }
         btnList.Clear();
     }

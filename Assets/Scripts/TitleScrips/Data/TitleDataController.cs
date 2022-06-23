@@ -8,6 +8,7 @@ public class TitleDataController : MonoBehaviour
 
     private void Awake()
     {
+        Time.timeScale = 1;
         SaveFileStream.LoadOption();
         for(int i = 0; i < saveSlots.Length; i++)
         {
@@ -18,6 +19,11 @@ public class TitleDataController : MonoBehaviour
     public void Save()
     {
         SaveFileStream.SaveOption();
+    }
+
+    public void StartNewGame()
+    {
+
     }
 
     #region OnApplication
