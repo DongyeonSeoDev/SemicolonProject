@@ -5,7 +5,7 @@ using System.IO;
 
 public static partial class Global
 {
-    public const string GAME_SAVE_FILE = "SaveFile2";
+    public const string GAME_SAVE_FILE = "SaveFile2";  //Test File Name
 }
 
 public static partial class Global

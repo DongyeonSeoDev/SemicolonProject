@@ -37,6 +37,7 @@ public static class SaveFileStream
         File.WriteAllText(path, content);
     }
 
+    #region Game Data
     public static void LoadGameSaveData(string saveFileName)
     {
         if(!saveDataDic.ContainsKey(saveFileName))
@@ -71,6 +72,8 @@ public static class SaveFileStream
             saveDataDic.Remove(saveFileName);
         }
     }
+
+    #endregion
 
     #region 공용 옵션 데이터 Save&Load
     public static void LoadOption()
