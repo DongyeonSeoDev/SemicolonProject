@@ -30,5 +30,7 @@ public class SaveSlot : MonoBehaviour
     public void OnDelete()
     {
         SaveFileStream.DeleteGameSaveData(saveFileName);
+
+        //UI °»½Å
     }
 }
