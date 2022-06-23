@@ -13,11 +13,14 @@ MonoBehaviour:
   m_Name: Stage0-01
   m_EditorClassIdentifier: 
   stageFloor: {fileID: 11400000, guid: 516212a852b2f484a8abbed3d2618a20, type: 2}
-  stageName: "\uD558\uC218\uAD6C \uAE4A\uC740 \uACF3"
+  stageName: '  '
+  isSaveStage: 0
+  useOpenDoorSound: 0
   stageMonsterBundleCount: 0
   stageMonsterBundleID: []
   stage: {fileID: 1378282381469885354, guid: f33f3730cd537b8459821f94d3e56c1a, type: 3}
   areaType: 0
   enemySpeciesArea: 2
+  missionTypes: 
   mapNPC: {fileID: 0}
   mapEvent: {fileID: 11400000, guid: 38325cb3f6f3c1d4c9d1f2974cdebe90, type: 2}

@@ -16,6 +16,8 @@ public static class SaveFileStream
 
     public const string CryptoKey = "XHUooeUjJzMKdt";
 
+    public static bool HasSaveData(string fileName) => saveDataDic.ContainsKey(fileName); 
+
     public static void Delete(string path, bool onlyFileName)
     {
         if (onlyFileName)

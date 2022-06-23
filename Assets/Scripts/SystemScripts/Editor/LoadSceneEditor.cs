@@ -4,15 +4,28 @@ using UnityEditor.SceneManagement;
 public class LoadSceneEditor : EditorWindow
 {
     #region Play
+    [MenuItem("Play/Title Scene")]
+    public static void PlayTitleScene()
+    {
+        LoadScene("TitleScene");
+        EditorApplication.isPlaying = true;
+    }
     [MenuItem("Play/Stage Scene")]
     public static void PlayStageScene()
     {
         LoadScene("StageScene");
         EditorApplication.isPlaying = true;
     }
+   
     #endregion
 
     #region Load
+    [MenuItem("Load/Title Scene")]
+    public static void LoadTitleScene()
+    {
+        LoadScene("TitleScene");
+    }
+
     [MenuItem("Load/Stage Scene")]
     public static void LoadStageScene()
     {
@@ -25,29 +38,14 @@ public class LoadSceneEditor : EditorWindow
         LoadScene("SystemScene");
     }
 
-    [MenuItem("Load/Enemy Scene")]
-    public static void LoadEnemyScene()
-    {
-        LoadScene("EnemyScene");
-    }
-
-    [MenuItem("Load/Slime Scene")]
+    [MenuItem("Load/Rimuru Scene")]
     public static void LoadSlimeScene()
     {
-        LoadScene("SlimeScene");
+        LoadScene("RimuruScene");
     }
 
-    [MenuItem("Load/Stage Test Scene")]
-    public static void LoadStageTest()
-    {
-        LoadScene("StageTestScene");
-    }
+    
 
-   /* [MenuItem("Load/Boss Test Scene")]
-    public static void LoadBossTest()
-    {
-        LoadScene("BossTestScene");
-    }*/
     #endregion
 
     private static void LoadScene(string sceneName)

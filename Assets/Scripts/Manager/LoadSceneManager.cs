@@ -52,10 +52,16 @@ public class LoadSceneManager : MonoSingleton<LoadSceneManager>
     /// <param name="sceneName"></param>
     public void LoadScene(string sceneName)
     {
+        EventManager.TriggerEvent("StartStageScene");  
+        EventManager.ClearEvents();  
+
         SceneManager.LoadScene(sceneName);
     }
     private IEnumerator LoadScenePregress()
     {
+        EventManager.TriggerEvent("StartStageScene");  //게임 시작 전에 이벤트 호출
+        EventManager.ClearEvents();  //씬 넘어가기 전에 이벤트 초기화
+
         AsyncOperation op = SceneManager.LoadSceneAsync(nextScene);
         op.allowSceneActivation = false;
 
