@@ -701,25 +701,21 @@ public class StageManager : MonoSingleton<StageManager>
 
                 RecoveryObj ro = PoolManager.GetItem<RecoveryObj>("RecoveryObjPrefObjPref1");
                 ro.transform.position = currentStage.objSpawnPos.position;
-                
-                if (StateManager.Instance.IsPlayerFullHP && StateManager.Instance.IsPlayerNoImpr)
+
+                Util.DelayFunc(() =>
                 {
-                    Util.DelayFunc(() =>
+                    Environment.Instance.OnEnteredOrExitRecoveryArea(true);
+                    ro.ActiveRecovLight();
+                    if (StateManager.Instance.IsPlayerFullHP && StateManager.Instance.IsPlayerNoImpr)
                     {
                         SetClearStage();
-                        Environment.Instance.OnEnteredOrExitRecoveryArea(true);
-                        ro.ActiveRecovLight();
-                    }, Global.ImprAndRecoEffDelay);
-                }
-                else
-                {
-                    Util.DelayFunc(() =>
+                    }
+                    else
                     {
-                        Environment.Instance.OnEnteredOrExitRecoveryArea(true);
-                        ro.ActiveRecovLight();
                         Util.DelayFunc(() => ro.Interaction(), Global.ImprAndRecoInteractDelay, this);
-                    }, Global.ImprAndRecoEffDelay, this);
-                }
+                    }
+                }, Global.ImprAndRecoEffDelay, this);
+
                 break;
         }
     }

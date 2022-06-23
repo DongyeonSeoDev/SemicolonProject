@@ -11,8 +11,6 @@ public static class StoredData
     #region object
     public static void SetValueKey(string key, object data)
     {
-        //objDataDic[key] = data;  //°Á ÀÌ·¸°Ô ¹Ù·Î ÇØµµ µÊ.
-        
         if(!valueDataDic.ContainsKey(key))
             valueDataDic.Add(key, data);
         else
@@ -119,17 +117,11 @@ public static class StoredData
 
     public static bool HasGameObjectKey(string key) => gameObjectDataDic.ContainsKey(key);
 
-    /*public static bool TryGetGameObject(string key, out GameObject obj)
+    public static void Reset()
     {
-        obj = gameObjectDataDic.ContainsKey(key) ? gameObjectDataDic[key] : null;
-        return obj != null;
+        valueDataDic.Clear();
+        gameObjectDataDic.Clear();
     }
-
-    public static bool TryGetGameObject<T>(string key, out T obj)
-    {
-        obj = gameObjectDataDic.ContainsKey(key) ? gameObjectDataDic[key].GetComponent<T>() : default;
-        return obj != null;
-    }*/
 
     #endregion
 }

@@ -1,15 +1,20 @@
 using System.IO;
 using UnityEngine;
+using System.Collections.Generic;
 
 public static class SaveFileStream
 {
+    #region 공용 데이터 관련
     public const string EternalOptionSaveFileName = "EtnOptSaveFile1";
     private static EternalOptionData saveOptionData;
     public static EternalOptionData SaveOptionData => saveOptionData;
+    #endregion
 
+    private static Dictionary<string, SaveData> saveDataDic = new Dictionary<string, SaveData>();
 
     public static string currentSaveFileName;
 
+    public const string CryptoKey = "XHUooeUjJzMKdt";
 
     public static void Delete(string path, bool onlyFileName)
     {
@@ -32,6 +37,42 @@ public static class SaveFileStream
         File.WriteAllText(path, content);
     }
 
+    public static void LoadGameSaveData(string saveFileName)
+    {
+        if(!saveDataDic.ContainsKey(saveFileName))
+        {
+            string path = saveFileName.PersistentDataPath();
+            if (File.Exists(path))
+            {
+                string json = Crypto.Decrypt(File.ReadAllText(path), CryptoKey);
+                SaveData data = JsonUtility.FromJson<SaveData>(json);
+                saveDataDic.Add(saveFileName, data);
+            }
+        }
+    }
+
+    public static SaveData GetSaveData(string saveFileName)
+    {
+        if (saveDataDic.ContainsKey(saveFileName))
+        {
+            return saveDataDic[saveFileName];
+        }
+
+        SaveData data = new SaveData();
+        saveDataDic.Add(saveFileName, data);
+        return data;
+    }
+
+    public static void DeleteGameSaveData(string saveFileName)
+    {
+        Delete(saveFileName, true);
+        if(saveDataDic.ContainsKey(saveFileName))
+        {
+            saveDataDic.Remove(saveFileName);
+        }
+    }
+
+    #region 공용 옵션 데이터 Save&Load
     public static void LoadOption()
     {
         saveOptionData = new EternalOptionData();
@@ -46,4 +87,5 @@ public static class SaveFileStream
     {
         Save(EternalOptionSaveFileName.PersistentDataPath(), JsonUtility.ToJson(saveOptionData));
     }
+    #endregion
 }

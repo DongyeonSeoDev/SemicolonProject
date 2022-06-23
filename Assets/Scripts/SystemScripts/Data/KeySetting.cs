@@ -71,14 +71,17 @@ public static class KeyCodeToString
 
     public static void Init()
     {
-        keycodeToStringDic = new Dictionary<KeyCode, string>();
-
-        keycodeToStringDic.Add(KeyCode.Mouse0, "Left Mouse");
-        keycodeToStringDic.Add(KeyCode.Mouse1, "Right Mouse");
-        keycodeToStringDic.Add(KeyCode.Escape, "ESC");
-        for (int i=0; i<10; ++i)
+        if (keycodeToStringDic == null)
         {
-            keycodeToStringDic.Add((KeyCode)(48 + i), i.ToString());
+            keycodeToStringDic = new Dictionary<KeyCode, string>();
+
+            keycodeToStringDic.Add(KeyCode.Mouse0, "Left Mouse");
+            keycodeToStringDic.Add(KeyCode.Mouse1, "Right Mouse");
+            keycodeToStringDic.Add(KeyCode.Escape, "ESC");
+            for (int i = 0; i < 10; ++i)
+            {
+                keycodeToStringDic.Add((KeyCode)(48 + i), i.ToString());
+            }
         }
     }
 

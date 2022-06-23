@@ -4,26 +4,41 @@ using UnityEngine;
 
 public class TitleDataController : MonoBehaviour
 {
+    public SaveSlot[] saveSlots;
+
     private void Awake()
     {
         SaveFileStream.LoadOption();
+        for(int i = 0; i < saveSlots.Length; i++)
+        {
+            saveSlots[i].Init();
+        }
     }
-    private void OnApplicationQuit()
+
+    public void Save()
     {
         SaveFileStream.SaveOption();
+    }
+
+    #region OnApplication
+    private void OnApplicationQuit()
+    {
+        Save();
     }
     private void OnApplicationFocus(bool focus)
     {
         if(!focus)
         {
-            SaveFileStream.SaveOption();
+            Save();
         }
     }
     private void OnApplicationPause(bool pause)
     {
         if (pause)
         {
-            SaveFileStream.SaveOption();
+            Save();
         }
     }
+
+    #endregion
 }
