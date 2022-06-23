@@ -6,7 +6,23 @@ public class Setting : GameUI
 {
     public override void ExceptionHandle()
     {
-        
+        EffectManager em = EffectManager.Instance;
+        if (!gameObject.activeSelf)
+        {
+            StoredData.SetValueKey("InvenBtnEffActive", em.inventoryBtnEffect.activeSelf);
+            StoredData.SetValueKey("StatBtnEffActive", em.statBtnEffect.activeSelf);
+            StoredData.SetValueKey("MonColBtnEffActive", em.monColBtnEffect.activeSelf);
+            
+            em.inventoryBtnEffect.SetActive(false);
+            em.statBtnEffect.SetActive(false);
+            em.monColBtnEffect.SetActive(false);
+        }
+        else
+        {
+            em.inventoryBtnEffect.SetActive(StoredData.GetValueData<bool>("InvenBtnEffActive"));
+            em.statBtnEffect.SetActive(StoredData.GetValueData<bool>("StatBtnEffActive"));
+            em.monColBtnEffect.SetActive(StoredData.GetValueData<bool>("MonColBtnEffActive"));
+        }
     }
 }
 
