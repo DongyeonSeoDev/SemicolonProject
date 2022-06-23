@@ -4,12 +4,10 @@ using UnityEngine.UI;
 public class SaveSlot : MonoBehaviour
 {
     [SerializeField] private string saveFileName;
-    
-
 
     public void Init()
     {
-        
+        SaveFileStream.LoadGameSaveData(saveFileName);
     }
 
     public void OnStart()
@@ -19,6 +17,6 @@ public class SaveSlot : MonoBehaviour
 
     public void OnDelete()
     {
-        SaveFileStream.Delete(saveFileName, true);
+        SaveFileStream.DeleteGameSaveData(saveFileName);
     }
 }

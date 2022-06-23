@@ -36,6 +36,15 @@ MonoBehaviour:
   - {fileID: 11400000, guid: de89f082528c77b4194f3c2b98ff4c44, type: 2}
   - {fileID: 11400000, guid: a6118a698a6adee4497cfdeb19367951, type: 2}
   - {fileID: 11400000, guid: f6d4e31dacdfe524dbc4b81e017c9e40, type: 2}
+  monsterStages:
+  - {fileID: 11400000, guid: 72429167179995d46b3afd90e6b40961, type: 2}
+  - {fileID: 11400000, guid: d06c40c91c5cdbf4c8f20b6b7e695fdb, type: 2}
+  - {fileID: 11400000, guid: 6f2fe5a9c813b4647989a87ae006e53c, type: 2}
+  - {fileID: 11400000, guid: e480329aac300fd4ca30a940575587e4, type: 2}
+  - {fileID: 11400000, guid: 4b7b6724b67435a4c9adde958648dc3c, type: 2}
+  - {fileID: 11400000, guid: e4c2d1eb6410f6741bd3a48bc7e7f95c, type: 2}
+  - {fileID: 11400000, guid: 0a175aefabb155844997f965125854da, type: 2}
+  - {fileID: 11400000, guid: f6af987ae81407a45a06adba0935800a, type: 2}
   randomStageList:
   - stageNumber: 1
     nextStageTypes: 01000000

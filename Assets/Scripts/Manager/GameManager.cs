@@ -12,8 +12,6 @@ public partial class GameManager : MonoSingleton<GameManager>
 {
     #region Save
     private string savedJson, filePath;
-    private string cryptoText;
-    private readonly string cryptoKey = "XHUooeUjJzMKdt";
 
     [SerializeField] private SaveData saveData;
     public SaveData savedData => saveData; 
@@ -63,8 +61,8 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     private void Awake()
     {
-        //filePath = SaveFileStream.currentSaveFileName.PersistentDataPath();
-        filePath = Global.GAME_SAVE_FILE.PersistentDataPath();
+        //filePath = SaveFileStream.currentSaveFileName.PersistentDataPath();  //나중에 주석 풀음
+        filePath = Global.GAME_SAVE_FILE.PersistentDataPath();  // 나중에 주석
         saveData = new SaveData();
         KeyCodeToString.Init();
         StateManager.Instance.Init();
@@ -89,7 +87,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         SaveData();
 
         savedJson = JsonUtility.ToJson(saveData);
-        cryptoText = Crypto.Encrypt(savedJson, cryptoKey);
+        string cryptoText = Crypto.Encrypt(savedJson, SaveFileStream.CryptoKey); 
         SaveFileStream.Save(filePath, cryptoText);
         SaveFileStream.SaveOption();
     }
@@ -98,12 +96,14 @@ public partial class GameManager : MonoSingleton<GameManager>
     {
         Debug.Log("Load Start");
 
-        if (File.Exists(filePath))
+        if (File.Exists(filePath))  //나중에 주석
         {
             string code = File.ReadAllText(filePath);
-            savedJson = Crypto.Decrypt(code, cryptoKey);
+            savedJson = Crypto.Decrypt(code, SaveFileStream.CryptoKey);
             saveData = JsonUtility.FromJson<SaveData>(savedJson);
         }
+
+        //saveData = SaveFileStream.GetSaveData(SaveFileStream.currentSaveFileName);  //나중에 주석 풀음
 
         if(SaveFileStream.SaveOptionData==null)
         {

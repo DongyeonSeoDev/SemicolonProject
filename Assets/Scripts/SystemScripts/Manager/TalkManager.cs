@@ -206,6 +206,8 @@ public class TalkManager : MonoSingleton<TalkManager>
 
     public void SetSubtitle(string[] strs, float[] durations = null)
     {
+        Debug.Log("Debug : 대사를 할려고 함. 첫 대사 : " + strs[0]);
+
         ResetDialog();
         DOTween.To(() => 0, a => subCvsg.alpha = a, 1, 0.3f);
 
