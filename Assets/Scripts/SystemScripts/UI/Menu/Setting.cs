@@ -1,9 +1,9 @@
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+
 
 public class Setting : GameUI
 {
+
+
     public override void ExceptionHandle()
     {
         EffectManager em = EffectManager.Instance;
