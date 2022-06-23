@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
-public class MenuButton : UITransition
+public class MenuButton : UITransition  //메뉴에서 상단쪽에 있는 인벤 도감 스태 설정 선택버튼에 붙음
 {
     public Color transitionColor;
     private Color originColor;

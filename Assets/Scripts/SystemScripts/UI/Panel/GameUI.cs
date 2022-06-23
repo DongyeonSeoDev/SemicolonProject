@@ -35,10 +35,6 @@ public class GameUI : MonoBehaviour
         { childGameUI = childGameUI, cvsg = cvsg, originPos = originPos, rectTrm = rectTrm, _UItype = _UItype, transform = transform, self = this };
     }
 
-    /* private void OnEnable()
-     {
-         ActiveTransition(_UItype);
-     }*/
 
     public virtual void ActiveTransition()
     {
@@ -283,6 +279,11 @@ public class GameUI : MonoBehaviour
         }
     }
     
+    public virtual void ExceptionHandle()
+    {
+
+    }
+
     //리펙토링 필요
     private void OnDisable()
     {
