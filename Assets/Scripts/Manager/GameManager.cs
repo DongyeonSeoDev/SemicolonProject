@@ -164,6 +164,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         DOUtil.Reset();
         PoolManager.ClearAllPool();
         Global.RemoveAllKeys();
+        EventManager.ClearEvents();
     }
    
 #endregion
