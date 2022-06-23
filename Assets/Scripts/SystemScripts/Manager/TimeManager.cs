@@ -21,6 +21,15 @@ public static class TimeManager
 
     private static bool isLerp = false;
 
+    public static void Reset()
+    {
+        timePauseQueue.Clear();
+        currentTimeScale = 1f;
+        timePauseAction = null;
+        timeResumeAction = null;
+        isLerp = false;
+    }
+
     public static void TimePause(Action pauseAction = null)
     {
         if (!IsTimePaused)

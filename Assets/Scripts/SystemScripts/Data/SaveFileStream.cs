@@ -75,11 +75,14 @@ public static class SaveFileStream
     #region 공용 옵션 데이터 Save&Load
     public static void LoadOption()
     {
-        saveOptionData = new EternalOptionData();
-        string path = EternalOptionSaveFileName.PersistentDataPath();
-        if(File.Exists(path))
+        if (saveOptionData == null)
         {
-            saveOptionData = JsonUtility.FromJson<EternalOptionData>(File.ReadAllText(path));
+            saveOptionData = new EternalOptionData();
+            string path = EternalOptionSaveFileName.PersistentDataPath();
+            if (File.Exists(path))
+            {
+                saveOptionData = JsonUtility.FromJson<EternalOptionData>(File.ReadAllText(path));
+            }
         }
     }
 

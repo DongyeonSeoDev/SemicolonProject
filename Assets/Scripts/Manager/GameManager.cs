@@ -146,6 +146,16 @@ public partial class GameManager : MonoSingleton<GameManager>
         //UtilEditor.PauseEditor();
     }
 
+    public void ResetData()
+    {
+        TimeManager.Reset();
+        StoredData.Reset();
+        InteractionHandler.Reset();
+        StateManager.Instance.Reset();
+        DOUtil.Reset();
+        PoolManager.ClearAllPool();
+        Global.RemoveAllKeys();
+    }
    
 #endregion
 
@@ -453,6 +463,12 @@ public partial class GameManager : MonoSingleton<GameManager>
     public void QuitGame()
     {
         Application.Quit();
+    }
+
+    public void GoToTitleScene()
+    {
+        Save();
+        ResetData();
     }
 
     #region OnApplication

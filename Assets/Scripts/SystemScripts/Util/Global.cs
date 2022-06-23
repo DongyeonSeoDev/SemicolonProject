@@ -108,24 +108,6 @@ public static partial class Global
         return DoorDirType.BACK;
     }
 
-   /* public static string StateAbnorToString(StateAbnormality state)
-    {
-        switch(state)
-        {
-            case StateAbnormality.Pain:
-                return "고통";
-            case StateAbnormality.Poverty:
-                return "가난";
-            case StateAbnormality.Scar:
-                return "상처";
-            case StateAbnormality.Blind:
-                return "실명";
-            default:
-                Debug.Log("아직 설정하지 않음 : " + state.ToString());
-                return string.Empty;
-        }
-    }*/
-
     public static T[] GetEnumArr<T>() => (T[])Enum.GetValues(typeof(T));
 
     public static void TriggerEvent(this string key)

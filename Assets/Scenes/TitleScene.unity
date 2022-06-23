@@ -2184,6 +2184,7 @@ GameObject:
   - component: {fileID: 287762676}
   - component: {fileID: 287762675}
   - component: {fileID: 287762677}
+  - component: {fileID: 287762678}
   m_Layer: 5
   m_Name: LoadGamePanel (1)
   m_TagString: Untagged
@@ -2262,6 +2263,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dataNum: 0
+--- !u!114 &287762678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 287762673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80b557277b8cc0a4b9cf7031a0f4b149, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveFileName: SaveFile_11
 --- !u!1 &293048344
 GameObject:
   m_ObjectHideFlags: 0
@@ -4122,6 +4136,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0cee7cddec2d364f96e88cc737b5526, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  saveSlots:
+  - {fileID: 2004973233}
+  - {fileID: 287762678}
+  - {fileID: 1902719888}
 --- !u!4 &597230076
 Transform:
   m_ObjectHideFlags: 0
@@ -10207,6 +10225,7 @@ GameObject:
   - component: {fileID: 1902719886}
   - component: {fileID: 1902719885}
   - component: {fileID: 1902719887}
+  - component: {fileID: 1902719888}
   m_Layer: 5
   m_Name: LoadGamePanel (2)
   m_TagString: Untagged
@@ -10285,6 +10304,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dataNum: 0
+--- !u!114 &1902719888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1902719883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80b557277b8cc0a4b9cf7031a0f4b149, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveFileName: SaveFile_12
 --- !u!1 &1915037751
 GameObject:
   m_ObjectHideFlags: 0
@@ -11012,6 +11044,7 @@ GameObject:
   - component: {fileID: 2004973231}
   - component: {fileID: 2004973230}
   - component: {fileID: 2004973232}
+  - component: {fileID: 2004973233}
   m_Layer: 5
   m_Name: LoadGamePanel
   m_TagString: Untagged
@@ -11090,6 +11123,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dataNum: 0
+--- !u!114 &2004973233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2004973228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80b557277b8cc0a4b9cf7031a0f4b149, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveFileName: SaveFile_10
 --- !u!1 &2013456179
 GameObject:
   m_ObjectHideFlags: 0
