@@ -1574,7 +1574,7 @@ MonoBehaviour:
   abspNoticeStartOffset: {x: 464, y: -124}
   absorptionNoticeDelay: 0.2
   absorptionNoticeTime: 2
-  assimNoticeInterval: 10
+  assimNoticeInterval: 25
   missionCvsg: {fileID: 1371298016450563872}
   missionContent: {fileID: 1371298016173754431}
 --- !u!1 &49092998971717144

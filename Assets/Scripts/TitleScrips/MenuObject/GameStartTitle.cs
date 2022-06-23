@@ -17,6 +17,7 @@ public class GameStartTitle : TitleObject
 
         loadingWindowObj.SetActive(true);
 
+        EventManager.TriggerEvent("StartNewGame"); //새 게임 버튼 누르고 씬 넘어가기 전 이벤트
         LoadSceneManager.Instance.LoadScene(progressBar, progressText, "StageScene");
     }
 

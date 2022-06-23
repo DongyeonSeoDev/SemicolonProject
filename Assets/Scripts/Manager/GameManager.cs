@@ -478,7 +478,6 @@ public partial class GameManager : MonoSingleton<GameManager>
     public void GoToTitleScene()
     {
         EventManager.TriggerEvent("GotoNextStage_LoadingStart");
-        //敲饭捞绢 公利贸府
         Save();
         ResetData();
         UIManager.Instance.StartLoading(() => SceneManager.LoadScene("TitleScene"), null, 0.5f, 15);

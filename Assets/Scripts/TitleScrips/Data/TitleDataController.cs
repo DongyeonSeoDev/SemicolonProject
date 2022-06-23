@@ -1,5 +1,3 @@
-using System;
-using System.IO;
 using UnityEngine;
 
 public class TitleDataController : MonoBehaviour
@@ -14,6 +12,13 @@ public class TitleDataController : MonoBehaviour
         {
             saveSlots[i].Init();
         }
+
+        EventManager.StartListening("StartNewGame", StartNewGame);
+        EventManager.StartListening("StartStageScene", () =>
+        {
+            Save();
+            StoredData.Reset();
+        });
     }
 
     public void Save()
@@ -23,7 +28,17 @@ public class TitleDataController : MonoBehaviour
 
     public void StartNewGame()
     {
+        for (int i = 0; i < saveSlots.Length; i++)
+        {
+            if(saveSlots[i].IsEmptySlot)
+            {
+                saveSlots[i].OnStart();
+                break;
+            }
+        }
 
+        Debug.Log("ºó ½½·ÔÀÌ ¾øÀ½");
+        //ºó ½½·Ô ¾øÀ» ¶§ÀÇ Ã³¸®
     }
 
     #region OnApplication
