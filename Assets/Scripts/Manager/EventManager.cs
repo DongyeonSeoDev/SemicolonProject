@@ -727,5 +727,26 @@ public partial class EventManager
             Debug.LogWarning("The Linked ActionsNum is zero of The '" + eventName + "' Event but you tried 'TriggerEvent'");
         }
     }
+
     #endregion
+    public static void ClearEvents()
+    {
+        eventDictionary.Clear();
+        bool_eventDictionary.Clear();
+        int_eventDictionary.Clear();
+        float_eventDictionary.Clear();
+        float_float_eventDictionary.Clear();
+        str_eventDictionary.Clear();
+        str_bool_eventDictionary.Clear();
+        str_float_eventDictionary.Clear();
+        str_int_eventDictionary.Clear();
+        vec2_EventDictionary.Clear();
+        vec2_bool_EventDictionary.Clear();
+        vec2_float_float_eventDictionary.Clear();
+        gmo_EventDictionary.Clear();
+        gmo_str_EventDictionary.Clear();
+        gmo_int_EventDictionary.Clear();
+        gmo_str_bool_EventDictionary.Clear();
+        gmo_vec2_int_EventDictionary.Clear();
+    }
 }
