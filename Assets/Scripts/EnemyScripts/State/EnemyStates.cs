@@ -16,6 +16,8 @@ namespace Enemy
         protected override void Start()
         {
             EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Move, enemyData.enemyAnimator, TriggerType.SetTrigger);
+            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Player, enemyData.enemyAnimator, enemyData.isUseIdleAnimation);
+
             base.Start();
         }
 
@@ -27,6 +29,8 @@ namespace Enemy
             {
                 enemyData.enemySpriteRotateCommand.Execute();
             }
+
+            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Idle, enemyData.enemyAnimator, enemyData.enemyRigidbody2D.velocity.magnitude < 1.2f);
 
             base.Update();
         }

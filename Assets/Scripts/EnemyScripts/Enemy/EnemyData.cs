@@ -91,6 +91,7 @@ namespace Enemy
         public bool isNoStun = false;
         public bool isNoAttack = false;
         public bool isParrying = false;
+        public bool isUseIdleAnimation = false;
 
         public int minAttackCount = 0;
         public int maxAttackCount = 0;

@@ -11,7 +11,9 @@ namespace Enemy
         Hit,
         Move,
         Attack,
-        AttackEnd
+        AttackEnd,
+        Idle,
+        Player
     }
 
     [System.Serializable]
