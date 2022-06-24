@@ -32,15 +32,14 @@ public class TitleMenu : MonoBehaviour
             menus[i].curTitleObjIdx = i;
         }
 
-        menuIdx = 0;
         maxMenuIdx = menus.Count - 1;
-        menuTitleObjectHighlighter.transform.position = menus[0].transform.position;
     }
     void Update()
     {
         CheckMenuIdx();
         DoMenuWork();
     }
+        
     public void SetMenuIdx(int idx)
     {
         if (!canSetMenuIdx || idx == menuIdx)
