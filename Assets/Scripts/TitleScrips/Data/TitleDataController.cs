@@ -33,7 +33,7 @@ public class TitleDataController : MonoBehaviour
             if(saveSlots[i].IsEmptySlot)
             {
                 saveSlots[i].OnStart();
-                break;
+                return;
             }
         }
 

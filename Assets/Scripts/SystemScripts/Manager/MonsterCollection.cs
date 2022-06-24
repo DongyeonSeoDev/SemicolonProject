@@ -158,8 +158,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             {
                 ChangeLearningStateKill(id, true);
             }
-            //Util.DelayFunc(() => UpdateMonsterDetailPanel(id), 0.3f)
-        });  ////몹 잡았는데 몹 자세히 보기 열려있으면 새로고침하는데 함수 호출 순서 이슈때문에 약간의 딜레이를 줌
+        });  
     }
 
     public void UpdateUnderstanding(string id)  //몹 동화율 정보 업뎃

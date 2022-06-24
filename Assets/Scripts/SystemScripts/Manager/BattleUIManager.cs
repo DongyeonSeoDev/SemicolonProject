@@ -40,7 +40,10 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
     public TextMeshProUGUI missionContent;
     private RectTransform missionPanelRt;
     private Vector2 missionPanelPos;
+
     private Dictionary<MissionType, Mission> allMissionsDic = new Dictionary<MissionType, Mission>();
+
+    private Dictionary<MissionType, int> missionExCountDic = new Dictionary<MissionType, int>();
     private List<Mission> currentMissions = new List<Mission>();
     private Pair<MissionType, short> prevMission = new Pair<MissionType, short>(MissionType.NONE, 0);
 
