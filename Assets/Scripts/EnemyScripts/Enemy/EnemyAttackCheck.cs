@@ -164,7 +164,7 @@ namespace Enemy
                         getBullet.isComplete = true;
                         getBullet.RemoveBullet();
 
-                        var bullet = EnemyPoolManager.Instance.GetPoolObject(Type.Bullet, getBullet.transform.position).GetComponent<EnemyBullet>();
+                        var bullet = EnemyPoolManager.Instance.GetPoolObject(getBullet.poolType, getBullet.transform.position).GetComponent<EnemyBullet>();
                         bullet.Init(EnemyController.AI, -getBullet.targetDirection, getBullet.attackDamage, Color.magenta, null, 2);
                         bullet.isReflection = true;
 
@@ -200,7 +200,7 @@ namespace Enemy
                         enemyBullet.isComplete = true;
                         enemyBullet.RemoveBullet();
 
-                        var playerBullet = EnemyPoolManager.Instance.GetPoolObject(Type.Bullet, enemyBullet.transform.position).GetComponent<EnemyBullet>();
+                        var playerBullet = EnemyPoolManager.Instance.GetPoolObject(enemyBullet.poolType, enemyBullet.transform.position).GetComponent<EnemyBullet>();
                         playerBullet.Init(EnemyController.PLAYER, -enemyBullet.targetDirection, enemyBullet.attackDamage, Color.green, this.enemy, 2);
                         playerBullet.isReflection = true;
 
