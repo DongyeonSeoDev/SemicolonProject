@@ -5,6 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using Water;
 using DG.Tweening;
+using System.Linq;
 
 public class BattleUIManager : MonoSingleton<BattleUIManager>   
 {
@@ -43,7 +44,7 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
 
     private Dictionary<MissionType, Mission> allMissionsDic = new Dictionary<MissionType, Mission>();
 
-    private Dictionary<MissionType, int> missionExCountDic = new Dictionary<MissionType, int>();
+    private Dictionary<MissionType, int> missionWeightDic = new Dictionary<MissionType, int>();
     private List<Mission> currentMissions = new List<Mission>();
     private Pair<MissionType, short> prevMission = new Pair<MissionType, short>(MissionType.NONE, 0);
 
@@ -117,6 +118,11 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
         allMissionsDic.Add(MissionType.NOQUIKSLOT, new NoQuikSlotMission("퀵슬롯을 사용하지 않고 클리어하세요"));
         allMissionsDic.Add(MissionType.ALLABSORPTION, new AllAbsorptionMission("모든 적을 흡수하세요"));
         //allMissionsDic.Add(MissionType.SURVIVAL, new SurvivalMission("30초 동안 살아남으세요", 30f));
+
+        foreach(MissionType type in allMissionsDic.Keys)
+        {
+            missionWeightDic.Add(type, 5);
+        }
         #endregion
     }
 
@@ -208,27 +214,51 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
         endedAbspNoticeQueue.Enqueue(ui);
     }
 
+    private Mission GetRandomMission()  //미션을 랜덤으로 부여받음. 가중치 확률
+    {
+        int total = 0, weight = 0, i;
+        List<MissionType> list = StageManager.Instance.CurrentStageData.missionTypes;
+        for(i = 0; i< list.Count; i++)
+            total += missionWeightDic[list[i]];
+        
+        int selNum = Mathf.RoundToInt(total * Random.Range(0f, 1f));
+
+        for(i=0; i< list.Count; i++)
+        {
+            weight += missionWeightDic[list[i]];
+            if(selNum < weight)
+            {
+                return allMissionsDic[list[i]];
+            }
+        }
+
+        return GetRandomMission();
+    }
+
+    private void MissionRandomInCounter(Mission ms)  //미션 랜덤 인카운터
+    {
+        if (ms.missionType != prevMission.first)
+        {
+            prevMission.first = ms.missionType;
+            prevMission.second = 0;
+        }
+        else if (++prevMission.second >= 2)
+        {
+            if (StageManager.Instance.CurrentStageData.missionTypes.Count > 1)
+            {
+                ms = allMissionsDic[StageManager.Instance.CurrentStageData.missionTypes.FindRandom(x => x != ms.missionType)];
+            }
+        }
+    }
     
-    public void EnteredMonsterArea()
+    public void EnteredMonsterArea()  //몬스터 구역 들가면 미션 할당
     {
         if (StageManager.Instance.CurrentAreaType == AreaType.MONSTER && StageManager.Instance.CurrentStageData.missionTypes.Count > 0)
         {
-            Mission ms = allMissionsDic[StageManager.Instance.CurrentStageData.missionTypes[Random.Range(0, StageManager.Instance.CurrentStageData.missionTypes.Count)]];
+            Mission ms = GetRandomMission();
+            MissionRandomInCounter(ms);
 
-            //랜덤 인카운터
-            if (ms.missionType != prevMission.first)
-            {
-                prevMission.first = ms.missionType;
-                prevMission.second = 0;
-            }
-            else if(++prevMission.second >= 2)
-            {
-                if(StageManager.Instance.CurrentStageData.missionTypes.Count > 1)
-                {
-                    ms = allMissionsDic[StageManager.Instance.CurrentStageData.missionTypes.FindRandom(x=>x!=ms.missionType)];
-                }
-            }
-
+            missionWeightDic[ms.missionType]--;
             currentMissions.Add(ms);
             ms.Start();
 
@@ -244,7 +274,7 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
         }
     }
 
-    public void DisableMission(int index = -1)
+    public void DisableMission(int index = -1) //현재진행중인 미션 리스트에서 제거하고 UI제거
     {
         if(index >= 0)
            currentMissions.RemoveAt(index);
@@ -254,7 +284,7 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
         missionPanelRt.DOAnchorPos(missionPanelPos + new Vector2(200, 0), 0.4f).OnComplete(() => missionCvsg.gameObject.SetActive(false));
     }
 
-    private void DeleteAllMissions()
+    private void DeleteAllMissions() //진행중인 모든 미션 종료
     {
         if (currentMissions.Count > 0)
         {
@@ -267,7 +297,7 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
         }
     }
 
-    public void ShakeMissionPanel(float duration = 0.6f, float strength = 10f)
+    public void ShakeMissionPanel(float duration = 0.6f, float strength = 10f) //미션 UI 흔들림
     {
         missionPanelRt.DOShakeAnchorPos(duration, strength);
     }
