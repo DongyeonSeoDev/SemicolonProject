@@ -319,9 +319,6 @@ namespace Enemy
 
             EnemyManager.Instance.EnemyDestroy();
 
-            EventManager.TriggerEvent("EnemyDead", gameObject, enemyData.enemyType.ToString()); // MonsterCollection부분의 코드가 이벤트의 매개변수 갯수 변동으로
-                                                                                                // 인해 작동하지 않을 것을 대비한 임시방편 머지 후에 수정할것
-
             EventManager.TriggerEvent("EnemyDead", gameObject, enemyData.enemyType.ToString(), false); // 3번째 매개변수는 흡수로인해 죽은것인가를 보내줌
         }
 
@@ -331,9 +328,6 @@ namespace Enemy
             gameObject.SetActive(false);
 
             EnemyManager.Instance.EnemyDestroy();
-
-            EventManager.TriggerEvent("EnemyDead", gameObject, enemyData.enemyType.ToString()); // MonsterCollection부분의 코드가 이벤트의 매개변수 갯수 변동으로
-                                                                                                // 인해 작동하지 않을 것을 대비한 임시방편 머지 후에 수정할것
 
             EventManager.TriggerEvent("EnemyDead", gameObject, enemyData.enemyType.ToString(), true);
         }
