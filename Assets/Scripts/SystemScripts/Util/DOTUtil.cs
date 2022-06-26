@@ -257,23 +257,10 @@ namespace FkTweening
             }
         }
         #endregion
+
+        public static void Reset()
+        {
+            tweeningDict.Clear();
+        }
     }
-
-    /*public class CTween
-    {
-        public string key;
-        public Action tween;
-
-        public void Invoke()
-        {
-            tween?.Invoke();
-        }
-
-        public CTween() { }
-        public CTween(string key, Action tween)
-        {
-            this.tween = tween;
-            this.key = key;
-        }
-    }*/
 }

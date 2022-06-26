@@ -44,9 +44,9 @@ public class EffectManager : MonoSingleton<EffectManager>
     public GameObject statBtnEffect;
     public GameObject monColBtnEffect;
 
-    public MulSpriteColorCtrl invenMSC;
-    public MulSpriteColorCtrl statMSC;
-    public MulSpriteColorCtrl mobMSC;
+    //public MulSpriteColorCtrl invenMSC;
+    //public MulSpriteColorCtrl statMSC;
+    //public MulSpriteColorCtrl mobMSC;
 
     #region touch effect
     public string TouchEffKey { private get; set; }

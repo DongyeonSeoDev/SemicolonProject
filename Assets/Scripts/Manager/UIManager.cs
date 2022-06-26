@@ -573,7 +573,7 @@ public partial class UIManager : MonoSingleton<UIManager>
                 if(!Util.IsActiveGameUI(type))
                 {
                     Inventory.Instance.SetActiveUseableMark(false);
-                    invenHpInfo.first.fillAmount = (float)sgm.Player.PlayerStat.currentHp / sgm.Player.PlayerStat.MaxHp;
+                    invenHpInfo.first.fillAmount = sgm.Player.PlayerStat.currentHp / sgm.Player.PlayerStat.MaxHp;
                     invenHpInfo.second.text = string.Concat("HP : ", Mathf.Ceil(Mathf.Clamp(sgm.Player.PlayerStat.currentHp, 0, sgm.Player.PlayerStat.MaxHp)), '/', Mathf.Ceil(sgm.Player.PlayerStat.MaxHp));
                     invenHpEffMaskInfo.first.localScale = new Vector3(invenHpEffMaskInfo.second * invenHpInfo.first.fillAmount, invenHpEffMaskInfo.second, invenHpEffMaskInfo.second);
                 }
@@ -587,13 +587,6 @@ public partial class UIManager : MonoSingleton<UIManager>
                 }
                 if (KeyActionManager.Instance.IsChangingKeySetting)  //키세팅 변경 중에는 esc로 키세팅 UI 안꺼지게
                     return true;
-                break;
-            case UIType.SETTING:
-                for(int i=0; i<gameMenuList.Count; i++)
-                {
-                    if (gameMenuList[i].gameObject.activeSelf)     //설정 속의 메뉴 UI가 켜져있는 중에는 설정창 못 끄게
-                        return true;
-                }
                 break;
             case UIType.MONSTERINFO_DETAIL:  //몹 드랍템 정보창이나 추가스탯 창 UI켜져있으면 몹 정보 자세히 보기 UI 상호작용 여닫기 X
                 if (Util.IsActiveGameUI(UIType.MONSTERINFO_DETAIL_ITEM) || Util.IsActiveGameUI(UIType.MONSTERINFO_DETAIL_STAT) || Util.IsActiveGameUI(UIType.MONSTERINFO_DETAIL_FEATURE))
@@ -651,6 +644,10 @@ public partial class UIManager : MonoSingleton<UIManager>
                     KeyActionManager.Instance.SetAutoQuikSlotItem();
                 }
                 break;
+        }
+        if(!bValue)
+        {
+            gameUIList[(int)type].ExceptionHandle();
         }
         return bValue;
     }

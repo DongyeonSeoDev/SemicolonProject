@@ -28,6 +28,7 @@ namespace Enemy
             enemyData.startAttackDelay = 0.5f;
             enemyData.minAttackCount = 3;
             enemyData.maxAttackCount = 5;
+            enemyData.isUseIdleAnimation = true;
 
             enemyData.enemyMoveCommand = new EnemyLongDistanceFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed, enemyData.isAttackPlayerDistance - 2f, moveDelay);
             enemyData.enemySpriteRotateCommand = new EnemySpriteRotateCommand(enemyData);

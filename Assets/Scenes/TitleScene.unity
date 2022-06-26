@@ -947,6 +947,8 @@ GameObject:
   - component: {fileID: 111437886}
   - component: {fileID: 111437885}
   - component: {fileID: 111437884}
+  - component: {fileID: 111437888}
+  - component: {fileID: 111437887}
   m_Layer: 5
   m_Name: GameStartBtn
   m_TagString: Untagged
@@ -1056,6 +1058,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 111437882}
   m_CullTransparentMesh: 1
+--- !u!114 &111437887
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111437882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f277daceb9cb25e49a71316302b10da9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionEnable: 1
+  transitionTime: 0.2
+  targetScale: {x: 1.1, y: 1.1, z: 1.1}
+  useSound: 1
+  soundId: UIMouseEnterSFX4
+--- !u!114 &111437888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 111437882}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
 --- !u!1 &112287296
 GameObject:
   m_ObjectHideFlags: 0
@@ -2184,6 +2216,7 @@ GameObject:
   - component: {fileID: 287762676}
   - component: {fileID: 287762675}
   - component: {fileID: 287762677}
+  - component: {fileID: 287762678}
   m_Layer: 5
   m_Name: LoadGamePanel (1)
   m_TagString: Untagged
@@ -2262,6 +2295,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dataNum: 0
+--- !u!114 &287762678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 287762673}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80b557277b8cc0a4b9cf7031a0f4b149, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveFileName: SaveFile_11
+  continueBtn: {fileID: 111437884}
 --- !u!1 &293048344
 GameObject:
   m_ObjectHideFlags: 0
@@ -4122,7 +4169,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0cee7cddec2d364f96e88cc737b5526, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
   saveSlots: []
+=======
+  saveSlots:
+  - {fileID: 2004973233}
+  - {fileID: 287762678}
+  - {fileID: 1902719888}
+>>>>>>> 1bc7db0d5e0dd4bf436f01d4f930476878e18efe
 --- !u!4 &597230076
 Transform:
   m_ObjectHideFlags: 0
@@ -6091,6 +6145,8 @@ GameObject:
   - component: {fileID: 985482214}
   - component: {fileID: 985482213}
   - component: {fileID: 985482212}
+  - component: {fileID: 985482216}
+  - component: {fileID: 985482215}
   m_Layer: 5
   m_Name: GameStartBtn
   m_TagString: Untagged
@@ -6200,6 +6256,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 985482210}
   m_CullTransparentMesh: 1
+--- !u!114 &985482215
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 985482210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f277daceb9cb25e49a71316302b10da9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionEnable: 1
+  transitionTime: 0.2
+  targetScale: {x: 1.1, y: 1.1, z: 1.1}
+  useSound: 1
+  soundId: UIMouseEnterSFX4
+--- !u!114 &985482216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 985482210}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
 --- !u!1 &1006016728
 GameObject:
   m_ObjectHideFlags: 0
@@ -7998,6 +8084,8 @@ GameObject:
   - component: {fileID: 1366893520}
   - component: {fileID: 1366893519}
   - component: {fileID: 1366893518}
+  - component: {fileID: 1366893522}
+  - component: {fileID: 1366893521}
   m_Layer: 5
   m_Name: GameStartBtn
   m_TagString: Untagged
@@ -8107,6 +8195,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1366893516}
   m_CullTransparentMesh: 1
+--- !u!114 &1366893521
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1366893516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f277daceb9cb25e49a71316302b10da9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionEnable: 1
+  transitionTime: 0.2
+  targetScale: {x: 1.1, y: 1.1, z: 1.1}
+  useSound: 1
+  soundId: UIMouseEnterSFX4
+--- !u!114 &1366893522
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1366893516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
 --- !u!1 &1371778366
 GameObject:
   m_ObjectHideFlags: 0
@@ -10208,6 +10326,7 @@ GameObject:
   - component: {fileID: 1902719886}
   - component: {fileID: 1902719885}
   - component: {fileID: 1902719887}
+  - component: {fileID: 1902719888}
   m_Layer: 5
   m_Name: LoadGamePanel (2)
   m_TagString: Untagged
@@ -10286,6 +10405,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dataNum: 0
+--- !u!114 &1902719888
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1902719883}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80b557277b8cc0a4b9cf7031a0f4b149, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveFileName: SaveFile_12
+  continueBtn: {fileID: 1366893518}
 --- !u!1 &1915037751
 GameObject:
   m_ObjectHideFlags: 0
@@ -11013,6 +11146,7 @@ GameObject:
   - component: {fileID: 2004973231}
   - component: {fileID: 2004973230}
   - component: {fileID: 2004973232}
+  - component: {fileID: 2004973233}
   m_Layer: 5
   m_Name: LoadGamePanel
   m_TagString: Untagged
@@ -11091,6 +11225,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dataNum: 0
+--- !u!114 &2004973233
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2004973228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80b557277b8cc0a4b9cf7031a0f4b149, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveFileName: SaveFile_10
+  continueBtn: {fileID: 985482212}
 --- !u!1 &2013456179
 GameObject:
   m_ObjectHideFlags: 0

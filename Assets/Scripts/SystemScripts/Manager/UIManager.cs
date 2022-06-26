@@ -20,7 +20,6 @@ public partial class UIManager : MonoSingleton<UIManager>
     public Canvas[] gameCanvases;  //overlay 아닌 애들
     #endregion
 
-    [HideInInspector] public List<Menu> gameMenuList = new List<Menu>();
     [HideInInspector] public List<InteractionNoticeUI> itrNoticeList = new List<InteractionNoticeUI>();
 
     public Pair<GameObject, Transform> noticeUIPair;

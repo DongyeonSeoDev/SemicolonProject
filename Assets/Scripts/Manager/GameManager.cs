@@ -7,6 +7,7 @@ using System.IO;
 using Water;
 using UnityEditor;
 using FkTweening;
+using UnityEngine.SceneManagement;
 
 public partial class GameManager : MonoSingleton<GameManager>
 {
@@ -61,8 +62,10 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     private void Awake()
     {
-        //filePath = SaveFileStream.currentSaveFileName.PersistentDataPath();  //나중에 주석 풀음
-        filePath = Global.GAME_SAVE_FILE.PersistentDataPath();  // 나중에 주석
+        string fileName = SaveFileStream.currentSaveFileName.AlternateIfEmpty(Global.GAME_SAVE_FILE); //실제 게임에서는 Global.GAME_SAVE_FILE가 파일 이름으로 가지는 않음
+        SaveFileStream.currentSaveFileName = fileName;
+        filePath = fileName.PersistentDataPath();
+
         saveData = new SaveData();
         KeyCodeToString.Init();
         StateManager.Instance.Init();
@@ -96,16 +99,22 @@ public partial class GameManager : MonoSingleton<GameManager>
     {
         Debug.Log("Load Start");
 
-        if (File.Exists(filePath))  //나중에 주석
+        if (SaveFileStream.currentSaveFileName == Global.GAME_SAVE_FILE) //테스트를 위한 조건문
         {
-            string code = File.ReadAllText(filePath);
-            savedJson = Crypto.Decrypt(code, SaveFileStream.CryptoKey);
-            saveData = JsonUtility.FromJson<SaveData>(savedJson);
+            Debug.Log("Test Save File Load Start");
+            if (File.Exists(filePath))
+            {
+                string code = File.ReadAllText(filePath);
+                savedJson = Crypto.Decrypt(code, SaveFileStream.CryptoKey);
+                saveData = JsonUtility.FromJson<SaveData>(savedJson);
+            }
+        }
+        else  //실제 게임에서는 무조건 이쪽으로 옴
+        {
+            saveData = SaveFileStream.GetSaveData(SaveFileStream.currentSaveFileName);
         }
 
-        //saveData = SaveFileStream.GetSaveData(SaveFileStream.currentSaveFileName);  //나중에 주석 풀음
-
-        if(SaveFileStream.SaveOptionData==null)
+        if(SaveFileStream.SaveOptionData==null)  //테스트를 위한 조건문. 실제 게임에서는 타이틀에서 아래 코드 실행
         {
             SaveFileStream.LoadOption();
         }
@@ -146,6 +155,17 @@ public partial class GameManager : MonoSingleton<GameManager>
         //UtilEditor.PauseEditor();
     }
 
+    public void ResetData()
+    {
+        TimeManager.Reset();
+        StoredData.Reset();
+        InteractionHandler.Reset();
+        StateManager.Instance.Reset();
+        DOUtil.Reset();
+        PoolManager.ClearAllPool();
+        Global.RemoveAllKeys();
+        EventManager.ClearEvents();
+    }
    
 #endregion
 
@@ -455,12 +475,23 @@ public partial class GameManager : MonoSingleton<GameManager>
         Application.Quit();
     }
 
+    public void GoToTitleScene()
+    {
+        EventManager.TriggerEvent("GotoNextStage_LoadingStart");
+        Save();
+        ResetData();
+        UIManager.Instance.StartLoading(() => SceneManager.LoadScene("TitleScene"), null, 0.5f, 15);
+    }
+
     #region OnApplication
     private void OnApplicationQuit()
     {
         Save();
         gameQuitEvent?.Invoke();
     }
+//#if UNITY_EDITOR
+//#else
+//#endif
     private void OnApplicationFocus(bool focus)
     {
         if (!focus)
@@ -475,5 +506,5 @@ public partial class GameManager : MonoSingleton<GameManager>
             Save();
         }
     }
-#endregion
+    #endregion
 }

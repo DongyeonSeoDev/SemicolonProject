@@ -63,14 +63,7 @@ namespace Water
             }
 
         }
-        /*public static void PoolObjSetActiveFalse(string[] keys)
-        {
-            for (int i = 0; i < keys.Length; i++)
-            {
-                if (poolDic.ContainsKey(keys[i]))
-                    poolDic[keys[i]].PoolSetActiveFalse();
-            }
-        }*/
+     
 
         public static bool IsContainKey(string key) => poolDic.ContainsKey(key);
 

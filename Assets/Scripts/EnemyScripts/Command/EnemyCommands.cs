@@ -148,11 +148,13 @@ namespace Enemy
             this.followDistance = followDistance;
 
             this.moveDelay = moveDelay;
+            
+            currentTime = moveDelay;
         }
 
         public override void Execute()
         {
-            if (currentTime > moveDelay)
+            if (currentTime >= moveDelay)
             {
                 currentTime = 0f;
 
