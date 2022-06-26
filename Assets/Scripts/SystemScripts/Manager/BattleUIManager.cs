@@ -45,11 +45,13 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
     private Dictionary<MissionType, Mission> allMissionsDic = new Dictionary<MissionType, Mission>();
 
     private Dictionary<MissionType, int> missionWeightDic = new Dictionary<MissionType, int>();
+    private List<MissionType> zeroWeightMsTypeList = new List<MissionType>();
     private List<Mission> currentMissions = new List<Mission>();
     private Pair<MissionType, short> prevMission = new Pair<MissionType, short>(MissionType.NONE, 0);
 
     #endregion
 
+    private StageManager sm;
 
     //흡수율 표시창에서 비어있는 다음 칸과 인덱스 가져옴
     public RectTransform NextEmptyNoticeSlot
@@ -128,6 +130,8 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
 
     private void Start()
     {
+        sm = StageManager.Instance;
+
         float i, maxAssimRate = PlayerEnemyUnderstandingRateManager.Instance.MaxUnderstandingRate;
         foreach(Enemy.EnemyType type in Global.GetEnumArr<Enemy.EnemyType>())
         {
@@ -217,7 +221,7 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
     private Mission GetRandomMission()  //미션을 랜덤으로 부여받음. 가중치 확률
     {
         int total = 0, weight = 0, i;
-        List<MissionType> list = StageManager.Instance.CurrentStageData.missionTypes;
+        List<MissionType> list = sm.CurrentStageData.missionTypes;
         for(i = 0; i< list.Count; i++)
             total += missionWeightDic[list[i]];
         
@@ -244,21 +248,45 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
         }
         else if (++prevMission.second >= 2)
         {
-            if (StageManager.Instance.CurrentStageData.missionTypes.Count > 1)
+            if (sm.CurrentStageData.missionTypes.Count > 1)
             {
-                ms = allMissionsDic[StageManager.Instance.CurrentStageData.missionTypes.FindRandom(x => x != ms.missionType)];
+                ms = allMissionsDic[sm.CurrentStageData.missionTypes.FindRandom(x => x != ms.missionType)];
             }
         }
     }
     
     public void EnteredMonsterArea()  //몬스터 구역 들가면 미션 할당
     {
-        if (StageManager.Instance.CurrentAreaType == AreaType.MONSTER && StageManager.Instance.CurrentStageData.missionTypes.Count > 0)
+        if (sm.CurrentAreaType == AreaType.MONSTER && sm.CurrentStageData.missionTypes.Count > 0)
         {
             Mission ms = GetRandomMission();
             MissionRandomInCounter(ms);
 
             missionWeightDic[ms.missionType]--;
+            if(missionWeightDic[ms.missionType] <= 0)
+            {
+                if(!zeroWeightMsTypeList.Contains(ms.missionType))
+                {
+                    zeroWeightMsTypeList.Add(ms.missionType);
+
+                    int count = 0;
+                    //몬스터 스테이지 세 턴 후에 다시 5번의 카운트 넣어줌
+                    System.Action action = null;
+                    action = () =>
+                    {
+                        if(sm.CurrentAreaType == AreaType.MONSTER)
+                        {
+                            if(++count >= 3)
+                            {
+                                missionWeightDic[ms.missionType] = 5;
+                                zeroWeightMsTypeList.Remove(ms.missionType);
+                                EventManager.StopListening(Global.EnterNextMap, action);
+                            }
+                        }
+                    };
+                    EventManager.StartListening(Global.EnterNextMap, action);
+                }
+            }
             currentMissions.Add(ms);
             ms.Start();
 
