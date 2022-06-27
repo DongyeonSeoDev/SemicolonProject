@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public partial class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
+public class MonoSingleton<T> : MonoBehaviour where T : MonoBehaviour
 {
     private static T instance = null;
     private static object lockObj = new object();
