@@ -25,24 +25,8 @@ namespace Enemy
         ResetTrigger,
     }
 
-    public class EnemyManager : MonoBehaviour
+    public class EnemyManager : MonoSingleton<EnemyManager>
     {
-        private static EnemyManager instance;
-        public static EnemyManager Instance
-        {
-            get
-            {
-                if (instance == null)
-                {
-                    Debug.Log("EnemyManager의 instance가 null입니다.");
-
-                    return null;
-                }
-
-                return instance;
-            }
-        }
-
         public int enemyCount;
         public bool isOnlyAbsorption = false;
 
@@ -73,18 +57,6 @@ namespace Enemy
             set => player = value;
         }
 
-        private void Awake()
-        {
-            if (instance != null)
-            {
-                Debug.Log("EnemyManager의 instance가 중복입니다.");
-
-                Destroy(gameObject);
-            }
-
-            instance = this;
-        }
-
         private void Start()
         {
             playerDrain = SlimeGameManager.Instance.CurrentPlayerBody.GetComponent<PlayerDrain>();
@@ -92,7 +64,7 @@ namespace Enemy
 
         public static float CanDrainPercent()
         {
-            return instance.playerDrain.PlayerDrainCol.CanDrainHpPercentage;
+            return Instance.playerDrain.PlayerDrainCol.CanDrainHpPercentage;
         }
 
         public static bool IsAttackPlayer(EnemyData data)

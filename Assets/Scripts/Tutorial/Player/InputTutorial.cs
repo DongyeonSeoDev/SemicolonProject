@@ -93,7 +93,12 @@ public class InputTutorial : MonoBehaviour
             "어둡다...",
             "근처에 누가 없을까..?",
             "왜 움직여지지 않는 거지"
-        };
+    };
+    private readonly string[] questionsStrArr =
+    {
+        "저기.. 무엇을 말하고 싶은지 모르겠어",
+        "나를 움직이게 해줄 힘을 줄 수 있니?"
+    };
 
 
 
@@ -112,6 +117,11 @@ public class InputTutorial : MonoBehaviour
     private bool skill0Clear = false;
     private bool skill1Clear = false;
     private bool skill2Clear = false;
+
+    private readonly int questionMarkStrCheckNum = 5;
+    private int questionMarkShowNum = 0;
+
+    private bool questionMarkStrArrShow = false;
 
     private void Awake()
     {
@@ -228,7 +238,7 @@ public class InputTutorial : MonoBehaviour
         }
             #endregion
 
-            if (!moveKeyClear && keyNotPressed && SlimeGameManager.Instance.Player.PlayerInput.IsPauseByTuto)
+        if (!moveKeyClear && keyNotPressed && SlimeGameManager.Instance.Player.PlayerInput.IsPauseByTuto)
         {
             keyNotPressTimer += Time.deltaTime;
 
@@ -242,6 +252,19 @@ public class InputTutorial : MonoBehaviour
         else
         {
             keyNotPressTimer = 0f;
+        }
+    }
+    private void QuestionMarkShowNumCheck()
+    {
+        if(questionMarkStrArrShow)
+        {
+            return;
+        }
+
+        if(questionMarkShowNum >= questionMarkStrCheckNum)
+        {
+            TalkManager.Instance.SetSubtitle(questionsStrArr);
+            questionMarkStrArrShow = true;
         }
     }
     private void CheckFixedKey(KeyAction keyAction)
@@ -261,11 +284,21 @@ public class InputTutorial : MonoBehaviour
             return;
         }
 
+        if(Input.GetKeyDown(KeySetting.fixedKeyDict[keyAction]))
+        {
+            if (KeyAction.ATTACK == keyAction)
+            {
+                questionMarkShowNum++;
+                QuestionMarkShowNumCheck();
+            }
+        }
+
         if (Input.GetKey(KeySetting.fixedKeyDict[keyAction]))
         {
             if (inputTutoDataDict.ContainsKey(keyAction) && !inputTutoDataDict[keyAction].timerStarted && !KeyActionManager.Instance.IsNoticingGetMove)
             {
                 //KeyActionManager.Instance.SetPlayerHeadText("?", 0.5f);
+
                 if (KeyAction.ATTACK == keyAction)
                 {
                     KeyActionManager.Instance.ShowQuestionMark();
@@ -273,16 +306,11 @@ public class InputTutorial : MonoBehaviour
                 else
                 {
                     KeyActionManager.Instance.ExclamationCharging(inputTutoDataDict[keyAction].pressTime, keyAction);
+
+                    CheckStartTimer(keyAction);
+
+                    keyNotPressed = false;
                 }
-
-                if (KeyAction.ATTACK == keyAction)
-                {
-                    return;
-                }
-
-                CheckStartTimer(keyAction);
-
-                keyNotPressed = false;
             }
         }
         
@@ -318,6 +346,20 @@ public class InputTutorial : MonoBehaviour
         if (SlimeGameManager.Instance.Player.PlayerInput.IsPauseByTuto)
         {
             return;
+        }
+
+        if(Input.GetKeyDown(KeySetting.keyDict[keyAction]))
+        {
+            if (KeyAction.SPECIALATTACK1 == keyAction || KeyAction.SPECIALATTACK2 == keyAction)
+            {
+                return;
+            }
+
+            if (inputTutoDataDict.ContainsKey(keyAction) && !inputTutoDataDict[keyAction].timerStarted)
+            {
+                questionMarkShowNum++;
+                QuestionMarkShowNumCheck();
+            }
         }
 
         if (Input.GetKey(KeySetting.keyDict[keyAction]))
