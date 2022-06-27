@@ -67,7 +67,14 @@ public class LoadSceneManager : MonoSingleton<LoadSceneManager>
 
         float timer = 0f;
 
-        while(!op.isDone)
+        progressBar.fillAmount = 0;
+
+        if (progressText != null)
+        {
+            progressText.text = string.Format("{0:0.00}%", progressBar.fillAmount * 100f);
+        }
+
+        while (!op.isDone)
         {
             if (op.progress < 0.9f)
             {
@@ -82,7 +89,7 @@ public class LoadSceneManager : MonoSingleton<LoadSceneManager>
 
                 if (progressBar != null)
                 {
-                    progressBar.fillAmount = Mathf.Lerp(0.9f, 1f, timer);
+                    progressBar.fillAmount = Mathf.Lerp(progressBar.fillAmount, 1f, timer);
                 }
                 else
                 {

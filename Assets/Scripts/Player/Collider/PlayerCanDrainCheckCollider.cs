@@ -56,7 +56,6 @@ public class PlayerCanDrainCheckCollider : MonoBehaviour
 
         if(enemy != null && enemy.EnemyHpPercent() > 0 && enemy.EnemyHpPercent() <= playerDrain.PlayerDrainCol.CanDrainHpPercentage)
         {
-            Debug.Log(enemy.EnemyHpPercent());
             EventManager.TriggerEvent("PlayerStop");
             EventManager.TriggerEvent("Tuto_CanDrainObject");
 
