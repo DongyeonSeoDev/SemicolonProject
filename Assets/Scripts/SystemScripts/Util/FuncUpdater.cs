@@ -25,4 +25,9 @@ public static class FuncUpdater
     {
         GameManager.Instance.RemoveUpdateAction(key);   
     }
+
+    public static void Add(Action action, Func<bool> bf)
+    {
+        GameManager.Instance.conditionUpdateAction.Add(new Pair<Action, Func<bool>>(action, bf));
+    }
 }

@@ -65,16 +65,6 @@ public partial class UIManager : MonoSingleton<UIManager>
     public InputField itemRemoveCntInput;
     #endregion
 
-    #region Prefab and Parent
-    [Space(20)]
-    public GameObject systemMsgPrefab, acquisitionTxtPrefab;
-    public Transform systemMsgParent, acquisitionTxtParent;
-
-    public GameObject mobSpeciesIconPref;
-    public GameObject npcNameUIPrefab; //NPC Name Text UI
-    public Transform npcUICvsTrm;  //
-    #endregion
-
     #region HP UI 관련
     [Space(10)]
     public Triple<Image, TextMeshProUGUI, Image> playerHPInfo;  //HPBar Image, HP Text (TMP), Green HPBar (Delay)
@@ -90,7 +80,6 @@ public partial class UIManager : MonoSingleton<UIManager>
     public bool IsSelecting => selWdStack.Count != 0;
 
     [Space(10)]
-    public Pair<GameObject, Transform> selWindowPair;
     public Pair<GameObject, Transform> selectionBtnPair;
     public GameObject iconSelBtn;
 
@@ -137,8 +126,6 @@ public partial class UIManager : MonoSingleton<UIManager>
 
 
     [SerializeField] private ResolutionOption resolutionOption;
-
-    //public Setting setting;
 
     public List<AcquisitionUI> acqUIList;
 
@@ -203,21 +190,13 @@ public partial class UIManager : MonoSingleton<UIManager>
         cvsgList.Add(ordinaryCvsg);
         cvsgList.Add(priorNormalPanelCvsg);
         cvsgList.Add(normalPanelCanvasg);
-
-        //setting.InitSet();
     }
 
     private void CreatePool()
     {
         //UI관련 풀 생성   Pool Create (related UI)
-        PoolManager.CreatePool(systemMsgPrefab, systemMsgParent, 5, "SystemMsg");
-        PoolManager.CreatePool(npcNameUIPrefab, npcUICvsTrm, 2, "NPCNameUI");
-        PoolManager.CreatePool(acquisitionTxtPrefab, acquisitionTxtParent, 5, "AcquisitionMsg");
         PoolManager.CreatePool(noticeUIPair.first, noticeUIPair.second, 2, "NoticeMsg");
-        PoolManager.CreatePool(interactionMarkPair.first, interactionMarkPair.second, 2, "InteractionMark");
-        PoolManager.CreatePool(selWindowPair.first, selWindowPair.second, 1, "SelWindow");
         PoolManager.CreatePool(selectionBtnPair.first, selectionBtnPair.second, 2, "SelBtn");
-        PoolManager.CreatePool(mobSpeciesIconPref, interactionMarkPair.second, 2, "MobSpeciesIcon");
         PoolManager.CreatePool(iconSelBtn, selectionBtnPair.second, 3, "IconSelBtn");
     }
 
@@ -358,8 +337,6 @@ public partial class UIManager : MonoSingleton<UIManager>
             {
                 return true;
             }
-
-            //KeyActionManager.Instance.SetPlayerHeadText("?", 0.5f);
             return false;
         }
 
@@ -404,10 +381,7 @@ public partial class UIManager : MonoSingleton<UIManager>
                     {
                         OnUIInteract(UIType.SETTING);
                     }
-                    /*else
-                    {
-                        KeyActionManager.Instance.SetPlayerHeadText("?", 0.5f);
-                    }*/
+     
                 }
             }
             else if (CheckInputAndActive(KeyAction.INVENTORY))
@@ -429,10 +403,6 @@ public partial class UIManager : MonoSingleton<UIManager>
             {
                 OnUIInteract(UIType.MONSTER_COLLECTION);
             }
-            /*else if (CheckInputAndActive(KeyAction.QUIT))
-            {
-                OnUIInteract(UIType.QUIT);
-            }*/
 
             //메뉴에서 쓰는 고정키들
             else if (Input.GetKeyDown(KeyCode.E) && Util.IsActiveGameUI(UIType.ITEM_DETAIL) && activeUIQueue.Count == 0)  //인벤에서 템 사용

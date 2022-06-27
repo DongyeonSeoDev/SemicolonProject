@@ -305,6 +305,7 @@ public class InitAcquisitionData
     public string explanation;
     public string addiExplanation;
     public Sprite UISpr;
+    public UnityEvent endEvent;
 }
 
 namespace Water

@@ -2,10 +2,8 @@ using System.Collections.Generic;
 using System.Collections;
 using UnityEngine;
 using System;
-using System.Text;
 using System.IO;
 using Water;
-using UnityEditor;
 using FkTweening;
 using UnityEngine.SceneManagement;
 
@@ -30,8 +28,6 @@ public partial class GameManager : MonoSingleton<GameManager>
     public GameObject foodBtnPrefab, ingredientImgPrefab;
     public Transform foodBtnParent, ingredientImgParent;
 
-    public GameObject itemPrefab, itemCloneEffectPrefab;
-
     public PoolBaseData[] poolBaseDatas;
     #endregion
 
@@ -54,11 +50,8 @@ public partial class GameManager : MonoSingleton<GameManager>
     private Dictionary<string, Action> updateActionDic = new Dictionary<string, Action>();
     private Queue<(string, Action)> updateActionAddQueue = new Queue<(string, Action)>();
     private Queue<(string, Action, bool)> updateActionRemoveQueue = new Queue<(string, Action, bool)>(); //키 , 함수 , 키를 삭제시킬지
+    [HideInInspector] public List<Pair<Action, Func<bool>>> conditionUpdateAction = new List<Pair<Action, Func<bool>>>();
     #endregion
-
-#if UNITY_EDITOR
-    public Dictionary<KeyCode, Action> testKeyInputActionDict = new Dictionary<KeyCode, Action>();
-#endif
 
     private void Awake()
     {
@@ -171,10 +164,6 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     private void Init()
     {
-        //saveData.userInfo = new UserInfo();  //UserInfo클래스의 저장 정보를 날림
-        //saveData.userInfo.userItems.ClearDic();
-        //saveData.userInfo.monsterInfoDic.ClearDic();
-
         List<Food> allFoods = new List<Food>(Resources.LoadAll<Food>(Global.foodDataPath));
         List<FoodButton> fbList = new List<FoodButton>();
         List<IngredientImage> igdImgList = new List<IngredientImage>();
@@ -214,15 +203,8 @@ public partial class GameManager : MonoSingleton<GameManager>
         });*/
 
         //풀 생성
-        PoolManager.CreatePool(itemPrefab, transform, 6, "Item");
-        PoolManager.CreatePool(itemCloneEffectPrefab, transform, 6, "ItemFollowEffect");
-        PoolManager.CreatePool(emptyPrefab, transform, 3, "EmptyObject");
-        PoolManager.CreatePool(Resources.Load<GameObject>("System/Etc/PlayerFollowEmptyObj"), transform, 2, "PlayerFollowEmptyObj");
-
-        for(int i=0; i<poolBaseDatas.Length; i++)
-            PoolManager.CreatePool(poolBaseDatas[i]);
+        for(int i=0; i<poolBaseDatas.Length; i++) PoolManager.CreatePool(poolBaseDatas[i]);
         
-
         //이벤트 정의
         EventManager.StartListening("PlayerDead", PlayerDead);
         EventManager.StartListening("PlayerRespawn", PlayerRespawnEvent);
@@ -259,6 +241,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         StoredData.SetGameObjectKey("Slime Follow Obj", slimeFollowObj.gameObject);
     }
 
+    #region Func Create And Remove
     public void AddUpdateAction(string key, Action action)
     {
         updateActionAddQueue.Enqueue((key, action));
@@ -273,10 +256,11 @@ public partial class GameManager : MonoSingleton<GameManager>
     {
         updateActionRemoveQueue.Enqueue((key, null, true));
     }
+    #endregion
 
     private void Update()
     {
-
+        #region Update Action
         UpdateEvent?.Invoke();
 
         while(updateActionAddQueue.Count > 0)
@@ -313,6 +297,20 @@ public partial class GameManager : MonoSingleton<GameManager>
             }
         }
 
+        for(int i=0; i<conditionUpdateAction.Count; i++)
+        {
+            if (conditionUpdateAction[i].second())
+            {
+                conditionUpdateAction.RemoveAt(i);
+                i--;
+            }
+            else
+            {
+                conditionUpdateAction[i].first();
+            }
+        }
+        #endregion
+
 #if UNITY_EDITOR
         foreach (KeyCode key in testKeyInputActionDict.Keys)
         {
@@ -324,12 +322,6 @@ public partial class GameManager : MonoSingleton<GameManager>
 #endif
     }
 
-    void PlayerDead()
-    {
-        PoolManager.PoolObjSetActiveFalse("ItemFollowEffect");
-        //PoolManager.PoolObjSetActiveFalse("EmptyObject");
-        StateManager.Instance.RemoveAllStateAbnormality(false);
-    }
 
 #region Item
 
@@ -464,12 +456,21 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     #endregion
 
+    #region Player
+    void PlayerDead()
+    {
+        PoolManager.PoolObjSetActiveFalse("ItemFollowEffect");
+        StateManager.Instance.RemoveAllStateAbnormality(false);
+    }
+
     public void RespawnPlayer()
     {
         UIManager.Instance.OnUIInteract(UIType.DEATH, true);
         UIManager.Instance.StartLoading(() => EventManager.TriggerEvent("PlayerRespawn"), () => EventManager.TriggerEvent("StartNextStage"));
     }
+    #endregion
 
+    #region System
     public void QuitGame()
     {
         Application.Quit();
@@ -482,6 +483,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         ResetData();
         UIManager.Instance.StartLoading(() => SceneManager.LoadScene("TitleScene"), null, 0.5f, 15);
     }
+    #endregion
 
     #region OnApplication
     private void OnApplicationQuit()

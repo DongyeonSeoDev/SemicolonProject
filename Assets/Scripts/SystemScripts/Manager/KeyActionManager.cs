@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using DG.Tweening;
 using FkTweening;
 using Water;
+using UnityEngine.Events;
 
 public class KeyActionManager : MonoSingleton<KeyActionManager>
 {
@@ -62,7 +63,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
     #endregion
 
     #region UI Init Gain Notice
-    private bool enableProcessGainUINotice = true;
+    [HideInInspector] public bool enableProcessGainUINotice = true;
     private Queue<InitGainType> initGainQueue = new Queue<InitGainType>();  //HP, 스킬 슬롯 등 얻고 UI 띄울 데이터 큐
     [SerializeField] private List<Pair<InitGainType, InitAcquisitionData>> initGainList;
     #endregion
@@ -149,6 +150,8 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         {
             UseQuikSlotItem();
         }
+
+        GetElementUpdate();
     }
 
     #region Quik Slot
@@ -518,9 +521,6 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
 
     public void GetElement(InitGainType type)
     {
-        if (initGainQueue.Count == 0)
-            TimeManager.TimePause();
-
         initGainQueue.Enqueue(type);
     }
 
@@ -534,6 +534,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
             {
                 if(initGainList[i].first == type)
                 {
+                    TimeManager.TimePause();
                     PoolManager.GetItem<AcquisitionTutorialNotice>("AcquisitionTutorialNotice").Set(initGainList[i].second);
                     break;
                 }

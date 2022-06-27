@@ -23,4 +23,15 @@ public class AcquisitionTutorialNotice : MonoBehaviour
         cvsg.DOFade(1, 0.39f).SetUpdate(true);
         transform.DOScale(Vector3.one, 0.4f).SetEase(Ease.OutBack).SetUpdate(true);
     }
+
+    public void Close()
+    {
+        transform.DOScale(SVector3.zeroPointSeven, 0.4f).SetEase(Ease.InBack).SetUpdate(true);
+        cvsg.DOFade(0, 0.41f).SetUpdate(true).OnComplete(() =>
+        {
+            KeyActionManager.Instance.enableProcessGainUINotice = true;
+            TimeManager.TimeResume();
+            gameObject.SetActive(false);
+        });
+    }
 }

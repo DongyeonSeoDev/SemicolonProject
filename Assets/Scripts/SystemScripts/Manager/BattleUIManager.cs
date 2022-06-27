@@ -142,16 +142,6 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
             }
             assimNoticeCheckDic.Add(type.ToString(), li);
         }
-
-#if UNITY_EDITOR
-        GameManager.Instance.testKeyInputActionDict.Add(KeyCode.K, () =>
-        {
-            foreach(MissionType key in missionWeightDic.Keys)
-            {
-                Debug.Log($"{key} : {missionWeightDic[key]}");
-            }
-        });
-#endif
     }
 
     private void Update()
