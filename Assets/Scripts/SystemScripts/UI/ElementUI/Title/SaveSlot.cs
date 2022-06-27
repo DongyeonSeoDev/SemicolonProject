@@ -7,6 +7,8 @@ public class SaveSlot : MonoBehaviour
 
     public Button continueBtn;
 
+    // 여기에 텍스트라던지 그런거 관련 매개변수들도 적어둔다.
+
     public bool IsEmptySlot => !SaveFileStream.HasSaveData(saveFileName);
 
     public void Init()

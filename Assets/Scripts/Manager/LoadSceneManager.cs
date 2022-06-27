@@ -68,7 +68,7 @@ public class LoadSceneManager : MonoSingleton<LoadSceneManager>
         float timer = 0f;
 
         progressBar.fillAmount = 0;
-
+        
         if (progressText != null)
         {
             progressText.text = string.Format("{0:0.00}%", progressBar.fillAmount * 100f);
