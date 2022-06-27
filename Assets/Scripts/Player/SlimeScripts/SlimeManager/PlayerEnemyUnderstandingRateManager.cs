@@ -4,21 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Water;
 
-[Serializable]
-public struct ChangeBodyData
-{
-    public string bodyName;
-    public Enemy.EnemyType bodyId;
-    public GameObject body;
-    public EternalStat additionalBodyStat; // 변신 후의 플레이어의 Additional스탯, (이해도 100% 기준)
-    public Sprite bodyImg;
-    public ItemSO dropItem;
-    [TextArea] public string bodyExplanation;
-    [TextArea] public string featureExplanation;
-    [TextArea] public string hint;
-}
 public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnderstandingRateManager>
 {
+    private ChangableBodyDataScript changableBodyDataScript = null;
+
     private Dictionary<string, int> playerEnemyUnderStandingRateDict  = new Dictionary<string, int>();
     /// <summary>
     /// (공허의 유산) -> "자~ 잠시 개입하겠어요. 이거 쓰지 말고, GetUnderstandingRate나 SetUnderstandingRate를! 사용하라 맨이야."
@@ -28,11 +17,9 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
         get { return playerEnemyUnderStandingRateDict ; }
     }
 
-    [SerializeField]
-    private List<ChangeBodyData> changableBodyList = new List<ChangeBodyData>();
     public List<ChangeBodyData> ChangableBodyList
     {
-        get { return changableBodyList; }
+        get { return changableBodyDataScript.ChangableBodyList; }
     }
 
     private Dictionary<string, (GameObject, EternalStat)> changableBodyDict = new Dictionary<string, (GameObject, EternalStat)>();
@@ -87,9 +74,11 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
 
     private void Awake()
     {
+        changableBodyDataScript = GetComponent<ChangableBodyDataScript>();
+
         changableBodyDict.Clear();
 
-        changableBodyList.ForEach(x =>
+        changableBodyDataScript.ChangableBodyList.ForEach(x =>
         {
             // x.bodyScript = x.body.GetComponent<Enemy.Enemy>();
             changableBodyDict.Add(x.bodyId.ToString(), (x.body, x.additionalBodyStat));

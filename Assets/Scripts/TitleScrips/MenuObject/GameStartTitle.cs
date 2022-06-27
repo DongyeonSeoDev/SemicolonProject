@@ -6,6 +6,8 @@ using TMPro;
 public class GameStartTitle : TitleObject
 {
     [SerializeField]
+    private TitleDataController controller;
+    [SerializeField]
     private GameObject loadingWindowObj = null;
 
     public Image progressBar = null;
@@ -13,6 +15,13 @@ public class GameStartTitle : TitleObject
 
     public override void DoWork()
     {
+        if(controller.loadedSlotNum >= controller.maxSlotNum)
+        {
+            Debug.Log("¿ÃπÃ ¿˙¿Â ΩΩ∑‘¿Ã ∞°µÊ √°Ω¿¥œ¥Ÿ.");
+
+            return;
+        }
+
         Debug.Log("DoWork! Num : " + curTitleObjIdx);
 
         loadingWindowObj.SetActive(true);

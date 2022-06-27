@@ -2,7 +2,10 @@ using UnityEngine;
 
 public class TitleDataController : MonoBehaviour
 {
+    public readonly int maxSlotNum = 3;
+
     public SaveSlot[] saveSlots;
+    public int loadedSlotNum = 0;
 
     private void Awake()
     {
@@ -10,7 +13,10 @@ public class TitleDataController : MonoBehaviour
         SaveFileStream.LoadOption();
         for(int i = 0; i < saveSlots.Length; i++)
         {
-            saveSlots[i].Init();
+            if(saveSlots[i].Init())
+            {
+                loadedSlotNum++;
+            }
         }
 
         EventManager.StartListening("StartNewGame", StartNewGame);
