@@ -54,7 +54,7 @@ public static class SaveFileStream
         }
     }
 
-    public static SaveData GetSaveData(string saveFileName)
+    public static SaveData GetSaveData(string saveFileName, bool readOnly = false)
     {
         if (saveDataDic.ContainsKey(saveFileName))
         {
@@ -62,7 +62,9 @@ public static class SaveFileStream
         }
 
         SaveData data = new SaveData();
-        saveDataDic.Add(saveFileName, data);
+        if(!readOnly) 
+           saveDataDic.Add(saveFileName, data);
+
         return data;
     }
 
