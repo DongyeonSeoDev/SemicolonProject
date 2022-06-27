@@ -193,32 +193,56 @@ public class TalkManager : MonoSingleton<TalkManager>
     }
 
     #region Subtitle
-    public void SetSubtitle(string str, float duration = -1)
+    public void SetSubtitle(string str, float secondPerLit = 0.05f, float duration = 3f)
     {
         ResetDialog();
         DOTween.To(() => 0, a => subCvsg.alpha = a, 1, 0.3f);
         seq.Append(subtitleText.DOText(str, secondPerLit * str.Length));
-        seq.AppendInterval(duration < 0 ? durationPerLit * str.Length : duration);
+        seq.AppendInterval(duration);
         seq.Append(subCvsg.DOFade(0f, 0.3f));
         seq.AppendCallback(twcb3);
         seq.Play();
     }
 
-    public void SetSubtitle(string[] strs, float[] durations = null)
+    public void SetSubtitle(string[] strs, float[] secondPerLits = null, float[] durations = null, float[] intervals = null)
     {
-        Debug.Log("Debug : 대사를 할려고 함. 첫 대사 : " + strs[0]);
-
         ResetDialog();
         DOTween.To(() => 0, a => subCvsg.alpha = a, 1, 0.3f);
 
         void SubTxtEmpty() => subtitleText.text = string.Empty;
 
+        if(secondPerLits==null)
+        {
+            secondPerLits = new float[strs.Length];
+            for(int i=0; i< secondPerLits.Length; i++)
+            {
+                secondPerLits[i] = 0.1f;
+            }
+        }
+        if(durations==null)
+        {
+            durations = new float[strs.Length];
+            for (int i = 0; i < durations.Length; i++)
+            {
+                durations[i] = 3f;
+            }
+        }
+        if(intervals==null)
+        {
+            intervals = new float[strs.Length];
+            for (int i = 0; i < intervals.Length; i++)
+            {
+                intervals[i] = 0.08f;
+            }
+        }
+
         for(int i=0; i<strs.Length; i++)
         {
             int si = i;
-            seq.Append(subtitleText.DOText(strs[si], secondPerLit * strs[si].Length));
-            seq.AppendInterval(durations == null ? durationPerLit * strs[si].Length : durations[si]);
+            seq.Append(subtitleText.DOText(strs[si], secondPerLits[si] * strs[si].Length));
+            seq.AppendInterval(durations[si]);
             seq.AppendCallback(SubTxtEmpty);
+            seq.AppendInterval(intervals[i]);
         }
         seq.Append(subCvsg.DOFade(0f, 0.3f));
         seq.AppendCallback(twcb3).Play();

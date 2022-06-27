@@ -44,8 +44,8 @@ namespace Water
                 data.SetPrefab();
         }
 
-        [MenuItem("File/Delete/SaveFile")]
-        static void DeleteSaveFile()
+        [MenuItem("File/Delete/" + Global.GAME_SAVE_FILE + "(Test Save File)")]
+        static void DeleteTestSaveFile()
         {
             if(File.Exists(Global.GAME_SAVE_FILE.PersistentDataPath()))
             {
@@ -53,16 +53,50 @@ namespace Water
             }
         }
 
-       /* [MenuItem("Hierarchy Manage/UI/ActiveUIMoveObj")]
-        static void ActiveUIMoveObj()
+        [MenuItem("File/Delete/" + Global.SAVE_FILE_1)]
+        static void DeleteSaveFile1()
         {
-            foreach (UIMove um in GameObject.FindObjectsOfType<UIMove>()) um.gameObject.SetActive(true);
+            if (File.Exists(Global.SAVE_FILE_1.PersistentDataPath()))
+            {
+                File.Delete(Global.SAVE_FILE_1.PersistentDataPath());
+            }
         }
 
-        [MenuItem("Hierarchy Manage/UI/InActiveUIMoveObj")]
-        static void InActiveUIMoveObj()
+        [MenuItem("File/Delete/" + Global.SAVE_FILE_2)]
+        static void DeleteSaveFile2()
         {
-            foreach (UIMove um in GameObject.FindObjectsOfType<UIMove>()) um.gameObject.SetActive(false);
-        }*/
+            if (File.Exists(Global.SAVE_FILE_2.PersistentDataPath()))
+            {
+                File.Delete(Global.SAVE_FILE_2.PersistentDataPath());
+            }
+        }
+
+        [MenuItem("File/Delete/" + Global.SAVE_FILE_3)]
+        static void DeleteSaveFile3()
+        {
+            if (File.Exists(Global.SAVE_FILE_3.PersistentDataPath()))
+            {
+                File.Delete(Global.SAVE_FILE_3.PersistentDataPath());
+            }
+        }
+
+        [MenuItem("File/Delete/" + SaveFileStream.EternalOptionSaveFileName)]
+        static void DeleteSaveOptionFile()
+        {
+            if (File.Exists(SaveFileStream.EternalOptionSaveFileName.PersistentDataPath()))
+            {
+                File.Delete(SaveFileStream.EternalOptionSaveFileName.PersistentDataPath());
+            }
+        }
+
+        [MenuItem("File/Delete/All")]
+        static void DeleteAllSaveFile()
+        {
+            DeleteTestSaveFile();
+            DeleteSaveFile1();
+            DeleteSaveFile2();
+            DeleteSaveFile3();
+            DeleteSaveOptionFile();
+        }
     }
 }

@@ -6,6 +6,10 @@ using System.IO;
 public static partial class Global
 {
     public const string GAME_SAVE_FILE = "SaveFile2";  //Test File Name
+
+    public const string SAVE_FILE_1 = "SaveFile_10";
+    public const string SAVE_FILE_2 = "SaveFile_11";
+    public const string SAVE_FILE_3 = "SaveFile_12";
 }
 
 public static partial class Global

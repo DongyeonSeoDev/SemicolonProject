@@ -143,7 +143,15 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
             assimNoticeCheckDic.Add(type.ToString(), li);
         }
 
-        
+#if UNITY_EDITOR
+        GameManager.Instance.testKeyInputActionDict.Add(KeyCode.K, () =>
+        {
+            foreach(MissionType key in missionWeightDic.Keys)
+            {
+                Debug.Log($"{key} : {missionWeightDic[key]}");
+            }
+        });
+#endif
     }
 
     private void Update()
@@ -239,7 +247,37 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
         return GetRandomMission();
     }
 
-    private void MissionRandomInCounter(Mission ms)  //미션 랜덤 인카운터
+    private void CheckMissionZeroWeight(ref Mission ms)
+    {
+        MissionType type = ms.missionType;
+        missionWeightDic[type]--;
+        if (missionWeightDic[type] <= 0)
+        {
+            if (!zeroWeightMsTypeList.Contains(type))
+            {
+                zeroWeightMsTypeList.Add(type);
+
+                int count = 0;
+                //몬스터 스테이지 세 턴 하고 네 턴째에 다시 5번의 카운트 넣어줌
+                System.Action action = null;
+                action = () =>
+                {
+                    if (sm.CurrentAreaType == AreaType.MONSTER)
+                    {
+                        if (++count >= 4)
+                        {
+                            missionWeightDic[type] = 5;
+                            zeroWeightMsTypeList.Remove(type);
+                            EventManager.StopListening(Global.EnterNextMap, action);
+                        }
+                    }
+                };
+                EventManager.StartListening(Global.EnterNextMap, action);
+            }
+        }
+    }
+
+    private void MissionRandomInCounter(ref Mission ms)  //미션 랜덤 인카운터
     {
         if (ms.missionType != prevMission.first)
         {
@@ -250,7 +288,8 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
         {
             if (sm.CurrentStageData.missionTypes.Count > 1)
             {
-                ms = allMissionsDic[sm.CurrentStageData.missionTypes.FindRandom(x => x != ms.missionType)];
+                MissionType curType = ms.missionType;
+                ms = allMissionsDic[sm.CurrentStageData.missionTypes.FindRandom(x => x != curType)];
             }
         }
     }
@@ -260,33 +299,9 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
         if (sm.CurrentAreaType == AreaType.MONSTER && sm.CurrentStageData.missionTypes.Count > 0)
         {
             Mission ms = GetRandomMission();
-            MissionRandomInCounter(ms);
-
-            missionWeightDic[ms.missionType]--;
-            if(missionWeightDic[ms.missionType] <= 0)
-            {
-                if(!zeroWeightMsTypeList.Contains(ms.missionType))
-                {
-                    zeroWeightMsTypeList.Add(ms.missionType);
-
-                    int count = 0;
-                    //몬스터 스테이지 세 턴 후에 다시 5번의 카운트 넣어줌
-                    System.Action action = null;
-                    action = () =>
-                    {
-                        if(sm.CurrentAreaType == AreaType.MONSTER)
-                        {
-                            if(++count >= 3)
-                            {
-                                missionWeightDic[ms.missionType] = 5;
-                                zeroWeightMsTypeList.Remove(ms.missionType);
-                                EventManager.StopListening(Global.EnterNextMap, action);
-                            }
-                        }
-                    };
-                    EventManager.StartListening(Global.EnterNextMap, action);
-                }
-            }
+            MissionRandomInCounter(ref ms);
+            CheckMissionZeroWeight(ref ms);
+            
             currentMissions.Add(ms);
             ms.Start();
 
