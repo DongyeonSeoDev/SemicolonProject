@@ -57,6 +57,18 @@ public enum UIType
     MONSTERINFO_DETAIL_FEATURE
 }
 
+public enum InitGainType
+{
+    NONE,
+    HP,
+    ENERGE,
+    QUIKSLOT,
+    MOBSLOT,
+    SKILL1,
+    SKILL2,
+    SKILL3
+}
+
 public enum KeyAction
 {
     UP,

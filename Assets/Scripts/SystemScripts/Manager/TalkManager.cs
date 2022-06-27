@@ -248,6 +248,17 @@ public class TalkManager : MonoSingleton<TalkManager>
         seq.AppendCallback(twcb3).Play();
     }
 
+    public void SetSubtitle(SubtitleData data)
+    {
+        if(data == null)
+        {
+            Debug.LogWarning("Slime dialog data is nothing");
+            return;
+        }
+
+        SetSubtitle(data.dialogs, data.secondPerLits, data.durations, data.nextLogIntervals);
+    }
+
     private void ResetDialog()
     {
         subCvsg.DOKill();
