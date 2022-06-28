@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Tutorial Start Event", menuName = "Scriptable Object/Tutorial Start Event", order = int.MaxValue)]
+[CreateAssetMenu(fileName = "Tutorial Start Event", menuName = "Scriptable Object/Map Events/Tutorial Start Event", order = int.MaxValue)]
 public class TutorialStartEvent : MapEventSO
 {
     public override void OnEnterEvent()

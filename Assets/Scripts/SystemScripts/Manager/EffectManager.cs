@@ -144,11 +144,11 @@ public class EffectManager : MonoSingleton<EffectManager>
         Global.AddAction(Global.MakeFood, unusedValue => OnTopRightBtnEffect(UIType.INVENTORY, true));  //음식 만들었을 시 UI이펙트
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         if(IsOnTouchEffect)
         {
-            if(Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
+            if (Input.GetMouseButtonDown(0))
             {
                 SpawnEffect(PoolManager.GetItem(TouchEffKey), Util.MousePositionForScreenSpace, 1f, true);  //터치 이펙트
             }

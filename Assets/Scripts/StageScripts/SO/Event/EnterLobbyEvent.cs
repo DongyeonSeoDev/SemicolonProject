@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Lobby Event", menuName = "Scriptable Object/Lobby Event", order = int.MaxValue)]
+[CreateAssetMenu(fileName = "Lobby Event", menuName = "Scriptable Object/Map Events/Lobby Event", order = int.MaxValue)]
 public class EnterLobbyEvent : MapEventSO
 {
     public override void OnEnterEvent()

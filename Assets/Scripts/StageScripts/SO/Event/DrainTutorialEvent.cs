@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Drain Tutorial Event", menuName = "Scriptable Object/Drain Tutorial Event", order = int.MaxValue)]
+[CreateAssetMenu(fileName = "Drain Tutorial Event", menuName = "Scriptable Object/Map Events/Drain Tutorial Event", order = int.MaxValue)]
 public class DrainTutorialEvent : MapEventSO
 {
     private int tutoEnemyDeathCnt = 0;

@@ -282,8 +282,8 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             playerFollowLight.pointLightInnerRadius = 0;
             playerFollowLight.pointLightOuterRadius = 0;
 
-            tutorialPhases.Add(new StartPhase(playerFollowLight,2));
-            EffectManager.Instance.OnTouchEffect("TouchEffect1");
+            tutorialPhases.Add(new StartPhase(playerFollowLight,1));
+            //EffectManager.Instance.OnTouchEffect("TouchEffect1");
         }
 
         if (!gm.savedData.userInfo.uiActiveDic[KeyAction.SETTING])
