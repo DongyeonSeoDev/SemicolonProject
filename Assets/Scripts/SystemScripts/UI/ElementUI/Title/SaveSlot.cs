@@ -79,7 +79,7 @@ public class SaveSlot : MonoBehaviour
 
                 Stat stat = saveData.userInfo.playerStat;
 
-                statTMPs.HPText.text = "HP: " + stat.currentHp;
+                statTMPs.HPText.text = "HP: " + stat.MaxHp;
                 statTMPs.DamageText.text = "Damage: " + stat.MinDamage + " ~ " + stat.MaxDamage;
                 statTMPs.DPText.text = "Defense: " + stat.Defense;
                 statTMPs.SpeedText.text = "Speed: " + stat.Speed;
