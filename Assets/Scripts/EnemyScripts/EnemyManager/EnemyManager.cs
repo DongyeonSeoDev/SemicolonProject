@@ -40,6 +40,7 @@ namespace Enemy
         public readonly int hashIsStart = Animator.StringToHash("isStart");
 
         private static StageData currentStageData = null;
+        public static bool[] isPlayer = null;
 
         private static GameObject player;
         public static GameObject Player
@@ -211,6 +212,16 @@ namespace Enemy
             return FindPath.NextPosition(currentStageData, start, end);
         }
 
-        public static void SetCurrentStageData(StageData stageData) => currentStageData = stageData;
+        public static void SetPlayer(Vector2Int position, bool data) => isPlayer[FindPath.GetBoolPosition(currentStageData, position.x, position.y)] = data;
+
+        public static void SetCurrentStageData(StageData stageData)
+        {
+            currentStageData = stageData;
+
+            if (currentStageData != null)
+            {
+                isPlayer = new bool[currentStageData.isWall.Length];
+            }
+        }
     }
 }

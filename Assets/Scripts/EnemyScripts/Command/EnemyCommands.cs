@@ -271,18 +271,18 @@ namespace Enemy
 
         public override void Execute()
         {
-            if (enemyData.movePosition != null)
+            if (enemyData.isMoveStop)
             {
-                rigid.velocity = enemyData.movePosition.Value;
-
+                rigid.velocity = Vector2.zero;
                 return;
             }
 
-            if (moveCount > 100 || nextPosition == null || nextPosition.Count < 1)
+            if (enemyData.isMovePositionReset || moveCount > 100 || nextPosition == null || nextPosition.Count < 1)
             {
                 nextPosition = EnemyManager.NextPosition(enemyTransform.position, EnemyManager.Player.transform.position);
 
                 position = null;
+                enemyData.isMovePositionReset = false;
             }
 
             if (position == null || Vector2.Distance(new Vector2(enemyTransform.position.x, enemyTransform.position.y), position.Value) < 0.4f)
