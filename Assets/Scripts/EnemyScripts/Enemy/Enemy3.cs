@@ -41,8 +41,10 @@ namespace Enemy
             }
         }
 
-        private void FixedUpdate()
+        protected override void FixedUpdate()
         {
+            base.FixedUpdate();
+
             if (moveSpeed > 0f)
             {
                 rb.velocity = positionCheckData.position * moveSpeed;
