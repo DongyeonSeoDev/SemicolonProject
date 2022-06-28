@@ -73,6 +73,7 @@ public partial class GameManager : MonoSingleton<GameManager>
     {
         MonsterCollection.Instance.Save();
         KeyActionManager.Instance.SaveKey();
+        saveData.userInfo.currentBodyID = SlimeGameManager.Instance.CurrentBodyId;
         saveData.Save();
     }
 
@@ -154,6 +155,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         StoredData.Reset();
         InteractionHandler.Reset();
         StateManager.Instance.Reset();
+        ObjectManager.Instance.Reset();
         DOUtil.Reset();
         PoolManager.ClearAllPool();
         Global.RemoveAllKeys();

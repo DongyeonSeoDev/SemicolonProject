@@ -15610,10 +15610,6 @@ MonoBehaviour:
     parent: {fileID: 7372304710792875980}
     defaultSpawnCount: 2
     poolKey: InteractionMark
-  - poolObj: {fileID: 9002131720139818498, guid: fbbe29cb48ae46941836cffd5216db87, type: 3}
-    parent: {fileID: 7372304710792875980}
-    defaultSpawnCount: 2
-    poolKey: InteractionMark
   pickupCheckGame: {fileID: 3043221056144739947}
   droppedItemList: []
   conditionUpdateAction: []

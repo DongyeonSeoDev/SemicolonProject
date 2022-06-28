@@ -78,7 +78,7 @@ public class UserInfo
     //스탯 정보
     public Stat playerStat = new Stat();  //현재 스탯
 
-    public string currentBodyID; //현재 장착중인 몸 아이디
+    public string currentBodyID = Global.OriginBodyID; //현재 장착중인 몸 아이디
 
     public string quikSlotItemID; //퀵슬롯에 등록된 아이템 아이디
 
