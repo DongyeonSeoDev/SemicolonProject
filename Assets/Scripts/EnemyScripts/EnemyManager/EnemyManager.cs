@@ -212,7 +212,13 @@ namespace Enemy
             return FindPath.NextPosition(currentStageData, start, end);
         }
 
-        public static void SetPlayer(Vector2Int position, bool data) => isPlayer[FindPath.GetBoolPosition(currentStageData, position.x, position.y)] = data;
+        public static void SetPlayer(Vector2Int position, bool data)
+        {
+            if (currentStageData != null)
+            {
+                isPlayer[FindPath.GetBoolPosition(currentStageData, position.x, position.y)] = data;
+            }
+        }
 
         public static void SetCurrentStageData(StageData stageData)
         {

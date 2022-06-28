@@ -29,6 +29,14 @@ public class SaveSlot : MonoBehaviour
 
     public bool IsEmptySlot => !SaveFileStream.HasSaveData(saveFileName);
 
+    #region LoadingWindowData
+    [SerializeField]
+    private GameObject loadingWindowObj = null;
+
+    public Image progressBar = null;
+    public TextMeshProUGUI progressText = null;
+    #endregion
+
     public bool Init()
     {
         SaveFileStream.LoadGameSaveData(saveFileName);
@@ -38,19 +46,16 @@ public class SaveSlot : MonoBehaviour
 
         continueBtn.onClick.AddListener(() =>
         {
+            loadingWindowObj.SetActive(true);
+
             OnStart();
-            LoadSceneManager.Instance.LoadScene("StageScene");  //임시 코드
+            LoadSceneManager.Instance.LoadScene(progressBar, progressText, "StageScene");
         });
 
         //여러가지 정보 UI 띄워줌. (저장 정보)
         UpdateTMPs();
 
-        if(saveData.userInfo.currentBodyID == null)
-        {
-            return false;
-        }
-
-        return true;
+        return SaveFileStream.HasSaveData(saveFileName);
     }
 
     public void OnStart()
@@ -59,7 +64,10 @@ public class SaveSlot : MonoBehaviour
     }
     public void UpdateTMPs()
     {
-        Debug.Log(saveData.userInfo.currentBodyID);
+        if(saveData.userInfo.currentBodyID == null || saveData.userInfo.currentBodyID == "")
+        {
+            saveData.userInfo.currentBodyID = "origin";
+        }
    
         if (SaveFileStream.HasSaveData(saveFileName))
         {
@@ -84,13 +92,14 @@ public class SaveSlot : MonoBehaviour
                 statTMPs.SpeedText.text = "Speed: ??";
             }
 
-            if (changableBodyDataScript.ChangableBodyNameDict.ContainsKey(saveData.userInfo.currentBodyID))
-            {
-                currentBodyNameTMP.text = changableBodyDataScript.ChangableBodyNameDict[saveData.userInfo.currentBodyID].name;
-            }
-            else
+            if (saveData.userInfo.currentBodyID == "origin") // origin 관련 작업
             {
                 currentBodyNameTMP.text = "기본 슬라임";
+            }
+            else if (changableBodyDataScript.ChangableBodyNameDict.ContainsKey(saveData.userInfo.currentBodyID))
+            {
+                
+                currentBodyNameTMP.text = changableBodyDataScript.ChangableBodyNameDict[saveData.userInfo.currentBodyID].name;
             }
         }
         else
