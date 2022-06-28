@@ -51,6 +51,7 @@ namespace Enemy
 
                 if (moveSpeed < 1f)
                 {
+                    enemyData.isMovePositionReset = true;
                     moveSpeed = 0f;
                 }
 
