@@ -61,17 +61,7 @@ public class SaveSlot : MonoBehaviour
     {
         Debug.Log(saveData.userInfo.currentBodyID);
    
-        if (saveData.userInfo.currentBodyID == null)
-        {
-            currentStageTMP.text = "??";
-            currentBodyNameTMP.text = "??";
-
-            statTMPs.HPText.text = "HP: ??";
-            statTMPs.DamageText.text = "Damage: ??";
-            statTMPs.DPText.text = "Defense: ??";
-            statTMPs.SpeedText.text = "Speed: ??";
-        }
-        else
+        if (SaveFileStream.HasSaveData(saveFileName))
         {
             if (saveData.tutorialInfo.isEnded)
             {
@@ -96,12 +86,22 @@ public class SaveSlot : MonoBehaviour
 
             if (changableBodyDataScript.ChangableBodyNameDict.ContainsKey(saveData.userInfo.currentBodyID))
             {
-                currentBodyNameTMP.text = changableBodyDataScript.ChangableBodyNameDict[saveData.userInfo.currentBodyID];
+                currentBodyNameTMP.text = changableBodyDataScript.ChangableBodyNameDict[saveData.userInfo.currentBodyID].name;
             }
             else
             {
                 currentBodyNameTMP.text = "기본 슬라임";
             }
+        }
+        else
+        {
+            currentStageTMP.text = "??";
+            currentBodyNameTMP.text = "??";
+
+            statTMPs.HPText.text = "HP: ??";
+            statTMPs.DamageText.text = "Damage: ??";
+            statTMPs.DPText.text = "Defense: ??";
+            statTMPs.SpeedText.text = "Speed: ??";
         }
     }
     public void OnDelete()

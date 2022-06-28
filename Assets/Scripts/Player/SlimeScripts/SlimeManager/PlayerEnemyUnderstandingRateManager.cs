@@ -4,6 +4,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using Water;
 
+[Serializable]
+public struct ChangeBodyData
+{
+    public string bodyName;
+    public Enemy.EnemyType bodyId;
+    public GameObject body;
+    public EternalStat additionalBodyStat; // 변신 후의 플레이어의 Additional스탯, (이해도 100% 기준)
+    public Sprite bodyImg;
+    public ItemSO dropItem;
+    [TextArea] public string bodyExplanation;
+    [TextArea] public string featureExplanation;
+    [TextArea] public string hint;
+}
 public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnderstandingRateManager>
 {
     private ChangableBodyDataScript changableBodyDataScript = null;
@@ -17,9 +30,11 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
         get { return playerEnemyUnderStandingRateDict ; }
     }
 
+    [SerializeField]
+    private List<ChangeBodyData> changableBodyList = new List<ChangeBodyData>();
     public List<ChangeBodyData> ChangableBodyList
     {
-        get { return changableBodyDataScript.ChangableBodyList; }
+        get { return changableBodyList; }
     }
 
     private Dictionary<string, (GameObject, EternalStat)> changableBodyDict = new Dictionary<string, (GameObject, EternalStat)>();
@@ -78,7 +93,7 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
 
         changableBodyDict.Clear();
 
-        changableBodyDataScript.ChangableBodyList.ForEach(x =>
+        changableBodyList.ForEach(x =>
         {
             // x.bodyScript = x.body.GetComponent<Enemy.Enemy>();
             changableBodyDict.Add(x.bodyId.ToString(), (x.body, x.additionalBodyStat));
