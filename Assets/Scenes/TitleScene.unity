@@ -1087,6 +1087,9 @@ MonoBehaviour:
     DamageText: {fileID: 1450596698}
     DPText: {fileID: 62098359}
     SpeedText: {fileID: 30124186}
+  loadingWindowObj: {fileID: 688481964}
+  progressBar: {fileID: 1406687452}
+  progressText: {fileID: 1268806073}
 --- !u!114 &130400314
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4218,6 +4221,9 @@ MonoBehaviour:
     DamageText: {fileID: 1617953170}
     DPText: {fileID: 438590476}
     SpeedText: {fileID: 874911930}
+  loadingWindowObj: {fileID: 688481964}
+  progressBar: {fileID: 1406687452}
+  progressText: {fileID: 1268806073}
 --- !u!114 &621012002
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12306,16 +12312,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   changableBodyNames:
-  - bodyId: 0
-    name: "\uBCF4\uB77C\uC2AC\uB77C\uC784"
-  - bodyId: 1
-    name: "\uC0DD\uC950"
-  - bodyId: 2
-    name: "\uCD08\uB85D\uC2AC\uB77C\uC784"
-  - bodyId: 3
-    name: "\uC2A4\uCF08\uB808\uD1A4 \uAD81"
-  - bodyId: 4
-    name: "Boss_SkeletonKing_01 (\uC784\uC2DC)"
+  - name: "\uBCF4\uB77C\uC2AC\uB77C\uC784"
+    bodyId: 0
+  - name: "\uC0DD\uC950"
+    bodyId: 1
+  - name: "\uCD08\uB85D\uC2AC\uB77C\uC784"
+    bodyId: 2
+  - name: "\uC2A4\uCF08\uB808\uD1A4 \uAD81"
+    bodyId: 3
+  - name: "Boss_SkeletonKing_01 (\uC784\uC2DC)"
+    bodyId: 4
 --- !u!1 &1606459620
 GameObject:
   m_ObjectHideFlags: 0
@@ -13715,6 +13721,9 @@ MonoBehaviour:
     DamageText: {fileID: 634993984}
     DPText: {fileID: 1343408406}
     SpeedText: {fileID: 368584671}
+  loadingWindowObj: {fileID: 688481964}
+  progressBar: {fileID: 1406687452}
+  progressText: {fileID: 1268806073}
 --- !u!114 &1756206824
 MonoBehaviour:
   m_ObjectHideFlags: 0
