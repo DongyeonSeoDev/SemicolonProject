@@ -13,7 +13,6 @@ public partial class UIManager : MonoSingleton<UIManager>
     private UIMsgQueue topCenterNoticeMsg = new UIMsgQueue();
 
     #region Canvas
-    //public Canvas ordinaryCvs;
     private CanvasScaler[] allCanvasScalers;
 
     public Transform canvasParent;
@@ -23,11 +22,9 @@ public partial class UIManager : MonoSingleton<UIManager>
     [HideInInspector] public List<InteractionNoticeUI> itrNoticeList = new List<InteractionNoticeUI>();
 
     public Pair<GameObject, Transform> noticeUIPair;
-    public Pair<GameObject, Transform> interactionMarkPair;
 
     public Image topCenterMsgPanel;
     public TextMeshProUGUI topCenterMsgTMP;
-    //private CanvasGroup topCenterMsgTMPCvsg;
 
     #region VertexGradient
     [HideInInspector] public VertexGradient noticeMsgGrd;  // 상단 중앙 알림 메시지 기본 색상
@@ -55,7 +52,6 @@ public partial class UIManager : MonoSingleton<UIManager>
             {
                 NoticeUISet nus = topCenterNoticeMsg.NewNotice;
 
-                //topCenterMsgTMPCvsg.alpha = 0;
                 topCenterMsgTMP.color = Color.clear;
                 topCenterMsgTMP.colorGradient = nus.changeVertexGradient ? nus.vg : defaultTopCenterMsgVG;
                 topCenterMsgTMP.text = nus.msg;

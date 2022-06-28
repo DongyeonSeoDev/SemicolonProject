@@ -50,6 +50,15 @@ public static class SaveFileStream
                 string json = Crypto.Decrypt(File.ReadAllText(path), CryptoKey);
                 SaveData data = JsonUtility.FromJson<SaveData>(json);
                 saveDataDic.Add(saveFileName, data);
+                
+                if(!data.tutorialInfo.isEnded)
+                {
+                    data.ResetComplete();
+                }
+                else
+                {
+                    data.ResetAfterTuto();
+                }
             }
         }
     }

@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using DG.Tweening;
 using FkTweening;
+using Water;
+using UnityEngine.Events;
 
 public class KeyActionManager : MonoSingleton<KeyActionManager>
 {
@@ -58,6 +60,12 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
 
     private bool isAutoQuik = true;
 
+    #endregion
+
+    #region UI Init Gain Notice
+    [HideInInspector] public bool enableProcessGainUINotice = true;
+    private Queue<InitGainType> initGainQueue = new Queue<InitGainType>();  //HP, 스킬 슬롯 등 얻고 UI 띄울 데이터 큐
+    [SerializeField] private List<Pair<InitGainType, InitAcquisitionData>> initGainList;
     #endregion
 
     private void Awake()
@@ -142,6 +150,8 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         {
             UseQuikSlotItem();
         }
+
+        GetElementUpdate();
     }
 
     #region Quik Slot
@@ -506,6 +516,29 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
             }
             keyInputFillElapsed += Time.fixedDeltaTime;
             headFillImg.fillAmount = keyInputFillElapsed / headImgFullTime;
+        }
+    }
+
+    public void GetElement(InitGainType type)
+    {
+        initGainQueue.Enqueue(type);
+    }
+
+    private void GetElementUpdate()
+    {
+        if(initGainQueue.Count > 0 && enableProcessGainUINotice)
+        {
+            enableProcessGainUINotice = false;
+            InitGainType type = initGainQueue.Dequeue();
+            for(int i=0; i<initGainList.Count; i++)
+            {
+                if(initGainList[i].first == type)
+                {
+                    TimeManager.TimePause();
+                    PoolManager.GetItem<AcquisitionTutorialNotice>("AcquisitionTutorialNotice").Set(initGainList[i].second);
+                    break;
+                }
+            }
         }
     }
 }

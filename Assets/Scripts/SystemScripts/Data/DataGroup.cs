@@ -21,6 +21,15 @@ public struct MonsterLearningInfo
 }
 
 [Serializable]
+public class SubtitleData
+{
+    public string[] dialogs; //대사
+    public float[] secondPerLits; //글자당 출력 속도
+    public float[] durations; //대사 다 출력되고 출력된 대사 글씨가 사라지기 전에 남아있는 시간
+    public float[] nextLogIntervals; //대사가 다 출력되고 대사 글씨 사라지고 다음 대사가 나오기 전까지의 딜레이
+}
+
+[Serializable]
 public class IngredientCount
 {
     public Ingredient ingredient; //음식을 만들기 위한 필요 재료
@@ -289,7 +298,15 @@ public class HeadUIData
     }
 }
 
-
+[Serializable]
+public class InitAcquisitionData
+{
+    public string objName;
+    public string explanation;
+    public string addiExplanation;
+    public Sprite UISpr;
+    public UnityEvent endEvent;
+}
 
 namespace Water
 {
