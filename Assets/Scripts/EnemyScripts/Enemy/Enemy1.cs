@@ -8,6 +8,7 @@ namespace Enemy
 
             enemyData.maxHP = 30;
             enemyData.hp = 30;
+            enemyData.isAttackPlayerDistance = 1.7f;
             enemyData.isParrying = true;
 
             enemyData.playerAnimationTime = 0.85f;

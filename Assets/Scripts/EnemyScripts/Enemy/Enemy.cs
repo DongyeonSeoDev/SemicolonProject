@@ -54,6 +54,9 @@ namespace Enemy
 
         private Vector2 knockBackDirection;
 
+        private Vector2Int? pastPosition;
+        private Vector2Int currentPosition;
+
         [SerializeField]
         private float addExperience;
 
@@ -253,6 +256,16 @@ namespace Enemy
                     isDamageCurrentTime = 0;
                 }
             }
+
+            currentPosition = new Vector2Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.y));
+            
+            if (pastPosition != null)
+            {
+                EnemyManager.SetPlayer(pastPosition.Value, false);
+            }
+
+            EnemyManager.SetPlayer(currentPosition, true);
+            pastPosition = currentPosition;
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
@@ -267,7 +280,9 @@ namespace Enemy
 
             if (enemyCheck != null)
             {
-                enemyData.movePosition = collision.contacts[0].normal;
+                enemyData.isMovePositionReset = true;
+
+                enemyData.isMoveStop = true;
                 currentCoroutine = StartCoroutine(ResetMove());
 
                 enemyCheck.EnemyMoveReset();
@@ -278,7 +293,7 @@ namespace Enemy
         {
             yield return moveDelay;
 
-            enemyData.movePosition = null;
+            enemyData.isMoveStop = false;
         }
 
         // 적 데미지 받는 코드
@@ -441,8 +456,8 @@ namespace Enemy
 
                 currentCoroutine = null;
             }
-            
-            enemyData.movePosition = null;
+
+            enemyData.isMoveStop = false;
         }
 
         private void ChangeHpEffectAnimationPlay(bool isActive)

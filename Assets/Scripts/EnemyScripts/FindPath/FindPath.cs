@@ -1,3 +1,4 @@
+using Enemy;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -84,7 +85,7 @@ public static class FindPath
         stageData.isWall = new bool[stageData.stageWidth * (limitMaxPosition.y - limitMinPosition.y + 1)];
     }
 
-    private static int GetBoolPosition(StageData stageData, int x, int y) => (x + stageData.offsetX) + (stageData.stageWidth * (y + stageData.offsetY));
+    public static int GetBoolPosition(StageData stageData, int x, int y) => (x + stageData.offsetX) + (stageData.stageWidth * (y + stageData.offsetY));
 
     private static bool IsPass(StageData stageData, int x, int y)
     {
@@ -94,7 +95,7 @@ public static class FindPath
             return false;
         }
 
-        return !isWall[GetBoolPosition(stageData, x, y)];
+        return !isWall[GetBoolPosition(stageData, x, y)] && !EnemyManager.isPlayer[GetBoolPosition(stageData, x, y)];
     }
 
     private static AStarData GetAStarData(StageData data, Vector2Int pos, int gValue, int hValue, ushort moveValue)
@@ -141,6 +142,7 @@ public static class FindPath
         currentAStarData.f = MAX_F_VALUE;
 
         isWall = new bool[stageData.isWall.Length];
+
         astarData = new AStarData[stageData.isWall.Length];
 
         Array.Copy(stageData.isWall, isWall, stageData.isWall.Length);

@@ -46,7 +46,6 @@ namespace Enemy
         public EnemyCommand enemySpriteRotateCommand;
         public EnemyCommand playerControllerMove;
 
-        public Vector2? movePosition;
         public Vector2 moveVector;
 
         public Color normalColor;
@@ -92,6 +91,8 @@ namespace Enemy
         public bool isNoAttack = false;
         public bool isParrying = false;
         public bool isUseIdleAnimation = false;
+        public bool isMovePositionReset = false;
+        public bool isMoveStop = false;
 
         public int minAttackCount = 0;
         public int maxAttackCount = 0;
