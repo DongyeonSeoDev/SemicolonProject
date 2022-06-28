@@ -23,10 +23,67 @@ public struct MonsterLearningInfo
 [Serializable]
 public class SubtitleData
 {
-    public string[] dialogs; //대사
-    public float[] secondPerLits; //글자당 출력 속도
-    public float[] durations; //대사 다 출력되고 출력된 대사 글씨가 사라지기 전에 남아있는 시간
-    public float[] nextLogIntervals; //대사가 다 출력되고 대사 글씨 사라지고 다음 대사가 나오기 전까지의 딜레이
+    public SingleSubtitleData[] subData;
+
+    #region Property
+    public string[] Dialogs
+    {
+        get
+        {
+            string[] strs = new string[subData.Length];
+            for(int i= 0; i < subData.Length; i++)
+            {
+                strs[i] = subData[i].dialog;
+            }
+            return strs;
+        }
+    }
+    public float[] SecondPerLits
+    {
+        get
+        {
+            float[] fs = new float[subData.Length];
+            for(int i= 0; i < subData.Length; i++)
+            {
+                fs[i] = subData[i].secondPerLit;
+            }
+            return fs;
+        }
+    }
+    public float[] Durations
+    {
+        get
+        {
+            float[] fs = new float[subData.Length];
+            for (int i = 0; i < subData.Length; i++)
+            {
+                fs[i] = subData[i].duration;
+            }
+            return fs;
+        }
+    }
+    public float[] NextLogIntervals
+    {
+        get
+        {
+            float[] fs = new float[subData.Length];
+            for (int i = 0; i < subData.Length; i++)
+            {
+                fs[i] = subData[i].nextLogInterval;
+            }
+            return fs;
+        }
+    }
+    #endregion
+}
+
+[Serializable]
+public class SingleSubtitleData
+{
+    public string dialog; //대사
+    public float secondPerLit; //글자당 출력 속도
+    public float duration; //대사 다 출력되고 출력된 대사 글씨가 사라지기 전에 남아있는 시간
+    public float nextLogInterval; //대사가 다 출력되고 대사 글씨 사라지고 다음 대사가 나오기 전까지의 딜레이
 }
 
 [Serializable]

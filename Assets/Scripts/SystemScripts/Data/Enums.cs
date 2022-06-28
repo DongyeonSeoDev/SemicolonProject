@@ -1,12 +1,12 @@
 
 public enum MissionType
 {
+    NONE,
     ALLKILL,
-    SURVIVAL,
+    SURVIVAL1,
     NOTRANSFORMATION,
     NOQUIKSLOT,
-    ALLABSORPTION,
-    NONE
+    ALLABSORPTION
 }
 
 public enum KillNoticeType

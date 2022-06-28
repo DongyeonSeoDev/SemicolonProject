@@ -1,19 +1,24 @@
 using UnityEngine;
+using System;
+
 public class SurvivalMission : Mission
 {
     private float survivalTime;
     private float survivalTimer;
+    private Action<bool> endAction;
 
-    public SurvivalMission(string title, float survivalTime) : base(title)
+    public SurvivalMission(string title, float survivalTime, Action<bool> end = null) : base(title)
     {
         this.survivalTime = survivalTime;
-        missionType = MissionType.SURVIVAL;
+        missionType = MissionType.SURVIVAL1;
+        this.endAction = end;
     }
 
     public override void End(bool breakDoor = false)
     {
         if(!breakDoor)
             StageManager.Instance.StageClear();
+        endAction?.Invoke(breakDoor);
     }
 
     public override void Start()

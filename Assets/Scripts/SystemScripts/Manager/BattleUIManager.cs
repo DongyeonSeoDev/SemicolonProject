@@ -119,12 +119,17 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
         allMissionsDic.Add(MissionType.NOTRANSFORMATION, new NoTransformationMission("변신하지 않고 클리어하세요"));
         allMissionsDic.Add(MissionType.NOQUIKSLOT, new NoQuikSlotMission("퀵슬롯을 사용하지 않고 클리어하세요"));
         allMissionsDic.Add(MissionType.ALLABSORPTION, new AllAbsorptionMission("모든 적을 흡수하세요"));
-        //allMissionsDic.Add(MissionType.SURVIVAL, new SurvivalMission("30초 동안 살아남으세요", 30f));
 
         foreach(MissionType type in allMissionsDic.Keys)
         {
             missionWeightDic.Add(type, 5);
         }
+
+        //튜토리얼 3번방 전용
+        allMissionsDic.Add(MissionType.SURVIVAL1, new SurvivalMission("10초 동안 살아남으세요", 10f, doorBreak =>
+        {
+            TalkManager.Instance.SetSubtitle("휴... 빨리 다음 방으로 가보자", 0.25f, 2f);
+        }));
         #endregion
     }
 
@@ -305,6 +310,23 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
             missionCvsg.DOFade(1, 0.4f);
             missionPanelRt.DOAnchorPos(missionPanelPos, 0.4f).SetEase(Ease.OutQuart);
         }
+    }
+
+    public void StartMission(MissionType msType)  // 어떠한 미션을 등장시켜줌
+    {
+        Mission ms = allMissionsDic[msType];
+        currentMissions.Add(ms);
+        ms.Start();
+
+        missionPanelRt.DOKill();
+
+        missionContent.text = ms.missionName;
+        missionCvsg.alpha = 0;
+        missionPanelRt.anchoredPosition = missionPanelPos + new Vector2(200, 0);
+        missionCvsg.gameObject.SetActive(true);
+
+        missionCvsg.DOFade(1, 0.4f);
+        missionPanelRt.DOAnchorPos(missionPanelPos, 0.4f).SetEase(Ease.OutQuart);
     }
 
     public void DisableMission(int index = -1) //현재진행중인 미션 리스트에서 제거하고 UI제거

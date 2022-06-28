@@ -256,7 +256,18 @@ public class TalkManager : MonoSingleton<TalkManager>
             return;
         }
 
-        SetSubtitle(data.dialogs, data.secondPerLits, data.durations, data.nextLogIntervals);
+        SetSubtitle(data.Dialogs, data.SecondPerLits, data.Durations, data.NextLogIntervals);
+    }
+
+    public void SetSubtitle(SingleSubtitleData data)
+    {
+        if (data == null)
+        {
+            Debug.LogWarning("Slime dialog data is nothing");
+            return;
+        }
+
+        SetSubtitle(data.dialog, data.secondPerLit, data.duration);
     }
 
     private void ResetDialog()
