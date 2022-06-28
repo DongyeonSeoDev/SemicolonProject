@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class TitleObject : MonoBehaviour 
+public abstract class TitleMenuObject : MonoBehaviour 
 {
     public TitleMenu menu = null;
     public int curTitleObjIdx = 0;

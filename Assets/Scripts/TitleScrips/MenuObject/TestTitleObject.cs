@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TestTitleObject : TitleObject
+public class TestTitleObject : TitleMenuObject
 {
     public override void DoWork()
     {

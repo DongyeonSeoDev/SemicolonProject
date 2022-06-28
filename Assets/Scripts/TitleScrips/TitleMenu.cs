@@ -7,7 +7,7 @@ public class TitleMenu : MonoBehaviour
     private readonly string effectSoundBoxName = "UIMouseEnterSFX4";
 
     [SerializeField]
-    private List<TitleObject> menus = new List<TitleObject>();
+    private List<TitleMenuObject> menus = new List<TitleMenuObject>();
 
     [SerializeField]
     private TitleMenuHighLighter menuTitleObjectHighlighter = null;
@@ -20,7 +20,7 @@ public class TitleMenu : MonoBehaviour
 
     void Start()
     {
-        menus = GetComponentsInChildren<TitleObject>().ToList();
+        menus = GetComponentsInChildren<TitleMenuObject>().ToList();
 
         if(menuTitleObjectHighlighter == null)
         {

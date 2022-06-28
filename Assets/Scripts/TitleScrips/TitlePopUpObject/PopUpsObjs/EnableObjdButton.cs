@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnableObjdButton : PopUpsButtons
 {
     [SerializeField]
-    protected TitlePopUpObject titlePopUpObject = null;
+    protected TitlePopUpObjectInMenu titlePopUpObject = null;
 
     public ChildPopUpPannel enableObj = null;
 
