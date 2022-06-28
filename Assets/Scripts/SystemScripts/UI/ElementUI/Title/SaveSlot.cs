@@ -37,13 +37,8 @@ public class SaveSlot : MonoBehaviour
     public TextMeshProUGUI progressText = null;
     #endregion
 
-    public bool Init()
+    private void Awake()
     {
-        SaveFileStream.LoadGameSaveData(saveFileName);
-
-        changableBodyDataScript = FindObjectOfType<ChangableBodyDataScript>();
-        saveData = SaveFileStream.GetSaveData(saveFileName, true);
-
         continueBtn.onClick.AddListener(() =>
         {
             loadingWindowObj.SetActive(true);
@@ -51,6 +46,16 @@ public class SaveSlot : MonoBehaviour
             OnStart();
             LoadSceneManager.Instance.LoadScene(progressBar, progressText, "StageScene");
         });
+    }
+
+    public bool Init()
+    {
+        SaveFileStream.LoadGameSaveData(saveFileName);
+
+        changableBodyDataScript = FindObjectOfType<ChangableBodyDataScript>();
+        saveData = SaveFileStream.GetSaveData(saveFileName, true);
+
+        Debug.Log(SaveFileStream.HasSaveData(saveFileName));
 
         //여러가지 정보 UI 띄워줌. (저장 정보)
         UpdateTMPs();

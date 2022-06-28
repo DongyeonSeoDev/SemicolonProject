@@ -2,15 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnableTitlePopUpObject : MonoBehaviour
+public class EnableTitlePopUpObjectInMenu : TitleMenuObject
 {
-    public TitlePopUpObject enableObj = null;
+    [SerializeField]
+    private bool canSetMenuIdxFalseOnEnable = true;
+
+    public TitlePopUpObjectInMenu enableObj = null;
 
     public SoundBox onEnableSoundBox = null;
     public SoundBox onDisableSoundBox = null;
 
-    public virtual void DoWork()
+    public override void DoWork()
     {
+        base.DoWork();
+
         if (!enableObj.gameObject.activeSelf)
         {
             PlayOnEnableSoundBox();
@@ -22,6 +27,11 @@ public class EnableTitlePopUpObject : MonoBehaviour
     {
         if (enableObj != null)
         {
+            if(canSetMenuIdxFalseOnEnable)
+            {
+                menu.canSetMenuIdx = false;
+            }
+
             enableObj.lastEnabler = this;
 
             enableObj.gameObject.SetActive(true);
@@ -31,6 +41,11 @@ public class EnableTitlePopUpObject : MonoBehaviour
     {
         if (enableObj != null)
         {
+            if (canSetMenuIdxFalseOnEnable)
+            {
+                menu.canSetMenuIdx = true;
+            }
+
             enableObj.gameObject.SetActive(false);
         }
     }

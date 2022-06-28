@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-public class GameStartTitle : TitleObject
+public class GameStartTitle : TitleMenuObject
 {
     [SerializeField]
     private TitleDataController controller;

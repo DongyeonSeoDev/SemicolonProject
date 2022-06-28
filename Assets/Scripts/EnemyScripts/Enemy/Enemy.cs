@@ -51,6 +51,7 @@ namespace Enemy
         private Coroutine currentCoroutine;
 
         private bool isHpEffectAnimationPlay = false;
+        private bool isKnockBack = false;
 
         private Vector2 knockBackDirection;
 
@@ -239,8 +240,10 @@ namespace Enemy
 
                 if (!enemyData.isNoKnockback && enemyData.isKnockBack)
                 {
-                    EnemyKnockBack();
+                    enemyData.isMoveStop = true;
                     enemyData.isKnockBack = false;
+
+                    isKnockBack = true;
                 }
 
                 enemyData.isDamaged = false;
@@ -266,6 +269,23 @@ namespace Enemy
 
             EnemyManager.SetPlayer(currentPosition, true);
             pastPosition = currentPosition;
+        }
+
+        protected virtual void FixedUpdate()
+        {
+            if (isKnockBack)
+            {
+                rb.velocity = knockBackDirection;
+
+                knockBackDirection = Vector2.Lerp(knockBackDirection, Vector2.zero, 0.1f);
+
+                if (knockBackDirection.sqrMagnitude < 0.1f)
+                {
+                    knockBackDirection = Vector2.zero;
+                    enemyData.isMoveStop = false;
+                    isKnockBack = false;
+                }
+            }
         }
 
         private void OnCollisionEnter2D(Collision2D collision)
@@ -320,11 +340,6 @@ namespace Enemy
             }
 
             return false;
-        }
-
-        private void EnemyKnockBack()
-        {
-            rb.AddForce(knockBackDirection, ForceMode2D.Impulse);
         }
 
         // 적이 죽었을때 발동되는 코드

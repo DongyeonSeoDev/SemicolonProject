@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class OptionPannel : TitlePopUpObject
+public class OptionPannel : TitlePopUpObjectInMenu
 {
     public override void Awake()
     {

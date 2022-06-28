@@ -419,7 +419,6 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     private void GetInventoryUI() //¿Œ∫• æÚ¿Ω
     {
         GetUIIcon(UIType.INVENTORY, ObjectManager.Instance.itrObjDic["Merchant"].transform.position);
-        
     }
 
     private void GetStatUI() //Ω∫≈» UI »πµÊ

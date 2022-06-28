@@ -309,6 +309,7 @@ public class Player : MonoBehaviour
 
             EffectManager.Instance.OnDamaged(dm, critical, false, SlimeGameManager.Instance.CurrentPlayerBody.transform.position, effectPosition, direction, effectSize);
             UIManager.Instance.UpdatePlayerHPUI(true);
+            EventManager.TriggerEvent("PlayerGetDamaged");
         }
     }
     /// <summary>
@@ -397,6 +398,7 @@ public class Player : MonoBehaviour
 
             EffectManager.Instance.OnDamaged(dm, critical, false, SlimeGameManager.Instance.CurrentPlayerBody.transform.position, effectPosition, direction, effectSize);
             UIManager.Instance.UpdatePlayerHPUI(true);
+            EventManager.TriggerEvent("PlayerGetDamaged");
         }
     }
     public bool CheckFake()
