@@ -26,6 +26,8 @@ MonoBehaviour:
     animationName: EndAttack
   - type: 0
     animationName: Reset
+  - type: 3
+    animationName: Hit
   normalColor: {r: 1, g: 0, b: 1, a: 1}
   damagedColor: {r: 0, g: 1, b: 0, a: 1}
   enemyDeadEffectColor: {r: 0.3764706, g: 0, b: 0.41568628, a: 1}

@@ -273,7 +273,6 @@ namespace Enemy
         {
             if (enemyData.isMoveStop)
             {
-                rigid.velocity = Vector2.zero;
                 return;
             }
 
