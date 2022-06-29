@@ -5,6 +5,8 @@ using System.IO;
 
 public class DeleteSaveFileCheckWindow : TitlePopUpObject
 {
+    [SerializeField]
+    private TitleDataController titleDataController = null;
     private SaveSlot currentSaveSlot;
     private SaveFileNum currentSaveFileNum;
     public void Init(SaveSlot saveSlot, SaveFileNum sfn)
@@ -55,6 +57,7 @@ public class DeleteSaveFileCheckWindow : TitlePopUpObject
                 break;
         }
 
+        titleDataController.loadedSlotNum--;
         currentSaveSlot.OnDelete();
         currentSaveSlot.Init();
     }
