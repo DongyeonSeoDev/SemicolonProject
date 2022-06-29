@@ -1266,6 +1266,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   saveFileName: SaveFile_11
   gameStartBtn: {fileID: 2088312772}
+  deleteSaveDataBtn: {fileID: 224482718}
   currentStageTMP: {fileID: 661898651}
   currentBodyNameTMP: {fileID: 2010013427}
   statTMPs:
@@ -1607,8 +1608,10 @@ GameObject:
   - component: {fileID: 224482717}
   - component: {fileID: 224482721}
   - component: {fileID: 224482720}
-  - component: {fileID: 224482719}
   - component: {fileID: 224482718}
+  - component: {fileID: 224482723}
+  - component: {fileID: 224482719}
+  - component: {fileID: 224482722}
   m_Layer: 5
   m_Name: DeleteSaveDataBtn
   m_TagString: Untagged
@@ -1746,6 +1749,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 224482716}
   m_CullTransparentMesh: 1
+--- !u!114 &224482722
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 224482716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f277daceb9cb25e49a71316302b10da9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionEnable: 1
+  transitionTime: 0.2
+  targetScale: {x: 1.1, y: 1.1, z: 1.1}
+  useSound: 1
+  soundId: UIMouseEnterSFX4
+--- !u!114 &224482723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 224482716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
 --- !u!1 &267732974
 GameObject:
   m_ObjectHideFlags: 0
@@ -4355,6 +4388,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   saveFileName: SaveFile_12
   gameStartBtn: {fileID: 1049711917}
+  deleteSaveDataBtn: {fileID: 2014517603}
   currentStageTMP: {fileID: 1226132300}
   currentBodyNameTMP: {fileID: 1163478534}
   statTMPs:
@@ -7278,8 +7312,10 @@ GameObject:
   - component: {fileID: 916662938}
   - component: {fileID: 916662941}
   - component: {fileID: 916662940}
-  - component: {fileID: 916662942}
   - component: {fileID: 916662939}
+  - component: {fileID: 916662944}
+  - component: {fileID: 916662942}
+  - component: {fileID: 916662943}
   m_Layer: 5
   m_Name: DeleteSaveDataBtn
   m_TagString: Untagged
@@ -7417,6 +7453,36 @@ MonoBehaviour:
   onDisableSoundBox: {fileID: -8177254558972320154, guid: 9670b60297405a645915f1feba3927a8, type: 3}
   window: {fileID: 1269849662}
   saveFileNum: 0
+--- !u!114 &916662943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 916662937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f277daceb9cb25e49a71316302b10da9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionEnable: 1
+  transitionTime: 0.2
+  targetScale: {x: 1.1, y: 1.1, z: 1.1}
+  useSound: 1
+  soundId: UIMouseEnterSFX4
+--- !u!114 &916662944
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 916662937}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
 --- !u!1 &931670583
 GameObject:
   m_ObjectHideFlags: 0
@@ -14447,6 +14513,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   saveFileName: SaveFile_10
   gameStartBtn: {fileID: 739579115}
+  deleteSaveDataBtn: {fileID: 916662939}
   currentStageTMP: {fileID: 1198509823}
   currentBodyNameTMP: {fileID: 1514078502}
   statTMPs:
@@ -16284,8 +16351,10 @@ GameObject:
   - component: {fileID: 2014517602}
   - component: {fileID: 2014517606}
   - component: {fileID: 2014517605}
-  - component: {fileID: 2014517604}
   - component: {fileID: 2014517603}
+  - component: {fileID: 2014517608}
+  - component: {fileID: 2014517604}
+  - component: {fileID: 2014517607}
   m_Layer: 5
   m_Name: DeleteSaveDataBtn
   m_TagString: Untagged
@@ -16423,6 +16492,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2014517601}
   m_CullTransparentMesh: 1
+--- !u!114 &2014517607
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2014517601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f277daceb9cb25e49a71316302b10da9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionEnable: 1
+  transitionTime: 0.2
+  targetScale: {x: 1.1, y: 1.1, z: 1.1}
+  useSound: 1
+  soundId: UIMouseEnterSFX4
+--- !u!114 &2014517608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2014517601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
 --- !u!1 &2019683019
 GameObject:
   m_ObjectHideFlags: 0

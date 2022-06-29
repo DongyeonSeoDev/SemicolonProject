@@ -12,6 +12,8 @@ public class SaveSlot : MonoBehaviour
     public Button gameStartBtn;
     private TextMeshProUGUI gameStartBtnText = null;
 
+    public Button deleteSaveDataBtn = null;
+
     [Serializable]
     private struct StatTMPs
     {
@@ -78,6 +80,7 @@ public class SaveSlot : MonoBehaviour
         if (SaveFileStream.HasSaveData(saveFileName))
         {
             gameStartBtnText.text = "이어하기";
+            deleteSaveDataBtn.gameObject.SetActive(true);
 
             if (saveData.tutorialInfo.isEnded)
             {
@@ -113,6 +116,7 @@ public class SaveSlot : MonoBehaviour
         else
         {
             gameStartBtnText.text = "새로시작";
+            deleteSaveDataBtn.gameObject.SetActive(false);
 
             currentStageTMP.text = "??";
             currentBodyNameTMP.text = "??";
