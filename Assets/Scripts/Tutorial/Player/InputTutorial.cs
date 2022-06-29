@@ -56,22 +56,22 @@ public class InputTutoData
         {
             case KeyAction.LEFT:
                 {
-                    TalkManager.Instance.SetSubtitle("알았어, 왼쪽으로 갈게");
+                    TalkManager.Instance.SetSubtitle("알았어, 왼쪽으로 갈게", 0.25f, 1.5f);
                 }
                 break;
             case KeyAction.RIGHT:
                 {
-                    TalkManager.Instance.SetSubtitle("오른쪽으로 가라는 거지?");
+                    TalkManager.Instance.SetSubtitle("오른쪽으로 가라는 거지?", 0.25f, 1.5f);
                 }
                 break;
             case KeyAction.UP:
                 {
-                    TalkManager.Instance.SetSubtitle("그래 위쪽으로 가자!");
+                    TalkManager.Instance.SetSubtitle("그래 위쪽으로 가자!", 0.2f, 1.5f);
                 }
                 break;
             case KeyAction.DOWN:
                 {
-                    TalkManager.Instance.SetSubtitle("아래쪽! 맞지?");
+                    TalkManager.Instance.SetSubtitle("아래쪽! 맞지?", 0.2f, 1.5f);
                 }
                 break;
         }
@@ -99,8 +99,6 @@ public class InputTutorial : MonoBehaviour
         "저기.. 무엇을 말하고 싶은지 모르겠어",
         "나를 움직이게 해줄 힘을 줄 수 있니?"
     };
-
-
 
     [SerializeField]
     private List<InputTutoData> inputTutoDatas = new List<InputTutoData>();
@@ -195,7 +193,7 @@ public class InputTutorial : MonoBehaviour
             }
         }
 
-        TalkManager.Instance.SetSubtitle(firstStrArr);
+        TalkManager.Instance.SetSubtitle(firstStrArr, new float[4] { 0.3f, 0.3f, 0.3f, 0.3f}, new float[4] { 3, 3, 3, 3 });
     }
 
 
@@ -232,7 +230,7 @@ public class InputTutorial : MonoBehaviour
 
         if ((CheckClear(KeyAction.LEFT) && CheckClear(KeyAction.RIGHT) && CheckClear(KeyAction.UP) && CheckClear(KeyAction.DOWN)) && !moveKeyClearAll)
         {
-            TalkManager.Instance.SetSubtitle("신기하게 네가 말하니까 움직일 수 있었던 것 같아!");
+            TalkManager.Instance.SetSubtitle("신기하게 네가 말하니까 움직일 수 있었던 것 같아!", 0.2f, 2f);
 
             moveKeyClearAll = true;
         }
@@ -263,7 +261,7 @@ public class InputTutorial : MonoBehaviour
 
         if(questionMarkShowNum >= questionMarkStrCheckNum)
         {
-            TalkManager.Instance.SetSubtitle(questionsStrArr);
+            TalkManager.Instance.SetSubtitle(questionsStrArr, new float[2] {0.25f, 0.25f}, new float[2] {1.5f, 1.5f});
             questionMarkStrArrShow = true;
         }
     }

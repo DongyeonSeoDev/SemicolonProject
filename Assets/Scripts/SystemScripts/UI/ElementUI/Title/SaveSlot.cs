@@ -58,8 +58,6 @@ public class SaveSlot : MonoBehaviour
         changableBodyDataScript = FindObjectOfType<ChangableBodyDataScript>();
         saveData = SaveFileStream.GetSaveData(saveFileName, true);
 
-        Debug.Log(SaveFileStream.HasSaveData(saveFileName));
-
         //여러가지 정보 UI 띄워줌. (저장 정보)
         UpdateTMPs();
 
