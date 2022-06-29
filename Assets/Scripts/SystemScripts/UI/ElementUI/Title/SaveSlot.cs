@@ -9,7 +9,8 @@ public class SaveSlot : MonoBehaviour
     [SerializeField] private string saveFileName;
     private SaveData saveData = null;
 
-    public Button continueBtn;
+    public Button gameStartBtn;
+    private TextMeshProUGUI gameStartBtnText = null;
 
     [Serializable]
     private struct StatTMPs
@@ -39,7 +40,7 @@ public class SaveSlot : MonoBehaviour
 
     private void Awake()
     {
-        continueBtn.onClick.AddListener(() =>
+        gameStartBtn.onClick.AddListener(() =>
         {
             loadingWindowObj.SetActive(true);
 
@@ -47,11 +48,11 @@ public class SaveSlot : MonoBehaviour
             LoadSceneManager.Instance.LoadScene(progressBar, progressText, "StageScene");
         });
     }
-
     public bool Init()
     {
         SaveFileStream.LoadGameSaveData(saveFileName);
 
+        gameStartBtnText = gameStartBtn.transform.GetComponentInChildren<TextMeshProUGUI>();
         changableBodyDataScript = FindObjectOfType<ChangableBodyDataScript>();
         saveData = SaveFileStream.GetSaveData(saveFileName, true);
 
@@ -76,6 +77,8 @@ public class SaveSlot : MonoBehaviour
    
         if (SaveFileStream.HasSaveData(saveFileName))
         {
+            gameStartBtnText.text = "이어하기";
+
             if (saveData.tutorialInfo.isEnded)
             {
                 currentStageTMP.text = saveData.stageInfo.currentStageID;
@@ -109,6 +112,8 @@ public class SaveSlot : MonoBehaviour
         }
         else
         {
+            gameStartBtnText.text = "새로시작";
+
             currentStageTMP.text = "??";
             currentBodyNameTMP.text = "??";
 

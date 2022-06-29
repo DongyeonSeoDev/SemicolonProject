@@ -1265,7 +1265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveFileName: SaveFile_11
-  continueBtn: {fileID: 2088312772}
+  gameStartBtn: {fileID: 2088312772}
   currentStageTMP: {fileID: 661898651}
   currentBodyNameTMP: {fileID: 2010013427}
   statTMPs:
@@ -4354,7 +4354,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveFileName: SaveFile_12
-  continueBtn: {fileID: 1049711917}
+  gameStartBtn: {fileID: 1049711917}
   currentStageTMP: {fileID: 1226132300}
   currentBodyNameTMP: {fileID: 1163478534}
   statTMPs:
@@ -14446,7 +14446,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveFileName: SaveFile_10
-  continueBtn: {fileID: 739579115}
+  gameStartBtn: {fileID: 739579115}
   currentStageTMP: {fileID: 1198509823}
   currentBodyNameTMP: {fileID: 1514078502}
   statTMPs:
