@@ -12,7 +12,7 @@ public class MissionTutorialEvent : MapEventSO
         TalkManager.Instance.SetSubtitle(startMapSubData);
 
         EventManager.StartListening("PlayerGetDamaged", PlayerDamaged);
-        // 몬스터 두 마리 스폰
+        EventManager.TriggerEvent("SpawnEnemy","Stage0-03");
     }
 
     public void PlayerDamaged()

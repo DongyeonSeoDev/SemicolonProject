@@ -8,11 +8,11 @@ public class PlayerCoverCollider : MonoBehaviour
     {
         SlimeGameManager.Instance.Player.CoveredObjectList.Add(collision.gameObject);
 
-        if(collision.gameObject.GetComponent<Enemy.DrainTutorialEnemy>() != null)
+        /*if(collision.gameObject.GetComponent<Enemy.DrainTutorialEnemy>() != null)
         {
             CutsceneManager.Instance.PlayCutscene("TutorialCutscene1");
             //SlimeGameManager.Instance.CurrentPlayerBody.GetComponent<PlayerDrain>().DoDrainByTuto();
-        }
+        }*/
     }
     private void OnTriggerExit2D(Collider2D collision)
     {

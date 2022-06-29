@@ -290,6 +290,8 @@ public partial class UIManager : MonoSingleton<UIManager>
         EventManager.StartListening("StartCutScene", () =>
         {
             SetUIAlpha(0f);
+            InteractionHandler.canTransformEnemy = false;
+            InteractionHandler.canUseQuikSlot = false;
             CanInteractUI = false;
             Cursor.visible = false;
             Time.timeScale = 1f;
@@ -298,6 +300,8 @@ public partial class UIManager : MonoSingleton<UIManager>
         EventManager.StartListening("EndCutScene", () =>
         {
             SetUIAlpha(1f);
+            InteractionHandler.canTransformEnemy = true;
+            InteractionHandler.canUseQuikSlot = true;
             CanInteractUI = true;
             Cursor.visible = true;
             Time.timeScale = TimeManager.IsTimePaused ? 0f : TimeManager.CurrentTimeScale;

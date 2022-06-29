@@ -60,105 +60,29 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         });  //플레이어가 방향키 하나 얻었을 때의 이벤트
 
         //플레이어가 작은 슬라임 흡수했을 때 이벤트
-        EventManager.StartListening("DrainTutorialEnemyDrain", enemyPos =>
+        EventManager.StartListening("DrainTutorialEnemyDrain", (Action<Vector2>)(enemyPos =>
         {
-            if (!StoredData.HasValueKey("DrainTutorialEnemyDrain1"))
+            Action logAction = null;
+            logAction = () =>
             {
-                Action logAction = null;
-                logAction = () =>
-                {
-                    um.RequestLogMsg("HP를 얻었습니다.");
-                    um.RequestLogMsg("흡수를 얻었습니다.");
-                    um.RequestLogMsg("기본 슬라임 변신 슬롯을 얻었습니다.");
+                KeyActionManager.Instance.GetElement(InitGainType.SKILL3);
+                EventManager.StopListening("EndCutScene", logAction);
+            };
+            EventManager.StartListening("EndCutScene", logAction);
 
-                    EventManager.StopListening("EndCutScene", logAction);
-                };
-                EventManager.StartListening("EndCutScene", logAction);
-                
+            Canvas ordCvs = UIManager.Instance.ordinaryCvsg.GetComponent<Canvas>();
+            ordCvs.GetComponent<CanvasGroup>().alpha = 1;
+            Vector3 special2SkillSlotPos = GetUITutorialReady(skillUIArr[2].GetComponent<RectTransform>(), new Vector2(1135, 389));
 
-                StoredData.SetValueKey("DrainTutorialEnemyDrain1", true);
+            skillUIArr[2].GetComponent<RectTransform>().DOAnchorPos(special2SkillSlotPos, 1f).SetEase(Ease.OutCubic);
+            skillUIArr[2].GetComponent<CanvasGroup>().DOFade(1, 0.6f).SetEase(Ease.OutCubic).OnComplete(() =>
+            {
+                EventManager.TriggerEvent("Skill2TutoClear");
+                EventManager.TriggerEvent("UpdateKeyCodeUI");
+            });
+        }));
 
-                //적 HP바 UI 생성 후 적 위치로 가져옴
-                RectTransform teHpBar;
-                Canvas ordCvs = UIManager.Instance.ordinaryCvsg.GetComponent<Canvas>();
-
-                teHpBar = Instantiate(Resources.Load<GameObject>("Tutorial/UI/TutorialEnemyHP"), ordCvs.transform).GetComponent<RectTransform>();
-                teHpBar.gameObject.SetActive(false);
-                teHpBar.anchoredPosition = Util.WorldToScreenPosForScreenSpace(enemyPos, ordCvs);
-
-                //Cursor Img
-                Image cursorImg = teHpBar.GetChild(1).GetComponent<Image>();
-
-                //Init
-                ordCvs.GetComponent<CanvasGroup>().alpha = 1;  //컷씬 시작상태라 alpha값이 0인 상태이므로 1로 켜줌. 
-                teHpBar.GetComponent<CanvasGroup>().alpha = 1;
-                cursorImg.color = Color.clear;
-                cursorImg.sprite = cursorSpr;
-
-                hpUI.GetComponent<CanvasGroup>().alpha = 0; //아직 HP바 못얻은 상태이므로 alpha만 0으로 하고 옵젝 켜줌 (파티클은 alpha 0이어도 보이므로 아직은 꺼진 상태 유지) 
-                hpUI.gameObject.SetActive(true);
-
-                changeableBodysUIArr[0].GetComponent<CanvasGroup>().alpha = 0;  //alpha만 0으로 하고 켜줌
-                changeableBodysUIArr[0].gameObject.SetActive(true);
-
-                float hpFillEffectMaskCenterInitScale = StoredData.GetValueData<float>("hpFillEffectMaskCenterInitScale", true);
-
-                UIManager.Instance.playerHPInfo.first.fillAmount = 0;
-                UIManager.Instance.playerHPInfo.third.fillAmount = 0;
-                EffectManager.Instance.hpFillEffectMaskCenter.localScale = new Vector3(0, hpFillEffectMaskCenterInitScale, hpFillEffectMaskCenterInitScale);
-
-                //이걸 어떻게 고칠까. anchor가 달라서 위치가 제대로 안나옴(anchor가 중간이어야 오른쪽 코드가 잘됨) //Util.WorldToScreenPosForScreenSpace(enemyPos, ordCvs) - new Vector3(960f, -67f);
-                // anchor와 부모 anchor까지 고려해서 어떤 값만큼 빼거나 더하는식으로 고쳐야할것 같음
-                Vector3 special2SkillSlotPos = GetUITutorialReady(skillUIArr[2].GetComponent<RectTransform>(), new Vector2(1135, 389));
-
-                //UtilEditor.PauseEditor();
-
-                //HP바 tweening
-
-                Util.DelayFunc(() =>  //슬라임 흡수하고 원래 사이즈로 되돌아올 때까지 대기
-                {
-                    teHpBar.gameObject.SetActive(true);
-                    EffectManager.Instance.hpFillEffect.gameObject.SetActive(true);
-
-                    Sequence seq = DOTween.Sequence();
-                    seq.Append(teHpBar.DOAnchorPos(Util.WorldToScreenPosForScreenSpace(Global.GetSlimePos.position + Vector3.down, ordCvs), 0.3f))
-                    .AppendInterval(0.7f); //슬라임 밑으로 체력바 옮김
-                    seq.Append(cursorImg.DOColor(Color.white, 0.5f))
-                        .AppendInterval(0.4f).AppendCallback(() => cursorImg.sprite = clickedCursorSpr);  //마우스 커서 이미지 보임
-                    seq.Append(teHpBar.DOAnchorPos(new Vector2(-640f, 474f), 0.9f).SetEase(Ease.InQuad))
-                        .AppendInterval(0.4f).AppendCallback(() =>
-                        {
-                            cursorImg.transform.parent = ordCvs.transform;
-                            cursorImg.sprite = cursorSpr;
-                        });  //HP UI 있는곳으로 옮김
-                    seq.AppendInterval(0.3f);
-                    seq.Append(teHpBar.DOScale(SVector3.two, 0.4f)).AppendInterval(0.3f);
-                    seq.Append(teHpBar.GetComponent<CanvasGroup>().DOFade(0, 0.3f))
-                    .AppendInterval(0.15f); //옮겨진 UI 안보이게
-                    seq.Append(hpUI.GetComponent<CanvasGroup>().DOFade(1, 0.4f))
-                        .Join(cursorImg.DOColor(Color.clear, 0.3f))
-                        .Join(changeableBodysUIArr[0].GetComponent<CanvasGroup>().DOFade(1, 0.3f))
-                        .AppendInterval(0.6f);
-                    seq.Append(UIManager.Instance.playerHPInfo.first.DOFillAmount(1, 0.7f))  //HP Fill 차오르게
-                    .Join(EffectManager.Instance.hpFillEffectMaskCenter.DOScaleX(hpFillEffectMaskCenterInitScale, 0.75f)) //이펙트 마스크 넓힘 (이펙트도 점점 보이게)
-                    .AppendInterval(0.5f);
-                    seq.Append(skillUIArr[2].GetComponent<RectTransform>().DOAnchorPos(special2SkillSlotPos, 1f).SetEase(Ease.OutCubic))
-                    .Join(skillUIArr[2].GetComponent<CanvasGroup>().DOFade(1, 0.6f).SetEase(Ease.OutCubic))
-                    .AppendInterval(0.2f)  //원래 HPUI랑 첫번째 변신 슬롯 보이게 + 흡수 스킬 슬롯 얻음
-                    .AppendCallback(() =>
-                    {
-                        UIManager.Instance.playerHPInfo.third.fillAmount = 1;
-                        Destroy(teHpBar.gameObject);
-                        Destroy(cursorImg.gameObject);
-                        EventManager.TriggerEvent("Skill2TutoClear");
-                        EventManager.TriggerEvent("UpdateKeyCodeUI");
-                    });
-                    seq.Play();
-                }, 3f);  //end of Util
-            }  //end of if
-        });  //플레이어가 튜토리얼(HP바 얻는 곳) 전용 몬스터를 흡수했을 때의 이벤트
-
-        //플레이어와 튜토 슬라임 사이 거리가 일정 이하(흡수 판정 거리)일 때 이벤트
+            //플레이어와 튜토 슬라임 사이 거리가 일정 이하(흡수 판정 거리)일 때 이벤트
         EventManager.StartListening("Tuto_CanDrainObject", () =>
         {
             if (!StoredData.HasValueKey("Tuto_CanDrainObject1"))
@@ -303,17 +227,27 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         //um.StartLoadingIn();
     }
 
-    /*private void ShowTargetSortingLayers() //Test
+    public void TutoEnemyDrainCSEvent()
     {
-        int[] arr = (int[])playerFollowLight.GetFieldInfo<Light2D>("m_ApplyToSortingLayers").GetValue(playerFollowLight);
+        StageManager.Instance.StageClear();
+        GameObject enemy = StageManager.Instance.CurrentStageGround.objSpawnPos.gameObject;
+        Vector3 target = Global.GetSlimePos.position;
 
-        StringBuilder sb = new StringBuilder();
-
-        foreach (int r in arr)
-            sb.Append(r + ", ");
-
-        Debug.Log(sb.ToString());
-    }*/
+        Util.DelayFunc(() =>
+        {
+            enemy.gameObject.SetActive(true);
+            enemy.transform.DOMove(target, 5f).SetEase(Ease.Linear).OnComplete(() =>
+            {
+                enemy.transform.DOScale(Vector3.zero, 0.4f).OnComplete(() =>
+                {
+                    UIManager.Instance.worldUICvsg.alpha = 1;
+                    KeyActionManager.Instance.ShowExclamationMark();
+                    Util.DelayFunc(() => EventManager.TriggerEvent("DrainTutorialEnemyDrain", (Vector2)target), 1);
+                    enemy.SetActive(false);
+                });
+            });
+        }, 1.5f, this);
+    }
 
     public void UIOn(KeyAction type)
     {
@@ -446,3 +380,119 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     }
     #endregion
 }
+
+
+
+
+
+
+
+#region 주석
+
+/*EventManager.StartListening("DrainTutorialEnemyDrain", enemyPos =>
+{
+    if (!StoredData.HasValueKey("DrainTutorialEnemyDrain1"))
+    {
+        Action logAction = null;
+        logAction = () =>
+        {
+            KeyActionManager.Instance.GetElement(InitGainType.SKILL3);
+            EventManager.StopListening("EndCutScene", logAction);
+        };
+        EventManager.StartListening("EndCutScene", logAction);
+
+        StoredData.SetValueKey("DrainTutorialEnemyDrain1", true);
+
+        //적 HP바 UI 생성 후 적 위치로 가져옴
+        RectTransform teHpBar;
+        Canvas ordCvs = UIManager.Instance.ordinaryCvsg.GetComponent<Canvas>();
+
+        teHpBar = Instantiate(Resources.Load<GameObject>("Tutorial/UI/TutorialEnemyHP"), ordCvs.transform).GetComponent<RectTransform>();
+        teHpBar.gameObject.SetActive(false);
+        teHpBar.anchoredPosition = Util.WorldToScreenPosForScreenSpace(enemyPos, ordCvs);
+
+        //Cursor Img
+        Image cursorImg = teHpBar.GetChild(1).GetComponent<Image>();
+
+        //Init
+        ordCvs.GetComponent<CanvasGroup>().alpha = 1;  //컷씬 시작상태라 alpha값이 0인 상태이므로 1로 켜줌. 
+        teHpBar.GetComponent<CanvasGroup>().alpha = 1;
+        cursorImg.color = Color.clear;
+        cursorImg.sprite = cursorSpr;
+
+        hpUI.GetComponent<CanvasGroup>().alpha = 0; //아직 HP바 못얻은 상태이므로 alpha만 0으로 하고 옵젝 켜줌 (파티클은 alpha 0이어도 보이므로 아직은 꺼진 상태 유지) 
+        hpUI.gameObject.SetActive(true);
+
+        changeableBodysUIArr[0].GetComponent<CanvasGroup>().alpha = 0;  //alpha만 0으로 하고 켜줌
+        changeableBodysUIArr[0].gameObject.SetActive(true);
+
+        float hpFillEffectMaskCenterInitScale = StoredData.GetValueData<float>("hpFillEffectMaskCenterInitScale", true);
+
+        UIManager.Instance.playerHPInfo.first.fillAmount = 0;
+        UIManager.Instance.playerHPInfo.third.fillAmount = 0;
+        EffectManager.Instance.hpFillEffectMaskCenter.localScale = new Vector3(0, hpFillEffectMaskCenterInitScale, hpFillEffectMaskCenterInitScale);
+
+        //이걸 어떻게 고칠까. anchor가 달라서 위치가 제대로 안나옴(anchor가 중간이어야 오른쪽 코드가 잘됨) //Util.WorldToScreenPosForScreenSpace(enemyPos, ordCvs) - new Vector3(960f, -67f);
+        // anchor와 부모 anchor까지 고려해서 어떤 값만큼 빼거나 더하는식으로 고쳐야할것 같음
+        Vector3 special2SkillSlotPos = GetUITutorialReady(skillUIArr[2].GetComponent<RectTransform>(), new Vector2(1135, 389));
+
+        //UtilEditor.PauseEditor();
+
+        //HP바 tweening
+
+        Util.DelayFunc(() =>  //슬라임 흡수하고 원래 사이즈로 되돌아올 때까지 대기
+        {
+            teHpBar.gameObject.SetActive(true);
+            EffectManager.Instance.hpFillEffect.gameObject.SetActive(true);
+
+            Sequence seq = DOTween.Sequence();
+            seq.Append(teHpBar.DOAnchorPos(Util.WorldToScreenPosForScreenSpace(Global.GetSlimePos.position + Vector3.down, ordCvs), 0.3f))
+            .AppendInterval(0.7f); //슬라임 밑으로 체력바 옮김
+            seq.Append(cursorImg.DOColor(Color.white, 0.5f))
+                .AppendInterval(0.4f).AppendCallback(() => cursorImg.sprite = clickedCursorSpr);  //마우스 커서 이미지 보임
+            seq.Append(teHpBar.DOAnchorPos(new Vector2(-640f, 474f), 0.9f).SetEase(Ease.InQuad))
+                .AppendInterval(0.4f).AppendCallback(() =>
+                {
+                    cursorImg.transform.parent = ordCvs.transform;
+                    cursorImg.sprite = cursorSpr;
+                });  //HP UI 있는곳으로 옮김
+            seq.AppendInterval(0.3f);
+            seq.Append(teHpBar.DOScale(SVector3.two, 0.4f)).AppendInterval(0.3f);
+            seq.Append(teHpBar.GetComponent<CanvasGroup>().DOFade(0, 0.3f))
+            .AppendInterval(0.15f); //옮겨진 UI 안보이게
+            seq.Append(hpUI.GetComponent<CanvasGroup>().DOFade(1, 0.4f))
+                .Join(cursorImg.DOColor(Color.clear, 0.3f))
+                .Join(changeableBodysUIArr[0].GetComponent<CanvasGroup>().DOFade(1, 0.3f))
+                .AppendInterval(0.6f);
+            seq.Append(UIManager.Instance.playerHPInfo.first.DOFillAmount(1, 0.7f))  //HP Fill 차오르게
+            .Join(EffectManager.Instance.hpFillEffectMaskCenter.DOScaleX(hpFillEffectMaskCenterInitScale, 0.75f)) //이펙트 마스크 넓힘 (이펙트도 점점 보이게)
+            .AppendInterval(0.5f);
+            seq.Append(skillUIArr[2].GetComponent<RectTransform>().DOAnchorPos(special2SkillSlotPos, 1f).SetEase(Ease.OutCubic))
+            .Join(skillUIArr[2].GetComponent<CanvasGroup>().DOFade(1, 0.6f).SetEase(Ease.OutCubic))
+            .AppendInterval(0.2f)  //원래 HPUI랑 첫번째 변신 슬롯 보이게 + 흡수 스킬 슬롯 얻음
+            .AppendCallback(() =>
+            {
+                UIManager.Instance.playerHPInfo.third.fillAmount = 1;
+                Destroy(teHpBar.gameObject);
+                Destroy(cursorImg.gameObject);
+                EventManager.TriggerEvent("Skill2TutoClear");
+                EventManager.TriggerEvent("UpdateKeyCodeUI");
+            });
+            seq.Play();
+        }, 3f);  //end of Util
+    }  //end of if
+});  //플레이어가 튜토리얼(HP바 얻는 곳) 전용 몬스터를 흡수했을 때의 이벤트*/
+
+/*private void ShowTargetSortingLayers() //Test
+{
+    int[] arr = (int[])playerFollowLight.GetFieldInfo<Light2D>("m_ApplyToSortingLayers").GetValue(playerFollowLight);
+
+    StringBuilder sb = new StringBuilder();
+
+    foreach (int r in arr)
+        sb.Append(r + ", ");
+
+    Debug.Log(sb.ToString());
+}*/
+
+#endregion

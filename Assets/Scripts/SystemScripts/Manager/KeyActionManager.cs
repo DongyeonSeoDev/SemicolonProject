@@ -541,4 +541,9 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
             }
         }
     }
+
+    public void CloseGetSkill3()
+    {
+        TalkManager.Instance.SetSubtitle("방금 뭔가 몸으로 들어오면서 새로운 능력을 얻은 것 같아", 0.2f, 1.5f);
+    }
 }

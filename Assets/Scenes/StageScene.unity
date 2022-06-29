@@ -346,7 +346,7 @@ MonoBehaviour:
   m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 60
-    OrthographicSize: 9
+    OrthographicSize: 8.5
     NearClipPlane: 0.3
     FarClipPlane: 200
     Dutch: 0
@@ -776,7 +776,7 @@ PlayableDirector:
   m_GameObject: {fileID: 939802015}
   m_Enabled: 1
   serializedVersion: 3
-  m_PlayableAsset: {fileID: 11400000, guid: 0c04972f69c810043bc1f8b81c4a76fc, type: 2}
+  m_PlayableAsset: {fileID: 11400000, guid: 76a1a3b41af8d764c859e153e36ded97, type: 2}
   m_InitialState: 0
   m_WrapMode: 2
   m_DirectorUpdateMode: 1
@@ -799,7 +799,7 @@ PlayableDirector:
   - key: {fileID: 0}
     value: {fileID: 1614698500}
   - key: {fileID: 4820985945009789302, guid: 76a1a3b41af8d764c859e153e36ded97, type: 2}
-    value: {fileID: 1782452595}
+    value: {fileID: 180796204}
   - key: {fileID: 0}
     value: {fileID: 1614698500}
   - key: {fileID: -5409987075804127680, guid: 0c04972f69c810043bc1f8b81c4a76fc, type: 2}
@@ -833,6 +833,7 @@ MonoBehaviour:
     - {fileID: 11400000, guid: 0e5dbb47b7650ba4d8a5bd6ca44101ba, type: 2}
     - {fileID: 11400000, guid: 490a59f0ea95bba41a329e2a736c335c, type: 2}
     - {fileID: 11400000, guid: 7e4da05f6dfd9464ebaabcbb028b9dca, type: 2}
+    - {fileID: 11400000, guid: fb5a707dc046bac47aa501486aca36af, type: 2}
     m_Events:
     - m_PersistentCalls:
         m_Calls:
@@ -881,6 +882,20 @@ MonoBehaviour:
         - m_Target: {fileID: 802721669}
           m_TargetAssemblyTypeName: CutsceneManager, Assembly-CSharp
           m_MethodName: InactiveCsVCam1
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1344996038}
+          m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
+          m_MethodName: TutoEnemyDrainCSEvent
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -2653,6 +2668,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6138407592601894101, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6325097880581833384, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
       propertyPath: m_SizeDelta.x
       value: 0
@@ -2867,6 +2886,17 @@ PrefabInstance:
     - {fileID: 6046224809409433838, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
     - {fileID: 3510323137831826764, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+--- !u!114 &1344996038 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5950706611391763827, guid: ca6b6f8f907db214a996465ddf9ff951, type: 3}
+  m_PrefabInstance: {fileID: 1344996037}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 200f25037ecf29146bb832dd45594ad5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1614698495
 GameObject:
   m_ObjectHideFlags: 0
@@ -3242,7 +3272,7 @@ MonoBehaviour:
   m_PivotOffset: {x: 0, y: 0, z: 0}
   m_AmplitudeGain: 0
   m_FrequencyGain: 0
-  mNoiseOffsets: {x: 0, y: 0, z: 0}
+  mNoiseOffsets: {x: -943.6057, y: -417.5121, z: 669.19116}
 --- !u!1001 &2140656871
 PrefabInstance:
   m_ObjectHideFlags: 0

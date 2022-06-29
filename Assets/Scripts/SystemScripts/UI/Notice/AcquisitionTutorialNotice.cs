@@ -10,12 +10,15 @@ public class AcquisitionTutorialNotice : MonoBehaviour
     public CanvasGroup cvsg;
     public RectTransform rt;
 
+    private System.Action closeAction;
+
     public void Set(InitAcquisitionData data)
     {
         objNameTxt.text = $"<color=yellow>{data.objName}</color> È¹µæ";
         explanationTxt.text = data.explanation;
         addiExpTxt.text = data.addiExplanation;
         UIImg.sprite = data.UISpr;
+        closeAction = () => data.endEvent.Invoke();
 
         cvsg.alpha = 0;
         transform.localScale = SVector3.zeroPointSeven;
@@ -31,6 +34,7 @@ public class AcquisitionTutorialNotice : MonoBehaviour
         {
             KeyActionManager.Instance.enableProcessGainUINotice = true;
             TimeManager.TimeResume();
+            closeAction?.Invoke();
             gameObject.SetActive(false);
         });
     }
