@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class SetStageDataEditor : Editor
 {
-    public static string getStagePath = Path.Combine("Stage", "StagePrefab", "Stage1");
-    public static string stageSavePath = Path.Combine(Application.dataPath, "Resources", "Enemy", "StageData", "Stage1Data.txt");
+    public static string getStagePath = Path.Combine("Stage", "StagePrefab");
+    public static string stageSavePath = Path.Combine(Application.dataPath, "Resources", "Enemy", "StageData", "StageData.txt");
 
     [MenuItem("EnemyWindow/SetStageData")]
     public static void Click()
@@ -21,7 +21,14 @@ public class SetStageDataEditor : Editor
 
             if (ground.isEnemyStage)
             {
-                stageDataList.Add(FindPath.SetStageData(ground.noPassTilemap, ground.limitMinPosition, ground.limitMaxPosition, ground.name.Substring(0, ground.name.IndexOf("Pref"))));
+                if (ground.name.Contains("Pref"))
+                {
+                    stageDataList.Add(FindPath.SetStageData(ground.noPassTilemap, ground.limitMinPosition, ground.limitMaxPosition, ground.name.Substring(0, ground.name.IndexOf("Pref"))));
+                }
+                else
+                {
+                    stageDataList.Add(FindPath.SetStageData(ground.noPassTilemap, ground.limitMinPosition, ground.limitMaxPosition, ground.name));
+                }
             }
         }
 
