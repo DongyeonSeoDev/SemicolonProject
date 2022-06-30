@@ -241,6 +241,8 @@ public class EffectManager : MonoSingleton<EffectManager>
 
             MeshParticleManager.Instance.SpawnBloodEffect(effectPosition);
         }
+
+        Environment.Instance.OnDamaged();
     }
     /*public void OnDamaged(float damage, Vector2 pos, Vector3 scale, VertexGradient textColor)
     {

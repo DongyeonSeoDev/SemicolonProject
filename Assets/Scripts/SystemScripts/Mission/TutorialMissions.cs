@@ -43,7 +43,8 @@ public class AbsorptionTutoMission : Mission
             checkTime = Time.time + 1f;
             for(int i=0; i<curEnemyList.Count; i++)
             {
-
+                curEnemyList[i].GetDamage(5, false, false, false,
+                    curEnemyList[i].transform.position, curEnemyList[i].transform.position - Global.GetSlimePos.position);
             }
         }
     }

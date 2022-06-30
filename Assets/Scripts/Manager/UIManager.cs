@@ -1116,7 +1116,6 @@ public partial class UIManager : MonoSingleton<UIManager>
         if (decrease)
         {
             EffectManager.Instance.OnDamagedUIEffect(rate);
-            Environment.Instance.OnDamaged();
             isStartDelayHPFillTimer = true;
             setDelayHPFillTime = Time.time + 0.5f;
         }
