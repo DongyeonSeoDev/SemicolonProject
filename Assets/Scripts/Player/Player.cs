@@ -311,7 +311,6 @@ public class Player : MonoBehaviour
                 }
                 UIManager.Instance.UpdatePlayerHPUI(true);
             }
-
         }
 
         EffectManager.Instance.OnDamaged(dm, critical, false, SlimeGameManager.Instance.CurrentPlayerBody.transform.position, effectPosition, direction, effectSize);
