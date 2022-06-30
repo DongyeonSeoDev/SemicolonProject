@@ -304,15 +304,15 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     public void GetCharUI()  //캐릭터 UI얻음 => HP Energe MobSlot
     {
-        for(int i=0; i<changeableBodysUIArr.Length; i++)
+        for (int i=0; i<changeableBodysUIArr.Length; i++)
         {
             changeableBodysUIArr[i].GetComponent<CanvasGroup>().alpha = 0;
             changeableBodysUIArr[i].gameObject.SetActive(true);
-            changeableBodysUIArr[i].GetComponent<CanvasGroup>().DOFade(1, 0.5f);
+            changeableBodysUIArr[i].GetComponent<CanvasGroup>().DOFade(i==0?1f:0.4f, 0.5f);
         }
 
         //HP 얻음
-        hpUI.GetComponent<CanvasGroup>().alpha = 0;
+        hpUI.GetComponent<CanvasGroup>().alpha = 1;
         hpUI.gameObject.SetActive(true);
         UIManager.Instance.playerHPInfo.third.fillAmount = 0;
         EffectManager.Instance.hpFillEffect.gameObject.SetActive(true);
@@ -328,7 +328,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         sum.energeFill.fillAmount = 0;
         sum.energeEffMask.localScale = new Vector3(0, orgEnergeEffMaskScl.y, orgEnergeEffMaskScl.z);
         sum.energeBarAndEff.second.gameObject.SetActive(true);
-        sum.energeBarAndEff.first.GetComponent<CanvasGroup>().alpha = 0;
+        sum.energeBarAndEff.first.GetComponent<CanvasGroup>().alpha = 1;
         sum.energeBarAndEff.first.SetActive(true);
 
         sum.energeFill.DOFillAmount(1, 0.7f);
@@ -336,9 +336,9 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         {
             sum.IsAutoFitEnergeBar = true;
             EventManager.TriggerEvent("UpdateKeyCodeUI");
+            StageManager.Instance.StageClear();
+            KeyActionManager.Instance.GetElement(InitGainType.CHAR_UI);
         });
-
-        KeyActionManager.Instance.GetElement(InitGainType.CHAR_UI);
     }
 
     public void GetUITween(Vector2 newPos, Transform ui, Action end) //UI 획득 트윈 연출 (Default)

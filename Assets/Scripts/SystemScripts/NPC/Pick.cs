@@ -104,7 +104,6 @@ public class Pick : InteractionObj
 
         droppedCount = count;
 
-        EventManager.TriggerEvent(Global.PickupPlant, suc);
         if (suc)
         {
             EffectManager.Instance.OnWorldTextEffect("채집 성공", transform.position, Vector3.one, EffectManager.Instance.pickupPlantSucFaiVG.normal);
@@ -115,6 +114,7 @@ public class Pick : InteractionObj
             EffectManager.Instance.OnWorldTextEffect("채집 실패", transform.position, Vector3.one, EffectManager.Instance.pickupPlantSucFaiVG.cri);
             gameObject.SetActive(false);
         }
+        EventManager.TriggerEvent(Global.PickupPlant, itemData.id, suc);
     }
 
     void CallEffect(string key, float time = 1)

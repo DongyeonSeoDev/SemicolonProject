@@ -27703,6 +27703,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8632448655464481713, guid: 913d8b5e292ca3f4b9cdf9e9ace1a6f4, type: 3}
+      propertyPath: isEnemyStage
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8702471488895736902, guid: 913d8b5e292ca3f4b9cdf9e9ace1a6f4, type: 3}
       propertyPath: m_Name
       value: PickItemSample

@@ -10,13 +10,18 @@ public class PickTutorialEvent : MapEventSO
     public override void OnEnterEvent()
     {
         TalkManager.Instance.SetSubtitle(enterSubData);
-        EventManager.StartListening(Global.PickupPlant, (Action<bool>)Pickup);
+        EventManager.StartListening(Global.PickupPlant, Pickup);
     }
 
-    private void Pickup(bool suc)
+    private void Pickup(string id, bool suc)
     {
+        if(!suc)
+        {
+            Inventory.Instance.GetItem(new ItemInfo(id, 1));
+        }
+
         TalkManager.Instance.SetSubtitle(suc ? success : fail);
         TutorialManager.Instance.GetQuikSlot();
-        EventManager.StopListening(Global.PickupPlant, (Action<bool>)Pickup);
+        EventManager.StopListening(Global.PickupPlant, Pickup);
     }
 }
