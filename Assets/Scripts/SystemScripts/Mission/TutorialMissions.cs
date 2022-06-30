@@ -17,6 +17,7 @@ public class AbsorptionTutoMission : Mission
         StageManager.Instance.StageClear();
         KeyActionManager.Instance.GetElement(InitGainType.SKILL2);
         EnemyManager.Instance.isOnlyAbsorption = false;
+        EventManager.StopListening("TryAbsorbMob", (System.Action<bool>)TryDrain);
     }
 
     public override void Start()
@@ -24,6 +25,15 @@ public class AbsorptionTutoMission : Mission
         checkTime = Time.time + 1f;
         EnemyManager.Instance.isOnlyAbsorption = true;
         curEnemyList = EnemyManager.Instance.enemyDictionary["Stage0-05"];
+        EventManager.StartListening("TryAbsorbMob", (System.Action<bool>)TryDrain);
+    }
+
+    private void TryDrain(bool suc)
+    {
+        if(!suc)
+        {
+            TalkManager.Instance.SetSubtitle("흡수는 적의 체력이 적을 때만 가능해", 0.2f, 2f);
+        }
     }
 
     public override void Update()

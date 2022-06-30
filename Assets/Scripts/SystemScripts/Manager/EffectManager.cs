@@ -277,6 +277,7 @@ public class EffectManager : MonoSingleton<EffectManager>
     private void TryDrain(Vector2 mobPos, bool drainSuc) //흡수 실패 성공 텍스트 띄움
     {
         OnWorldTextEffect(drainSuc ? "흡수" : "흡수실패", mobPos, Vector3.one, drainSuc ? drainVG.normal : drainVG.cri);
+        EventManager.TriggerEvent("TryAbsorbMob", drainSuc);
     }
 
     public GameObject CallGameEffect(string key, Vector3 pos, float duration)  //이펙트 호출
