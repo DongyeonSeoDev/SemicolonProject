@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerDrain : PlayerSkill
 {
-    private readonly string canDrainCheckColliderPath = "Player/PlayerCollider/CanDrainCheckCollider";
+    //private readonly string canDrainCheckColliderPath = "Player/PlayerCollider/CanDrainCheckCollider";
 
     [SerializeField]
     private GameObject drainCollider = null; // drain 체크에 사용될 Collider
@@ -33,10 +33,10 @@ public class PlayerDrain : PlayerSkill
         get { return upUnderstandingRateValue; }
     }
 
-    public bool drainTutorial = false;
+    //public bool drainTutorial = false;
+    //public bool drainTutorialDone = false;
 
     private bool canDrain = true;
-    public bool drainTutorialDone = false;
     public bool cantDrainObject = false;
 
     public override void Awake()
@@ -48,14 +48,14 @@ public class PlayerDrain : PlayerSkill
     }
     private void Start()
     {
-        if(TutorialManager.Instance.IsTutorialStage)
-        {
-            Instantiate(Resources.Load<GameObject>(canDrainCheckColliderPath), transform);
-        }
-        else
-        {
-            drainTutorialDone = true;
-        }
+        //if(TutorialManager.Instance.IsTutorialStage)
+        //{
+        //    //Instantiate(Resources.Load<GameObject>(canDrainCheckColliderPath), transform);
+        //}
+        //else
+        //{
+        //    //drainTutorialDone = true;
+        //}
     }
     public override void OnEnable()
     {
@@ -89,23 +89,23 @@ public class PlayerDrain : PlayerSkill
 
         if (canDrain)
         {
-            drainTutorial = false;
+            //drainTutorial = false;
 
             DoDrain();
         }
     }
     public void DoDrainByTuto()
     {
-        drainTutorial = true;
+        //drainTutorial = true;
 
         DoDrain();
     }
     private void DoDrain()
     {
-        if(!drainTutorialDone && !drainTutorial)
-        {
-            return;
-        }
+        //if(!drainTutorialDone && !drainTutorial)
+        //{
+        //    return;
+        //}
 
         player.PlayerState.IsDrain = true;
         player.PlayerOrderInLayerController.SetOrderInLayer("Object", 0);
