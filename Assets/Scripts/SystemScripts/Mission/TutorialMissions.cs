@@ -4,6 +4,7 @@ using Enemy;
 public class AbsorptionTutoMission : Mission
 {
     private float checkTime;
+    //현재 적 리스트
 
     public AbsorptionTutoMission(string title) : base(title)
     {
@@ -21,6 +22,7 @@ public class AbsorptionTutoMission : Mission
     {
         checkTime = Time.time + 1f;
         EnemyManager.Instance.isOnlyAbsorption = true;
+        //현재 적 리스트 변수에 적들 넣음
     }
 
     public override void Update()

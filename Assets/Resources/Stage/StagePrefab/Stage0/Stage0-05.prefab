@@ -27412,6 +27412,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: AttackTutorialEnemy (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 6312957648424485583, guid: f904a1692a5fa674cafb98b3f9228743, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6312957648424485617, guid: f904a1692a5fa674cafb98b3f9228743, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -27578,6 +27582,10 @@ PrefabInstance:
     - target: {fileID: 6312957648424485583, guid: f904a1692a5fa674cafb98b3f9228743, type: 3}
       propertyPath: m_Name
       value: AttackTutorialEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 6312957648424485583, guid: f904a1692a5fa674cafb98b3f9228743, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6312957648424485617, guid: f904a1692a5fa674cafb98b3f9228743, type: 3}
       propertyPath: m_RootOrder

@@ -7,6 +7,8 @@ public class DrainTutorialEvent : MapEventSO
 
     public override void OnEnterEvent()
     {
+        BattleUIManager.Instance.StartMission(MissionType.ABSORPTIONTUTORIAL);
+        EventManager.TriggerEvent("SpawnEnemy", "Stage0-05");
         //tutoEnemyDeathCnt = 0;
         //EventManager.StartListening("Tuto_EnemyDeathCheck", CheckTutoEnemyDead);
     }
