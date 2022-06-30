@@ -68,7 +68,7 @@ public class StageManager : MonoSingleton<StageManager>
     private Dictionary<int, List<RandomRoomType>> randomZoneTypeListDic = new Dictionary<int, List<RandomRoomType>>(); //랜덤 구역에서 나올 구역 타입들을 미리 넣어놓음
 
     private Dictionary<string, StageData> stageDataDictionary = new Dictionary<string, StageData>();
-    private string stageDataPath = Path.Combine("Enemy", "StageData", "Stage1Data");
+    private string stageDataPath = Path.Combine("Enemy", "StageData", "StageData");
 
     private void Awake()
     {
