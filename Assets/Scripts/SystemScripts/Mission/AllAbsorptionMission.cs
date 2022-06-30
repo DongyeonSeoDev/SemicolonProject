@@ -15,8 +15,6 @@ public class AllAbsorptionMission : Mission
     {
         isEnd = false;
         Enemy.EnemyManager.Instance.isOnlyAbsorption = true;
-        //
-        //SlimeGameManager.Instance.PlayerBodyChange(Global.OriginBodyID);
     }
 
     public override void Update()

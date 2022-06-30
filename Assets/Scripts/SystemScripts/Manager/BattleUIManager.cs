@@ -131,6 +131,10 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
             TalkManager.Instance.SetSubtitle("휴... 빨리 다음 방으로 가보자", 0.25f, 2f);
             Enemy.EnemyManager.Instance.PlayerDeadEvent();
         }));
+
+        //튜토 5번방 전용
+        allMissionsDic.Add(MissionType.ABSORPTIONTUTORIAL, new AbsorptionTutoMission("모든 적을 흡수하세요"));
+
         #endregion
     }
 

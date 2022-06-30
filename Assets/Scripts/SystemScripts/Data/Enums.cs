@@ -6,7 +6,8 @@ public enum MissionType
     SURVIVAL1,
     NOTRANSFORMATION,
     NOQUIKSLOT,
-    ALLABSORPTION
+    ALLABSORPTION,
+    ABSORPTIONTUTORIAL
 }
 
 public enum KillNoticeType

@@ -133,7 +133,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -992757899
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 5
   m_Sprite: {fileID: 21300000, guid: 4c65fb9db70f3ef4a845982ed8949ddd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -220,13 +220,17 @@ MonoBehaviour:
     npcName: 
     talkContents:
     - value:
-      - message: "\uC790\uB124, \uB098\uB97C \uBCF8 \uC801\uC774 \uC788\uB098?"
+      - message: "\uC790\uB124\uB294 \uC5EC\uAE30 \uC2AC\uB77C\uC784\uC774 \uC544\uB2CC
+          \uAC83 \uAC19\uC740\uB370"
         talkEndEventKey: 
-      - message: "\uBB50 \uC77C\uB2E8\uC740 \uADF8\uAC8C \uC911\uC694\uD55C \uAC74
-          \uC544\uB2C8\uACA0\uC9C0"
+      - message: "\uC5B4\uCA4C\uB2E4 \uC774\uACF3\uC73C\uB85C \uC654\uB294\uAC00?"
         talkEndEventKey: 
-      - message: "\uC774 \uBB38\uC744 \uD1B5\uACFC\uD558\uACE0 \uC2F6\uC73C\uBA74
-          \uBAB8\uC744 \uC555\uCD95\uD574\uBCF4\uAC8C\uB098"
+      - message: "\uC74C... \uAE30\uC5B5\uC774 \uC548 \uB09C\uB2E4\uBA74 \uC5B4\uCA54
+          \uC218 \uC5C6\uAD6C\uB9CC"
+        talkEndEventKey: 
+      - message: "\uC77C\uB2E8 \uC774\uB7F0 \uBB38 \uC815\uB3C4\uB294 \uC790\uB124\uAC00
+          \uD798\uC744 \uCD5C\uB300\uB85C \uBAA8\uC73C\uBA74 \uBD80\uC220 \uC218
+          \uC788\uC744 \uAC83\uC774\uB124"
         talkEndEventKey: GetRushAttack
     - value:
       - message: "\uC880 \uB354 \uD798\uC744 \uBAA8\uC544\uBCF4\uAC8C!"

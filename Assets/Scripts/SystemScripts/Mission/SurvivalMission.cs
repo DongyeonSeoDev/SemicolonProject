@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 
+//아마 튜토리얼 전용
 public class SurvivalMission : Mission
 {
     private float survivalTime;

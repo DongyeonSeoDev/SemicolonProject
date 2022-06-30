@@ -74,6 +74,8 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             ordCvs.GetComponent<CanvasGroup>().alpha = 1;
             Vector3 special2SkillSlotPos = GetUITutorialReady(skillUIArr[2].GetComponent<RectTransform>(), new Vector2(1135, 389));
 
+            EventManager.StartListening("Skill2TutoClear", () => Debug.Log("양진욱 테스트"));
+
             skillUIArr[2].GetComponent<RectTransform>().DOAnchorPos(special2SkillSlotPos, 1f).SetEase(Ease.OutCubic);
             skillUIArr[2].GetComponent<CanvasGroup>().DOFade(1, 0.6f).SetEase(Ease.OutCubic).OnComplete(() =>
             {
