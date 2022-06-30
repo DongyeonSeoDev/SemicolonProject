@@ -68,7 +68,13 @@ public enum InitGainType
     MOBSLOT,
     SKILL1,
     SKILL2,
-    SKILL3
+    SKILL3,
+    CHAR_UI,  //HP, Energe, MobSlot(3Ä­ ´Ù) 3°³ 
+    INVENTORY_UI,
+    STAT_UI,
+    MONCOL_UI,
+    SETTING_UI,
+    HP_STAT
 }
 
 public enum KeyAction

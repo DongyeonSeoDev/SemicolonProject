@@ -11,9 +11,9 @@ public class EnterLobbyEvent : MapEventSO
             StageManager.Instance.SaveStage("Stage0-06");
             CutsceneManager.Instance.PlayCutscene("TutorialCutscene2");
 
-            NGlobal.playerStatUI.StatUnlock(NGlobal.playerStatUI.PlayerStat.eternalStat.maxHp);
-            NGlobal.playerStatUI.StatUnlock(NGlobal.playerStatUI.PlayerStat.eternalStat.minDamage);
-            NGlobal.playerStatUI.StatUnlock(NGlobal.playerStatUI.PlayerStat.eternalStat.maxDamage);
+            NGlobal.playerStatUI.StatUnlock(NGlobal.playerStatUI.PlayerStat.eternalStat.maxHp, false);
+            NGlobal.playerStatUI.StatUnlock(NGlobal.playerStatUI.PlayerStat.eternalStat.minDamage, false);
+            NGlobal.playerStatUI.StatUnlock(NGlobal.playerStatUI.PlayerStat.eternalStat.maxDamage, false);
             NGlobal.playerStatUI.StatOpen(NGlobal.MaxHpID, true);
             NGlobal.playerStatUI.StatOpen(NGlobal.MinDamageID, true);
             NGlobal.playerStatUI.StatOpen(NGlobal.MaxDamageID, true);

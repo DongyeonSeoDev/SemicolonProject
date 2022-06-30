@@ -10,17 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64e33b43e1e30554a86e99b006a1e50a, type: 3}
-  m_Name: Stage0-08
+  m_Name: Stage0-09
   m_EditorClassIdentifier: 
   stageFloor: {fileID: 11400000, guid: 516212a852b2f484a8abbed3d2618a20, type: 2}
-  stageName: '    '
+  stageName: "\uD558\uC218\uAD6C \uB85C\uBE44"
   isSaveStage: 0
   useOpenDoorSound: 0
   stageMonsterBundleCount: 0
   stageMonsterBundleID: []
-  stage: {fileID: 1378282381469885354, guid: 8e299a74e65c2ac479e02597036eaecc, type: 3}
+  stage: {fileID: 1378282381469885354, guid: 393db139b727b7c4bb76659a3998420d, type: 3}
   areaType: 0
   enemySpeciesArea: 2
   missionTypes: 
   mapNPC: {fileID: 0}
-  mapEvent: {fileID: 11400000, guid: 7213446e93d7be74fb3b37738065c817, type: 2}
+  mapEvent: {fileID: 11400000, guid: fc125be61f1675d42a10dc90cd867ae0, type: 2}

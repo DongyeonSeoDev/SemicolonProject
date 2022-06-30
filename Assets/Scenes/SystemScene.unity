@@ -83840,6 +83840,26 @@ MonoBehaviour:
               m_StringArgument: 
               m_BoolArgument: 0
             m_CallState: 2
+  - first: 13
+    second:
+      objName: HP
+      explanation: "\uB2F9\uC2E0\uC740 \uC774\uC81C \uC2AC\uB77C\uC784\uC758 \uAC74\uAC15\uAE4C\uC9C0
+        \uC0DD\uAC01\uD574 \uC8FC\uC154\uC57C \uD569\uB2C8\uB2E4"
+      addiExplanation: "(HP\uAC00 0\uC774 \uB418\uBA74 \uC0AC\uB9DD\uD569\uB2C8\uB2E4)"
+      UISpr: {fileID: 21300000, guid: 2efacd613fa7e06418a1193d6831ce7e, type: 3}
+      endEvent:
+        m_PersistentCalls:
+          m_Calls: []
+  - first: 8
+    second:
+      objName: "\uCE90\uB9AD\uD130 UI"
+      explanation: "\uC774\uC81C \uC880 \uB354 \uC2AC\uB77C\uC784\uC758 \uB9C8\uC74C\uC744
+        \uC774\uD574\uD558\uC2E4 \uC218 \uC788\uC744 \uAC81\uB2C8\uB2E4"
+      addiExplanation: 
+      UISpr: {fileID: 21300000, guid: 2efacd613fa7e06418a1193d6831ce7e, type: 3}
+      endEvent:
+        m_PersistentCalls:
+          m_Calls: []
 --- !u!225 &7974943957994546905
 CanvasGroup:
   m_ObjectHideFlags: 0
