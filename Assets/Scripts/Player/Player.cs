@@ -264,53 +264,58 @@ public class Player : MonoBehaviour
             return;
         }
 
+
         if((playerState.BodySlapping && !stateAbnormality))
         {
             return;
         }
 
-        if(playerStat.choiceStat.fake.isUnlock && !stateAbnormality && CheckFake())
+        if (playerStat.choiceStat.fake.isUnlock && !stateAbnormality && CheckFake())
         {
             damage = 0f;
         }
 
-        if (!playerState.IsDead)
+        float dm = damage;
+
+        if (TutorialManager.Instance.hpUI.gameObject.activeSelf)
         {
-            float dm = damage;
-
-            if (!stateAbnormality) // 효과데미지 아닐 때
+            if (!playerState.IsDead)
             {
-                dm = damage - playerStat.Defense;
-                dm += (int)(dm * getExtraDamagePercantage / 100f);
-            }
-
-            if (dm <= 0)
-            {
-                dm = 0;
-            }
-            else
-            {
-                playerChoiceStatControl.UpTotalDamage(dm);
-            }
-
-            playerStat.currentHp -= dm;
-
-            if (playerStat.currentHp <= 0)
-            {
-                if (stateAbnormality)
+                if (!stateAbnormality) // 효과데미지 아닐 때
                 {
-                    playerStat.currentHp = 1;
+                    dm = damage - playerStat.Defense;
+                    dm += (int)(dm * getExtraDamagePercantage / 100f);
+                }
+
+                if (dm <= 0)
+                {
+                    dm = 0;
                 }
                 else
                 {
-                    playerState.IsDead = true;
+                    playerChoiceStatControl.UpTotalDamage(dm);
                 }
+
+                playerStat.currentHp -= dm;
+
+                if (playerStat.currentHp <= 0)
+                {
+                    if (stateAbnormality)
+                    {
+                        playerStat.currentHp = 1;
+                    }
+                    else
+                    {
+                        playerState.IsDead = true;
+                    }
+                }
+                UIManager.Instance.UpdatePlayerHPUI(true);
             }
 
-            EffectManager.Instance.OnDamaged(dm, critical, false, SlimeGameManager.Instance.CurrentPlayerBody.transform.position, effectPosition, direction, effectSize);
-            UIManager.Instance.UpdatePlayerHPUI(true);
-            EventManager.TriggerEvent("PlayerGetDamaged");
         }
+
+        EffectManager.Instance.OnDamaged(dm, critical, false, SlimeGameManager.Instance.CurrentPlayerBody.transform.position, effectPosition, direction, effectSize);
+        EventManager.TriggerEvent("PlayerGetDamaged");
     }
     /// <summary>
     /// EventManager.TriggerEvent("PlayerOnDamage", GameObject); 를 항상 같이 호출해줄것!
@@ -358,48 +363,52 @@ public class Player : MonoBehaviour
 
         //SlimeGameManager.Instance.playerHitCheckDict.Add(attacker, false);
 
-        if (SlimeGameManager.Instance.playerHitCheckDict.ContainsKey(attacker))
+        float dm = damage;
+
+        if (TutorialManager.Instance.hpUI.gameObject.activeSelf)
         {
-            SlimeGameManager.Instance.playerHitCheckDict[attacker] = true;
-        }
-
-        if (!playerState.IsDead)
-        {
-            float dm = damage;
-
-            if (!stateAbnormality) // 효과데미지 아닐 때
+            if (SlimeGameManager.Instance.playerHitCheckDict.ContainsKey(attacker))
             {
-                dm = damage - playerStat.Defense;
-                dm += (int)(dm * (getExtraDamagePercantage / 100f));
+                SlimeGameManager.Instance.playerHitCheckDict[attacker] = true;
             }
 
-            if (dm <= 0)
+            if (!playerState.IsDead)
             {
-                dm = 0;
-            }
-            else
-            {
-                playerChoiceStatControl.UpTotalDamage(dm);
-            }
-
-            playerStat.currentHp -= dm;
-
-            if (playerStat.currentHp <= 0)
-            {
-                if (stateAbnormality)
+                if (!stateAbnormality) // 효과데미지 아닐 때
                 {
-                    playerStat.currentHp = 1;
+                    dm = damage - playerStat.Defense;
+                    dm += (int)(dm * (getExtraDamagePercantage / 100f));
+                }
+
+                if (dm <= 0)
+                {
+                    dm = 0;
                 }
                 else
                 {
-                    playerState.IsDead = true;
+                    playerChoiceStatControl.UpTotalDamage(dm);
                 }
-            }
 
-            EffectManager.Instance.OnDamaged(dm, critical, false, SlimeGameManager.Instance.CurrentPlayerBody.transform.position, effectPosition, direction, effectSize);
-            UIManager.Instance.UpdatePlayerHPUI(true);
-            EventManager.TriggerEvent("PlayerGetDamaged");
+                playerStat.currentHp -= dm;
+
+                if (playerStat.currentHp <= 0)
+                {
+                    if (stateAbnormality)
+                    {
+                        playerStat.currentHp = 1;
+                    }
+                    else
+                    {
+                        playerState.IsDead = true;
+                    }
+                }
+
+                UIManager.Instance.UpdatePlayerHPUI(true);
+            }
         }
+
+        EffectManager.Instance.OnDamaged(dm, critical, false, SlimeGameManager.Instance.CurrentPlayerBody.transform.position, effectPosition, direction, effectSize);
+        EventManager.TriggerEvent("PlayerGetDamaged");
     }
     public bool CheckFake()
     {
