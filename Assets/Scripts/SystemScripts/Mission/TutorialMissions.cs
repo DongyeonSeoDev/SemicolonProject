@@ -73,7 +73,7 @@ public class AbsorptionTutoMission2 : Mission
     public override void End(bool breakDoor = false)
     {
         TalkManager.Instance.SetSubtitle("점점 더 강해지는 기분이야!", 0.2f, 1.5f);
-        //일반공격 스킬 얻음
+        TutorialManager.Instance.GetSkill1();
         EnemyManager.Instance.isOnlyAbsorption = false;
         EventManager.StopListening("TryAbsorbMob", (System.Action<bool>)TryDrain);
         //StageManager.Instance.StageClear();

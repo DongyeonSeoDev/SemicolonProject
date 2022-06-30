@@ -289,6 +289,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         }).Play();
     }
 
+
     public void EndTalkRushMaster() //돌진 NPC와 대화 후에
     {
         if(!StoredData.HasValueKey("EndTalkRushMaster"))
