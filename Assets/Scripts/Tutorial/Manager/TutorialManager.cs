@@ -117,10 +117,16 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             skillUIArr[i].gameObject.SetActive(active);
             //changeableBodysUIArr[i].gameObject.SetActive(active);
         }
-        changeableBodysUIArr[0].gameObject.SetActive(active);
-        for(int i=1; i< changeableBodysUIArr.Length; i++)
+
+        //changeableBodysUIArr[0].gameObject.SetActive(active);
+        /*for(int i=1; i< changeableBodysUIArr.Length; i++)
         {
             changeableBodysUIArr[i].gameObject.SetActive(gm.savedData.userInfo.isGainBodyChangeSlot);   
+        }*/
+
+        for(int i = 0; i < changeableBodysUIArr.Length; i++)
+        {
+            changeableBodysUIArr[i].gameObject.SetActive(active);
         }
 
         //PlayerFollowLight Init Setting
@@ -262,31 +268,87 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     public void GetSkill2() //돌진 획득
     {
-        Vector3 startPos = GetUITutorialReady(skillUIArr[1].GetComponent<RectTransform>(), new Vector2(1189, 343));
-
-        Sequence seq = DOTween.Sequence();
-        seq.Append(skillUIArr[1].GetComponent<CanvasGroup>().DOFade(1, 0.3f).SetEase(Ease.OutCirc))
-            .Join(skillUIArr[1].GetComponent<RectTransform>().DOAnchorPos(startPos, 0.4f).SetEase(Ease.OutCirc));
-        seq.AppendCallback(() =>
+        GetUITween(new Vector2(1189, 343), skillUIArr[1], () =>
         {
             EventManager.TriggerEvent("Skill1TutoClear");
             EventManager.TriggerEvent("UpdateKeyCodeUI");
             KeyActionManager.Instance.GetElement(InitGainType.SKILL2);
-        }).Play();
+        });
     }
     public void GetSkill1() //일반공격 획득
     {
-        Vector3 startPos = GetUITutorialReady(skillUIArr[0].GetComponent<RectTransform>(), new Vector2(1100, 300));
-
-        Sequence seq = DOTween.Sequence();
-        seq.Append(skillUIArr[0].GetComponent<CanvasGroup>().DOFade(1, 0.3f).SetEase(Ease.OutCirc))
-            .Join(skillUIArr[0].GetComponent<RectTransform>().DOAnchorPos(startPos, 0.4f).SetEase(Ease.OutCirc));
-        seq.AppendCallback(() =>
+        GetUITween(new Vector2(1100, 300), skillUIArr[0], () =>
         {
             EventManager.TriggerEvent("Skill0TutoClear");
             EventManager.TriggerEvent("UpdateKeyCodeUI");
             KeyActionManager.Instance.GetElement(InitGainType.SKILL1);
-        }).Play();
+        });
+    }
+
+    public void GetQuikSlot()  //퀵 슬롯 획득
+    {
+        GetUITween(new Vector2(1000, 300), quikSlotUI, () =>
+        {
+            EventManager.TriggerEvent("UpdateKeyCodeUI");
+            KeyActionManager.Instance.GetElement(InitGainType.QUIKSLOT);
+        });
+    }
+
+    public void OnCloseQuikSlotGetPanel() //퀵 슬롯 획득 UI 닫고나서
+    {
+        Util.DelayFunc(() =>
+        {
+            tutorialPhases.Add(new QuikSlotTutorialPhase(SetUIEmphasisEffect(quikSlotUI)));
+        }, 4f, this);
+    }
+
+    public void GetCharUI()  //캐릭터 UI얻음 => HP Energe MobSlot
+    {
+        for(int i=0; i<changeableBodysUIArr.Length; i++)
+        {
+            changeableBodysUIArr[i].GetComponent<CanvasGroup>().alpha = 0;
+            changeableBodysUIArr[i].gameObject.SetActive(true);
+            changeableBodysUIArr[i].GetComponent<CanvasGroup>().DOFade(1, 0.5f);
+        }
+
+        //HP 얻음
+        hpUI.GetComponent<CanvasGroup>().alpha = 0;
+        hpUI.gameObject.SetActive(true);
+        UIManager.Instance.playerHPInfo.third.fillAmount = 0;
+        EffectManager.Instance.hpFillEffect.gameObject.SetActive(true);
+        float hpFillEffectMaskCenterInitScale = StoredData.GetValueData<float>("hpFillEffectMaskCenterInitScale", true);
+        EffectManager.Instance.hpFillEffectMaskCenter.localScale = new Vector3(0, hpFillEffectMaskCenterInitScale, hpFillEffectMaskCenterInitScale);
+
+        UIManager.Instance.playerHPInfo.third.DOFillAmount(1, 0.7f);
+        EffectManager.Instance.hpFillEffectMaskCenter.DOScaleX(hpFillEffectMaskCenterInitScale, 0.75f);
+
+        SkillUIManager sum = SkillUIManager.Instance;
+        Vector3 orgEnergeEffMaskScl = StoredData.GetValueData<Vector3>("orgEnergeEffMaskScl", true);
+        sum.IsAutoFitEnergeBar = false;
+        sum.energeFill.fillAmount = 0;
+        sum.energeEffMask.localScale = new Vector3(0, orgEnergeEffMaskScl.y, orgEnergeEffMaskScl.z);
+        sum.energeBarAndEff.second.gameObject.SetActive(true);
+        sum.energeBarAndEff.first.GetComponent<CanvasGroup>().alpha = 0;
+        sum.energeBarAndEff.first.SetActive(true);
+
+        sum.energeFill.DOFillAmount(1, 0.7f);
+        sum.energeEffMask.DOScaleX(orgEnergeEffMaskScl.x, 0.75f).OnComplete(() =>
+        {
+            sum.IsAutoFitEnergeBar = true;
+            EventManager.TriggerEvent("UpdateKeyCodeUI");
+        });
+
+        KeyActionManager.Instance.GetElement(InitGainType.CHAR_UI);
+    }
+
+    public void GetUITween(Vector2 newPos, Transform ui, Action end) //UI 획득 트윈 연출 (Default)
+    {
+        Vector3 startPos = GetUITutorialReady(ui.GetComponent<RectTransform>(), newPos);
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(ui.GetComponent<CanvasGroup>().DOFade(1, 0.3f).SetEase(Ease.OutCirc))
+            .Join(ui.GetComponent<RectTransform>().DOAnchorPos(startPos, 0.4f).SetEase(Ease.OutCirc));
+        seq.AppendCallback(() => end?.Invoke()).Play();
     }
 
 
@@ -303,29 +365,6 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             TalkManager.Instance.SetSubtitle("처음에는 무서워 보였는데 생각보다 오르드씨는 좋으신 분 같아", 0.2f, 2f);
         }
     }
-
-    /*public void GetRushAttack()  //돌진을 얻음
-    {
-        if (StoredData.HasValueKey("GetRushAttack")) return;
-
-        (ObjectManager.Instance.itrObjDic["Rush Master"] as NormalNPC)._NPCInfo.talkId = 2;
-
-        Vector3 startPos = GetUITutorialReady(skillUIArr[1].GetComponent<RectTransform>(), new Vector2(1189, 343));
-
-        Sequence seq = DOTween.Sequence();
-        seq.Append(skillUIArr[1].GetComponent<CanvasGroup>().DOFade(1, 0.3f).SetEase(Ease.OutCirc))
-            .Join(skillUIArr[1].GetComponent<RectTransform>().DOAnchorPos(startPos, 0.4f).SetEase(Ease.OutCirc));
-        seq.AppendCallback(() =>
-        {
-            EventManager.TriggerEvent("Skill1TutoClear");
-            RectTransform emphRectTr = SetUIEmphasisEffect(skillUIArr[1].transform);
-            tutorialPhases.Add(new RushTutorialPhase(emphRectTr.gameObject));
-            um.RequestLogMsg("돌진을 얻었습니다.");
-            EventManager.TriggerEvent("UpdateKeyCodeUI");
-        }).Play();
-
-        StoredData.SetValueKey("GetRushAttack", true);
-    }*/
 
     private void GetInventoryUI() //인벤 얻음
     {
@@ -539,5 +578,28 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         });  //end of lerp time end event
     }  //end of if 
 });  //end of event*/
+
+/*public void GetRushAttack()  //돌진을 얻음
+    {
+        if (StoredData.HasValueKey("GetRushAttack")) return;
+
+        (ObjectManager.Instance.itrObjDic["Rush Master"] as NormalNPC)._NPCInfo.talkId = 2;
+
+        Vector3 startPos = GetUITutorialReady(skillUIArr[1].GetComponent<RectTransform>(), new Vector2(1189, 343));
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(skillUIArr[1].GetComponent<CanvasGroup>().DOFade(1, 0.3f).SetEase(Ease.OutCirc))
+            .Join(skillUIArr[1].GetComponent<RectTransform>().DOAnchorPos(startPos, 0.4f).SetEase(Ease.OutCirc));
+        seq.AppendCallback(() =>
+        {
+            EventManager.TriggerEvent("Skill1TutoClear");
+            RectTransform emphRectTr = SetUIEmphasisEffect(skillUIArr[1].transform);
+            tutorialPhases.Add(new RushTutorialPhase(emphRectTr.gameObject));
+            um.RequestLogMsg("돌진을 얻었습니다.");
+            EventManager.TriggerEvent("UpdateKeyCodeUI");
+        }).Play();
+
+        StoredData.SetValueKey("GetRushAttack", true);
+    }*/
 
 #endregion

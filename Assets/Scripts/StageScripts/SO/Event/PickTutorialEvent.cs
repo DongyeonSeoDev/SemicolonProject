@@ -5,6 +5,7 @@ using System;
 public class PickTutorialEvent : MapEventSO
 {
     public SubtitleData enterSubData;
+    public SubtitleData success, fail;
 
     public override void OnEnterEvent()
     {
@@ -14,8 +15,8 @@ public class PickTutorialEvent : MapEventSO
 
     private void Pickup(bool suc)
     {
-        
-
+        TalkManager.Instance.SetSubtitle(suc ? success : fail);
+        TutorialManager.Instance.GetQuikSlot();
         EventManager.StopListening(Global.PickupPlant, (Action<bool>)Pickup);
     }
 }
