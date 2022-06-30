@@ -123,10 +123,10 @@ public class PlayerDrainCollider : MonoBehaviour
 
             ICanGetDamagableEnemy enemy = other.GetComponent<ICanGetDamagableEnemy>();
 
-            if(enemy.GetTransform().GetComponent<Enemy.TutorialEnemy>()) // 튜토리얼 상태가 아니어도 튜토리얼 대상을 흡수하면 튜토리얼 처리
-            {
-                playerDrain.drainTutorial = true;
-            }
+            //if(enemy.GetTransform().GetComponent<Enemy.TutorialEnemy>()) // 튜토리얼 상태가 아니어도 튜토리얼 대상을 흡수하면 튜토리얼 처리
+            //{
+            //    playerDrain.drainTutorial = true;
+            //}
             
             if (tryDrainList.Contains(enemy))
             {
@@ -146,7 +146,7 @@ public class PlayerDrainCollider : MonoBehaviour
 
             tryDrainList.Add(enemy);
 
-            if ((playerDrain.drainTutorial || (enemy != null && hpPercentage <= canDrainHpPercentage)) && !playerDrain.cantDrainObject) // 흡수 성공////////////////////
+            if ((/*playerDrain.drainTutorial ||*/ (enemy != null && hpPercentage <= canDrainHpPercentage)) && !playerDrain.cantDrainObject) // 흡수 성공////////////////////
             {
                 doDrainList.Add(enemy);
                 SpawnGrabObj(enemy.GetGameObject());

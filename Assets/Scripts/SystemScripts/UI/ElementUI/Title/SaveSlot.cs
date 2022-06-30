@@ -80,10 +80,10 @@ public class SaveSlot : MonoBehaviour
             gameStartBtnText.text = "이어하기";
             deleteSaveDataBtn.gameObject.SetActive(true);
 
+            currentStageTMP.text = StageInfoTextAsset.Instance.GetValue(saveData.stageInfo.currentStageID);
+
             if (saveData.tutorialInfo.isEnded)
             {
-                currentStageTMP.text = saveData.stageInfo.currentStageID;
-
                 Stat stat = saveData.userInfo.playerStat;
 
                 statTMPs.HPText.text = "HP: " + stat.MaxHp;
@@ -93,8 +93,6 @@ public class SaveSlot : MonoBehaviour
             }
             else
             {
-                currentStageTMP.text = "TutorialStage";
-
                 statTMPs.HPText.text = "HP: ??";
                 statTMPs.DamageText.text = "Damage: ??";
                 statTMPs.DPText.text = "Defense: ??";
