@@ -82,7 +82,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             });
         }));    
 
-        EventManager.StartListening("GetRushAttack", GetRushAttack);  //돌진 주는 NPC와 대화후에
+        //EventManager.StartListening("GetRushAttack", GetRushAttack);  //돌진 주는 NPC와 대화후에
         EventManager.StartListening("GetInventoryUI", GetInventoryUI);  //인벤 주는 NPC와 대화하고 얻을 때
         EventManager.StartListening("GetStatUI", GetStatUI);  //스탯 주는 NPC와 대화하고 얻을 때
         EventManager.StartListening("GetMonsterCollectionUI", GetMonsterCollectionUI); //도감 주는 NPC와 대화하고 얻을 때
@@ -261,10 +261,20 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     public void GetSkill2() //돌진 획득
     {
+        Vector3 startPos = GetUITutorialReady(skillUIArr[1].GetComponent<RectTransform>(), new Vector2(1189, 343));
 
+        Sequence seq = DOTween.Sequence();
+        seq.Append(skillUIArr[1].GetComponent<CanvasGroup>().DOFade(1, 0.3f).SetEase(Ease.OutCirc))
+            .Join(skillUIArr[1].GetComponent<RectTransform>().DOAnchorPos(startPos, 0.4f).SetEase(Ease.OutCirc));
+        seq.AppendCallback(() =>
+        {
+            EventManager.TriggerEvent("Skill1TutoClear");
+            EventManager.TriggerEvent("UpdateKeyCodeUI");
+            KeyActionManager.Instance.GetElement(InitGainType.SKILL2);
+        }).Play();
     }
 
-    public void GetRushAttack()  //돌진을 얻음
+    /*public void GetRushAttack()  //돌진을 얻음
     {
         if (StoredData.HasValueKey("GetRushAttack")) return;
 
@@ -285,7 +295,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         }).Play();
 
         StoredData.SetValueKey("GetRushAttack", true);
-    }
+    }*/
 
     private void GetInventoryUI() //인벤 얻음
     {

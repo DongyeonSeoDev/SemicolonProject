@@ -14,7 +14,6 @@ public class AbsorptionTutoMission : Mission
 
     public override void End(bool breakDoor = false)
     {
-        KeyActionManager.Instance.GetElement(InitGainType.SKILL2);
         TutorialManager.Instance.GetSkill2();
         EnemyManager.Instance.isOnlyAbsorption = false;
         EventManager.StopListening("TryAbsorbMob", (System.Action<bool>)TryDrain);
