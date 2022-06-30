@@ -69,12 +69,10 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                 EventManager.StopListening("EndCutScene", logAction);
             };
             EventManager.StartListening("EndCutScene", logAction);
-
+            
             Canvas ordCvs = UIManager.Instance.ordinaryCvsg.GetComponent<Canvas>();
             ordCvs.GetComponent<CanvasGroup>().alpha = 1;
             Vector3 special2SkillSlotPos = GetUITutorialReady(skillUIArr[2].GetComponent<RectTransform>(), new Vector2(1135, 389));
-
-            EventManager.StartListening("Skill2TutoClear", () => Debug.Log("양진욱 테스트"));
 
             skillUIArr[2].GetComponent<RectTransform>().DOAnchorPos(special2SkillSlotPos, 1f).SetEase(Ease.OutCubic);
             skillUIArr[2].GetComponent<CanvasGroup>().DOFade(1, 0.6f).SetEase(Ease.OutCubic).OnComplete(() =>
@@ -82,75 +80,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                 EventManager.TriggerEvent("Skill2TutoClear");
                 EventManager.TriggerEvent("UpdateKeyCodeUI");
             });
-        }));
-
-            //플레이어와 튜토 슬라임 사이 거리가 일정 이하(흡수 판정 거리)일 때 이벤트
-        EventManager.StartListening("Tuto_CanDrainObject", () =>
-        {
-            if (!StoredData.HasValueKey("Tuto_CanDrainObject1"))
-            {
-                StoredData.SetValueKey("Tuto_CanDrainObject1", true);
-                SlimeGameManager.Instance.Player.PlayerInput.CantPlaySkill2 = true;
-
-                TimeManager.LerpTime(2f, 0f, () =>
-                {
-                    RectTransform emphRectTr = SetUIEmphasisEffect(skillUIArr[2].transform);
-                    tutorialPhases.Add(new AbsorptionPhase(() =>
-                    {
-                        emphRectTr.gameObject.SetActive(false);
-                        TimeManager.TimeResume(() =>
-                        {
-                            SlimeGameManager.Instance.Player.PlayerInput.CantPlaySkill2 = false;
-                            Global.GetSlimePos.GetComponent<PlayerDrain>().DoDrainByTuto();
-                            Destroy(Global.GetSlimePos.GetComponentInChildren<PlayerCanDrainCheckCollider>().gameObject);
-
-                            EventManager.TriggerEvent("StartCutScene");
-                            Canvas ordCvs = UIManager.Instance.ordinaryCvsg.GetComponent<Canvas>();
-                            ordCvs.GetComponent<CanvasGroup>().alpha = 1;
-                            EffectManager.Instance.hpFillEffect.gameObject.SetActive(true);
-
-                            Util.DelayFunc(() =>
-                            {
-                                //Init
-                                Vector3 startPos = GetUITutorialReady(skillUIArr[0].GetComponent<RectTransform>(), new Vector2(918, 393)); //몬스터 위치(의 스크린 좌표)로
-                               
-                                Vector3 orgEnergeEffMaskScl = StoredData.GetValueData<Vector3>("orgEnergeEffMaskScl", true);
-                                //StoredData.DeleteValueKey("orgEnergeEffMaskScl");
-                                SkillUIManager sum = SkillUIManager.Instance;
-                                sum.IsAutoFitEnergeBar = false;
-                                sum.energeFill.fillAmount = 0;
-                                sum.energeEffMask.localScale = new Vector3(0, orgEnergeEffMaskScl.y, orgEnergeEffMaskScl.z);
-                                sum.energeBarAndEff.second.gameObject.SetActive(true);
-                                sum.energeBarAndEff.first.GetComponent<CanvasGroup>().alpha = 0;
-                                sum.energeBarAndEff.first.SetActive(true);
-
-                                //Tween Sequence
-
-                                Sequence seq = DOTween.Sequence();
-                                seq.Append(skillUIArr[0].GetComponent<RectTransform>().DOAnchorPos(startPos, 0.4f).SetEase(Ease.InQuad))
-                                .Join(skillUIArr[0].GetComponent<CanvasGroup>().DOFade(1, 0.3f))
-                                .AppendInterval(0.5f);
-                                seq.Append(sum.energeBarAndEff.first.GetComponent<CanvasGroup>().DOFade(1, 0.4f));
-                                seq.Append(sum.energeFill.DOFillAmount(1, 0.75f))
-                                .Join(sum.energeEffMask.DOScaleX(orgEnergeEffMaskScl.x, 0.68f));
-                                seq.AppendInterval(0.6f).AppendCallback(() =>
-                                {
-                                    EventManager.TriggerEvent("EndCutScene");
-                                    EventManager.TriggerEvent("Skill0TutoClear");
-                                    sum.IsAutoFitEnergeBar = true;
-
-                                    um.RequestLogMsg("공격 에너지를 얻었습니다.");
-                                    um.RequestLogMsg("기본 공격을 얻었습니다.");
-                                    EventManager.TriggerEvent("UpdateKeyCodeUI");
-                                });  
-
-                            }, 2.5f, this); //end of util
-
-                        }, 1f);  //end of time resume event
-                    }));  //end of AbsorptionPhase event
-                });  //end of lerp time end event
-            }  //end of if 
-        });  //end of event
+        }));    
 
         EventManager.StartListening("GetRushAttack", GetRushAttack);  //돌진 주는 NPC와 대화후에
         EventManager.StartListening("GetInventoryUI", GetInventoryUI);  //인벤 주는 NPC와 대화하고 얻을 때
@@ -229,7 +159,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         //um.StartLoadingIn();
     }
 
-    public void TutoEnemyDrainCSEvent()
+    public void TutoEnemyDrainCSEvent() //슬라임 흡수 컷씬 중에 슬라임 나오는 연출 시작
     {
         StageManager.Instance.StageClear();
         GameObject enemy = StageManager.Instance.CurrentStageGround.objSpawnPos.gameObject;
@@ -251,7 +181,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         }, 1.5f, this);
     }
 
-    public void UIOn(KeyAction type)
+    public void UIOn(KeyAction type)  //UI보이게 하고 기능 켜줌
     {
         um.PreventItrUI(0.4f);
         gm.savedData.userInfo.uiActiveDic[type] = true;
@@ -264,7 +194,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     }
 
 
-    private void TutorialUpdate()
+    private void TutorialUpdate()  
     {
         int i;
         for (i = 0; i < tutorialPhases.Count; i++)
@@ -329,6 +259,11 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     #region Tutorial Function
 
+    public void GetSkill2() //돌진 획득
+    {
+
+    }
+
     public void GetRushAttack()  //돌진을 얻음
     {
         if (StoredData.HasValueKey("GetRushAttack")) return;
@@ -390,7 +325,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
 
 #region 주석
-
+//플레이어가 작은 슬라임 흡수했을 때 이벤트
 /*EventManager.StartListening("DrainTutorialEnemyDrain", enemyPos =>
 {
     if (!StoredData.HasValueKey("DrainTutorialEnemyDrain1"))
@@ -496,5 +431,73 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     Debug.Log(sb.ToString());
 }*/
+
+//플레이어와 튜토 슬라임 사이 거리가 일정 이하(흡수 판정 거리)일 때 이벤트
+/*EventManager.StartListening("Tuto_CanDrainObject", () =>
+{
+    if (!StoredData.HasValueKey("Tuto_CanDrainObject1"))
+    {
+        StoredData.SetValueKey("Tuto_CanDrainObject1", true);
+        SlimeGameManager.Instance.Player.PlayerInput.CantPlaySkill2 = true;
+
+        TimeManager.LerpTime(2f, 0f, () =>
+        {
+            RectTransform emphRectTr = SetUIEmphasisEffect(skillUIArr[2].transform);
+            tutorialPhases.Add(new AbsorptionPhase(() =>
+            {
+                emphRectTr.gameObject.SetActive(false);
+                TimeManager.TimeResume(() =>
+                {
+                    SlimeGameManager.Instance.Player.PlayerInput.CantPlaySkill2 = false;
+                    Global.GetSlimePos.GetComponent<PlayerDrain>().DoDrainByTuto();
+                    Destroy(Global.GetSlimePos.GetComponentInChildren<PlayerCanDrainCheckCollider>().gameObject);
+
+                    EventManager.TriggerEvent("StartCutScene");
+                    Canvas ordCvs = UIManager.Instance.ordinaryCvsg.GetComponent<Canvas>();
+                    ordCvs.GetComponent<CanvasGroup>().alpha = 1;
+                    EffectManager.Instance.hpFillEffect.gameObject.SetActive(true);
+
+                    Util.DelayFunc(() =>
+                    {
+                        //Init
+                        Vector3 startPos = GetUITutorialReady(skillUIArr[0].GetComponent<RectTransform>(), new Vector2(918, 393)); //몬스터 위치(의 스크린 좌표)로
+
+                        Vector3 orgEnergeEffMaskScl = StoredData.GetValueData<Vector3>("orgEnergeEffMaskScl", true);
+                        //StoredData.DeleteValueKey("orgEnergeEffMaskScl");
+                        SkillUIManager sum = SkillUIManager.Instance;
+                        sum.IsAutoFitEnergeBar = false;
+                        sum.energeFill.fillAmount = 0;
+                        sum.energeEffMask.localScale = new Vector3(0, orgEnergeEffMaskScl.y, orgEnergeEffMaskScl.z);
+                        sum.energeBarAndEff.second.gameObject.SetActive(true);
+                        sum.energeBarAndEff.first.GetComponent<CanvasGroup>().alpha = 0;
+                        sum.energeBarAndEff.first.SetActive(true);
+
+                        //Tween Sequence
+
+                        Sequence seq = DOTween.Sequence();
+                        seq.Append(skillUIArr[0].GetComponent<RectTransform>().DOAnchorPos(startPos, 0.4f).SetEase(Ease.InQuad))
+                        .Join(skillUIArr[0].GetComponent<CanvasGroup>().DOFade(1, 0.3f))
+                        .AppendInterval(0.5f);
+                        seq.Append(sum.energeBarAndEff.first.GetComponent<CanvasGroup>().DOFade(1, 0.4f));
+                        seq.Append(sum.energeFill.DOFillAmount(1, 0.75f))
+                        .Join(sum.energeEffMask.DOScaleX(orgEnergeEffMaskScl.x, 0.68f));
+                        seq.AppendInterval(0.6f).AppendCallback(() =>
+                        {
+                            EventManager.TriggerEvent("EndCutScene");
+                            EventManager.TriggerEvent("Skill0TutoClear");
+                            sum.IsAutoFitEnergeBar = true;
+
+                            um.RequestLogMsg("공격 에너지를 얻었습니다.");
+                            um.RequestLogMsg("기본 공격을 얻었습니다.");
+                            EventManager.TriggerEvent("UpdateKeyCodeUI");
+                        });  
+
+                    }, 2.5f, this); //end of util
+
+                }, 1f);  //end of time resume event
+            }));  //end of AbsorptionPhase event
+        });  //end of lerp time end event
+    }  //end of if 
+});  //end of event*/
 
 #endregion
