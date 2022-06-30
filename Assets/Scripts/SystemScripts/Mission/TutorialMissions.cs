@@ -61,3 +61,40 @@ public class AbsorptionTutoMission : Mission
         }
     }
 }
+
+public class AbsorptionTutoMission2 : Mission
+{
+
+    public AbsorptionTutoMission2(string title) : base(title)
+    {
+
+    }
+
+    public override void End(bool breakDoor = false)
+    {
+        TalkManager.Instance.SetSubtitle("점점 더 강해지는 기분이야!", 0.2f, 1.5f);
+        //일반공격 스킬 얻음
+        EnemyManager.Instance.isOnlyAbsorption = false;
+        EventManager.StopListening("TryAbsorbMob", (System.Action<bool>)TryDrain);
+        //StageManager.Instance.StageClear();
+    }
+
+    public override void Start()
+    {
+        EnemyManager.Instance.isOnlyAbsorption = true;
+        EventManager.StartListening("TryAbsorbMob", (System.Action<bool>)TryDrain);
+    }
+
+    public override void Update()
+    {
+        
+    }
+
+    private void TryDrain(bool suc)
+    {
+        if (!suc)
+        {
+            TalkManager.Instance.SetSubtitle("한번 더 말하지만 흡수는 적의 체력이 적을 때만 가능해", 0.2f, 1.5f);
+        }
+    }
+}

@@ -80,9 +80,10 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                 EventManager.TriggerEvent("Skill2TutoClear");
                 EventManager.TriggerEvent("UpdateKeyCodeUI");
             });
-        }));    
+        }));
 
         //EventManager.StartListening("GetRushAttack", GetRushAttack);  //돌진 주는 NPC와 대화후에
+        EventManager.StartListening("EndTalkRushMaster", EndTalkRushMaster); //돌진 주는 NPC와 대화후에
         EventManager.StartListening("GetInventoryUI", GetInventoryUI);  //인벤 주는 NPC와 대화하고 얻을 때
         EventManager.StartListening("GetStatUI", GetStatUI);  //스탯 주는 NPC와 대화하고 얻을 때
         EventManager.StartListening("GetMonsterCollectionUI", GetMonsterCollectionUI); //도감 주는 NPC와 대화하고 얻을 때
@@ -272,6 +273,34 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             EventManager.TriggerEvent("UpdateKeyCodeUI");
             KeyActionManager.Instance.GetElement(InitGainType.SKILL2);
         }).Play();
+    }
+    public void GetSkill1() //일반공격 획득
+    {
+        Vector3 startPos = GetUITutorialReady(skillUIArr[0].GetComponent<RectTransform>(), new Vector2(1100, 300));
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(skillUIArr[0].GetComponent<CanvasGroup>().DOFade(1, 0.3f).SetEase(Ease.OutCirc))
+            .Join(skillUIArr[0].GetComponent<RectTransform>().DOAnchorPos(startPos, 0.4f).SetEase(Ease.OutCirc));
+        seq.AppendCallback(() =>
+        {
+            EventManager.TriggerEvent("Skill0TutoClear");
+            EventManager.TriggerEvent("UpdateKeyCodeUI");
+            KeyActionManager.Instance.GetElement(InitGainType.SKILL1);
+        }).Play();
+    }
+
+    public void EndTalkRushMaster() //돌진 NPC와 대화 후에
+    {
+        if(!StoredData.HasValueKey("EndTalkRushMaster"))
+        {
+            StoredData.SetValueKey("EndTalkRushMaster", true);
+            RectTransform emphRectTr = SetUIEmphasisEffect(skillUIArr[1].transform);
+            tutorialPhases.Add(new RushTutorialPhase(emphRectTr.gameObject));
+
+            (ObjectManager.Instance.itrObjDic["Rush Master"] as NormalNPC)._NPCInfo.talkId = 2;
+
+            TalkManager.Instance.SetSubtitle("처음에는 무서워 보였는데 생각보다 오르드씨는 좋으신 분 같아", 0.2f, 2f);
+        }
     }
 
     /*public void GetRushAttack()  //돌진을 얻음

@@ -7,7 +7,8 @@ public enum MissionType
     NOTRANSFORMATION,
     NOQUIKSLOT,
     ALLABSORPTION,
-    ABSORPTIONTUTORIAL
+    ABSORPTIONTUTORIAL,
+    ABSORPTIONTUTORIAL2
 }
 
 public enum KillNoticeType

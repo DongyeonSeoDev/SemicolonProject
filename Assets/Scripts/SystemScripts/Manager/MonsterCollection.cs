@@ -465,12 +465,12 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     
     public void AddSavedBody(string id, int slotNumber = -1)
     {
-        if (!GameManager.Instance.savedData.userInfo.isGainBodyChangeSlot)
+        /*if (!GameManager.Instance.savedData.userInfo.isGainBodyChangeSlot)
         {
             GameManager.Instance.savedData.userInfo.isGainBodyChangeSlot = true;
             TutorialManager.Instance.GetBodyChangeSlot();
             EventManager.TriggerEvent("UpdateKeyCodeUI");
-        }
+        }*/
 
         if (slotNumber == -1) 
         {

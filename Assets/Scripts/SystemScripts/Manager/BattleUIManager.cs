@@ -132,8 +132,9 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
             Enemy.EnemyManager.Instance.PlayerDeadEvent();
         }));
 
-        //튜토 5번방 전용
+        //튜토 5번방, 7번방 전용
         allMissionsDic.Add(MissionType.ABSORPTIONTUTORIAL, new AbsorptionTutoMission("모든 적을 흡수하세요"));
+        allMissionsDic.Add(MissionType.ABSORPTIONTUTORIAL2, new AbsorptionTutoMission2("모든 적을 흡수하세요"));
 
         #endregion
     }
