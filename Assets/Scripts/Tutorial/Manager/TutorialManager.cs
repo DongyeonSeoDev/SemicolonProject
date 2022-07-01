@@ -87,6 +87,8 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         EventManager.StartListening("GetInventoryUI", GetInventoryUI);  //인벤 주는 NPC와 대화하고 얻을 때
         EventManager.StartListening("GetStatUI", GetStatUI);  //스탯 주는 NPC와 대화하고 얻을 때
         EventManager.StartListening("GetMonsterCollectionUI", GetMonsterCollectionUI); //도감 주는 NPC와 대화하고 얻을 때
+
+        EventManager.StartListening("GainQuikSlotUI", GetQuikSlot);
     }
 
     private void Start()
@@ -298,6 +300,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     {
         Util.DelayFunc(() =>
         {
+            InteractionHandler.canUseQuikSlot = true;
             tutorialPhases.Add(new QuikSlotTutorialPhase(SetUIEmphasisEffect(quikSlotUI)));
         }, 4f, this);
     }

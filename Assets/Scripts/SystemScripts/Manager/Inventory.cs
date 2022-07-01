@@ -220,7 +220,7 @@ public class Inventory : MonoSingleton<Inventory>
     }
 
     public void GetItem(ItemInfo item) //아이템 획득했을 때 (단 이 함수는 호출 전에 미리 인벤토리에 넣을 수 있는지 검사해야함. CanCombine함수)
-    {
+    { 
         gm.AddItem(item);
 
         int count = item.count;

@@ -235,7 +235,7 @@ public class QuikSlotTutorialPhase : TutorialPhase
         Util.DelayFunc(() =>
         {
             KeyActionManager.Instance.GetElement(InitGainType.HP_STAT);
-        }, 1f);
+        }, 2.5f);
 
         base.End();
     }

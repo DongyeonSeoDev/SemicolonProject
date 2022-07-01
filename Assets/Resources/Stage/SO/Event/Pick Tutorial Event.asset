@@ -19,30 +19,36 @@ MonoBehaviour:
       secondPerLit: 0.2
       duration: 2
       nextLogInterval: 0
+      endActionId: 
   success:
     subData:
     - dialog: "\uC798\uD588\uC5B4!"
       secondPerLit: 0.2
       duration: 1.2
       nextLogInterval: 0
+      endActionId: 
     - dialog: "\uADF8\uB807\uAC8C \uC815\uD655\uD55C \uC704\uCE58\uC5D0\uC11C \uCC44\uC9D1\uD558\uBA74
         \uAF43\uC744 \uD68D\uB4DD\uD560 \uC218 \uC788\uC5B4"
       secondPerLit: 0.15
       duration: 2
       nextLogInterval: 0
+      endActionId: GainQuikSlotUI
   fail:
     subData:
     - dialog: "\uC5B4.....!"
       secondPerLit: 0.15
       duration: 1
       nextLogInterval: 0
+      endActionId: 
     - dialog: "\uADF8\uB798\uB3C4 \uBC14\uB2E5\uC5D0 \uAF43\uC774 \uB5A8\uC5B4\uC838
         \uC788\uC5B4\uC11C \uB2E4\uD589\uC774\uC57C"
       secondPerLit: 0.2
       duration: 2
       nextLogInterval: 0
+      endActionId: 
     - dialog: "\uB2E4\uC74C\uBC88\uC5D0\uB294 \uB354 \uC798 \uCC44\uC9D1\uD560 \uC218
         \uC788\uC744 \uAC70\uC57C"
       secondPerLit: 0.2
       duration: 2
       nextLogInterval: 0
+      endActionId: GainQuikSlotUI

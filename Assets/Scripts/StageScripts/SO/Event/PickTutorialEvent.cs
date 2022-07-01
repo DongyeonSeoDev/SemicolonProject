@@ -10,6 +10,7 @@ public class PickTutorialEvent : MapEventSO
     public override void OnEnterEvent()
     {
         TalkManager.Instance.SetSubtitle(enterSubData);
+        InteractionHandler.canUseQuikSlot = false;
         EventManager.StartListening(Global.PickupPlant, Pickup);
     }
 
@@ -19,9 +20,8 @@ public class PickTutorialEvent : MapEventSO
         {
             Inventory.Instance.GetItem(new ItemInfo(id, 1));
         }
-
+        
         TalkManager.Instance.SetSubtitle(suc ? success : fail);
-        TutorialManager.Instance.GetQuikSlot();
         EventManager.StopListening(Global.PickupPlant, Pickup);
     }
 }
