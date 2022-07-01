@@ -25300,7 +25300,7 @@ PrefabInstance:
     - target: {fileID: 8604531944747639586, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
       propertyPath: nextStageData
       value: 
-      objectReference: {fileID: 11400000, guid: 3ab00434fbcd45e4da9c3f132cc01c65, type: 2}
+      objectReference: {fileID: 11400000, guid: f077958f39e6b004180b3cf148a6a8a6, type: 2}
     - target: {fileID: 8604531944747639586, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
       propertyPath: playerSpawnPos
       value: 

@@ -32,7 +32,7 @@ public class SaveData
         UserInfo uInfo = new UserInfo();
         uInfo.monsterLearningDic = userInfo.monsterLearningDic;
         uInfo.uiActiveDic = userInfo.uiActiveDic;
-        uInfo.isGainBodyChangeSlot = userInfo.isGainBodyChangeSlot;
+        //uInfo.isGainBodyChangeSlot = userInfo.isGainBodyChangeSlot;
         userInfo.playerStat.ResetAfterRegame();
         uInfo.playerStat = userInfo.playerStat;
 
@@ -88,7 +88,7 @@ public class UserInfo
     public SaveDic<string, MonsterLearningInfo> monsterLearningDic = new SaveDic<string, MonsterLearningInfo>();
 
     public SaveDic<KeyAction, bool> uiActiveDic = new SaveDic<KeyAction, bool>();
-    public bool isGainBodyChangeSlot = false;
+    //public bool isGainBodyChangeSlot = false;
 }
 
 [Serializable]

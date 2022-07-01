@@ -23,7 +23,7 @@ public static class KeySetting
         keyDict[KeyAction.CHANGE_SLIME] = KeyCode.Alpha1;
         keyDict[KeyAction.CHANGE_MONSTER1] = KeyCode.Alpha2;
         keyDict[KeyAction.CHANGE_MONSTER2] = KeyCode.Alpha3;
-        keyDict[KeyAction.ITEM_QUIKSLOT] = KeyCode.H;
+        keyDict[KeyAction.ITEM_QUIKSLOT] = KeyCode.E;
         //keyDict[KeyAction.SETTING] = KeyCode.Tab;
         //keyDict[KeyAction.QUIT] = KeyCode.F4;
     }

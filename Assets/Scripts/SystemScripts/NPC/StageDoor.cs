@@ -130,7 +130,7 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
 
     public void DoorLightActive(bool on)
     {
-        if (isExitDoor) return;
+        if (isExitDoor || TutorialManager.Instance.IsTutorialStage) return;
 
         doorLight.gameObject.SetActive(on);
     }

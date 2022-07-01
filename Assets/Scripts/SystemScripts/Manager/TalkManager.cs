@@ -193,7 +193,7 @@ public class TalkManager : MonoSingleton<TalkManager>
     }
 
     #region Subtitle
-    public void SetSubtitle(string str, float secondPerLit = 0.05f, float duration = 3f)
+    public void SetSubtitle(string str, float secondPerLit = 0.05f, float duration = 3f, string endActionId = "")
     {
         ResetDialog();
         DOTween.To(() => 0, a => subCvsg.alpha = a, 1, 0.3f);
@@ -201,10 +201,11 @@ public class TalkManager : MonoSingleton<TalkManager>
         seq.AppendInterval(duration);
         seq.Append(subCvsg.DOFade(0f, 0.3f));
         seq.AppendCallback(twcb3);
+        if (!string.IsNullOrEmpty(endActionId)) seq.AppendCallback(() => EventManager.TriggerEvent(endActionId));
         seq.Play();
     }
 
-    public void SetSubtitle(string[] strs, float[] secondPerLits = null, float[] durations = null, float[] intervals = null)
+    public void SetSubtitle(string[] strs, float[] secondPerLits = null, float[] durations = null, float[] intervals = null, string[] endActionIdArr = null)
     {
         ResetDialog();
         DOTween.To(() => 0, a => subCvsg.alpha = a, 1, 0.3f);
@@ -235,6 +236,14 @@ public class TalkManager : MonoSingleton<TalkManager>
                 intervals[i] = 0.08f;
             }
         }
+        if(endActionIdArr==null)
+        {
+            endActionIdArr = new string[strs.Length];
+            for(int i = 0; i < endActionIdArr.Length; i++)
+            {
+                endActionIdArr[i] = string.Empty;
+            }
+        }
 
         for(int i=0; i<strs.Length; i++)
         {
@@ -242,6 +251,7 @@ public class TalkManager : MonoSingleton<TalkManager>
             seq.Append(subtitleText.DOText(strs[si], secondPerLits[si] * strs[si].Length));
             seq.AppendInterval(durations[si]);
             seq.AppendCallback(SubTxtEmpty);
+            if (!string.IsNullOrEmpty(endActionIdArr[si])) seq.AppendCallback(() => EventManager.TriggerEvent(endActionIdArr[si]));
             seq.AppendInterval(intervals[i]);
         }
         seq.Append(subCvsg.DOFade(0f, 0.3f));
@@ -256,7 +266,7 @@ public class TalkManager : MonoSingleton<TalkManager>
             return;
         }
 
-        SetSubtitle(data.Dialogs, data.SecondPerLits, data.Durations, data.NextLogIntervals);
+        SetSubtitle(data.Dialogs, data.SecondPerLits, data.Durations, data.NextLogIntervals, data.EndActionIDArr);
     }
 
     public void SetSubtitle(SingleSubtitleData data)
@@ -267,7 +277,7 @@ public class TalkManager : MonoSingleton<TalkManager>
             return;
         }
 
-        SetSubtitle(data.dialog, data.secondPerLit, data.duration);
+        SetSubtitle(data.dialog, data.secondPerLit, data.duration, data.endActionId);
     }
 
     private void ResetDialog()

@@ -80,12 +80,15 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                 EventManager.TriggerEvent("Skill2TutoClear");
                 EventManager.TriggerEvent("UpdateKeyCodeUI");
             });
-        }));    
+        }));
 
-        EventManager.StartListening("GetRushAttack", GetRushAttack);  //돌진 주는 NPC와 대화후에
+        //EventManager.StartListening("GetRushAttack", GetRushAttack);  //돌진 주는 NPC와 대화후에
+        EventManager.StartListening("EndTalkRushMaster", EndTalkRushMaster); //돌진 주는 NPC와 대화후에
         EventManager.StartListening("GetInventoryUI", GetInventoryUI);  //인벤 주는 NPC와 대화하고 얻을 때
         EventManager.StartListening("GetStatUI", GetStatUI);  //스탯 주는 NPC와 대화하고 얻을 때
         EventManager.StartListening("GetMonsterCollectionUI", GetMonsterCollectionUI); //도감 주는 NPC와 대화하고 얻을 때
+
+        EventManager.StartListening("GainQuikSlotUI", GetQuikSlot);
     }
 
     private void Start()
@@ -109,17 +112,23 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         //Init Etc UI Active
         hpUI.gameObject.SetActive(active);
         energeBarUI.gameObject.SetActive(active);
-        quikSlotUI.gameObject.SetActive(active); //퀵슬롯 UI 처리 => 이 부분 얻는 튜토에 대해서는 나중에 다시 정해야 함. 일단 임시로 여기에
+        quikSlotUI.gameObject.SetActive(active); 
         
         for (int i = 0; i < skillUIArr.Length; i++)
         {
             skillUIArr[i].gameObject.SetActive(active);
             //changeableBodysUIArr[i].gameObject.SetActive(active);
         }
-        changeableBodysUIArr[0].gameObject.SetActive(active);
-        for(int i=1; i< changeableBodysUIArr.Length; i++)
+
+        //changeableBodysUIArr[0].gameObject.SetActive(active);
+        /*for(int i=1; i< changeableBodysUIArr.Length; i++)
         {
             changeableBodysUIArr[i].gameObject.SetActive(gm.savedData.userInfo.isGainBodyChangeSlot);   
+        }*/
+
+        for(int i = 0; i < changeableBodysUIArr.Length; i++)
+        {
+            changeableBodysUIArr[i].gameObject.SetActive(active);
         }
 
         //PlayerFollowLight Init Setting
@@ -261,30 +270,103 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     public void GetSkill2() //돌진 획득
     {
-
-    }
-
-    public void GetRushAttack()  //돌진을 얻음
-    {
-        if (StoredData.HasValueKey("GetRushAttack")) return;
-
-        (ObjectManager.Instance.itrObjDic["Rush Master"] as NormalNPC)._NPCInfo.talkId = 2;
-
-        Vector3 startPos = GetUITutorialReady(skillUIArr[1].GetComponent<RectTransform>(), new Vector2(1189, 343));
-
-        Sequence seq = DOTween.Sequence();
-        seq.Append(skillUIArr[1].GetComponent<CanvasGroup>().DOFade(1, 0.3f).SetEase(Ease.OutCirc))
-            .Join(skillUIArr[1].GetComponent<RectTransform>().DOAnchorPos(startPos, 0.4f).SetEase(Ease.OutCirc));
-        seq.AppendCallback(() =>
+        GetUITween(new Vector2(1189, 343), skillUIArr[1], () =>
         {
             EventManager.TriggerEvent("Skill1TutoClear");
+            EventManager.TriggerEvent("UpdateKeyCodeUI");
+            KeyActionManager.Instance.GetElement(InitGainType.SKILL2);
+        });
+    }
+    public void GetSkill1() //일반공격 획득
+    {
+        GetUITween(new Vector2(1100, 300), skillUIArr[0], () =>
+        {
+            EventManager.TriggerEvent("Skill0TutoClear");
+            EventManager.TriggerEvent("UpdateKeyCodeUI");
+            KeyActionManager.Instance.GetElement(InitGainType.SKILL1);
+        });
+    }
+
+    public void GetQuikSlot()  //퀵 슬롯 획득
+    {
+        GetUITween(new Vector2(1000, 300), quikSlotUI, () =>
+        {
+            EventManager.TriggerEvent("UpdateKeyCodeUI");
+            KeyActionManager.Instance.GetElement(InitGainType.QUIKSLOT);
+        });
+    }
+
+    public void OnCloseQuikSlotGetPanel() //퀵 슬롯 획득 UI 닫고나서
+    {
+        Util.DelayFunc(() =>
+        {
+            InteractionHandler.canUseQuikSlot = true;
+            tutorialPhases.Add(new QuikSlotTutorialPhase(SetUIEmphasisEffect(quikSlotUI)));
+        }, 4f, this);
+    }
+
+    public void GetCharUI()  //캐릭터 UI얻음 => HP Energe MobSlot
+    {
+        for (int i=0; i<changeableBodysUIArr.Length; i++)
+        {
+            changeableBodysUIArr[i].GetComponent<CanvasGroup>().alpha = 0;
+            changeableBodysUIArr[i].gameObject.SetActive(true);
+            changeableBodysUIArr[i].GetComponent<CanvasGroup>().DOFade(i==0?1f:0.4f, 0.5f);
+        }
+
+        //HP 얻음
+        hpUI.GetComponent<CanvasGroup>().alpha = 1;
+        hpUI.gameObject.SetActive(true);
+        UIManager.Instance.playerHPInfo.third.fillAmount = 0;
+        EffectManager.Instance.hpFillEffect.gameObject.SetActive(true);
+        float hpFillEffectMaskCenterInitScale = StoredData.GetValueData<float>("hpFillEffectMaskCenterInitScale", true);
+        EffectManager.Instance.hpFillEffectMaskCenter.localScale = new Vector3(0, hpFillEffectMaskCenterInitScale, hpFillEffectMaskCenterInitScale);
+
+        UIManager.Instance.playerHPInfo.third.DOFillAmount(1, 0.7f);
+        EffectManager.Instance.hpFillEffectMaskCenter.DOScaleX(hpFillEffectMaskCenterInitScale, 0.75f);
+
+        SkillUIManager sum = SkillUIManager.Instance;
+        Vector3 orgEnergeEffMaskScl = StoredData.GetValueData<Vector3>("orgEnergeEffMaskScl", true);
+        sum.IsAutoFitEnergeBar = false;
+        sum.energeFill.fillAmount = 0;
+        sum.energeEffMask.localScale = new Vector3(0, orgEnergeEffMaskScl.y, orgEnergeEffMaskScl.z);
+        sum.energeBarAndEff.second.gameObject.SetActive(true);
+        sum.energeBarAndEff.first.GetComponent<CanvasGroup>().alpha = 1;
+        sum.energeBarAndEff.first.SetActive(true);
+
+        sum.energeFill.DOFillAmount(1, 0.7f);
+        sum.energeEffMask.DOScaleX(orgEnergeEffMaskScl.x, 0.75f).OnComplete(() =>
+        {
+            sum.IsAutoFitEnergeBar = true;
+            EventManager.TriggerEvent("UpdateKeyCodeUI");
+            StageManager.Instance.StageClear();
+            KeyActionManager.Instance.GetElement(InitGainType.CHAR_UI);
+        });
+    }
+
+    public void GetUITween(Vector2 newPos, Transform ui, Action end) //UI 획득 트윈 연출 (Default)
+    {
+        Vector3 startPos = GetUITutorialReady(ui.GetComponent<RectTransform>(), newPos);
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(ui.GetComponent<CanvasGroup>().DOFade(1, 0.3f).SetEase(Ease.OutCirc))
+            .Join(ui.GetComponent<RectTransform>().DOAnchorPos(startPos, 0.4f).SetEase(Ease.OutCirc));
+        seq.AppendCallback(() => end?.Invoke()).Play();
+    }
+
+
+    public void EndTalkRushMaster() //돌진 NPC와 대화 후에
+    {
+        if(!StoredData.HasValueKey("EndTalkRushMaster"))
+        {
+            StoredData.SetValueKey("EndTalkRushMaster", true);
             RectTransform emphRectTr = SetUIEmphasisEffect(skillUIArr[1].transform);
             tutorialPhases.Add(new RushTutorialPhase(emphRectTr.gameObject));
-            um.RequestLogMsg("돌진을 얻었습니다.");
-            EventManager.TriggerEvent("UpdateKeyCodeUI");
-        }).Play();
 
-        StoredData.SetValueKey("GetRushAttack", true);
+            (ObjectManager.Instance.itrObjDic["Rush Master"] as NormalNPC)._NPCInfo.talkId = 2;
+
+            TalkManager.Instance.SetSubtitle("처음에는 무서워 보였는데 생각보다 오르드씨는 좋으신 분 같아", 0.2f, 2f);
+        }
     }
 
     private void GetInventoryUI() //인벤 얻음
@@ -499,5 +581,28 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         });  //end of lerp time end event
     }  //end of if 
 });  //end of event*/
+
+/*public void GetRushAttack()  //돌진을 얻음
+    {
+        if (StoredData.HasValueKey("GetRushAttack")) return;
+
+        (ObjectManager.Instance.itrObjDic["Rush Master"] as NormalNPC)._NPCInfo.talkId = 2;
+
+        Vector3 startPos = GetUITutorialReady(skillUIArr[1].GetComponent<RectTransform>(), new Vector2(1189, 343));
+
+        Sequence seq = DOTween.Sequence();
+        seq.Append(skillUIArr[1].GetComponent<CanvasGroup>().DOFade(1, 0.3f).SetEase(Ease.OutCirc))
+            .Join(skillUIArr[1].GetComponent<RectTransform>().DOAnchorPos(startPos, 0.4f).SetEase(Ease.OutCirc));
+        seq.AppendCallback(() =>
+        {
+            EventManager.TriggerEvent("Skill1TutoClear");
+            RectTransform emphRectTr = SetUIEmphasisEffect(skillUIArr[1].transform);
+            tutorialPhases.Add(new RushTutorialPhase(emphRectTr.gameObject));
+            um.RequestLogMsg("돌진을 얻었습니다.");
+            EventManager.TriggerEvent("UpdateKeyCodeUI");
+        }).Play();
+
+        StoredData.SetValueKey("GetRushAttack", true);
+    }*/
 
 #endregion

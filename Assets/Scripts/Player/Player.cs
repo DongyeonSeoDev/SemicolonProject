@@ -511,6 +511,11 @@ public class Player : MonoBehaviour
     }
     private void EnemyDead(GameObject enemyObj, string objId, bool isDrained)
     {
+        if(TutorialManager.Instance.IsTutorialStage)
+        {
+            return;
+        }
+
         Enemy.Enemy enemy = enemyObj.GetComponent<Enemy.Enemy>();
 
         if (SlimeGameManager.Instance.CurrentBodyId == "origin")

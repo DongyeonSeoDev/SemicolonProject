@@ -322,7 +322,7 @@ public class PlayerStatUI : MonoBehaviour
         }
     }
 
-    public void StatUnlock(StatElement se)  //∆Ø¡§ Ω∫≈»¿ª 'πﬂ∞ﬂ'«‘
+    public void StatUnlock(StatElement se, bool log = true)  //∆Ø¡§ Ω∫≈»¿ª 'πﬂ∞ﬂ'«‘
     {
         se.isUnlock = true;
         if (statInfoUIDic.ContainsKey(se.id))   //∞Ì¡§ Ω∫≈» »πµÊ
@@ -333,7 +333,12 @@ public class PlayerStatUI : MonoBehaviour
         {
             choiceStatInfoUIDic[se.id].gameObject.SetActive(true);
         }
-        UIManager.Instance.RequestLogMsg("[" + GetStatSOData(se.id).statName + "] »πµÊ");
+
+        if (log)
+        {
+            UIManager.Instance.RequestLogMsg("[" + GetStatSOData(se.id).statName + "] »πµÊ");
+        }
+        
     }
 
     public void DetailViewChoiceStatInfo(ushort id)  //º±≈√ Ω∫≈» UI ≈¨∏Ø »ƒ ¿⁄ºº»˜ ∫∏±‚

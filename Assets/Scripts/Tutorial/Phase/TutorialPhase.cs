@@ -209,3 +209,34 @@ public class RushTutorialPhase : TutorialPhase
         base.End();
     }
 }
+
+
+public class QuikSlotTutorialPhase : TutorialPhase
+{
+    RectTransform emphasisEffect;
+
+    public QuikSlotTutorialPhase(RectTransform emphaRt)
+    {
+        emphasisEffect = emphaRt;
+    }
+
+    public override void DoPhaseUpdate()
+    {
+        if(Input.GetKeyDown(KeySetting.keyDict[KeyAction.ITEM_QUIKSLOT]))
+        {
+            End();
+        }
+    }
+
+    public override void End()
+    {
+        emphasisEffect.gameObject.SetActive(false);
+
+        Util.DelayFunc(() =>
+        {
+            KeyActionManager.Instance.GetElement(InitGainType.HP_STAT);
+        }, 2.5f);
+
+        base.End();
+    }
+}
