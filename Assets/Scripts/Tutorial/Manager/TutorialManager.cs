@@ -112,7 +112,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         //Init Etc UI Active
         hpUI.gameObject.SetActive(active);
         energeBarUI.gameObject.SetActive(active);
-        quikSlotUI.gameObject.SetActive(active); //퀵슬롯 UI 처리 => 이 부분 얻는 튜토에 대해서는 나중에 다시 정해야 함. 일단 임시로 여기에
+        quikSlotUI.gameObject.SetActive(active); 
         
         for (int i = 0; i < skillUIArr.Length; i++)
         {
