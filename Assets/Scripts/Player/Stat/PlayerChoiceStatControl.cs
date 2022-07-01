@@ -126,7 +126,12 @@ public class PlayerChoiceStatControl : MonoBehaviour
     //}
     private void Start()
     {
-        for(int i = 0; i < choiceDataList.Count; i++)
+        if (TutorialManager.Instance.IsTutorialStage)
+        {
+            StopListenings();
+        }
+
+        for (int i = 0; i < choiceDataList.Count; i++)
         {
             choiceDataList[i].id = (ushort)(100 + i * 5);
         }
@@ -154,6 +159,11 @@ public class PlayerChoiceStatControl : MonoBehaviour
     }
     private void OnDisable()
     {
+        StopListenings();
+    }
+
+    private void StopListenings()
+    {
         EventManager.StopListening("PlayerDead", ChoiceStatControlReset);
         EventManager.StopListening("OnEnemyAttack", UpAttackNum);
         EventManager.StopListening("OnAttackMiss", UpAttackMissedNum);
@@ -162,17 +172,21 @@ public class PlayerChoiceStatControl : MonoBehaviour
         EventManager.StopListening("OnAvoidInMomentom", UpAvoidInMomentomNum);
         //EventManager.StopListening("OnBodySlap", UpBodySlapNum);
     }
+
     private void Update()
     {
-        CheckMucusMaxTime();
+        if (TutorialManager.Instance.IsTutorialStage)
+        {
+            CheckMucusMaxTime();
 
-        CheckEndurance();
-        CheckProficiency();
-        CheckMomentom();
-        CheckFrenzy();
-        CheckReflection();
-        CheckFake();
-        CheckMucusRecharge();
+            CheckEndurance();
+            CheckProficiency();
+            CheckMomentom();
+            CheckFrenzy();
+            CheckReflection();
+            CheckFake();
+            CheckMucusRecharge();
+        }
     }
     public void CheckMucusMaxTime()
     {

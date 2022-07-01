@@ -1275,7 +1275,7 @@ MonoBehaviour:
     DPText: {fileID: 62098359}
     SpeedText: {fileID: 30124186}
   loadingWindowObj: {fileID: 688481964}
-  progressBar: {fileID: 1406687452}
+  progressBar: {fileID: 1191484930}
   progressText: {fileID: 1268806073}
 --- !u!114 &130400314
 MonoBehaviour:
@@ -4397,7 +4397,7 @@ MonoBehaviour:
     DPText: {fileID: 438590476}
     SpeedText: {fileID: 874911930}
   loadingWindowObj: {fileID: 688481964}
-  progressBar: {fileID: 1406687452}
+  progressBar: {fileID: 1191484930}
   progressText: {fileID: 1268806073}
 --- !u!114 &621012002
 MonoBehaviour:
@@ -14522,7 +14522,7 @@ MonoBehaviour:
     DPText: {fileID: 1343408406}
     SpeedText: {fileID: 368584671}
   loadingWindowObj: {fileID: 688481964}
-  progressBar: {fileID: 1406687452}
+  progressBar: {fileID: 1191484930}
   progressText: {fileID: 1268806073}
 --- !u!114 &1756206824
 MonoBehaviour:
