@@ -8,7 +8,7 @@ public class EnterLobbyEvent : MapEventSO
         if (TutorialManager.Instance.IsTutorialStage)
         {
             GameManager.Instance.savedData.tutorialInfo.isEnded = true;
-            StageManager.Instance.SaveStage("Stage0-06");
+            StageManager.Instance.SaveStage("Stage0-09");
             CutsceneManager.Instance.PlayCutscene("TutorialCutscene2");
 
             NGlobal.playerStatUI.StatUnlock(NGlobal.playerStatUI.PlayerStat.eternalStat.maxHp, false);

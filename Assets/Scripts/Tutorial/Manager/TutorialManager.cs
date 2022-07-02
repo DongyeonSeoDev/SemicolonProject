@@ -160,7 +160,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                 {
                     UIOn(KeyAction.SETTING);
                     gm.savedData.userInfo.uiActiveDic[KeyAction.QUIT] = true;
-                    um.RequestLogMsg("º≥¡§¿ª »πµÊ«ﬂΩ¿¥œ¥Ÿ");
+                    KeyActionManager.Instance.GetElement(InitGainType.SETTING_UI);
                 });
             }));
         }
@@ -253,13 +253,13 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                     switch(type)
                     {
                         case UIType.INVENTORY:
-                            um.RequestLogMsg("¿Œ∫•≈‰∏Æ∏¶ »πµÊ«ﬂΩ¿¥œ¥Ÿ");
+                            KeyActionManager.Instance.GetElement(InitGainType.INVENTORY_UI);
                             break;
                         case UIType.STAT:
-                            um.RequestLogMsg("Ω∫≈»¿ª »πµÊ«ﬂΩ¿¥œ¥Ÿ");
+                            KeyActionManager.Instance.GetElement(InitGainType.STAT_UI);
                             break;
                         case UIType.MONSTER_COLLECTION:
-                            um.RequestLogMsg("∏ÛΩ∫≈Õ µµ∞®¿ª »πµÊ«ﬂΩ¿¥œ¥Ÿ");
+                            KeyActionManager.Instance.GetElement(InitGainType.MONCOL_UI);
                             break;
                     }
                 });
