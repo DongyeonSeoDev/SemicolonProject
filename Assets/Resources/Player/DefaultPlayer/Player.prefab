@@ -112,14 +112,14 @@ MonoBehaviour:
       criticalRate:
         id: 40
         statValue: 0
-        upStatValue: 1
+        upStatValue: 2
         isUnlock: 0
         statLv: 0
         maxStatLv: 0
       criticalDamage:
         id: 45
-        statValue: 10
-        upStatValue: 2
+        statValue: 0
+        upStatValue: 1
         isUnlock: 0
         statLv: 0
         maxStatLv: 0
