@@ -62,6 +62,12 @@ public class TalkManager : MonoSingleton<TalkManager>
 
         twcb2 = () =>
         {
+            string k = CurNPCInfoData.CurTalkEndEventKey;
+            if (!string.IsNullOrEmpty(k))
+            {
+                EventManager.TriggerEvent(k);
+            }
+
             CurNPCInfoData = null;
             talkText.DOKill();
             talkPanelCvsg.gameObject.SetActive(false);
@@ -87,7 +93,7 @@ public class TalkManager : MonoSingleton<TalkManager>
             float sDist = (talkingNPCTr.position - Global.GetSlimePos.position).sqrMagnitude;
             if (sDist > autoEndTalkDistSquare)
             {
-                EndTalk();
+                EndTalk(false);
             }
             else
             {
@@ -140,11 +146,11 @@ public class TalkManager : MonoSingleton<TalkManager>
         if (++dialogIndex < CurNPCInfoData.talkContents[dialogSetIndex].value.Count)
         {
             string msg = CurNPCInfoData.talkContents[dialogSetIndex].value[dialogIndex].message;
-            talkText.DOText(msg, msg.Length * secondPerLit).OnComplete(twcb1);
+            talkText.DOText(msg, msg.Length * secondPerLit).SetEase(Ease.Linear).OnComplete(twcb1);
         }
         else
         {
-            EndTalk();
+            EndTalk(true);
         }
     }
 
@@ -179,7 +185,7 @@ public class TalkManager : MonoSingleton<TalkManager>
         EventManager.TriggerEvent("TalkWithNPC", false);
     }
 
-    public void EndTalk()  //대화가 다 끝나거나 일정 거리를 벗어나서 대화종료
+    public void EndTalk(bool talkCompletion)  //대화가 다 끝나거나 일정 거리를 벗어나서 대화종료
     {
         if (delayCoroutine != null)
         {
@@ -197,7 +203,7 @@ public class TalkManager : MonoSingleton<TalkManager>
     {
         ResetDialog();
         DOTween.To(() => 0, a => subCvsg.alpha = a, 1, 0.3f);
-        seq.Append(subtitleText.DOText(str, secondPerLit * str.Length));
+        seq.Append(subtitleText.DOText(str, secondPerLit * str.Length).SetEase(Ease.Linear));
         seq.AppendInterval(duration);
         seq.Append(subCvsg.DOFade(0f, 0.3f));
         seq.AppendCallback(twcb3);
@@ -248,7 +254,7 @@ public class TalkManager : MonoSingleton<TalkManager>
         for(int i=0; i<strs.Length; i++)
         {
             int si = i;
-            seq.Append(subtitleText.DOText(strs[si], secondPerLits[si] * strs[si].Length));
+            seq.Append(subtitleText.DOText(strs[si], secondPerLits[si] * strs[si].Length).SetEase(Ease.Linear));
             seq.AppendInterval(durations[si]);
             seq.AppendCallback(SubTxtEmpty);
             if (!string.IsNullOrEmpty(endActionIdArr[si])) seq.AppendCallback(() => EventManager.TriggerEvent(endActionIdArr[si]));
