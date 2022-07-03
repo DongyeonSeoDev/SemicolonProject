@@ -35,7 +35,10 @@ namespace Enemy
 
         public Vector3 targetDirection;
 
-        public float attackDamage;
+        public float minAttack;
+        public float maxAttack;
+        public float critical;
+        public float criticalPower;
 
         public Type bulletEffectType;
 
@@ -121,7 +124,14 @@ namespace Enemy
 
             if (eEnemyController == EnemyController.AI && collision.CompareTag("Player"))
             {
-                SlimeGameManager.Instance.Player.GetDamage(gameObject, Random.Range(attackDamage - 5, attackDamage + 6), transform.position, targetDirection);
+                float damage = Random.Range(minAttack, maxAttack + 1);
+
+                if (critical > Random.Range(0, 100))
+                {
+                    damage = damage + (damage * (criticalPower / 100));
+                }
+
+                SlimeGameManager.Instance.Player.GetDamage(gameObject, damage, transform.position, targetDirection);
 
                 if (enemy != null && enemy != this.enemy)
                 {
@@ -193,10 +203,14 @@ namespace Enemy
             ResetBullet();
         }
 
-        public void Init(EnemyController controller, Vector3 direction, float damage, Color color, Enemy enemy = null, float multipleSpeed = 1f)
+        public void Init(EnemyController controller, Vector3 direction, float minAttack, float maxAttack, float critical, float criticalPower, Color color, Enemy enemy = null, float multipleSpeed = 1f)
         {
+            this.minAttack = minAttack;
+            this.maxAttack = maxAttack;
+            this.critical = critical;
+            this.criticalPower = criticalPower;
+
             eEnemyController = controller;
-            attackDamage = damage;
             targetDirection = direction;
             this.enemy = enemy;
             this.multipleSpeed = multipleSpeed;

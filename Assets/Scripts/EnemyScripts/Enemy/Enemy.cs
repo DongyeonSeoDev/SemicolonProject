@@ -59,6 +59,28 @@ namespace Enemy
         private Vector2Int currentPosition;
 
         [SerializeField]
+        [Header("스피드")]
+        private float speed;
+        [SerializeField]
+        [Header("최소 공격력")]
+        private float minAttack;
+        [SerializeField]
+        [Header("최대 공격력")]
+        private float maxAttack;
+        [SerializeField]
+        [Header("치명타 확률")]
+        private float critical;
+        [SerializeField]
+        [Header("치명타 추가 데미지 퍼센트")]
+        private float criticalDamage;
+        [SerializeField]
+        [Header("방어력")]
+        private float defense;
+        [SerializeField]
+        [Header("체력")]
+        private float hp;
+        [SerializeField]
+        [Header("경험치")]
         private float addExperience;
 
         public float AddExperience
@@ -156,7 +178,15 @@ namespace Enemy
                 enemyAnimator = anim,
                 enemySpriteRenderer = sr,
                 enemyRigidbody2D = rb,
-                enemy = this
+                enemy = this,
+                chaseSpeed = speed,
+                minAttackPower = minAttack,
+                maxAttackPower = maxAttack,
+                randomCritical = critical,
+                criticalDamagePercent = criticalDamage,
+                hp = hp,
+                maxHP = hp,
+                defense = defense
             };
 
             enemyData.enemyAnimator.enabled = true; // 애니메이션 실행
@@ -218,7 +248,7 @@ namespace Enemy
             if (enemyData.isDamaged)
             {
                 isDamageCurrentTime = enemyData.damageDelay;
-                enemyData.hp -= enemyData.damagedValue;
+                enemyData.hp -= Mathf.Clamp(enemyData.damagedValue - enemyData.defense, 0, float.MaxValue);
 
                 if (EnemyManager.Instance.isOnlyAbsorption && enemyData.hp < 1)
                 {
@@ -483,13 +513,17 @@ namespace Enemy
                 hpEffectAnimation.SetBool(EnemyManager.Instance.hashIsStart, isActive);
             }
         }
-            
+
+        public (float, float, float, float) GetAttackData()
+        {
+            return (enemyData.minAttackPower, enemyData.maxAttackPower, enemyData.randomCritical, enemyData.criticalDamagePercent); ;
+        }
+
         public EnemyController GetEnemyController() => enemyData.eEnemyController;
         public Transform GetTransform() => transform;
         public GameObject GetGameObject() => gameObject;
         public string GetEnemyId() => enemyData.enemyType.ToString(); // 적 아이디를 가져옴
         public float EnemyHpPercent() => ((float)enemyData.hp / enemyData.maxHP) * 100f; // 적 체력 퍼센트를 가져옴
-        public float GetEnemyAttackPower() => enemyData.attackPower; // 적 공격력을 가져옴
         public bool GetIsKnockBack() => enemyData.isUseKnockBack; // 적이 넉백 공격을 할 수 있는지를 가져옴
         public bool GetIsParrying() => enemyData.isParrying;
     }

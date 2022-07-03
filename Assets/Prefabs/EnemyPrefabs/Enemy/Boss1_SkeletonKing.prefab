@@ -289,7 +289,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 627d7b24bed9f5d4981cce96bf83c018, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addAttackValue: 0
   stunTime: 1
 --- !u!1 &3521012444034881540
 GameObject:
@@ -464,7 +463,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 627d7b24bed9f5d4981cce96bf83c018, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addAttackValue: 0
   stunTime: 1
 --- !u!1 &4361452404789073768
 GameObject:
@@ -1318,6 +1316,14 @@ MonoBehaviour:
   hpTweenTime: 0.1
   hpTweenDelayTime: 0.3
   damageHPTweenTime: 0.2
+  hpEffectAnimation: {fileID: 0}
+  speed: 5
+  minAttack: 20
+  maxAttack: 30
+  critical: 0
+  criticalDamage: 0
+  defense: 0
+  hp: 1250
   addExperience: 50
   specialAttack3HPPercent:
   - 60
@@ -1326,7 +1332,6 @@ MonoBehaviour:
   playableDirector: {fileID: 7559260690231365845}
   fireCount: 9
   maxAttackCount: 7
-  bossHP: 1250
   specialAttackTime: 6
   bossAttackMoveSpeed: 30
   fireDistance: 2

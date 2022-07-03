@@ -18,10 +18,6 @@ namespace Enemy
             enemyData.isUseKnockBack = true;
             enemyData.isAttackPlayerDistance = 7f;
             enemyData.attackDelay = 2f;
-            enemyData.chaseSpeed = 2f;
-            enemyData.attackPower = 20;
-            enemyData.maxHP = 30;
-            enemyData.hp = 30;
             enemyData.playerAnimationTime = 1f;
 
             enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed);
@@ -87,6 +83,12 @@ namespace Enemy
         {
             moveSpeed = 30f;
             currentDownSpeed = downSpeed;
+        }
+
+        private void AttackEnd() // 애니메이션에서 실행
+        {
+            moveSpeed = 0f;
+            rb.velocity = Vector2.zero;
         }
 
         private void DeadEvent()

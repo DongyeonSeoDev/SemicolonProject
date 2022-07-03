@@ -343,7 +343,7 @@ public class Player : MonoBehaviour
                     Vector2 dir1 = -(direction.normalized);
                     Vector2 dir2 = playerInput.LastBodySlapVector;
 
-                    playerReflectionScript.DoReflection(bullet.poolType, (dir1 + dir2).normalized, damage);
+                    playerReflectionScript.DoReflection(bullet.poolType, (dir1 + dir2).normalized, Global.CurrentPlayer.PlayerStat.MinDamage, Global.CurrentPlayer.PlayerStat.MinDamage, 0, 0);
                 }
             }
 

@@ -19,7 +19,11 @@ namespace Enemy
         private Color currentAttackRangeColor;
         private Color targetAttackRangeColor;
 
-        private float attackPower;
+        private float minAttack;
+        private float maxAttack;
+        private float critical;
+        private float criticalPower;
+
         private bool checkTogether;
 
         private readonly int hashAttack = Animator.StringToHash("Attack");
@@ -43,14 +47,18 @@ namespace Enemy
             EventManager.StartListening("BossDead", PlayerDeadEvent);
         }
 
-        public void Spawn(Enemy enemy, EnemyController controller, float power, float attackTime, bool checkTogether)
+        public void Spawn(Enemy enemy, EnemyController controller, float minAttack, float maxAttack, float critical, float criticalPower, float attackTime, bool checkTogether)
         {
             animator.ResetTrigger(hashAttack);
             animator.SetTrigger(hashReset);
 
+            this.minAttack = minAttack;
+            this.maxAttack = maxAttack;
+            this.critical = critical;
+            this.criticalPower = criticalPower;
+
             enemyCheck = enemy;
             eEnemyController = controller;
-            attackPower = power;
             this.checkTogether = checkTogether;
 
             if (!checkTogether)
@@ -124,7 +132,14 @@ namespace Enemy
 
             if (eEnemyController == EnemyController.AI && collision.CompareTag("Player"))
             {
-                SlimeGameManager.Instance.Player.GetDamage(gameObject, Random.Range(attackPower - 5, attackPower + 6), transform.position, EnemyManager.Player.transform.position - transform.position);
+                float damage = Random.Range(minAttack, maxAttack + 1);
+
+                if (critical > Random.Range(0, 100))
+                {
+                    damage = damage + (damage * (criticalPower / 100));
+                }
+
+                SlimeGameManager.Instance.Player.GetDamage(gameObject, damage, transform.position, EnemyManager.Player.transform.position - transform.position);
 
                 if (enemy != null && enemy != enemyCheck)
                 {

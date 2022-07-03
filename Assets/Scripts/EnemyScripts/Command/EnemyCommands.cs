@@ -433,22 +433,29 @@ namespace Enemy
 
         private Type objectType;
 
-        private float attackDamage;
+        private float minAttack;
+        private float maxAttack;
+        private float critical;
+        private float criticalPower;
 
-        public EnemylongRangeAttackCommand(Enemy enemy, Transform enemyPosition, Type objectType, Transform shotTransform, float damage)
+        public EnemylongRangeAttackCommand(Enemy enemy, Transform enemyPosition, Type objectType, Transform shotTransform, float minAttack, float maxAttack, float critical, float criticalPower)
         {
+            this.minAttack = minAttack;
+            this.maxAttack = maxAttack;
+            this.critical = critical;
+            this.criticalPower = criticalPower;
+
             this.enemy = enemy;
             enemyTransform = enemyPosition;
             this.objectType = objectType;
             this.shotTransform = shotTransform;
-            attackDamage = damage;
         }
 
         public override void Execute()
         {
             EnemyPoolData spawnObject = EnemyPoolManager.Instance.GetPoolObject(objectType, shotTransform.position);
 
-            spawnObject.GetComponent<EnemyBullet>().Init(enemy.GetEnemyController(), (EnemyManager.Player.transform.position - enemyTransform.position).normalized, attackDamage, Color.white, null);
+            spawnObject.GetComponent<EnemyBullet>().Init(enemy.GetEnemyController(), (EnemyManager.Player.transform.position - enemyTransform.position).normalized, minAttack, maxAttack, critical, criticalPower, Color.white, null);
         }
     }
 
@@ -462,15 +469,22 @@ namespace Enemy
         private Type objectType;
         private Color color;
 
-        private float attackDamage;
+        private float minAttack;
+        private float maxAttack;
+        private float critical;
+        private float criticalPower;
 
-        public PlayerlongRangeAttackCommand(Transform transform, Transform shotTransform, Enemy enemy, Type objectType, float attackDamage, Color color)
+        public PlayerlongRangeAttackCommand(Transform transform, Transform shotTransform, Enemy enemy, Type objectType, float minAttack, float maxAttack, float critical, float criticalPower, Color color)
         {
             playerInput = SlimeGameManager.Instance.Player.GetComponent<PlayerInput>();
 
+            this.minAttack = minAttack;
+            this.maxAttack = maxAttack;
+            this.critical = critical;
+            this.criticalPower = criticalPower;
+
             this.transform = transform;
             this.shotTransform = shotTransform;
-            this.attackDamage = attackDamage;
             this.enemy = enemy;
             this.objectType = objectType;
             this.color = color;
@@ -480,7 +494,7 @@ namespace Enemy
         {
             EnemyPoolData spawnObject = EnemyPoolManager.Instance.GetPoolObject(objectType, shotTransform.position);
 
-            spawnObject.GetComponent<EnemyBullet>().Init(enemy.GetEnemyController(), (playerInput.AttackMousePosition - (Vector2)transform.position).normalized, attackDamage, color, enemy);
+            spawnObject.GetComponent<EnemyBullet>().Init(enemy.GetEnemyController(), (playerInput.AttackMousePosition - (Vector2)transform.position).normalized, minAttack, maxAttack, critical, criticalPower, color, enemy);
         }
     }
 

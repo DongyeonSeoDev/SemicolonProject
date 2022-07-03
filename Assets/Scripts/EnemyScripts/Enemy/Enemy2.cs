@@ -16,18 +16,15 @@ namespace Enemy
             base.OnEnable();
 
             enemyData.isLongDistanceAttack = true;
-            enemyData.chaseSpeed = 10f;
             enemyData.attackDelay = 1.5f;
             enemyData.minRunAwayTime = 2f;
             enemyData.maxRunAwayTime = 4f;
             enemyData.playerAnimationTime = 1.05f;
-            enemyData.maxHP = 20;
-            enemyData.hp = 20;
 
             enemyData.enemyMoveCommand = new EnemyRandomMoveCommand(enemyData, positionCheckData); // MoveCommand 생성
             enemyData.enemySpriteRotateCommand = new EnemySpriteRotateCommand(enemyData);
-            enemyAttackPlayerCommand = new PlayerlongRangeAttackCommand(transform, shootPosition, this, Type.Bullet, enemyData.attackPower, playerAttackColor);
-            enemyAttackCommand = new EnemylongRangeAttackCommand(this, enemyData.enemyObject.transform, Type.Bullet, transform, enemyData.attackPower);
+            enemyAttackPlayerCommand = new PlayerlongRangeAttackCommand(transform, shootPosition, this, Type.Bullet, enemyData.minAttackPower, enemyData.maxAttackPower, enemyData.randomCritical, enemyData.randomCritical, playerAttackColor);
+            enemyAttackCommand = new EnemylongRangeAttackCommand(this, enemyData.enemyObject.transform, Type.Bullet, transform, enemyData.minAttackPower, enemyData.maxAttackPower, enemyData.randomCritical, enemyData.randomCritical);
         }
 
         public void EnemyAttack() // 애니메이션에서 실행 - 적 공격
