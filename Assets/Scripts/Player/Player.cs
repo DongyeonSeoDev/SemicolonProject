@@ -275,7 +275,7 @@ public class Player : MonoBehaviour
             damage = 0f;
         }
 
-        float dm = damage;
+        float dm = (int)damage;
 
         if (TutorialManager.Instance.hpUI.gameObject.activeSelf)
         {
@@ -362,7 +362,7 @@ public class Player : MonoBehaviour
 
         //SlimeGameManager.Instance.playerHitCheckDict.Add(attacker, false);
 
-        float dm = damage;
+        float dm = (int)damage;
 
         if (TutorialManager.Instance.hpUI.gameObject.activeSelf)
         {
@@ -475,7 +475,15 @@ public class Player : MonoBehaviour
 
         if(checkRate <= playerStat.CriticalRate)
         {
-            n_damage += playerStat.CriticalDamage;
+            if (playerStat.CriticalDamage <= 1f)
+            {
+                n_damage += damage;
+            }
+            else
+            {
+                n_damage += damage + ((playerStat.CriticalDamage - 1) * (damage / 10f));
+            }
+
             isCritical = true;
         }
 
