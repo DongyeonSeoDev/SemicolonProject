@@ -91,8 +91,6 @@ namespace Enemy
 
         private void AttackEnd() // 애니메이션에서 실행
         {
-            Debug.Log("Attack End");
-
             moveSpeed = 0f;
             rb.velocity = Vector2.zero;
         }
