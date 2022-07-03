@@ -6,7 +6,7 @@ using UnityEngine.U2D;
 public class SlimeSkin : MonoBehaviour
 {
     private PlayerInput playerInput = null;
-    private SpriteShapeRenderer renderer = null;
+    private SpriteShapeRenderer shapeRenderer = null;
 
     private Material[] materials;
 
@@ -17,10 +17,10 @@ public class SlimeSkin : MonoBehaviour
 
     void Start()
     {
-        renderer = GetComponent<SpriteShapeRenderer>();
+        shapeRenderer = GetComponent<SpriteShapeRenderer>();
         playerInput = SlimeGameManager.Instance.Player.GetComponent<PlayerInput>();
 
-        materials = renderer.materials;
+        materials = shapeRenderer.materials;
     }
 
     void Update()
