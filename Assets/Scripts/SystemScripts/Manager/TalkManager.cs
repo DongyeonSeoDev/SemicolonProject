@@ -146,7 +146,7 @@ public class TalkManager : MonoSingleton<TalkManager>
         if (++dialogIndex < CurNPCInfoData.talkContents[dialogSetIndex].value.Count)
         {
             string msg = CurNPCInfoData.talkContents[dialogSetIndex].value[dialogIndex].message;
-            talkText.DOText(msg, msg.Length * secondPerLit).OnComplete(twcb1);
+            talkText.DOText(msg, msg.Length * secondPerLit).SetEase(Ease.Linear).OnComplete(twcb1);
         }
         else
         {
@@ -203,7 +203,7 @@ public class TalkManager : MonoSingleton<TalkManager>
     {
         ResetDialog();
         DOTween.To(() => 0, a => subCvsg.alpha = a, 1, 0.3f);
-        seq.Append(subtitleText.DOText(str, secondPerLit * str.Length));
+        seq.Append(subtitleText.DOText(str, secondPerLit * str.Length).SetEase(Ease.Linear));
         seq.AppendInterval(duration);
         seq.Append(subCvsg.DOFade(0f, 0.3f));
         seq.AppendCallback(twcb3);
@@ -254,7 +254,7 @@ public class TalkManager : MonoSingleton<TalkManager>
         for(int i=0; i<strs.Length; i++)
         {
             int si = i;
-            seq.Append(subtitleText.DOText(strs[si], secondPerLits[si] * strs[si].Length));
+            seq.Append(subtitleText.DOText(strs[si], secondPerLits[si] * strs[si].Length).SetEase(Ease.Linear));
             seq.AppendInterval(durations[si]);
             seq.AppendCallback(SubTxtEmpty);
             if (!string.IsNullOrEmpty(endActionIdArr[si])) seq.AppendCallback(() => EventManager.TriggerEvent(endActionIdArr[si]));
