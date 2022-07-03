@@ -50,28 +50,28 @@ MonoBehaviour:
     additionalBodyStat:
       maxHp:
         id: 5
-        statValue: 100
+        statValue: 120
         upStatValue: 0
         isUnlock: 0
         statLv: 0
         maxStatLv: 0
       minDamage:
         id: 10
-        statValue: 8
+        statValue: 4
         upStatValue: 0
         isUnlock: 0
         statLv: 0
         maxStatLv: 0
       maxDamage:
         id: 15
-        statValue: 8
+        statValue: 4
         upStatValue: 0
         isUnlock: 0
         statLv: 0
         maxStatLv: 0
       defense:
         id: 20
-        statValue: 2
+        statValue: 0
         upStatValue: 0
         isUnlock: 0
         statLv: 0
@@ -130,14 +130,14 @@ MonoBehaviour:
         maxStatLv: 0
       minDamage:
         id: 10
-        statValue: 5
+        statValue: 6
         upStatValue: 0
         isUnlock: 0
         statLv: 0
         maxStatLv: 0
       maxDamage:
         id: 15
-        statValue: 5
+        statValue: 6
         upStatValue: 0
         isUnlock: 0
         statLv: 0
@@ -158,7 +158,7 @@ MonoBehaviour:
         maxStatLv: 0
       speed:
         id: 30
-        statValue: 6
+        statValue: 4
         upStatValue: 0
         isUnlock: 0
         statLv: 0
@@ -196,28 +196,28 @@ MonoBehaviour:
     additionalBodyStat:
       maxHp:
         id: 5
-        statValue: 150
+        statValue: 50
         upStatValue: 0
         isUnlock: 0
         statLv: 0
         maxStatLv: 0
       minDamage:
         id: 10
-        statValue: 5
+        statValue: 2
         upStatValue: 0
         isUnlock: 0
         statLv: 0
         maxStatLv: 0
       maxDamage:
         id: 15
-        statValue: 5
+        statValue: 2
         upStatValue: 0
         isUnlock: 0
         statLv: 0
         maxStatLv: 0
       defense:
         id: 20
-        statValue: 3
+        statValue: 4
         upStatValue: 0
         isUnlock: 0
         statLv: 0
