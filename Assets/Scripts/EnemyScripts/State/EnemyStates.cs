@@ -357,7 +357,7 @@ namespace Enemy
             {
                 bossCloneArray[i] = (Boss1Clone)EnemyPoolManager.Instance.GetPoolObject(Type.Boss1Clone, bossPositionArray[i + 1]);
                 attackBoss1CloneArray[i] = bossCloneArray[i].GetComponentInChildren<AttackBoss1Clone>();
-                attackBoss1CloneArray[i].Init(enemyData.eEnemyController, enemyData.attackPower);
+                attackBoss1CloneArray[i].Init(enemyData.eEnemyController, enemyData.minAttackPower, enemyData.maxAttackPower, enemyData.criticalDamagePercent, enemyData.criticalDamagePercent);
                 attackBoss1CloneArray[i].AttackObjectReset();
             }
         }

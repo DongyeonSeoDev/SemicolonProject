@@ -13,7 +13,6 @@ namespace Enemy
 
         public int fireCount = 0;
         public int maxAttackCount = 0;
-        public int bossHP = 2000;
         public float specialAttackTime = 6f;
         public float bossAttackMoveSpeed = 0f;
         public float fireDistance = 0f;
@@ -82,9 +81,6 @@ namespace Enemy
 
             enemyData.attackDelay = 1.8f;
             enemyData.isAttackPlayerDistance = 4f;
-            enemyData.attackPower = 30;
-            enemyData.maxHP = bossHP;
-            enemyData.hp = bossHP;
             enemyData.isNoKnockback = true;
             enemyData.isNoStun = true;
 
@@ -332,7 +328,7 @@ namespace Enemy
             for (int i = 0; i < fireCount - 1; i++)
             {
                 Fire fire = EnemyPoolManager.Instance.GetPoolObject(Type.Fire, AnglePosition(playerPosition, (360 / (fireCount - 1)) * i)).GetComponent<Fire>();
-                fire.Spawn(this, enemyData.eEnemyController, enemyData.attackPower, -1f, true);
+                fire.Spawn(this, enemyData.eEnemyController, enemyData.minAttackPower, enemyData.maxAttackPower, enemyData.randomCritical, enemyData.criticalDamagePercent, - 1f, true);
 
                 fireList.Add(fire);
 
@@ -340,7 +336,7 @@ namespace Enemy
             }
 
             Fire playerAttackFire = EnemyPoolManager.Instance.GetPoolObject(Type.Fire, playerPosition).GetComponent<Fire>();
-            playerAttackFire.Spawn(this, enemyData.eEnemyController, enemyData.attackPower, -1f, true);
+            playerAttackFire.Spawn(this, enemyData.eEnemyController, enemyData.minAttackPower, enemyData.maxAttackPower, enemyData.randomCritical, enemyData.criticalDamagePercent, -1f, true);
 
             fireList.Add(playerAttackFire);
 
@@ -379,7 +375,7 @@ namespace Enemy
             for (int i = 0; i < 150; i++)
             {
                 Fire fire = EnemyPoolManager.Instance.GetPoolObject(Type.Fire, RandomPosition()).GetComponent<Fire>();
-                fire.Spawn(this, enemyData.eEnemyController, enemyData.attackPower - 15, 1f, false);
+                fire.Spawn(this, enemyData.eEnemyController, enemyData.minAttackPower, enemyData.maxAttackPower, enemyData.randomCritical, enemyData.criticalDamagePercent, 1f, false);
 
                 yield return fireSpawnTimeSeconds2;
             }

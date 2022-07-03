@@ -7,14 +7,22 @@ namespace Enemy
     {
         private List<GameObject> attackObject = new List<GameObject>();
         private EnemyController eEnemyController;
-        private float attackPower;
+
+        private float minAttack;
+        private float maxAttack;
+        private float critical;
+        private float criticalPower;
 
         public Vector3 direction;
 
-        public void Init(EnemyController controllerm, float power)
+        public void Init(EnemyController controllerm, float minAttack, float maxAttack, float critical, float criticalPower)
         {
             eEnemyController = controllerm;
-            attackPower = power;
+
+            this.minAttack = minAttack;
+            this.maxAttack = maxAttack;
+            this.critical = critical;
+            this.criticalPower = criticalPower;
         }
 
         public void AttackObjectReset()
@@ -33,7 +41,14 @@ namespace Enemy
 
             if (eEnemyController == EnemyController.AI && collision.CompareTag("Player"))
             {
-                SlimeGameManager.Instance.Player.GetDamage(gameObject, Random.Range(attackPower - 5, attackPower + 6), transform.position, direction);
+                float damage = Random.Range(minAttack, maxAttack + 1);
+
+                if (critical > Random.Range(0, 100))
+                {
+                    damage = damage + (damage * (criticalPower / 100));
+                }
+
+                SlimeGameManager.Instance.Player.GetDamage(gameObject, damage, transform.position, direction);
 
                 if (enemy != null)             
                 {

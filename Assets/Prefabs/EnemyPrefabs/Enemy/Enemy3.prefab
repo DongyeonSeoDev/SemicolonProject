@@ -289,6 +289,13 @@ MonoBehaviour:
   hpTweenDelayTime: 0.3
   damageHPTweenTime: 0.2
   hpEffectAnimation: {fileID: 4602842886488794526}
+  speed: 3
+  minAttack: 5
+  maxAttack: 15
+  critical: 0
+  criticalDamage: 0
+  defense: 2
+  hp: 40
   addExperience: 50
   anotherImage: {fileID: 5565962855984174146}
   downSpeed: 0.01
@@ -396,7 +403,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 627d7b24bed9f5d4981cce96bf83c018, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addAttackValue: 0
   stunTime: 0.7
 --- !u!1001 &5191832025836309663
 PrefabInstance:

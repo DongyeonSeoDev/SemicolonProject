@@ -92,7 +92,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 627d7b24bed9f5d4981cce96bf83c018, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  addAttackValue: 0
   stunTime: 1
 --- !u!1 &1748969661245656920
 GameObject:
@@ -301,6 +300,13 @@ MonoBehaviour:
   hpTweenDelayTime: 0.3
   damageHPTweenTime: 0.2
   hpEffectAnimation: {fileID: 5216392835198631098}
+  speed: 5
+  minAttack: 15
+  maxAttack: 19
+  critical: 0
+  criticalDamage: 0
+  defense: 0
+  hp: 60
   addExperience: 50
 --- !u!114 &9188459099727085732
 MonoBehaviour:

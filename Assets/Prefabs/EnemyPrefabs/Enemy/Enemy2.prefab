@@ -371,6 +371,13 @@ MonoBehaviour:
   hpTweenDelayTime: 0.3
   damageHPTweenTime: 0.2
   hpEffectAnimation: {fileID: 9106362413360595843}
+  speed: 10
+  minAttack: 12
+  maxAttack: 14
+  critical: 0
+  criticalDamage: 0
+  defense: 0
+  hp: 15
   addExperience: 50
   shootPosition: {fileID: 4916023448725414156}
   playerAttackColor: {r: 0, g: 1, b: 0, a: 1}

@@ -16,13 +16,9 @@ namespace Enemy
         {
             base.OnEnable();
 
-            enemyData.chaseSpeed = 8f;
             enemyData.attackDelay = 0.42f;
             enemyData.playerAnimationTime = 0.45f;
             enemyData.isAttackPlayerDistance = 12f;
-            enemyData.maxHP = 35;
-            enemyData.hp = 35;
-            enemyData.attackPower = 15;
             enemyData.playerAnimationDelay = 0.1f;
             enemyData.playerAnimationSpeed = 1.0f;
             enemyData.startAttackDelay = 0.5f;
@@ -33,8 +29,8 @@ namespace Enemy
             enemyData.enemyMoveCommand = new EnemyLongDistanceFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed, enemyData.isAttackPlayerDistance - 2f, moveDelay);
             enemyData.enemySpriteRotateCommand = new EnemySpriteRotateCommand(enemyData);
 
-            enemyAttackPlayerCommand = new PlayerlongRangeAttackCommand(transform, shotPosition, this, Type.Arrow, enemyData.attackPower, playerAttackColor);
-            enemyAttackCommand = new EnemylongRangeAttackCommand(this, enemyData.enemyObject.transform, Type.Arrow, shotPosition, enemyData.attackPower);
+            enemyAttackPlayerCommand = new PlayerlongRangeAttackCommand(transform, shotPosition, this, Type.Arrow, enemyData.minAttackPower, enemyData.maxAttackPower, enemyData.randomCritical, enemyData.randomCritical, playerAttackColor);
+            enemyAttackCommand = new EnemylongRangeAttackCommand(this, enemyData.enemyObject.transform, Type.Arrow, shotPosition, enemyData.minAttackPower, enemyData.maxAttackPower, enemyData.randomCritical, enemyData.randomCritical);
         }
 
         public void EnemyAttack() // 애니메이션에서 실행 - 적 공격

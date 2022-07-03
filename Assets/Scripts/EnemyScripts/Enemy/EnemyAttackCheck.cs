@@ -6,7 +6,6 @@ namespace Enemy
 {
     public class EnemyAttackCheck : MonoBehaviour
     {
-        public int addAttackValue = 0;
         public float stunTime = 1f;
 
         private Enemy enemy;
@@ -21,7 +20,11 @@ namespace Enemy
         private bool isAttackInit = false;
         private bool isUseKnockBack = false;
         private bool isParrying = false;
-        private float attackPower = 0;
+
+        private float minAttackPower = 0;
+        private float maxAttackPower = 0;
+        private float critical = 0;
+        private float criticalPower = 0;
 
         public Action<EnemyController> enemyControllerChange = null;
 
@@ -68,8 +71,14 @@ namespace Enemy
             isParrying = enemy.GetIsParrying();
             positionCheckData = enemy.positionCheckData;
             eEnemyController = enemy.GetEnemyController();
-            attackPower = enemy.GetEnemyAttackPower() + addAttackValue;
             enemyRigidbody = enemy.GetComponent<Rigidbody2D>();
+
+            var attack = enemy.GetAttackData();
+
+            minAttackPower = attack.Item1;
+            maxAttackPower = attack.Item2;
+            critical = attack.Item3;
+            criticalPower = attack.Item4;
 
             if (eEnemyController == EnemyController.PLAYER)
             {
@@ -106,6 +115,13 @@ namespace Enemy
 
             if (eEnemyController == EnemyController.AI)
             {
+                float damage = UnityEngine.Random.Range(minAttackPower, maxAttackPower + 1);
+
+                if (critical > UnityEngine.Random.Range(0, 100))
+                {
+                    damage = damage + (damage * (criticalPower / 100));
+                }
+
                 if (collision.CompareTag("Player"))
                 {
                     attackObject.Add(collision.gameObject);
@@ -115,7 +131,7 @@ namespace Enemy
 
                     if (isUseKnockBack)
                     {
-                        SlimeGameManager.Instance.Player.GetDamage(gameObject, UnityEngine.Random.Range(attackPower - 5, attackPower + 6), hit.point, positionCheckData.position, new Vector3(1.5f, 1.5f, 1.5f));
+                        SlimeGameManager.Instance.Player.GetDamage(gameObject, damage, hit.point, positionCheckData.position, new Vector3(1.5f, 1.5f, 1.5f));
 
                         enemyRigidbody.velocity = Vector2.zero;
                         enemyRigidbody.angularVelocity = 0f;
@@ -134,12 +150,12 @@ namespace Enemy
                     {
                         if (enemy != null)
                         {
-                            SlimeGameManager.Instance.Player.GetDamage(gameObject, UnityEngine.Random.Range(attackPower - 5, attackPower + 6), hit.point, enemy.transform.position - this.enemy.transform.position);
+                            SlimeGameManager.Instance.Player.GetDamage(gameObject, damage, hit.point, enemy.transform.position - this.enemy.transform.position);
                             enemy.AttackInit(0, false, false);
                         }
                         else
                         {
-                            SlimeGameManager.Instance.Player.GetDamage(gameObject, UnityEngine.Random.Range(attackPower - 5, attackPower + 6), hit.point, EnemyManager.Player.transform.position - this.enemy.transform.position);
+                            SlimeGameManager.Instance.Player.GetDamage(gameObject, damage, hit.point, EnemyManager.Player.transform.position - this.enemy.transform.position);
                         }
                     }
                 }
@@ -150,7 +166,7 @@ namespace Enemy
                     if (playerBullet != null && playerBullet.MoveVec != Vector2.zero)
                     {
                         var enemyBullet = EnemyPoolManager.Instance.GetPoolObject(Type.ReflectionBullet, playerBullet.transform.position).GetComponent<EnemyBullet>();
-                        enemyBullet.Init(EnemyController.AI, -playerBullet.MoveVec, attackPower, Util.Change255To1Color(255f, 120f, 255f), null, 2);
+                        enemyBullet.Init(EnemyController.AI, -playerBullet.MoveVec, minAttackPower, maxAttackPower, critical, criticalPower, Util.Change255To1Color(255f, 120f, 255f), null, 2);
                         enemyBullet.isReflection = true;
                         playerBullet.Despawn();
 
@@ -165,7 +181,7 @@ namespace Enemy
                         getBullet.RemoveBullet();
 
                         var bullet = EnemyPoolManager.Instance.GetPoolObject(getBullet.poolType, getBullet.transform.position).GetComponent<EnemyBullet>();
-                        bullet.Init(EnemyController.AI, -getBullet.targetDirection, getBullet.attackDamage, Color.magenta, null, 2);
+                        bullet.Init(EnemyController.AI, -getBullet.targetDirection, getBullet.minAttack, getBullet.maxAttack, getBullet.critical, getBullet.criticalPower, Color.magenta, null, 2);
                         bullet.isReflection = true;
 
                         return;
@@ -201,7 +217,7 @@ namespace Enemy
                         enemyBullet.RemoveBullet();
 
                         var playerBullet = EnemyPoolManager.Instance.GetPoolObject(enemyBullet.poolType, enemyBullet.transform.position).GetComponent<EnemyBullet>();
-                        playerBullet.Init(EnemyController.PLAYER, -enemyBullet.targetDirection, enemyBullet.attackDamage, Color.green, this.enemy, 2);
+                        playerBullet.Init(EnemyController.PLAYER, -enemyBullet.targetDirection, enemyBullet.minAttack, enemyBullet.maxAttack, enemyBullet.critical, enemyBullet.criticalPower, Color.green, this.enemy, 2);
                         playerBullet.isReflection = true;
 
                         return;

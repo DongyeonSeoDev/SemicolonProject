@@ -6,8 +6,6 @@ namespace Enemy
         {
             base.OnEnable();
 
-            enemyData.maxHP = 30;
-            enemyData.hp = 30;
             enemyData.isAttackPlayerDistance = 1.7f;
             enemyData.isParrying = true;
 
