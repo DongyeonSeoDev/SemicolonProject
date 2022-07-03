@@ -83,7 +83,7 @@ MonoBehaviour:
         maxStatLv: 0
       defense:
         id: 20
-        statValue: 2
+        statValue: 0
         upStatValue: 1
         isUnlock: 0
         statLv: 0
@@ -111,7 +111,7 @@ MonoBehaviour:
         maxStatLv: 0
       criticalRate:
         id: 40
-        statValue: 50
+        statValue: 0
         upStatValue: 1
         isUnlock: 0
         statLv: 0
