@@ -262,8 +262,36 @@ public class NPCInfo
 
     public string npcName;
 
-    public List<Single<List<TalkElement>>> talkContents; 
+    public List<Single<List<TalkElement>>> talkContents;
+    public List<Pair<int, string>> dialogsEndEvKeyInfo;
+    //public List<string> curDialogsEndEvKey;
+    //public List<NPCDiglogSet> talkContents;
+
+    public string CurTalkEndEventKey
+    {
+        get
+        {
+            if (dialogsEndEvKeyInfo != null)
+            {
+                for (int i = 0; i < dialogsEndEvKeyInfo.Count; i++)
+                {
+                    if (dialogsEndEvKeyInfo[i].first == talkId)
+                    {
+                        return dialogsEndEvKeyInfo[i].second;
+                    }
+                }
+            }
+            return string.Empty;
+        }
+    }
 }
+
+/*[Serializable]
+public class NPCDiglogSet
+{
+    public string talkEndEventKey;
+    public List<TalkElement> dialogs;
+}*/
 
 [Serializable]
 public class TalkElement

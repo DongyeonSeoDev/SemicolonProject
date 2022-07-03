@@ -25430,10 +25430,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8159210779070181231, guid: ce9d716165b62ac46bc374b07e8775ef, type: 3}
-      propertyPath: npcInfo.talkContents.Array.data[0].value.Array.data[3].talkEndEventKey
-      value: EndTalkRushMaster
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ce9d716165b62ac46bc374b07e8775ef, type: 3}
 --- !u!4 &6230166543938301409 stripped

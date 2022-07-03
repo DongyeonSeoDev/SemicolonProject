@@ -62,6 +62,12 @@ public class TalkManager : MonoSingleton<TalkManager>
 
         twcb2 = () =>
         {
+            string k = CurNPCInfoData.CurTalkEndEventKey;
+            if (!string.IsNullOrEmpty(k))
+            {
+                EventManager.TriggerEvent(k);
+            }
+
             CurNPCInfoData = null;
             talkText.DOKill();
             talkPanelCvsg.gameObject.SetActive(false);
@@ -87,7 +93,7 @@ public class TalkManager : MonoSingleton<TalkManager>
             float sDist = (talkingNPCTr.position - Global.GetSlimePos.position).sqrMagnitude;
             if (sDist > autoEndTalkDistSquare)
             {
-                EndTalk();
+                EndTalk(false);
             }
             else
             {
@@ -144,7 +150,7 @@ public class TalkManager : MonoSingleton<TalkManager>
         }
         else
         {
-            EndTalk();
+            EndTalk(true);
         }
     }
 
@@ -179,7 +185,7 @@ public class TalkManager : MonoSingleton<TalkManager>
         EventManager.TriggerEvent("TalkWithNPC", false);
     }
 
-    public void EndTalk()  //대화가 다 끝나거나 일정 거리를 벗어나서 대화종료
+    public void EndTalk(bool talkCompletion)  //대화가 다 끝나거나 일정 거리를 벗어나서 대화종료
     {
         if (delayCoroutine != null)
         {
