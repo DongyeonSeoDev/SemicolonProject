@@ -248,7 +248,7 @@ namespace Enemy
             if (enemyData.isDamaged)
             {
                 isDamageCurrentTime = enemyData.damageDelay;
-                enemyData.hp -= Mathf.Clamp(enemyData.damagedValue - enemyData.defense, 0, float.MaxValue);
+                enemyData.hp -= enemyData.damagedValue;
 
                 if (EnemyManager.Instance.isOnlyAbsorption && enemyData.hp < 1)
                 {
@@ -351,7 +351,7 @@ namespace Enemy
         {
             if (AttackInit(damage, isKnockBack, isStun, direction, knockBackPower, stunTime))
             {
-                EffectManager.Instance.OnDamaged(damage, critical, true, transform.position, effectPosition, direction, effectSize);
+                EffectManager.Instance.OnDamaged(enemyData.damagedValue, critical, true, transform.position, effectPosition, direction, effectSize);
             }
         }
 
@@ -360,7 +360,7 @@ namespace Enemy
             if (enemyData.isEnemyMove && !enemyData.isDamaged)
             {
                 enemyData.isDamaged = true;
-                enemyData.damagedValue = damage;
+                enemyData.damagedValue = Mathf.Clamp(damage - enemyData.defense, 1f, float.MaxValue);
                 enemyData.isKnockBack = isKnockBack;
                 enemyData.stunTime = isStun ? stunTime : 0;
 
