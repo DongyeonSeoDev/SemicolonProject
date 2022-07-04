@@ -175,7 +175,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
     private void Update()
     {
-        if (TutorialManager.Instance.IsTutorialStage)
+        if (!TutorialManager.Instance.IsTutorialStage)
         {
             CheckMucusMaxTime();
 
