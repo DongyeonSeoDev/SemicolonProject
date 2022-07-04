@@ -477,11 +477,11 @@ public class Player : MonoBehaviour
         {
             if (playerStat.CriticalDamage <= 1f)
             {
-                n_damage += damage;
+                n_damage += damage * 0.3f;
             }
             else
             {
-                n_damage += damage + ((playerStat.CriticalDamage - 1) * (damage / 10f));
+                n_damage += damage * 0.3f + ((playerStat.CriticalDamage - 1) * (damage * 0.1f));
             }
 
             isCritical = true;
