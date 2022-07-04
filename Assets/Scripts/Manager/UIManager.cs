@@ -94,7 +94,6 @@ public partial class UIManager : MonoSingleton<UIManager>
     [Space(10)]
     public CanvasGroup normalPanelCanvasg;
     public CanvasGroup priorNormalPanelCvsg;
-    //public CanvasGroup settingCvsg;
     public CanvasGroup worldUICvsg;
     public CanvasGroup ordinaryCvsg;
     public CanvasGroup msgCvsg;
@@ -761,18 +760,6 @@ public partial class UIManager : MonoSingleton<UIManager>
     }
     #endregion
 
-    #region UI Position
-    public void UIPositionReset(UIType type)
-    {
-        gameUIList[(int)type].ResetPos();
-    }
-
-    public void AllUIPositionReset()
-    {
-        gameUIList.ForEach(ui => ui.ResetPos());
-    }
-    #endregion
-
     #region Cursor 따라다니는 정보텍스트
     private void CursorInfo()
     {
@@ -859,10 +846,10 @@ public partial class UIManager : MonoSingleton<UIManager>
         ItemSO data = gm.GetItemData(itemID);
 
         //itemImg.sprite = data.GetSprite();
+        //itemCntTxt.text = string.Format("수량: {0}개", gm.GetItemCount(itemID));
         itemTypeImg.sprite = Global.GetItemTypeSpr(data.itemType);
         itemNameTmp.text = data.itemName;
         itemExplanation.text = data.explanation;
-        //itemCntTxt.text = string.Format("수량: {0}개", gm.GetItemCount(itemID));
         itemTypeTxt.text = Global.GetItemTypeName(data.itemType);
 
         itemAbilExplanation.text = data.abilExplanation;
@@ -1066,30 +1053,6 @@ public partial class UIManager : MonoSingleton<UIManager>
     #endregion
 
     #region Stat
-
-   /* public void UpdateStatUI()
-    {
-        Stat stat = sgm.Player.PlayerStat;
-
-        statTexts[0].text = string.Concat(Mathf.Ceil( Mathf.Clamp(sgm.Player.PlayerStat.currentHp, 0, stat.MaxHp)), '/',Mathf.Ceil( stat.MaxHp));
-        statTexts[1].text = string.Concat( stat.MinDamage, '~', stat.MaxDamage);
-        statTexts[2].text = stat.Defense.ToString();
-        statTexts[3].text = Mathf.RoundToInt(Mathf.Abs(stat.Speed)).ToString(); //스피드가 몇인지 소수로 나오면 어색할 것 같아서 일단은 정수로 나오게 함.
-        statTexts[4].text = string.Concat(stat.CriticalRate, '%');
-        statTexts[5].text = stat.CriticalDamage.ToString() + "%";
-        statTexts[6].text = stat.Intellect.ToString();
-        statTexts[7].text = stat.AttackSpeed.ToString();
-
-        //statText.text = $"HP\t\t{currentHP}/{stat.hp}\n\n공격력\t\t{stat.damage}\n\n방어력\t\t{stat.defense}\n\n이동속도\t\t{stat.speed}";
-    }
-
-    public void UpdateChoiceStatUI()
-    {
-        Stat stat = sgm.Player.PlayerStat;
-
-        //choiceStatTexts[0].text = stat.choiceStat.endurance.ToString(); //맷집
-        //choiceStatTexts[1].text = stat.choiceStat.patience.ToString(); //인내력
-    }*/
 
     public void UpdatePlayerHPInInven()
     {
