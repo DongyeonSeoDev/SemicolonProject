@@ -177,9 +177,9 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         Util.DelayFunc(() =>
         {
             enemy.gameObject.SetActive(true);
-            enemy.transform.DOMove(target, 5f).SetEase(Ease.Linear).OnComplete(() =>
+            enemy.transform.DOMove(target, 2.8f).SetEase(Ease.Linear).OnComplete(() =>
             {
-                enemy.transform.DOScale(Vector3.zero, 0.4f).OnComplete(() =>
+                enemy.transform.DOScale(Vector3.zero, 0.3f).OnComplete(() =>
                 {
                     UIManager.Instance.worldUICvsg.alpha = 1;
                     KeyActionManager.Instance.ShowExclamationMark();
