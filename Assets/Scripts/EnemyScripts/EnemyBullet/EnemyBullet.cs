@@ -124,14 +124,17 @@ namespace Enemy
 
             if (eEnemyController == EnemyController.AI && collision.CompareTag("Player"))
             {
-                float damage = Random.Range(minAttack, maxAttack + 1);
+                (float, bool) damage;
 
-                if (critical > Random.Range(0, 100))
+                damage.Item1 = Random.Range(minAttack, maxAttack + 1);
+                damage.Item2 = critical > Random.Range(0, 100);
+
+                if (damage.Item2)
                 {
-                    damage = damage + (damage * (criticalPower / 100));
+                    damage.Item1 = damage.Item1 + (damage.Item1 * (criticalPower / 100));
                 }
 
-                SlimeGameManager.Instance.Player.GetDamage(gameObject, damage, transform.position, targetDirection);
+                SlimeGameManager.Instance.Player.GetDamage(gameObject, damage.Item1, transform.position, targetDirection, critical: damage.Item2);
 
                 if (enemy != null && enemy != this.enemy)
                 {

@@ -6,6 +6,15 @@ using DG.Tweening;
 
 public class MonsterCollection : MonoSingleton<MonsterCollection>
 {
+    [System.Serializable]
+    public class StatInfoUI
+    {
+        public ushort id;
+        public string statName;
+        public Text statNameTxt;
+        public Text statValueTxt;
+    }
+
     private PlayerEnemyUnderstandingRateManager urmg;
 
     public Dictionary<string, MonsterInfoSlot> mobIdToSlot = new Dictionary<string, MonsterInfoSlot>();
@@ -33,7 +42,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     //몹 드랍템 정보 확인창
     public Triple<Image, Text, Text> mobItemImgNameEx;
 
-    public Text[] statText; //몹으로 변신시 상승 능력치 확인 텍스트
+    public StatInfoUI[] statInfoUI; //몹으로 변신시 상승 능력치 확인
     public Text statIncrRatePerAssim; //동화율 n 오를 때마다 처음 스탯의 m퍼센트만큼 증가함을 나타내는 텍스트
 
     //몬스터 (주로 스탯의)특성 정보
@@ -152,7 +161,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
                 }
             }
         });
-        EventManager.StartListening("EnemyDead", (obj, id) =>
+        EventManager.StartListening("EnemyDead", (obj, id, dead) =>
         {
             if (!mobLearningInfoDic[id].kill)
             {
@@ -321,22 +330,59 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             EternalStat stat = mobIdToSlot[selectedDetailMobId].BodyData.additionalBodyStat;
             EternalStat addiStat = PlayerEnemyUnderstandingRateManager.Instance.GetExtraUpStat(selectedDetailMobId);
 
-            statText[0].text = MinusException(stat.maxHp.statValue) + AdditionalStat(addiStat.maxHp.statValue);
-            statText[1].text = MinusException(stat.maxDamage.statValue) + AdditionalStat(addiStat.maxDamage.statValue);  //maxDamage만큼 min/max 데미지를 올려준다
-            statText[2].text = MinusException(stat.defense.statValue) + AdditionalStat(addiStat.defense.statValue);
-            statText[3].text = MinusException(Mathf.RoundToInt(stat.speed.statValue)) + AdditionalStat(Mathf.RoundToInt(addiStat.speed.statValue));
-            statText[4].text = string.Concat(MinusException(stat.criticalRate.statValue), '%') + AdditionalStat(addiStat.criticalRate.statValue, true);
-            statText[5].text = string.Concat(MinusException(stat.criticalDamage.statValue), '%') + AdditionalStat(addiStat.criticalDamage.statValue, true);
-            statText[6].text = MinusException(stat.intellect.statValue) + AdditionalStat(addiStat.intellect.statValue);
-            statText[7].text = MinusException(stat.attackSpeed.statValue) + AdditionalStat(addiStat.attackSpeed.statValue);
+            //maxDamage만큼 min/max 데미지를 올려준다
+            for (int i = 0; i < statInfoUI.Length; i++)
+            {
+                if (NGlobal.playerStatUI.eternalStatDic[statInfoUI[i].id].first.isUnlock)
+                {
+                    statInfoUI[i].statNameTxt.text = statInfoUI[i].statName;
+                    statInfoUI[i].statValueTxt.text = GetStatValueStr(statInfoUI[i].id, stat, addiStat);
+                }
+                else
+                {
+                    statInfoUI[i].statNameTxt.text = "???";
+                    statInfoUI[i].statValueTxt.text = "??";
+                }
+            }
         }
         else
         {
-            for(int i=0; i<statText.Length; i++)
+            for(int i=0; i< statInfoUI.Length; i++)
             {
-                statText[i].text = "??";
+                statInfoUI[i].statNameTxt.text = NGlobal.playerStatUI.eternalStatDic[statInfoUI[i].id].first.isUnlock ? statInfoUI[i].statName : "???";
+                statInfoUI[i].statValueTxt.text = "??";
             }
         }
+    }
+
+    public string GetStatValueStr(ushort id, EternalStat stat, EternalStat addiStat)
+    {
+        switch(id)
+        {
+            case NGlobal.MaxHpID:
+                return MinusException(stat.maxHp.statValue) + AdditionalStat(addiStat.maxHp.statValue);
+            case NGlobal.MaxDamageID:
+                return MinusException(stat.maxDamage.statValue) + AdditionalStat(addiStat.maxDamage.statValue);
+            case NGlobal.DefenseID:
+                return MinusException(stat.defense.statValue) + AdditionalStat(addiStat.defense.statValue);
+            case NGlobal.SpeedID:
+                return MinusException(Mathf.RoundToInt(stat.speed.statValue)) + AdditionalStat(Mathf.RoundToInt(addiStat.speed.statValue));
+            case NGlobal.CriticalRate:
+                return string.Concat(MinusException(stat.criticalRate.statValue), '%') + AdditionalStat(addiStat.criticalRate.statValue, true);
+            case NGlobal.CriticalDamage:
+                return string.Concat(MinusException(stat.criticalDamage.statValue), '%') + AdditionalStat(addiStat.criticalDamage.statValue, true);
+            case NGlobal.IntellectID:
+                return MinusException(stat.intellect.statValue) + AdditionalStat(addiStat.intellect.statValue);
+            case NGlobal.AttackSpeedID:
+                return MinusException(stat.attackSpeed.statValue) + AdditionalStat(addiStat.attackSpeed.statValue);
+
+            case NGlobal.MinDamageID:
+                return MinusException(stat.minDamage.statValue) + AdditionalStat(addiStat.minDamage.statValue);  //아마 여기는 안옴
+        }
+
+        Debug.LogError("존재하지 않는 스탯 아이디 : " + id);
+
+        return string.Empty;
     }
 
     private string MinusException(int value)
@@ -448,6 +494,18 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             {
                 ChangeLearningStateMeet(id, true);
             }
+        }
+    }
+
+    public void ResetLearning()
+    {
+        foreach (string key in mobLearningInfoDic.Keys)
+        {
+            tempDummyMobLearningInfo = mobLearningInfoDic[key];
+            tempDummyMobLearningInfo.meet = false;
+            tempDummyMobLearningInfo.kill = false;
+            tempDummyMobLearningInfo.assimilation = false;
+            mobIdToSlot[key].SetMonsterImg(false);
         }
     }
 

@@ -101,7 +101,7 @@ public class Inventory : MonoSingleton<Inventory>
         EventManager.StartListening("PlayerDead", ResetInventory);
     }
 
-    void ResetInventory()
+    public void ResetInventory()
     {
         gm.savedData.userInfo.userItems.ClearDic();
         itemSlots.ForEach(x =>

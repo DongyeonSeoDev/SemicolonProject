@@ -19,6 +19,8 @@ public class EnterLobbyEvent : MapEventSO
             NGlobal.playerStatUI.StatOpen(NGlobal.MaxDamageID, true);
         }
 
+        MonsterCollection.Instance.ResetLearning();
+        Inventory.Instance.ResetInventory();
         StageManager.Instance.canNextStage = CanNextStage;
         StageManager.Instance.SetClearStage();
     }
