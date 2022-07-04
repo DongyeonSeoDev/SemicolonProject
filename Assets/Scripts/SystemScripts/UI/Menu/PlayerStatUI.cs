@@ -269,7 +269,8 @@ public class PlayerStatUI : MonoBehaviour
             }
         }
 
-        if (Mathf.Pow(2, eternalStatDic[id].first.upStatCount) <= playerStat.currentStatPoint) return true;
+        //if (Mathf.Pow(2, eternalStatDic[id].first.upStatCount) <= playerStat.currentStatPoint) return true;
+        if (UpStatInfoTextAsset.Instance.GetValue(eternalStatDic[id].first.statLv) <= playerStat.currentStatPoint) return true;
         UIManager.Instance.RequestSystemMsg("스탯 포인트가 부족합니다.");
         return false;
     }
@@ -279,7 +280,7 @@ public class PlayerStatUI : MonoBehaviour
     {
         
         StatElement stat = eternalStatDic[id].first;
-        int value = (int)Mathf.Pow(2, stat.upStatCount);
+        int value = UpStatInfoTextAsset.Instance.GetValue(eternalStatDic[id].first.statLv);
         playerStat.currentStatPoint -= value;
         playerStat.accumulateStatPoint += value;
         stat.statLv++;
