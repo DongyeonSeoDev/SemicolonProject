@@ -289,7 +289,7 @@ public class Player : MonoBehaviour
 
                 if (dm <= 0)
                 {
-                    dm = 0;
+                    dm = 1;
                 }
                 else
                 {
@@ -381,7 +381,7 @@ public class Player : MonoBehaviour
 
                 if (dm <= 0)
                 {
-                    dm = 0;
+                    dm = 1;
                 }
                 else
                 {
