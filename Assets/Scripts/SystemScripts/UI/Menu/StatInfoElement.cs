@@ -92,7 +92,7 @@ public class StatInfoElement : UITransition
         {
             if (on)
             {
-                NGlobal.playerStatUI.OnMouseEnterStatUpBtn(eternal.isOpenStat ? (int)Mathf.Pow(2, eternal.upStatCount) : -5);  //2^지금까지 스탯을 올린 횟수 = 스탯올리기 위해 필요한 포인트 양
+                NGlobal.playerStatUI.OnMouseEnterStatUpBtn(eternal.isOpenStat ? UpStatInfoTextAsset.Instance.GetValue(eternal.statLv) : -5);  //2^지금까지 스탯을 올린 횟수 = 스탯올리기 위해 필요한 포인트 양(이었다)
                 UpdatePlusStat(true);
             }
             else

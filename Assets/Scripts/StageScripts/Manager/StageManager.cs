@@ -627,6 +627,10 @@ public class StageManager : MonoSingleton<StageManager>
         {
             EventManager.TriggerEvent("GameClear");
         }
+        else if(currentArea == AreaType.MONSTER)
+        {
+            NGlobal.playerStatUI.AddPlayerStatPointExp(250);
+        }
     }
 
     private void Respawn()
