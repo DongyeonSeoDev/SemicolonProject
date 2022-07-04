@@ -115,11 +115,14 @@ namespace Enemy
 
             if (eEnemyController == EnemyController.AI)
             {
-                float damage = UnityEngine.Random.Range(minAttackPower, maxAttackPower + 1);
+                (float, bool) damage;
 
-                if (critical > UnityEngine.Random.Range(0, 100))
+                damage.Item1 = UnityEngine.Random.Range(minAttackPower, maxAttackPower + 1);
+                damage.Item2 = critical > UnityEngine.Random.Range(0, 100);
+
+                if (damage.Item2)
                 {
-                    damage = damage + (damage * (criticalPower / 100));
+                    damage.Item1 = damage.Item1 + (damage.Item1 * (criticalPower / 100));
                 }
 
                 if (collision.CompareTag("Player"))
@@ -131,7 +134,7 @@ namespace Enemy
 
                     if (isUseKnockBack)
                     {
-                        SlimeGameManager.Instance.Player.GetDamage(gameObject, damage, hit.point, positionCheckData.position, new Vector3(1.5f, 1.5f, 1.5f));
+                        SlimeGameManager.Instance.Player.GetDamage(gameObject, damage.Item1, hit.point, positionCheckData.position, new Vector3(1.5f, 1.5f, 1.5f), damage.Item2);
 
                         enemyRigidbody.velocity = Vector2.zero;
                         enemyRigidbody.angularVelocity = 0f;
@@ -150,12 +153,12 @@ namespace Enemy
                     {
                         if (enemy != null)
                         {
-                            SlimeGameManager.Instance.Player.GetDamage(gameObject, damage, hit.point, enemy.transform.position - this.enemy.transform.position);
+                            SlimeGameManager.Instance.Player.GetDamage(gameObject, damage.Item1, hit.point, enemy.transform.position - this.enemy.transform.position, critical: damage.Item2);
                             enemy.AttackInit(0, false, false);
                         }
                         else
                         {
-                            SlimeGameManager.Instance.Player.GetDamage(gameObject, damage, hit.point, EnemyManager.Player.transform.position - this.enemy.transform.position);
+                            SlimeGameManager.Instance.Player.GetDamage(gameObject, damage.Item1, hit.point, EnemyManager.Player.transform.position - this.enemy.transform.position, critical: damage.Item2);
                         }
                     }
                 }
