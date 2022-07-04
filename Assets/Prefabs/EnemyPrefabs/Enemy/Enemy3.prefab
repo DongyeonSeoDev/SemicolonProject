@@ -295,7 +295,7 @@ MonoBehaviour:
   critical: 0
   criticalDamage: 0
   defense: 2
-  hp: 40
+  hp: 20
   addExperience: 50
   anotherImage: {fileID: 5565962855984174146}
   downSpeed: 0.01
