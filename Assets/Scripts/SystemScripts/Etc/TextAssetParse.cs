@@ -98,7 +98,7 @@ public class UpStatInfoTextAsset : AssetParse<int, int, UpStatInfoTextAsset>
             return lastCost;
 
         if (key == 0)
-            return 2;
+            return 10;
 
         Debug.Log("Not Exist Key : " + key);
         return 999;

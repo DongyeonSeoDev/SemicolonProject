@@ -35152,7 +35152,7 @@ MonoBehaviour:
   choiceDetailAbil: {fileID: 7217820947876521739}
   choiceDetailGrowth: {fileID: 7217820948013733978}
   choiceDetailAcq: {fileID: 7217820949212614260}
-  statOpenCost: 2
+  statOpenCost: 10
 --- !u!4 &1699014320170825324
 Transform:
   m_ObjectHideFlags: 0

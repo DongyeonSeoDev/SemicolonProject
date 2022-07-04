@@ -451,6 +451,18 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         }
     }
 
+    public void ResetLearning()
+    {
+        foreach (string key in mobLearningInfoDic.Keys)
+        {
+            tempDummyMobLearningInfo = mobLearningInfoDic[key];
+            tempDummyMobLearningInfo.meet = false;
+            tempDummyMobLearningInfo.kill = false;
+            tempDummyMobLearningInfo.assimilation = false;
+            mobIdToSlot[key].SetMonsterImg(false);
+        }
+    }
+
     #endregion
 
     #region ChangeableBodyList Top Left
