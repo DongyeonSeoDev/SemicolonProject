@@ -275,7 +275,7 @@ public class Player : MonoBehaviour
             damage = 0f;
         }
 
-        float dm = damage;
+        float dm = (int)damage;
 
         if (TutorialManager.Instance.hpUI.gameObject.activeSelf)
         {
@@ -289,7 +289,7 @@ public class Player : MonoBehaviour
 
                 if (dm <= 0)
                 {
-                    dm = 0;
+                    dm = 1;
                 }
                 else
                 {
@@ -343,7 +343,7 @@ public class Player : MonoBehaviour
                     Vector2 dir1 = -(direction.normalized);
                     Vector2 dir2 = playerInput.LastBodySlapVector;
 
-                    playerReflectionScript.DoReflection(bullet.poolType, (dir1 + dir2).normalized, Global.CurrentPlayer.PlayerStat.MinDamage, Global.CurrentPlayer.PlayerStat.MinDamage, 0, 0);
+                    playerReflectionScript.DoReflection(bullet.poolType, (dir1 + dir2).normalized, bullet.minAttack, bullet.maxAttack, 0, 0);
                 }
             }
 
@@ -362,7 +362,7 @@ public class Player : MonoBehaviour
 
         //SlimeGameManager.Instance.playerHitCheckDict.Add(attacker, false);
 
-        float dm = damage;
+        float dm = (int)damage;
 
         if (TutorialManager.Instance.hpUI.gameObject.activeSelf)
         {
@@ -381,7 +381,7 @@ public class Player : MonoBehaviour
 
                 if (dm <= 0)
                 {
-                    dm = 0;
+                    dm = 1;
                 }
                 else
                 {
@@ -475,7 +475,15 @@ public class Player : MonoBehaviour
 
         if(checkRate <= playerStat.CriticalRate)
         {
-            n_damage += playerStat.CriticalDamage;
+            if (playerStat.CriticalDamage <= 1f)
+            {
+                n_damage += damage * 0.3f;
+            }
+            else
+            {
+                n_damage += damage * 0.3f + ((playerStat.CriticalDamage - 1) * (damage * 0.1f));
+            }
+
             isCritical = true;
         }
 

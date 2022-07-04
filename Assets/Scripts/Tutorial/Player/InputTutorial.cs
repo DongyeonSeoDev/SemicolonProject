@@ -193,7 +193,7 @@ public class InputTutorial : MonoBehaviour
             }
         }
 
-        TalkManager.Instance.SetSubtitle(firstStrArr, new float[4] { 0.3f, 0.3f, 0.3f, 0.3f}, new float[4] { 3, 3, 3, 3 });
+        TalkManager.Instance.SetSubtitle(firstStrArr, new float[4] { 0.3f, 0.3f, 0.3f, 0.3f}, new float[4] { 30, 30, 30, 30 });
     }
 
 

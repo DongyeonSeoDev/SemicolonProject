@@ -306,7 +306,7 @@ MonoBehaviour:
   critical: 0
   criticalDamage: 0
   defense: 0
-  hp: 60
+  hp: 25
   addExperience: 50
 --- !u!114 &9188459099727085732
 MonoBehaviour:
