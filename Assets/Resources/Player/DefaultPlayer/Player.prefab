@@ -390,6 +390,27 @@ MonoBehaviour:
     upAmount: 5
     changeUpAmount: 0
     upTargetStatPerChoiceStat: 1
+  eternalDataList:
+  - id: 20
+    name: "\uBC29\uC5B4\uB825"
+    unlockStatValue: 50
+    firstValue: 0
+  - id: 30
+    name: "\uC774\uB3D9\uC18D\uB3C4"
+    unlockStatValue: 50
+    firstValue: 0
+  - id: 35
+    name: "\uACF5\uACA9\uC18D\uB3C4"
+    unlockStatValue: 50
+    firstValue: 0
+  - id: 40
+    name: "\uCE58\uBA85\uD0C0"
+    unlockStatValue: 50
+    firstValue: 0
+  - id: 45
+    name: "\uCE58\uBA85\uD0C0 \uB370\uBBF8\uC9C0"
+    unlockStatValue: 50
+    firstValue: 0
   avoidNum: 0
   avoidInMomentomNum: 0
   fakeNum: 0

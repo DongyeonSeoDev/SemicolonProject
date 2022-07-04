@@ -4,6 +4,24 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
+public class EternalStatData
+{
+    public ushort id; // 스탯 기획 문서에 작성된 변수 명으로 작성한다.
+    public string name; // UI에 뜰 한글 이름
+
+    public int unlockStatValue; // 이 스탯을 휙득하기 위해 checkStartValue에서 때 부터 얻어야하는 해당 값의 양
+    public int firstValue; // 초기값
+
+    public void DataCpy(EternalStatData stat)
+    {
+        id = stat.id;
+        name = stat.name;
+
+        unlockStatValue = stat.unlockStatValue;
+        firstValue = stat.firstValue;
+    }
+}
+[Serializable]
 public class ChoiceStatData
 {
     public ushort id; // 스탯 기획 문서에 작성된 변수 명으로 작성한다.
@@ -34,6 +52,7 @@ public class ChoiceStatData
 }
 public class PlayerChoiceStatControl : MonoBehaviour
 {
+    #region ChoiceStat Data 자료구조
     [SerializeField]
     private List<ChoiceStatData> choiceDataList = new List<ChoiceStatData>();
 
@@ -47,6 +66,17 @@ public class PlayerChoiceStatControl : MonoBehaviour
     {
         get { return originChoiceDataDict; }
     }
+    #endregion
+
+    #region EternalStat Data 자료구조
+    [SerializeField]
+    private List<EternalStatData> eternalDataList = new List<EternalStatData>();
+    private Dictionary<ushort, EternalStatData> eternalStatDataDict = new Dictionary<ushort, EternalStatData>();
+    public Dictionary<ushort, EternalStatData> EternalStatDataDict
+    {
+        get { return eternalStatDataDict; }
+    }
+    #endregion
 
     [SerializeField]
     private int avoidNum = 0;
@@ -146,6 +176,11 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
             originChoiceDataDict.Add(item.id, choiceStatData);
         }
+
+        foreach(var item in eternalDataList)
+        {
+            eternalStatDataDict.Add(item.id, item);
+        }
     }
     private void OnEnable()
     {
@@ -177,6 +212,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
     {
         if (!TutorialManager.Instance.IsTutorialStage)
         {
+            #region ChoiceStat 관련
             CheckMucusMaxTime();
 
             CheckEndurance();
@@ -186,6 +222,85 @@ public class PlayerChoiceStatControl : MonoBehaviour
             CheckReflection();
             CheckFake();
             CheckMucusRecharge();
+            #endregion
+
+            #region EternalStat 관련
+            CheckAttackSpeed();
+            CheckDefense();
+            CheckSpeed();
+            CheckCriticalRate();
+            CheckCriticalDamage();
+            #endregion
+        }
+    }
+    public void CheckAttackSpeed()
+    {
+        StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.eternalStat.attackSpeed;
+
+        if (stat.isUnlock)
+        {
+            return;
+        }
+
+        if(eternalStatDataDict[NGlobal.AttackSpeedID].unlockStatValue <= PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(Enemy.EnemyType.Slime_01.ToString()))
+        {
+            UIManager.Instance.playerStatUI.StatUnlock(stat);
+        }
+    }
+    public void CheckDefense()
+    {
+        StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.eternalStat.defense;
+
+        if (stat.isUnlock)
+        {
+            return;
+        }
+
+        if (eternalStatDataDict[NGlobal.DefenseID].unlockStatValue <= PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(Enemy.EnemyType.Slime_03.ToString()))
+        {
+            UIManager.Instance.playerStatUI.StatUnlock(stat);
+        }
+    }
+    public void CheckSpeed()
+    {
+        StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.eternalStat.speed;
+
+        if (stat.isUnlock)
+        {
+            return;
+        }
+
+        if (eternalStatDataDict[NGlobal.SpeedID].unlockStatValue <= PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(Enemy.EnemyType.Rat_02.ToString()))
+        {
+            UIManager.Instance.playerStatUI.StatUnlock(stat);
+        }
+    }
+    public void CheckCriticalRate()
+    {
+        StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.eternalStat.criticalRate;
+
+        if (stat.isUnlock)
+        {
+            return;
+        }
+
+        if (eternalStatDataDict[NGlobal.CriticalRate].unlockStatValue <= PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(Enemy.EnemyType.SkeletonArcher_04.ToString()))
+        {
+            UIManager.Instance.playerStatUI.StatUnlock(stat);
+        }
+    }
+    public void CheckCriticalDamage()
+    {
+        StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.eternalStat.criticalDamage;
+
+        if (stat.isUnlock)
+        {
+            return;
+        }
+
+        if (eternalStatDataDict[NGlobal.CriticalDamage].unlockStatValue <= PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(Enemy.EnemyType.SkeletonArcher_04.ToString()))
+        {
+            UIManager.Instance.playerStatUI.StatUnlock(stat);
         }
     }
     public void CheckMucusMaxTime()
