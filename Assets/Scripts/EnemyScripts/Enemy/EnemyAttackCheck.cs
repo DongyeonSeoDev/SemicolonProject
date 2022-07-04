@@ -166,7 +166,7 @@ namespace Enemy
                     if (playerBullet != null && playerBullet.MoveVec != Vector2.zero)
                     {
                         var enemyBullet = EnemyPoolManager.Instance.GetPoolObject(Type.ReflectionBullet, playerBullet.transform.position).GetComponent<EnemyBullet>();
-                        enemyBullet.Init(EnemyController.AI, -playerBullet.MoveVec, minAttackPower, maxAttackPower, critical, criticalPower, Util.Change255To1Color(255f, 120f, 255f), null, 2);
+                        enemyBullet.Init(EnemyController.AI, -playerBullet.MoveVec, minAttackPower, maxAttackPower, 0, 0, Util.Change255To1Color(255f, 120f, 255f), null, 2);
                         enemyBullet.isReflection = true;
                         playerBullet.Despawn();
 
@@ -217,7 +217,7 @@ namespace Enemy
                         enemyBullet.RemoveBullet();
 
                         var playerBullet = EnemyPoolManager.Instance.GetPoolObject(enemyBullet.poolType, enemyBullet.transform.position).GetComponent<EnemyBullet>();
-                        playerBullet.Init(EnemyController.PLAYER, -enemyBullet.targetDirection, enemyBullet.minAttack, enemyBullet.maxAttack, enemyBullet.critical, enemyBullet.criticalPower, Color.green, this.enemy, 2);
+                        playerBullet.Init(EnemyController.PLAYER, -enemyBullet.targetDirection, enemyBullet.minAttack, enemyBullet.maxAttack, 0, 0, Color.green, this.enemy, 2);
                         playerBullet.isReflection = true;
 
                         return;
