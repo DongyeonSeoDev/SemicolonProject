@@ -20,6 +20,7 @@ public class EnterLobbyEvent : MapEventSO
         }
 
         MonsterCollection.Instance.ResetLearning();
+        Inventory.Instance.ResetInventory();
         StageManager.Instance.canNextStage = CanNextStage;
         StageManager.Instance.SetClearStage();
     }
