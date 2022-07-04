@@ -226,8 +226,6 @@ public class PlayerChoiceStatControl : MonoBehaviour
             if (((int)totalDamage - choiceDataDict[NGlobal.EnduranceID].checkStartValue) >= choiceDataDict[NGlobal.EnduranceID].unlockStatValue)
             {
                 // √≥¿Ω ¿Ã Ω∫≈»¿Ã ª˝±Ë
-                stat.isUnlock = true;
-
                 UIManager.Instance.playerStatUI.StatUnlock(stat);
 
                 stat.statValue = choiceDataDict[NGlobal.EnduranceID].firstValue;
@@ -282,8 +280,6 @@ public class PlayerChoiceStatControl : MonoBehaviour
                 stat.statValue = choiceDataDict[NGlobal.ProficiencyID].firstValue;
                 stat.statLv = choiceDataDict[NGlobal.ProficiencyID].firstValue;
 
-                stat.isUnlock = true;
-
                 UIManager.Instance.playerStatUI.StatUnlock(stat);
 
                 ProficiencyCheckValueReset(true);
@@ -333,8 +329,6 @@ public class PlayerChoiceStatControl : MonoBehaviour
                 stat.statValue = choiceDataDict[NGlobal.MomentomID].firstValue;
                 stat.statLv = choiceDataDict[NGlobal.MomentomID].firstValue;
 
-                stat.isUnlock = true;
-
                 MomentomCheckValueReset();
 
                 UIManager.Instance.playerStatUI.StatUnlock(stat);
@@ -358,8 +352,6 @@ public class PlayerChoiceStatControl : MonoBehaviour
             stat.statValue = choiceDataDict[NGlobal.FrenzyID].firstValue;
             stat.statLv = choiceDataDict[NGlobal.FrenzyID].firstValue;
 
-            stat.isUnlock = true;
-
             UIManager.Instance.playerStatUI.StatUnlock(stat);
         }
     }
@@ -374,8 +366,6 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
             stat.statValue = choiceDataDict[NGlobal.ReflectionID].firstValue;
             stat.statLv = choiceDataDict[NGlobal.ReflectionID].firstValue;
-
-            stat.isUnlock = true;
 
             UIManager.Instance.playerStatUI.StatUnlock(stat);
         }
@@ -409,8 +399,6 @@ public class PlayerChoiceStatControl : MonoBehaviour
             {
                 stat.statValue = choiceDataDict[NGlobal.MucusRechargeID].firstValue;
                 stat.statLv = choiceDataDict[NGlobal.MucusRechargeID].firstValue;
-
-                stat.isUnlock = true;
 
                 UIManager.Instance.playerStatUI.StatUnlock(stat);
             }
@@ -448,8 +436,6 @@ public class PlayerChoiceStatControl : MonoBehaviour
             {
                 stat.statValue = choiceDataDict[NGlobal.FakeID].firstValue;
                 stat.statLv = choiceDataDict[NGlobal.FakeID].firstValue;
-
-                stat.isUnlock = true;
                 
                 UIManager.Instance.playerStatUI.StatUnlock(stat);
             }
