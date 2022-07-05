@@ -456,6 +456,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
     public void ChangeLearningStateMeet(string id, bool value)
     {
+        if (TutorialManager.Instance.IsTutorialStage) return;
+
         tempDummyMobLearningInfo = mobLearningInfoDic[id];
         tempDummyMobLearningInfo.meet = value;
         mobLearningInfoDic[id] = tempDummyMobLearningInfo;
@@ -467,12 +469,16 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     }
     public void ChangeLearningStateKill(string id, bool value)
     {
+        if (TutorialManager.Instance.IsTutorialStage) return;
+
         tempDummyMobLearningInfo = mobLearningInfoDic[id];
         tempDummyMobLearningInfo.kill = value;
         mobLearningInfoDic[id] = tempDummyMobLearningInfo;
     }
     public void ChangeLearningStateAssimilation(string id, bool value)
     {
+        if (TutorialManager.Instance.IsTutorialStage) return;
+
         tempDummyMobLearningInfo = mobLearningInfoDic[id];
         tempDummyMobLearningInfo.assimilation = value;
         mobLearningInfoDic[id] = tempDummyMobLearningInfo;
@@ -480,6 +486,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
     public void CheckRecordedMonsters(List<EnemySpawnData> spawnEnemyList)
     {
+        if (TutorialManager.Instance.IsTutorialStage) return;
+
         List<Enemy.Type> list = new List<Enemy.Type>();
         int i;
 
@@ -502,18 +510,19 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         }
     }
 
-    public void ResetLearning()
+    /*public void ResetLearning()
     {
         foreach (string key in mobLearningInfoDic.Keys)
         {
-            tempDummyMobLearningInfo = mobLearningInfoDic[key];
+            //왜인지 이 주석부분에서 에러가 남. -> 콘솔창에서 오류는 안뜨는데 뒤에 있는 함수 실행 안됨.
+            *//*tempDummyMobLearningInfo = mobLearningInfoDic[key];
             tempDummyMobLearningInfo.meet = false;
             tempDummyMobLearningInfo.kill = false;
             tempDummyMobLearningInfo.assimilation = false;
-            mobLearningInfoDic[key] = tempDummyMobLearningInfo;
-            //mobIdToSlot[key].SetMonsterImg(false);
+            mobLearningInfoDic[key] = tempDummyMobLearningInfo;*//*
+            mobIdToSlot[key].SetMonsterImg(false);
         }
-    }
+    }*/
 
     #endregion
 

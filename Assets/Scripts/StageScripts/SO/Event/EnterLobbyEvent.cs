@@ -26,8 +26,7 @@ public class EnterLobbyEvent : MapEventSO
         Inventory.Instance.ResetInventory();
         KeyActionManager.Instance.UnregisterQuikSlot();
         //몬스터 정보 해금 상태 초기화
-        MonsterCollection.Instance.ResetLearning();
-        Debug.Log("Test1");
+        //MonsterCollection.Instance.ResetLearning();
     }
 
     private bool CanNextStage()
