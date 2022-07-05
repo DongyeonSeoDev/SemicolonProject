@@ -11,6 +11,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     {
         public ushort id;
         public string statName;
+        public int statNameTxtFontSize;
         public Text statNameTxt;
         public Text statValueTxt;
     }
@@ -42,6 +43,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     //몹 드랍템 정보 확인창
     public Triple<Image, Text, Text> mobItemImgNameEx;
 
+    public int defaultStatNameFontSize = 40;
     public StatInfoUI[] statInfoUI; //몹으로 변신시 상승 능력치 확인
     public Text statIncrRatePerAssim; //동화율 n 오를 때마다 처음 스탯의 m퍼센트만큼 증가함을 나타내는 텍스트
 
@@ -335,11 +337,13 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             {
                 if (NGlobal.playerStatUI.eternalStatDic[statInfoUI[i].id].first.isUnlock)
                 {
+                    statInfoUI[i].statNameTxt.fontSize = statInfoUI[i].statNameTxtFontSize;
                     statInfoUI[i].statNameTxt.text = statInfoUI[i].statName;
                     statInfoUI[i].statValueTxt.text = GetStatValueStr(statInfoUI[i].id, stat, addiStat);
                 }
                 else
                 {
+                    statInfoUI[i].statNameTxt.fontSize = defaultStatNameFontSize;
                     statInfoUI[i].statNameTxt.text = "???";
                     statInfoUI[i].statValueTxt.text = "??";
                 }
@@ -349,6 +353,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         {
             for(int i=0; i< statInfoUI.Length; i++)
             {
+                statInfoUI[i].statNameTxt.fontSize = defaultStatNameFontSize;
                 statInfoUI[i].statNameTxt.text = NGlobal.playerStatUI.eternalStatDic[statInfoUI[i].id].first.isUnlock ? statInfoUI[i].statName : "???";
                 statInfoUI[i].statValueTxt.text = "??";
             }
@@ -505,6 +510,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             tempDummyMobLearningInfo.meet = false;
             tempDummyMobLearningInfo.kill = false;
             tempDummyMobLearningInfo.assimilation = false;
+            mobLearningInfoDic[key] = tempDummyMobLearningInfo;
             mobIdToSlot[key].SetMonsterImg(false);
         }
     }
