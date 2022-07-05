@@ -511,7 +511,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             tempDummyMobLearningInfo.kill = false;
             tempDummyMobLearningInfo.assimilation = false;
             mobLearningInfoDic[key] = tempDummyMobLearningInfo;
-            mobIdToSlot[key].SetMonsterImg(false);
+            //mobIdToSlot[key].SetMonsterImg(false);
         }
     }
 
