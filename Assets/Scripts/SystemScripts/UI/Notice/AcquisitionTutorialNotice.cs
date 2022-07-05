@@ -12,6 +12,8 @@ public class AcquisitionTutorialNotice : MonoBehaviour
 
     private System.Action closeAction;
 
+    private bool click;
+
     public void Set(InitAcquisitionData data)
     {
         objNameTxt.text = $"<color=yellow>{data.objName}</color> È¹µæ";
@@ -25,10 +27,14 @@ public class AcquisitionTutorialNotice : MonoBehaviour
 
         cvsg.DOFade(1, 0.39f).SetUpdate(true);
         transform.DOScale(Vector3.one, 0.4f).SetEase(Ease.OutBack).SetUpdate(true);
+        click = false;
     }
 
     public void Close()
     {
+        if (click) return;
+
+        click = true;
         transform.DOScale(SVector3.zeroPointSeven, 0.4f).SetEase(Ease.InBack).SetUpdate(true);
         cvsg.DOFade(0, 0.41f).SetUpdate(true).OnComplete(() =>
         {
