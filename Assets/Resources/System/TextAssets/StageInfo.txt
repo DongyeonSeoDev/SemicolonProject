@@ -1,3 +1,3 @@
-Stage0-06 하수구
+Stage0-09 로비
 Stage1-01 하수구
 Stage0-01 튜토리얼

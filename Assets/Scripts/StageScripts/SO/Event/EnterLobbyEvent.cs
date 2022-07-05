@@ -19,10 +19,14 @@ public class EnterLobbyEvent : MapEventSO
             NGlobal.playerStatUI.StatOpen(NGlobal.MaxDamageID, true);
         }
 
-        MonsterCollection.Instance.ResetLearning();
-        Inventory.Instance.ResetInventory();
+        //문 열어주고 담 지역 입장 조건 넣어줌
         StageManager.Instance.canNextStage = CanNextStage;
         StageManager.Instance.SetClearStage();
+        //인벤토리와 퀵슬롯 비워줌
+        Inventory.Instance.ResetInventory();
+        KeyActionManager.Instance.UnregisterQuikSlot();
+        //몬스터 정보 해금 상태 초기화
+        //MonsterCollection.Instance.ResetLearning();
     }
 
     private bool CanNextStage()
