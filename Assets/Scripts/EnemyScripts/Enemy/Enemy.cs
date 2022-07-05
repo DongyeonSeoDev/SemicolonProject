@@ -18,7 +18,7 @@ namespace Enemy
         protected EnemyData enemyData; // 적 데이터
 
         // GetComponent로 가져옴
-        protected SpriteRenderer sr; 
+        protected SpriteRenderer sr;
         protected Animator anim;
         protected Rigidbody2D rb;
 

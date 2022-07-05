@@ -201,8 +201,16 @@ namespace Enemy
                     (float, bool) damage;
                     damage.Item1 = UnityEngine.Random.Range(SlimeGameManager.Instance.Player.PlayerStat.MinDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage + 1);
                     damage = SlimeGameManager.Instance.Player.CriticalCheck(damage.Item1);
+
+                    if (isUseKnockBack)
+                    {
+                        enemy.GetDamage(damage.Item1, damage.Item2, true, true, hit.point, enemy.transform.position - this.enemy.transform.position, 20f, 0.7f);
+                    }
+                    else
+                    {
+                        enemy.GetDamage(damage.Item1, damage.Item2, true, false, hit.point, enemy.transform.position - this.enemy.transform.position, 5f);
+                    }
                     
-                    enemy.GetDamage(damage.Item1, damage.Item2, false, false, hit.point, enemy.transform.position - this.enemy.transform.position);
                     attackObject.Add(collision.gameObject);
 
                     EventManager.TriggerEvent("OnEnemyAttack");
