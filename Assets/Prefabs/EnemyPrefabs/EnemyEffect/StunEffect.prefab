@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 289505263124388632}
   - component: {fileID: 289505263124388635}
   - component: {fileID: 289505263124388634}
+  - component: {fileID: -5107793413057322029}
   m_Layer: 0
   m_Name: StunEffect
   m_TagString: Untagged
@@ -102,3 +103,17 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &-5107793413057322029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 289505263124388637}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8538de00d64c4479123dd9e732192e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolType: 113
+  count: 5

@@ -481,11 +481,16 @@ namespace Enemy
 
     public partial class EnemyStunStatus : EnemyState
     {
+        private StunEffect currentStunEffect;
+
         public EnemyStunStatus(EnemyData enemyData) : base(eState.STUN, enemyData) { }
 
         protected override void Start()
         {
             EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Hit, enemyData.enemyAnimator, TriggerType.SetTrigger);
+
+            currentStunEffect = EnemyPoolManager.Instance.GetPoolObject(Type.StunEffect, enemyData.stunEffectPosition).GetComponent<StunEffect>();
+            currentStunEffect.transform.SetParent(enemyData.enemyObject.transform, false);
 
             base.Start();
         }
@@ -504,7 +509,13 @@ namespace Enemy
             AlwaysCheckStateChangeCondition();
         }
 
-        protected override void End() => EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Hit, enemyData.enemyAnimator, TriggerType.ResetTrigger);
+        protected override void End()
+        {
+            currentStunEffect.gameObject.SetActive(false);
+            currentStunEffect.transform.SetParent(EnemyPoolManager.Instance.transform, false);
+
+            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Hit, enemyData.enemyAnimator, TriggerType.ResetTrigger);
+        }
     }
 
     public partial class EnemyDeadState : EnemyState // Á×¾úÀ»¶§
