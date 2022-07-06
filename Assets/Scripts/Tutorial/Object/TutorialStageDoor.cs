@@ -19,13 +19,18 @@ public class TutorialStageDoor : MonoBehaviour, IDamageableBySlimeBodySlap
             return;
         }
 
-        TalkManager.Instance.SetSubtitle("생각보다 문이 좀 딱딱한데", 0.15f, 2f);
         if (charging < Global.GetSlimePos.GetComponent<PlayerBodySlap>().MaxChargingTime) //에너지 풀차징 아니면
         {
             //TalkManager.Instance.SetTalkData(npc._NPCInfo, npc.transform, 1);
         }
         else
         {
+            if(!StoredData.HasValueKey("TutoDoorHit1"))
+            {
+                TalkManager.Instance.SetSubtitle("생각보다 문이 좀 딱딱한데", 0.15f, 2f);
+                StoredData.SetValueKey("TutoDoorHit1", true);
+            }
+
             if(--hp == 0)  
             {
                 npc._NPCInfo.talkId = 3;
