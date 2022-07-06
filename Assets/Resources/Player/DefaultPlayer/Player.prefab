@@ -299,6 +299,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e6897f257b5453499242149c42bbd4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  stunPosition: {x: 0, y: 1.5}
 --- !u!114 &4322804713794740887
 MonoBehaviour:
   m_ObjectHideFlags: 0

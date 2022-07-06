@@ -47,6 +47,7 @@ namespace Enemy
         public EnemyCommand playerControllerMove;
 
         public Vector2 moveVector;
+        public Vector2 stunEffectPosition;
 
         public Color normalColor;
         public Color damagedColor;

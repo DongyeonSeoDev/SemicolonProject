@@ -1,9 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Enemy;
 
 public class PlayerStatusEffect : PlayerAction
 {
+    private StunEffect currentStunEffect = null;
+    private bool isStun = false;
+
+    [SerializeField] private Vector2 stunPosition;
+
     private float sturnTimer = 0f;
 
    public override void Awake()
@@ -72,7 +78,13 @@ public class PlayerStatusEffect : PlayerAction
 
         playerState.IsStun = true;
 
-        EventManager.TriggerEvent("PlayerSturn");
+        if (!isStun)
+        {
+            isStun = true;
+
+            currentStunEffect = EnemyPoolManager.Instance.GetPoolObject(Type.StunEffect, stunPosition).GetComponent<StunEffect>();
+            currentStunEffect.transform.SetParent(SlimeGameManager.Instance.CurrentPlayerBody.transform, false);
+        }
     }
     private void CheckSturnTimer()
     {
@@ -84,6 +96,11 @@ public class PlayerStatusEffect : PlayerAction
             {
                 sturnTimer = 0f;
                 playerState.IsStun = false;
+
+                currentStunEffect.gameObject.SetActive(false);
+                currentStunEffect.transform.SetParent(EnemyPoolManager.Instance.transform, false);
+
+                isStun = false;
             }
         }
     }
