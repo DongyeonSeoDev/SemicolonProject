@@ -71,8 +71,6 @@ public class PlayerStatusEffect : PlayerAction
         sturnTimer = sturnTime;
 
         playerState.IsStun = true;
-
-        EventManager.TriggerEvent("PlayerSturn");
     }
     private void CheckSturnTimer()
     {

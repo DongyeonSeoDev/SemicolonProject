@@ -289,6 +289,7 @@ MonoBehaviour:
   hpTweenDelayTime: 0.3
   damageHPTweenTime: 0.2
   hpEffectAnimation: {fileID: 4602842886488794526}
+  stunEffectPosition: {x: 0, y: 1.2}
   speed: 3
   minAttack: 5
   maxAttack: 15

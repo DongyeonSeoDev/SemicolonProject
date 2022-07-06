@@ -24,7 +24,8 @@ namespace Enemy
         Arrow,
         HitEffect,
         ReflectionBullet,
-        ReflectionBulletEffect
+        ReflectionBulletEffect,
+        StunEffect
     }
 
     public class EnemyPoolManager : MonoBehaviour

@@ -58,6 +58,8 @@ namespace Enemy
         private Vector2Int? pastPosition;
         private Vector2Int currentPosition;
 
+        [SerializeField] private Vector2 stunEffectPosition;
+
         [SerializeField]
         [Header("스피드")]
         private float speed;
@@ -186,7 +188,8 @@ namespace Enemy
                 criticalDamagePercent = criticalDamage,
                 hp = hp,
                 maxHP = hp,
-                defense = defense
+                defense = defense,
+                stunEffectPosition = stunEffectPosition
             };
 
             enemyData.enemyAnimator.enabled = true; // 애니메이션 실행

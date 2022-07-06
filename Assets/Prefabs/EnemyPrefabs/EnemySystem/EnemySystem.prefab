@@ -166,6 +166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enemyCount: 0
+  isOnlyAbsorption: 0
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 128
@@ -234,6 +235,7 @@ MonoBehaviour:
   - {fileID: 2240778786373301897, guid: e0fa6089aa1639e4e8eeb450618f5445, type: 3}
   - {fileID: 3967438964179761062, guid: e476d594afc51194f9bcf096b11d5170, type: 3}
   - {fileID: 2235962702463486546, guid: c68fa8d31df8e9d48a7673bacd783bd5, type: 3}
+  - {fileID: -5107793413057322029, guid: 606793d46bb81f44fbf2e19f2d8707a7, type: 3}
 --- !u!1 &6423039109790018455
 GameObject:
   m_ObjectHideFlags: 0
