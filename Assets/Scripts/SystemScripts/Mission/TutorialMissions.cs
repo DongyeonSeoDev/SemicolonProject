@@ -31,7 +31,7 @@ public class AbsorptionTutoMission : Mission
     {
         if(!suc)
         {
-            TalkManager.Instance.SetSubtitle("흡수는 적의 체력이 적을 때만 가능해", 0.2f, 2f);
+            TalkManager.Instance.SetSubtitle("흡수는 적의 체력이 적을 때만 가능해", 0.15f, 2f);
         }
     }
 
@@ -72,7 +72,7 @@ public class AbsorptionTutoMission2 : Mission
 
     public override void End(bool breakDoor = false)
     {
-        TalkManager.Instance.SetSubtitle("점점 더 강해지는 기분이야!", 0.2f, 1.5f);
+        TalkManager.Instance.SetSubtitle("점점 더 강해지는 기분이야!", 0.15f, 1.5f);
         TutorialManager.Instance.GetSkill1();
         EnemyManager.Instance.isOnlyAbsorption = false;
         EventManager.StopListening("TryAbsorbMob", (System.Action<bool>)TryDrain);
@@ -94,7 +94,7 @@ public class AbsorptionTutoMission2 : Mission
     {
         if (!suc)
         {
-            TalkManager.Instance.SetSubtitle("한번 더 말하지만 흡수는 적의 체력이 적을 때만 가능해", 0.2f, 1.5f);
+            TalkManager.Instance.SetSubtitle("한번 더 말하지만 흡수는 적의 체력이 적을 때만 가능해", 0.15f, 1.5f);
         }
     }
 }

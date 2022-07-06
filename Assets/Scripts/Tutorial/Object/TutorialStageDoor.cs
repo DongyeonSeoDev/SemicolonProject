@@ -19,7 +19,7 @@ public class TutorialStageDoor : MonoBehaviour, IDamageableBySlimeBodySlap
             return;
         }
 
-        TalkManager.Instance.SetSubtitle("생각보다 문이 좀 딱딱한데", 0.2f, 2f);
+        TalkManager.Instance.SetSubtitle("생각보다 문이 좀 딱딱한데", 0.15f, 2f);
         if (charging < Global.GetSlimePos.GetComponent<PlayerBodySlap>().MaxChargingTime) //에너지 풀차징 아니면
         {
             //TalkManager.Instance.SetTalkData(npc._NPCInfo, npc.transform, 1);
@@ -29,7 +29,7 @@ public class TutorialStageDoor : MonoBehaviour, IDamageableBySlimeBodySlap
             if(--hp == 0)  
             {
                 npc._NPCInfo.talkId = 3;
-                TalkManager.Instance.SetSubtitle("우왓!", 0.2f, 1f);
+                TalkManager.Instance.SetSubtitle("우왓!", 0.1f, 1f);
             }
 
             isDamageable = false;

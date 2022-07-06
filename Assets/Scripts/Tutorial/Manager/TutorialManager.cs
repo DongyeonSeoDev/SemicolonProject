@@ -365,7 +365,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
             (ObjectManager.Instance.itrObjDic["Rush Master"] as NormalNPC)._NPCInfo.talkId = 2;
 
-            TalkManager.Instance.SetSubtitle("처음에는 무서워 보였는데 생각보다 오르드씨는 좋으신 분 같아", 0.2f, 2f);
+            TalkManager.Instance.SetSubtitle("처음에는 무서워 보였는데 생각보다 오르드씨는 좋으신 분 같아", 0.15f, 2f);
         }
     }
 

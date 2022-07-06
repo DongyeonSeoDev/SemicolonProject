@@ -52,7 +52,7 @@ public class StartPhase : TutorialPhase
         if(currentCount++ == 0)
         {
             TalkManager.Instance.SetSubtitle(new string[3] { "!", "누구세요?", "뭔가 힘이 느껴진 것 같은데..." }, 
-                new float[3] {0.2f, 0.2f, 0.3f},
+                new float[3] {0.2f, 0.15f, 0.2f},
                 new float[3] {1f, 1.5f, 1.5f});
         }
         if (needCount == currentCount)
