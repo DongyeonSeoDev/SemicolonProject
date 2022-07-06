@@ -16,10 +16,12 @@ MonoBehaviour:
     subData:
     - dialog: "\uC774\uBC88\uC5D0\uB3C4 \uBAA8\uB4E0 \uC801\uC744 \uD761\uC218\uD574\uC57C
         \uB3FC"
-      secondPerLit: 0.2
+      secondPerLit: 0.15
       duration: 1.5
       nextLogInterval: 0
+      endActionId: 
     - dialog: "3\uB9C8\uB9AC\uB098 \uB098\uC624\uC9C0\uB9CC \uD560 \uC218 \uC788\uC9C0?"
-      secondPerLit: 0.2
+      secondPerLit: 0.15
       duration: 1.5
       nextLogInterval: 0
+      endActionId: 
