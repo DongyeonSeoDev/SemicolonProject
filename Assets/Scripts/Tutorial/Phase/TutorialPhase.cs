@@ -78,7 +78,7 @@ public class StartPhase : TutorialPhase
 
 public class SettingPhase : TutorialPhase
 {
-    private int pressCount = 10, currentCount = 0;
+    private int pressCount = 7, currentCount = 0;
 
     private float camShakeStr = 0.3f, camFreq = 0.7f;
 

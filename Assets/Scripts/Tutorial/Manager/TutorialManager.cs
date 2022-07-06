@@ -153,7 +153,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
         if (!gm.savedData.userInfo.uiActiveDic[KeyAction.SETTING])
         {
-            tutorialPhases.Add(new SettingPhase(10, () =>
+            tutorialPhases.Add(new SettingPhase(7, () =>
             {
                 PoolManager.GetItem<AcquisitionDropIcon>("AcqDropIcon").Set(UIManager.Instance.GetInterfaceSprite(UIType.SETTING),
                 Global.GetSlimePos.position - new Vector3(10f, 0), 3f, new Vector2(12, 12), () =>
@@ -372,34 +372,25 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     private void GetInventoryUI() //ÀÎº¥ ¾òÀ½
     {
         //GetUIIcon(UIType.INVENTORY, ObjectManager.Instance.itrObjDic["Merchant"].transform.position);
-        Util.DelayFunc(() =>
-        {
-            KeyActionManager.Instance.GetElement(InitGainType.INVENTORY_UI);
-            UIOn(KeyAction.INVENTORY);
-            gm.savedData.userInfo.uiActiveDic[KeyAction.INVENTORY] = true;
-        }, 1, this); 
+        KeyActionManager.Instance.GetElement(InitGainType.INVENTORY_UI);
+        UIOn(KeyAction.INVENTORY);
+        gm.savedData.userInfo.uiActiveDic[KeyAction.INVENTORY] = true;
     }
 
     private void GetStatUI() //½ºÅÈ UI È¹µæ
     {
         //GetUIIcon(UIType.STAT, ObjectManager.Instance.itrObjDic["StatNPC"].transform.position);
-        Util.DelayFunc(() =>
-        {
-            KeyActionManager.Instance.GetElement(InitGainType.STAT_UI);
-            UIOn(KeyAction.STAT);
-            gm.savedData.userInfo.uiActiveDic[KeyAction.STAT] = true;
-        }, 1, this);
+        KeyActionManager.Instance.GetElement(InitGainType.STAT_UI);
+        UIOn(KeyAction.STAT);
+        gm.savedData.userInfo.uiActiveDic[KeyAction.STAT] = true;
     }
 
     private void GetMonsterCollectionUI() //¸ó½ºÅÍ µµ°¨ UI È¹µæ
     {
         //GetUIIcon(UIType.MONSTER_COLLECTION, ObjectManager.Instance.itrObjDic["MonsterCollectionObjNPC"].transform.position);
-        Util.DelayFunc(() =>
-        {
-            KeyActionManager.Instance.GetElement(InitGainType.MONCOL_UI);
-            UIOn(KeyAction.MONSTER_COLLECTION);
-            gm.savedData.userInfo.uiActiveDic[KeyAction.MONSTER_COLLECTION] = true;
-        }, 1, this);
+        KeyActionManager.Instance.GetElement(InitGainType.MONCOL_UI);
+        UIOn(KeyAction.MONSTER_COLLECTION);
+        gm.savedData.userInfo.uiActiveDic[KeyAction.MONSTER_COLLECTION] = true;
     }
 
     public void GetBodyChangeSlot()  //º¯½Å ½½·Ô È¹µæ(2,3¹øÂ°)  
