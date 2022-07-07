@@ -549,13 +549,13 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
 
     public void CloseQuikSlotUI() //Äü½½·Ô ¾ò°í È¹µæ Ç¥½Ã UIÆÐ³Î ´ÝÀ» ¶§
     {
-        TalkManager.Instance.SetSubtitle("ÀÌÁ¦ ³×°¡ E¸¦ ¸»ÇÏ¸é Ã¤ÁýÇÑ ²ÉÀÌ ³» ÀÔÀ¸·Î µé¾î¿Ã °Å¾ß", 0.15f, 2f);
+        TalkManager.Instance.SetSubtitle(SubtitleDataManager.Instance.GetSubtitle("Tuto_QuikSlotE"));
         TutorialManager.Instance.OnCloseQuikSlotGetPanel();
     }
 
     public void CloseHPStat() //HP Stat È¹µæ UI´Ý°í
     {
-        TalkManager.Instance.SetSubtitle("°í¸¶¿ö! µåµð¾î ¸öÀÌ ±¦Âú¾ÆÁø °Í °°¾Æ", 0.15f, 1.7f);
+        TalkManager.Instance.SetSubtitle(SubtitleDataManager.Instance.GetSubtitle("Tuto_GetHPStat"));
         Util.DelayFunc(() =>
         {
             TutorialManager.Instance.GetCharUI();

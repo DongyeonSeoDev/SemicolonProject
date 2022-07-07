@@ -4,11 +4,11 @@ using UnityEngine;
 public class GetDefaultSkillEvent : MapEventSO  //튜토리얼 7번방 입장
 {
 
-    public SubtitleData enterSubData;
+    public string enterSubDataId;
 
     public override void OnEnterEvent()
     {
-        TalkManager.Instance.SetSubtitle(enterSubData);
+        TalkManager.Instance.SetSubtitle(SubtitleDataManager.Instance.GetSubtitle(enterSubDataId));
         BattleUIManager.Instance.StartMission(MissionType.ABSORPTIONTUTORIAL2);
         EventManager.TriggerEvent("SpawnEnemy", "Stage0-07");
     }
