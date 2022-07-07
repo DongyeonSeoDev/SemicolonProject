@@ -375,7 +375,7 @@ MonoBehaviour:
   - {fileID: 2340873013643165143}
   - {fileID: 4423148325749221914}
   limitMinPosition: {x: -13, y: 0}
-  limitMaxPosition: {x: 13, y: 9}
+  limitMaxPosition: {x: 9, y: 13}
 --- !u!1 &3553275141150440558
 GameObject:
   m_ObjectHideFlags: 0

@@ -38,7 +38,7 @@ public class CursorController : MonoBehaviour
     private void OnGameStart()
     {
 #if !UNITY_EDITOR
-        Util.DelayFunc(() => Cursor.lockState = CursorLockMode.Confined, 5);
+        Util.DelayFunc(() => Cursor.lockState = CursorLockMode.Confined, 5, this);
 #endif
         cursorTextureDict.Add("DefaultCursor", GetCursor("DefaultCursor"));
         cursorTextureDict.Add("DefaultClickedCursor", GetCursor("DefaultClickedCursor"));

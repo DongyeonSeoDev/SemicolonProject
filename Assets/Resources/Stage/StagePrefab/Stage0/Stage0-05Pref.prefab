@@ -80,7 +80,7 @@ MonoBehaviour:
   - {fileID: 8411029843940780913}
   - {fileID: 8559646029071912583}
   limitMinPosition: {x: -13, y: 0}
-  limitMaxPosition: {x: 13, y: 9}
+  limitMaxPosition: {x: 9, y: 13}
 --- !u!1 &2376124270233639088
 GameObject:
   m_ObjectHideFlags: 0
