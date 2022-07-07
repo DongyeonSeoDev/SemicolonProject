@@ -544,7 +544,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
 
     public void CloseGetSkill3() //흡수 얻고 패널 닫을 때
     {
-        TalkManager.Instance.SetSubtitle("방금 뭔가 몸으로 들어오면서 새로운 능력을 얻은 것 같아", 0.15f, 1.5f);
+        TalkManager.Instance.SetSubtitle(SubtitleDataManager.Instance.GetSubtitle("GetDrain"));
     }
 
     public void CloseQuikSlotUI() //퀵슬롯 얻고 획득 표시 UI패널 닫을 때
