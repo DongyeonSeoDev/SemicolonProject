@@ -401,7 +401,7 @@ namespace Enemy
         // 적이 Drain되었을 때 발동하는 코드
         public void EnemyDrain()
         {
-            gameObject.SetActive(false);
+            ActiveFalse();
 
             EnemyManager.Instance.EnemyDestroy();
 
