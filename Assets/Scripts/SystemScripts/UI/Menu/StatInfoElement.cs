@@ -129,7 +129,7 @@ public class StatInfoElement : UITransition
     {
         if (enter && !eternal.isOpenStat) return;
 
-        curStatTxt.text = enter ? string.Concat(NGlobal.playerStatUI.GetCurrentPlayerStat(id), "<color=green>(+", NGlobal.playerStatUI.eternalStatDic[id].first.upStatValue, ")</color>") : NGlobal.playerStatUI.GetCurrentPlayerStat(id).ToString();
+        curStatTxt.text = enter ? string.Concat(Mathf.RoundToInt(NGlobal.playerStatUI.GetCurrentPlayerStat(id)), "<color=green>(+", NGlobal.playerStatUI.eternalStatDic[id].first.upStatValue, ")</color>") : Mathf.RoundToInt(NGlobal.playerStatUI.GetCurrentPlayerStat(id)).ToString();
     }
 
     public void UnlockStat() //해당 스탯을 얻음. 하지만 아직 개방상태는 아님

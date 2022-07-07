@@ -372,6 +372,9 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     private void GetInventoryUI() //¿Œ∫• æÚ¿Ω
     {
         //GetUIIcon(UIType.INVENTORY, ObjectManager.Instance.itrObjDic["Merchant"].transform.position);
+
+        if (gm.savedData.userInfo.uiActiveDic[KeyAction.INVENTORY]) return;
+
         KeyActionManager.Instance.GetElement(InitGainType.INVENTORY_UI);
         UIOn(KeyAction.INVENTORY);
         gm.savedData.userInfo.uiActiveDic[KeyAction.INVENTORY] = true;
@@ -379,6 +382,8 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     private void GetStatUI() //Ω∫≈» UI »πµÊ
     {
+        if (gm.savedData.userInfo.uiActiveDic[KeyAction.STAT]) return;
+
         //GetUIIcon(UIType.STAT, ObjectManager.Instance.itrObjDic["StatNPC"].transform.position);
         KeyActionManager.Instance.GetElement(InitGainType.STAT_UI);
         UIOn(KeyAction.STAT);
@@ -387,6 +392,8 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
     private void GetMonsterCollectionUI() //∏ÛΩ∫≈Õ µµ∞® UI »πµÊ
     {
+        if (gm.savedData.userInfo.uiActiveDic[KeyAction.MONSTER_COLLECTION]) return;
+
         //GetUIIcon(UIType.MONSTER_COLLECTION, ObjectManager.Instance.itrObjDic["MonsterCollectionObjNPC"].transform.position);
         KeyActionManager.Instance.GetElement(InitGainType.MONCOL_UI);
         UIOn(KeyAction.MONSTER_COLLECTION);
