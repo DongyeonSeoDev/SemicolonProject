@@ -5,11 +5,24 @@ using System.IO;
 
 public static partial class Global
 {
-    public const string GAME_SAVE_FILE = "SaveFile2";  //Test File Name
+    public const string GAME_SAVE_FILE = "SaveFile3";  //Test File Name
 
-    public const string SAVE_FILE_1 = "SaveFile_10";
-    public const string SAVE_FILE_2 = "SaveFile_11";
-    public const string SAVE_FILE_3 = "SaveFile_12";
+    public const string SAVE_FILE_1 = "SaveFile_13";
+    public const string SAVE_FILE_2 = "SaveFile_14";
+    public const string SAVE_FILE_3 = "SaveFile_15";
+
+    public static string GetSaveFileName(int index)
+    {
+        switch(index)
+        {
+            case 0: return SAVE_FILE_1;
+            case 1: return SAVE_FILE_2;
+            case 2: return SAVE_FILE_3;
+            default:
+                Debug.Log("존재하지 않는 인덱스 : " + index);
+                return SAVE_FILE_1;
+        }
+    }
 }
 
 public static partial class Global
