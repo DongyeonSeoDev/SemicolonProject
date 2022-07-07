@@ -375,6 +375,19 @@ namespace Enemy
             return false;
         }
 
+        public void ActiveFalse()
+        {
+            if (enemyData.currentStunEffect != null)
+            {
+                enemyData.currentStunEffect.gameObject.SetActive(false);
+                enemyData.currentStunEffect.transform.SetParent(EnemyPoolManager.Instance.transform, false);
+
+                enemyData.currentStunEffect = null;
+            }
+
+            gameObject.SetActive(false);
+        }
+
         // 적이 죽었을때 발동되는 코드
         public void EnemyDestroy()
         {

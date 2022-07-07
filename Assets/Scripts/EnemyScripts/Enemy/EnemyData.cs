@@ -46,6 +46,8 @@ namespace Enemy
         public EnemyCommand enemySpriteRotateCommand;
         public EnemyCommand playerControllerMove;
 
+        public StunEffect currentStunEffect;
+
         public Vector2 moveVector;
         public Vector2 stunEffectPosition;
 

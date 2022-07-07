@@ -481,16 +481,17 @@ namespace Enemy
 
     public partial class EnemyStunStatus : EnemyState
     {
-        private StunEffect currentStunEffect;
-
         public EnemyStunStatus(EnemyData enemyData) : base(eState.STUN, enemyData) { }
 
         protected override void Start()
         {
             EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Hit, enemyData.enemyAnimator, TriggerType.SetTrigger);
 
-            currentStunEffect = EnemyPoolManager.Instance.GetPoolObject(Type.StunEffect, enemyData.stunEffectPosition).GetComponent<StunEffect>();
-            currentStunEffect.transform.SetParent(enemyData.enemyObject.transform, false);
+            if (enemyData.currentStunEffect == null)
+            {
+                enemyData.currentStunEffect = EnemyPoolManager.Instance.GetPoolObject(Type.StunEffect, enemyData.stunEffectPosition).GetComponent<StunEffect>();
+                enemyData.currentStunEffect.transform.SetParent(enemyData.enemyObject.transform, false);
+            }
 
             base.Start();
         }
@@ -511,9 +512,13 @@ namespace Enemy
 
         protected override void End()
         {
-            currentStunEffect.gameObject.SetActive(false);
-            currentStunEffect.transform.SetParent(EnemyPoolManager.Instance.transform, false);
-
+            if (enemyData.currentStunEffect != null)
+            {
+                enemyData.currentStunEffect.gameObject.SetActive(false);
+                enemyData.currentStunEffect.transform.SetParent(EnemyPoolManager.Instance.transform, false);
+                enemyData.currentStunEffect = null;
+            }
+            
             EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Hit, enemyData.enemyAnimator, TriggerType.ResetTrigger);
         }
     }

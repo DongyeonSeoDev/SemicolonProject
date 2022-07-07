@@ -6,7 +6,6 @@ using Enemy;
 public class PlayerStatusEffect : PlayerAction
 {
     private StunEffect currentStunEffect = null;
-    private bool isStun = false;
 
     [SerializeField] private Vector2 stunPosition;
 
@@ -19,10 +18,12 @@ public class PlayerStatusEffect : PlayerAction
     private void OnEnable()
     {
         EventManager.StartListening("KnockBackDone", OnKnockBackDone);
+        EventManager.StartListening("PlayerDead", DeleteEffect);
     }
     private void OnDisable()
     {
         EventManager.StopListening("KnockBackDone", OnKnockBackDone);
+        EventManager.StopListening("PlayerDead", DeleteEffect);
     }
     void Start()
     {
@@ -78,10 +79,8 @@ public class PlayerStatusEffect : PlayerAction
 
         playerState.IsStun = true;
 
-        if (!isStun)
+        if (currentStunEffect == null)
         {
-            isStun = true;
-
             currentStunEffect = EnemyPoolManager.Instance.GetPoolObject(Type.StunEffect, stunPosition).GetComponent<StunEffect>();
             currentStunEffect.transform.SetParent(SlimeGameManager.Instance.CurrentPlayerBody.transform, false);
         }
@@ -97,11 +96,18 @@ public class PlayerStatusEffect : PlayerAction
                 sturnTimer = 0f;
                 playerState.IsStun = false;
 
-                currentStunEffect.gameObject.SetActive(false);
-                currentStunEffect.transform.SetParent(EnemyPoolManager.Instance.transform, false);
-
-                isStun = false;
+                DeleteEffect();
             }
+        }
+    }
+
+    private void DeleteEffect()
+    {
+        if (currentStunEffect != null)
+        {
+            currentStunEffect.gameObject.SetActive(false);
+            currentStunEffect.transform.SetParent(EnemyPoolManager.Instance.transform, false);
+            currentStunEffect = null;
         }
     }
 }

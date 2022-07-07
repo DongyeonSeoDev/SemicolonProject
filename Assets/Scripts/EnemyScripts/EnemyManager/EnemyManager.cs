@@ -186,7 +186,7 @@ namespace Enemy
                 {
                     if (enemyList[i].gameObject.activeSelf)
                     {
-                        enemyList[i].gameObject.SetActive(false);
+                        enemyList[i].ActiveFalse();
                     }
                 }
             }
