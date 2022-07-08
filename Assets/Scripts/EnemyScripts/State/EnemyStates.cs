@@ -331,7 +331,7 @@ namespace Enemy
 
             bossPosition = bossPositionArray[randomNum];
             bossPositionArray[randomNum] = bossPositionArray[0];
-            bossPositionArray[randomNum] = bossPosition;
+            bossPositionArray[0] = bossPosition;
         }
         
         /// <summary>

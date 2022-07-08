@@ -1317,6 +1317,7 @@ MonoBehaviour:
   hpTweenDelayTime: 0.3
   damageHPTweenTime: 0.2
   hpEffectAnimation: {fileID: 0}
+  stunEffectPosition: {x: 0, y: 0}
   speed: 5
   minAttack: 20
   maxAttack: 30
@@ -1341,6 +1342,7 @@ MonoBehaviour:
   startSpeed: 7
   speedUpValue: 0.5
   speedUpTime: 0.5
+  fireDamage: -10
   fireLimitDistance: 1.5
   fireLimitSpawnDistance: 0.5
   limitMinPosition: {x: 0, y: 0}

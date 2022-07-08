@@ -22,6 +22,7 @@ namespace Enemy
         public float startSpeed = 5f;
         public float speedUpValue = 0.5f;
         public float speedUpTime = 1f;
+        public float fireDamage = 0f;
 
         [Header("Distance")]
         public float fireLimitDistance = 1.5f;
@@ -375,7 +376,7 @@ namespace Enemy
             for (int i = 0; i < 150; i++)
             {
                 Fire fire = EnemyPoolManager.Instance.GetPoolObject(Type.Fire, RandomPosition()).GetComponent<Fire>();
-                fire.Spawn(this, enemyData.eEnemyController, enemyData.minAttackPower, enemyData.maxAttackPower, enemyData.randomCritical, enemyData.criticalDamagePercent, 1f, false);
+                fire.Spawn(this, enemyData.eEnemyController, enemyData.minAttackPower + fireDamage, enemyData.maxAttackPower + fireDamage, enemyData.randomCritical, enemyData.criticalDamagePercent, 1f, false);
 
                 yield return fireSpawnTimeSeconds2;
             }
