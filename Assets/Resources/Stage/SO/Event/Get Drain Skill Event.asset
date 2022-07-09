@@ -12,9 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e7488ee635559b43b0aad1033d82cbd, type: 3}
   m_Name: Get Drain Skill Event
   m_EditorClassIdentifier: 
-  enterMapSubData:
-    dialog: "\uC5EC\uAE34 \uB2E4\uD589\uD788 \uC544\uBB34\uAC83\uB3C4 \uC5C6\uB124"
-    secondPerLit: 0.15
-    duration: 2
-    nextLogInterval: 0
-    endActionId: 
+  enterDialogKey: Tuto_EnterRoom4

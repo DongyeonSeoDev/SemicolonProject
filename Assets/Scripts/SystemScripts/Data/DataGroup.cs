@@ -98,6 +98,16 @@ public class SingleSubtitleData
     public float duration; //대사 다 출력되고 출력된 대사 글씨가 사라지기 전에 남아있는 시간
     public float nextLogInterval; //대사가 다 출력되고 대사 글씨 사라지고 다음 대사가 나오기 전까지의 딜레이
     public string endActionId;
+
+    /*public SingleSubtitleData() { }
+    public SingleSubtitleData(string dialog, float secondPerLit, float duration, float nextLogInterval, string endActionId)
+    {
+        this.dialog = dialog;
+        this.secondPerLit = secondPerLit;
+        this.duration = duration;
+        this.nextLogInterval = nextLogInterval;
+        this.endActionId = endActionId;
+    }*/
 }
 
 [Serializable]

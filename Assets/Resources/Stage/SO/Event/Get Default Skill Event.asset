@@ -12,16 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07b4a8c83bfe3194ebbc2a139f2c33ae, type: 3}
   m_Name: Get Default Skill Event
   m_EditorClassIdentifier: 
-  enterSubData:
-    subData:
-    - dialog: "\uC774\uBC88\uC5D0\uB3C4 \uBAA8\uB4E0 \uC801\uC744 \uD761\uC218\uD574\uC57C
-        \uB3FC"
-      secondPerLit: 0.15
-      duration: 1.5
-      nextLogInterval: 0
-      endActionId: 
-    - dialog: "3\uB9C8\uB9AC\uB098 \uB098\uC624\uC9C0\uB9CC \uD560 \uC218 \uC788\uC9C0?"
-      secondPerLit: 0.15
-      duration: 1.5
-      nextLogInterval: 0
-      endActionId: 
+  enterSubDataId: Tuto_EnterRoom7

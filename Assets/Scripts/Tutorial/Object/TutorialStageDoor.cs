@@ -27,14 +27,14 @@ public class TutorialStageDoor : MonoBehaviour, IDamageableBySlimeBodySlap
         {
             if(!StoredData.HasValueKey("TutoDoorHit1"))
             {
-                TalkManager.Instance.SetSubtitle("»ý°¢º¸´Ù ¹®ÀÌ Á» µüµüÇÑµ¥", 0.15f, 2f);
+                TalkManager.Instance.SetSubtitle(SubtitleDataManager.Instance.GetSubtitle("Tuto_BreakDoorOneHit"));
                 StoredData.SetValueKey("TutoDoorHit1", true);
             }
 
             if(--hp == 0)  
             {
                 npc._NPCInfo.talkId = 3;
-                TalkManager.Instance.SetSubtitle("¿ì¿Ó!", 0.1f, 1f);
+                TalkManager.Instance.SetSubtitle(SubtitleDataManager.Instance.GetSubtitle("Tuto_BreakDoor"));
             }
 
             isDamageable = false;

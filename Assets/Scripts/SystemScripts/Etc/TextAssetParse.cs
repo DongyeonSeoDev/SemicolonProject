@@ -104,3 +104,64 @@ public class UpStatInfoTextAsset : AssetParse<int, int, UpStatInfoTextAsset>
         return 999;
     }
 }
+
+
+
+
+
+
+
+#region 주석
+//슬라임 대사 정보를 가져온다
+/*public class SlimeDialogTextAsset : AssetParse<string, SubtitleData, SlimeDialogTextAsset>
+{
+    protected override string Path => "System/TextAssets/SlimeDialogsData";
+
+    public override void CreateData()
+    {
+        dictionary = new Dictionary<string, SubtitleData>();
+        string[] strs1 = Resources.Load<TextAsset>(Path).text.Split('$'); //대사 한 세트가 $로 분리되어 있음
+
+        for(int i = 0; i < strs1.Length; i++)
+        {
+            string[] strs2 = strs1[i].Split('\n');  //대사 한 세트는 \n로 구분되어 있으며 0번째는 아이디
+            Debug.Log(strs2.Length);
+            SubtitleData data = new SubtitleData();
+            data.subData = new SingleSubtitleData[strs2.Length - 2];  //0번째는 아이디고 마지막 데이터와 다음 $사이의 개행 때문에 길이에서 두 개 뺌
+            for(int j = 1; j < strs2.Length-1; j++)
+            {
+                string[] strs3 = strs2[j].Split('|');  //각 대사에 대한 정보는 |로 구분
+                int idx = j - 1;
+                Debug.Log(idx);
+                data.subData[idx] = new SingleSubtitleData();
+                Debug.Log(strs3[0]);
+                data.subData[idx].dialog = strs3[0];  //대사
+                data.subData[idx].secondPerLit = float.Parse(strs3[1]);  //글자당 초
+                data.subData[idx].duration = float.Parse(strs3[2]);  //텍스트 지속시간
+                data.subData[idx].nextLogInterval = float.Parse(strs3[3]);  //다음 텍스트 딜레이
+                data.subData[idx].endActionId = strs3[4];  //텍스트 끝나고 이벤트 키
+            }
+            
+            dictionary.Add(strs2[0].Trim(), data);
+        }
+    }
+
+    public override SubtitleData GetValue(string key)
+    {
+        if(dictionary == null)
+        {
+            CreateData();
+        }
+
+        if(dictionary.ContainsKey(key))
+        {
+            return dictionary[key];
+        }
+        else
+        {
+            Debug.LogWarning("존재하지 않는 대사 키 : " + key);
+            return new SubtitleData();
+        }
+    }
+}*/
+#endregion

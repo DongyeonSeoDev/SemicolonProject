@@ -1,0 +1,221 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43e9ddd0c1f12694aa9298e4b7098098, type: 3}
+  m_Name: SlimeDialogDataSO
+  m_EditorClassIdentifier: 
+  slimeDialogDatas:
+  - key: Tuto_FirstKeyInput
+    subtitleData:
+      subData:
+      - dialog: '!'
+        secondPerLit: 0.1
+        duration: 1
+        nextLogInterval: 0
+        endActionId: 
+      - dialog: "\uB204\uAD6C\uC138\uC694?"
+        secondPerLit: 0.1
+        duration: 1.5
+        nextLogInterval: 0
+        endActionId: 
+      - dialog: "\uBB54\uAC00 \uD798\uC774 \uB290\uAEF4\uC9C4 \uAC83 \uAC19\uC740\uB370..."
+        secondPerLit: 0.15
+        duration: 1.5
+        nextLogInterval: 0
+        endActionId: 
+  - key: Tuto_EnterRoom3
+    subtitleData:
+      subData:
+      - dialog: "\uC800 \uB9C8\uBC95\uC9C4\uC5D0\uC11C \uBAAC\uC2A4\uD130\uAC00 \uB098\uC624\uC9C0\uB9CC"
+        secondPerLit: 0.1
+        duration: 1.5
+        nextLogInterval: 0
+        endActionId: 
+      - dialog: "\uC5B4\uC9DC\uD53C \uAC19\uC740 \uBAAC\uC2A4\uD130\uB77C \uACF5\uACA9\uD558\uC9C0
+          \uC54A\uC744 \uAC70\uC57C"
+        secondPerLit: 0.1
+        duration: 1.5
+        nextLogInterval: 0
+        endActionId: 
+  - key: Tuto_EnterRoom3Damaged
+    subtitleData:
+      subData:
+      - dialog: "\uC74C..?"
+        secondPerLit: 0.03
+        duration: 2
+        nextLogInterval: 0
+        endActionId: 
+      - dialog: "\uB3C4..\uB9DD\uCE58\uB294\uAC8C \uC88B\uC744 \uAC83 \uAC19\uC544!"
+        secondPerLit: 0.05
+        duration: 2
+        nextLogInterval: 0
+        endActionId: 
+  - key: Tuto3Clear
+    subtitleData:
+      subData:
+      - dialog: "\uD734... \uBE68\uB9AC \uB2E4\uC74C \uBC29\uC73C\uB85C \uAC00\uBCF4\uC790"
+        secondPerLit: 0.1
+        duration: 2
+        nextLogInterval: 0
+        endActionId: 
+  - key: Tuto_EnterRoom4
+    subtitleData:
+      subData:
+      - dialog: "\uC5EC\uAE34 \uB2E4\uD589\uD788 \uC544\uBB34\uAC83\uB3C4 \uC5C6\uB124"
+        secondPerLit: 0.1
+        duration: 2
+        nextLogInterval: 0
+        endActionId: 
+  - key: GetDrain
+    subtitleData:
+      subData:
+      - dialog: "\uBC29\uAE08 \uBB54\uAC00 \uBAB8\uC73C\uB85C \uB4E4\uC5B4\uC624\uBA74\uC11C
+          \uC0C8\uB85C\uC6B4 \uB2A5\uB825\uC744 \uC5BB\uC740 \uAC83 \uAC19\uC544"
+        secondPerLit: 0.1
+        duration: 1.5
+        nextLogInterval: 0
+        endActionId: 
+  - key: Tuto_QuikSlotE
+    subtitleData:
+      subData:
+      - dialog: "\uC774\uC81C \uB124\uAC00 E\uB97C \uB9D0\uD558\uBA74 \uCC44\uC9D1\uD55C
+          \uAF43\uC774 \uB0B4 \uC785\uC73C\uB85C \uB4E4\uC5B4\uC62C \uAC70\uC57C"
+        secondPerLit: 0.1
+        duration: 1.5
+        nextLogInterval: 0
+        endActionId: 
+  - key: Tuto_GetHPStat
+    subtitleData:
+      subData:
+      - dialog: "\uACE0\uB9C8\uC6CC! \uB4DC\uB514\uC5B4 \uBAB8\uC774 \uAD1C\uCC2E\uC544\uC9C4
+          \uAC83 \uAC19\uC544"
+        secondPerLit: 0.1
+        duration: 1.5
+        nextLogInterval: 0
+        endActionId: 
+  - key: AfterTalkWithOrd
+    subtitleData:
+      subData:
+      - dialog: "\uCC98\uC74C\uC5D0\uB294 \uBB34\uC11C\uC6CC \uBCF4\uC600\uB294\uB370
+          \uC0DD\uAC01\uBCF4\uB2E4 \uC624\uB974\uB4DC\uC528\uB294 \uC88B\uC73C\uC2E0
+          \uBD84 \uAC19\uC544"
+        secondPerLit: 0.1
+        duration: 2
+        nextLogInterval: 0
+        endActionId: 
+  - key: Tuto_EnterRoom5
+    subtitleData:
+      subData:
+      - dialog: "\uB4DC\uB514\uC5B4 \uB2A5\uB825\uC744 \uBCF4\uC5EC\uC904 \uB54C\uAC00
+          \uB41C \uAC83 \uAC19\uC544"
+        secondPerLit: 0.1
+        duration: 2
+        nextLogInterval: 0
+        endActionId: 
+  - key: Tuto_FailAbsorb
+    subtitleData:
+      subData:
+      - dialog: "\uD761\uC218\uB294 \uC801\uC758 \uCCB4\uB825\uC774 \uC801\uC744
+          \uB54C\uB9CC \uAC00\uB2A5\uD574"
+        secondPerLit: 0.1
+        duration: 2
+        nextLogInterval: 0
+        endActionId: 
+  - key: Tuto_BreakDoorOneHit
+    subtitleData:
+      subData:
+      - dialog: "\uC0DD\uAC01\uBCF4\uB2E4 \uBB38\uC774 \uC880 \uB531\uB531\uD55C\uB370"
+        secondPerLit: 0.1
+        duration: 2
+        nextLogInterval: 0
+        endActionId: 
+  - key: Tuto_BreakDoor
+    subtitleData:
+      subData:
+      - dialog: "\uC6B0\uC653!"
+        secondPerLit: 0.03
+        duration: 1.5
+        nextLogInterval: 0
+        endActionId: 
+  - key: Tuto_EnterRoom7
+    subtitleData:
+      subData:
+      - dialog: "\uC774\uBC88\uC5D0\uB3C4 \uBAA8\uB4E0 \uC801\uC744 \uD761\uC218\uD574\uC57C
+          \uB3FC"
+        secondPerLit: 0.1
+        duration: 2
+        nextLogInterval: 0
+        endActionId: 
+      - dialog: "3\uB9C8\uB9AC\uB098 \uB098\uC624\uC9C0\uB9CC \uD560 \uC218 \uC788\uC9C0?"
+        secondPerLit: 0.1
+        duration: 2
+        nextLogInterval: 0
+        endActionId: 
+  - key: Tuto_FailAbsorb2
+    subtitleData:
+      subData:
+      - dialog: "\uD55C\uBC88 \uB354 \uB9D0\uD558\uC9C0\uB9CC \uD761\uC218\uB294
+          \uC801\uC758 \uCCB4\uB825\uC774 \uC801\uC744 \uB54C\uB9CC \uAC00\uB2A5\uD574"
+        secondPerLit: 0.1
+        duration: 2
+        nextLogInterval: 0
+        endActionId: 
+  - key: Tuto_StageClear7
+    subtitleData:
+      subData:
+      - dialog: "\uC810\uC810 \uB354 \uAC15\uD574\uC9C0\uB294 \uAE30\uBD84\uC774\uC57C!"
+        secondPerLit: 0.1
+        duration: 1.5
+        nextLogInterval: 0
+        endActionId: 
+  - key: Tuto_EnterRoom8
+    subtitleData:
+      subData:
+      - dialog: "\uC800\uAE30 \uC800 \uAF43\uC744 \uCC44\uC9D1\uD558\uBA74 \uB2E4\uCE5C
+          \uC0C1\uCC98\uB97C \uCE58\uB8CC\uD560 \uC218 \uC788\uC744 \uAC83 \uAC19\uC544"
+        secondPerLit: 0.1
+        duration: 1.5
+        nextLogInterval: 0
+        endActionId: 
+  - key: Tuto_PickSuccess
+    subtitleData:
+      subData:
+      - dialog: "\uC798\uD588\uC5B4!"
+        secondPerLit: 0.1
+        duration: 1.5
+        nextLogInterval: 0
+        endActionId: 
+      - dialog: "\uADF8\uB807\uAC8C \uC815\uD655\uD55C \uC704\uCE58\uC5D0\uC11C \uCC44\uC9D1\uD558\uBA74
+          \uAF43\uC744 \uD68D\uB4DD\uD560 \uC218 \uC788\uC5B4"
+        secondPerLit: 0.1
+        duration: 1.5
+        nextLogInterval: 0
+        endActionId: GainQuikSlotUI
+  - key: Tuto_PickFail
+    subtitleData:
+      subData:
+      - dialog: "\uC5B4.....!"
+        secondPerLit: 0.1
+        duration: 1
+        nextLogInterval: 0
+        endActionId: 
+      - dialog: "\uADF8\uB798\uB3C4 \uBC14\uB2E5\uC5D0 \uAF43\uC774 \uB5A8\uC5B4\uC838
+          \uC788\uC5B4\uC11C \uB2E4\uD589\uC774\uC57C"
+        secondPerLit: 0.1
+        duration: 1.5
+        nextLogInterval: 0
+        endActionId: 
+      - dialog: "\uB2E4\uC74C\uBC88\uC5D0\uB294 \uB354 \uC798 \uCC44\uC9D1\uD560
+          \uC218 \uC788\uC744 \uAC70\uC57C"
+        secondPerLit: 0.1
+        duration: 1.5
+        nextLogInterval: 0
+        endActionId: GainQuikSlotUI

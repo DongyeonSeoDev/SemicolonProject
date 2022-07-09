@@ -6,7 +6,8 @@ using TMPro;
 public class SaveSlot : MonoBehaviour
 {
     private ChangableBodyDataScript changableBodyDataScript = null;
-    [SerializeField] private string saveFileName;
+    [SerializeField] private int saveFileIndex;
+    private string saveFileName => Global.GetSaveFileName(saveFileIndex);
     private SaveData saveData = null;
 
     public Button gameStartBtn;

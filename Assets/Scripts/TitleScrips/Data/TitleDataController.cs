@@ -25,6 +25,8 @@ public class TitleDataController : MonoBehaviour
             Save();
             StoredData.Reset();
         });
+
+        SubtitleDataManager.Instance.Init();
     }
 
     public void Save()

@@ -107,7 +107,7 @@ public class StatInfoElement : UITransition
     {
         //curStatTxt.text = NGlobal.playerStatUI.GetCurrentPlayerStat(id).ToString();
         int curStatValue = Mathf.RoundToInt(NGlobal.playerStatUI.GetCurrentPlayerStat(id));
-        curStatTxt.text = eternal.isUnlock ? curStatValue.ToString().ToColorStr("#980D0D", () => eternal.statLv == 0 && eternal.isUnlock) : "?" ;
+        curStatTxt.text = eternal.isUnlock ? curStatValue.ToString().ToColorStr("#980D0D", () => eternal.isUnlockClose) : "?" ;
         statLvTxt.text = eternal.statLv.ToString();
     }
 

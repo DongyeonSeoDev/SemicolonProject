@@ -278,13 +278,16 @@ public class PlayerStatUI : MonoBehaviour
 
     public void StatUp(ushort id)  //특정 스탯을 레벨업 함
     {
-        
-        StatElement stat = eternalStatDic[id].first;
+        StatElement eterStat = eternalStatDic[id].first;
+        StatElement addiStat = eternalStatDic[id].second;
         int value = UpStatInfoTextAsset.Instance.GetValue(eternalStatDic[id].first.statLv);
+
         playerStat.currentStatPoint -= value;
         playerStat.accumulateStatPoint += value;
-        stat.statLv++;
-        stat.statValue += stat.upStatValue;
+
+        eterStat.statLv++;
+        addiStat.statValue += eterStat.upStatValue;
+
         UpdateCurStatPoint(false);
         UIManager.Instance.UpdatePlayerHPUI();
         //eternalStatDic[id].second.statValue += stat.upStatValue;
@@ -301,6 +304,7 @@ public class PlayerStatUI : MonoBehaviour
             }
             StatElement stat = eternalStatDic[id].first;
             stat.statLv = 1;
+            stat.savedStatLv = 1;
             statInfoUIDic[id].OpenStat();
 
             UpdateCurStatPoint(false);

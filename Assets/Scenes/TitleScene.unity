@@ -1527,7 +1527,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80b557277b8cc0a4b9cf7031a0f4b149, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  saveFileName: SaveFile_11
+  saveFileIndex: 1
   gameStartBtn: {fileID: 2088312772}
   deleteSaveDataBtn: {fileID: 224482718}
   currentStageTMP: {fileID: 661898651}
@@ -4192,7 +4192,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80b557277b8cc0a4b9cf7031a0f4b149, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  saveFileName: SaveFile_12
+  saveFileIndex: 2
   gameStartBtn: {fileID: 1049711917}
   deleteSaveDataBtn: {fileID: 2014517603}
   currentStageTMP: {fileID: 1226132300}
@@ -14310,7 +14310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80b557277b8cc0a4b9cf7031a0f4b149, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  saveFileName: SaveFile_10
+  saveFileIndex: 0
   gameStartBtn: {fileID: 739579115}
   deleteSaveDataBtn: {fileID: 916662939}
   currentStageTMP: {fileID: 1198509823}

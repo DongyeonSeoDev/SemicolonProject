@@ -24,6 +24,19 @@ public class Stat
         choiceStat.Reset();
     }
 
+    public void SaveStat()
+    {
+        additionalEternalStat.maxHp.statValue -= eternalStat.maxHp.SaveEternal();
+        additionalEternalStat.minDamage.statValue -= eternalStat.minDamage.SaveEternal();
+        additionalEternalStat.maxDamage.statValue -= eternalStat.maxDamage.SaveEternal();
+        additionalEternalStat.speed.statValue -= eternalStat.speed.SaveEternal();
+        additionalEternalStat.attackSpeed.statValue -= eternalStat.attackSpeed.SaveEternal();
+        additionalEternalStat.criticalDamage.statValue -= eternalStat.criticalDamage.SaveEternal();
+        additionalEternalStat.criticalRate.statValue -= eternalStat.criticalRate.SaveEternal();
+        additionalEternalStat.intellect.statValue -= eternalStat.intellect.SaveEternal();
+        additionalEternalStat.defense.statValue -= eternalStat.defense.SaveEternal();
+    }
+
     #region default stat + additional stat  property
     public float MaxHp  
     {
@@ -75,10 +88,12 @@ public class StatElement  //스탯은 0렙부터 시작. 0렙일 때는 스탯을 개방하지 못한
     public float upStatValue; // 특정 스탯 포인트를 투자했을 때 오를 스탯의 값
     public bool isUnlock;  //획득한 스탯인가
     public int statLv;  //스탯 레벨 (이 스탯을 몇 번 올렸는지) (Stat클래스의 eternalStat에서만 쓰일듯함)
+    public int savedStatLv;  //저장된 스탯 레벨. 만약에 스테이지 클리어하고 그 때의 스탯레벨 저장한다면 여기에 저장하고 리겜하면 이 값으로 되돌림
     public int maxStatLv; // 스탯 최대 레벨
 
     public int upStatCount => statLv - 1;  //스탯 올리는 짓을 몇 번 했는지
-    public bool isOpenStat => statLv > 0;
+    public bool isOpenStat => statLv > 0;  //스탯 개방이 되었는지
+    public bool isUnlockClose => statLv == 0 && isUnlock;
 
     public StatElement() { }
 
@@ -86,8 +101,9 @@ public class StatElement  //스탯은 0렙부터 시작. 0렙일 때는 스탯을 개방하지 못한
     {
         if (statLv > 1)
         {
-            statValue -= upStatCount * upStatValue;
-            statLv = 1;
+            statLv = savedStatLv;
+            //statValue -= upStatCount * upStatValue;
+            //statLv = 1;
         }
     }
 
@@ -98,6 +114,20 @@ public class StatElement  //스탯은 0렙부터 시작. 0렙일 때는 스탯을 개방하지 못한
         isUnlock = false;
     }
 
+    public float SaveEternal()
+    {
+        int tmp = savedStatLv;
+        savedStatLv = statLv;
+        int sub = savedStatLv - tmp;
+
+        float res = 0f;
+        if (sub > 0)
+        {
+            res = sub * upStatValue;
+            statValue += res;
+        }
+        return res;
+    }
 }
 
 [Serializable]
