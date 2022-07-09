@@ -14,6 +14,7 @@ namespace Enemy
         public float hp = 10;
 
         public string objName = "";
+        public readonly string enemyId = "TutorialEnemy";
 
         protected bool destroyTimerStarted = false;
         protected readonly float destroyTime = 1f;
@@ -67,6 +68,11 @@ namespace Enemy
         public string GetEnemyName()
         {
             return objName;
+        }
+
+        public string GetEnemyId()
+        {
+            return enemyId;
         }
     }
 }
