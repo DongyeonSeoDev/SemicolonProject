@@ -324,6 +324,7 @@ public class PlayerStatUI : MonoBehaviour
 
             UIManager.Instance.InsertNoticeQueue($"Ω∫≈»∆˜¿Œ∆Æ {point} »πµÊ");
             UIManager.Instance.RequestLogMsg($"Ω∫≈»∆˜¿Œ∆Æ∏¶ »πµÊ«ﬂΩ¿¥œ¥Ÿ. (+{point})");
+            EffectManager.Instance.CallFollowTargetGameEffect("StatPntUpEff", Global.GetSlimePos, Vector3.zero, 1.5f);
         }
     }
 
