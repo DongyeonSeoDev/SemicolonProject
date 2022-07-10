@@ -11,11 +11,8 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
 
     [SerializeField] private int maxHp = 2;
     private int hp;
-    //public FakeSpriteOutline fsOut;
 
     public StageDataSO nextStageData;
-
-    //[SerializeField] private bool notExistMap; //test
 
     public DoorDirType dirType; //door dir
     public Transform playerSpawnPos;
@@ -34,7 +31,7 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
 
     public bool IsExitDoor { set => isExitDoor = value; get => isExitDoor; }
 
-    public bool IsBlindState => StateManager.Instance.stateCountDict[StateAbnormality.Blind.ToString()] > 0;
+    public bool IsBlindState => StateManager.Instance.stateCountDict[StateAbnormality.Blind.ToString()] > 0;  //저주 : 실명 상태가 적용중인지
 
     protected override void Awake()
     {
@@ -78,13 +75,6 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
                 UIManager.Instance.StartLoading(() => StageManager.Instance.NextStage(nextStageData.stageID), () => EventManager.TriggerEvent("StartNextStage"));
             }
         }
-        else
-        {
-           /* if (StageManager.Instance.CurrentAreaType == AreaType.MONSTER)
-                UIManager.Instance.RequestSystemMsg("몬스터가 남아있을 때는 다음 지역으로 입장할 수 없습니다.");
-            else
-                UIManager.Instance.RequestSystemMsg("아직은 지나갈 수 없습니다.");*/
-        }
     }
 
     public void Open() //열기
@@ -99,7 +89,7 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
 
         isOpen = true;
         isEnter = false;
-        spr.sprite = StageManager.Instance.doorSprDic[dirType.ToString() + "Open"];
+        spr.sprite = StageManager.Instance.GetDoorSprite(dirType, "Open");
         objName = IsBlindState ? "???" : Global.AreaTypeToString(nextStageData.areaType);
 
         detectorObj.SetActive(true);
@@ -113,7 +103,7 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
     {
         if (isExitDoor || !gameObject.activeSelf) return;
 
-        spr.sprite = StageManager.Instance.doorSprDic[dirType.ToString() + "Close"];
+        spr.sprite = StageManager.Instance.GetDoorSprite(dirType, "Close");
         doorLight.gameObject.SetActive(false);
         detectorObj.SetActive(false);
         isOpen = false;
@@ -122,7 +112,7 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
 
     public void Pass() //이 문이 입구가 될 것임
     {
-        spr.sprite = StageManager.Instance.doorSprDic[dirType.ToString() + "Exit"];
+        spr.sprite = StageManager.Instance.GetDoorSprite(dirType, "Exit");
         isExitDoor = true;
         doorLight.gameObject.SetActive(false);
         detectorObj.SetActive(false);
@@ -160,8 +150,6 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
                     }
                 }
             }
-            /*if(fsOut)
-               fsOut.gameObject.SetActive(on); */
         }
     }
 
