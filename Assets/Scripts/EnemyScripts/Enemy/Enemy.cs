@@ -40,8 +40,6 @@ namespace Enemy
         [SerializeField]
         private Animator hpEffectAnimation = null;
 
-        EnemyCommand enemyDamagedCommand;
-
         private float isDamageCurrentTime = 0f;
         protected bool isStop = false;
 
@@ -195,8 +193,6 @@ namespace Enemy
             enemyData.enemyAnimator.enabled = true; // 애니메이션 실행
             isDamageCurrentTime = 0f;
 
-            enemyDamagedCommand = new EnemyGetDamagedCommand(enemyData);
-
             SetHP(false);
 
             EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Reset, anim, TriggerType.SetTrigger);
@@ -269,7 +265,7 @@ namespace Enemy
                     ChangeHpEffectAnimationPlay(false);
                 }
 
-                enemyDamagedCommand.Execute();
+                DamageEffect();
 
                 if (!enemyData.isNoKnockback && enemyData.isKnockBack)
                 {
@@ -288,7 +284,8 @@ namespace Enemy
 
                 if (isDamageCurrentTime <= 0)
                 {
-                    enemyDamagedCommand.Execute();
+                    DamageEffect();
+
                     isDamageCurrentTime = 0;
                 }
             }
@@ -373,6 +370,32 @@ namespace Enemy
             }
 
             return false;
+        }
+
+        private void DamageEffect()
+        {
+            if (enemyData.eEnemyController == EnemyController.AI)
+            {
+                if (enemyData.isDamaged) // 색깔 변경
+                {
+                    enemyData.enemy.ChangeColor(enemyData.damagedColor);
+                }
+                else // 색깔 변경 해제
+                {
+                    enemyData.enemy.ChangeColor(enemyData.normalColor);
+                }
+            }
+            else if (enemyData.eEnemyController == EnemyController.PLAYER)
+            {
+                if (enemyData.isDamaged) // 색깔 변경
+                {
+                    enemyData.enemy.ChangeColor(enemyData.playerDamagedColor);
+                }
+                else // 색깔 변경 해제
+                {
+                    enemyData.enemy.ChangeColor(enemyData.playerNormalColor);
+                }
+            }
         }
 
         public void ActiveFalse()
