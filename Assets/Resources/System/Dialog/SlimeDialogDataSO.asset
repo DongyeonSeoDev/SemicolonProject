@@ -219,3 +219,73 @@ MonoBehaviour:
         duration: 1.5
         nextLogInterval: 0
         endActionId: GainQuikSlotUI
+  - key: Tuto_Start
+    subtitleData:
+      subData:
+      - dialog: "\uC73C..."
+        secondPerLit: 0.2
+        duration: 5
+        nextLogInterval: 15
+        endActionId: 
+      - dialog: "\uC5B4\uB461\uB2E4.."
+        secondPerLit: 0.2
+        duration: 3
+        nextLogInterval: 15
+        endActionId: 
+      - dialog: "\uADFC\uCC98\uC5D0 \uB204\uAD70\uAC00 \uC5C6\uC744\uAE4C..?"
+        secondPerLit: 0.2
+        duration: 3
+        nextLogInterval: 15
+        endActionId: 
+      - dialog: "\uC65C \uC6C0\uC9C1\uC5EC\uC9C0\uC9C0 \uC54A\uB294 \uAC70\uC9C0"
+        secondPerLit: 0.2
+        duration: 3
+        nextLogInterval: 0
+        endActionId: 
+  - key: Tuto_Question
+    subtitleData:
+      subData:
+      - dialog: "\uC800\uAE30.. \uBB34\uC5C7\uC744 \uB9D0\uD558\uACE0 \uC2F6\uC740\uC9C0
+          \uBAA8\uB974\uACA0\uC5B4"
+        secondPerLit: 0.15
+        duration: 1.5
+        nextLogInterval: 0
+        endActionId: 
+      - dialog: "\uB098\uB97C \uC6C0\uC9C1\uC774\uAC8C \uD574\uC904 \uD798\uC744
+          \uC904 \uC218 \uC788\uB2C8?"
+        secondPerLit: 0.15
+        duration: 1.5
+        nextLogInterval: 0
+        endActionId: 
+  - key: Tuto_UpKey
+    subtitleData:
+      subData:
+      - dialog: "\uADF8\uB798 \uC704\uCABD\uC73C\uB85C \uAC00\uC790!"
+        secondPerLit: 0.05
+        duration: 2.5
+        nextLogInterval: 0
+        endActionId: 
+  - key: Tuto_RightKey
+    subtitleData:
+      subData:
+      - dialog: "\uC624\uB978\uCABD\uC73C\uB85C \uAC00\uB77C\uB294 \uAC70\uC9C0?"
+        secondPerLit: 0.1
+        duration: 2
+        nextLogInterval: 0
+        endActionId: 
+  - key: Tuto_LeftKey
+    subtitleData:
+      subData:
+      - dialog: "\uC54C\uC558\uC5B4, \uC67C\uCABD\uC73C\uB85C \uAC08\uAC8C"
+        secondPerLit: 0.1
+        duration: 2
+        nextLogInterval: 0
+        endActionId: 
+  - key: Tuto_DownKeu
+    subtitleData:
+      subData:
+      - dialog: " \uC544\uB798\uCABD! \uB9DE\uC9C0?"
+        secondPerLit: 0.05
+        duration: 2.5
+        nextLogInterval: 0
+        endActionId: 
