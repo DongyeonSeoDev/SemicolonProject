@@ -385,17 +385,6 @@ namespace Enemy
                     enemyData.enemy.ChangeColor(enemyData.normalColor);
                 }
             }
-            else if (enemyData.eEnemyController == EnemyController.PLAYER)
-            {
-                if (enemyData.isDamaged) // »ö±ò º¯°æ
-                {
-                    enemyData.enemy.ChangeColor(enemyData.playerDamagedColor);
-                }
-                else // »ö±ò º¯°æ ÇØÁ¦
-                {
-                    enemyData.enemy.ChangeColor(enemyData.playerNormalColor);
-                }
-            }
         }
 
         public void ActiveFalse()
