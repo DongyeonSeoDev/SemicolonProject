@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Stages2
   m_EditorClassIdentifier: 
   floor: 2
-  stageBundleName: 
+  stageBundleName: "\uD574\uACE8 \uB358\uC804"
   stages: []
+  monsterStages: []
   randomStageList: []
