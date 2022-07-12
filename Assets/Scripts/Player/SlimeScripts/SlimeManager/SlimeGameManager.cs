@@ -168,7 +168,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             }
         }
 
-        if (player.PlayerState.IsDrain)
+        if (player.PlayerState.IsDrain || player.PlayerState.IsStun)
         {
             return;
         }
