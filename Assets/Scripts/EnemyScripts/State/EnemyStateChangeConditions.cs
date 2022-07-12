@@ -153,7 +153,14 @@ namespace Enemy
     {
         protected override void StateChangeCondition() 
         {
-            ChangeState(null);
+            if ((enemyData.eEnemyController == EnemyController.AI))
+            {
+                ChangeState(null);
+            }
+            else
+            {
+                ChangeState(new EnemyMoveState(enemyData));
+            }
         }
     }
 
