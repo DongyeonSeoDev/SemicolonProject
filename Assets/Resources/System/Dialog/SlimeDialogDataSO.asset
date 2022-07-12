@@ -281,7 +281,7 @@ MonoBehaviour:
         duration: 2
         nextLogInterval: 0
         endActionId: 
-  - key: Tuto_DownKeu
+  - key: Tuto_DownKey
     subtitleData:
       subData:
       - dialog: " \uC544\uB798\uCABD! \uB9DE\uC9C0?"
