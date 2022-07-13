@@ -324,10 +324,6 @@ public class BodyPoint : MonoBehaviour
                 transform.position = Vector2.Lerp(transform.position, middlePoint.transform.position, Time.deltaTime * moveToMiddleSpeed);
             }
         }
-        else
-        {
-            moveToOriginTimer = moveToOriginTime;
-        }
 
         CheckCrossWall();
     }
