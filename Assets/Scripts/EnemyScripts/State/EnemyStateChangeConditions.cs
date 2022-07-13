@@ -151,16 +151,9 @@ namespace Enemy
 
     public partial class EnemyDeadState : EnemyState // Á×¾úÀ»¶§
     {
-        protected override void StateChangeCondition() 
+        protected override void StateChangeCondition()
         {
-            if ((enemyData.eEnemyController == EnemyController.AI))
-            {
-                ChangeState(null);
-            }
-            else
-            {
-                ChangeState(new EnemyMoveState(enemyData));
-            }
+            ChangeState(null);
         }
     }
 

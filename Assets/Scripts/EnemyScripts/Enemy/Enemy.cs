@@ -357,7 +357,7 @@ namespace Enemy
 
         public bool AttackInit(float damage, bool isKnockBack, bool isStun, Vector2? direction = null, float knockBackPower = 20f, float stunTime = 1f)
         {
-            if (enemyData.isEnemyMove && !enemyData.isDamaged)
+            if (enemyData.eEnemyController == EnemyController.AI && enemyData.isEnemyMove && !enemyData.isDamaged)
             {
                 enemyData.isDamaged = true;
                 enemyData.damagedValue = Mathf.Clamp(damage - enemyData.defense, 1f, float.MaxValue);

@@ -532,43 +532,28 @@ namespace Enemy
 
         protected override void Start()
         {
-            if (enemyData.eEnemyController == EnemyController.AI)
+            enemyData.enemyRigidbody2D.velocity = Vector2.zero;
+
+            if (enemyData.deadEvent != null)
             {
-                enemyData.enemyRigidbody2D.velocity = Vector2.zero;
-
-                if (enemyData.deadEvent != null)
-                {
-                    enemyData.deadEvent.Invoke();
-                }
-
-                EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Reset, enemyData.enemyAnimator, TriggerType.ResetTrigger);
-                EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Die, enemyData.enemyAnimator, TriggerType.SetTrigger);
-
-                currentTime = 0f;
-
-                enemyData.enemyObject.layer = LayerMask.NameToLayer("ENEMYDEAD");
-
-                base.Start();
+                enemyData.deadEvent.Invoke();
             }
-            else
-            {
-                Debug.LogError("적으로 변신했을때는 플레이어 코드에서 죽음 처리");
-                enemyData.hp = 1;
-            }
+
+            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Reset, enemyData.enemyAnimator, TriggerType.ResetTrigger);
+            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Die, enemyData.enemyAnimator, TriggerType.SetTrigger);
+
+            currentTime = 0f;
+
+            enemyData.enemyObject.layer = LayerMask.NameToLayer("ENEMYDEAD");
+
+            base.Start();
         }
 
         protected override void Update()
         {
-            if (enemyData.eEnemyController == EnemyController.AI)
-            {
-                currentTime += Time.deltaTime;
+            currentTime += Time.deltaTime;
 
-                if (currentTime > deadTime)
-                {
-                    base.Update();
-                }
-            }
-            else
+            if (currentTime > deadTime)
             {
                 base.Update();
             }
@@ -576,13 +561,10 @@ namespace Enemy
 
         protected override void End()
         {
-            if (enemyData.eEnemyController == EnemyController.AI)
-            {
-                EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Die, enemyData.enemyAnimator, TriggerType.ResetTrigger);
-                EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.IsDead, enemyData.enemyAnimator, true);
+            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Die, enemyData.enemyAnimator, TriggerType.ResetTrigger);
+            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.IsDead, enemyData.enemyAnimator, true);
 
-                EnemyDead();
-            }
+            EnemyDead();
         }
 
         private void EnemyDead()
