@@ -435,7 +435,6 @@ public class PlayerStatUI : MonoBehaviour
     {
         UpdateAllStatUI();
         UpdateAllChoiceStatUI();
-        //UpdateCurStatPoint(false);
 
         SetAllEternalStatUIUpBtn(false);
 

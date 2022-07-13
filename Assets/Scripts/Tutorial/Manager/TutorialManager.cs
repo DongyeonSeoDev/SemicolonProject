@@ -117,14 +117,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         for (int i = 0; i < skillUIArr.Length; i++)
         {
             skillUIArr[i].gameObject.SetActive(active);
-            //changeableBodysUIArr[i].gameObject.SetActive(active);
         }
-
-        //changeableBodysUIArr[0].gameObject.SetActive(active);
-        /*for(int i=1; i< changeableBodysUIArr.Length; i++)
-        {
-            changeableBodysUIArr[i].gameObject.SetActive(gm.savedData.userInfo.isGainBodyChangeSlot);   
-        }*/
 
         for(int i = 0; i < changeableBodysUIArr.Length; i++)
         {
@@ -164,8 +157,6 @@ public class TutorialManager : MonoSingleton<TutorialManager>
                 });
             }));
         }
-
-        //um.StartLoadingIn();
     }
 
     public void TutoEnemyDrainCSEvent() //슬라임 흡수 컷씬 중에 슬라임 나오는 연출 시작
