@@ -8,7 +8,7 @@ public class GetDefaultSkillEvent : MapEventSO  //튜토리얼 7번방 입장
 
     public override void OnEnterEvent()
     {
-        TalkManager.Instance.SetSubtitle(SubtitleDataManager.Instance.GetSubtitle(enterSubDataId));
+        TalkUtil.ShowSubtitle(enterSubDataId);
         BattleUIManager.Instance.StartMission(MissionType.ABSORPTIONTUTORIAL2);
         EventManager.TriggerEvent("SpawnEnemy", "Stage0-07");
     }

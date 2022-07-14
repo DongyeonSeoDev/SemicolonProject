@@ -163,7 +163,7 @@ public static partial class Util
     public static IEnumerator DelayFuncCo(Action func, float delay, bool realTime, bool applyCurTimeScale)
     {
         if (!realTime)
-            yield return new WaitForSeconds(delay * (applyCurTimeScale ? TimeManager.CurrentTimeScale : 1f));
+            yield return new WaitForSeconds(applyCurTimeScale ? delay * TimeManager.CurrentTimeScale : 1f);
         else
             yield return new WaitForSecondsRealtime(delay);
         func();

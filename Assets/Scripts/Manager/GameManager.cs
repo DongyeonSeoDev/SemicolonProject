@@ -166,6 +166,8 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     private void Init()
     {
+        SubtitleDataManager.Instance.Init(); //타이틀부터 시작하면 굳이 안해도 되지만 테스트용으로 추가해둠
+
         List<Food> allFoods = new List<Food>(Resources.LoadAll<Food>(Global.foodDataPath));
         List<FoodButton> fbList = new List<FoodButton>();
         List<IngredientImage> igdImgList = new List<IngredientImage>();

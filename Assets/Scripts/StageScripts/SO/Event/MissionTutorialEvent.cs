@@ -12,7 +12,7 @@ public class MissionTutorialEvent : MapEventSO
     public override void OnEnterEvent()
     {
         BattleUIManager.Instance.StartMission(MissionType.SURVIVAL1);
-        TalkManager.Instance.SetSubtitle(SubtitleDataManager.Instance.GetSubtitle(startMapSubDataId));
+        TalkUtil.ShowSubtitle(startMapSubDataId);
 
         EventManager.StartListening("PlayerGetDamaged", PlayerDamaged);
         EventManager.TriggerEvent("SpawnEnemy","Stage0-03");
@@ -20,7 +20,7 @@ public class MissionTutorialEvent : MapEventSO
 
     public void PlayerDamaged()
     {
-        TalkManager.Instance.SetSubtitle(SubtitleDataManager.Instance.GetSubtitle(damagedSubDataId));
+        TalkUtil.ShowSubtitle(damagedSubDataId);
         EventManager.StopListening("PlayerGetDamaged", PlayerDamaged);
     }
 

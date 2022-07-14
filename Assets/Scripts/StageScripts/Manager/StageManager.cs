@@ -38,8 +38,8 @@ public class StageManager : MonoSingleton<StageManager>
     [SerializeField] private int MaxStage;
     [SerializeField] private string startStageID;
 
-    public Sprite[] doorSprites;
-    public Dictionary<string, Sprite> doorSprDic = new Dictionary<string, Sprite>();
+    public List<Single<Sprite[]>> doorSpriteList;
+    public Dictionary<int, Dictionary<string, Sprite>> doorSprDic = new Dictionary<int, Dictionary<string, Sprite>>();
     private bool[] floorInitSet;
     #endregion
 
@@ -69,6 +69,9 @@ public class StageManager : MonoSingleton<StageManager>
 
     private Dictionary<string, StageData> stageDataDictionary = new Dictionary<string, StageData>();
     private string stageDataPath = Path.Combine("Enemy", "StageData", "StageData");
+
+    public LinkedListNode<string> s;
+    public LinkedList<string> ss;
 
     private void Awake()
     {
@@ -105,11 +108,16 @@ public class StageManager : MonoSingleton<StageManager>
         }
 
         cnt = Global.EnumCount<DoorDirType>();
-        for(int i=0; i<cnt; i++)
+        int cnt2 = cnt * 2;
+        for(int i=0; i<=MaxStage; i++)
         {
-            doorSprDic.Add(((DoorDirType)i).ToString() + "Close", doorSprites[i]);
-            doorSprDic.Add(((DoorDirType)i).ToString() + "Open", doorSprites[i + cnt]);
-            doorSprDic.Add(((DoorDirType)i).ToString() + "Exit", doorSprites[i + cnt * 2]);
+            doorSprDic.Add(i, new Dictionary<string, Sprite>());
+            for(int j=0; j<cnt; j++)
+            {
+                doorSprDic[i].Add(((DoorDirType)j).ToString() + "Close", doorSpriteList[i].value[j]);
+                doorSprDic[i].Add(((DoorDirType)j).ToString() + "Open", doorSpriteList[i].value[j+cnt]);
+                doorSprDic[i].Add(((DoorDirType)j).ToString() + "Exit", doorSpriteList[i].value[j+cnt2]);
+            }
         }
 
         EventManager.StartListening(Global.EnterNextMap, () =>  //해당 방을 입장했을 때, 마지막에 호출
@@ -117,7 +125,7 @@ public class StageManager : MonoSingleton<StageManager>
             currentStageNumber++;
         });
 
-        floorInitSet = new bool[MaxStage + 1];
+        floorInitSet = new bool[MaxStage + 1];  //튜토리얼 (0스테이지) 포함하므로 +1
         for(int i=0; i<floorInitSet.Length; i++)
             floorInitSet[i] = false;
     }
@@ -319,6 +327,8 @@ public class StageManager : MonoSingleton<StageManager>
             randomZoneTypeListDic[currentFloor].Insert(pre, rList[i]);
         }
     }
+
+    public Sprite GetDoorSprite(DoorDirType ddt, string state) => doorSprDic[currentFloor][ddt.ToString() + state];
 
     private string FloorToFloorID(int floor)
     {

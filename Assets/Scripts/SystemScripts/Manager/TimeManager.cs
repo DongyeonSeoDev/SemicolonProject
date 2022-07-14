@@ -71,7 +71,7 @@ public static class TimeManager
     /// <param name="duration"></param>
     /// <param name="endAction"></param>
     /// <param name="realTime"></param>
-    public static void SetTimeScale(float scale, float duration, Action endAction = null, bool realTime = false, bool applyCurTimeScale = true)
+    public static void SetTimeScale(float scale, float duration, Action endAction = null, bool realTime = false, bool applyCurTimeScale = false)
     {
         currentTimeScale = scale;
         if (!IsTimePaused)
