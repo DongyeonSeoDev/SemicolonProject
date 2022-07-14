@@ -389,42 +389,6 @@ namespace Enemy
         }
     }
 
-    public class EnemyGetDamagedCommand : EnemyCommand // 적이 데미지를 받음
-    {
-        private EnemyData enemyData;
-
-        public EnemyGetDamagedCommand(EnemyData enemyData)
-        {
-            this.enemyData = enemyData;
-        }
-
-        public override void Execute()
-        {
-            if (enemyData.eEnemyController == EnemyController.AI)
-            {
-                if (enemyData.isDamaged) // 색깔 변경
-                {
-                    enemyData.enemy.ChangeColor(enemyData.damagedColor);
-                }
-                else // 색깔 변경 해제
-                {
-                    enemyData.enemy.ChangeColor(enemyData.normalColor);
-                }
-            }
-            else if (enemyData.eEnemyController == EnemyController.PLAYER)
-            {
-                if (enemyData.isDamaged) // 색깔 변경
-                {
-                    enemyData.enemy.ChangeColor(enemyData.playerDamagedColor);
-                }
-                else // 색깔 변경 해제
-                {
-                    enemyData.enemy.ChangeColor(enemyData.playerNormalColor);
-                }
-            }
-        }
-    }
-
     public class EnemylongRangeAttackCommand : EnemyCommand // 적 공격
     {
         private Transform enemyTransform;

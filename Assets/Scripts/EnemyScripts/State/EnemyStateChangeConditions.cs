@@ -151,7 +151,7 @@ namespace Enemy
 
     public partial class EnemyDeadState : EnemyState // Á×¾úÀ»¶§
     {
-        protected override void StateChangeCondition() 
+        protected override void StateChangeCondition()
         {
             ChangeState(null);
         }
