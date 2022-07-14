@@ -9,7 +9,7 @@ public class PickTutorialEvent : MapEventSO
 
     public override void OnEnterEvent()
     {
-        TalkManager.Instance.SetSubtitle(SubtitleDataManager.Instance.GetSubtitle(enterSubDataID));
+        TalkUtil.ShowSubtitle(enterSubDataID);
         InteractionHandler.canUseQuikSlot = false;
         EventManager.StartListening(Global.PickupPlant, Pickup);
     }
@@ -22,7 +22,7 @@ public class PickTutorialEvent : MapEventSO
         }
         
         string tId = suc ? successId : failId;
-        TalkManager.Instance.SetSubtitle(SubtitleDataManager.Instance.GetSubtitle(tId));
+        TalkUtil.ShowSubtitle(tId);
         EventManager.StopListening(Global.PickupPlant, Pickup);
     }
 }

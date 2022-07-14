@@ -10,7 +10,7 @@ public class DrainTutorialEvent : MapEventSO
 
     public override void OnEnterEvent()
     {
-        TalkManager.Instance.SetSubtitle(SubtitleDataManager.Instance.GetSubtitle(enterSubtitleId));
+        TalkUtil.ShowSubtitle(enterSubtitleId);
         EventManager.TriggerEvent("SpawnEnemy", "Stage0-05");
         BattleUIManager.Instance.StartMission(MissionType.ABSORPTIONTUTORIAL);
         //tutoEnemyDeathCnt = 0;

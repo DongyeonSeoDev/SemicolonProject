@@ -7,6 +7,6 @@ public class GetDrainSkillEvent : MapEventSO
 
     public override void OnEnterEvent()
     {
-        TalkManager.Instance.SetSubtitle(SubtitleDataManager.Instance.GetSubtitle(enterDialogKey));
+        TalkUtil.ShowSubtitle(enterDialogKey);
     }
 }

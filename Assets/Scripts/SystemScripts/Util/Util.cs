@@ -62,17 +62,17 @@ public static partial class Util
         mark.localScale = Vector3.one;
     }
 
-    public static void ExecuteFunc(Action func, float delay, float duration, MonoBehaviour mono = null, Action start=null, Action end = null, bool realTime = false)
+    public static void ExecuteFunc(Action func, float delay, float duration, MonoBehaviour mono = null, Action start=null, Action end = null, bool realTime = false, bool applyTimeScale = false)
     {
         if (!mono) mono = GameManager.Instance;
 
-        mono.StartCoroutine(ExecuteFuncCo(func, delay, duration, start, end, realTime));
+        mono.StartCoroutine(ExecuteFuncCo(func, delay, duration, start, end, realTime, applyTimeScale));
     }
 
-    private static IEnumerator ExecuteFuncCo(Action func, float delay, float duration, Action start = null, Action end = null, bool realTime = false)
+    private static IEnumerator ExecuteFuncCo(Action func, float delay, float duration, Action start = null, Action end = null, bool realTime = false, bool applyTimeScale = false)
     {
         if (!realTime)
-            yield return new WaitForSeconds(delay * TimeManager.CurrentTimeScale);
+            yield return new WaitForSeconds(applyTimeScale ? delay * TimeManager.CurrentTimeScale : delay);
         else
             yield return new WaitForSecondsRealtime(delay);
 
@@ -200,6 +200,14 @@ public static partial class Util
         Color c = img.color;
         c.a = a;
         img.color = c;
+    }
+}
+
+public static class TalkUtil
+{
+    public static void ShowSubtitle(string dialogDataKey)
+    {
+        TalkManager.Instance.SetSubtitle(SubtitleDataManager.Instance.GetSubtitle(dialogDataKey));
     }
 }
 
