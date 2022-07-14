@@ -34,7 +34,5 @@ namespace Enemy
         public Color damagedColor;
         public Color enemyDeadEffectColor;
         public Color playerNormalColor;
-        public Color playerDamagedColor;
-        public Color playerDeadEffectColor;
     }
 }

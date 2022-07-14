@@ -13,8 +13,6 @@ namespace Enemy
             damagedColor = enemyDataSO.damagedColor;
             enemyDeadEffectColor = enemyDataSO.enemyDeadEffectColor;
             playerNormalColor = enemyDataSO.playerNormalColor;
-            playerDamagedColor = enemyDataSO.playerDamagedColor;
-            playerDeadEffectColor = enemyDataSO.playerDeadEffectColor;
 
             EnemyManager.SetEnemyAnimationDictionary(animationDictionary, enemyDataSO.animationList);
 
@@ -54,10 +52,7 @@ namespace Enemy
         public Color normalColor;
         public Color damagedColor;
         public Color enemyDeadEffectColor;
-
         public Color playerNormalColor;
-        public Color playerDamagedColor;
-        public Color playerDeadEffectColor;
 
         public float chaseSpeed = 5f;
         public float isAttackPlayerDistance = 2f;
