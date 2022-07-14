@@ -151,7 +151,7 @@ public static partial class Util
 
     public static string PersistentDataPath(this string fileName) => string.Concat(Application.persistentDataPath, "/", fileName);
 
-    public static void DelayFunc(Action a, float delay, MonoBehaviour mono = null, bool realTime=false, bool applyCurTimeScale = true)
+    public static void DelayFunc(Action a, float delay, MonoBehaviour mono = null, bool realTime=false, bool applyCurTimeScale = false)
     {
         if (!mono) mono = GameManager.Instance;
 

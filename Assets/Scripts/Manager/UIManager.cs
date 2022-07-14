@@ -780,13 +780,21 @@ public partial class UIManager : MonoSingleton<UIManager>
         cursorInfoText.fontSize = fontSize;
 
         //cursorImgRectTrm.sizeDelta = new Vector2(Mathf.Clamp(msg.Length * widthOffset, sw, 1000f), cursorImgRectTrm.rect.height);
-        cursorInfoImgOffset = new Vector3(cursorImgRectTrm.rect.width, cursorImgRectTrm.rect.height) * 0.5f;
+        cursorInfoImg.GetComponent<CanvasGroup>().alpha = 0;
+        Util.PriDelayFunc("Tooltip UI Resize", CursorImgRectSetting, 0.1f, this, true);
 
         cursorInfoImg.gameObject.SetActive(true);
     }
 
+    private void CursorImgRectSetting()
+    {
+        cursorInfoImgOffset = new Vector3(cursorImgRectTrm.rect.width, cursorImgRectTrm.rect.height) * 0.5f;
+        cursorInfoImg.GetComponent<CanvasGroup>().alpha = 1;
+    }
+
     public void OffCursorInfoUI()
     {
+        Util.StopCo("Tooltip UI Resize", this);
         cursorInfoImg.gameObject.SetActive(false);
         isOnCursorInfo = false;
     }

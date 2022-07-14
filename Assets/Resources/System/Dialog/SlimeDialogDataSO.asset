@@ -289,3 +289,11 @@ MonoBehaviour:
         duration: 2.5
         nextLogInterval: 0
         endActionId: 
+  - key: NotReadyInLobby
+    subtitleData:
+      subData:
+      - dialog: "\uBB34\uC5B8\uAC00\uB97C \uAE5C\uBE61\uD55C \uAC83 \uAC19\uC740\uB370"
+        secondPerLit: 0.07
+        duration: 1
+        nextLogInterval: 0
+        endActionId: 

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System;
 using System.Runtime.InteropServices;
 using System.Reflection;
-using UnityEditor;
+using FkTweening;
 
 public static partial class Util
 {
@@ -60,6 +60,20 @@ public static partial class Util
         mark.localPosition = Vector3.zero;
         mark.SetAsLastSibling();
         mark.localScale = Vector3.one;
+    }
+
+    public static void PriDelayFunc(string key, Action a, float delay, MonoBehaviour mono, bool realTime, bool applyCurTimeScale = false)
+    {
+        if (!mono) mono = GameManager.Instance;
+
+        DOUtil.ExecuteTweening(key, DelayFuncCo(a, delay, realTime, applyCurTimeScale), mono);
+    }
+
+    public static void StopCo(string key, MonoBehaviour mono)
+    {
+        if (!mono) mono = GameManager.Instance;
+
+        DOUtil.StopCo(key, mono);
     }
 
     public static void ExecuteFunc(Action func, float delay, float duration, MonoBehaviour mono = null, Action start=null, Action end = null, bool realTime = false, bool applyTimeScale = false)
