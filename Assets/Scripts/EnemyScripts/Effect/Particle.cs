@@ -13,9 +13,13 @@ namespace Enemy
         private int uvIndex;
         private int quadIndex;
 
-        public Particle(MeshParticleSystem m, Vector3 pos, Vector3 dir, Vector3 s, float rot, float sp, int uv)
+        public Particle(MeshParticleSystem m)
         {
             mesh = m;
+        }
+
+        public Particle Init(Vector3 pos, Vector3 dir, Vector3 s, float rot, float sp, int uv)
+        {
             position = pos;
             direction = dir;
             size = s;
@@ -24,6 +28,8 @@ namespace Enemy
             uvIndex = uv;
 
             quadIndex = mesh.AddQuad(position, rotation, size, uvIndex);
+
+            return this;
         }
 
         public void Update()
@@ -37,5 +43,10 @@ namespace Enemy
         }
 
         public bool IsComplete() => speed < 0.05f;
+
+        public Particle Clone()
+        {
+            return MemberwiseClone() as Particle;
+        }
     }
 }

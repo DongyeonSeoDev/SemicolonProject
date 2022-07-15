@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +6,7 @@ namespace Enemy
     public class MeshParticleManager : MonoSingleton<MeshParticleManager>
     {
         private MeshParticleSystem mesh = null;
+        private Particle particlePrototype = null;
 
         private List<Particle> particleList = new List<Particle>();
 
@@ -38,14 +38,26 @@ namespace Enemy
             }
         }
 
+        private Particle GetParticle()
+        {
+            if (particlePrototype == null)
+            {
+                particlePrototype = new Particle(mesh);
+            }
+
+            return particlePrototype.Clone();
+        }
+
         public void SpawnBloodEffect(Vector3 position)
         {
             int count = Random.Range(minCount, maxCount);
 
             for (int i = 0; i < count; i++)
             {
+                Particle particle = GetParticle();
+
                 var randomAngle = Random.Range(0f, 360f);
-                particleList.Add(new Particle(mesh, position, new Vector3(Mathf.Cos(randomAngle * Mathf.Deg2Rad), Mathf.Sin(randomAngle * Mathf.Deg2Rad)), Vector3.one * Random.Range(minSize, maxSize), Random.Range(0f, 360f), Random.Range(minSpeed, maxSpeed), mesh.GetRandomBloodUVIndex()));
+                particleList.Add(particle.Init(position, new Vector3(Mathf.Cos(randomAngle * Mathf.Deg2Rad), Mathf.Sin(randomAngle * Mathf.Deg2Rad)), Vector3.one * Random.Range(minSize, maxSize), Random.Range(0f, 360f), Random.Range(minSpeed, maxSpeed), mesh.GetRandomBloodUVIndex()));
             }
         }
 
