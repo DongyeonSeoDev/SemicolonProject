@@ -164,3 +164,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3185198a44a6d0429cafe14ca10ea77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  poolType: 5
+  count: 5
+  enemyDataSO: {fileID: 11400000, guid: 656c7dcb6b4674d40b3528b2e00be591, type: 2}
+  hpBarFillImage: {fileID: 0}
+  hpBarDamageFillImage: {fileID: 0}
+  hpBar: {fileID: 0}
+  enemyAttackCheck: []
+  hpTweenTime: 0.1
+  hpTweenDelayTime: 0.3
+  damageHPTweenTime: 0.2
+  hpEffectAnimation: {fileID: 0}
+  stunEffectPosition: {x: 0, y: 0}
+  speed: 0
+  minAttack: 0
+  maxAttack: 0
+  critical: 0
+  criticalDamage: 0
+  defense: 0
+  hp: 0
+  addExperience: 0
