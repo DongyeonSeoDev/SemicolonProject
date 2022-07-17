@@ -328,18 +328,6 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
                 return false;
             case KeyCode.Menu:
                 return false;
-
-
-                /*case KeyCode.UpArrow:
-                     return false;
-                 case KeyCode.LeftArrow:
-                     return false;
-                 case KeyCode.RightArrow:
-                     return false;
-                 case KeyCode.DownArrow:
-                     return false;*/
-                /*case KeyCode.Escape:
-                    return false;*/
         }
         return true;
     }
@@ -505,7 +493,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         }
     }
 
-    private void KeyInputUIFillUpdate()  
+    private void KeyInputUIFillUpdate()    //슬라임 머리 위의 이미지 게이지 차오르는 효과
     {
         if (headImgFullTime > 0f)
         {
@@ -519,12 +507,12 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         }
     }
 
-    public void GetElement(InitGainType type)
+    public void GetElement(InitGainType type)  //어떤 UI나 스탯 같은 것을 획득
     {
         initGainQueue.Enqueue(type);
     }
 
-    private void GetElementUpdate()
+    private void GetElementUpdate() //획득한 UI나 시스템 있으면 띄워줌
     {
         if(initGainQueue.Count > 0 && enableProcessGainUINotice)
         {
