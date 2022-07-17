@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Enemy5_SkeletonGhost
   m_EditorClassIdentifier: 
   enemyType: 5
-  animationList: []
+  animationList:
+  - type: 4
+    animationName: Move
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   damagedColor: {r: 1, g: 1, b: 1, a: 1}
   enemyDeadEffectColor: {r: 1, g: 1, b: 1, a: 1}

@@ -108,15 +108,12 @@ namespace Enemy
 
         protected override void Update()
         {
-            if (isUseStartDelay)
+            if (isUseStartDelay && !isStartDelay)
             {
-                if (!isStartDelay)
-                {
-                    isUseStartDelay = false;
+                isUseStartDelay = false;
 
-                    EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Attack, enemyData.enemyAnimator, TriggerType.SetTrigger);
-                    EnemyManager.SpriteFlipCheck(enemyData);
-                }
+                EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Attack, enemyData.enemyAnimator, TriggerType.SetTrigger);
+                EnemyManager.SpriteFlipCheck(enemyData);
             }
             else
             {
