@@ -151,7 +151,7 @@ public static partial class Util
 
     public static string PersistentDataPath(this string fileName) => string.Concat(Application.persistentDataPath, "/", fileName);
 
-    public static void DelayFunc(Action a, float delay, MonoBehaviour mono = null, bool realTime=false, bool applyCurTimeScale = false)
+    public static void DelayFunc(Action a, float delay, MonoBehaviour mono = null, bool realTime=false, bool applyCurTimeScale = true)
     {
         if (!mono) mono = GameManager.Instance;
 
@@ -163,11 +163,11 @@ public static partial class Util
     public static IEnumerator DelayFuncCo(Action func, float delay, bool realTime, bool applyCurTimeScale)
     {
         if (!realTime)
-            yield return new WaitForSeconds(applyCurTimeScale ? delay * TimeManager.CurrentTimeScale : 1f);
+            yield return new WaitForSeconds(applyCurTimeScale ? delay : delay * TimeManager.CurrentTimeScale);
         else
             yield return new WaitForSecondsRealtime(delay);
         func();
-    }
+    } //waitforseconds는 timeScale 영향 받음
 }
 #endregion
 

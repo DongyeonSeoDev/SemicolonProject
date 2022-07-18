@@ -62,7 +62,7 @@ public static partial class Util
         mark.localScale = Vector3.one;
     }
 
-    public static void PriDelayFunc(string key, Action a, float delay, MonoBehaviour mono, bool realTime, bool applyCurTimeScale = false)
+    public static void PriDelayFunc(string key, Action a, float delay, MonoBehaviour mono, bool realTime, bool applyCurTimeScale = true)
     {
         if (!mono) mono = GameManager.Instance;
 
@@ -76,7 +76,7 @@ public static partial class Util
         DOUtil.StopCo(key, mono);
     }
 
-    public static void ExecuteFunc(Action func, float delay, float duration, MonoBehaviour mono = null, Action start=null, Action end = null, bool realTime = false, bool applyTimeScale = false)
+    public static void ExecuteFunc(Action func, float delay, float duration, MonoBehaviour mono = null, Action start=null, Action end = null, bool realTime = false, bool applyTimeScale = true)
     {
         if (!mono) mono = GameManager.Instance;
 
@@ -86,7 +86,7 @@ public static partial class Util
     private static IEnumerator ExecuteFuncCo(Action func, float delay, float duration, Action start = null, Action end = null, bool realTime = false, bool applyTimeScale = false)
     {
         if (!realTime)
-            yield return new WaitForSeconds(applyTimeScale ? delay * TimeManager.CurrentTimeScale : delay);
+            yield return new WaitForSeconds(applyTimeScale ? delay : delay * TimeManager.CurrentTimeScale);
         else
             yield return new WaitForSecondsRealtime(delay);
 
