@@ -687,6 +687,7 @@ public class StageManager : MonoSingleton<StageManager>
 
         RandomRoomType room = randomZoneTypeListDic[currentFloor][0];
         randomZoneTypeListDic[currentFloor].RemoveAt(0);
+        randomZoneTypeListDic[currentFloor].Add(room); //혹시 모를 예외 처리
 
         switch (room)
         {

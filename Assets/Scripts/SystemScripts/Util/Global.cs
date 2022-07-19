@@ -81,7 +81,7 @@ public static partial class Global
     public static Sprite ToEnemySpeciesSprite(this EnemySpecies species)
     {
         if (speciesSpriteArr[(int)species] == null)
-            speciesSpriteArr[(int)species] = Resources.Load<Sprite>("System/Sprites/MobSpeciesIcon/" + species.ToString());
+            speciesSpriteArr[(int)species] = Resources.Load<Sprite>("System/Sprites/MobSpeciesIcon/" + species.ToString());  //지금은 걍 몹 이미지 하나 가져와서 쓰지만 몬스터 종마다 대표 이미지가 필요해보임
         return speciesSpriteArr[(int)species];
     }
 
