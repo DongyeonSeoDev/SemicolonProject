@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerBodySlap : PlayerSkill
 {
     [SerializeField]
+    private LayerMask cantCrossLayer;
+    [SerializeField]
     private LayerMask canCrashLayer;
     [SerializeField]
     private LayerMask whatIsEnemy;
@@ -182,7 +184,7 @@ public class PlayerBodySlap : PlayerSkill
 
         Debug.DrawRay(moveOriginPos, moveTargetPos, Color.red, 10f);
 
-        moveTargetPos = SlimeGameManager.Instance.PosCantCrossWall(canCrashLayer, moveOriginPos, moveTargetPos);
+        moveTargetPos = SlimeGameManager.Instance.PosCantCrossWall(cantCrossLayer, moveOriginPos, moveTargetPos);
 
         currentBodySlapTime = Vector2.Distance(moveOriginPos, moveTargetPos) / bodySlapMoveSpeed;
 
@@ -208,6 +210,14 @@ public class PlayerBodySlap : PlayerSkill
             }
 
             hitWhenBodySlap.Add(targetObject);
+
+            StageDoor stageDoor = targetObject.GetComponent<StageDoor>();
+
+            if(stageDoor != null && (stageDoor.IsOpen || stageDoor.IsExitDoor))
+            {
+                //Debug.Log("aaaaa");
+                return;
+            }
 
             IDamageableBySlimeBodySlap damagableByBodySlap = targetObject.GetComponent<IDamageableBySlimeBodySlap>();
 
