@@ -41,9 +41,6 @@ public class PlayerBodySlap : PlayerSkill
     [SerializeField]
     private float damageMagnificationOfBodySlap = 2f;
 
-    [Header("돌진하기 전 살짝 뒤로 뺄 때의 속도")]
-    [SerializeField]
-    private float moveBackSpeed = 8f;
     [SerializeField]
     private float bodySlapMoveSpeed = 2f;
 
@@ -215,7 +212,6 @@ public class PlayerBodySlap : PlayerSkill
 
             if(stageDoor != null && (stageDoor.IsOpen || stageDoor.IsExitDoor))
             {
-                //Debug.Log("aaaaa");
                 return;
             }
 
@@ -281,10 +277,6 @@ public class PlayerBodySlap : PlayerSkill
         playerState.Chargning = false;
 
         StopBodySlap();
-    }
-    private void StartBodySlap()
-    {
-
     }
     public override void WhenSkillDelayTimerZero()
     {

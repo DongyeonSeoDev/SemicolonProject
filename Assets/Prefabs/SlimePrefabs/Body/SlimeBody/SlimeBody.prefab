@@ -309,9 +309,8 @@ MonoBehaviour:
     frequency: 0
     duration: 0
   maxChargingTime: 1
-  targetPosFarPerCharge: 3
+  targetPosFarPerCharge: 2
   damageMagnificationOfBodySlap: 1
-  moveBackSpeed: 5
   bodySlapMoveSpeed: 30
   offsetBodySlapMovePos: 10
   bodySlapTime: 0.15

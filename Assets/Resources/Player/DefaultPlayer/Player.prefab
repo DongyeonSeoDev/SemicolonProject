@@ -611,12 +611,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 8985080968744771313}
     - target: {fileID: 1014413151, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: moveBackSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1014413151, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: maxChargingTime
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 1014413151, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: bodySlapMoveSpeed
-      value: 40
+      value: 45
       objectReference: {fileID: 0}
     - target: {fileID: 1014413151, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: whenBodySlapCrashShakeData.duration
