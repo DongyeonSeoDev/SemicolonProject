@@ -8,7 +8,18 @@ public enum MissionType
     NOQUIKSLOT,
     ALLABSORPTION,
     ABSORPTIONTUTORIAL,
-    ABSORPTIONTUTORIAL2
+    ABSORPTIONTUTORIAL2,
+    NODAMAGED,
+    SIMULABSORPTION,
+    CONSEKILL,
+    TIMELIMIT
+}
+
+public enum DifficultyLevel
+{
+    EASY,
+    NORMAL,
+    HARD
 }
 
 public enum KillNoticeType

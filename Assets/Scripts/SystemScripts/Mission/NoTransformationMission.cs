@@ -1,7 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class NoTransformationMission : Mission
+public class NoTransformationMission : Mission  //»ç¿ë X
 {
     private List<KeyAction> cantChangeKeyActions;
 
@@ -36,5 +36,10 @@ public class NoTransformationMission : Mission
                 BattleUIManager.Instance.ShakeMissionPanel();
             }
         }
+    }
+
+    public override void SetLv(DifficultyLevel lv)
+    {
+        
     }
 }

@@ -21,5 +21,8 @@ public class AllKillMission : Mission
         
     }
 
-
+    public override void SetLv(DifficultyLevel lv)
+    {
+        missionLevel = DifficultyLevel.EASY;
+    }
 }

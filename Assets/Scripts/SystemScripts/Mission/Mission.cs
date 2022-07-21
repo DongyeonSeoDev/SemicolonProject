@@ -3,6 +3,7 @@ public abstract class Mission
 {
     public bool isEnd;
     public MissionType missionType;
+    public DifficultyLevel missionLevel;
     public string missionName;
 
     public Mission() { }
@@ -14,4 +15,6 @@ public abstract class Mission
     public abstract void Start();
     public abstract void Update();
     public abstract void End(bool breakDoor = false);  //문을 부수고 지나가서 End가 호출된건지
+
+    public abstract void SetLv(DifficultyLevel lv);
 }

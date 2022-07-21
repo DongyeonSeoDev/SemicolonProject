@@ -60,6 +60,11 @@ public class AbsorptionTutoMission : Mission
             
         }
     }
+
+    public override void SetLv(DifficultyLevel lv)
+    {
+        missionLevel = lv;
+    }
 }
 
 public class AbsorptionTutoMission2 : Mission
@@ -96,5 +101,10 @@ public class AbsorptionTutoMission2 : Mission
         {
             TalkManager.Instance.SetSubtitle(SubtitleDataManager.Instance.GetSubtitle("Tuto_FailAbsorb2"));
         }
+    }
+
+    public override void SetLv(DifficultyLevel lv)
+    {
+        missionLevel = lv;
     }
 }

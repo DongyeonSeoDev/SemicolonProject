@@ -37,4 +37,9 @@ public class SurvivalMission : Mission
             isEnd = true;
         }
     }
+
+    public override void SetLv(DifficultyLevel lv)
+    {
+        missionLevel = lv;
+    }
 }

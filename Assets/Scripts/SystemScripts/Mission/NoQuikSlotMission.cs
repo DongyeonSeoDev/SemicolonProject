@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class NoQuikSlotMission : Mission
+public class NoQuikSlotMission : Mission 
 {
     public NoQuikSlotMission(string title) : base(title)
     {
@@ -23,5 +23,10 @@ public class NoQuikSlotMission : Mission
         {
             BattleUIManager.Instance.ShakeMissionPanel();
         }
+    }
+
+    public override void SetLv(DifficultyLevel lv)
+    {
+        missionLevel = DifficultyLevel.NORMAL;
     }
 }

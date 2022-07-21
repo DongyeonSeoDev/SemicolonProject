@@ -1,6 +1,6 @@
 
 
-public class AllAbsorptionMission : Mission
+public class AllAbsorptionMission : Mission  //»ç¿ë X
 {
     public AllAbsorptionMission(string title) : base(title)
     {
@@ -20,5 +20,10 @@ public class AllAbsorptionMission : Mission
     public override void Update()
     {
        
+    }
+
+    public override void SetLv(DifficultyLevel lv)
+    {
+        
     }
 }

@@ -12,7 +12,7 @@ public class DrainTutorialEvent : MapEventSO
     {
         TalkUtil.ShowSubtitle(enterSubtitleId);
         EventManager.TriggerEvent("SpawnEnemy", "Stage0-05");
-        BattleUIManager.Instance.StartMission(MissionType.ABSORPTIONTUTORIAL);
+        BattleUIManager.Instance.StartMission(MissionType.ABSORPTIONTUTORIAL, DifficultyLevel.EASY);
         //tutoEnemyDeathCnt = 0;
         //EventManager.StartListening("Tuto_EnemyDeathCheck", CheckTutoEnemyDead);
     }

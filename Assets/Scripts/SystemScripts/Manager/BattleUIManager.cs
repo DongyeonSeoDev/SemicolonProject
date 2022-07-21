@@ -116,9 +116,9 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
 
         #region Mission Setting
         allMissionsDic.Add(MissionType.ALLKILL, new AllKillMission("모든 적을 처치하세요"));
-        allMissionsDic.Add(MissionType.NOTRANSFORMATION, new NoTransformationMission("변신하지 않고 클리어하세요"));
         allMissionsDic.Add(MissionType.NOQUIKSLOT, new NoQuikSlotMission("퀵슬롯을 사용하지 않고 클리어하세요"));
-        allMissionsDic.Add(MissionType.ALLABSORPTION, new AllAbsorptionMission("모든 적을 흡수하세요"));
+        //allMissionsDic.Add(MissionType.NOTRANSFORMATION, new NoTransformationMission("변신하지 않고 클리어하세요"));
+        //allMissionsDic.Add(MissionType.ALLABSORPTION, new AllAbsorptionMission("모든 적을 흡수하세요"));
 
         foreach(MissionType type in allMissionsDic.Keys)
         {
@@ -302,7 +302,8 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
             Mission ms = GetRandomMission();
             MissionRandomInCounter(ref ms);
             CheckMissionZeroWeight(ref ms);
-            
+            ms.SetLv((DifficultyLevel)Random.Range(0, Global.EnumCount<DifficultyLevel>()));
+
             currentMissions.Add(ms);
             ms.Start();
 
@@ -318,9 +319,10 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
         }
     }
 
-    public void StartMission(MissionType msType)  // 어떠한 미션을 등장시켜줌
+    public void StartMission(MissionType msType, DifficultyLevel lv)  // 어떠한 미션을 등장시켜줌
     {
         Mission ms = allMissionsDic[msType];
+        ms.SetLv(lv);
         currentMissions.Add(ms);
         ms.Start();
 

@@ -11,7 +11,7 @@ public class MissionTutorialEvent : MapEventSO
 
     public override void OnEnterEvent()
     {
-        BattleUIManager.Instance.StartMission(MissionType.SURVIVAL1);
+        BattleUIManager.Instance.StartMission(MissionType.SURVIVAL1, DifficultyLevel.EASY);
         TalkUtil.ShowSubtitle(startMapSubDataId);
 
         EventManager.StartListening("PlayerGetDamaged", PlayerDamaged);
