@@ -133,8 +133,6 @@ public class PlayerBodySlap : PlayerSkill
     {
         base.DoSkill();
 
-        // currentChargingTimer 측정을 시작한다.
-
         if (canBodySlap)
         {
             StopBodySlap();

@@ -25,13 +25,10 @@ public class SlimeSkin : MonoBehaviour
 
     void Update()
     {
-        //Vector3 wave = Vector3.zero;
         Vector3 newWave = Vector3.zero;
 
         for (int i = 0; i < 2; i++)
         {
-            //wave = materials[i].GetVector("_WaveVisuals");
-
             if (playerInput.MoveVector != Vector2.zero)
             {
                 newWave.x = waveVisuals.x;

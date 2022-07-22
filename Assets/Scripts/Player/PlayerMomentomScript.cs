@@ -51,8 +51,6 @@ public class PlayerMomentomScript : MonoBehaviour
         momentomTimer = momentomTime + 
             playerChoiceStatControl.ChoiceDataDict[NGlobal.MomentomID].upTargetStatPerChoiceStat * SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.statValue;
 
-        // 추진력 사용 이펙트 넣을것
-        // 이전값 저장해서 추진력 끝나면 그 값 빼기
         lastUpSpeed = momentomSpeed;
         SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.speed.statValue += lastUpSpeed;
 

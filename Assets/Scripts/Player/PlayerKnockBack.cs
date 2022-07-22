@@ -22,7 +22,6 @@ public class PlayerKnockBack : MonoBehaviour
         EventManager.StopListening("PlayerKnockBack", OnKnockBack);
     }
 
-    // Update is called once per frame
     void Update()
     {
         CheckKnockBackTimer();

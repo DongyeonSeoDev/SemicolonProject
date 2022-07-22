@@ -37,7 +37,6 @@ public class BodyPoint : MonoBehaviour
     private float moveToMiddleTimer = 0f;
 
     private bool isFarByPlayerByDrain = false;
-    //private float returnToPlayerPosUpdateTime = 0f;
 
     private Vector2 farMaxPos = Vector2.zero;
 

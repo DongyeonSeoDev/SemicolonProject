@@ -82,7 +82,6 @@ public class AcquisitionDropIcon : MonoBehaviour
                 isFollowing = false;
                 isTweening = true;
 
-                //spriteRenderer.DOColor(Color.clear, 0.58f);
                 transform.DOScale(Vector3.zero, 0.65f).OnComplete(() => end?.Invoke());
             }
         }

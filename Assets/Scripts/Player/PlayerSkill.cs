@@ -13,8 +13,6 @@ public abstract class PlayerSkill : PlayerAction
 
     public virtual void Update()
     {
-        //CheckSkillDelay();
-
         if(SlimeGameManager.Instance.SkillDelayTimerZero[skillIdx])
         {
             SlimeGameManager.Instance.SkillDelayTimerZero[skillIdx] = false;

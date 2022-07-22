@@ -283,8 +283,6 @@ public class InputTutorial : MonoBehaviour
         {
             if (inputTutoDataDict.ContainsKey(keyAction) && !inputTutoDataDict[keyAction].timerStarted && !KeyActionManager.Instance.IsNoticingGetMove)
             {
-                //KeyActionManager.Instance.SetPlayerHeadText("?", 0.5f);
-
                 if (KeyAction.ATTACK == keyAction)
                 {
                     KeyActionManager.Instance.ShowQuestionMark();

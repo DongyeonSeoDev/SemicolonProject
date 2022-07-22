@@ -39,10 +39,7 @@ public class PlayerShoot : PlayerSkill
     {
         base.Update();
     }
-    void FixedUpdate()
-    {
-        //CheckSkillDelay();
-    }
+
     public override void DoSkill()
     {
         base.DoSkill();
@@ -77,8 +74,6 @@ public class PlayerShoot : PlayerSkill
 
             EventManager.TriggerEvent("PlayerShoot");
         }
-
-        //playerInput.IsDoSkill0 = false;
     }
 
     public override void WhenSkillDelayTimerZero()
@@ -87,16 +82,4 @@ public class PlayerShoot : PlayerSkill
 
         canShoot = true;
     }
-    //private void CheckProjectileDelayTimer()
-    //{
-    //    if (projectileDelayTimer > 0f)
-    //    {
-    //        projectileDelayTimer -= Time.fixedDeltaTime;
-
-    //        if (projectileDelayTimer <= 0f)
-    //        {
-    //            canShoot = true;
-    //        }
-    //    }
-    //}
 }

@@ -19,7 +19,6 @@ public class Stat
         accumulateStatPoint = 0;
         currentExp = 0;
         additionalEternalStat.ResetAdditional();
-        //choiceStat = new ChoiceStat();
         eternalStat.Reset();
         choiceStat.Reset();
     }
@@ -102,8 +101,6 @@ public class StatElement  //스탯은 0렙부터 시작. 0렙일 때는 스탯을 개방하지 못한
         if (statLv > 1)
         {
             statLv = savedStatLv;
-            //statValue -= upStatCount * upStatValue;
-            //statLv = 1;
         }
     }
 
@@ -133,8 +130,6 @@ public class StatElement  //스탯은 0렙부터 시작. 0렙일 때는 스탯을 개방하지 못한
 [Serializable]
 public class EternalStat
 {
-    //public static EternalStat operator +(EternalStat a, EternalStat b) => new EternalStat(a.maxHp.statValue + b.maxHp.statValue, a.minDamage.statValue + b.minDamage.statValue, a.maxDamage.statValue + b.maxDamage.statValue, a.defense.statValue + b.defense.statValue, a.intellect.statValue + b.intellect.statValue, a.speed.statValue + b.speed.statValue, a.attackSpeed.statValue + b.attackSpeed.statValue, a.criticalRate.statValue + b.criticalRate.statValue, a.criticalDamage.statValue + b.criticalDamage.statValue);
-    //public static EternalStat operator -(EternalStat a, EternalStat b) => new EternalStat(a.maxHp.statValue - b.maxHp.statValue, a.minDamage.statValue - b.minDamage.statValue, a.maxDamage.statValue - b.maxDamage.statValue, a.defense.statValue - b.defense.statValue, a.intellect.statValue - b.intellect.statValue, a.speed.statValue - b.speed.statValue, a.attackSpeed.statValue - b.attackSpeed.statValue, a.criticalRate.statValue - b.criticalRate.statValue, a.criticalDamage.statValue - b.criticalDamage.statValue);
     public static EternalStat operator *(EternalStat a, EternalStat b) => new EternalStat(a.maxHp.statValue * b.maxHp.statValue, a.minDamage.statValue * b.minDamage.statValue, a.maxDamage.statValue * b.maxDamage.statValue, a.defense.statValue * b.defense.statValue, a.intellect.statValue * b.intellect.statValue, a.speed.statValue * b.speed.statValue, a.attackSpeed.statValue * b.attackSpeed.statValue, a.criticalRate.statValue * b.criticalRate.statValue, a.criticalDamage.statValue * b.criticalDamage.statValue);
     public static EternalStat operator *(EternalStat a, int b) =>         new EternalStat(a.maxHp .statValue* b, a.minDamage.statValue * b, a.maxDamage.statValue * b, a.defense.statValue * b, a.intellect.statValue * b, a.speed.statValue * b, a.attackSpeed.statValue * b, a.criticalRate.statValue * b, a.criticalDamage.statValue * b);
     public static EternalStat operator *(EternalStat a, float b) =>       new EternalStat((a.maxHp.statValue * b), (int)(a.minDamage.statValue * b), (int)(a.maxDamage.statValue * b), (int)(a.defense.statValue * b), (int)(a.intellect.statValue * b), (int)(a.speed.statValue * b), (int)(a.attackSpeed.statValue * b), (int)(a.criticalRate.statValue * b), (int)(a.criticalDamage.statValue * b));
@@ -142,9 +137,7 @@ public class EternalStat
     public static EternalStat operator /(EternalStat a, int b) =>         new EternalStat(a.maxHp .statValue/ b, a.minDamage.statValue / b, a.maxDamage.statValue / b, a.defense.statValue / b, a.intellect.statValue / b, a.speed.statValue / b, a.attackSpeed.statValue / b, a.criticalRate.statValue / b, a.criticalDamage.statValue / b);
     public static EternalStat operator /(EternalStat a, float b) =>       new EternalStat((a.maxHp.statValue / b), (int)(a.minDamage.statValue / b), (int)(a.maxDamage.statValue / b), (int)(a.defense.statValue / b), (int)(a.intellect.statValue / b), (int)(a.speed.statValue / b), (int)(a.attackSpeed.statValue / b), (int)(a.criticalRate.statValue / b), (int)(a.criticalDamage.statValue / b));
     
-    //public int currentHp;
     public StatElement maxHp = new StatElement();
-    //public int mp;
 
     public StatElement minDamage = new StatElement();
     public StatElement maxDamage = new StatElement();
@@ -307,7 +300,6 @@ public class EternalStat
 [Serializable]
 public class ChoiceStat
 {
-    //public int overweight; // 과체중
     public StatElement proficiency = new StatElement(); // 숙련도
 
     public StatElement momentom = new StatElement(); // 추진력
@@ -322,19 +314,6 @@ public class ChoiceStat
 
     public StatElement fake = new StatElement(); // 맞은척
 
-    //public int luck; // 운
-
-    //public float viscosity; // 점성
-    //public float humidity; // 습도
-
-    //public float affinity; // 친밀도
-    //public float dominion; // 지배력
-
-    //public float marineLifeFitness; // 해양생물 적합력
-    //public float landCreatureFitness; // 지상생물 적합력
-
-    //public float cookingAbility;
-
     public void Reset()
     {
         proficiency.ResetComplete();
@@ -343,6 +322,4 @@ public class ChoiceStat
         frenzy.ResetComplete();
         reflection.ResetComplete();
     }
-
-
 }
