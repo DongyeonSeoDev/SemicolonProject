@@ -1324,7 +1324,7 @@ MonoBehaviour:
   critical: 0
   criticalDamage: 0
   defense: 0
-  hp: 1250
+  hp: 1000
   addExperience: 50
   specialAttack3HPPercent:
   - 60

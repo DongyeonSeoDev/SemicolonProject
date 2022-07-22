@@ -20,3 +20,11 @@ MonoBehaviour:
   damagedColor: {r: 1, g: 1, b: 1, a: 1}
   enemyDeadEffectColor: {r: 1, g: 1, b: 1, a: 1}
   playerNormalColor: {r: 1, g: 1, b: 1, a: 1}
+  speed: 5
+  minAttack: 15
+  maxAttack: 19
+  critical: 0
+  criticalDamage: 0
+  defense: 0
+  hp: 25
+  addExperience: 50

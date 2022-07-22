@@ -59,36 +59,11 @@ namespace Enemy
 
         [SerializeField] private Vector2 stunEffectPosition;
 
-        [SerializeField]
-        [Header("스피드")]
-        private float speed;
-        [SerializeField]
-        [Header("최소 공격력")]
-        private float minAttack;
-        [SerializeField]
-        [Header("최대 공격력")]
-        private float maxAttack;
-        [SerializeField]
-        [Header("치명타 확률")]
-        private float critical;
-        [SerializeField]
-        [Header("치명타 추가 데미지 퍼센트")]
-        private float criticalDamage;
-        [SerializeField]
-        [Header("방어력")]
-        private float defense;
-        [SerializeField]
-        [Header("체력")]
-        private float hp;
-        [SerializeField]
-        [Header("경험치")]
-        private float addExperience;
-
         public float AddExperience
         { 
             get
             {
-                return addExperience;
+                return enemyDataSO.addExperience;
             }
         }
 
@@ -180,14 +155,6 @@ namespace Enemy
                 enemySpriteRenderer = sr,
                 enemyRigidbody2D = rb,
                 enemy = this,
-                chaseSpeed = speed,
-                minAttackPower = minAttack,
-                maxAttackPower = maxAttack,
-                randomCritical = critical,
-                criticalDamagePercent = criticalDamage,
-                hp = hp,
-                maxHP = hp,
-                defense = defense,
                 stunEffectPosition = stunEffectPosition
             };
 
