@@ -117,6 +117,10 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
         #region Mission Setting
         allMissionsDic.Add(MissionType.ALLKILL, new AllKillMission("모든 적을 처치하세요"));
         allMissionsDic.Add(MissionType.NOQUIKSLOT, new NoQuikSlotMission("퀵슬롯을 사용하지 않고 클리어하세요"));
+        allMissionsDic.Add(MissionType.NODAMAGED, new NoDamagedMission());
+        allMissionsDic.Add(MissionType.SIMULABSORPTION, new SimulAbsorptionMission("3마리를 동시에 흡수하세요"));
+        allMissionsDic.Add(MissionType.CONSEKILL, new ConseKillMission());
+        allMissionsDic.Add(MissionType.TIMELIMITKILL, new TimeLimitKillMission());
         //allMissionsDic.Add(MissionType.NOTRANSFORMATION, new NoTransformationMission("변신하지 않고 클리어하세요"));
         //allMissionsDic.Add(MissionType.ALLABSORPTION, new AllAbsorptionMission("모든 적을 흡수하세요"));
 

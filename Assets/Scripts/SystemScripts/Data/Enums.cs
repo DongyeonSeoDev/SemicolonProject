@@ -12,7 +12,7 @@ public enum MissionType
     NODAMAGED,
     SIMULABSORPTION,
     CONSEKILL,
-    TIMELIMIT
+    TIMELIMITKILL
 }
 
 public enum DifficultyLevel
