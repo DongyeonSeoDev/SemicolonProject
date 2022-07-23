@@ -459,7 +459,7 @@ namespace Enemy
                 base.Update();
             }
 
-            if (SlimeGameManager.Instance.CurrentSkillDelayTimer[0] <= enemyData.playerAnimationDelay) // 공격 종료
+            if (SlimeGameManager.Instance.SkillDelays[0] - SlimeGameManager.Instance.CurrentSkillDelayTimer[0] > enemyData.playerAnimationTime) // 공격 종료
             {
                 base.Update();
             }
