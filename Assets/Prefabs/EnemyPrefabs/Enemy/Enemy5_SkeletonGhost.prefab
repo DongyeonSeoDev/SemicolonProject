@@ -180,14 +180,6 @@ MonoBehaviour:
   damageHPTweenTime: 0.2
   hpEffectAnimation: {fileID: 3393951944251396924}
   stunEffectPosition: {x: 0, y: 0.8}
-  speed: 5
-  minAttack: 15
-  maxAttack: 19
-  critical: 0
-  criticalDamage: 0
-  defense: 0
-  hp: 25
-  addExperience: 50
 --- !u!114 &5332868602282750055
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -8,7 +8,7 @@ namespace Enemy
 
             enemyData.attackDelay = 0.5f;
 
-            enemyData.enemySpriteRotateCommand = new EnemySpriteFlipCommand(enemyData);
+            enemyData.enemySpriteRotateCommand = new EnemySpriteRotateCommand(enemyData);
         }
 
         public void ReadyAttack() // 애니메이션에서 실행
