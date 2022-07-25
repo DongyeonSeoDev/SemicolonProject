@@ -23,6 +23,6 @@ MonoBehaviour:
   stage: {fileID: 1378282381469885354, guid: faaa5bcc3e9138d47b5a637b4c898ed9, type: 3}
   areaType: 1
   enemySpeciesArea: 1
-  missionTypes: 0100000004000000
+  missionTypes: 0100000004000000080000000b000000
   mapNPC: {fileID: 0}
   mapEvent: {fileID: 0}
