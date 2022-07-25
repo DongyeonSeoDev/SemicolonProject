@@ -22,7 +22,7 @@ public class BodyPoint : MonoBehaviour
     private SoundBox whenDrainBodyPointMoveSound = null;
 
     [SerializeField]
-    private float returnToOriginSpeed = 2f;
+    private float moveToOriginSpeed = 2f;
     [SerializeField]
     private float moveToMiddleSpeed = 1f;
     [SerializeField]
@@ -135,6 +135,7 @@ public class BodyPoint : MonoBehaviour
             EventManager.StartListening("PlayerCharging", SetMoveToMiddleTimer);
             EventManager.StartListening("PlayerChargingCancel", SetMoveToMiddleTimerZero);
             EventManager.StartListening("PlayerBodySlap", (Action<float>)PlayerBodySlap);
+            EventManager.StartListening("PlayerBodySlapStop", PlayerBodySlapStop);
         }
     }
     
@@ -162,6 +163,7 @@ public class BodyPoint : MonoBehaviour
             EventManager.StopListening("PlayerCharging", SetMoveToMiddleTimer);
             EventManager.StopListening("PlayerChargingCancel", SetMoveToMiddleTimerZero);
             EventManager.StopListening("PlayerBodySlap", (Action<float>)PlayerBodySlap);
+            EventManager.StopListening("PlayerBodySlapStop", PlayerBodySlapStop);
         }
     }
 
@@ -206,7 +208,7 @@ public class BodyPoint : MonoBehaviour
 
             if (Vector2.Distance(transform.localPosition, originLocalPosition) > 0.01f)
             {
-                transform.localPosition = Vector2.Lerp(transform.localPosition, originLocalPosition, Time.deltaTime * returnToOriginSpeed);
+                transform.localPosition = Vector2.Lerp(transform.localPosition, originLocalPosition, Time.deltaTime * moveToOriginSpeed);
             }
             else
             {
@@ -221,7 +223,7 @@ public class BodyPoint : MonoBehaviour
             isMoveToOriginASec = true;
             moveToOriginTimer -= Time.deltaTime;
 
-            transform.localPosition = Vector2.Lerp(transform.localPosition, originLocalPosition, Time.deltaTime * returnToOriginSpeed);
+            transform.localPosition = Vector2.Lerp(transform.localPosition, originLocalPosition, Time.deltaTime * moveToOriginSpeed);
 
             if(moveToOriginTimer <= 0f)
             {
@@ -231,6 +233,14 @@ public class BodyPoint : MonoBehaviour
                 transform.localPosition = originLocalPosition;
             }
         }
+    }
+    private void MoveToOriginAuto()
+    {
+        float dis = Vector2.Distance(originLocalPosition, transform.localPosition);
+
+        float moveSec = dis / moveToOriginSpeed;
+
+        moveToOriginTimer = moveSec;
     }
     private void CheckCrossWall()
     {
@@ -266,6 +276,10 @@ public class BodyPoint : MonoBehaviour
     private void PlayerBodySlap(float bodySlapTime)
     {
         moveToMiddleTimer = bodySlapTime;
+    }
+    private void PlayerBodySlapStop()
+    {
+        MoveToOriginAuto();
     }
     private void PlayerDrain(float drainTime)
     {

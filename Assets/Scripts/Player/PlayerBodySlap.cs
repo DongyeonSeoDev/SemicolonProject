@@ -292,6 +292,8 @@ public class PlayerBodySlap : PlayerSkill
 
         bodySlapTimer = bodySlapTime;
         moveTargetPos = Vector2.zero;
+
+        EventManager.TriggerEvent("PlayerBodySlapStop");
     }
     private void CheckChargeTime()
     {
