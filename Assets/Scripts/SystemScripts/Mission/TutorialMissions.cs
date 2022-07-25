@@ -2,6 +2,7 @@ using UnityEngine;
 using Enemy;
 using System.Collections.Generic;
 
+//Tutorial Missions
 public class AbsorptionTutoMission : Mission
 {
     private float checkTime;

@@ -7,7 +7,7 @@ public class SimulAbsorptionMission : Mission
 
     public SimulAbsorptionMission(string title) : base(title)
     {
-
+        missionType = MissionType.SIMULABSORPTION;
     }
 
     public override void End(bool breakDoor = false)
@@ -23,6 +23,7 @@ public class SimulAbsorptionMission : Mission
     public override void Start()
     {
         isEnd = false;
+        isClear = false;
     }
 
     public override void Update()

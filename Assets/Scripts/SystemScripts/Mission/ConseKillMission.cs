@@ -4,6 +4,10 @@ public class ConseKillMission : Mission
 {
     private int needConseKill;
 
+    public ConseKillMission()
+    {
+        missionType = MissionType.CONSEKILL;
+    }
     public override void End(bool breakDoor = false)
     {
         
@@ -29,7 +33,8 @@ public class ConseKillMission : Mission
 
     public override void Start()
     {
-        isEnd = false;  
+        isEnd = false;
+        isClear = false;
     }
 
     public override void Update()

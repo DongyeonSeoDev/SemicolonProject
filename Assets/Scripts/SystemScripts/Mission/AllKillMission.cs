@@ -1,4 +1,4 @@
-using UnityEngine;
+
 public class AllKillMission : Mission
 {
     public AllKillMission(string title) : base(title)
@@ -7,13 +7,14 @@ public class AllKillMission : Mission
     }
     public override void End(bool breakDoor = false)
     {
-       
+        EventManager.StopListening("StageClear", MissionSuccess);
     }
 
     public override void Start()
     {
         isEnd = false;
-        
+        isClear = false;
+        EventManager.StartListening("StageClear", MissionSuccess);
     }
 
     public override void Update()
@@ -25,4 +26,6 @@ public class AllKillMission : Mission
     {
         missionLevel = DifficultyLevel.EASY;
     }
+
+   
 }

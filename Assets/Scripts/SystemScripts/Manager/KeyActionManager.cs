@@ -160,6 +160,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         if(!string.IsNullOrEmpty(quikItemId) && isUseableQuik && !TimeManager.IsTimePaused && !Util.IsActiveGameUI(UIType.MENU) && InteractionHandler.canUseQuikSlot)
         {
             GameManager.Instance.UseItem(quikItemId);
+            EventManager.TriggerEvent("UseQuikSlot");
         }
     }
 
