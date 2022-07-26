@@ -207,8 +207,8 @@ MonoBehaviour:
   hpEffectAnimation: {fileID: 8516383107406063678}
   stunEffectPosition: {x: 0, y: 0.7}
   speed: 5
-  minAttack: 7
-  maxAttack: 11
+  minAttack: 6
+  maxAttack: 10
   critical: 40
   criticalDamage: 100
   defense: 0
