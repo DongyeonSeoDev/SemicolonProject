@@ -10,7 +10,7 @@ public class StageCheatWindow : EditorWindow
     //private bool useClearStageKey = false;
 
     //stage 관련
-    private int floor;
+    private int floor = 1;
 
     //Player 관련
     private Stat playerStat = new Stat();
@@ -30,8 +30,8 @@ public class StageCheatWindow : EditorWindow
     private StateAbnormality sa;
 
     //아이템 관련
-    private string itemId;
-    private int itemCnt;
+    private string itemId = "Restorativeherb";
+    private int itemCnt = 1;
 
     //몹 아이디
     private Enemy.EnemyType mobId;
@@ -74,13 +74,7 @@ public class StageCheatWindow : EditorWindow
     {
         playerStat = SlimePlayer.PlayerStat;
 
-        useEnergyAmount = 1f;
-        upMountingPercentageValueWhenEnemyDead = 2f;
-        upUnderstandingRateValueWhenEnemyDead = 1;
-        bodyChangeTime = 10f;
-        floor = 1;
-
-        skillDelays = SlimeGameManager.Instance.SkillDelays;
+        skillDelays = new float[3] { 0.2f, 0.5f, 3f };
     } 
 
     private void OnGUI()
@@ -275,12 +269,12 @@ public class StageCheatWindow : EditorWindow
                 EditorGUI.BeginDisabledGroup(!Application.isPlaying);
                 GUILayout.Space(20);
                 GUILayout.Label("[ScreenShot]", EditorStyles.boldLabel);
-                GUILayout.Label("(저장위치는 일단 Assets/ScreenShot)\n(아마 에디터에서만 스샷 가능)", EditorStyles.label);
+                GUILayout.Label("(저장위치: Assets/ScreenShot)\n(에디터에서만 스샷 가능)", EditorStyles.label);
                 GUILayout.Label("단축키 : " + ScreenShot.captureKeyCode.ToString(), EditorStyles.label);
 
                 GUILayout.Space(20);
                 keyCode = (KeyCode)EditorGUILayout.EnumPopup("스샷 단축키", keyCode);
-                if (GUILayout.Button("스샷 단축키 변경"))
+                if (GUILayout.Button("스샷 단축키 변경 적용"))
                 {
                     ScreenShot.captureKeyCode = keyCode;
                 }
