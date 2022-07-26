@@ -11,7 +11,6 @@ public class ChangableBodyDataScript : MonoBehaviour
     {
         public string name;
         public Enemy.EnemyType bodyId;
-        //public Sprite sprite;
     }
 
     [SerializeField]

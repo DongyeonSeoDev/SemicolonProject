@@ -29,8 +29,6 @@ public class PlayerStatusEffect : PlayerAction
     {
         playerState = SlimeGameManager.Instance.Player.GetComponent<PlayerState>();
     }
-
-    // Update is called once per frame
     void Update()
     {
         CheckSturnTimer();

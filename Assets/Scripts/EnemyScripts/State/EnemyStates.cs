@@ -108,15 +108,12 @@ namespace Enemy
 
         protected override void Update()
         {
-            if (isUseStartDelay)
+            if (isUseStartDelay && !isStartDelay)
             {
-                if (!isStartDelay)
-                {
-                    isUseStartDelay = false;
+                isUseStartDelay = false;
 
-                    EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Attack, enemyData.enemyAnimator, TriggerType.SetTrigger);
-                    EnemyManager.SpriteFlipCheck(enemyData);
-                }
+                EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Attack, enemyData.enemyAnimator, TriggerType.SetTrigger);
+                EnemyManager.SpriteFlipCheck(enemyData);
             }
             else
             {
@@ -462,7 +459,7 @@ namespace Enemy
                 base.Update();
             }
 
-            if (SlimeGameManager.Instance.CurrentSkillDelayTimer[0] <= enemyData.playerAnimationDelay) // 공격 종료
+            if (SlimeGameManager.Instance.SkillDelays[0] - SlimeGameManager.Instance.CurrentSkillDelayTimer[0] > enemyData.playerAnimationTime) // 공격 종료
             {
                 base.Update();
             }

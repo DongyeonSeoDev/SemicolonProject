@@ -11,6 +11,7 @@ namespace Enemy
     {
         public List<EnemyLootData> enemyLootListSO = new List<EnemyLootData>(); // 적 전리품 리스트
         public EnemyDataSO enemyDataSO; // 적 데이터 관리 ( 없으면 Scriptable Object에서 만들어야 함 )
+        
         public Image hpBarFillImage; // 적 HP 바 채워진것중 체력 확인용
         public Image hpBarDamageFillImage; // 적 HP 바 채워진것중 데미지 확인용
         public GameObject hpBar; // 적 HP 바 오브젝트 ( hpBarFillImage의 부모 캔버스 오브젝트 )
@@ -58,36 +59,11 @@ namespace Enemy
 
         [SerializeField] private Vector2 stunEffectPosition;
 
-        [SerializeField]
-        [Header("스피드")]
-        private float speed;
-        [SerializeField]
-        [Header("최소 공격력")]
-        private float minAttack;
-        [SerializeField]
-        [Header("최대 공격력")]
-        private float maxAttack;
-        [SerializeField]
-        [Header("치명타 확률")]
-        private float critical;
-        [SerializeField]
-        [Header("치명타 추가 데미지 퍼센트")]
-        private float criticalDamage;
-        [SerializeField]
-        [Header("방어력")]
-        private float defense;
-        [SerializeField]
-        [Header("체력")]
-        private float hp;
-        [SerializeField]
-        [Header("경험치")]
-        private float addExperience;
-
         public float AddExperience
         { 
             get
             {
-                return addExperience;
+                return enemyDataSO.addExperience;
             }
         }
 
@@ -179,14 +155,6 @@ namespace Enemy
                 enemySpriteRenderer = sr,
                 enemyRigidbody2D = rb,
                 enemy = this,
-                chaseSpeed = speed,
-                minAttackPower = minAttack,
-                maxAttackPower = maxAttack,
-                randomCritical = critical,
-                criticalDamagePercent = criticalDamage,
-                hp = hp,
-                maxHP = hp,
-                defense = defense,
                 stunEffectPosition = stunEffectPosition
             };
 

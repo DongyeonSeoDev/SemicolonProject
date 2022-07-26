@@ -45,7 +45,6 @@ public class PCSoftBody : SoftBody
     #region MonoBehaviour Callbacks
     private void Awake()
     {
-        //UpdateVerticies();
         SetPoints();
 
         for (int i = 0; i < notMiddlePoints.Count; i++)
@@ -168,10 +167,8 @@ public class PCSoftBody : SoftBody
 
     private void SetJoints(int i)
     {
-        //int upNotMiddleBodyPointNum = (i - 1).Limit(0, notMiddlePoints.Count - 1);
         int downNotMiddleBodyPointnum = (i + 1).Limit(0, notMiddlePoints.Count - 1);
 
-        //Transform upPoint = notMiddlePoints[upNotMiddleBodyPointNum];
         Transform downPoint = notMiddlePoints[downNotMiddleBodyPointnum];
 
         RelativeJoint2D notMiddleRelativeJoint2D = null;
@@ -211,14 +208,6 @@ public class PCSoftBody : SoftBody
             spriteShapeController.spline.SetRightTangent(i, -GetTangentVec(i, true) / 4f);
 
             spriteShapeController.spline.SetTangentMode(i, UnityEngine.U2D.ShapeTangentMode.Continuous);
-
-            //Vector2 _lt = spriteShapeController.spline.GetLeftTangent(i);
-
-            //Vector2 _newRt = Vector2.Perpendicular(_towardsCenter) * _lt.magnitude;
-            //Vector2 _newLt = -_newRt;
-
-            ////spriteShapeController.spline.SetRightTangent(i, _newRt);
-            //spriteShapeController.spline.SetLeftTangent(i, _newLt);
         }
     }
     private Vector2 GetTangentVec(int idx, bool isPaste)
@@ -227,19 +216,5 @@ public class PCSoftBody : SoftBody
             : spriteShapeController.spline.GetPosition((idx + 1).Limit(0, spriteShapeController.spline.GetPointCount() - 1))) 
             - spriteShapeController.spline.GetPosition(idx); 
     }
-    //private void CheckPasteNext(int idx)
-    //{
-    //    Vector2 curPos = spriteShapeController.spline.GetPosition(idx);
-    //    Vector2 pastePos = spriteShapeController.spline.GetPosition((idx - 1).Limit(0, spriteShapeController.spline.GetPointCount() - 1));
-    //    Vector2 nextPos = spriteShapeController.spline.GetPosition((idx + 1).Limit(0, spriteShapeController.spline.GetPointCount() + 1));
-
-    //    Vector2 cur_paste_gap = curPos - pastePos;
-    //    Vector2 cur_next_gap = curPos - nextPos;
-
-    //    if(cur_paste_gap.x < 0.1f)
-    //    {
-
-    //    }
-    //}
     #endregion
 }

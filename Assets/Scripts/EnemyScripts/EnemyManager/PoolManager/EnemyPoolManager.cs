@@ -11,6 +11,7 @@ namespace Enemy
         Rat_02,
         Slime_03,
         SkeletonArcher_04,
+        SkeletonGhost_05,
         Boss_SkeletonKing_50 = 50,
         Bullet = 100,
         EnemyLoot,

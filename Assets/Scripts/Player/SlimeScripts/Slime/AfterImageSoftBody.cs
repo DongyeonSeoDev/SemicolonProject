@@ -103,8 +103,6 @@ public class AfterImageSoftBody : SoftBody
             }
             catch
             {
-                Debug.Log("Spline Points들이 서로 너무 가깝습니다.. recalculate");
-
                 spriteShapeController.spline.SetPosition(i, (_vertex - _towardsCenter * (radius + splineOffset)));
             }
 

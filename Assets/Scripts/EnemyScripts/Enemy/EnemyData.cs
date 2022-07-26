@@ -14,6 +14,16 @@ namespace Enemy
             enemyDeadEffectColor = enemyDataSO.enemyDeadEffectColor;
             playerNormalColor = enemyDataSO.playerNormalColor;
 
+            // Stats
+            chaseSpeed = enemyDataSO.speed;
+            minAttackPower = enemyDataSO.minAttack;
+            maxAttackPower = enemyDataSO.maxAttack;
+            randomCritical = enemyDataSO.critical;
+            criticalDamagePercent = enemyDataSO.criticalDamage;
+            hp = enemyDataSO.hp;
+            maxHP = enemyDataSO.hp;
+            defense = enemyDataSO.defense;
+
             EnemyManager.SetEnemyAnimationDictionary(animationDictionary, enemyDataSO.animationList);
 
             playerControllerMove = new EnemyMovePlayerControllerCommand(this);

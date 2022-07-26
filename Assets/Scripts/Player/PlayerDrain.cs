@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerDrain : PlayerSkill
 {
-    //private readonly string canDrainCheckColliderPath = "Player/PlayerCollider/CanDrainCheckCollider";
-
     [SerializeField]
     private GameObject drainCollider = null; // drain 체크에 사용될 Collider
     private PlayerDrainCollider playerDrainCol = null;
@@ -33,9 +31,6 @@ public class PlayerDrain : PlayerSkill
         get { return upUnderstandingRateValue; }
     }
 
-    //public bool drainTutorial = false;
-    //public bool drainTutorialDone = false;
-
     private bool canDrain = true;
     public bool cantDrainObject = false;
 
@@ -45,17 +40,6 @@ public class PlayerDrain : PlayerSkill
 
         playerDrainCol = drainCollider.GetComponent<PlayerDrainCollider>();
         drainCollider.SetActive(false);
-    }
-    private void Start()
-    {
-        //if(TutorialManager.Instance.IsTutorialStage)
-        //{
-        //    //Instantiate(Resources.Load<GameObject>(canDrainCheckColliderPath), transform);
-        //}
-        //else
-        //{
-        //    //drainTutorialDone = true;
-        //}
     }
     public override void OnEnable()
     {
@@ -89,24 +73,15 @@ public class PlayerDrain : PlayerSkill
 
         if (canDrain)
         {
-            //drainTutorial = false;
-
             DoDrain();
         }
     }
     public void DoDrainByTuto()
     {
-        //drainTutorial = true;
-
         DoDrain();
     }
     private void DoDrain()
     {
-        //if(!drainTutorialDone && !drainTutorial)
-        //{
-        //    return;
-        //}
-
         player.PlayerState.IsDrain = true;
         player.PlayerOrderInLayerController.SetOrderInLayer("Object", 0);
 
@@ -161,11 +136,6 @@ public class PlayerDrain : PlayerSkill
                 {
                     BattleUIManager.Instance.InsertAbsorptionInfo(objId, drainPercentage, PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(objId), KillNoticeType.FAIL);
                 }
-
-                //if(!drain)
-                //{
-                //    UIManager.Instance.RequestLogMsg(objName + "(를)을 흡수하는데 실패하셨습니다. (확률: " + drainPercentage + "%)");
-                //}
             }
         }
 

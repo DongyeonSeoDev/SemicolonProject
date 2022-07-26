@@ -60,7 +60,6 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
     }
 
     private EternalStat prevBodyAdditionalStat = new EternalStat();
-    // pasteExtraStat
 
     private bool canBodyChange = true;
 
@@ -141,7 +140,6 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             currentPlayerBody.SetActive(true);
         }
 
-        //currentPlayerBody.transform.position = spawnPosition;
         prevBodyAdditionalStat = new EternalStat();
 
         Player.WhenRespawn();
@@ -182,8 +180,6 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
         float hpPercentage = Player.PlayerStat.currentHp / Player.PlayerStat.MaxHp;
 
-        //Destroy(currentPlayerBody);
-
         Debug.Log(currentPlayerBody.name);
         SlimePoolManager.Instance.AddObject(currentPlayerBody);
         currentPlayerBody.SetActive(false);
@@ -206,7 +202,6 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             {
                 Player.PlayerStat.additionalEternalStat.Sub(prevBodyAdditionalStat);
 
-                //player.CurrentHp = (player.PlayerStat.MaxHp * hpPercentage).Round();
                 Player.PlayerStat.currentHp = Player.PlayerStat.MaxHp * hpPercentage;
 
                 prevBodyAdditionalStat = new EternalStat();
@@ -257,7 +252,6 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
             Player.PlayerStat.additionalEternalStat.Sum(prevBodyAdditionalStat);
 
-            //player.CurrentHp = (player.PlayerStat.MaxHp * hpPercentage).Round();
             Player.PlayerStat.currentHp = Player.PlayerStat.MaxHp * hpPercentage;
 
             (newBody, found) = SlimePoolManager.Instance.Find(newBodyData.Item1);
@@ -272,8 +266,6 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             }
 
             Enemy.EnemyManager.Player = newBody;
-
-            //newBody = Instantiate(newBodyData.Item1, player.transform);
 
             newBody.AddComponent<PlayerBodyScript>();
 
@@ -291,15 +283,6 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
             EventManager.TriggerEvent("ChangeBody");
             EventManager.TriggerEvent("ChangeBody", bodyId, isDead);
-
-            //for(int i = 0; i < currentSkillDelayTimer.Length; i++) // 스킬 갱신
-            //{
-            //    if(currentSkillDelayTimer[i] <= 0f)
-            //    {
-            //        //EventManager.TriggerEvent("Skill" + i + "DelayTimerZero");
-            //        skillDelayTimerZero[i]
-            //    }
-            //}
 
             SetCanBodyChangeFalse();
         }

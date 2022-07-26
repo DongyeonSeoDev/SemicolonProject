@@ -95,16 +95,11 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
 
         changableBodyList.ForEach(x =>
         {
-            // x.bodyScript = x.body.GetComponent<Enemy.Enemy>();
             changableBodyDict.Add(x.bodyId.ToString(), (x.body, x.additionalBodyStat));
-            //playerEnemyUnderStandingRateDict.Add(x.bodyId.ToString(), 120);
-
-            // Debug.Log(enemyId);
         });
     }
     void Start()
     {
-        // SetUnderstandingRate("Enemy", 0); // For Test
         EventManager.StartListening("PlayerDead", ResetDicts);
         EventManager.StartListening("PlayerBodySet", MountBody);
     }
@@ -133,8 +128,7 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
             return drainProbabilityDict[key];
         }
         else
-        {
-            ////Debug.LogWarning("The key '" + key + "' is not Contain.");                                              
+        {                                     
             return 0f;
         }
     }
@@ -240,9 +234,9 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
             }
             else
             {
-                //EventManager.TriggerEvent("TimePause");
                 UIManager.Instance.OnUIInteract(UIType.CHANGEABLEMOBLIST, true);
                 MonsterCollection.Instance.AddBody(objId);
+
                 return;
             }
             MonsterCollection.Instance.AddSavedBody(objId);

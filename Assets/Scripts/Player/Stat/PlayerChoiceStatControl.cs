@@ -146,14 +146,10 @@ public class PlayerChoiceStatControl : MonoBehaviour
         }
     }
 
-    //private int bodySlapNum = 0;
     ///// <summary>
     ///// µ¹ÁøÇÑ È½¼ö
     ///// </summary>
-    //public int BodySlapNum
-    //{
-    //    get { return bodySlapNum; }
-    //}
+
     private void Start()
     {
         if (TutorialManager.Instance.IsTutorialStage)
@@ -190,7 +186,6 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
         EventManager.StartListening("Avoid", UpAvoidNum);
         EventManager.StartListening("OnAvoidInMomentom", UpAvoidInMomentomNum);
-        //EventManager.StartListening("OnBodySlap", UpBodySlapNum); 
     }
     private void OnDisable()
     {
@@ -205,7 +200,6 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
         EventManager.StopListening("Avoid", UpAvoidNum);
         EventManager.StopListening("OnAvoidInMomentom", UpAvoidInMomentomNum);
-        //EventManager.StopListening("OnBodySlap", UpBodySlapNum);
     }
 
     private void Update()
@@ -363,7 +357,6 @@ public class PlayerChoiceStatControl : MonoBehaviour
     }
     public void CheckProficiency()
     {
-        //float pastePatienceNum = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.proficiency.statValue;
         StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.proficiency;
 
         if (SlimeGameManager.Instance.Player.PlayerStat.choiceStat.proficiency.isUnlock)
@@ -608,15 +601,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
     {
         fakeNum++;
     }
-    //public void UpBodySlapNum()
-    //{
-    //    if(!SlimeGameManager.Instance.Player.PlayerStat.eternalStat.speed.isUnlock)
-    //    {
-    //        return;
-    //    }
 
-    //    bodySlapNum++;
-    //}
     public void UpTotalDamage(float value)
     {
         if(!SlimeGameManager.Instance.Player.PlayerStat.eternalStat.maxHp.isUnlock)

@@ -10,31 +10,33 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9dcf67616fbd998419e75a8a3f708bb3, type: 3}
-  m_Name: Boss_SkeletonKing1
+  m_Name: Enemy5_SkeletonGhost
   m_EditorClassIdentifier: 
-  enemyType: 4
+  enemyType: 5
   animationList:
   - type: 4
-    animationName: move
-  - type: 5
-    animationName: attack
-  - type: 6
-    animationName: attackEnd
+    animationName: Move
   - type: 0
-    animationName: reset
-  - type: 1
-    animationName: dead
+    animationName: Reset
   - type: 2
-    animationName: isDie
+    animationName: IsDead
+  - type: 1
+    animationName: Dead
+  - type: 5
+    animationName: Attack
+  - type: 3
+    animationName: Hit
+  - type: 6
+    animationName: AttackEnd
   normalColor: {r: 1, g: 1, b: 1, a: 1}
-  damagedColor: {r: 1, g: 0, b: 0, a: 1}
-  enemyDeadEffectColor: {r: 0.454902, g: 0.38823533, b: 0.5019608, a: 0}
-  playerNormalColor: {r: 0.5882353, g: 1, b: 0.5882353, a: 1}
+  damagedColor: {r: 1, g: 1, b: 1, a: 1}
+  enemyDeadEffectColor: {r: 1, g: 1, b: 1, a: 1}
+  playerNormalColor: {r: 1, g: 1, b: 1, a: 1}
   speed: 5
-  minAttack: 20
-  maxAttack: 30
+  minAttack: 15
+  maxAttack: 19
   critical: 0
   criticalDamage: 0
   defense: 0
-  hp: 1000
+  hp: 25
   addExperience: 50

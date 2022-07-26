@@ -114,11 +114,8 @@ public class PlayerDrainCollider : MonoBehaviour
     }
     private void OnTriggerEnter2D(Collider2D other)
     {
-        // 1. 튜토리얼 전용 스크립트를 만든다
-        
         if (canDrainObjLayers.CompareGameObjectLayer(other.gameObject))
         {
-            //Debug.Log(other.gameObject.layer);
             //Drain되는 오브젝트는 삭제처리
 
             ICanGetDamagableEnemy enemy = other.GetComponent<ICanGetDamagableEnemy>();
@@ -149,10 +146,6 @@ public class PlayerDrainCollider : MonoBehaviour
                 SpawnGrabObj(enemy.GetGameObject());
 
                 EventManager.TriggerEvent("TryDrain", other.transform.position, true);
-
-                Debug.Log("Do Drain");
-
-                //UIManager.Instance.RequestLogMsg(enemy.Get);
             }
             else if(enemy != null) // 흡수 실패
             {
@@ -226,7 +219,6 @@ public class PlayerDrainCollider : MonoBehaviour
 
                 if (key.GetComponent<Enemy.TutorialEnemy>() != null)
                 {
-                    //EventManager.TriggerEvent("DrainTutorialEnemyDrain", key.transform.position);
                     EventManager.TriggerEvent("Tuto_EnemyDeathCheck");
 
                     removeList.Add(item);

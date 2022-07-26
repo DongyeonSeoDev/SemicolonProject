@@ -159,7 +159,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1646225281
-  m_SortingLayer: 5
+  m_SortingLayer: 6
   m_SortingOrder: 1
   m_Sprite: {fileID: -2413806693520163455, guid: ebe73ca9363db456bacf42c025bb4847, type: 3}
   m_Color: {r: 0.1981132, g: 0.1981132, b: 0.1981132, a: 0}
@@ -290,6 +290,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skillDelay: 1
   skillIdx: 1
+  cantCrossLayer:
+    serializedVersion: 2
+    m_Bits: 131136
   canCrashLayer:
     serializedVersion: 2
     m_Bits: 8519744
@@ -306,9 +309,8 @@ MonoBehaviour:
     frequency: 0
     duration: 0
   maxChargingTime: 1
-  targetPosFarPerCharge: 3
+  targetPosFarPerCharge: 2
   damageMagnificationOfBodySlap: 1
-  moveBackSpeed: 5
   bodySlapMoveSpeed: 30
   offsetBodySlapMovePos: 10
   bodySlapTime: 0.15
@@ -358,8 +360,6 @@ MonoBehaviour:
   drainSpeedWhenNone: 2
   upMountingPercentageValue: 8
   upUnderstandingRateValue: 1
-  drainTutorial: 0
-  drainTutorialDone: 0
   cantDrainObject: 0
 --- !u!114 &5835559770882864823
 MonoBehaviour:
@@ -775,7 +775,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 79265675134852617, guid: 9b97e39c54eac0442be1f0fc9e71b478, type: 3}
       propertyPath: m_SortingLayer
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 79265675134852617, guid: 9b97e39c54eac0442be1f0fc9e71b478, type: 3}
       propertyPath: m_SortingLayerID

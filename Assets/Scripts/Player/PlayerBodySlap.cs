@@ -5,6 +5,8 @@ using UnityEngine;
 public class PlayerBodySlap : PlayerSkill
 {
     [SerializeField]
+    private LayerMask cantCrossLayer;
+    [SerializeField]
     private LayerMask canCrashLayer;
     [SerializeField]
     private LayerMask whatIsEnemy;
@@ -39,9 +41,6 @@ public class PlayerBodySlap : PlayerSkill
     [SerializeField]
     private float damageMagnificationOfBodySlap = 2f;
 
-    [Header("돌진하기 전 살짝 뒤로 뺄 때의 속도")]
-    [SerializeField]
-    private float moveBackSpeed = 8f;
     [SerializeField]
     private float bodySlapMoveSpeed = 2f;
 
@@ -134,8 +133,6 @@ public class PlayerBodySlap : PlayerSkill
     {
         base.DoSkill();
 
-        // currentChargingTimer 측정을 시작한다.
-
         if (canBodySlap)
         {
             StopBodySlap();
@@ -182,7 +179,7 @@ public class PlayerBodySlap : PlayerSkill
 
         Debug.DrawRay(moveOriginPos, moveTargetPos, Color.red, 10f);
 
-        moveTargetPos = SlimeGameManager.Instance.PosCantCrossWall(canCrashLayer, moveOriginPos, moveTargetPos);
+        moveTargetPos = SlimeGameManager.Instance.PosCantCrossWall(cantCrossLayer, moveOriginPos, moveTargetPos);
 
         currentBodySlapTime = Vector2.Distance(moveOriginPos, moveTargetPos) / bodySlapMoveSpeed;
 
@@ -208,6 +205,13 @@ public class PlayerBodySlap : PlayerSkill
             }
 
             hitWhenBodySlap.Add(targetObject);
+
+            StageDoor stageDoor = targetObject.GetComponent<StageDoor>();
+
+            if(stageDoor != null && (stageDoor.IsOpen || stageDoor.IsExitDoor))
+            {
+                return;
+            }
 
             IDamageableBySlimeBodySlap damagableByBodySlap = targetObject.GetComponent<IDamageableBySlimeBodySlap>();
 
@@ -272,10 +276,6 @@ public class PlayerBodySlap : PlayerSkill
 
         StopBodySlap();
     }
-    private void StartBodySlap()
-    {
-
-    }
     public override void WhenSkillDelayTimerZero()
     {
         base.WhenSkillDelayTimerZero();
@@ -292,6 +292,8 @@ public class PlayerBodySlap : PlayerSkill
 
         bodySlapTimer = bodySlapTime;
         moveTargetPos = Vector2.zero;
+
+        EventManager.TriggerEvent("PlayerBodySlapStop");
     }
     private void CheckChargeTime()
     {

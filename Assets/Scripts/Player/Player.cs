@@ -172,15 +172,12 @@ public class Player : MonoBehaviour
 
         playerStat.currentHp = playerStat.MaxHp;
         currentEnergy = maxEnergy;
-
-        ////UIManager.Instance.UpdatePlayerHPUI();
     }
     private void OnEnable()
     {
         EventManager.StartListening("PlayerDead", PlayerDead);
         EventManager.StartListening("EnemyDead", EnemyDead);
         EventManager.StartListening("PlayerSetActiveFalse", SetActiveFalse);
-        EventManager.StartListening("GameClear", WhenGameClear);
         EventManager.StartListening("ChangeBody", OnChangeBody);
         EventManager.StartListening("StartPlayerSlow", StartPlayerSlow);
         EventManager.StartListening("StopPlayerSlow", StopPlayerSlow);
@@ -212,7 +209,6 @@ public class Player : MonoBehaviour
         EventManager.StopListening("PlayerDead", PlayerDead);
         EventManager.StopListening("EnemyDead", EnemyDead);
         EventManager.StopListening("PlayerSetActiveFalse", SetActiveFalse);
-        EventManager.StopListening("GameClear", WhenGameClear);
         EventManager.StopListening("ChangeBody", OnChangeBody);
         EventManager.StopListening("StartPlayerSlow", StartPlayerSlow);
         EventManager.StopListening("StopPlayerSlow", StopPlayerSlow);
@@ -360,8 +356,6 @@ public class Player : MonoBehaviour
             damage = 0f;
         }
 
-        //SlimeGameManager.Instance.playerHitCheckDict.Add(attacker, false);
-
         float dm = (int)damage;
 
         if (TutorialManager.Instance.hpUI.gameObject.activeSelf)
@@ -507,10 +501,6 @@ public class Player : MonoBehaviour
             }
         }
     }
-    private void WhenGameClear()
-    {
-
-    }
     private void PlayerDead()
     {
         playerStat.additionalEternalStat.ResetAdditional();
@@ -545,7 +535,6 @@ public class Player : MonoBehaviour
         }
         else
         {
-            //Debug.Log("우오옷 동화율이 오른다앗");
             PlayerEnemyUnderstandingRateManager.Instance.UpUnderstandingRate(SlimeGameManager.Instance.CurrentBodyId, upUnderstandingRateValueWhenEnemyDeadAfterBodyChanged);
 
             BattleUIManager.Instance.InsertAbsorptionInfo(SlimeGameManager.Instance.CurrentBodyId, PlayerEnemyUnderstandingRateManager.Instance.GetDrainProbabilityDict(SlimeGameManager.Instance.CurrentBodyId),

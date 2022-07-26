@@ -11,15 +11,12 @@ public class CinemachineCameraScript : MonoSingleton<CinemachineCameraScript>
 
     private CinemachineBasicMultiChannelPerlin cinemachineNoise;
 
-    //public Collider2D boundingCollider = null;
-
     private readonly float defaultOrthographicSize = 8.5f;
 
     private void Start()
     { 
         cinemachine = GetComponent<CinemachineVirtualCamera>();
         cinemachineConfiner = GetComponent<CinemachineConfiner>();
-        //boundingCollider = GameObject.FindGameObjectWithTag("CameraLimit").GetComponent<Collider2D>();
         cinemachineNoise = cinemachine.GetCinemachineComponent<CinemachineBasicMultiChannelPerlin>();
 
         cinemachine.m_Lens.OrthographicSize = defaultOrthographicSize;
@@ -27,11 +24,9 @@ public class CinemachineCameraScript : MonoSingleton<CinemachineCameraScript>
         EventManager.StartListening("PlayerDead", () =>
         {
             SetCinemachineFollow(SlimeGameManager.Instance.CurrentPlayerBody.transform);
-            //SetCinemachineConfiner(boundingCollider);
         });
 
         SetCinemachineFollow(SlimeGameManager.Instance.CurrentPlayerBody.transform);
-        //SetCinemachineConfiner(boundingCollider);
 
         cinemachineNoise.m_AmplitudeGain = 0;
         cinemachineNoise.m_FrequencyGain = 0;

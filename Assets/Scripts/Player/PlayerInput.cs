@@ -284,8 +284,6 @@ public class PlayerInput : MonoBehaviour
                     inputTutorial.InputTutoDataDict[KeyAction.ATTACK].isClear))
                     && !cantPlaySkill0) // mouse 0
                     {
-                        //isDoSkill0 = Input.GetMouseButton(0);
-
                         if (Input.GetMouseButtonDown(0))
                         {
                             isDoSkill0 = true;
@@ -310,7 +308,6 @@ public class PlayerInput : MonoBehaviour
                     }
                 }
 
-                //Debug.Log(isDoSkill0 == Input.GetButton("Shoot"));
                 // ContainKeyüũ
 
                 if (skill2TutoClear)
@@ -391,9 +388,7 @@ public class PlayerInput : MonoBehaviour
         isDoSkill0 = false;
         isDoSkill1 = false;
         isDoSkill2 = false;
-        //skill0ButtonDowned = false;
-        ////skill1ButtonDowned = false;
-        //skill2ButtonDowned = false;
+
         isInteraction = false;
     }
 

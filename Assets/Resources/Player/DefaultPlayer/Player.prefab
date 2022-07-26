@@ -66,6 +66,7 @@ MonoBehaviour:
         upStatValue: 5
         isUnlock: 0
         statLv: 0
+        savedStatLv: 0
         maxStatLv: 0
       minDamage:
         id: 10
@@ -73,6 +74,7 @@ MonoBehaviour:
         upStatValue: 1
         isUnlock: 0
         statLv: 0
+        savedStatLv: 0
         maxStatLv: 0
       maxDamage:
         id: 15
@@ -80,6 +82,7 @@ MonoBehaviour:
         upStatValue: 1
         isUnlock: 0
         statLv: 0
+        savedStatLv: 0
         maxStatLv: 0
       defense:
         id: 20
@@ -87,6 +90,7 @@ MonoBehaviour:
         upStatValue: 1
         isUnlock: 0
         statLv: 0
+        savedStatLv: 0
         maxStatLv: 0
       intellect:
         id: 25
@@ -94,6 +98,7 @@ MonoBehaviour:
         upStatValue: 1
         isUnlock: 0
         statLv: 0
+        savedStatLv: 0
         maxStatLv: 0
       speed:
         id: 30
@@ -101,6 +106,7 @@ MonoBehaviour:
         upStatValue: 1
         isUnlock: 0
         statLv: 0
+        savedStatLv: 0
         maxStatLv: 0
       attackSpeed:
         id: 35
@@ -108,6 +114,7 @@ MonoBehaviour:
         upStatValue: 1
         isUnlock: 0
         statLv: 0
+        savedStatLv: 0
         maxStatLv: 0
       criticalRate:
         id: 40
@@ -115,6 +122,7 @@ MonoBehaviour:
         upStatValue: 2
         isUnlock: 0
         statLv: 0
+        savedStatLv: 0
         maxStatLv: 0
       criticalDamage:
         id: 45
@@ -122,6 +130,7 @@ MonoBehaviour:
         upStatValue: 1
         isUnlock: 0
         statLv: 0
+        savedStatLv: 0
         maxStatLv: 0
     additionalEternalStat:
       maxHp:
@@ -130,6 +139,7 @@ MonoBehaviour:
         upStatValue: 0
         isUnlock: 0
         statLv: 0
+        savedStatLv: 0
         maxStatLv: 0
       minDamage:
         id: 0
@@ -137,6 +147,7 @@ MonoBehaviour:
         upStatValue: 0
         isUnlock: 0
         statLv: 0
+        savedStatLv: 0
         maxStatLv: 0
       maxDamage:
         id: 0
@@ -144,6 +155,7 @@ MonoBehaviour:
         upStatValue: 0
         isUnlock: 0
         statLv: 0
+        savedStatLv: 0
         maxStatLv: 0
       defense:
         id: 0
@@ -151,6 +163,7 @@ MonoBehaviour:
         upStatValue: 0
         isUnlock: 0
         statLv: 0
+        savedStatLv: 0
         maxStatLv: 0
       intellect:
         id: 0
@@ -158,6 +171,7 @@ MonoBehaviour:
         upStatValue: 0
         isUnlock: 0
         statLv: 0
+        savedStatLv: 0
         maxStatLv: 0
       speed:
         id: 0
@@ -165,6 +179,7 @@ MonoBehaviour:
         upStatValue: 0
         isUnlock: 0
         statLv: 0
+        savedStatLv: 0
         maxStatLv: 0
       attackSpeed:
         id: 0
@@ -172,6 +187,7 @@ MonoBehaviour:
         upStatValue: 0
         isUnlock: 0
         statLv: 0
+        savedStatLv: 0
         maxStatLv: 0
       criticalRate:
         id: 0
@@ -179,6 +195,7 @@ MonoBehaviour:
         upStatValue: 0
         isUnlock: 0
         statLv: 0
+        savedStatLv: 0
         maxStatLv: 0
       criticalDamage:
         id: 0
@@ -186,6 +203,7 @@ MonoBehaviour:
         upStatValue: 0
         isUnlock: 0
         statLv: 0
+        savedStatLv: 0
         maxStatLv: 0
     choiceStat:
       proficiency:
@@ -194,6 +212,7 @@ MonoBehaviour:
         upStatValue: 0
         isUnlock: 0
         statLv: 0
+        savedStatLv: 0
         maxStatLv: 20
       momentom:
         id: 105
@@ -201,6 +220,7 @@ MonoBehaviour:
         upStatValue: 0
         isUnlock: 0
         statLv: 0
+        savedStatLv: 0
         maxStatLv: 10
       endurance:
         id: 110
@@ -208,6 +228,7 @@ MonoBehaviour:
         upStatValue: 0
         isUnlock: 0
         statLv: 0
+        savedStatLv: 0
         maxStatLv: 10
       frenzy:
         id: 115
@@ -215,6 +236,7 @@ MonoBehaviour:
         upStatValue: 0
         isUnlock: 0
         statLv: 0
+        savedStatLv: 0
         maxStatLv: 0
       reflection:
         id: 120
@@ -222,6 +244,7 @@ MonoBehaviour:
         upStatValue: 0
         isUnlock: 0
         statLv: 0
+        savedStatLv: 0
         maxStatLv: 0
       mucusRecharge:
         id: 125
@@ -229,6 +252,7 @@ MonoBehaviour:
         upStatValue: 0
         isUnlock: 0
         statLv: 0
+        savedStatLv: 0
         maxStatLv: 5
       fake:
         id: 130
@@ -236,6 +260,7 @@ MonoBehaviour:
         upStatValue: 0
         isUnlock: 0
         statLv: 0
+        savedStatLv: 0
         maxStatLv: 5
   playerInput: {fileID: 0}
   playerChoiceStatControl: {fileID: 0}
@@ -585,6 +610,18 @@ PrefabInstance:
       propertyPath: bodySlapLine
       value: 
       objectReference: {fileID: 8985080968744771313}
+    - target: {fileID: 1014413151, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: moveBackSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 1014413151, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: maxChargingTime
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1014413151, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
+      propertyPath: bodySlapMoveSpeed
+      value: 45
+      objectReference: {fileID: 0}
     - target: {fileID: 1014413151, guid: 22427b2f3b7b53445b2dd74539890b11, type: 3}
       propertyPath: whenBodySlapCrashShakeData.duration
       value: 0.3
