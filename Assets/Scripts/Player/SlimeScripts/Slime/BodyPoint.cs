@@ -286,6 +286,8 @@ public class BodyPoint : MonoBehaviour
         transform.localPosition = originLocalPosition;
         isFarByPlayerByDrain = true;
 
+        moveToOriginTimer = 0f;
+
         StartFarByMiddleTimer(drainTime);
     }
 
