@@ -69,10 +69,14 @@ public class PlayerDrain : PlayerSkill
     }
     public override void DoSkill()
     {
-        base.DoSkill();
+        if(StageManager.Instance.CurrentAreaType == AreaType.BOSS)
+        {
+            return; // 보스스테이지일경우 흡수 진행 안됌
+        }
 
         if (canDrain)
         {
+            base.DoSkill();
             DoDrain();
         }
     }

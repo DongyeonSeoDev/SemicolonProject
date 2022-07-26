@@ -64,6 +64,11 @@ public class PlayerDrainCollider : MonoBehaviour
 
     private int int_timer = 0;
 
+    [SerializeField]
+    private int manyDrainNum = 3;
+
+    private bool manyDrain = false;
+
     private void Awake()
     {
         playerDrain = transform.parent.GetComponent<PlayerDrain>();
@@ -72,6 +77,7 @@ public class PlayerDrainCollider : MonoBehaviour
     private void OnEnable()
     {
         drainTimer = drainTime;
+        manyDrain = false;
     }
     void Update()
     {
@@ -137,6 +143,16 @@ public class PlayerDrainCollider : MonoBehaviour
             float drainMoveTime = 0f;
 
             tryDrainList.Add(enemy);
+
+            if (!manyDrain)
+            {
+                if (tryDrainList.Count >= manyDrainNum)
+                {
+                    manyDrain = true;
+
+                    EventManager.TriggerEvent("PlayerManyDrain"); // n마리 이상 흡수했을 때
+                }
+            }
 
             bool isBoss = (enemy.GetEnemyId().ToLower().Split('_')[0] == "boss");
 
