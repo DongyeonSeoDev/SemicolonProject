@@ -49,6 +49,10 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
     private List<Mission> currentMissions = new List<Mission>();
     private Pair<MissionType, short> prevMission = new Pair<MissionType, short>(MissionType.NONE, 0);
 
+    private int[] msLvRate = new int[3] { 60, 90, 100 };
+
+    public VertexGradient missionFailVG;
+
     #endregion
 
     private StageManager sm;
@@ -299,6 +303,19 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
         }
     }
     
+    private DifficultyLevel GetRandomDLV()
+    {
+        int ran = Random.Range(0, 100);
+        for(int i=0; i<3; i++)
+        {
+            if(ran < msLvRate[i])
+            {
+                return (DifficultyLevel)i;
+            }
+        }
+        return DifficultyLevel.NORMAL;
+    }
+
     public void EnteredMonsterArea()  //몬스터 구역 들가면 미션 할당
     {
         if (sm.CurrentAreaType == AreaType.MONSTER && sm.CurrentStageData.missionTypes.Count > 0)
@@ -306,7 +323,7 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
             Mission ms = GetRandomMission();
             MissionRandomInCounter(ref ms);
             CheckMissionZeroWeight(ref ms);
-            ms.SetLv((DifficultyLevel)Random.Range(0, Global.EnumCount<DifficultyLevel>()));
+            ms.SetLv(GetRandomDLV());
 
             currentMissions.Add(ms);
             ms.Start();

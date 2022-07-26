@@ -22,7 +22,7 @@ public abstract class Mission
     public virtual void MissionFailure()
     {
         //임시 미션 실패 알림
-        UIManager.Instance.InsertTopCenterNoticeQueue("미션 실패", 70, null, 1.5f);
+        UIManager.Instance.InsertTopCenterNoticeQueue("미션 실패", BattleUIManager.Instance.missionFailVG, 70, null, 1.5f);
 
         isEnd = true;
     }

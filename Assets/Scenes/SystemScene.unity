@@ -83056,6 +83056,11 @@ MonoBehaviour:
   assimNoticeInterval: 25
   missionCvsg: {fileID: 3208303451923310708}
   missionContent: {fileID: 3208303452183310187}
+  missionFailVG:
+    topLeft: {r: 0.5764706, g: 0.5764706, b: 0.6117647, a: 1}
+    topRight: {r: 0.6901961, g: 0.7058824, b: 0.7058824, a: 1}
+    bottomLeft: {r: 0.60784316, g: 0.62352943, b: 0.6, a: 1}
+    bottomRight: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &4553019827324916570
 GameObject:
   m_ObjectHideFlags: 0
