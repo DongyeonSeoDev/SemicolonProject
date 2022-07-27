@@ -21,6 +21,8 @@ public abstract class Mission
 
     public virtual void MissionFailure()
     {
+        if (isEnd) return;
+
         //임시 미션 실패 알림
         UIManager.Instance.InsertTopCenterNoticeQueue("미션 실패", BattleUIManager.Instance.missionFailVG, 70, null, 1.5f);
 
@@ -29,6 +31,8 @@ public abstract class Mission
 
     public virtual void MissionSuccess()
     {
+        if (isEnd) return;
+
         //임시 미션 성공 알림
         UIManager.Instance.InsertTopCenterNoticeQueue("미션 성공", 70, null, 1.5f);
 

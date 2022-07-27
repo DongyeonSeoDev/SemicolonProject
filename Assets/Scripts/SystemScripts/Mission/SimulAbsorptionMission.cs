@@ -1,10 +1,5 @@
-using System.Collections.Generic;
-using UnityEngine;
-
 public class SimulAbsorptionMission : Mission
 {
-    private readonly int simulMobCount = 3;
-
     public SimulAbsorptionMission(string title) : base(title)
     {
         missionType = MissionType.SIMULABSORPTION;
@@ -12,7 +7,8 @@ public class SimulAbsorptionMission : Mission
 
     public override void End(bool breakDoor = false)
     {
-        
+        EventManager.StopListening("PlayerManyDrain", MissionSuccess);
+        EventManager.StopListening("StageClear", MissionFailure);
     }
 
     public override void SetLv(DifficultyLevel lv)
@@ -24,6 +20,8 @@ public class SimulAbsorptionMission : Mission
     {
         isEnd = false;
         isClear = false;
+        EventManager.StartListening("PlayerManyDrain", MissionSuccess); //3마리 흡수 판정 후에 몹 사망 판정 시켜야 함. 호출 순서 주의
+        EventManager.StartListening("StageClear", MissionFailure);
     }
 
     public override void Update()
