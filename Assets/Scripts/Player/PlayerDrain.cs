@@ -115,7 +115,6 @@ public class PlayerDrain : PlayerSkill
         }
 
         string objId = enemy.GetEnemyId();
-        string objName = Global.GetMonsterName(objId);
 
         if (!TutorialManager.Instance.IsTutorialStage)
         {
