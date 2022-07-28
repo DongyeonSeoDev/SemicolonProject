@@ -218,6 +218,13 @@ public class BodyPoint : MonoBehaviour
     }
     private void MoveToOriginASec()
     {
+        if(SlimeGameManager.Instance.Player.PlayerState.IsDrain)
+        {
+            moveToOriginTimer = 0f;
+
+            return;
+        }
+
         if(moveToOriginTimer > 0f)
         {
             isMoveToOriginASec = true;
@@ -228,7 +235,6 @@ public class BodyPoint : MonoBehaviour
             if(moveToOriginTimer <= 0f)
             {
                 isMoveToOriginASec = false;
-                moveToOriginTimer = 0f;
 
                 transform.localPosition = originLocalPosition;
             }

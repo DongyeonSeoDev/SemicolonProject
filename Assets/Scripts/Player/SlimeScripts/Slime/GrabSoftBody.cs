@@ -6,8 +6,6 @@ public class GrabSoftBody : SoftBody
 {
     public GameObject targetObj = null;
 
-    private Vector3 offset = Vector3.zero;
-
     [SerializeField]
     private LayerMask rayCheckingLayer;
 
@@ -21,15 +19,10 @@ public class GrabSoftBody : SoftBody
     private Vector2 leftestLocalPos = Vector2.zero;
     private Vector2 rightestLocalPos = Vector2.zero;
 
-    private float gapAboutLefstestToRightest = 0f; // x
-    private float gapAboutUpestToDownest = 0f; // y
+    private float gapAboutLefstestToRightest = 0f;
+    private float gapAboutUpestToDownest = 0f;
 
     private bool setRay = false;
-
-    void Start()
-    {
-        
-    }
 
     void Update()
     {
@@ -77,7 +70,6 @@ public class GrabSoftBody : SoftBody
         setRay = false;
 
         targetObj = tObj;
-        offset = offS;
     }
     private Vector2 ShootRay(Vector2 startPos, Vector2 direction)
     {
@@ -137,8 +129,6 @@ public class GrabSoftBody : SoftBody
             }
             catch
             {
-                Debug.Log("Spline Points들이 서로 너무 가깝습니다.. recalculate");
-
                 spriteShapeController.spline.SetPosition(i, (_vertex - _towardsCenter * (radius + splineOffset)));
             }
 

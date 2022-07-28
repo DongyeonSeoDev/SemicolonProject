@@ -64,6 +64,11 @@ public class PlayerDrainCollider : MonoBehaviour
 
     private int int_timer = 0;
 
+    [SerializeField]
+    private int manyDrainNum = 3;
+
+    private bool manyDrain = false;
+
     private void Awake()
     {
         playerDrain = transform.parent.GetComponent<PlayerDrain>();
@@ -72,6 +77,7 @@ public class PlayerDrainCollider : MonoBehaviour
     private void OnEnable()
     {
         drainTimer = drainTime;
+        manyDrain = false;
     }
     void Update()
     {
@@ -138,9 +144,7 @@ public class PlayerDrainCollider : MonoBehaviour
 
             tryDrainList.Add(enemy);
 
-            bool isBoss = (enemy.GetEnemyId().ToLower().Split('_')[0] == "boss");
-
-            if (!isBoss && ((enemy != null && hpPercentage <= canDrainHpPercentage)) && !playerDrain.cantDrainObject) // 흡수 성공////////////////////
+            if ((enemy != null && hpPercentage <= canDrainHpPercentage) && !playerDrain.cantDrainObject) // 흡수 성공////////////////////
             {
                 doDrainList.Add(enemy);
                 SpawnGrabObj(enemy.GetGameObject());
@@ -154,6 +158,16 @@ public class PlayerDrainCollider : MonoBehaviour
                 Debug.Log(distance);
 
                 EventManager.TriggerEvent("TryDrain", other.transform.position, false);
+            }
+
+            if (!manyDrain)
+            {
+                if (doDrainList.Count >= manyDrainNum)
+                {
+                    manyDrain = true;
+
+                    EventManager.TriggerEvent("PlayerManyDrain"); // n마리 이상 흡수했을 때
+                }
             }
 
             drainMoveTime = distance / drainMoveSpeed;
@@ -197,11 +211,6 @@ public class PlayerDrainCollider : MonoBehaviour
 
         grabObj.GetComponent<GrabSoftBody>().OnSpawn(obj, Vector2.zero);
     }
-
-    // Player.DoDrain의 역할을 대신하는 함수가 필요하다.
-    // DoDrain과는 다르게, 흡수대상의 오브젝트들을 n초 단위로 끊어서 이동시킨다.
-    // (시작 지점에서 n초 뒤에 있어야 하는 곳으로 이동할 때 그 곳으로 서서히 이동하는 것이 아닌 그 곳으로 바로 이동, 잠시 쉬었다 똑같이 이동 을 반복)
-    // 일정 거리 이하로 가까워지면 흡수로 판단하고 PlayerDrain의 OnDrain함수를 호출한다.
 
     private void CheckDrainMoveTime()
     {

@@ -160,8 +160,6 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
             if (bodyId == currentBodyId)
             {
-                Debug.Log("이미 해당 Body로 변신중입니다.");
-
                 return;
             }
         }

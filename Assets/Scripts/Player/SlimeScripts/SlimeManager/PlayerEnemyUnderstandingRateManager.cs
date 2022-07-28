@@ -336,7 +336,7 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
         {
             int upNewBodyStat = (GetUnderstandingRate(objId) / understandingRatePercentageWhenUpStat);
 
-            if (upNewBodyStat >= 1) // this code is "imsi" code that inserted "imsi" values.
+            if (upNewBodyStat >= 1)
             {
 
                 result = (upStat * upNewBodyStat * upStatPercentage);// 10% 마다 upStatPercentage배씩 상승
