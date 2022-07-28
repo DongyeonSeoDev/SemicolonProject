@@ -31,6 +31,7 @@ namespace Enemy
         public EnemyAttackCheck[] enemyAttackCheck; // 적 공격 확인 ( 근거리 적은 있고 원거리 적은 없음 )
         public EnemyPositionCheckData positionCheckData = new EnemyPositionCheckData(); // 벽과 적 위치 확인
 
+        // 체력 애니메이션 관리
         private Tween hpTween = null;
         private Tween damageHPTween = null;
 
@@ -212,11 +213,13 @@ namespace Enemy
                 currentState = currentState.Process();
             }
 
+            // 피해를 입었다면
             if (enemyData.isDamaged)
             {
                 isDamageCurrentTime = enemyData.damageDelay;
                 enemyData.hp -= enemyData.damagedValue;
 
+                // 흡수 미션일때는 체력을 1 남겨놓음
                 if (EnemyManager.Instance.isOnlyAbsorption && enemyData.hp < 1)
                 {
                     enemyData.hp = 1;
@@ -271,8 +274,10 @@ namespace Enemy
 
         protected virtual void FixedUpdate()
         {
+            // 넉백 상태라면
             if (isKnockBack)
             {
+                // 넉백 실행
                 rb.velocity = knockBackDirection;
 
                 knockBackDirection = Vector2.Lerp(knockBackDirection, Vector2.zero, 0.1f);
