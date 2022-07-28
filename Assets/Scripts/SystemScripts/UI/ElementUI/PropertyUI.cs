@@ -3,6 +3,9 @@ using TMPro;
 
 public class PropertyUI : MonoBehaviour  //상시UI로 평소 화면에 보이는 특성 (선택 스탯) UI 요소
 {
+    public CanvasGroup cvsg;
+    public RectTransform rectTr;
+
     public TextMeshProUGUI lvTmp;
     public TextMeshProUGUI nameTmp;
 
@@ -13,5 +16,10 @@ public class PropertyUI : MonoBehaviour  //상시UI로 평소 화면에 보이는 특성 (선�
         ID = stat.id;
         lvTmp.SetText(stat.statLv.ToString());
         nameTmp.SetText(NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(ID).statName);
+    }
+
+    public void NewUpdate()
+    {
+        lvTmp.SetText(NGlobal.playerStatUI.choiceStatDic[ID].statLv.ToString());
     }
 }
