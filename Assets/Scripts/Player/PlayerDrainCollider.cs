@@ -144,16 +144,6 @@ public class PlayerDrainCollider : MonoBehaviour
 
             tryDrainList.Add(enemy);
 
-            if (!manyDrain)
-            {
-                if (tryDrainList.Count >= manyDrainNum)
-                {
-                    manyDrain = true;
-
-                    EventManager.TriggerEvent("PlayerManyDrain"); // n마리 이상 흡수했을 때
-                }
-            }
-
             if ((enemy != null && hpPercentage <= canDrainHpPercentage) && !playerDrain.cantDrainObject) // 흡수 성공////////////////////
             {
                 doDrainList.Add(enemy);
@@ -168,6 +158,16 @@ public class PlayerDrainCollider : MonoBehaviour
                 Debug.Log(distance);
 
                 EventManager.TriggerEvent("TryDrain", other.transform.position, false);
+            }
+
+            if (!manyDrain)
+            {
+                if (doDrainList.Count >= manyDrainNum)
+                {
+                    manyDrain = true;
+
+                    EventManager.TriggerEvent("PlayerManyDrain"); // n마리 이상 흡수했을 때
+                }
             }
 
             drainMoveTime = distance / drainMoveSpeed;

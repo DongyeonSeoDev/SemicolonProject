@@ -308,8 +308,6 @@ public class PlayerInput : MonoBehaviour
                     }
                 }
 
-                // ContainKey체크
-
                 if (skill2TutoClear)
                 {
                     if ((inputTutorial == null || (!inputTutorial.InputTutoDataDict.ContainsKey(KeyAction.SPECIALATTACK2) ||
@@ -397,8 +395,6 @@ public class PlayerInput : MonoBehaviour
         if (isDoSkill0)
         {
             EventManager.TriggerEvent("StartSkill0"); // 기본공격
-
-            //isDoSkill0 = false;
         }
 
         if (isDoSkill1)
