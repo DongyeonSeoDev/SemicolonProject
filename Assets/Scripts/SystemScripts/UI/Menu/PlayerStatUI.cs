@@ -111,16 +111,67 @@ public class PlayerStatUI : MonoBehaviour
                     isInsertingProperty = true;
                     ushort id = propNoticeQueue.Dequeue();
                     int idx = ExistCurPropNotice(id);
+                    Vector2 newPos;
                     if(idx == -1)
                     {
                         PropertyUI newProp = PoolManager.GetItem<PropertyUI>("PropertyNotice");
                         propertyNoticeList.Add(newProp);
                         newProp.Set(choiceStatDic[id]);
-                        //여기서 할 것: 리스트 위치에 맞게 UI 나타남. 4칸 다 찼으면 한 칸씩 아래로 내리고 마지막은 리스트에서 제거
+                        newProp.cvsg.alpha = 0f;
+                        if(propertyNoticeList.Count > propertyNoticeMaxCount)
+                        {
+                            PropertyUI old = propertyNoticeList[0];
+                            propertyNoticeList.RemoveAt(0);
+                            newPos = propertyNoticePos[propertyNoticeMaxCount-1];
+                            newPos.y += propIntervalY;
+                            newProp.rectTr.anchoredPosition = newPos;
+
+                            for(int i=0; i<propertyNoticeMaxCount; i++)
+                            {
+                                int si = i;
+                                propertyNoticeList[si].rectTr.DOAnchorPos(propertyNoticePos[si], 0.3f);
+                            }
+
+                            newPos = propertyNoticePos[0];
+                            newPos.y -= propIntervalY;
+                            old.cvsg.DOFade(0f, 0.3f);
+                            old.rectTr.DOAnchorPos(newPos, 0.3f).OnComplete(()=>old.gameObject.SetActive(false));
+                            newProp.cvsg.DOFade(1, 0.3f).OnComplete(() => isInsertingProperty = false);
+                        }
+                        else
+                        {
+                            newPos = propertyNoticePos[propertyNoticeList.Count - 1];
+                            newPos.y += propIntervalY;
+                            newProp.rectTr.anchoredPosition = newPos;
+                            newProp.rectTr.DOAnchorPos(propertyNoticePos[propertyNoticeList.Count - 1], 0.3f);
+                            newProp.cvsg.DOFade(1, 0.3f).OnComplete(()=>isInsertingProperty = false);
+                        }
                     }
                     else
                     {
                         propertyNoticeList[idx].NewUpdate();
+                        if(idx < propertyNoticeList.Count - 1)
+                        {
+                            Sequence seq = DOTween.Sequence();
+                            newPos = propertyNoticePos[idx];
+                            newPos.x += propSizeMoveX;
+                            seq.Append(propertyNoticeList[idx].rectTr.DOAnchorPos(newPos, 0.3f))
+                            .Join(propertyNoticeList[idx].cvsg.DOFade(0f, 0.3f));
+                            seq.AppendInterval(0.15f);
+
+                            propertyNoticeList.Add(propertyNoticeList[idx]);
+                            propertyNoticeList.RemoveAt(idx);
+
+                            for(int i=idx; i<propertyNoticeList.Count-1; i++)
+                            {
+                                int si = i;
+                                seq.Append(propertyNoticeList[si].rectTr.DOAnchorPos(propertyNoticePos[si], 0.3f));
+                            }
+                            seq.AppendInterval(0.15f);
+                            seq.Append(propertyNoticeList[propertyNoticeList.Count - 1].cvsg.DOFade(1f, 0.3f));
+                            seq.Append(propertyNoticeList[propertyNoticeList.Count - 1].rectTr.DOAnchorPos(propertyNoticePos[propertyNoticeList.Count - 1], 0.3f));
+                            seq.AppendCallback(() => isInsertingProperty = false).Play();
+                        }
                         //여기서 할 것 : 맨위로 보내는 연출. 이미 맨위면 그대로 리턴. 맨 위로 보내면서 위에것들 한 칸 씩 아래로
                     }
                 }
