@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
+using Water;
 
 public class PlayerStatUI : MonoBehaviour
 {
@@ -23,6 +24,15 @@ public class PlayerStatUI : MonoBehaviour
     private Dictionary<ushort, ChoiceStatInfoElement> choiceStatInfoUIDic = new Dictionary<ushort, ChoiceStatInfoElement>(); //선택 스탯 UI 옵젝들 담음
     public Dictionary<ushort, Pair<StatElement,StatElement>> eternalStatDic = new Dictionary<ushort, Pair<StatElement, StatElement>>(); // 1: 디폴트, 2: 추가
     public Dictionary<ushort, StatElement> choiceStatDic = new Dictionary<ushort, StatElement>();  //additional있으면 위처럼 Pair로 묶긴 해야함.
+
+    private readonly int propertyNoticeMaxCount = 4;
+    private Vector2[] propertyNoticePos;
+    private bool isInsertingProperty = false;
+    private Queue<ushort> propNoticeQueue = new Queue<ushort>();
+    private List<PropertyUI> propertyNoticeList = new List<PropertyUI>();
+    private float propIntervalY;
+    private float propSizeMoveX;
+    public Transform propertyUIParent;
 
     [SerializeField] private int invisibleChoiceStatUICount = 3; //선택 스탯 요소 중 하나 누르고 자세히 보기 상태일 때 자세히 보기창까지 포함해서
     //선택 스탯 스크롤뷰 안에 있어서 스크롤에 포함된 것처럼 보이게 하기 위해서 현재 선택된 버튼 밑에 안보이는 선택 스탯 버튼을 몇 개(변수) 둬서 그렇게 보이도록 할지. 어케할지 몰라서 일단 이렇게 꼼수로 함
@@ -72,11 +82,62 @@ public class PlayerStatUI : MonoBehaviour
 
         choiceDetailPar = choiceStatDetailPanel.transform.parent;
         //choiceDetailStartPos = choiceStatDetailPanel.GetComponent<RectTransform>().anchoredPosition;
+
+        propertyNoticePos = new Vector2[propertyNoticeMaxCount];
+        GameObject[] arr = new GameObject[propertyNoticeMaxCount];
+        for(int i=0; i<propertyNoticeMaxCount; i++)
+        {
+            propertyNoticePos[i] = propertyUIParent.GetChild(propertyNoticeMaxCount - 1 - i).GetComponent<RectTransform>().anchoredPosition;
+            arr[i] = propertyUIParent.GetChild(i).gameObject;
+        }
+        propSizeMoveX = propertyUIParent.GetChild(0).GetComponent<RectTransform>().rect.width * 0.3f;
+        propIntervalY = Mathf.Abs(propertyNoticePos[1].y - propertyNoticePos[0].y);
+        for (int i=0; i<arr.Length; i++)
+        {
+            Destroy(arr[i]);
+        }
     }
 
     private void Start()
     {
         InitSet();
+
+        FuncUpdater.Add(() =>
+        {
+            if (!isInsertingProperty)
+            {
+                if(propNoticeQueue.Count > 0)
+                {
+                    isInsertingProperty = true;
+                    ushort id = propNoticeQueue.Dequeue();
+                    int idx = ExistCurPropNotice(id);
+                    if(idx == -1)
+                    {
+                        PropertyUI newProp = PoolManager.GetItem<PropertyUI>("PropertyNotice");
+                        propertyNoticeList.Add(newProp);
+                        newProp.Set(choiceStatDic[id]);
+                        //여기서 할 것: 리스트 위치에 맞게 UI 나타남. 4칸 다 찼으면 한 칸씩 아래로 내리고 마지막은 리스트에서 제거
+                    }
+                    else
+                    {
+                        propertyNoticeList[idx].NewUpdate();
+                        //여기서 할 것 : 맨위로 보내는 연출. 이미 맨위면 그대로 리턴. 맨 위로 보내면서 위에것들 한 칸 씩 아래로
+                    }
+                }
+            }
+        });
+    }
+
+    int ExistCurPropNotice(ushort id)  //로그같은 특성 UI들 중에 현재 화면에 해당 id의 특성이 표시되어 있는지
+    {
+        for (int i = 0; i < propertyNoticeList.Count; i++)
+        {
+            if (propertyNoticeList[i].ID == id)
+            {
+                return i;
+            }
+        }
+        return -1;
     }
 
     public void PlayerRespawnEvent()
@@ -338,6 +399,7 @@ public class PlayerStatUI : MonoBehaviour
         else  //선택 스탯 획득
         {
             choiceStatInfoUIDic[se.id].gameObject.SetActive(true);
+            InsertPropertyInfo(se.id);
         }
 
         if (log)
@@ -345,6 +407,11 @@ public class PlayerStatUI : MonoBehaviour
             UIManager.Instance.RequestLogMsg("[" + GetStatSOData(se.id).statName + "] 획득");
         }
         
+    }
+
+    public void InsertPropertyInfo(ushort id)  //특성(선택스탯)을 얻거나 렙업하면 호출
+    {
+        propNoticeQueue.Enqueue(id);
     }
 
     public void DetailViewChoiceStatInfo(ushort id)  //선택 스탯 UI 클릭 후 자세히 보기

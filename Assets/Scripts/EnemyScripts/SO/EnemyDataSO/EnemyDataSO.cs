@@ -28,8 +28,10 @@ namespace Enemy
     {
         public EnemyType enemyType;
 
+        // 애니메이션 리스트
         public List<EnemyAnimation> animationList = new List<EnemyAnimation>();
 
+        // 적 색깔
         public Color normalColor;
         public Color damagedColor;
         public Color enemyDeadEffectColor;
