@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 2562849804374694923}
   - component: {fileID: 6733055458574363012}
   - component: {fileID: 467518829431291813}
+  - component: {fileID: 4973412210076925943}
+  - component: {fileID: 573707942550919683}
   m_Layer: 0
   m_Name: Enemy6_Mage
   m_TagString: Untagged
@@ -102,3 +104,39 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &4973412210076925943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1844745320149715030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6342c7c7fa59ec4487950d6002c0ad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &573707942550919683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1844745320149715030}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0546f8ccffb51c41b63604d106c9ffe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolType: 6
+  count: 5
+  enemyDataSO: {fileID: 11400000, guid: dafdc798eb029474e821b6680dbbcbca, type: 2}
+  hpBarFillImage: {fileID: 0}
+  hpBarDamageFillImage: {fileID: 0}
+  hpBar: {fileID: 0}
+  enemyAttackCheck: []
+  hpTweenTime: 0.1
+  hpTweenDelayTime: 0.3
+  damageHPTweenTime: 0.2
+  hpEffectAnimation: {fileID: 0}
+  stunEffectPosition: {x: 0, y: 0}
