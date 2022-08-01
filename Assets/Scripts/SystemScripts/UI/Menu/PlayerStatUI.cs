@@ -200,6 +200,8 @@ public class PlayerStatUI : MonoBehaviour
         prevConfirmExpRate = 0f;
         expFullCount = 0;
         prevStatPoint = playerStat.currentStatPoint;
+
+        PoolManager.PoolObjSetActiveFalse("PropertyNotice");
     }
 
     private void InitSet()
