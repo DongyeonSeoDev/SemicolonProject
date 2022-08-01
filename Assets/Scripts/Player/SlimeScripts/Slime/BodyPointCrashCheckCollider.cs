@@ -22,13 +22,11 @@ public class BodyPointCrashCheckCollider : MonoBehaviour
     }
     private void OnEnable()
     {
-        EventManager.StartListening("BodyPointCrash", BodyPointCrash);
         EventManager.StartListening("OnBodySlap", OnBodySlap);
         EventManager.StartListening("ExitCurrentMap", ExitCurrentMap);
     }
     private void OnDisable()
     {
-        EventManager.StopListening("BodyPointCrash", BodyPointCrash);
         EventManager.StopListening("OnBodySlap", OnBodySlap);
         EventManager.StopListening("ExitCurrentMap", ExitCurrentMap);
     }
@@ -96,9 +94,5 @@ public class BodyPointCrashCheckCollider : MonoBehaviour
         {
             bodyPoint.MiddlePoint.WillCrashList.Clear();
         }
-    }
-    private void BodyPointCrash(GameObject targetObject)
-    {
-
     }
 }

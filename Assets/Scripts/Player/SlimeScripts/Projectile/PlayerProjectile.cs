@@ -83,8 +83,6 @@ public class PlayerProjectile : MonoBehaviour
             return;
         }
 
-        bool isCritical = false;
-
         if (whatIsCrashable.CompareGameObjectLayer(other.gameObject))
         { 
             if (whatIsEnemy.CompareGameObjectLayer(other.gameObject))
@@ -138,26 +136,20 @@ public class PlayerProjectile : MonoBehaviour
 
         effect.OnSpawn(transform.rotation, transform.position);
     }
+    public void OnSpawn(Vector2 direction, float speed, float damage)
+    {
+        OnSpawn(direction, speed);
+
+        projectileDamage = damage;
+    }
     public void OnSpawn(Vector2 direction, float speed)
     {
-        //r = distance
-        //x = direction.x
-
         transform.rotation = Quaternion.Euler(new Vector3(0f, 0f, Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg));
 
         moveVec = direction;
 
         moveTimer = moveTime;
         moveSpeed = speed;
-    }
-    public void OnSpawn(Vector2 direction, float speed, float damage)
-    {
-        //r = distance
-        //x = direction.x
-
-        OnSpawn(direction, speed);
-
-        projectileDamage = damage;
     }
     private void Move()
     {

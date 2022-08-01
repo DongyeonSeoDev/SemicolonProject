@@ -53,8 +53,6 @@ public class PlayerMomentomScript : MonoBehaviour
 
         lastUpSpeed = momentomSpeed;
         SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.speed.statValue += lastUpSpeed;
-
-        Debug.Log("추진력!!!!!!!!" + lastUpSpeed + " 만큼 이속 상승");
     }
     private void EndMomentom()
     {
@@ -64,7 +62,6 @@ public class PlayerMomentomScript : MonoBehaviour
         SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.speed.statValue -= lastUpSpeed;
         momentomTimer = 0f;
 
-        Debug.Log("추진력 멈춰!" + lastUpSpeed + "만큼 이동속도 감소");
         lastUpSpeed = 0f;
     }
     private void PlayerDead()
