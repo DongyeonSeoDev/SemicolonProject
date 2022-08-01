@@ -317,8 +317,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
                     return;
                 }
 
-                stat.statValue++;
-                stat.statLv++;
+                UpChoiceStatLv(stat);
 
                 SlimeGameManager.Instance.Player.PlayerStat.additionalEternalStat.maxHp.statValue += choiceDataDict[NGlobal.EnduranceID].upTargetStatPerChoiceStat;
 
@@ -368,8 +367,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
                     return;
                 }
 
-                stat.statValue++;
-                stat.statLv++;
+                UpChoiceStatLv(stat);
 
                 ProficiencyCheckValueReset(false);
 
@@ -419,8 +417,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
                     return;
                 }
 
-                stat.statValue++;
-                stat.statLv++;
+                UpChoiceStatLv(stat);
 
                 MomentomCheckValueReset();
 
@@ -492,8 +489,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
                     return;
                 }
 
-                stat.statValue++;
-                stat.statLv++;
+                UpChoiceStatLv(stat);
 
                 MucusRechargeValueReset();
 
@@ -530,8 +526,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
                     return;
                 }
 
-                stat.statValue++;
-                stat.statLv++;
+                UpChoiceStatLv(stat);
 
                 choiceDataDict[NGlobal.FakeID].upAmount *= 2;
 
@@ -617,5 +612,13 @@ public class PlayerChoiceStatControl : MonoBehaviour
         totalDamage = 0;
         attackMissedNum = 0;
         attackNum = 0;
+    }
+
+    private void UpChoiceStatLv(StatElement choiceStat)
+    {
+        choiceStat.statLv++;
+        choiceStat.statValue++;
+
+        NGlobal.playerStatUI.InsertPropertyInfo(choiceStat.id);
     }
 }
