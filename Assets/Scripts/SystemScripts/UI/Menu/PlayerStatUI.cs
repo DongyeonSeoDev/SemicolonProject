@@ -162,17 +162,27 @@ public class PlayerStatUI : MonoBehaviour
                             propertyNoticeList.Add(propertyNoticeList[idx]);
                             propertyNoticeList.RemoveAt(idx);
 
+                            bool b = false;
+
                             for(int i=idx; i<propertyNoticeList.Count-1; i++)
                             {
                                 int si = i;
-                                seq.Append(propertyNoticeList[si].rectTr.DOAnchorPos(propertyNoticePos[si], 0.3f));
+                                if (b)
+                                    seq.Join(propertyNoticeList[si].rectTr.DOAnchorPos(propertyNoticePos[si], 0.3f));
+                                else
+                                {
+                                    seq.Append(propertyNoticeList[si].rectTr.DOAnchorPos(propertyNoticePos[si], 0.3f));
+                                    b = true;
+                                }
                             }
-                            seq.AppendInterval(0.15f);
-                            seq.Append(propertyNoticeList[propertyNoticeList.Count - 1].cvsg.DOFade(1f, 0.3f));
-                            seq.Append(propertyNoticeList[propertyNoticeList.Count - 1].rectTr.DOAnchorPos(propertyNoticePos[propertyNoticeList.Count - 1], 0.3f));
+
+                            newPos = propertyNoticePos[propertyNoticeList.Count - 1] + new Vector2(propSizeMoveX, 0);
+
+                            seq.AppendInterval(0.15f).AppendCallback(()=>propertyNoticeList[propertyNoticeList.Count - 1].rectTr.anchoredPosition = newPos);
+                            seq.Append(propertyNoticeList[propertyNoticeList.Count - 1].cvsg.DOFade(1f, 0.3f))
+                            .Join(propertyNoticeList[propertyNoticeList.Count - 1].rectTr.DOAnchorPos(propertyNoticePos[propertyNoticeList.Count - 1], 0.3f));
                             seq.AppendCallback(() => isInsertingProperty = false).Play();
                         }
-                        //여기서 할 것 : 맨위로 보내는 연출. 이미 맨위면 그대로 리턴. 맨 위로 보내면서 위에것들 한 칸 씩 아래로
                     }
                 }
             }
@@ -405,7 +415,6 @@ public class PlayerStatUI : MonoBehaviour
         UpdateCurStatPoint(false);
         UIManager.Instance.UpdatePlayerHPUI();
         //eternalStatDic[id].second.statValue += stat.upStatValue;
-
     }
     public void StatOpen(ushort id, bool free = false)  //특정 스탯을 '개방'함 (스탯 레벨 1로 함)  -> 고정스탯 전용
     {

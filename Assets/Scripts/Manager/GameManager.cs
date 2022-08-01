@@ -236,7 +236,6 @@ public partial class GameManager : MonoSingleton<GameManager>
                 checkItrObjDic.Add(new Pair<string, InteractionObj>(key, ObjectManager.Instance.itrObjDic[key]));
             }
         });
-
 #endif
 
         slimeFollowObj = PoolManager.GetItem("EmptyObject").transform;
