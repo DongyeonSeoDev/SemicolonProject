@@ -15,14 +15,14 @@ MonoBehaviour:
   enemyType: 6
   animationList: []
   normalColor: {r: 1, g: 1, b: 1, a: 1}
-  damagedColor: {r: 1, g: 1, b: 1, a: 1}
-  enemyDeadEffectColor: {r: 1, g: 1, b: 1, a: 1}
-  playerNormalColor: {r: 1, g: 1, b: 1, a: 1}
-  speed: 0
-  minAttack: 0
-  maxAttack: 0
+  damagedColor: {r: 1, g: 0, b: 0, a: 1}
+  enemyDeadEffectColor: {r: 0.427451, g: 0.9686275, b: 0.69411767, a: 1}
+  playerNormalColor: {r: 0, g: 1, b: 0, a: 1}
+  speed: 5
+  minAttack: 15
+  maxAttack: 19
   critical: 0
   criticalDamage: 0
   defense: 0
-  hp: 0
-  addExperience: 0
+  hp: 25
+  addExperience: 50
