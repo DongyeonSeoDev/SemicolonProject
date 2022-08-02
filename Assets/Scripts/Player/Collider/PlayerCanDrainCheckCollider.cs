@@ -60,7 +60,6 @@ public class PlayerCanDrainCheckCollider : MonoBehaviour
             EventManager.TriggerEvent("Tuto_CanDrainObject");
 
             playerState.CantChangeDir = true;
-            //playerDrain.drainTutorialDone = true;
         }
     }
 }

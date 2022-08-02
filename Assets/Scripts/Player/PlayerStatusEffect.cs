@@ -33,7 +33,6 @@ public class PlayerStatusEffect : PlayerAction
     {
         CheckSturnTimer();
     }
-    
     public void KnockBack(Vector2 direction, float speed, float knockBackTime) // knockBackTime은 knockBack되는 시간이다.
     {
         if(playerState.IsDrain)
