@@ -212,6 +212,7 @@ public class PlayerStatUI : MonoBehaviour
         prevStatPoint = playerStat.currentStatPoint;
 
         PoolManager.PoolObjSetActiveFalse("PropertyNotice");
+        propertyNoticeList.Clear();
     }
 
     private void InitSet()
