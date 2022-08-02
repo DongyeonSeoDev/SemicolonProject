@@ -9,7 +9,7 @@ namespace Enemy
             enemyData.attackDelay = 0.5f;
 
             enemyData.enemySpriteRotateCommand = new EnemySpriteRotateCommand(enemyData);
-            enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed);
+            enemyData.enemyMoveCommand = new EnemyMoveCommand();
         }
 
         public void ReadyAttack() // 애니메이션에서 실행

@@ -306,6 +306,19 @@ namespace Enemy
         }
     }
 
+    public class EnemyMoveCommand : EnemyCommand
+    {
+        public EnemyMoveCommand()
+        { 
+        
+        }
+
+        public override void Execute()
+        {
+
+        }
+    }
+
     public class BossMoveCommand : EnemyCommand // 보스 움직임
     {
         private EnemyData enemyData;
