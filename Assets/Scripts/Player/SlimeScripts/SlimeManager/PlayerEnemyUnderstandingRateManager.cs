@@ -71,7 +71,7 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
 
     [Header("동화율 몇퍼당 변신시 능력치가 오를지를 정하는 변수")]
     [SerializeField]
-    private int understandingRatePercentageWhenUpStat = 10;
+    private int understandingRatePercentageWhenUpStat = 50;
     public float UnderstandingRatePercentageWhenUpStat
     {
         get { return understandingRatePercentageWhenUpStat; }
@@ -79,7 +79,7 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
 
     [Header("동화율 'understadingRatePercentageWhenUpStat'퍼당 변신시 오르게되는 능력치가 오르게 되는 수치(배율)")]
     [SerializeField]
-    private float upStatPercentage = 0.05f;
+    private float upStatPercentage = 0.50f;
     public float UpStatPercentage
     {
         get { return upStatPercentage; }
@@ -339,7 +339,7 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
             if (upNewBodyStat >= 1)
             {
 
-                result = (upStat * upNewBodyStat * upStatPercentage);// 10% 마다 upStatPercentage배씩 상승
+                result = (upStat * upNewBodyStat * upStatPercentage);// 50% 마다 upStatPercentage배씩 상승
             }
 
             if (currentUpNewBodyStat.ContainsKey(objId))
