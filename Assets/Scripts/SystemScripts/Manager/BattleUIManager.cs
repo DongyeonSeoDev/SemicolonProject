@@ -324,9 +324,8 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
             MissionRandomInCounter(ref ms);
             CheckMissionZeroWeight(ref ms);
             ms.SetLv(GetRandomDLV());
-
-            currentMissions.Add(ms);
             ms.Start();
+            currentMissions.Add(ms);
 
             missionPanelRt.DOKill();
 
@@ -344,8 +343,8 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
     {
         Mission ms = allMissionsDic[msType];
         ms.SetLv(lv);
-        currentMissions.Add(ms);
         ms.Start();
+        currentMissions.Add(ms);
 
         missionPanelRt.DOKill();
 

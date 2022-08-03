@@ -112,14 +112,15 @@ public class PlayerStatUI : MonoBehaviour
                     ushort id = propNoticeQueue.Dequeue();
                     int idx = ExistCurPropNotice(id);
                     Vector2 newPos;
-                    if(idx == -1)
+                    if(idx == -1)  //현재 화면에 해당 특성 표시 UI가 없을 경우
                     {
                         PropertyUI newProp = PoolManager.GetItem<PropertyUI>("PropertyNotice");
                         propertyNoticeList.Add(newProp);
                         newProp.Set(choiceStatDic[id]);
                         newProp.cvsg.alpha = 0f;
-                        if(propertyNoticeList.Count > propertyNoticeMaxCount)
+                        if(propertyNoticeList.Count > propertyNoticeMaxCount)  //UI칸이 꽉 참
                         {
+                            //맨 아래를 없애주고 새로운 것을 맨 위로 올림
                             PropertyUI old = propertyNoticeList[0];
                             propertyNoticeList.RemoveAt(0);
                             newPos = propertyNoticePos[propertyNoticeMaxCount-1];
@@ -138,8 +139,9 @@ public class PlayerStatUI : MonoBehaviour
                             old.rectTr.DOAnchorPos(newPos, 0.3f).OnComplete(()=>old.gameObject.SetActive(false));
                             newProp.cvsg.DOFade(1, 0.3f).OnComplete(() => isInsertingProperty = false);
                         }
-                        else
+                        else  //UI 수가 아직 max가 아님
                         {
+                            //맨 위 빈 칸에 UI 넣어줌
                             newPos = propertyNoticePos[propertyNoticeList.Count - 1];
                             newPos.y += propIntervalY;
                             newProp.rectTr.anchoredPosition = newPos;
@@ -147,11 +149,12 @@ public class PlayerStatUI : MonoBehaviour
                             newProp.cvsg.DOFade(1, 0.3f).OnComplete(()=>isInsertingProperty = false);
                         }
                     }
-                    else
+                    else  //현재 화면에 해당 특성 표시 UI가 있으면
                     {
                         propertyNoticeList[idx].NewUpdate();
-                        if(idx < propertyNoticeList.Count - 1)
+                        if(idx < propertyNoticeList.Count - 1)  //해당 특성 UI가 맨 위가 아니라면
                         {
+                            //맨 위로 보내줌
                             Sequence seq = DOTween.Sequence();
                             newPos = propertyNoticePos[idx];
                             newPos.x += propSizeMoveX;
@@ -182,6 +185,22 @@ public class PlayerStatUI : MonoBehaviour
                             seq.Append(propertyNoticeList[propertyNoticeList.Count - 1].cvsg.DOFade(1f, 0.3f))
                             .Join(propertyNoticeList[propertyNoticeList.Count - 1].rectTr.DOAnchorPos(propertyNoticePos[propertyNoticeList.Count - 1], 0.3f));
                             seq.AppendCallback(() => isInsertingProperty = false).Play();
+
+                            #region 혹시 모를 다른 연출. 일단 주석
+                            //일단 주석. => 이 연출로 할 수도 있으므로
+
+                            /*propertyNoticeList[idx].transform.SetAsLastSibling();
+                            propertyNoticeList[idx].rectTr.DOAnchorPos(propertyNoticePos[propertyNoticeList.Count - 1], 0.32f).OnComplete(()=> isInsertingProperty = false);
+
+                            propertyNoticeList.Add(propertyNoticeList[idx]);
+                            propertyNoticeList.RemoveAt(idx);
+
+                            for (int i = idx; i < propertyNoticeList.Count - 1; i++)
+                            {
+                                int si = i;
+                                propertyNoticeList[si].rectTr.DOAnchorPos(propertyNoticePos[si], 0.3f);
+                            }*/
+                            #endregion
                         }
                     }
                 }
