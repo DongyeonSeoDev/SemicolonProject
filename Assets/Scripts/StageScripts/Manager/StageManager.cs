@@ -418,6 +418,7 @@ public class StageManager : MonoSingleton<StageManager>
         else if (currentStage.lobbySpawnPoint && teleport)  //주로 로비에서 부활하거나 시작했을 때
         {
             MapCenterPoint = currentStage.lobbySpawnPoint.position;
+            currentStage.GetOpposeDoor(PassDir);
         }
         else
         {
@@ -534,7 +535,7 @@ public class StageManager : MonoSingleton<StageManager>
         {
             currentStage.stageDoors.ToRandomList(5).ForEach(door =>
             {
-                if (!door.gameObject.activeSelf && idx < count && canSetDoorPos(door))
+                if (!door.gameObject.activeSelf && idx < count && canSetDoorPos(door))  //로비에서는 어차피 문이 두 개. 입구/출구. 걸어서 가는 경우라면 상관없음
                 {
                     try
                     {
