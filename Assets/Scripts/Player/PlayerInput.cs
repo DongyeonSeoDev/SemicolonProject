@@ -7,6 +7,7 @@ public class PlayerInput : MonoBehaviour
 {
     private PlayerState playerState = null;
     private InputTutorial inputTutorial = null;
+    private Rigidbody rigid = null;
 
     private Vector2 moveVector = Vector2.zero;
     public Vector2 MoveVector
@@ -236,13 +237,12 @@ public class PlayerInput : MonoBehaviour
 
                 moveVector = moveVector.normalized;
 
-                if (SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.isUnlock && !playerState.IsInMomentom) // 추진력을 얻었는지, 추진력 중복상태는 아닌지 체크
+                if (SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.isUnlock && !playerState.IsInMomentom)
                 {
                     if (moveVector != Vector2.zero)
                     {
                         if (playerStopStayTimerStarted && playerStopStay)
                         {
-                            // 추진력 실행 코드
                             playerState.IsInMomentom = true;
                         }
 
