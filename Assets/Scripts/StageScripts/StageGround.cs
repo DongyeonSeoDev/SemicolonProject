@@ -6,7 +6,7 @@ public class StageGround : MonoBehaviour
 {
     public Collider2D camStageCollider;
 
-    public Transform playerSpawnPoint;
+    public Transform playerSpawnPoint, lobbySpawnPoint;
 
     public Transform objSpawnPos;
 

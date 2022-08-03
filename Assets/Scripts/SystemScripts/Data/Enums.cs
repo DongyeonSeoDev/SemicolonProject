@@ -154,7 +154,8 @@ public enum AreaType
     BOSS,
     RECOVERY,
     IMPRECATION,
-    NONE
+    NONE,
+    LOBBY
 }
 
 public enum StateAbnormality

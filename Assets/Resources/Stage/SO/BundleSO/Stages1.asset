@@ -15,6 +15,7 @@ MonoBehaviour:
   floor: 1
   stageBundleName: "\uD558\uC218\uAD6C"
   stages:
+  - {fileID: 11400000, guid: 3ab00434fbcd45e4da9c3f132cc01c65, type: 2}
   - {fileID: 11400000, guid: b5dcade26e02d6a4f9220c167de830bf, type: 2}
   - {fileID: 11400000, guid: 72429167179995d46b3afd90e6b40961, type: 2}
   - {fileID: 11400000, guid: 9059aafb7ab1bd94ea2be40299f2dfe8, type: 2}
@@ -47,24 +48,26 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f6af987ae81407a45a06adba0935800a, type: 2}
   randomStageList:
   - stageNumber: 1
-    nextStageTypes: 01000000
+    nextStageTypes: 00000000
   - stageNumber: 2
-    nextStageTypes: 0400000001000000
+    nextStageTypes: 01000000
   - stageNumber: 3
-    nextStageTypes: 040000000200000003000000
-  - stageNumber: 4
     nextStageTypes: 0400000001000000
+  - stageNumber: 4
+    nextStageTypes: 040000000200000003000000
   - stageNumber: 5
     nextStageTypes: 0400000001000000
   - stageNumber: 6
-    nextStageTypes: 040000000200000003000000
-  - stageNumber: 7
     nextStageTypes: 0400000001000000
+  - stageNumber: 7
+    nextStageTypes: 040000000200000003000000
   - stageNumber: 8
     nextStageTypes: 0400000001000000
   - stageNumber: 9
-    nextStageTypes: 0200000003000000
+    nextStageTypes: 0400000001000000
   - stageNumber: 10
-    nextStageTypes: 05000000
+    nextStageTypes: 0200000003000000
   - stageNumber: 11
-    nextStageTypes: 00000000
+    nextStageTypes: 05000000
+  - stageNumber: 12
+    nextStageTypes: 09000000

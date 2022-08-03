@@ -157,13 +157,13 @@ public class StageManager : MonoSingleton<StageManager>
     {
         startStageID = GameManager.Instance.savedData.stageInfo.currentStageID;
         PassDir = GameManager.Instance.savedData.stageInfo.passDoorDir;
-        if (TutorialManager.Instance.IsTestMode) startStageID = "Stage1-01";
+        if (TutorialManager.Instance.IsTestMode) startStageID = "Stage1-00";
         currentFloor = GetStageData(startStageID).stageFloor.floor;
         InsertRandomMaps(currentFloor);
         SetRandomAreaRandomIncounter();
         Util.DelayFunc(() =>
         {
-            NextStage(startStageID);
+            NextStage(startStageID, true);
             UIManager.Instance.StartLoadingIn();
         }, 0.2f);
 
@@ -361,14 +361,14 @@ public class StageManager : MonoSingleton<StageManager>
 
         foreach (AreaType type in Enum.GetValues(typeof(AreaType)))
         {
-            if (type == AreaType.START) continue;
+            if (type == AreaType.START || type == AreaType.LOBBY) continue;
 
             randomRoomDict[floor][type] = randomRoomDict[floor][type].ToRandomList();
         }
     }
 
     //다음 스테이지로 감. (검은색 로딩 화면 중에 이루어지는 함수)
-    public void NextStage(string id)
+    public void NextStage(string id, bool teleport)
     {
         Debug.Log("Next Stage : " + id);
 
@@ -414,7 +414,10 @@ public class StageManager : MonoSingleton<StageManager>
         {
             //주로 처음 게임 스타트 지점
             MapCenterPoint = currentStage.playerSpawnPoint.position;
-            
+        }
+        else if (currentStage.lobbySpawnPoint && teleport)  //주로 로비에서 부활하거나 시작했을 때
+        {
+            MapCenterPoint = currentStage.lobbySpawnPoint.position;
         }
         else
         {
@@ -647,7 +650,7 @@ public class StageManager : MonoSingleton<StageManager>
         PassDir = GameManager.Instance.savedData.stageInfo.passDoorDir;
         InsertRandomMaps(currentFloor);
         SetRandomAreaRandomIncounter();
-        NextStage(startStageID);
+        NextStage(startStageID, true);
     }
 
     public StageDataSO GetStageData(string id = "")
@@ -703,7 +706,7 @@ public class StageManager : MonoSingleton<StageManager>
             case RandomRoomType.MONSTER:  //몬스터 구역
                 //int targetStage = Mathf.Clamp(currentStageData.stageFloor.floor + UnityEngine.Random.Range(-1, 2), 1, MaxStage); //현재 층에서 몇 층을 더할지 정함
                 //StageBundleDataSO sbData = idToStageFloorDict.Values.Find(x=>x.floor == targetStage); //현재 층에서 -1 or 0 or 1층을 더한 층을 가져온다
-                NextStage(GetStageBundleData(currentFloor).monsterStages.ToRandomElement().stageID); //뽑은 층에서 몬스터 지역들중에 랜덤으로 가져온다
+                NextStage(GetStageBundleData(currentFloor).monsterStages.ToRandomElement().stageID, false); //뽑은 층에서 몬스터 지역들중에 랜덤으로 가져온다
                 break;
 
             case RandomRoomType.RECOVERY:  //회복 구역
