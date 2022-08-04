@@ -15,6 +15,7 @@ public class TimeLimitKillMission : Mission
 
     public override void SetLv(DifficultyLevel lv)
     {
+        missionLevel = lv;
         switch (lv)
         {
             case DifficultyLevel.EASY:

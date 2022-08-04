@@ -5,6 +5,8 @@ public class NoDamagedMission : Mission
     private int curDamagedCnt;
     private int damagedLimCnt;
 
+    private int heart;
+
     
     public NoDamagedMission()
     {
@@ -18,6 +20,7 @@ public class NoDamagedMission : Mission
 
     public override void SetLv(DifficultyLevel lv)
     {
+        missionLevel = lv;
         switch (lv)
         {
             case DifficultyLevel.EASY:
@@ -30,7 +33,9 @@ public class NoDamagedMission : Mission
                 damagedLimCnt = 0;
                 break;
         }
-        missionName = (damagedLimCnt + 1).ToString() + "회 이상 피격당하지 않고 클리어하세요";
+        heart = damagedLimCnt + 1;
+        string s = heart.ToString();
+        missionName = $"{s}회 이상 피격당하지 않고 클리어하세요 ({s}/{s})";
         EventManager.StartListening("PlayerGetDamaged", CheckDamageCount);
         EventManager.StartListening("StageClear", MissionSuccess);
     }
@@ -49,7 +54,11 @@ public class NoDamagedMission : Mission
 
     private void CheckDamageCount()
     {
-        if(++curDamagedCnt > damagedLimCnt)  //미션 실패
+        curDamagedCnt++;
+
+        SetMissionNameText($"{heart}회 이상 피격당하지 않고 클리어하세요 ({heart-curDamagedCnt}/{heart})");
+
+        if(curDamagedCnt > damagedLimCnt)  //미션 실패
         {
             MissionFailure();
         }

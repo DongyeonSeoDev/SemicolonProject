@@ -321,6 +321,32 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         }
     }
 
+    public void SetMonsterAssim(int up)  //미션 보상 전용 함수. => 어떤 몹의 동화율을 올려줌
+    {
+        List<string> list = new List<string>(); 
+        for(int i=0; i<savedBodys.Count; i++)
+        {
+            if (savedBodys[i].Registered && savedBodys[i].BodyID != Global.OriginBodyID)
+                list.Add(savedBodys[i].BodyID);
+        }
+
+        if(list.Count > 0)
+        {
+            if(list.Count == 1)
+            {
+                urmg.SetUnderstandingRate(list[0], urmg.GetUnderstandingRate(list[0]) + up);
+            }
+            else
+            {
+
+            }
+        }
+        else
+        {
+            Debug.LogWarning("잘못된 접근입니다. 다시 확인 필요. 동화율을 올릴 몸이 존재하지 않음");
+        }
+    }
+
     #region Detail Stat
 
     public void DetailStat()
@@ -590,6 +616,19 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
                 savedBodys[i].Unregister();
             }
         }*/
+    }
+
+    public int GetSavedMonsterBodyCount()  //기본 슬라임 몸을 제외하고 몇 개의 몸을 흡수해서 가지고 있는지 리턴
+    {
+        int cnt = 0;
+        for(int i=0; i<maxSavedBodyCount; i++)
+        {
+            if (savedBodys[i].Registered && savedBodys[i].BodyID != Global.OriginBodyID)
+            {
+                cnt++;
+            }
+        }
+        return cnt;
     }
 
     #endregion

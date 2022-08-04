@@ -593,6 +593,21 @@ public class StageManager : MonoSingleton<StageManager>
         currentStageMonsterBundleOrder++;
     }
 
+    public int GetCurStageEnemyCount()  //현재 스테이지의 몹 수 전체 수. => 몇 세트씩 나뉘어서 나오는 것들 전부 합쳐서
+    {
+        string[] strs = currentStageData.stageMonsterBundleID;
+        int count = 0;
+
+        //count += Enemy.EnemyManager.Instance.enemyDictionary[strs[i]].Count;  // 아직 스테이지 로드가 안 된 경우에는 값을 못불러온다
+
+        Dictionary<string,List<EnemySpawnData>> spawnData =  CSVEnemySpawn.Instance.enemySpawnDatas;
+        for (int i = 0; i < strs.Length; i++)
+        {
+            count += spawnData[strs[i]].Count;
+        }
+        return count;
+    }
+
     public void SetClearStage()
     {
         IsStageClear = true;

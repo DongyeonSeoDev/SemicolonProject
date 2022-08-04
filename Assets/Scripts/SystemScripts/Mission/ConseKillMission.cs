@@ -22,6 +22,7 @@ public class ConseKillMission : Mission
 
     public override void SetLv(DifficultyLevel lv)
     {
+        missionLevel = lv; 
         switch (lv)
         {
             case DifficultyLevel.EASY:
@@ -35,7 +36,7 @@ public class ConseKillMission : Mission
                 break;
         }
 
-        missionName = needConseKill.ToString() + "마리를 연속으로 처치하세요";
+        missionName = needConseKill.ToString() + "마리를 연속으로 처치하세요 (0/" + needConseKill.ToString() + ")";
     }
 
     public override void Start()
@@ -59,6 +60,7 @@ public class ConseKillMission : Mission
                 {
                     onTimer = false;
                     curConseKill = 0;
+                    SetMissionNameText($"{needConseKill}마리를 연속으로 처치하세요 (0/{needConseKill})");
                 }
             }
         }
@@ -66,7 +68,7 @@ public class ConseKillMission : Mission
 
     private void EnemyDead(GameObject o, string s, bool b)  //매개변수는 그냥 타입에 맞추기 위한것.
     {
-        curConseKill++;
+        SetMissionNameText($"{needConseKill}마리를 연속으로 처치하세요 ({++curConseKill}/{needConseKill})");
 
         if (!onTimer)
         {
