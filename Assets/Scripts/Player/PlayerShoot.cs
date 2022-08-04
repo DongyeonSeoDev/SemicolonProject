@@ -6,6 +6,8 @@ public class PlayerShoot : PlayerSkill
 {
     private SlimePoolManager slimePoolManager = null;
 
+    private PlayerShootDirectionControl playerShootDirectionControl = null;
+
     [SerializeField]
     private GameObject projectile = null;
 
@@ -24,6 +26,7 @@ public class PlayerShoot : PlayerSkill
     public override void Awake()
     {
         slimePoolManager = SlimePoolManager.Instance;
+        playerShootDirectionControl = GetComponent<PlayerShootDirectionControl>();
 
         base.Awake();
     }
@@ -51,21 +54,36 @@ public class PlayerShoot : PlayerSkill
             GameObject temp = null;
             bool findInDic = false;
 
-            Vector2 direction = (playerInput.MousePosition - (Vector2)transform.position).normalized;
+            Vector2 mouseDirection = (playerInput.MousePosition - (Vector2)transform.position).normalized;
+            Vector2 shootDirection = Vector2.zero;
+            List<float> directionList = new List<float>();
 
-            (temp, findInDic) = slimePoolManager.Find(projectile);
-
-            if (findInDic && temp != null)
+            if (player.PlayerStat.choiceStat.multiShootingTest.statLv > 0)
             {
-                temp.SetActive(true);
+                directionList = playerShootDirectionControl.DirectionList[player.PlayerStat.choiceStat.multiShootingTest.statLv - 1].dataList;
             }
             else
             {
-                temp = Instantiate(projectile, SlimePoolManager.Instance.transform);
+                directionList.Add(0);
             }
 
-            temp.transform.position = (Vector2)transform.position + (direction * shootPosOffset);
-            temp.GetComponent<PlayerProjectile>().OnSpawn(direction, projectileSpeed);
+            for (int i = 0; i < directionList.Count; i++)
+            {
+                shootDirection = Quaternion.Euler(mouseDirection.x, mouseDirection.y, directionList[i]) * mouseDirection;
+                (temp, findInDic) = slimePoolManager.Find(projectile);
+
+                if (findInDic && temp != null)
+                {
+                    temp.SetActive(true);
+                }
+                else
+                {
+                    temp = Instantiate(projectile, SlimePoolManager.Instance.transform);
+                }
+
+                temp.transform.position = (Vector2)transform.position + ((shootDirection).normalized * shootPosOffset);
+                temp.GetComponent<PlayerProjectile>().OnSpawn((shootDirection).normalized, projectileSpeed);
+            }
 
             SlimeGameManager.Instance.Player.UseEnergy(useEnergyAmount);
             SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = SlimeGameManager.Instance.SkillDelays[skillIdx];

@@ -69,16 +69,14 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
         get { return maxUnderstandingRate; }
     }
 
-    [Header("동화율 몇퍼당 변신시 능력치가 오를지를 정하는 변수")]
-    [SerializeField]
+    // "동화율 몇퍼당 변신시 능력치가 오를지를 정하는 변수"
     private int understandingRatePercentageWhenUpStat = 50;
     public float UnderstandingRatePercentageWhenUpStat
     {
         get { return understandingRatePercentageWhenUpStat; }
     }
 
-    [Header("동화율 'understadingRatePercentageWhenUpStat'퍼당 변신시 오르게되는 능력치가 오르게 되는 수치(배율)")]
-    [SerializeField]
+    // 동화율 'understadingRatePercentageWhenUpStat'퍼당 변신시 오르게되는 능력치가 오르게 되는 수치(배율)
     private float upStatPercentage = 0.50f;
     public float UpStatPercentage
     {
