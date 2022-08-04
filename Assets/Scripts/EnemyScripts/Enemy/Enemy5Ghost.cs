@@ -9,7 +9,7 @@ namespace Enemy
             enemyData.attackDelay = 0.5f;
 
             enemyData.enemySpriteRotateCommand = new EnemySpriteRotateCommand(enemyData);
-            enemyData.enemyMoveCommand = new EnemyMoveCommand();
+            enemyData.enemyMoveCommand = new EnemyMoveCommand(enemyData, transform, SlimeGameManager.Instance.CurrentPlayerBody.transform, enemyData.chaseSpeed);
         }
 
         public void ReadyAttack() // 애니메이션에서 실행
