@@ -46,7 +46,7 @@ public class StageCheatWindow : EditorWindow
     private Vector2 scrollPos = Vector2.zero;
 
     [MenuItem("Cheat/Normal Cheat")]
-    public static void ShowEnemySpawnWindow()
+    public static void ShowStageCheatWindow()
     {
         GetWindow(typeof(StageCheatWindow));
     }
