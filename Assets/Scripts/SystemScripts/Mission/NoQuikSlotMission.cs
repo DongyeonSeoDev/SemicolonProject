@@ -15,8 +15,7 @@ public class NoQuikSlotMission : Mission
 
     public override void Start()
     {
-        isEnd = false;
-        isClear = false;
+        base.Start();
         //InteractionHandler.canUseQuikSlot = false;
 
         EventManager.StartListening("UseQuikSlot", MissionFailure);

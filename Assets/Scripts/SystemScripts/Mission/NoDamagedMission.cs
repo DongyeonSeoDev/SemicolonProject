@@ -43,8 +43,7 @@ public class NoDamagedMission : Mission
     public override void Start()
     {
         curDamagedCnt = 0;
-        isEnd = false;
-        isClear = false;
+        base.Start();
     }
 
     public override void Update()

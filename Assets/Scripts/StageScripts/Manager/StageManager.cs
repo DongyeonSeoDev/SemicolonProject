@@ -179,9 +179,13 @@ public class StageManager : MonoSingleton<StageManager>
             {
                 case AreaType.RECOVERY:
                     PoolManager.PoolObjSetActiveFalse("RecoveryObjPrefObjPref1");
+                    Util.StopCo("SetRecoveryEnv", this);
+                    Util.StopCo("RecoveryInteract", this);
                     break;
                 case AreaType.IMPRECATION:
                     PoolManager.PoolObjSetActiveFalse("ImprecationObjPref1");
+                    Util.StopCo("SetImprecationEnv", this);
+                    Util.StopCo("ImprecationInteract", this);
                     break;
                 case AreaType.CHEF:
                     currentMapNPCList.ForEach(x => x.gameObject.SetActive(false));
@@ -712,11 +716,11 @@ public class StageManager : MonoSingleton<StageManager>
 
                 ImprecationObj io = PoolManager.GetItem<ImprecationObj>("ImprecationObjPref1");
                 io.transform.position = currentStage.objSpawnPos.position;
-                Util.DelayFunc(() => 
+                Util.PriDelayFunc("SetImprecationEnv", () =>
                 {
                     Environment.Instance.OnEnteredOrExitImprecationArea(true);
-                    Util.DelayFunc(() => io.Interaction(), Global.ImprAndRecoInteractDelay, this);
-                }, Global.ImprAndRecoEffDelay, this);
+                    Util.PriDelayFunc("ImprecationInteract", io.Interaction, Global.ImprAndRecoInteractDelay, this, false);
+                }, Global.ImprAndRecoEffDelay, this, false);
                 break;
 
             case RandomRoomType.MONSTER:  //몬스터 구역
@@ -732,7 +736,7 @@ public class StageManager : MonoSingleton<StageManager>
                 RecoveryObj ro = PoolManager.GetItem<RecoveryObj>("RecoveryObjPrefObjPref1");
                 ro.transform.position = currentStage.objSpawnPos.position;
 
-                Util.DelayFunc(() =>
+                Util.PriDelayFunc("SetRecoveryEnv", () =>
                 {
                     Environment.Instance.OnEnteredOrExitRecoveryArea(true);
                     ro.ActiveRecovLight();
@@ -742,9 +746,9 @@ public class StageManager : MonoSingleton<StageManager>
                     }
                     else
                     {
-                        Util.DelayFunc(() => ro.Interaction(), Global.ImprAndRecoInteractDelay, this);
+                        Util.PriDelayFunc("RecoveryInteract", ro.Interaction, Global.ImprAndRecoInteractDelay, this, false);
                     }
-                }, Global.ImprAndRecoEffDelay, this);
+                }, Global.ImprAndRecoEffDelay, this, false);
 
                 break;
         }

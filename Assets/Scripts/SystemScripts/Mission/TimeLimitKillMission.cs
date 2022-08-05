@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class TimeLimitKillMission : Mission
 {
-    private float limitTime;
+    private float limit;
+    private float limitTimer;
+    private int rest;
 
     public TimeLimitKillMission() 
     {
@@ -19,31 +21,38 @@ public class TimeLimitKillMission : Mission
         switch (lv)
         {
             case DifficultyLevel.EASY:
-                limitTime = 60f;
+                limit = 60f;
                 break;
             case DifficultyLevel.NORMAL:
-                limitTime = 45f;
+                limit = 45f;
                 break;
             case DifficultyLevel.HARD:
-                limitTime = 30f;
+                limit = 30f;
                 break;
         }
-        missionName = ((int)limitTime).ToString() + "초 이내로 클리어하세요";
+        limitTimer = limit;
+        rest = (int)limit;
+        missionName = rest.ToString() + "초 이내로 클리어하세요 (" + rest.ToString() + ")";
         EventManager.StartListening("StageClear", MissionSuccess);
     }
 
     public override void Start()
     {
-        isEnd = false;
-        isClear = false;
+        base.Start();
     }
 
     public override void Update()
     {
         if(!isEnd && !isClear)
         {
-            limitTime -= Time.deltaTime;
-            if (limitTime <= 0f)
+            limitTimer -= Time.deltaTime;
+
+            if(Mathf.CeilToInt(limitTimer) != rest)
+            {
+                SetMissionNameText($"{(int)limit}초 이내로 클리어하세요 ({--rest})");
+            }
+
+            if (limitTimer <= 0f)
             {
                 MissionFailure();
             }

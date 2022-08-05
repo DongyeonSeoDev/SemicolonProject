@@ -26,6 +26,7 @@ public class AbsorptionTutoMission : Mission
         checkTime = Time.time + 1f;
         EnemyManager.Instance.isOnlyAbsorption = true;
         EventManager.StartListening("TryAbsorbMob", (System.Action<bool>)TryDrain);
+        base.Start();
     }
 
     private void TryDrain(bool suc)
@@ -89,6 +90,7 @@ public class AbsorptionTutoMission2 : Mission
     {
         EnemyManager.Instance.isOnlyAbsorption = true;
         EventManager.StartListening("TryAbsorbMob", (System.Action<bool>)TryDrain);
+        base.Start();
     }
 
     public override void Update()

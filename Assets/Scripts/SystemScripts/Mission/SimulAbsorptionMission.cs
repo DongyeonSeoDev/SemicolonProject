@@ -18,8 +18,7 @@ public class SimulAbsorptionMission : Mission
 
     public override void Start()
     {
-        isEnd = false;
-        isClear = false;
+        base.Start();
         EventManager.StartListening("PlayerManyDrain", MissionSuccess); //3마리 흡수 판정 후에 몹 사망 판정 시켜야 함. 호출 순서 주의
         EventManager.StartListening("StageClear", MissionFailure);
     }

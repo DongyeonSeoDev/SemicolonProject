@@ -8,6 +8,8 @@ public class SurvivalMission : Mission
     private float survivalTimer;
     private Action<bool> endAction;
 
+    private int cur;
+
     public SurvivalMission(string title, float survivalTime, Action<bool> end = null) : base(title)
     {
         this.survivalTime = survivalTime;
@@ -24,7 +26,7 @@ public class SurvivalMission : Mission
 
     public override void Start()
     {
-        isEnd = false;
+        base.Start();
         survivalTimer = 0f;
     }
 
@@ -32,7 +34,12 @@ public class SurvivalMission : Mission
     {
         survivalTimer += Time.deltaTime;
 
-        if(survivalTimer > survivalTime)
+        if (Mathf.FloorToInt(survivalTimer) != cur)
+        {
+            SetMissionNameText($"{survivalTime}초 동안 살아남으세요 ({++cur})");
+        }
+
+        if (survivalTimer > survivalTime)
         {
             isEnd = true;
         }
@@ -41,5 +48,6 @@ public class SurvivalMission : Mission
     public override void SetLv(DifficultyLevel lv)
     {
         missionLevel = lv;
+        cur = 0;
     }
 }

@@ -16,8 +16,7 @@ public class AllKillMission : Mission
 
     public override void Start()
     {
-        isEnd = false;
-        isClear = false;
+        base.Start();
         EventManager.StartListening("EnemyDead", EnemyDead);
         EventManager.StartListening("StageClear", MissionSuccess);
     }

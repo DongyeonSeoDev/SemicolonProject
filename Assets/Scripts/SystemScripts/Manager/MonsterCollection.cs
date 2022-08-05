@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using System.Text;
 
 public class MonsterCollection : MonoSingleton<MonsterCollection>
 {
@@ -335,10 +336,19 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             if(list.Count == 1)
             {
                 urmg.SetUnderstandingRate(list[0], urmg.GetUnderstandingRate(list[0]) + up);
+
+                StringBuilder sb = new StringBuilder();
+                sb.Append('[');
+                sb.Append(GetMonsterInfo(list[0]).bodyName);
+                sb.Append("] 동화율이 증가했습니다 (+");
+                sb.Append(up);
+                sb.Append(')');
+
+                UIManager.Instance.RequestLogMsg(sb.ToString());
             }
             else
             {
-
+                //어떤 몹의 동화율 올릴지 선택창 띄워줌
             }
         }
         else

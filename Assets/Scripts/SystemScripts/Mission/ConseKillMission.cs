@@ -41,8 +41,7 @@ public class ConseKillMission : Mission
 
     public override void Start()
     {
-        isEnd = false;
-        isClear = false;
+        base.Start();
         onTimer = false;
         curConseKill = 0;
         EventManager.StartListening("EnemyDead", EnemyDead);
@@ -60,6 +59,7 @@ public class ConseKillMission : Mission
                 {
                     onTimer = false;
                     curConseKill = 0;
+                    BattleUIManager.Instance.ShakeMissionPanel(0.4f, 10);
                     SetMissionNameText($"{needConseKill}마리를 연속으로 처치하세요 (0/{needConseKill})");
                 }
             }

@@ -113,8 +113,10 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
         EventManager.StartListening("GotoNextStage_LoadingStart", DeleteAllMissions);
         EventManager.StartListening("StageClear", () =>
         {
-            for (int i = 0; i < currentMissions.Count; i++)
+            for(int i=0; i<currentMissions.Count; i++)
+            {
                 currentMissions[i].isEnd = true;
+            }
         });
         #endregion
 
@@ -134,7 +136,7 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
         }
 
         //튜토리얼 3번방 전용
-        allMissionsDic.Add(MissionType.SURVIVAL1, new SurvivalMission("20초 동안 살아남으세요", 20f, doorBreak =>
+        allMissionsDic.Add(MissionType.SURVIVAL1, new SurvivalMission("20초 동안 살아남으세요 (20)", 20f, doorBreak =>
         {
             TalkManager.Instance.SetSubtitle(SubtitleDataManager.Instance.GetSubtitle("Tuto3Clear"));
             Enemy.EnemyManager.Instance.PlayerDeadEvent();
