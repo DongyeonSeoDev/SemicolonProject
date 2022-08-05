@@ -7,6 +7,7 @@ namespace Enemy
             base.OnEnable();
 
             enemyData.attackDelay = 0.5f;
+            enemyData.isAttackPlayerDistance = 1.5f;
 
             enemyData.enemySpriteRotateCommand = new EnemySpriteRotateCommand(enemyData);
             enemyData.enemyMoveCommand = new EnemyMoveCommand(enemyData, transform, SlimeGameManager.Instance.CurrentPlayerBody.transform, enemyData.chaseSpeed);
