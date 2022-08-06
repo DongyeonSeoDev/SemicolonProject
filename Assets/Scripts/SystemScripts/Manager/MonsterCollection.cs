@@ -72,6 +72,10 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     public Sprite notExistBodySpr; //빈 슬롯일 때의 스프라이트 (몸)
     public Sprite questionSpr; // ? 스프라이트
 
+    #region Assim Reward Panel
+    public AssimRewardPanel assimRewardPanel;   
+    #endregion
+
     private void Awake()
     {
         for(int i=0; i<savedBodys.Count; i++)
@@ -349,6 +353,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             else
             {
                 //어떤 몹의 동화율 올릴지 선택창 띄워줌
+                TimeManager.TimePause();
             }
         }
         else
