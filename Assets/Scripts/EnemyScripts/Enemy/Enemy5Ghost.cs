@@ -1,7 +1,12 @@
+using UnityEngine;
+
 namespace Enemy
 {
     public class Enemy5Ghost : Enemy
     {
+        private readonly int hashTeleport = Animator.StringToHash("Teleport");
+        private readonly int hashTeleportEnd = Animator.StringToHash("TeleportEnd");
+
         protected override void OnEnable()
         {
             base.OnEnable();
@@ -19,6 +24,19 @@ namespace Enemy
             {
                 enemyAttackCheck[i].AttackObjectReset();
             }
+        }
+
+        public void StartTeleport()
+        {
+            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Move, enemyData.enemyAnimator, TriggerType.SetTrigger);
+            enemyData.enemyAnimator.SetTrigger(hashTeleport);
+
+            Invoke("EndTeleport", 3f);
+        }
+
+        public void EndTeleport()
+        {
+            enemyData.enemyAnimator.SetTrigger(hashTeleportEnd);
         }
     }
 }
