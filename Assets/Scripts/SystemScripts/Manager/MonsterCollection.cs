@@ -352,14 +352,31 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             }
             else
             {
-                //어떤 몹의 동화율 올릴지 선택창 띄워줌
-                TimeManager.TimePause();
+                assimRewardPanel.Open(list, up);
             }
         }
         else
         {
             Debug.LogWarning("잘못된 접근입니다. 다시 확인 필요. 동화율을 올릴 몸이 존재하지 않음");
         }
+    }
+
+    public void MonsterAssimReward(int up, string id)  //미션 보상 전용 함수. => 어떤 몹의 동화율을 올려주는데 유저가 몹 선택하고 그 몹 올려주고 리워드 패널 끔
+    {
+        assimRewardPanel.Close();
+        Util.DelayFunc(() =>
+        {
+            urmg.SetUnderstandingRate(id, urmg.GetUnderstandingRate(id) + up);
+
+            StringBuilder sb = new StringBuilder();
+            sb.Append('[');
+            sb.Append(GetMonsterInfo(id).bodyName);
+            sb.Append("] 동화율이 증가했습니다 (+");
+            sb.Append(up);
+            sb.Append(')');
+
+            UIManager.Instance.RequestLogMsg(sb.ToString());
+        }, 0.4f, this, true);
     }
 
     #region Detail Stat
