@@ -346,9 +346,10 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
                 sb.Append(GetMonsterInfo(list[0]).bodyName);
                 sb.Append("] 동화율이 증가했습니다 (+");
                 sb.Append(up);
-                sb.Append(')');
+                sb.Append("%)");
 
                 UIManager.Instance.RequestLogMsg(sb.ToString());
+                UIManager.Instance.InsertNoticeQueue($"<color=blue>{GetMonsterInfo(list[0]).bodyName}</color> 동화율 <color=blue>{up}</color>% 상승");
             }
             else
             {
@@ -373,9 +374,10 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             sb.Append(GetMonsterInfo(id).bodyName);
             sb.Append("] 동화율이 증가했습니다 (+");
             sb.Append(up);
-            sb.Append(')');
+            sb.Append("%)");
 
             UIManager.Instance.RequestLogMsg(sb.ToString());
+            UIManager.Instance.InsertNoticeQueue($"<color=blue>{GetMonsterInfo(id).bodyName}</color> 동화율 <color=blue>{up}</color>% 상승");
         }, 0.4f, this, true);
     }
 
