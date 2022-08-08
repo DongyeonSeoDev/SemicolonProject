@@ -306,6 +306,32 @@ namespace Enemy
         }
     }
 
+    public class EnemyMoveCommand : EnemyCommand
+    {
+        private EnemyData enemyData;
+        private Transform enemyTransform;
+        private Transform targetTransform;
+        private float speed;
+
+        public EnemyMoveCommand(EnemyData data, Transform enemy, Transform playerTransform, float moveSpeed)
+        {
+            enemyData = data;
+            enemyTransform = enemy;
+            targetTransform = playerTransform;
+            speed = moveSpeed;
+        }
+
+        public override void Execute()
+        {
+            Vector3 targetDirection = targetTransform.position - enemyTransform.position;
+
+            targetDirection = targetDirection.normalized;
+            enemyData.moveVector = targetDirection;
+
+            enemyTransform.position += targetDirection * speed * Time.deltaTime;
+        }
+    }
+
     public class BossMoveCommand : EnemyCommand // 보스 움직임
     {
         private EnemyData enemyData;
