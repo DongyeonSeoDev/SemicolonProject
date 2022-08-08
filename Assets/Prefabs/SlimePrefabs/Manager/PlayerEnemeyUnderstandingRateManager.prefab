@@ -617,5 +617,5 @@ MonoBehaviour:
     hint: 
   canMountObjNum: 2
   maxUnderstandingRate: 200
-  understandingRatePercentageWhenUpStat: 10
+  understandingRatePercentageWhenUpStat: 50
   upStatPercentage: 0.05

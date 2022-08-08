@@ -26,7 +26,6 @@ public class PlayerRotation : MonoBehaviour
     {
         CheckTimer();
     }
-
     private void StartRotationByLerp(float ra, float rt)
     {
         originValue = SlimeGameManager.Instance.CurrentPlayerBody.transform.rotation.z;

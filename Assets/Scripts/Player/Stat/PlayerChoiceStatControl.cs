@@ -216,6 +216,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
             CheckReflection();
             CheckFake();
             CheckMucusRecharge();
+            CheckMultiShootingTest();
             #endregion
 
             #region EternalStat 관련
@@ -226,6 +227,23 @@ public class PlayerChoiceStatControl : MonoBehaviour
             CheckCriticalDamage();
             #endregion
         }
+    }
+    public void CheckMultiShootingTest()
+    {
+        StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.multiShootingTest;
+
+        if(stat.isUnlock)
+        {
+            if(stat.statLv > stat.maxStatLv)
+            {
+                stat.statLv = stat.maxStatLv;
+            }
+
+            return;
+        }
+
+        stat.isUnlock = true;
+        stat.statLv = choiceDataDict[135].firstValue; // 135 는 임시 ID
     }
     public void CheckAttackSpeed()
     {

@@ -88,6 +88,7 @@ GameObject:
   - component: {fileID: 1014413144}
   - component: {fileID: 1014413151}
   - component: {fileID: 4791505076498265380}
+  - component: {fileID: 7345431068749341646}
   - component: {fileID: 3493340178899303131}
   - component: {fileID: 5835559770882864823}
   - component: {fileID: 4331802093199943809}
@@ -209,7 +210,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 131136
   whenDrainBodyPointMoveSound: {fileID: 0}
-  returnToOriginSpeed: 2
+  moveToOriginSpeed: 2
   moveToMiddleSpeed: 1
   farByMiddleSpeed: 1
   moveToOriginTime: 1
@@ -342,6 +343,39 @@ MonoBehaviour:
   shootPosOffset: 0.6
   projectileSpeed: 15
   useEnergyAmount: 1
+--- !u!114 &7345431068749341646
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6840160282341942530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f693bbcf4d955ea4e8d12d668f998c95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  directionList:
+  - dataList:
+    - 0
+  - dataList:
+    - 0
+    - 180
+  - dataList:
+    - 0
+    - 45
+    - 315
+  - dataList:
+    - 0
+    - 90
+    - 180
+    - 270
+  - dataList:
+    - 0
+    - 45
+    - 315
+    - 225
+    - 135
 --- !u!114 &3493340178899303131
 MonoBehaviour:
   m_ObjectHideFlags: 0

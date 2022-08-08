@@ -190,7 +190,6 @@ public class PCSoftBody : SoftBody
         for (int i = 0; i < notMiddlePoints.Count; i++)
         {
             Vector2 _vertex = notMiddlePoints[i].transform.localPosition;
-
             Vector2 _towardsCenter = (-_vertex).normalized;
 
             try

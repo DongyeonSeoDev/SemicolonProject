@@ -144,7 +144,7 @@ public class PlayerDrainCollider : MonoBehaviour
 
             tryDrainList.Add(enemy);
 
-            if ((enemy != null && hpPercentage <= canDrainHpPercentage) && !playerDrain.cantDrainObject) // 흡수 성공////////////////////
+            if ((enemy != null && hpPercentage <= canDrainHpPercentage) && !playerDrain.cantDrainObject)
             {
                 doDrainList.Add(enemy);
                 SpawnGrabObj(enemy.GetGameObject());
@@ -177,9 +177,6 @@ public class PlayerDrainCollider : MonoBehaviour
                 drainTimer = drainMoveTime;
                 drainTime = drainTimer;
             }
-
-            // 여기부턴 흡수 성공 혹은 실패한 오브젝트의 이동 관련 처리를 위한
-            // 사전 준비작업
 
             EventManager.TriggerEvent("SetDrainTime", drainTime);
 

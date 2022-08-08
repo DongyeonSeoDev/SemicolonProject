@@ -31,9 +31,8 @@ public abstract class AvoidCloseCheckCollider : MonoBehaviour
 
                 removeList.Add(item.Key);
 
-                if (hitCheck) // 공격 회피를 못했으니 리턴
+                if (hitCheck) // 공격 회피를 못했으니 넘어감
                 {
-
                     continue;
                 }
 
