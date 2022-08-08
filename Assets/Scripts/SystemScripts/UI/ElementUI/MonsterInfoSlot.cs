@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using DG.Tweening;
 
 public class MonsterInfoSlot : MonoBehaviour
 {
@@ -12,6 +11,8 @@ public class MonsterInfoSlot : MonoBehaviour
     [SerializeField] private Image understandingRateFill, understandingOverRateFill;
 
     [SerializeField] private Image drainProbabilityFill;
+
+    public TextMeshProUGUI nameTMP;
 
     public Transform MobImgBg { get; private set; }
 
@@ -37,9 +38,10 @@ public class MonsterInfoSlot : MonoBehaviour
         monsterImg.GetComponent<Button>().onClick.AddListener(() => MonsterCollection.Instance.Detail(this, monsterBodyID));
     }
 
-    public void SetMonsterImg(bool set)
+    public void SetMonsterSlot(bool set)
     {
         monsterImg.sprite = set ? BodyData.bodyImg : MonsterCollection.Instance.questionSpr;
+        //nameTMP.text = set ? BodyData.bodyName : "???";
     }
 
     public void UpdateAssimilationRate(float rate)

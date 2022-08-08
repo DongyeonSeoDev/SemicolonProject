@@ -207,7 +207,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         foreach(string key in mobLearningInfoDic.Keys)
         {
             if (mobLearningInfoDic[key].meet)
-                mobIdToSlot[key].SetMonsterImg(true);
+                mobIdToSlot[key].SetMonsterSlot(true);
         }
     }
 
@@ -522,7 +522,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
         if (value)
         {
-            mobIdToSlot[id].SetMonsterImg(true);
+            mobIdToSlot[id].SetMonsterSlot(true);
         }
     }
     public void ChangeLearningStateKill(string id, bool value)
