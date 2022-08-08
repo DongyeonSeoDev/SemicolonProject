@@ -67,6 +67,8 @@ public class PlayerShoot : PlayerSkill
                 directionList.Add(0);
             }
 
+            PlayerProjectile pTemp = null;
+            int shootId = 0;
             for (int i = 0; i < directionList.Count; i++)
             {
                 shootDirection = Quaternion.Euler(mouseDirection.x, mouseDirection.y, directionList[i]) * mouseDirection;
@@ -81,8 +83,18 @@ public class PlayerShoot : PlayerSkill
                     temp = Instantiate(projectile, SlimePoolManager.Instance.transform);
                 }
 
+                if(shootId == 0)
+                {
+                    shootId = temp.GetInstanceID();
+                }
+
                 temp.transform.position = (Vector2)transform.position + ((shootDirection).normalized * shootPosOffset);
-                temp.GetComponent<PlayerProjectile>().OnSpawn((shootDirection).normalized, projectileSpeed);
+
+                pTemp = temp.GetComponent<PlayerProjectile>();
+                pTemp.OnSpawn((shootDirection).normalized, projectileSpeed);
+                pTemp.shootId = shootId;
+
+                PlayerProjectileControl.Instance.AddListDict(shootId, pTemp);
             }
 
             SlimeGameManager.Instance.Player.UseEnergy(useEnergyAmount);

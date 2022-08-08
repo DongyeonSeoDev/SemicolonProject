@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerProjectile : MonoBehaviour
 {
+    public int shootId = 0;
+
     private SlimePoolManager slimePoolManager = null;
     private PlayerInput playerInput = null;
 
@@ -99,16 +101,17 @@ public class PlayerProjectile : MonoBehaviour
                     {
                         SlimeGameManager.Instance.Player.Mag_GiveDamage(enemy, SlimeGameManager.Instance.Player.PlayerStat.MinDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, transform.position, moveVec, damageMagnificationOfShoot, true, knockBackPower, 0f);
                     }
-                    EventManager.TriggerEvent("OnEnemyAttack");
+
+                    PlayerProjectileControl.Instance.OnEnemyAttack(shootId);
                 }
                 else
                 {
-                    EventManager.TriggerEvent("OnAttackMiss");
+                    PlayerProjectileControl.Instance.OnMissAttack(shootId);
                 }
             }
             else 
             {
-                EventManager.TriggerEvent("OnAttackMiss");
+                PlayerProjectileControl.Instance.OnMissAttack(shootId);
             }
 
             ShowOnCrashEffect();
@@ -164,6 +167,7 @@ public class PlayerProjectile : MonoBehaviour
             if (moveTimer <= 0f)
             {
                 moveTimer = 0f;
+                PlayerProjectileControl.Instance.OnMissAttack(shootId);
 
                 Despawn();
             }
