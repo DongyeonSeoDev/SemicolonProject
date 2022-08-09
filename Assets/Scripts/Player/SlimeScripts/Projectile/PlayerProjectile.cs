@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerProjectile : MonoBehaviour
 {
     public int shootId = 0;
+    public bool isShootAlone = false;
 
     private SlimePoolManager slimePoolManager = null;
     private PlayerInput playerInput = null;
@@ -102,14 +103,29 @@ public class PlayerProjectile : MonoBehaviour
                         SlimeGameManager.Instance.Player.Mag_GiveDamage(enemy, SlimeGameManager.Instance.Player.PlayerStat.MinDamage, SlimeGameManager.Instance.Player.PlayerStat.MaxDamage, transform.position, moveVec, damageMagnificationOfShoot, true, knockBackPower, 0f);
                     }
 
-                    PlayerProjectileControl.Instance.OnEnemyAttack(shootId);
+                    if (isShootAlone)
+                    {
+                        EventManager.TriggerEvent("OnEnemyAttack");
+                    }
+                    else
+                    {
+                        PlayerProjectileControl.Instance.OnEnemyAttack(shootId);
+                    }
+                }
+                else if (isShootAlone)
+                {
+                    EventManager.TriggerEvent("OnAttackMiss");
                 }
                 else
                 {
                     PlayerProjectileControl.Instance.OnMissAttack(shootId);
                 }
             }
-            else 
+            else if (isShootAlone)
+            {
+                EventManager.TriggerEvent("OnAttackMiss");
+            }
+            else
             {
                 PlayerProjectileControl.Instance.OnMissAttack(shootId);
             }

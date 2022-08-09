@@ -22,7 +22,6 @@ public class PlayerProjectileControl : MonoSingleton<PlayerProjectileControl>
             key = item.Key;
             if(totalNumDict[key] >= item.Value.Count)
             {
-
                 if(onAttackEnemyDict[key] > 0)
                 {
                     EventManager.TriggerEvent("OnEnemyAttack");

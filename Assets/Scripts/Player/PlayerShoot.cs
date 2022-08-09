@@ -94,7 +94,15 @@ public class PlayerShoot : PlayerSkill
                 pTemp.OnSpawn((shootDirection).normalized, projectileSpeed);
                 pTemp.shootId = shootId;
 
-                PlayerProjectileControl.Instance.AddListDict(shootId, pTemp);
+                if (directionList.Count <= 1)
+                {
+                    pTemp.isShootAlone = true;
+                }
+                else
+                {
+                    pTemp.isShootAlone = false;
+                    PlayerProjectileControl.Instance.AddListDict(shootId, pTemp);
+                }
             }
 
             SlimeGameManager.Instance.Player.UseEnergy(useEnergyAmount);
