@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using Water;
+using TMPro;
 
 public class PlayerStatUI : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class PlayerStatUI : MonoBehaviour
     public Text statExpText;  // 스탯 포인트 경험치 텍스트
     public Pair<GameObject, Transform> statInfoUIPair, choiceStatInfoUIPair;  //고정 스탯 UI 프리팹과 부모, 선택스탯 UI 프리팹과 부모
     public GameObject invisibleChoiceStatUIPrefab;
+
+    public TextMeshProUGUI statPointTMP;  //화면에 그냥 상시로 보이는 스탯포인트 텍스트
 
     private int prevStatPoint; //마지막으로 스탯창 닫았을 때의 스탯포인트 양
     private int expFullCount = 0; //마지막으로 스탯창 열고 경험치 확인한 후로부터 스탯포인트 경험치가 꽉차서 포인트를 얻은 것이 몇 회 있었는지
@@ -32,7 +35,7 @@ public class PlayerStatUI : MonoBehaviour
     private List<PropertyUI> propertyNoticeList = new List<PropertyUI>();
     private float propIntervalY;
     private float propSizeMoveX;
-    public Transform propertyUIParent;
+    public Transform propertyUIParent;  //특성 UI 요소의 부모 위치
 
     [SerializeField] private int invisibleChoiceStatUICount = 3; //선택 스탯 요소 중 하나 누르고 자세히 보기 상태일 때 자세히 보기창까지 포함해서
     //선택 스탯 스크롤뷰 안에 있어서 스크롤에 포함된 것처럼 보이게 하기 위해서 현재 선택된 버튼 밑에 안보이는 선택 스탯 버튼을 몇 개(변수) 둬서 그렇게 보이도록 할지. 어케할지 몰라서 일단 이렇게 꼼수로 함
@@ -232,6 +235,8 @@ public class PlayerStatUI : MonoBehaviour
 
         PoolManager.PoolObjSetActiveFalse("PropertyNotice");
         propertyNoticeList.Clear();
+
+        UpdateScrStatUI();
     }
 
     private void InitSet()
@@ -294,6 +299,8 @@ public class PlayerStatUI : MonoBehaviour
             invisibleChoiceStatUIList.Add(o.transform);
             o.SetActive(false);
         }
+
+        UpdateScrStatUI();
     }
 
     public float GetCurrentPlayerStat(ushort id)  //해당 스탯의 최종 수치를 반환  
@@ -468,6 +475,8 @@ public class PlayerStatUI : MonoBehaviour
             UIManager.Instance.InsertNoticeQueue($"스탯포인트 {point} 획득");
             UIManager.Instance.RequestLogMsg($"스탯포인트를 획득했습니다. (+{point})");
             EffectManager.Instance.CallFollowTargetGameEffect("StatPntUpEff", Global.GetSlimePos, Vector3.zero, 1.5f);
+
+            UpdateScrStatUI();
         }
     }
 
@@ -561,6 +570,11 @@ public class PlayerStatUI : MonoBehaviour
         }
     }
     
+    public void UpdateScrStatUI()  //플레이 화면에 보이는 스탯 UI 업뎃
+    {
+        statPointTMP.text = string.Concat('+', playerStat.currentStatPoint);
+    }
+
     public void UpdateAllChoiceStatUI()  //모든 선택 스탯 UI 갱신
     {
         foreach(ChoiceStatInfoElement csie in choiceStatInfoUIDic.Values)

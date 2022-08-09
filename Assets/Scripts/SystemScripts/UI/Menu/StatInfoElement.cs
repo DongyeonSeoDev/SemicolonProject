@@ -129,6 +129,12 @@ public class StatInfoElement : UITransition
     {
         if (enter && !eternal.isOpenStat) return;
 
+        if (eternal.isUnlockClose)
+        {
+            curStatTxt.text = "<color=#980D0D>" + Mathf.RoundToInt(NGlobal.playerStatUI.GetCurrentPlayerStat(id)).ToString() + "</color>";
+            return;
+        }
+
         curStatTxt.text = enter ? string.Concat(Mathf.RoundToInt(NGlobal.playerStatUI.GetCurrentPlayerStat(id)), "<color=green>(+", NGlobal.playerStatUI.eternalStatDic[id].first.upStatValue, ")</color>") : Mathf.RoundToInt(NGlobal.playerStatUI.GetCurrentPlayerStat(id)).ToString();
     }
 

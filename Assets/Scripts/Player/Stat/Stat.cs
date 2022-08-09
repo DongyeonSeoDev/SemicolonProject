@@ -92,7 +92,7 @@ public class StatElement  //스탯은 0렙부터 시작. 0렙일 때는 스탯을 개방하지 못한
 
     public int upStatCount => statLv - 1;  //스탯 올리는 짓을 몇 번 했는지
     public bool isOpenStat => statLv > 0;  //스탯 개방이 되었는지
-    public bool isUnlockClose => statLv == 0 && isUnlock;
+    public bool isUnlockClose => statLv == 0 && isUnlock;  //스탯을 획득했지만 개방은 안했는지
 
     public StatElement() { }
 

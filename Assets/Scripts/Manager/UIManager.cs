@@ -615,6 +615,7 @@ public partial class UIManager : MonoSingleton<UIManager>
                 else
                 {
                     KeyActionManager.Instance.SetAutoQuikSlotItem();
+                    NGlobal.playerStatUI.UpdateScrStatUI();
                 }
                 break;
         }
