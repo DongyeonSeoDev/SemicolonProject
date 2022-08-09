@@ -314,7 +314,7 @@ public class ChoiceStat
 
     public StatElement fake = new StatElement(); // 맞은척
 
-    public StatElement multiShootingTest = new StatElement() ; // 여러갈래 발사 테스트 ID: 131
+    public StatElement multipleShots = new StatElement() ; // 여러갈래 발사 
 
     public void Reset()
     {
@@ -323,6 +323,6 @@ public class ChoiceStat
         endurance.ResetComplete();
         frenzy.ResetComplete();
         reflection.ResetComplete();
-        multiShootingTest.ResetComplete();
+        multipleShots.ResetComplete();
     }
 }

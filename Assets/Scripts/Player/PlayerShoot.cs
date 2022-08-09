@@ -58,9 +58,9 @@ public class PlayerShoot : PlayerSkill
             Vector2 shootDirection = Vector2.zero;
             List<float> directionList = new List<float>();
 
-            if (player.PlayerStat.choiceStat.multiShootingTest.statLv > 0)
+            if (player.PlayerStat.choiceStat.multipleShots.statLv > 0)
             {
-                directionList = playerShootDirectionControl.DirectionList[player.PlayerStat.choiceStat.multiShootingTest.statLv - 1].dataList;
+                directionList = playerShootDirectionControl.DirectionList[player.PlayerStat.choiceStat.multipleShots.statLv - 1].dataList;
             }
             else
             {
