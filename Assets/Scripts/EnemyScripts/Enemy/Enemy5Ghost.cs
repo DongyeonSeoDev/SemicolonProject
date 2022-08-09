@@ -15,7 +15,7 @@ namespace Enemy
             enemyData.isAttackPlayerDistance = 1.5f;
 
             enemyData.enemySpriteRotateCommand = new EnemySpriteRotateCommand(enemyData);
-            enemyData.enemyMoveCommand = new EnemyMoveCommand(enemyData, transform, SlimeGameManager.Instance.CurrentPlayerBody.transform, enemyData.chaseSpeed);
+            enemyData.enemyMoveCommand = new EnemyMoveCommand(enemyData, transform, enemyData.chaseSpeed);
         }
 
         public void ReadyAttack() // 애니메이션에서 실행

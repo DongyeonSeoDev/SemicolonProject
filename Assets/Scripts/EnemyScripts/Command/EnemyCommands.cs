@@ -310,20 +310,18 @@ namespace Enemy
     {
         private EnemyData enemyData;
         private Transform enemyTransform;
-        private Transform targetTransform;
         private float speed;
 
-        public EnemyMoveCommand(EnemyData data, Transform enemy, Transform playerTransform, float moveSpeed)
+        public EnemyMoveCommand(EnemyData data, Transform enemy, float moveSpeed)
         {
             enemyData = data;
             enemyTransform = enemy;
-            targetTransform = playerTransform;
             speed = moveSpeed;
         }
 
         public override void Execute()
         {
-            Vector3 targetDirection = targetTransform.position - enemyTransform.position;
+            Vector3 targetDirection = SlimeGameManager.Instance.CurrentPlayerBody.transform.position - enemyTransform.position;
 
             targetDirection = targetDirection.normalized;
             enemyData.moveVector = targetDirection;
