@@ -97,7 +97,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         urmg = PlayerEnemyUnderstandingRateManager.Instance;
         //Water.PoolManager.CreatePool(trfAbleTxtPref, mobInfoUIPair.second, 2, "CanTrfMark");
 
-        mobInfoUIPair.second.GetComponent<GridLayoutGroup>().constraintCount = Mathf.Clamp(urmg.ChangableBodyList.Count / 3 + 1, 6, 10000);
+        mobInfoUIPair.second.GetComponent<GridLayoutGroup>().constraintCount = Mathf.Clamp(urmg.ChangableBodyList.Count / 3 + 1, 5, 10000);
         statIncrRatePerAssim.text = "[동화율 " + (urmg.UnderstandingRatePercentageWhenUpStat).ToString()  + "%당 "
             + (urmg.UpStatPercentage * 100f).ToString() + "%씩 스탯 상승]";
         changeBodySlots.ForEach(x => x.SetSlotNumber());
@@ -224,39 +224,40 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         {
             monsterImgNameEx.first.sprite = data.bodyImg;
             monsterImgNameEx.second.text = data.bodyName;
-            monsterImgNameEx.third.text = data.bodyExplanation;
-
-            mobDrainProbAndAssimTmp.first.text = "흡수확률: " + urmg.GetDrainProbabilityDict(id).ToString() + "%";
-            mobDrainProbAndAssimTmp.second.text = "동화율: " + urmg.GetUnderstandingRate(id).ToString() + "%";
+           
+            mobDrainProbAndAssimTmp.first.text = $"흡수율: {urmg.GetDrainProbabilityDict(id)}% / 100%";
+            mobDrainProbAndAssimTmp.second.text = $"동화율: {urmg.GetUnderstandingRate(id)}% / {urmg.MaxUnderstandingRate}%";
         }
         else
         {
             monsterImgNameEx.first.sprite = questionSpr;
             monsterImgNameEx.second.text = "???";
-            monsterImgNameEx.third.text = data.hint;
+            //monsterImgNameEx.third.text = data.hint;
 
-            mobDrainProbAndAssimTmp.first.text = "흡수확률: ??%";
-            mobDrainProbAndAssimTmp.second.text = "동화율: ??%";
+            mobDrainProbAndAssimTmp.first.text = "흡수율: ??% / 100%";
+            mobDrainProbAndAssimTmp.second.text = string.Concat("동화율: ??% / ", urmg.MaxUnderstandingRate, '%');
         }
 
         if (mobLearningInfoDic[id].kill)
         {
-            ItemSO item = data.dropItem;
-            mobDropItemImg.sprite = item.GetSprite();
-            mobDropItemImg.GetComponent<NameInfoFollowingCursor>().explanation = item.itemName;
+            monsterImgNameEx.third.text = data.bodyExplanation;
+            //ItemSO item = data.dropItem;
+            //mobDropItemImg.sprite = item.GetSprite();
+            //mobDropItemImg.GetComponent<NameInfoFollowingCursor>().explanation = item.itemName;
         }
         else
         {
-            mobDropItemImg.sprite = questionSpr;
-            mobDropItemImg.GetComponent<NameInfoFollowingCursor>().explanation = "???";
+            monsterImgNameEx.third.text = "?????";
+            //mobDropItemImg.sprite = questionSpr;
+            //mobDropItemImg.GetComponent<NameInfoFollowingCursor>().explanation = "???";
         }
 
-        if (UIManager.Instance.gameUIList[(int)UIType.MONSTERINFO_DETAIL_ITEM].gameObject.activeSelf)
+        /*if (UIManager.Instance.gameUIList[(int)UIType.MONSTERINFO_DETAIL_ITEM].gameObject.activeSelf)
             DetailItem();
         if (UIManager.Instance.gameUIList[(int)UIType.MONSTERINFO_DETAIL_STAT].gameObject.activeSelf)
             DetailStat();
         if (UIManager.Instance.gameUIList[(int)UIType.MONSTERINFO_DETAIL_FEATURE].gameObject.activeSelf)
-            DetailFeature();
+            DetailFeature();*/
 
         Util.SetSlotMark(slotSelectedImg.transform, slot.MobImgBg);
     }
