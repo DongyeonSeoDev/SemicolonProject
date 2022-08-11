@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
 using System.Text;
+using Water;
 
 public class MonsterCollection : MonoSingleton<MonsterCollection>
 {
@@ -50,6 +51,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
     //몬스터 (주로 스탯의)특성 정보
     public Text featureTxt;
+
+    public Pair<TextMeshProUGUI, TextMeshProUGUI> assimMobStatTMP;  //동화율 상승에 따른 증가 스탯을 표시하는 TMP. 1: 50/150/200,  2: 100
 
     #endregion
 
@@ -220,6 +223,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         ChangeBodyData data = slot.BodyData;
         UIManager.Instance.OnUIInteractSetActive(UIType.MONSTERINFO_DETAIL, true);
 
+        PoolManager.PoolObjSetActiveFalse("MobStatText");
+
         if (mobLearningInfoDic[id].meet)
         {
             monsterImgNameEx.first.sprite = data.bodyImg;
@@ -250,6 +255,53 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             monsterImgNameEx.third.text = "?????";
             //mobDropItemImg.sprite = questionSpr;
             //mobDropItemImg.GetComponent<NameInfoFollowingCursor>().explanation = "???";
+        }
+
+        EternalStat stat = mobIdToSlot[id].BodyData.additionalBodyStat;
+        if (mobLearningInfoDic[id].assimilation)
+        {
+            StringBuilder sb = new StringBuilder();
+            int upValue;
+            for(int i=0; i<stat.AllStats.Count; i++)  //몹 능력치 표시.  스탯 이름은 해당 스탯을 얻어야하고 스탯 수치는 해당 스탯을 개방해야 보임
+            {
+                if(stat.AllStats[i].statValue > 0 && stat.AllStats[i].id != NGlobal.MinDamageID)  //스탯 수치가 1 이상이고 최소데미지가 아니면(최소뎀, 최대뎀은 공격력으로 통일해서 표시)
+                {
+                    //몹 능력치 표시
+                    Text tx = PoolManager.GetItem<Text>("MobStatText");
+                    ushort sId = stat.AllStats[i].id;
+                    string statNameStr = NGlobal.playerStatUI.eternalStatDic[sId].first.isUnlock ? NGlobal.playerStatUI.GetStatSOData<EternalStatSO>(sId).statName : "??";
+                    string statValueStr = NGlobal.playerStatUI.eternalStatDic[sId].first.isOpenStat ? stat.AllStats[i].statValue.ToString() : "?";
+                    if(sId == NGlobal.MaxDamageID && !statNameStr.Contains("?"))
+                    {
+                        statNameStr = "공격력";
+                    }
+                    tx.text = statNameStr + " : " + statValueStr;
+
+                    //동화율에 따른 상승 능력치 표시
+                    sb.Append(statNameStr);
+                    sb.Append('+');
+
+                    upValue = (int)(stat.AllStats[i].statValue * urmg.UpStatPercentage);
+                    sb.Append(NGlobal.playerStatUI.eternalStatDic[sId].first.isOpenStat ? upValue.ToString() : "?");
+
+                    sb.Append(' ');
+                }
+            }
+            assimMobStatTMP.first.text = sb.ToString();
+            assimMobStatTMP.second.text = sb.ToString() + ", 특성 획득";
+        }
+        else
+        {
+            for (int i = 0; i < stat.AllStats.Count; i++)
+            {
+                if (stat.AllStats[i].statValue > 0)
+                {
+                    Text tx = PoolManager.GetItem<Text>("MobStatText");
+                    tx.text = "?? : ??";
+                }
+            }
+            assimMobStatTMP.first.text = "???";
+            assimMobStatTMP.second.text = "???";
         }
 
         /*if (UIManager.Instance.gameUIList[(int)UIType.MONSTERINFO_DETAIL_ITEM].gameObject.activeSelf)

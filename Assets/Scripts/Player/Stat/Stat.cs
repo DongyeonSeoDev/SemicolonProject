@@ -151,6 +151,30 @@ public class EternalStat
 
     public StatElement criticalRate = new StatElement();
     public StatElement criticalDamage = new StatElement();
+
+    private List<StatElement> elements;
+
+    public List<StatElement> AllStats
+    {
+        get
+        {
+            if(elements == null)
+            {
+                elements = new List<StatElement>();
+                elements.Add(maxHp);
+                elements.Add(minDamage);
+                elements.Add(maxDamage);
+                elements.Add(defense);
+                elements.Add(intellect);
+                elements.Add(speed);
+                elements.Add(attackSpeed);
+                elements.Add(criticalRate);
+                elements.Add(criticalDamage);
+            }
+            return elements;
+        }
+    }
+
     public EternalStat()
     {
 
