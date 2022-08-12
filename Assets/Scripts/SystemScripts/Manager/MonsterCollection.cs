@@ -257,15 +257,19 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             //mobDropItemImg.GetComponent<NameInfoFollowingCursor>().explanation = "???";
         }
 
-        EternalStat stat = mobIdToSlot[id].BodyData.additionalBodyStat;
+        EternalStat stat = data.additionalBodyStat;
+        int count = stat.NoZeroStatCount - 1;  //스탯 상승이 가능한 스탯 수 (스탯 수치가 0보다 큰 스탯 수) (최대/최소뎀은 공격력 하나로 표시하기 때문에 1을 빼줌)
         if (mobLearningInfoDic[id].assimilation)
         {
             StringBuilder sb = new StringBuilder();
             int upValue;
+            int j = 0;
             for(int i=0; i<stat.AllStats.Count; i++)  //몹 능력치 표시.  스탯 이름은 해당 스탯을 얻어야하고 스탯 수치는 해당 스탯을 개방해야 보임
             {
                 if(stat.AllStats[i].statValue > 0 && stat.AllStats[i].id != NGlobal.MinDamageID)  //스탯 수치가 1 이상이고 최소데미지가 아니면(최소뎀, 최대뎀은 공격력으로 통일해서 표시)
                 {
+                    j++;
+
                     //몹 능력치 표시
                     Text tx = PoolManager.GetItem<Text>("MobStatText");
                     ushort sId = stat.AllStats[i].id;
@@ -279,16 +283,30 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
                     //동화율에 따른 상승 능력치 표시
                     sb.Append(statNameStr);
-                    sb.Append('+');
+                    sb.Append(" +");
 
                     upValue = (int)(stat.AllStats[i].statValue * urmg.UpStatPercentage);
                     sb.Append(NGlobal.playerStatUI.eternalStatDic[sId].first.isOpenStat ? upValue.ToString() : "?");
 
-                    sb.Append(' ');
+                    if(j<count)
+                       sb.Append(", ");
                 }
             }
             assimMobStatTMP.first.text = sb.ToString();
-            assimMobStatTMP.second.text = sb.ToString() + ", 특성 획득";
+            assimMobStatTMP.second.text = sb.ToString();
+            if (data.propertyID > 0)
+            {
+                string s;
+                if (urmg.GetUnderstandingRate(id) >= 100)
+                {
+                    s = ", " + NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(data.propertyID).statName + " 획득";
+                }
+                else
+                {
+                    s = ", ?? 획득";
+                }
+                assimMobStatTMP.second.text += s;
+            }
         }
         else
         {

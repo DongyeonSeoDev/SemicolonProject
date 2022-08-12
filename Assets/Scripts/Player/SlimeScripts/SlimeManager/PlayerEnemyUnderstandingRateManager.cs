@@ -16,6 +16,7 @@ public struct ChangeBodyData
     [TextArea] public string bodyExplanation;
     [TextArea] public string featureExplanation;
     [TextArea] public string hint;
+    public ushort propertyID; //동화율 100퍼일 때 얻는 특성(선택스탯)의 아이디---> 없으면 0
 }
 public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnderstandingRateManager>
 {

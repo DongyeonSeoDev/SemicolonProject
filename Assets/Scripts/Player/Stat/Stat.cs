@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 [Serializable]
 public class Stat
@@ -174,6 +175,9 @@ public class EternalStat
             return elements;
         }
     }
+
+    //스탯의 수치가 0보다 큰 스탯들의 개수
+    public int NoZeroStatCount => AllStats.Count(stat => stat.statValue > 0);  
 
     public EternalStat()
     {
