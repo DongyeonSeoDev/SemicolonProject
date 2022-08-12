@@ -122,6 +122,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camStageCollider: {fileID: 8648534772182156580}
   playerSpawnPoint: {fileID: 0}
+  lobbySpawnPoint: {fileID: 0}
   objSpawnPos: {fileID: 0}
   stageDoors: []
   plants: []
@@ -19585,7 +19586,11 @@ Tilemap:
     m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   m_TileSpriteArray:
+  - m_RefCount: 0
+    m_Data: {fileID: 0}
   - m_RefCount: 0
     m_Data: {fileID: 0}
   - m_RefCount: 0
@@ -19613,25 +19618,25 @@ Tilemap:
   m_TileMatrixArray:
   - m_RefCount: 0
     m_Data:
-      e00: 2.5244127e-29
-      e01: -4.4716065e+32
-      e02: -0.0000000024888251
-      e03: -0.00000002150297
-      e10: 9.26e-43
+      e00: 0
+      e01: -3.7822523e-34
+      e02: 1.3373546e-19
+      e03: 0.000000003609637
+      e10: 0
       e11: 4.5904e-41
-      e12: 9.28e-43
-      e13: 9.25e-43
-      e20: 6e-45
-      e21: -1.536794e+15
-      e22: -1.5366706e+15
-      e23: -1.5366706e+15
-      e30: 0
-      e31: 2.86e-43
-      e32: 2.86e-43
-      e33: 2.86e-43
+      e12: 6.35e-43
+      e13: 6.32e-43
+      e20: -5.1017377e-36
+      e21: -1.3422632e+16
+      e22: -1.3421687e+16
+      e23: -1.3421687e+16
+      e30: 4.5904e-41
+      e31: 9e-44
+      e32: 9e-44
+      e33: 9e-44
   m_TileColorArray:
   - m_RefCount: 0
-    m_Data: {r: 1.73551e-40, g: 1.73551e-40, b: 1.73551e-40, a: 1.73551e-40}
+    m_Data: {r: 5.3538e-41, g: 5.3538e-41, b: 5.3538e-41, a: 5.3538e-41}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
   m_Color: {r: 1, g: 1, b: 1, a: 1}
