@@ -11,5 +11,5 @@ public class ChoiceStatSO : StatSO
     public string growthWay;
     [TextArea]
     public string acquisitionWay;
-    public List<Pair<float, string>> emotionRangeList = new List<Pair<float, string>>();  //스탯 수치에 따른 감정
+    //public List<Pair<float, string>> emotionRangeList = new List<Pair<float, string>>();  //스탯 수치에 따른 감정
 }

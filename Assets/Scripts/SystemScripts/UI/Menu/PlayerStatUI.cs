@@ -244,6 +244,12 @@ public class PlayerStatUI : MonoBehaviour
         //playerStat불러오기 및 세팅
         playerStat = SlimeGameManager.Instance.Player.PlayerStat;
 
+        List<ushort> statIDList = new List<ushort>();
+        List<ushort> propIDList = new List<ushort>();
+
+        for (int i = 0; i < playerStat.eternalStat.AllStats.Count; i++) statIDList.Add(playerStat.eternalStat.AllStats[i].id);
+        for (int i = 0; i < playerStat.choiceStat.AllStats.Count; i++) propIDList.Add(playerStat.choiceStat.AllStats[i].id);
+
         if (GameManager.Instance.savedData.tutorialInfo.isEnded)
         {
             playerStat = GameManager.Instance.savedData.userInfo.playerStat;
@@ -254,6 +260,15 @@ public class PlayerStatUI : MonoBehaviour
         else
         {
             GameManager.Instance.savedData.userInfo.playerStat = playerStat;
+        }
+
+        for (int i = 0; i < playerStat.eternalStat.AllStats.Count; i++)
+        {
+            if(playerStat.eternalStat.AllStats[i].id == 0) playerStat.eternalStat.AllStats[i].id = statIDList[i];
+        }
+        for (int i = 0; i < playerStat.choiceStat.AllStats.Count; i++)
+        {
+            if(playerStat.choiceStat.AllStats[i].id == 0) playerStat.choiceStat.AllStats[i].id = propIDList[i]; 
         }
 
         prevStatPoint = playerStat.currentStatPoint;
@@ -284,6 +299,7 @@ public class PlayerStatUI : MonoBehaviour
         choiceStatDic.Add(NGlobal.ReflectionID, playerStat.choiceStat.reflection);
         choiceStatDic.Add(NGlobal.MucusRechargeID, playerStat.choiceStat.mucusRecharge);
         choiceStatDic.Add(NGlobal.FakeID, playerStat.choiceStat.fake);
+        choiceStatDic.Add(NGlobal.MultiShootID, playerStat.choiceStat.multiShootingTest);
 
         //선택 스탯 UI 생성
         foreach(ushort key in choiceStatDic.Keys)

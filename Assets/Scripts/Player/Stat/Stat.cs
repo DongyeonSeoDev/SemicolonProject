@@ -344,6 +344,28 @@ public class ChoiceStat
 
     public StatElement multiShootingTest = new StatElement() ; // 여러갈래 발사 테스트 ID: 131
 
+    private List<StatElement> elements;
+
+    public List<StatElement> AllStats
+    {
+        get
+        {
+            if (elements == null)
+            {
+                elements = new List<StatElement>();
+                elements.Add(proficiency);
+                elements.Add(momentom);
+                elements.Add(endurance);
+                elements.Add(frenzy);
+                elements.Add(reflection);
+                elements.Add(mucusRecharge);
+                elements.Add(fake);
+                elements.Add(multiShootingTest);
+            }
+            return elements;
+        }
+    }
+
     public void Reset()
     {
         proficiency.ResetComplete();
@@ -351,6 +373,8 @@ public class ChoiceStat
         endurance.ResetComplete();
         frenzy.ResetComplete();
         reflection.ResetComplete();
+        mucusRecharge.ResetComplete();
+        fake.ResetComplete();   
         multiShootingTest.ResetComplete();
     }
 }

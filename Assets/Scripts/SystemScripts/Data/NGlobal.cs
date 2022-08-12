@@ -23,9 +23,10 @@ public static class NGlobal
     public const ushort ReflectionID = 120;
     public const ushort MucusRechargeID = 125;
     public const ushort FakeID = 130;
+    public const ushort MultiShootID = 135;
 
     public const ushort CStatStartID = 100;
-    public const ushort CStatEndID = 300; //나중에 값 바꿔야 함
+    public const ushort CStatEndID = 135; 
 
     public static PlayerStatUI playerStatUI => UIManager.Instance.playerStatUI;
 }
