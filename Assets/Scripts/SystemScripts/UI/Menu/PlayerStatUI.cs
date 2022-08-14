@@ -588,7 +588,7 @@ public class PlayerStatUI : MonoBehaviour
     
     public void UpdateScrStatUI()  //플레이 화면에 보이는 스탯 UI 업뎃
     {
-        statPointTMP.gameObject.SetActive(playerStat.currentStatPoint > 0);
+        statPointTMP.transform.parent.gameObject.SetActive(playerStat.currentStatPoint > 0);
         statPointTMP.text = string.Concat('+', playerStat.currentStatPoint);
     }
 
