@@ -297,7 +297,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             if (data.propertyID > 0)
             {
                 string s;
-                if (urmg.GetUnderstandingRate(id) >= 100)
+                if (mobLearningInfoDic[id].ownProperty || urmg.GetUnderstandingRate(id) >= 100)
                 {
                     s = ", " + NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(data.propertyID).statName + " 획득";
                 }
@@ -612,6 +612,15 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
         tempDummyMobLearningInfo = mobLearningInfoDic[id];
         tempDummyMobLearningInfo.assimilation = value;
+        mobLearningInfoDic[id] = tempDummyMobLearningInfo;
+    }
+
+    public void ChangeLearningStateOwnProperty(string id, bool value)
+    {
+        if (TutorialManager.Instance.IsTutorialStage) return;
+
+        tempDummyMobLearningInfo = mobLearningInfoDic[id];
+        tempDummyMobLearningInfo.ownProperty = value;
         mobLearningInfoDic[id] = tempDummyMobLearningInfo;
     }
 
