@@ -342,7 +342,7 @@ public class ChoiceStat
 
     public StatElement fake = new StatElement(); // 맞은척
 
-    public StatElement multiShootingTest = new StatElement() ; // 여러갈래 발사 테스트 ID: 131
+    public StatElement multipleShots = new StatElement() ; // 여러갈래 발사 
 
     private List<StatElement> elements;
 

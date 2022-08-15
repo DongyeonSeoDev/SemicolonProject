@@ -230,7 +230,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
     }
     public void CheckMultiShootingTest()
     {
-        StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.multiShootingTest;
+        StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.multipleShots;
 
         if(stat.isUnlock)
         {
