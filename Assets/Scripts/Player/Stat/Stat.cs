@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 [Serializable]
 public class Stat
@@ -92,7 +93,7 @@ public class StatElement  //스탯은 0렙부터 시작. 0렙일 때는 스탯을 개방하지 못한
 
     public int upStatCount => statLv - 1;  //스탯 올리는 짓을 몇 번 했는지
     public bool isOpenStat => statLv > 0;  //스탯 개방이 되었는지
-    public bool isUnlockClose => statLv == 0 && isUnlock;
+    public bool isUnlockClose => statLv == 0 && isUnlock;  //스탯을 획득했지만 개방은 안했는지
 
     public StatElement() { }
 
@@ -151,6 +152,33 @@ public class EternalStat
 
     public StatElement criticalRate = new StatElement();
     public StatElement criticalDamage = new StatElement();
+
+    private List<StatElement> elements;
+
+    public List<StatElement> AllStats
+    {
+        get
+        {
+            if(elements == null)
+            {
+                elements = new List<StatElement>();
+                elements.Add(maxHp);
+                elements.Add(minDamage);
+                elements.Add(maxDamage);
+                elements.Add(defense);
+                elements.Add(intellect);
+                elements.Add(speed);
+                elements.Add(attackSpeed);
+                elements.Add(criticalRate);
+                elements.Add(criticalDamage);
+            }
+            return elements;
+        }
+    }
+
+    //스탯의 수치가 0보다 큰 스탯들의 개수
+    public int NoZeroStatCount => AllStats.Count(stat => stat.statValue > 0);  
+
     public EternalStat()
     {
 
@@ -314,7 +342,29 @@ public class ChoiceStat
 
     public StatElement fake = new StatElement(); // 맞은척
 
-    public StatElement multiShootingTest = new StatElement() ; // 여러갈래 발사 테스트 ID: 131
+    public StatElement multipleShots = new StatElement() ; // 여러갈래 발사 
+
+    private List<StatElement> elements;
+
+    public List<StatElement> AllStats
+    {
+        get
+        {
+            if (elements == null)
+            {
+                elements = new List<StatElement>();
+                elements.Add(proficiency);
+                elements.Add(momentom);
+                elements.Add(endurance);
+                elements.Add(frenzy);
+                elements.Add(reflection);
+                elements.Add(mucusRecharge);
+                elements.Add(fake);
+                elements.Add(multiShootingTest);
+            }
+            return elements;
+        }
+    }
 
     public void Reset()
     {
@@ -323,6 +373,8 @@ public class ChoiceStat
         endurance.ResetComplete();
         frenzy.ResetComplete();
         reflection.ResetComplete();
+        mucusRecharge.ResetComplete();
+        fake.ResetComplete();   
         multiShootingTest.ResetComplete();
     }
 }

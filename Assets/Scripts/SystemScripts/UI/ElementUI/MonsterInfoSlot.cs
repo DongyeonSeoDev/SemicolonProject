@@ -41,7 +41,7 @@ public class MonsterInfoSlot : MonoBehaviour
     public void SetMonsterSlot(bool set)
     {
         monsterImg.sprite = set ? BodyData.bodyImg : MonsterCollection.Instance.questionSpr;
-        //nameTMP.text = set ? BodyData.bodyName : "???";
+        nameTMP.text = set ? BodyData.bodyName : "???";
     }
 
     public void UpdateAssimilationRate(float rate)

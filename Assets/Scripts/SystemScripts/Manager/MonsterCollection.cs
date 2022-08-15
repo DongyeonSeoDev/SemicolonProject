@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
 using System.Text;
+using Water;
 
 public class MonsterCollection : MonoSingleton<MonsterCollection>
 {
@@ -51,6 +52,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     //몬스터 (주로 스탯의)특성 정보
     public Text featureTxt;
 
+    public Pair<TextMeshProUGUI, TextMeshProUGUI> assimMobStatTMP;  //동화율 상승에 따른 증가 스탯을 표시하는 TMP. 1: 50/150/200,  2: 100
+
     #endregion
 
     [SerializeField] private ChangeBodyData defaultSlimeBodyData;
@@ -97,7 +100,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         urmg = PlayerEnemyUnderstandingRateManager.Instance;
         //Water.PoolManager.CreatePool(trfAbleTxtPref, mobInfoUIPair.second, 2, "CanTrfMark");
 
-        mobInfoUIPair.second.GetComponent<GridLayoutGroup>().constraintCount = Mathf.Clamp(urmg.ChangableBodyList.Count / 3 + 1, 6, 10000);
+        mobInfoUIPair.second.GetComponent<GridLayoutGroup>().constraintCount = Mathf.Clamp(urmg.ChangableBodyList.Count / 3 + 1, 5, 10000);
         statIncrRatePerAssim.text = "[동화율 " + (urmg.UnderstandingRatePercentageWhenUpStat).ToString()  + "%당 "
             + (urmg.UpStatPercentage * 100f).ToString() + "%씩 스탯 상승]";
         changeBodySlots.ForEach(x => x.SetSlotNumber());
@@ -220,43 +223,111 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         ChangeBodyData data = slot.BodyData;
         UIManager.Instance.OnUIInteractSetActive(UIType.MONSTERINFO_DETAIL, true);
 
+        PoolManager.PoolObjSetActiveFalse("MobStatText");
+
         if (mobLearningInfoDic[id].meet)
         {
             monsterImgNameEx.first.sprite = data.bodyImg;
             monsterImgNameEx.second.text = data.bodyName;
-            monsterImgNameEx.third.text = data.bodyExplanation;
-
-            mobDrainProbAndAssimTmp.first.text = "흡수확률: " + urmg.GetDrainProbabilityDict(id).ToString() + "%";
-            mobDrainProbAndAssimTmp.second.text = "동화율: " + urmg.GetUnderstandingRate(id).ToString() + "%";
+           
+            mobDrainProbAndAssimTmp.first.text = $"흡수율: {urmg.GetDrainProbabilityDict(id)}% / 100%";
+            mobDrainProbAndAssimTmp.second.text = $"동화율: {urmg.GetUnderstandingRate(id)}% / {urmg.MaxUnderstandingRate}%";
         }
         else
         {
             monsterImgNameEx.first.sprite = questionSpr;
             monsterImgNameEx.second.text = "???";
-            monsterImgNameEx.third.text = data.hint;
+            //monsterImgNameEx.third.text = data.hint;
 
-            mobDrainProbAndAssimTmp.first.text = "흡수확률: ??%";
-            mobDrainProbAndAssimTmp.second.text = "동화율: ??%";
+            mobDrainProbAndAssimTmp.first.text = "흡수율: ??% / 100%";
+            mobDrainProbAndAssimTmp.second.text = string.Concat("동화율: ??% / ", urmg.MaxUnderstandingRate, '%');
         }
 
         if (mobLearningInfoDic[id].kill)
         {
-            ItemSO item = data.dropItem;
-            mobDropItemImg.sprite = item.GetSprite();
-            mobDropItemImg.GetComponent<NameInfoFollowingCursor>().explanation = item.itemName;
+            monsterImgNameEx.third.text = data.bodyExplanation;
+            //ItemSO item = data.dropItem;
+            //mobDropItemImg.sprite = item.GetSprite();
+            //mobDropItemImg.GetComponent<NameInfoFollowingCursor>().explanation = item.itemName;
         }
         else
         {
-            mobDropItemImg.sprite = questionSpr;
-            mobDropItemImg.GetComponent<NameInfoFollowingCursor>().explanation = "???";
+            monsterImgNameEx.third.text = "?????";
+            //mobDropItemImg.sprite = questionSpr;
+            //mobDropItemImg.GetComponent<NameInfoFollowingCursor>().explanation = "???";
         }
 
-        if (UIManager.Instance.gameUIList[(int)UIType.MONSTERINFO_DETAIL_ITEM].gameObject.activeSelf)
+        EternalStat stat = data.additionalBodyStat;
+        int count = stat.NoZeroStatCount - 1;  //스탯 상승이 가능한 스탯 수 (스탯 수치가 0보다 큰 스탯 수) (최대/최소뎀은 공격력 하나로 표시하기 때문에 1을 빼줌)
+        if (mobLearningInfoDic[id].assimilation)
+        {
+            StringBuilder sb = new StringBuilder();
+            int upValue;
+            int j = 0;
+            for(int i=0; i<stat.AllStats.Count; i++)  //몹 능력치 표시.  스탯 이름은 해당 스탯을 얻어야하고 스탯 수치는 해당 스탯을 개방해야 보임
+            {
+                if(stat.AllStats[i].statValue > 0 && stat.AllStats[i].id != NGlobal.MinDamageID)  //스탯 수치가 1 이상이고 최소데미지가 아니면(최소뎀, 최대뎀은 공격력으로 통일해서 표시)
+                {
+                    j++;
+
+                    //몹 능력치 표시
+                    Text tx = PoolManager.GetItem<Text>("MobStatText");
+                    ushort sId = stat.AllStats[i].id;
+                    string statNameStr = NGlobal.playerStatUI.eternalStatDic[sId].first.isUnlock ? NGlobal.playerStatUI.GetStatSOData<EternalStatSO>(sId).statName : "??";
+                    string statValueStr = NGlobal.playerStatUI.eternalStatDic[sId].first.isOpenStat ? stat.AllStats[i].statValue.ToString() : "?";
+                    if(sId == NGlobal.MaxDamageID && !statNameStr.Contains("?"))
+                    {
+                        statNameStr = "공격력";
+                    }
+                    tx.text = statNameStr + " : " + statValueStr;
+
+                    //동화율에 따른 상승 능력치 표시
+                    sb.Append(statNameStr);
+                    sb.Append(" +");
+
+                    upValue = (int)(stat.AllStats[i].statValue * urmg.UpStatPercentage);
+                    sb.Append(NGlobal.playerStatUI.eternalStatDic[sId].first.isOpenStat ? upValue.ToString() : "?");
+
+                    if(j<count)
+                       sb.Append(", ");
+                }
+            }
+            assimMobStatTMP.first.text = sb.ToString();
+            assimMobStatTMP.second.text = sb.ToString();
+            if (data.propertyID > 0)
+            {
+                string s;
+                if (mobLearningInfoDic[id].ownProperty || urmg.GetUnderstandingRate(id) >= 100)
+                {
+                    s = ", " + NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(data.propertyID).statName + " 획득";
+                }
+                else
+                {
+                    s = ", ?? 획득";
+                }
+                assimMobStatTMP.second.text += s;
+            }
+        }
+        else
+        {
+            for (int i = 0; i < stat.AllStats.Count; i++)
+            {
+                if (stat.AllStats[i].statValue > 0)
+                {
+                    Text tx = PoolManager.GetItem<Text>("MobStatText");
+                    tx.text = "?? : ??";
+                }
+            }
+            assimMobStatTMP.first.text = "???";
+            assimMobStatTMP.second.text = "???";
+        }
+
+        /*if (UIManager.Instance.gameUIList[(int)UIType.MONSTERINFO_DETAIL_ITEM].gameObject.activeSelf)
             DetailItem();
         if (UIManager.Instance.gameUIList[(int)UIType.MONSTERINFO_DETAIL_STAT].gameObject.activeSelf)
             DetailStat();
         if (UIManager.Instance.gameUIList[(int)UIType.MONSTERINFO_DETAIL_FEATURE].gameObject.activeSelf)
-            DetailFeature();
+            DetailFeature();*/
 
         Util.SetSlotMark(slotSelectedImg.transform, slot.MobImgBg);
     }
@@ -541,6 +612,15 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
         tempDummyMobLearningInfo = mobLearningInfoDic[id];
         tempDummyMobLearningInfo.assimilation = value;
+        mobLearningInfoDic[id] = tempDummyMobLearningInfo;
+    }
+
+    public void ChangeLearningStateOwnProperty(string id, bool value)
+    {
+        if (TutorialManager.Instance.IsTutorialStage) return;
+
+        tempDummyMobLearningInfo = mobLearningInfoDic[id];
+        tempDummyMobLearningInfo.ownProperty = value;
         mobLearningInfoDic[id] = tempDummyMobLearningInfo;
     }
 

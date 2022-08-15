@@ -18,6 +18,7 @@ public struct MonsterLearningInfo
     public bool meet;
     public bool kill;
     public bool assimilation;
+    public bool ownProperty;
 }
 
 [Serializable]

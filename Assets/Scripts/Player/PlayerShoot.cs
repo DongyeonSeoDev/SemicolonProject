@@ -58,15 +58,17 @@ public class PlayerShoot : PlayerSkill
             Vector2 shootDirection = Vector2.zero;
             List<float> directionList = new List<float>();
 
-            if (player.PlayerStat.choiceStat.multiShootingTest.statLv > 0)
+            if (player.PlayerStat.choiceStat.multipleShots.statLv > 0)
             {
-                directionList = playerShootDirectionControl.DirectionList[player.PlayerStat.choiceStat.multiShootingTest.statLv - 1].dataList;
+                directionList = playerShootDirectionControl.DirectionList[player.PlayerStat.choiceStat.multipleShots.statLv - 1].dataList;
             }
             else
             {
                 directionList.Add(0);
             }
 
+            PlayerProjectile pTemp = null;
+            int shootId = 0;
             for (int i = 0; i < directionList.Count; i++)
             {
                 shootDirection = Quaternion.Euler(mouseDirection.x, mouseDirection.y, directionList[i]) * mouseDirection;
@@ -81,8 +83,26 @@ public class PlayerShoot : PlayerSkill
                     temp = Instantiate(projectile, SlimePoolManager.Instance.transform);
                 }
 
+                if(shootId == 0)
+                {
+                    shootId = temp.GetInstanceID();
+                }
+
                 temp.transform.position = (Vector2)transform.position + ((shootDirection).normalized * shootPosOffset);
-                temp.GetComponent<PlayerProjectile>().OnSpawn((shootDirection).normalized, projectileSpeed);
+
+                pTemp = temp.GetComponent<PlayerProjectile>();
+                pTemp.OnSpawn((shootDirection).normalized, projectileSpeed);
+                pTemp.shootId = shootId;
+
+                if (directionList.Count <= 1)
+                {
+                    pTemp.isShootAlone = true;
+                }
+                else
+                {
+                    pTemp.isShootAlone = false;
+                    PlayerProjectileControl.Instance.AddListDict(shootId, pTemp);
+                }
             }
 
             SlimeGameManager.Instance.Player.UseEnergy(useEnergyAmount);

@@ -269,9 +269,9 @@ public class GameUI : MonoBehaviour
                 break;
             case UIType.MONSTER_COLLECTION:
                 UIManager.Instance.gameUIList[(int)UIType.MONSTERINFO_DETAIL].gameObject.SetActive(false);
-                UIManager.Instance.OnUIInteractSetActive(UIType.MONSTERINFO_DETAIL_FEATURE, false, true);
-                UIManager.Instance.OnUIInteractSetActive(UIType.MONSTERINFO_DETAIL_ITEM, false, true);
-                UIManager.Instance.OnUIInteractSetActive(UIType.MONSTERINFO_DETAIL_STAT, false, true);
+                //UIManager.Instance.OnUIInteractSetActive(UIType.MONSTERINFO_DETAIL_FEATURE, false, true);
+                //UIManager.Instance.OnUIInteractSetActive(UIType.MONSTERINFO_DETAIL_ITEM, false, true);
+                //UIManager.Instance.OnUIInteractSetActive(UIType.MONSTERINFO_DETAIL_STAT, false, true);
                 break;
         }
     }

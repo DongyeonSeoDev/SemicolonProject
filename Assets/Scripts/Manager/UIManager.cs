@@ -561,10 +561,10 @@ public partial class UIManager : MonoSingleton<UIManager>
                 if (KeyActionManager.Instance.IsChangingKeySetting)  //키세팅 변경 중에는 esc로 키세팅 UI 안꺼지게
                     return true;
                 break;
-            case UIType.MONSTERINFO_DETAIL:  //몹 드랍템 정보창이나 추가스탯 창 UI켜져있으면 몹 정보 자세히 보기 UI 상호작용 여닫기 X
+            /*case UIType.MONSTERINFO_DETAIL:  //몹 드랍템 정보창이나 추가스탯 창 UI켜져있으면 몹 정보 자세히 보기 UI 상호작용 여닫기 X
                 if (Util.IsActiveGameUI(UIType.MONSTERINFO_DETAIL_ITEM) || Util.IsActiveGameUI(UIType.MONSTERINFO_DETAIL_STAT) || Util.IsActiveGameUI(UIType.MONSTERINFO_DETAIL_FEATURE))
                     return true;
-                break; 
+                break; */
             case UIType.CHANGEABLEMOBLIST:      //몸 제거창 뜨면 일시정지
                 if (!gameUIList[(int)UIType.CHANGEABLEMOBLIST].gameObject.activeSelf)
                 {
@@ -615,6 +615,7 @@ public partial class UIManager : MonoSingleton<UIManager>
                 else
                 {
                     KeyActionManager.Instance.SetAutoQuikSlotItem();
+                    NGlobal.playerStatUI.UpdateScrStatUI();
                 }
                 break;
         }

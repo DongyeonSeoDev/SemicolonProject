@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5427881869486345069}
+  - component: {fileID: 4814828239347202260}
   - component: {fileID: 5427881869486345105}
   - component: {fileID: 5427881869486345104}
   - component: {fileID: 5427881869486345071}
@@ -41,6 +42,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4814828239347202260
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5427881869486345068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 87646ba6e2eefc7428b0b7b9e13e8aa5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &5427881869486345105
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -262,14 +275,14 @@ MonoBehaviour:
         statLv: 0
         savedStatLv: 0
         maxStatLv: 5
-      multiShootingTest:
+      multipleShots:
         id: 135
         statValue: 0
         upStatValue: 1
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
-        maxStatLv: 5
+        maxStatLv: 0
   playerInput: {fileID: 0}
   playerChoiceStatControl: {fileID: 0}
   playerReflectionScript: {fileID: 0}
@@ -425,10 +438,10 @@ MonoBehaviour:
     changeUpAmount: 0
     upTargetStatPerChoiceStat: 1
   - id: 135
-    name: "\uC5EC\uB7EC\uAC08\uB798 \uACF5\uACA9 \uD14C\uC2A4\uD2B8"
+    name: "\uB2E4\uC911 \uBC1C\uC0AC"
     targetStat: 
     unlockStatValue: 0
-    firstValue: 1
+    firstValue: 2
     checkStartValue: 0
     upAmount: 1
     changeUpAmount: 0

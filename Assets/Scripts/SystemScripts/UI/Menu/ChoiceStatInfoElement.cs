@@ -22,10 +22,7 @@ public class ChoiceStatInfoElement : MonoBehaviour
         BGStatNameTxt.text = statData.statName;
         BGStatExplanationTxt.text = statData.simpleAbilExplanation;
 
-        btn.onClick.AddListener(() =>
-        {
-            NGlobal.playerStatUI.DetailViewChoiceStatInfo(id);
-        });
+        btn.onClick.AddListener(() => NGlobal.playerStatUI.DetailViewChoiceStatInfo(id));
 
         gameObject.SetActive(stat.isUnlock);
     }

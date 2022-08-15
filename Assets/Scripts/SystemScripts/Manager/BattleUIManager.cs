@@ -39,6 +39,8 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
 
     public CanvasGroup missionCvsg;
     public TextMeshProUGUI missionContent;
+    [SerializeField] private MulSpriteColorCtrl mscCtrl;
+    [SerializeField][ColorUsage(true, true)] private Color[] missionLvColors;  //미션 난이도에 따른 미션 패널의 테두리 색상
     private RectTransform missionPanelRt;
     private Vector2 missionPanelPos;
 
@@ -325,10 +327,12 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
             Mission ms = GetRandomMission();
             MissionRandomInCounter(ref ms);
             CheckMissionZeroWeight(ref ms);
-            ms.SetLv(GetRandomDLV());
+            DifficultyLevel lv = GetRandomDLV();
+            ms.SetLv(lv);
             ms.Start();
             currentMissions.Add(ms);
 
+            mscCtrl.SetColor(missionLvColors[(int)lv]);
             missionPanelRt.DOKill();
 
             missionContent.text = ms.missionName;
@@ -348,6 +352,7 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
         ms.Start();
         currentMissions.Add(ms);
 
+        mscCtrl.SetColor(missionLvColors[(int)lv]);
         missionPanelRt.DOKill();
 
         missionContent.text = ms.missionName;

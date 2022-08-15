@@ -182,6 +182,8 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         quikItemCountTxt.text = GameManager.Instance.GetItemCount(id).ToString();
 
         quikCvsg.alpha = 1;
+        quikCvsg.GetComponent<NameInfoFollowingCursor>().transitionEnable = true;
+        quikCvsg.GetComponent<NameInfoFollowingCursor>().explanation = GameManager.Instance.GetItemData(id).itemName;
 
         Inventory.Instance.SetActiveUseableMark(true, id);
     }
@@ -191,6 +193,9 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
         quikItemCountTxt.gameObject.SetActive(false);
         quikItemImg.gameObject.SetActive(false);
         quikItemId = string.Empty;
+
+        quikCvsg.GetComponent<NameInfoFollowingCursor>().transitionEnable = false;
+        quikCvsg.GetComponent<NameInfoFollowingCursor>().explanation = string.Empty;
 
         quikCvsg.alpha = 0.5f;
     }
