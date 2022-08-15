@@ -299,7 +299,7 @@ public class PlayerStatUI : MonoBehaviour
         choiceStatDic.Add(NGlobal.ReflectionID, playerStat.choiceStat.reflection);
         choiceStatDic.Add(NGlobal.MucusRechargeID, playerStat.choiceStat.mucusRecharge);
         choiceStatDic.Add(NGlobal.FakeID, playerStat.choiceStat.fake);
-        choiceStatDic.Add(NGlobal.MultiShotID, playerStat.choiceStat.multiShootingTest);
+        choiceStatDic.Add(NGlobal.MultiShotID, playerStat.choiceStat.multipleShots);
 
         //선택 스탯 UI 생성
         foreach(ushort key in choiceStatDic.Keys)
