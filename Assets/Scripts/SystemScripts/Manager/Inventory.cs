@@ -328,7 +328,7 @@ public class Inventory : MonoSingleton<Inventory>
     public void SetActiveUseableMark(bool useable, string id = "_NONE_")  //useable이 false일 때는 굳이 id를 매개변수로 안보내도 됨
     {
         invenUseActionImg.SetActive(useable);
-
+        
         if(useable)
         {
             invenQuikActionImg.SetActive(GameManager.Instance.GetItemData(id).isHealItem);
