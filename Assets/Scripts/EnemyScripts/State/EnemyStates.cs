@@ -61,6 +61,13 @@ namespace Enemy
                 enemyData.enemySpriteRotateCommand.Execute();
             }
 
+            if (enemyData.moveEvent != null)
+            {
+                Debug.Log("Action");
+
+                enemyData.moveEvent.Invoke();
+            }
+
             base.Update();
         }
 

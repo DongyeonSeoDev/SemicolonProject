@@ -4,6 +4,10 @@ namespace Enemy
 {
     public class Enemy5Ghost : Enemy
     {
+        private float currentTime = 0f;
+        private float moveTime = 2f;
+        private bool isTeleport = false;
+
         private readonly int hashTeleport = Animator.StringToHash("Teleport");
         private readonly int hashTeleportEnd = Animator.StringToHash("TeleportEnd");
 
@@ -16,6 +20,7 @@ namespace Enemy
 
             enemyData.enemySpriteRotateCommand = new EnemySpriteRotateCommand(enemyData);
             enemyData.enemyMoveCommand = new EnemyMoveCommand(enemyData, transform, enemyData.chaseSpeed);
+            enemyData.moveEvent = MoveEvent;
         }
 
         public void ReadyAttack() // 애니메이션에서 실행
@@ -26,17 +31,35 @@ namespace Enemy
             }
         }
 
-        public void StartTeleport()
+        private void MoveEvent()
         {
-            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Move, enemyData.enemyAnimator, TriggerType.SetTrigger);
-            enemyData.enemyAnimator.SetTrigger(hashTeleport);
+            currentTime += Time.deltaTime;
 
-            Invoke("EndTeleport", 3f);
+            if (currentTime > moveTime)
+            {
+                StartTeleport();
+            }
         }
 
-        public void EndTeleport()
+        private void StartTeleport()
+        {
+            if (!isTeleport)
+            {
+                isTeleport = true;
+
+                EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Move, enemyData.enemyAnimator, TriggerType.SetTrigger);
+                enemyData.enemyAnimator.SetTrigger(hashTeleport);
+
+                Invoke("EndTeleport", 3f);
+            }
+        }
+
+        private void EndTeleport()
         {
             enemyData.enemyAnimator.SetTrigger(hashTeleportEnd);
+
+            currentTime = 0f;
+            isTeleport = false;
         }
     }
 }

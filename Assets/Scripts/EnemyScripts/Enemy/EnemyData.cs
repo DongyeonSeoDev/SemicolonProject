@@ -38,6 +38,7 @@ namespace Enemy
         public Action attackTypeCheckCondition = null;
         public Action endAttack = null;
         public Action deadEvent = null;
+        public Action moveEvent = null;
 
         public Func<EnemyState> enemyChaseStateChangeCondition = null;
         public Func<EnemyState> addAIAttackStateChangeCondition = null;
