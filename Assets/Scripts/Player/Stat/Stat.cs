@@ -360,7 +360,7 @@ public class ChoiceStat
                 elements.Add(reflection);
                 elements.Add(mucusRecharge);
                 elements.Add(fake);
-                elements.Add(multiShootingTest);
+                elements.Add(multipleShots);
             }
             return elements;
         }
@@ -374,7 +374,7 @@ public class ChoiceStat
         frenzy.ResetComplete();
         reflection.ResetComplete();
         mucusRecharge.ResetComplete();
-        fake.ResetComplete();   
-        multiShootingTest.ResetComplete();
+        fake.ResetComplete();
+        multipleShots.ResetComplete();
     }
 }

@@ -184,7 +184,13 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     {
         if (!mobIdToSlot.ContainsKey(id)) return;
 
-        mobIdToSlot[id].UpdateAssimilationRate((float)urmg.GetUnderstandingRate(id) / 100);
+        float rate = urmg.GetUnderstandingRate(id);
+        mobIdToSlot[id].UpdateAssimilationRate(rate / 100);
+
+        if(rate >= 100f && !mobLearningInfoDic[id].ownProperty)
+        {
+            ChangeLearningStateOwnProperty(id, true);
+        }
     }
 
     public void AllUpdateUnderstanding()   //모든 몹 동화율 정보 업뎃
