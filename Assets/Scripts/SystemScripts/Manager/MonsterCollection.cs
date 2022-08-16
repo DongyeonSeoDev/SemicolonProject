@@ -215,8 +215,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     {
         foreach(string key in mobLearningInfoDic.Keys)
         {
-            if (mobLearningInfoDic[key].meet)
-                mobIdToSlot[key].SetMonsterSlot(true);
+            mobIdToSlot[key].SetMonsterSlot(mobLearningInfoDic[key].meet);
         }
     }
 
@@ -263,35 +262,53 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             //mobDropItemImg.GetComponent<NameInfoFollowingCursor>().explanation = "???";
         }
 
-        EternalStat stat = data.additionalBodyStat;
-        int count = stat.NoZeroStatCount - 1;  //스탯 상승이 가능한 스탯 수 (스탯 수치가 0보다 큰 스탯 수) (최대/최소뎀은 공격력 하나로 표시하기 때문에 1을 빼줌)
+        EternalStat addiStat = data.additionalBodyStat;
+        EternalStat mobStat = data.monsterStat;
+        int count = addiStat.NoZeroStatCount - 1;  //스탯 상승이 가능한 스탯 수 (스탯 수치가 0보다 큰 스탯 수) (최대/최소뎀은 공격력 하나로 표시하기 때문에 1을 빼줌)
         if (mobLearningInfoDic[id].assimilation)
         {
             StringBuilder sb = new StringBuilder();
             int upValue;
-            int j = 0;
-            for(int i=0; i<stat.AllStats.Count; i++)  //몹 능력치 표시.  스탯 이름은 해당 스탯을 얻어야하고 스탯 수치는 해당 스탯을 개방해야 보임
+            int j = 0, i;
+            for(i=0; i<mobStat.AllStats.Count; i++)   //몹 능력치 표시.  스탯 이름은 해당 스탯을 얻어야하고 스탯 수치는 해당 스탯을 개방해야 보임
             {
-                if(stat.AllStats[i].statValue > 0 && stat.AllStats[i].id != NGlobal.MinDamageID)  //스탯 수치가 1 이상이고 최소데미지가 아니면(최소뎀, 최대뎀은 공격력으로 통일해서 표시)
+                if (mobStat.AllStats[i].statValue > 0 && mobStat.AllStats[i].id != NGlobal.MinDamageID)  //스탯 수치가 1 이상이고 최소데미지가 아니면(최소뎀, 최대뎀은 공격력으로 통일해서 표시)
+                {
+                    Text tx = PoolManager.GetItem<Text>("MobStatText");
+                    tx.transform.SetSiblingIndex(j++);
+
+                    ushort sId = mobStat.AllStats[i].id;
+                    string statNameStr = NGlobal.playerStatUI.eternalStatDic[sId].first.isUnlock ? NGlobal.playerStatUI.GetStatSOData<EternalStatSO>(sId).statName : "??";
+                    string statValueStr = NGlobal.playerStatUI.eternalStatDic[sId].first.isOpenStat ? mobStat.AllStats[i].statValue.ToString() : "?";
+
+                    if (sId == NGlobal.MaxDamageID && !statNameStr.Contains("?"))
+                    {
+                        statNameStr = "공격력";
+                        statValueStr = string.Concat(mobStat.minDamage.statValue, '~', mobStat.maxDamage.statValue);
+                    }
+                    tx.text = statNameStr + " : " + statValueStr;
+                }
+            }
+            j = 0;
+            for(i=0; i< addiStat.AllStats.Count; i++)  //변신시 능력치 상승량 표시
+            {
+                if(addiStat.AllStats[i].statValue > 0 && addiStat.AllStats[i].id != NGlobal.MinDamageID)  
                 {
                     j++;
 
-                    //몹 능력치 표시
-                    Text tx = PoolManager.GetItem<Text>("MobStatText");
-                    ushort sId = stat.AllStats[i].id;
+                    ushort sId = addiStat.AllStats[i].id;
                     string statNameStr = NGlobal.playerStatUI.eternalStatDic[sId].first.isUnlock ? NGlobal.playerStatUI.GetStatSOData<EternalStatSO>(sId).statName : "??";
-                    string statValueStr = NGlobal.playerStatUI.eternalStatDic[sId].first.isOpenStat ? stat.AllStats[i].statValue.ToString() : "?";
-                    if(sId == NGlobal.MaxDamageID && !statNameStr.Contains("?"))
+                    
+                    if (sId == NGlobal.MaxDamageID && !statNameStr.Contains("?"))
                     {
                         statNameStr = "공격력";
                     }
-                    tx.text = statNameStr + " : " + statValueStr;
 
                     //동화율에 따른 상승 능력치 표시
                     sb.Append(statNameStr);
                     sb.Append(" +");
 
-                    upValue = (int)(stat.AllStats[i].statValue * urmg.UpStatPercentage);
+                    upValue = (int)(addiStat.AllStats[i].statValue * urmg.UpStatPercentage);
                     sb.Append(NGlobal.playerStatUI.eternalStatDic[sId].first.isOpenStat ? upValue.ToString() : "?");
 
                     if(j<count)
@@ -316,9 +333,9 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         }
         else
         {
-            for (int i = 0; i < stat.AllStats.Count; i++)
+            for (int i = 0; i < mobStat.AllStats.Count; i++)
             {
-                if (stat.AllStats[i].statValue > 0)
+                if (mobStat.AllStats[i].statValue > 0 && mobStat.AllStats[i].id != NGlobal.MinDamageID)
                 {
                     Text tx = PoolManager.GetItem<Text>("MobStatText");
                     tx.text = "?? : ??";

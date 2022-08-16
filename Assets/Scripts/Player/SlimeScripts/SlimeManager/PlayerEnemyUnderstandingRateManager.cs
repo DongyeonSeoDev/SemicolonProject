@@ -11,6 +11,7 @@ public struct ChangeBodyData
     public Enemy.EnemyType bodyId;
     public GameObject body;
     public EternalStat additionalBodyStat; // 변신 후의 플레이어의 Additional스탯, (이해도 100% 기준)
+    public EternalStat monsterStat;
     public Sprite bodyImg;
     public ItemSO dropItem;
     [TextArea] public string bodyExplanation;
