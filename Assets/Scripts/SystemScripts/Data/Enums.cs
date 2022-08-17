@@ -155,7 +155,8 @@ public enum AreaType
     RECOVERY,
     IMPRECATION,
     NONE,
-    LOBBY
+    LOBBY,
+    STAT
 }
 
 public enum StateAbnormality

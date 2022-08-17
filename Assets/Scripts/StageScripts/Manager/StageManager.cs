@@ -53,6 +53,12 @@ public class StageManager : MonoSingleton<StageManager>
     public Transform npcParent;
     #endregion
 
+    #region Map Incounter
+    private Dictionary<int, Dictionary<AreaType, int>> areaWeightDic = new Dictionary<int, Dictionary<AreaType, int>>();
+    private Dictionary<int, Dictionary<EnemySpecies, int>> mobAreaWeightDic = new Dictionary<int, Dictionary<EnemySpecies, int>>();
+    [SerializeField] private List<Pair<int, List<EnemySpecies>>> floorSpecies;  
+    #endregion
+
     public Func<bool> canNextStage = null;  //다음 스테이지를 갈 때 이게 null이면 가지고 무언가 값이 있으면 그것을 실행해서 true면 지나가짐
 
     public DoorDirType PassDir { get; set; } //전 스테이지에서 지나간 문 방향
