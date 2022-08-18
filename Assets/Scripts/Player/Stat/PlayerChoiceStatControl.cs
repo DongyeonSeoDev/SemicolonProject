@@ -630,6 +630,11 @@ public class PlayerChoiceStatControl : MonoBehaviour
         totalDamage = 0;
         attackMissedNum = 0;
         attackNum = 0;
+
+        foreach (var item in choiceDataDict)
+        {
+            item.Value.checkStartValue = originChoiceDataDict[item.Key].checkStartValue;
+        }
     }
 
     private void UpChoiceStatLv(StatElement choiceStat)
