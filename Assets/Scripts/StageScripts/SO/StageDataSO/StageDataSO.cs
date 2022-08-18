@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using Enemy;
 
 [CreateAssetMenu(fileName = "Stage Data", menuName = "Scriptable Object/Stage Data", order = int.MaxValue)]
 public partial class StageDataSO : ScriptableObject
@@ -20,7 +21,7 @@ public partial class StageDataSO : ScriptableObject
     public GameObject stage;  //스테이지 프리팹
 
     public AreaType areaType;  //구역 타입
-    public EnemySpecies enemySpeciesArea = EnemySpecies.NONE;
+    public EnemyType enemySpeciesArea;
     public List<MissionType> missionTypes; //나타날 수 있는 미션들 (몬스터 구역 한정)
 
     public GameObject mapNPC;

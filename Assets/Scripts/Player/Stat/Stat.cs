@@ -97,6 +97,9 @@ public class StatElement  //½ºÅÈÀº 0·¾ºÎÅÍ ½ÃÀÛ. 0·¾ÀÏ ¶§´Â ½ºÅÈÀ» °³¹æÇÏÁö ¸øÇÑ
 
     public StatElement() { }
 
+    public string StatName => NGlobal.playerStatUI.GetStatSOData(id).statName;
+    public UnityEngine.Sprite StatSprite => NGlobal.playerStatUI.GetStatSOData(id).statSpr;
+
     public void Reset()
     {
         if (statLv > 1)

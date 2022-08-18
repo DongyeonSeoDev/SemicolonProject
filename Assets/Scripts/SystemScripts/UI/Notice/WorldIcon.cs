@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using Enemy;
 
 public class WorldIcon : MonoBehaviour
 {
@@ -10,12 +11,12 @@ public class WorldIcon : MonoBehaviour
 
     public Vector2 offset;
 
-    public void Set(RectTransform rect, EnemySpecies type)
+    public void Set(RectTransform rect, EnemyType type)
     {
         if(!rectTr) rectTr = GetComponent<RectTransform>();
 
         targetRectTrm = rect;
-        speciesImg.sprite = type.ToEnemySpeciesSprite();
+        speciesImg.sprite = MonsterCollection.Instance.GetMonsterInfo(type.ToString()).bodyImg;
     }
 
     private void LateUpdate()

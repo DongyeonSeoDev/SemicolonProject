@@ -5,6 +5,7 @@ using Water;
 using FkTweening;
 using System.IO;
 using UnityEngine.Tilemaps;
+using Enemy;
 
 public class StageManager : MonoSingleton<StageManager>
 {
@@ -55,8 +56,8 @@ public class StageManager : MonoSingleton<StageManager>
 
     #region Map Incounter
     private Dictionary<int, Dictionary<AreaType, int>> areaWeightDic = new Dictionary<int, Dictionary<AreaType, int>>();
-    private Dictionary<int, Dictionary<EnemySpecies, int>> mobAreaWeightDic = new Dictionary<int, Dictionary<EnemySpecies, int>>();
-    [SerializeField] private List<Pair<int, List<EnemySpecies>>> floorSpecies;  
+    private Dictionary<int, Dictionary<EnemyType, int>> mobAreaWeightDic = new Dictionary<int, Dictionary<EnemyType, int>>();
+    [SerializeField] private List<Pair<int, List<EnemyType>>> floorSpecies;  
     #endregion
 
     public Func<bool> canNextStage = null;  //다음 스테이지를 갈 때 이게 null이면 가지고 무언가 값이 있으면 그것을 실행해서 true면 지나가짐
@@ -518,6 +519,10 @@ public class StageManager : MonoSingleton<StageManager>
                     break;
                 case AreaType.PLANTS:
                     SetClearStage();
+                    break;
+                case AreaType.STAT:
+                    SetClearStage();
+                    StatStore.Instance.EnteredStatArea();
                     break;
                 case AreaType.RANDOM:
                     SetMonsterStage();

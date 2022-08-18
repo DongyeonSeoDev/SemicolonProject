@@ -117,6 +117,12 @@ public class PlayerStatUI : MonoBehaviour
                     Vector2 newPos;
                     if(idx == -1)  //현재 화면에 해당 특성 표시 UI가 없을 경우
                     {
+                        if (!choiceStatDic[id].isUnlock)  //특성을 판매한 경우
+                        {
+                            isInsertingProperty = false;
+                            return;
+                        }
+
                         PropertyUI newProp = PoolManager.GetItem<PropertyUI>("PropertyNotice");
                         propertyNoticeList.Add(newProp);
                         newProp.Set(choiceStatDic[id]);
@@ -133,14 +139,14 @@ public class PlayerStatUI : MonoBehaviour
                             for(int i=0; i<propertyNoticeMaxCount; i++)
                             {
                                 int si = i;
-                                propertyNoticeList[si].rectTr.DOAnchorPos(propertyNoticePos[si], 0.3f);
+                                propertyNoticeList[si].rectTr.DOAnchorPos(propertyNoticePos[si], 0.3f).SetUpdate(true);
                             }
 
                             newPos = propertyNoticePos[0];
                             newPos.y -= propIntervalY;
-                            old.cvsg.DOFade(0f, 0.3f);
-                            old.rectTr.DOAnchorPos(newPos, 0.3f).OnComplete(()=>old.gameObject.SetActive(false));
-                            newProp.cvsg.DOFade(1, 0.3f).OnComplete(() => isInsertingProperty = false);
+                            old.cvsg.DOFade(0f, 0.3f).SetUpdate(true);
+                            old.rectTr.DOAnchorPos(newPos, 0.3f).SetUpdate(true).OnComplete(()=>old.gameObject.SetActive(false));
+                            newProp.cvsg.DOFade(1, 0.3f).SetUpdate(true).OnComplete(() => isInsertingProperty = false);
                         }
                         else  //UI 수가 아직 max가 아님
                         {
@@ -148,17 +154,49 @@ public class PlayerStatUI : MonoBehaviour
                             newPos = propertyNoticePos[propertyNoticeList.Count - 1];
                             newPos.y += propIntervalY;
                             newProp.rectTr.anchoredPosition = newPos;
-                            newProp.rectTr.DOAnchorPos(propertyNoticePos[propertyNoticeList.Count - 1], 0.3f);
-                            newProp.cvsg.DOFade(1, 0.3f).OnComplete(()=>isInsertingProperty = false);
+                            newProp.rectTr.DOAnchorPos(propertyNoticePos[propertyNoticeList.Count - 1], 0.3f).SetUpdate(true);
+                            newProp.cvsg.DOFade(1, 0.3f).SetUpdate(true).OnComplete(()=>isInsertingProperty = false);
                         }
                     }
                     else  //현재 화면에 해당 특성 표시 UI가 있으면
                     {
+                        if (!choiceStatDic[id].isUnlock)  //특성을 판매한 경우
+                        {
+                            Sequence seq = DOTween.Sequence();
+                            seq.SetUpdate(true);
+                            newPos = propertyNoticePos[idx];
+                            newPos.x += propSizeMoveX;
+                            seq.Append(propertyNoticeList[idx].rectTr.DOAnchorPos(newPos, 0.3f))
+                            .Join(propertyNoticeList[idx].cvsg.DOFade(0f, 0.3f).OnComplete(() => propertyNoticeList[idx].gameObject.SetActive(false)));
+                            seq.AppendInterval(0.15f);
+
+                            propertyNoticeList.RemoveAt(idx);
+                            bool b = false;
+
+                            for (int i = idx; i < propertyNoticeList.Count; i++)
+                            {
+                                int si = i;
+                                if (b)
+                                    seq.Join(propertyNoticeList[si].rectTr.DOAnchorPos(propertyNoticePos[si], 0.3f));
+                                else
+                                {
+                                    seq.Append(propertyNoticeList[si].rectTr.DOAnchorPos(propertyNoticePos[si], 0.3f));
+                                    b = true;
+                                }
+                            }
+
+                            seq.AppendInterval(0.05f);
+                            seq.AppendCallback(() => isInsertingProperty = false);
+
+                            return;
+                        }
+
                         propertyNoticeList[idx].NewUpdate();
                         if(idx < propertyNoticeList.Count - 1)  //해당 특성 UI가 맨 위가 아니라면
                         {
                             //맨 위로 보내줌
                             Sequence seq = DOTween.Sequence();
+                            seq.SetUpdate(true);
                             newPos = propertyNoticePos[idx];
                             newPos.x += propSizeMoveX;
                             seq.Append(propertyNoticeList[idx].rectTr.DOAnchorPos(newPos, 0.3f))
@@ -204,6 +242,10 @@ public class PlayerStatUI : MonoBehaviour
                                 propertyNoticeList[si].rectTr.DOAnchorPos(propertyNoticePos[si], 0.3f);
                             }*/
                             #endregion
+                        }
+                        else
+                        {
+                            isInsertingProperty = false;
                         }
                     }
                 }
@@ -329,6 +371,9 @@ public class PlayerStatUI : MonoBehaviour
         Debug.LogWarning("Not Exist ID : " + id);
         return 0f;
     }
+
+    public bool IsUnlockStat(ushort id) => eternalStatDic[id].first.isUnlock;
+    public bool IsOpenStat(ushort id) => eternalStatDic[id].first.isOpenStat;
 
     public void UpdateAllStatUI()  //모든 스탯의 현재 스탯과 스탯포인트 사용 횟수를 업뎃함
     {
@@ -514,6 +559,22 @@ public class PlayerStatUI : MonoBehaviour
             UIManager.Instance.RequestLogMsg("[" + GetStatSOData(se.id).statName + "] 획득");
         }
         
+    }
+
+    public void SellStat(StatElement se, bool log = true)  //어떤 특성을 판매함
+    {
+        if (choiceStatDic.ContainsKey(se.id))
+        {
+            se.ResetComplete();
+            choiceStatInfoUIDic[se.id].gameObject.SetActive(false);
+
+            InsertPropertyInfo(se.id);
+
+            if (log)
+            {
+                UIManager.Instance.RequestLogMsg($"[{se.StatName}] 특성을 판매하였습니다");
+            }
+        }
     }
 
     public void InsertPropertyInfo(ushort id)  //특성(선택스탯)을 얻거나 렙업하면 호출

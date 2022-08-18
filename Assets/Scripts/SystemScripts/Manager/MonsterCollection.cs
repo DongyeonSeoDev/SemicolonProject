@@ -278,8 +278,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
                     tx.transform.SetSiblingIndex(j++);
 
                     ushort sId = mobStat.AllStats[i].id;
-                    string statNameStr = NGlobal.playerStatUI.eternalStatDic[sId].first.isUnlock ? NGlobal.playerStatUI.GetStatSOData<EternalStatSO>(sId).statName : "??";
-                    string statValueStr = NGlobal.playerStatUI.eternalStatDic[sId].first.isOpenStat ? mobStat.AllStats[i].statValue.ToString() : "?";
+                    string statNameStr = NGlobal.playerStatUI.IsUnlockStat(sId) ? NGlobal.playerStatUI.GetStatSOData<EternalStatSO>(sId).statName : "??";
+                    string statValueStr = NGlobal.playerStatUI.IsOpenStat(sId) ? mobStat.AllStats[i].statValue.ToString() : "?";
 
                     if (sId == NGlobal.MaxDamageID && !statNameStr.Contains("?"))
                     {
@@ -297,7 +297,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
                     j++;
 
                     ushort sId = addiStat.AllStats[i].id;
-                    string statNameStr = NGlobal.playerStatUI.eternalStatDic[sId].first.isUnlock ? NGlobal.playerStatUI.GetStatSOData<EternalStatSO>(sId).statName : "??";
+                    string statNameStr = NGlobal.playerStatUI.IsUnlockStat(sId) ? NGlobal.playerStatUI.GetStatSOData<EternalStatSO>(sId).statName : "??";
                     
                     if (sId == NGlobal.MaxDamageID && !statNameStr.Contains("?"))
                     {
@@ -309,7 +309,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
                     sb.Append(" +");
 
                     upValue = (int)(addiStat.AllStats[i].statValue * urmg.UpStatPercentage);
-                    sb.Append(NGlobal.playerStatUI.eternalStatDic[sId].first.isOpenStat ? upValue.ToString() : "?");
+                    sb.Append(NGlobal.playerStatUI.IsOpenStat(sId) ? upValue.ToString() : "?");
 
                     if(j<count)
                        sb.Append(", ");

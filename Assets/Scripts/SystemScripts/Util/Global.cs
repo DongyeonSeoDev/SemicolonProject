@@ -55,7 +55,7 @@ public static partial class Global
     
     private static string[] keyActionNameArr;
     private static string[] mobSpeciesKoArr;
-    private static Sprite[] speciesSpriteArr = new Sprite[EnumCount<EnemySpecies>()];
+    //private static Sprite[] speciesSpriteArr = new Sprite[EnumCount<EnemySpecies>()];
 
     public static string[] TextAssetsToStringArr(string path, char criteria = '\n') => Resources.Load<TextAsset>(path).text.Split(criteria);
 
@@ -69,21 +69,21 @@ public static partial class Global
         return keyActionNameArr[(int)keyAction];
     }
 
-    public static string ToMonsterSpeciesStr(this EnemySpecies species)
+    /*public static string ToMonsterSpeciesStr(this EnemySpecies species)
     {
         if(mobSpeciesKoArr == null)
         {
             mobSpeciesKoArr = TextAssetsToStringArr(TAResSysDefaultPath + "species");
         }
         return mobSpeciesKoArr[(int)species];
-    }
+    }*/
 
-    public static Sprite ToEnemySpeciesSprite(this EnemySpecies species)
+   /* public static Sprite ToEnemySpeciesSprite(this EnemySpecies species)
     {
         if (speciesSpriteArr[(int)species] == null)
             speciesSpriteArr[(int)species] = Resources.Load<Sprite>("System/Sprites/MobSpeciesIcon/" + species.ToString());  //지금은 걍 몹 이미지 하나 가져와서 쓰지만 몬스터 종마다 대표 이미지가 필요해보임
         return speciesSpriteArr[(int)species];
-    }
+    }*/
 
     public static Sprite GetMonsterBodySprite(string id)
     {
