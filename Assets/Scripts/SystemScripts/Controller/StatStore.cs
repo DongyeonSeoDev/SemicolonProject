@@ -46,31 +46,49 @@ public class StatStore : MonoSingleton<StatStore>
         }
     }
 
-    public void Renewal()  //리롤
+    public void Renewal()  //리롤하기 위한 포인트가 있어야 함. 최대 리롤 가능 횟수만큼 리롤하면 더 이상 리롤 불가
     {
-        curRechargeCount++;
-        purchasedPropIDList.Clear();
-    }
+        if (curRechargeCount < maxRechargeCount)
+        {
+            curRechargeCount++;
+            purchasedPropIDList.Clear();
 
-    public void Purchase(ushort id) 
-    {
-        purchasedPropIDList.Add(id);
-        StatElement stat = NGlobal.playerStatUI.choiceStatDic[id];
-        if (!stat.isUnlock)
-        {
-            NGlobal.playerStatUI.StatUnlock(stat);
-        }
-        else
-        {
-            if(stat.statLv < stat.maxStatLv)
+            List<ushort> list = allPropIDList.FindAllRandom(id =>
             {
-                stat.statLv++;
-                NGlobal.playerStatUI.InsertPropertyInfo(id);
+                StatElement stat = NGlobal.playerStatUI.choiceStatDic[id];
+                return stat.statLv < stat.maxStatLv && !prevStockIDList.Contains(id);
+            }, 15);
+
+            for (int i = 0; i < maxStockAmount; i++)
+            {
+                storeProperties[i].Renewal(list[i]);
+                prevStockIDList.Add(list[i]);
             }
         }
     }
 
-    public void Sell(ushort id)
+    public void Purchase(ushort id) //purchasedPropIDList에 없는 id만 구매 가능, 구매하기 위한 포인트가 있어야 함
+    {
+        if (!purchasedPropIDList.Contains(id))
+        {
+            purchasedPropIDList.Add(id);
+            StatElement stat = NGlobal.playerStatUI.choiceStatDic[id];
+            if (!stat.isUnlock)
+            {
+                NGlobal.playerStatUI.StatUnlock(stat);
+            }
+            else
+            {
+                if (stat.statLv < stat.maxStatLv)
+                {
+                    stat.statLv++;
+                    NGlobal.playerStatUI.InsertPropertyInfo(id);
+                }
+            }
+        }
+    }
+
+    public void Sell(ushort id) //어떤 스탯을 가지고 있어야 팔 수 있음. 레벨에 따라서 팔아서 받는 포인트 증가
     {
         StatElement stat = NGlobal.playerStatUI.choiceStatDic[id];
         if (stat.isUnlock)
