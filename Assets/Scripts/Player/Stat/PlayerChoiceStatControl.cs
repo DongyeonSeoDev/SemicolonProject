@@ -630,13 +630,25 @@ public class PlayerChoiceStatControl : MonoBehaviour
         totalDamage = 0;
         attackMissedNum = 0;
         attackNum = 0;
+        mucusChargeEnergyMaxTime = 0;
 
         foreach (var item in choiceDataDict)
         {
             item.Value.checkStartValue = originChoiceDataDict[item.Key].checkStartValue;
         }
     }
-
+    public void WhenBuyStat()
+    {
+        ChoiceStatCheckStatValueSet();
+    }
+    private void ChoiceStatCheckStatValueSet()
+    {
+        choiceDataDict[NGlobal.MomentomID].checkStartValue = avoidInMomentomNum;
+        choiceDataDict[NGlobal.FakeID].checkStartValue = fakeNum;
+        choiceDataDict[NGlobal.EnduranceID].checkStartValue = (int)totalDamage;
+        choiceDataDict[NGlobal.ProficiencyID].checkStartValue = attackMissedNum + attackNum;
+        choiceDataDict[NGlobal.MucusRechargeID].checkStartValue = (int)mucusChargeEnergyMaxTime;
+    }
     private void UpChoiceStatLv(StatElement choiceStat)
     {
         choiceStat.statLv++;
