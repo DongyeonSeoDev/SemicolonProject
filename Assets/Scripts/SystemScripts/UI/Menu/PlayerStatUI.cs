@@ -16,6 +16,7 @@ public class PlayerStatUI : MonoBehaviour
     public GameObject invisibleChoiceStatUIPrefab;
 
     public TextMeshProUGUI statPointTMP;  //화면에 그냥 상시로 보이는 스탯포인트 텍스트
+    public GameObject statPointEff;  //화면에 상시로 보이는 스탯포인트 표시 UI 이펙트
 
     private int prevStatPoint; //마지막으로 스탯창 닫았을 때의 스탯포인트 양
     private int expFullCount = 0; //마지막으로 스탯창 열고 경험치 확인한 후로부터 스탯포인트 경험치가 꽉차서 포인트를 얻은 것이 몇 회 있었는지

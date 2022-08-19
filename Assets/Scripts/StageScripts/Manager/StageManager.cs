@@ -36,7 +36,7 @@ public class StageManager : MonoSingleton<StageManager>
     #endregion
 
     #region Map Values
-    [SerializeField] private int MaxStage;
+    [SerializeField] private int maxStage;
     [SerializeField] private string startStageID;
 
     public List<Single<Sprite[]>> doorSpriteList;
@@ -57,7 +57,10 @@ public class StageManager : MonoSingleton<StageManager>
     #region Map Incounter
     private Dictionary<int, Dictionary<AreaType, int>> areaWeightDic = new Dictionary<int, Dictionary<AreaType, int>>();
     private Dictionary<int, Dictionary<EnemyType, int>> mobAreaWeightDic = new Dictionary<int, Dictionary<EnemyType, int>>();
-    [SerializeField] private List<Pair<int, List<EnemyType>>> floorSpecies;  
+    [SerializeField] private List<Pair<int, List<EnemyType>>> floorSpecies;  //층마다 어떤 몹들 나오는지
+    [SerializeField] private List<Pair<AreaType, int>> areaWeight;  //맵마다 기본 가중치
+    [SerializeField] private int mobWeight = 15; //몬스터당 기본 가중치 
+    [SerializeField] private int plusWeight = 10, minusWeight = 5;
     #endregion
 
     public Func<bool> canNextStage = null;  //다음 스테이지를 갈 때 이게 null이면 가지고 무언가 값이 있으면 그것을 실행해서 true면 지나가짐
@@ -82,6 +85,7 @@ public class StageManager : MonoSingleton<StageManager>
 
     private void Awake()
     {
+        //맵 데이터
         foreach (StageDataSO data in Resources.LoadAll<StageDataSO>("Stage/SO/"))
         {
             idToStageDataDict.Add(data.stageID, data);
@@ -93,6 +97,7 @@ public class StageManager : MonoSingleton<StageManager>
             data.SetStageDic();
         }
 
+        //스테이지 데이터
         string jsonData = Resources.Load(stageDataPath).ToString();
         var stageData = JsonUtility.FromJson<JsonParse<StageData>>(jsonData);
 
@@ -101,6 +106,34 @@ public class StageManager : MonoSingleton<StageManager>
             stageDataDictionary.Add(stageData.jsonData[i].stageName, stageData.jsonData[i]);
         }
 
+        //맵 인카운터 준비 + 스테이지 로직 (신)
+        int[] mobStageWeight = new int[maxStage];
+        for(int i=0; i<maxStage; i++)
+        {
+            mobStageWeight[i] = 0;
+            for(int j=0; j<floorSpecies[i].second.Count; j++)
+            {
+                mobStageWeight[i] += mobWeight;
+            }
+        }
+
+        for(int i=0; i<maxStage; i++)
+        {
+            areaWeightDic.Add(i + 1 , new Dictionary<AreaType, int>());
+            mobAreaWeightDic.Add(i + 1, new Dictionary<EnemyType, int>());
+
+            for(int j=0; j<areaWeight.Count; j++)
+            {
+                areaWeightDic[i + 1][areaWeight[j].first] = areaWeight[j].second;
+            }
+            areaWeightDic[i + 1][AreaType.MONSTER] = mobStageWeight[i];
+            for(int j=0; j<floorSpecies[i].second.Count; j++)
+            {
+                mobAreaWeightDic[i + 1][floorSpecies[i].second[j]] = mobWeight;
+            }
+        }
+
+        //스테이지 로직 준비 (구) + 랜덤구역 데이터 세팅
         int cnt = Global.EnumCount<AreaType>();
         foreach (StageBundleDataSO data in idToStageFloorDict.Values)
         {
@@ -111,12 +144,13 @@ public class StageManager : MonoSingleton<StageManager>
                 randomRoomDict[data.floor].Add((AreaType)i, new List<StageDataSO>());
             }
 
-            randomZoneTypeListDic.Add(data.floor, new List<RandomRoomType>());
+            randomZoneTypeListDic.Add(data.floor, new List<RandomRoomType>());  //랜덤구역 키 값 세팅
         }
 
+        //문 스프라이트 세팅
         cnt = Global.EnumCount<DoorDirType>();
         int cnt2 = cnt * 2;
-        for(int i=0; i<=MaxStage; i++)
+        for(int i=0; i<= maxStage; i++)
         {
             doorSprDic.Add(i, new Dictionary<string, Sprite>());
             for(int j=0; j<cnt; j++)
@@ -129,10 +163,11 @@ public class StageManager : MonoSingleton<StageManager>
 
         EventManager.StartListening(Global.EnterNextMap, () =>  //해당 방을 입장했을 때, 마지막에 호출
         {
+            UpdateAreaWeights();
             currentStageNumber++;
         });
 
-        floorInitSet = new bool[MaxStage + 1];  //튜토리얼 (0스테이지) 포함하므로 +1
+        floorInitSet = new bool[maxStage + 1];  //튜토리얼 (0스테이지) 포함하므로 +1
         for(int i=0; i<floorInitSet.Length; i++)
             floorInitSet[i] = false;
     }
@@ -541,6 +576,73 @@ public class StageManager : MonoSingleton<StageManager>
         }
     }
 
+    private void ResetMapWeight(int floor)
+    {
+        int mobStageWeight = 0, i;
+        for (i = 0; i < floorSpecies[floor].second.Count; i++)
+        {
+            mobStageWeight += mobWeight;
+        }
+
+        for (i = 0; i < areaWeight.Count; i++)
+        {
+            areaWeightDic[floor][areaWeight[i].first] = areaWeight[i].second;
+        }
+        areaWeightDic[floor][AreaType.MONSTER] = mobStageWeight;
+        for (i = 0; i < floorSpecies[floor].second.Count; i++)
+        {
+            mobAreaWeightDic[floor][floorSpecies[floor].second[i]] = mobWeight;
+        }
+    }
+
+    private AreaType GetRandomArea(List<AreaType> list)
+    {
+        List<AreaType> li = areaWeightDic[currentFloor].Keys.ToList();
+        if (currentStageData.stageFloor.randomStageList[currentStageNumber].nextStageTypes.Length == 1)
+            return currentStageData.stageFloor.randomStageList[currentStageNumber].nextStageTypes[0];
+        int total = 0, weight = 0, i;
+        for (i = 0; i < li.Count; i++)
+            total += areaWeightDic[currentFloor][li[i]];
+
+        for(i=0; i<list.Count; i++)
+        {
+            li.Remove(list[i]);
+            total -= areaWeightDic[currentFloor][list[i]];
+        }
+
+        int sel = Mathf.RoundToInt(total * UnityEngine.Random.Range(0f, 1f));
+
+        for (i = 0; i < li.Count; i++)
+        {
+            weight += areaWeightDic[currentFloor][li[i]];
+            if (sel < weight)
+            {
+                if (!list.Contains(li[i])) return li[i];
+            }
+        }
+
+        return GetRandomArea(list); 
+    }
+
+    private void UpdateAreaWeights()
+    {
+        AreaType type = currentStageData.areaType;
+        if (areaWeightDic[currentFloor].ContainsKey(type))
+        {
+            areaWeightDic[currentFloor][type] -= minusWeight;
+
+            if (areaWeightDic[currentFloor][type] <= 0) areaWeightDic[currentFloor][type] = 0;
+
+            foreach (AreaType key in Global.GetEnumArr<AreaType>())  //주의 : Dictionary를 foreach로 순회중에 내부의 값을 바꾸면 순회가 중단되고 다음에 실행될 코드도 실행이 안됨.
+            {
+                if (areaWeightDic[currentFloor].ContainsKey(key) && key != type)
+                {
+                    areaWeightDic[currentFloor][key] += plusWeight;
+                }
+            }
+        }
+    }
+
     private void SetNextDoors(Func<StageDoor, bool> canSetDoorPos) //canSetDoorPos -> 이 자리에 문을 생성할 수 있는지
     {
         int idx = 0;
@@ -548,15 +650,24 @@ public class StageManager : MonoSingleton<StageManager>
 
         if (currentFloor > 0)
         {
+            List<AreaType> list = new List<AreaType>();
+
             currentStage.stageDoors.ToRandomList(5).ForEach(door =>
             {
                 if (!door.gameObject.activeSelf && idx < count && canSetDoorPos(door))  //로비에서는 어차피 문이 두 개. 입구/출구. 걸어서 가는 경우라면 상관없음
                 {
                     try
                     {
-                        door.nextStageData = randomRoomDict[currentFloor][currentStageData.stageFloor.randomStageList[currentStageNumber].nextStageTypes[idx]][0];
-                        randomRoomDict[currentFloor][currentStageData.stageFloor.randomStageList[currentStageNumber].nextStageTypes[idx]].RemoveAt(0);
-                        randomRoomDict[currentFloor][currentStageData.stageFloor.randomStageList[currentStageNumber].nextStageTypes[idx]].Add(door.nextStageData);
+                        AreaType type = GetRandomArea(list);
+                        list.Add(type);
+                        door.nextStageData = randomRoomDict[currentFloor][type][0];
+                        randomRoomDict[currentFloor][type].RemoveAt(0);
+                        randomRoomDict[currentFloor][type].Add(door.nextStageData);
+
+                        //door.nextStageData = randomRoomDict[currentFloor][currentStageData.stageFloor.randomStageList[currentStageNumber].nextStageTypes[idx]][0];
+                        //randomRoomDict[currentFloor][currentStageData.stageFloor.randomStageList[currentStageNumber].nextStageTypes[idx]].RemoveAt(0);
+                        //randomRoomDict[currentFloor][currentStageData.stageFloor.randomStageList[currentStageNumber].nextStageTypes[idx]].Add(door.nextStageData);
+
                         ++idx;
                         door.gameObject.SetActive(true);
                     }
@@ -680,6 +791,7 @@ public class StageManager : MonoSingleton<StageManager>
         currentStageNumber = 0;
         PassDir = GameManager.Instance.savedData.stageInfo.passDoorDir;
         InsertRandomMaps(currentFloor);
+        ResetMapWeight(currentFloor);
         SetRandomAreaRandomIncounter();
         NextStage(startStageID, true);
     }
