@@ -55,6 +55,8 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
 
     public VertexGradient missionFailVG;
 
+    public GameObject[] missionLVStars;
+
     #endregion
 
     private StageManager sm;
@@ -332,7 +334,7 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
             ms.Start();
             currentMissions.Add(ms);
 
-            mscCtrl.SetColor(missionLvColors[(int)lv]);
+            mscCtrl.SetColor(missionLvColors[(int)ms.missionLevel]);
             missionPanelRt.DOKill();
 
             missionContent.text = ms.missionName;
@@ -342,6 +344,8 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
 
             missionCvsg.DOFade(1, 0.4f);
             missionPanelRt.DOAnchorPos(missionPanelPos, 0.4f).SetEase(Ease.OutQuart);
+
+            SetMissionStarAmount(ms.missionLevel);
         }
     }
 
@@ -362,6 +366,8 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
 
         missionCvsg.DOFade(1, 0.4f);
         missionPanelRt.DOAnchorPos(missionPanelPos, 0.4f).SetEase(Ease.OutQuart);
+
+        SetMissionStarAmount(lv);
     }
 
     public void DisableMission(int index = -1) //현재진행중인 미션 리스트에서 제거하고 UI제거
@@ -390,5 +396,14 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
     public void ShakeMissionPanel(float duration = 0.6f, float strength = 10f) //미션 UI 흔들림
     {
         missionPanelRt.DOShakeAnchorPos(duration, strength);
+    }
+
+    public void SetMissionStarAmount(DifficultyLevel lv)
+    {
+        int cnt = (int)lv + 1;
+        for(int i=0; i<missionLVStars.Length; i++)
+        {
+            missionLVStars[i].SetActive(i < cnt);
+        }
     }
 }

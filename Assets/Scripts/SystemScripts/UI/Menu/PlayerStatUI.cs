@@ -100,6 +100,9 @@ public class PlayerStatUI : MonoBehaviour
         {
             Destroy(arr[i]);
         }
+
+        EventManager.StartListening("StartCutScene", () => statPointEff.SetActive(false));
+        EventManager.StartListening("EndCutScene", () => statPointEff.SetActive(true));
     }
 
     private void Start()

@@ -37,6 +37,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: de89f082528c77b4194f3c2b98ff4c44, type: 2}
   - {fileID: 11400000, guid: a6118a698a6adee4497cfdeb19367951, type: 2}
   - {fileID: 11400000, guid: f6d4e31dacdfe524dbc4b81e017c9e40, type: 2}
+  - {fileID: 11400000, guid: 0e68bdce9ccd61749a11af4925650740, type: 2}
+  - {fileID: 11400000, guid: 1bf69e2a27fb19e44966aa9732cb4b42, type: 2}
   monsterStages:
   - {fileID: 11400000, guid: 72429167179995d46b3afd90e6b40961, type: 2}
   - {fileID: 11400000, guid: d06c40c91c5cdbf4c8f20b6b7e695fdb, type: 2}

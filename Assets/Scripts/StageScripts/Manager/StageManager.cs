@@ -192,6 +192,14 @@ public class StageManager : MonoSingleton<StageManager>
             Enemy.EnemyManager.Instance.PlayerDeadEvent();
         });
 
+        GameManager.Instance.testKeyInputActionDict.Add(KeyCode.F11, () =>
+        {
+            foreach(AreaType key in areaWeightDic[currentFloor].Keys)
+            {
+                Debug.Log($"{key} : {areaWeightDic[currentFloor][key]}");
+            }
+        });
+
 #endif
     }
 
