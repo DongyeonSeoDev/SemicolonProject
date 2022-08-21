@@ -6,6 +6,9 @@ namespace Enemy
     {
         private float currentTime = 0f;
         private float moveTime = 2f;
+        private float minMoveTime = 2f;
+        private float maxMoveTime = 5f;
+        private float randomTeleportPosition = 2f;
         private bool isTeleport = false;
 
         private readonly int hashTeleport = Animator.StringToHash("Teleport");
@@ -21,6 +24,8 @@ namespace Enemy
             enemyData.enemySpriteRotateCommand = new EnemySpriteRotateCommand(enemyData);
             enemyData.enemyMoveCommand = new EnemyMoveCommand(enemyData, transform, enemyData.chaseSpeed);
             enemyData.moveEvent = MoveEvent;
+
+            moveTime = Random.Range(minMoveTime, maxMoveTime);
         }
 
         public void ReadyAttack() // 애니메이션에서 실행
@@ -56,9 +61,18 @@ namespace Enemy
 
         private void EndTeleport()
         {
+            Vector2 teleportPosition = SlimeGameManager.Instance.CurrentPlayerBody.transform.position;
+
+            teleportPosition.x += Random.Range(-randomTeleportPosition, randomTeleportPosition);
+            teleportPosition.y += Random.Range(-randomTeleportPosition, randomTeleportPosition);
+
+            transform.position = teleportPosition;
+
             enemyData.enemyAnimator.SetTrigger(hashTeleportEnd);
 
             currentTime = 0f;
+            moveTime = Random.Range(minMoveTime, maxMoveTime);
+
             isTeleport = false;
         }
     }

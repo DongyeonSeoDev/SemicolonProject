@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5022227129099399403}
   - component: {fileID: 4000157984152769091}
   - component: {fileID: 5332868602282750055}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy5_SkeletonGhost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
