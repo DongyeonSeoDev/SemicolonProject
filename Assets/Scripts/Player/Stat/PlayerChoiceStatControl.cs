@@ -630,8 +630,55 @@ public class PlayerChoiceStatControl : MonoBehaviour
         totalDamage = 0;
         attackMissedNum = 0;
         attackNum = 0;
-    }
+        mucusChargeEnergyMaxTime = 0;
 
+        foreach (var item in choiceDataDict)
+        {
+            item.Value.checkStartValue = originChoiceDataDict[item.Key].checkStartValue;
+        }
+    }
+    public void WhenBuyStat(ushort statID)
+    {
+        ChoiceStatCheckStatValueSet(statID);
+    }
+    private void ChoiceStatCheckStatValueSet(ushort statID)
+    {
+        #region Swtich¹®
+        switch (statID)
+        {
+            case NGlobal.MomentomID:
+                {
+                    choiceDataDict[NGlobal.MomentomID].checkStartValue = avoidInMomentomNum;
+                }
+                break;
+            case NGlobal.FakeID:
+                {
+                    choiceDataDict[NGlobal.FakeID].checkStartValue = fakeNum;
+                }
+                break;
+            case NGlobal.EnduranceID:
+                {
+                    choiceDataDict[NGlobal.EnduranceID].checkStartValue = (int)totalDamage;
+                }
+                break;
+            case NGlobal.ProficiencyID:
+                {
+                    choiceDataDict[NGlobal.ProficiencyID].checkStartValue = attackMissedNum + attackNum;
+                }
+                break;
+            case NGlobal.MucusRechargeID:
+                {
+                    choiceDataDict[NGlobal.MucusRechargeID].checkStartValue = (int)mucusChargeEnergyMaxTime;
+                }
+                break;
+            default:
+                {
+                    Debug.LogError("Un Signed StatID in ChoiceDataDict");
+                }
+                break;
+        }
+        #endregion
+    }
     private void UpChoiceStatLv(StatElement choiceStat)
     {
         choiceStat.statLv++;
