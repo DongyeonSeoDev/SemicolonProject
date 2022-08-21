@@ -238,8 +238,10 @@ public class StageManager : MonoSingleton<StageManager>
                     Util.StopCo("ImprecationInteract", this);
                     break;
                 case AreaType.CHEF:
-                    currentMapNPCList.ForEach(x => x.gameObject.SetActive(false));
-                    currentMapNPCList.Clear();
+                    ClearNPC();
+                    break;
+                case AreaType.STAT:
+                    ClearNPC();
                     break;
                 case AreaType.BOSS:
                     SkillUIManager.Instance.SetEnableSlot(SkillType.SPECIALATTACK2, true);
@@ -565,6 +567,7 @@ public class StageManager : MonoSingleton<StageManager>
                     break;
                 case AreaType.STAT:
                     SetClearStage();
+                    ChefStage();
                     StatStore.Instance.EnteredStatArea();
                     break;
                 case AreaType.RANDOM:
@@ -634,18 +637,21 @@ public class StageManager : MonoSingleton<StageManager>
 
     private void UpdateAreaWeights()
     {
-        AreaType type = currentStageData.areaType;
-        if (areaWeightDic[currentFloor].ContainsKey(type))
+        if (currentFloor > 0)
         {
-            areaWeightDic[currentFloor][type] -= minusWeight;
-
-            if (areaWeightDic[currentFloor][type] <= 0) areaWeightDic[currentFloor][type] = 0;
-
-            foreach (AreaType key in Global.GetEnumArr<AreaType>())  //주의 : Dictionary를 foreach로 순회중에 내부의 값을 바꾸면 순회가 중단되고 다음에 실행될 코드도 실행이 안됨.
+            AreaType type = currentStageData.areaType;
+            if (areaWeightDic[currentFloor].ContainsKey(type))
             {
-                if (areaWeightDic[currentFloor].ContainsKey(key) && key != type)
+                areaWeightDic[currentFloor][type] -= minusWeight;
+
+                if (areaWeightDic[currentFloor][type] <= 0) areaWeightDic[currentFloor][type] = 0;
+
+                foreach (AreaType key in Global.GetEnumArr<AreaType>())  //주의 : Dictionary를 foreach로 순회중에 내부의 값을 바꾸면 순회가 중단되고 다음에 실행될 코드도 실행이 안됨.
                 {
-                    areaWeightDic[currentFloor][key] += plusWeight;
+                    if (areaWeightDic[currentFloor].ContainsKey(key) && key != type)
+                    {
+                        areaWeightDic[currentFloor][key] += plusWeight;
+                    }
                 }
             }
         }
@@ -892,6 +898,12 @@ public class StageManager : MonoSingleton<StageManager>
         NPC npc = Instantiate(Resources.Load<GameObject>("Prefabs/NPC/" + id), transform).GetComponent<NPC>();
         npcDict.Add(id, npc);
         return npc;
+    }
+
+    private void ClearNPC()
+    {
+        currentMapNPCList.ForEach(x => x.gameObject.SetActive(false));
+        currentMapNPCList.Clear();
     }
 
     private void ChefStage()

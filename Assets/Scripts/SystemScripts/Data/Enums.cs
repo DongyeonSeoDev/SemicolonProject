@@ -67,7 +67,8 @@ public enum UIType
     MINIGAME_PICKUP,
     UIOFFCONFIRM,
     MENU,
-    MONSTERINFO_DETAIL_FEATURE
+    MONSTERINFO_DETAIL_FEATURE,
+    STORE
 }
 
 public enum InitGainType

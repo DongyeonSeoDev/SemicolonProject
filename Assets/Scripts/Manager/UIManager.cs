@@ -716,6 +716,9 @@ public partial class UIManager : MonoSingleton<UIManager>
             case UIType.CHEF_FOODS_PANEL:
                 TimeManager.TimeResume();
                 break;
+            case UIType.STORE:
+                TimeManager.TimeResume();
+                break;
             case UIType.MONSTERINFO_DETAIL:
                 MonsterCollection.Instance.CloseDetail();
                 break;

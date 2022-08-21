@@ -22,5 +22,5 @@ MonoBehaviour:
   areaType: 10
   enemySpeciesArea: 0
   missionTypes: 
-  mapNPC: {fileID: 2234542626858057358, guid: eca11d4b5f5510148b75e1bb8597f135, type: 3}
+  mapNPC: {fileID: 2234542626858057358, guid: f0f4da73d235d7f4fac1f50a7fcb8c27, type: 3}
   mapEvent: {fileID: 0}

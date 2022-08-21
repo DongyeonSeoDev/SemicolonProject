@@ -8,7 +8,7 @@ namespace Water
     public class UtilMenu
     {
 
-        [MenuItem("Resource Manage/Data/Set Max Count of Item Possession")]
+        /*[MenuItem("Resource Manage/Data/Set Max Count of Item Possession")]
         static void SetItemPossessionMaxCount()
         {
             List<ItemSO> list = new List<ItemSO>();
@@ -42,7 +42,7 @@ namespace Water
             StageDataSO[] datas = Resources.LoadAll<StageDataSO>("Stage/SO/Stage1/");
             foreach (StageDataSO data in datas)
                 data.SetPrefab();
-        }
+        }*/
 
         [MenuItem("File/Delete/" + Global.GAME_SAVE_FILE + "(Test Save File)")]
         static void DeleteTestSaveFile()
