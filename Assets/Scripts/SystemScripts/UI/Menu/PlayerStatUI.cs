@@ -554,6 +554,7 @@ public class PlayerStatUI : MonoBehaviour
         }
         else  //º±≈√ Ω∫≈» »πµÊ
         {
+            se.statLv = 1;
             choiceStatInfoUIDic[se.id].gameObject.SetActive(true);
             InsertPropertyInfo(se.id);
         }

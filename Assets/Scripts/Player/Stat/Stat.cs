@@ -14,6 +14,13 @@ public class Stat
     public EternalStat additionalEternalStat = new EternalStat();  //영구 스탯(추가 능력치)
     public ChoiceStat choiceStat = new ChoiceStat();  //기본 선택 스탯
     
+    public void UseStatPoint(int point)
+    {
+        currentStatPoint -= point;
+        if(currentStatPoint<0) currentStatPoint = 0;
+        accumulateStatPoint += point;
+    }
+
     public void ResetAfterRegame()
     {
         currentStatPoint += accumulateStatPoint;
