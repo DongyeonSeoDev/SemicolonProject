@@ -358,8 +358,6 @@ MonoBehaviour:
   directionList:
   - dataList:
     - 0
-  - dataList:
-    - 0
     - 180
   - dataList:
     - 0

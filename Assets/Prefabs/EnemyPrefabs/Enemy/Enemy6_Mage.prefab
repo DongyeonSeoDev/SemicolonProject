@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: -1158705011
   m_SortingLayer: 7
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 0497de5233414034bbce232bbbe87081, type: 3}
+  m_Sprite: {fileID: 21300000, guid: a49c3a9e0c2f8aa40bbfbebd51c4de01, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -142,18 +142,18 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.6583398, y: -0.6264704}
+  m_Offset: {x: -0.09287089, y: -0.032002687}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 6.25, y: 4.0625}
+    oldSize: {x: 3.125, y: 3}
     newSize: {x: 1, y: 0.65}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.0520309, y: 2.0675535}
+  m_Size: {x: 1.3075951, y: 2.1899414}
   m_EdgeRadius: 0
 --- !u!61 &-1685914087399773146
 BoxCollider2D:
@@ -168,18 +168,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.71748614, y: -0.1910243}
+  m_Offset: {x: -0.09214902, y: -0.5304813}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 6.25, y: 4.0625}
+    oldSize: {x: 3.125, y: 3}
     newSize: {x: 1, y: 0.65}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.8122177, y: 1.1934497}
+  m_Size: {x: 1.3056428, y: 1.1897994}
   m_EdgeRadius: 0
 --- !u!114 &573707942550919683
 MonoBehaviour:
@@ -294,11 +294,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1559462951835451896, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -0.7
+      value: -0.04
       objectReference: {fileID: 0}
     - target: {fileID: 1559462951835451896, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -0.9
+      value: -0.3
       objectReference: {fileID: 0}
     - target: {fileID: 1559462951835451896, guid: cd769bc743cd18b4eb14dfb56f994fdf, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
