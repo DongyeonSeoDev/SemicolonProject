@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: ProficiencyData
   m_EditorClassIdentifier: 
   statId: 100
+  maxStatLv: 20
   statName: "\uC219\uB828\uB3C4"
+  statSpr: {fileID: 0}
   simpleAbilExplanation: "\uACF5\uACA9\uC744 \uC77C\uC815\uD69F\uC218 \uD560 \uACBD\uC6B0
     \uACF5\uACA9\uB825 \uC0C1\uC2B9"
   detailAbilExplanation: "\uBAA8\uB4E0 \uACF5\uACA9 100\uD68C \uC774\uD6C4 \uD69F\uC218
@@ -23,4 +25,3 @@ MonoBehaviour:
   acquisitionWay: "\uBAAC\uC2A4\uD130\uAC00 \uC544\uB2CC \uACF3\uC5D0 100\uD68C \uACF5\uACA9\uC744
     \uC2DC\uB3C4\uD588\uC744 \uB54C \uD68D\uB4DD(\uBAAC\uC2A4\uD130 \uACF5\uACA9
     \uC2DC \uD69F\uC218 \uCD08\uAE30\uD654)"
-  emotionRangeList: []

@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: MucusRecharge
   m_EditorClassIdentifier: 
   statId: 125
+  maxStatLv: 5
   statName: "\uC810\uC561 \uC7AC\uCDA9\uC804"
+  statSpr: {fileID: 0}
   simpleAbilExplanation: "\uC810\uC561 \uB358\uC9C0\uAE30\uC758 \uCDA9\uC804\uC18D\uB3C4
     \uC0C1\uC2B9"
   detailAbilExplanation: "\uC810\uC561 \uB358\uC9C0\uAE30\uC758 \uC804\uCCB4\uC801\uC778
@@ -22,4 +24,3 @@ MonoBehaviour:
     \uC54A\uC744 \uACBD\uC6B0 \uC2A4\uD0EF \uC0C1\uC2B9"
   acquisitionWay: "\uC2A4\uCF08\uB808\uD1A4 \uAD81\uC218 \uBAAC\uC2A4\uD130\uC758
     \uB3D9\uD654\uC728 100% \uB2EC\uC131 \uC2DC \uD68D\uB4DD"
-  emotionRangeList: []

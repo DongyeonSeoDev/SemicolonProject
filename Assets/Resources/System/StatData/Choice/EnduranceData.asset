@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: EnduranceData
   m_EditorClassIdentifier: 
   statId: 110
+  maxStatLv: 10
   statName: "\uB9F7\uC9D1"
+  statSpr: {fileID: 0}
   simpleAbilExplanation: "\uCCB4\uB825 \uAC10\uC18C \uC2DC \uCD5C\uB300 \uCCB4\uB825
     \uC0C1\uC2B9"
   detailAbilExplanation: "Hp100 \uAC10\uC18C \uC2DC \uCD5C\uB300 \uCCB4\uB825 <color=#4444EC>+{0}</color>Hp
@@ -21,4 +23,3 @@ MonoBehaviour:
   growthWay: "\uC9C0\uC18D\uC801\uC778 \uCCB4\uB825 \uC18C\uBAA8 \uC2DC \uC2A4\uD0EF
     \uC0C1\uC2B9"
   acquisitionWay: "hp100 \uC774\uC0C1 \uC18C\uBAA8 \uC2DC \uD68D\uB4DD"
-  emotionRangeList: []

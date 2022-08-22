@@ -62,7 +62,7 @@ public class StatStore : MonoSingleton<StatStore>
         List<ushort> list = allPropIDList.FindAllRandom(id =>
         {
             StatElement stat = NGlobal.playerStatUI.choiceStatDic[id];
-            return stat.statLv < stat.maxStatLv;
+            return stat.statLv < NGlobal.playerStatUI.GetStatSOData(id).maxStatLv;
         }, 15);
 
         availableCount = list.Count;
@@ -100,7 +100,7 @@ public class StatStore : MonoSingleton<StatStore>
                 List<ushort> list = allPropIDList.FindAllRandom(id =>
                 {
                     StatElement stat = NGlobal.playerStatUI.choiceStatDic[id];
-                    return stat.statLv < stat.maxStatLv && !prevStockIDList.Contains(id);
+                    return stat.statLv < NGlobal.playerStatUI.GetStatSOData(id).maxStatLv && !prevStockIDList.Contains(id);
                 }, 15);
 
                 prevStockIDList.Clear();
