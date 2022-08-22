@@ -60,7 +60,14 @@ public class PlayerShoot : PlayerSkill
 
             if (player.PlayerStat.choiceStat.multipleShots.statLv > 0)
             {
-                directionList = playerShootDirectionControl.DirectionList[player.PlayerStat.choiceStat.multipleShots.statLv - 1].dataList;
+                if (player.PlayerStat.choiceStat.multipleShots.statLv <= playerShootDirectionControl.DirectionList.Count)
+                {
+                    directionList = playerShootDirectionControl.DirectionList[player.PlayerStat.choiceStat.multipleShots.statLv - 1].dataList;
+                }
+                else
+                {
+                    directionList = playerShootDirectionControl.DirectionList[playerShootDirectionControl.DirectionList.Count - 1].dataList;
+                }
             }
             else
             {
