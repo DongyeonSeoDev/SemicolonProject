@@ -168,10 +168,11 @@ public class PlayerStatUI : MonoBehaviour
                         {
                             Sequence seq = DOTween.Sequence();
                             seq.SetUpdate(true);
+                            PropertyUI old = propertyNoticeList[idx];
                             newPos = propertyNoticePos[idx];
                             newPos.x += propSizeMoveX;
-                            seq.Append(propertyNoticeList[idx].rectTr.DOAnchorPos(newPos, 0.3f))
-                            .Join(propertyNoticeList[idx].cvsg.DOFade(0f, 0.3f).OnComplete(() => propertyNoticeList[idx].gameObject.SetActive(false)));
+                            seq.Append(old.rectTr.DOAnchorPos(newPos, 0.3f))
+                            .Join(old.cvsg.DOFade(0f, 0.3f).OnComplete(() => old.gameObject.SetActive(false)));
                             seq.AppendInterval(0.15f);
 
                             propertyNoticeList.RemoveAt(idx);
@@ -201,10 +202,11 @@ public class PlayerStatUI : MonoBehaviour
                             //맨 위로 보내줌
                             Sequence seq = DOTween.Sequence();
                             seq.SetUpdate(true);
+                            PropertyUI old = propertyNoticeList[idx];
                             newPos = propertyNoticePos[idx];
                             newPos.x += propSizeMoveX;
-                            seq.Append(propertyNoticeList[idx].rectTr.DOAnchorPos(newPos, 0.3f))
-                            .Join(propertyNoticeList[idx].cvsg.DOFade(0f, 0.3f));
+                            seq.Append(old.rectTr.DOAnchorPos(newPos, 0.3f))
+                            .Join(old.cvsg.DOFade(0f, 0.3f).OnComplete(()=>old.gameObject.SetActive(false)));
                             seq.AppendInterval(0.15f);
 
                             propertyNoticeList.Add(propertyNoticeList[idx]);

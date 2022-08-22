@@ -250,7 +250,7 @@ MonoBehaviour:
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
-        maxStatLv: 0
+        maxStatLv: 1
       reflection:
         id: 120
         statValue: 0
@@ -258,7 +258,7 @@ MonoBehaviour:
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
-        maxStatLv: 0
+        maxStatLv: 1
       mucusRecharge:
         id: 125
         statValue: 0
@@ -282,7 +282,7 @@ MonoBehaviour:
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
-        maxStatLv: 0
+        maxStatLv: 5
   playerInput: {fileID: 0}
   playerChoiceStatControl: {fileID: 0}
   playerReflectionScript: {fileID: 0}

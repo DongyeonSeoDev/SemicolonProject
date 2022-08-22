@@ -370,7 +370,7 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     private void UserInput()
     {
-        if (CanInteractUI)
+        if (CanInteractUI && !InteractionHandler.isOpenWarningWindow)
         {
             if (Input.GetKeyDown(KeySetting.fixedKeyDict[KeyAction.SETTING]))
             {
@@ -578,7 +578,6 @@ public partial class UIManager : MonoSingleton<UIManager>
                     playerStatUI.UpdateStat();
                     //playerStatUI.CloseChoiceDetail();
                 }
-                    
                 //UpdateStatUI();
                 EffectManager.Instance.OnTopRightBtnEffect(UIType.STAT, false);
                 break;
@@ -616,6 +615,7 @@ public partial class UIManager : MonoSingleton<UIManager>
                 {
                     KeyActionManager.Instance.SetAutoQuikSlotItem();
                     NGlobal.playerStatUI.UpdateScrStatUI();
+                    StatStore.Instance.UpdateUserPoint();
                 }
                 break;
         }
@@ -918,6 +918,7 @@ public partial class UIManager : MonoSingleton<UIManager>
 
     public void RequestWarningWindow(Action confirm, string warning, string verify = "확인", string cancel = "취소")
     {
+        InteractionHandler.isOpenWarningWindow = true;
         wnWd.Register(confirm, warning, verify, cancel);
     }
 

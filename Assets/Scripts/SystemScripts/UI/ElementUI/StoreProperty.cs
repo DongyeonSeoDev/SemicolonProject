@@ -35,14 +35,14 @@ public class StoreProperty : MonoBehaviour
         UIScaleCtrl.transitionEnable = true;
         cvsg.alpha = 1;
 
-        maxLv.text = "최대레벨 : <color=blue>" + NGlobal.playerStatUI.choiceStatDic[ID].maxStatLv.ToString() + "</color>";
+        maxLv.text = "최대레벨 : <color=blue>" + NGlobal.playerStatUI.GetStatSOData(ID).maxStatLv.ToString() + "</color>";
         abil.text = string.Format(stat.detailAbilExplanation, Global.CurrentPlayer.GetComponent<PlayerChoiceStatControl>().ChoiceDataDict[ID].upTargetStatPerChoiceStat);
         growth.text = stat.growthWay;
 
         if (!IsSellItem) Point = StatStore.Instance.PropCost;
-        else Point = StatStore.Instance.SellCost * (NGlobal.playerStatUI.choiceStatDic[ID].statLv + 1);
+        else Point = StatStore.Instance.SellCost * NGlobal.playerStatUI.choiceStatDic[ID].statLv;
 
-        point.text = $"<color=blue>{point}</color> POINT";
+        point.text = $"<color=yellow>{Point}</color> POINT";
     }
 
     public void Buy()

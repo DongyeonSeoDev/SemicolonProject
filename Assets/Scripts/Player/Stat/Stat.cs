@@ -21,6 +21,13 @@ public class Stat
         accumulateStatPoint += point;
     }
 
+    public void GetStatPoint(int point)
+    {
+        currentStatPoint += point;
+        accumulateStatPoint -= point;
+        if(accumulateStatPoint < 0) accumulateStatPoint = 0;
+    }
+
     public void ResetAfterRegame()
     {
         currentStatPoint += accumulateStatPoint;

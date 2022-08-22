@@ -190,6 +190,18 @@ PrefabInstance:
       propertyPath: isPauseByTuto
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5427881869486345105, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
+      propertyPath: playerStat.choiceStat.frenzy.maxStatLv
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5427881869486345105, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
+      propertyPath: playerStat.choiceStat.reflection.maxStatLv
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5427881869486345105, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
+      propertyPath: playerStat.choiceStat.multipleShots.maxStatLv
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5969261799166203317, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
       propertyPath: m_IsActive
       value: 0

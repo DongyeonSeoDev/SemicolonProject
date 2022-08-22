@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: MultiShootData
   m_EditorClassIdentifier: 
   statId: 135
-  maxStatLv: 5
+  maxStatLv: 4
   statName: "\uB2E4\uC911 \uBC1C\uC0AC"
   statSpr: {fileID: 0}
   simpleAbilExplanation: "\uCD1D\uC54C\uC744 \uC5EC\uB7EC \uBC1C \uBC1C\uC0AC\uD55C\uB2E4"
   detailAbilExplanation: "\uCD1D\uC54C\uC744 \uC5EC\uB7EC \uBC1C \uBC1C\uC0AC\uD55C\uB2E4"
-  growthWay: "\uC131\uC7A5 \uBC29\uBC95"
-  acquisitionWay: "\uD68D\uB4DD \uBC29\uBC95"
+  growthWay: "\uC0C1\uC810\uC5D0\uC11C \uAD6C\uC785"
+  acquisitionWay: "\uC0C1\uC810\uC5D0\uC11C \uAD6C\uC785"

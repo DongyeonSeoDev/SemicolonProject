@@ -51,6 +51,8 @@ public class WarningWindow : MonoBehaviour
         transform.DOKill();
         cvsg.DOKill();
 
+        InteractionHandler.isOpenWarningWindow = false;
+
         transform.DOScale(SVector3.zeroPointSeven, 0.3f).SetUpdate(true);
         cvsg.DOFade(0, 0.3f).SetUpdate(true).OnComplete(() => gameObject.SetActive(false));
     }
