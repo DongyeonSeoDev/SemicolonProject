@@ -182,6 +182,7 @@ public class StatStore : MonoSingleton<StatStore>
                     NGlobal.playerStatUI.InsertPropertyInfo(id);
                 }
             }
+            Global.CurrentPlayer.GetComponent<PlayerChoiceStatControl>().WhenTradeStat(id);
         }
     }
 
@@ -196,6 +197,7 @@ public class StatStore : MonoSingleton<StatStore>
             NGlobal.playerStatUI.SellStat(stat);
             selectedProp.Sell();
             NGlobal.playerStatUI.UpdateScrStatUI();
+            Global.CurrentPlayer.GetComponent<PlayerChoiceStatControl>().WhenTradeStat(id);
         }
     }
 

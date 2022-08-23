@@ -619,7 +619,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
             item.Value.checkStartValue = originChoiceDataDict[item.Key].checkStartValue;
         }
     }
-    public void WhenBuyStat(ushort statID)
+    public void WhenTradeStat(ushort statID)
     {
         ChoiceStatCheckStatValueSet(statID);
     }
@@ -651,11 +651,6 @@ public class PlayerChoiceStatControl : MonoBehaviour
             case NGlobal.MucusRechargeID:
                 {
                     choiceDataDict[NGlobal.MucusRechargeID].checkStartValue = (int)mucusChargeEnergyMaxTime;
-                }
-                break;
-            default:
-                {
-                    Debug.LogError("Un Signed StatID in ChoiceDataDict");
                 }
                 break;
         }
