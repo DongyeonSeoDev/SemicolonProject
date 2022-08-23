@@ -35,7 +35,7 @@ public class StoreProperty : MonoBehaviour
         UIScaleCtrl.transitionEnable = true;
         cvsg.alpha = 1;
 
-        maxLv.text = "최대레벨 : <color=blue>" + NGlobal.playerStatUI.GetStatSOData(ID).maxStatLv.ToString() + "</color>";
+        maxLv.text = "최대레벨 : <color=#4444EC>" + NGlobal.playerStatUI.GetStatSOData(ID).maxStatLv.ToString() + "</color>";
         abil.text = string.Format(stat.detailAbilExplanation, Global.CurrentPlayer.GetComponent<PlayerChoiceStatControl>().ChoiceDataDict[ID].upTargetStatPerChoiceStat);
         growth.text = stat.growthWay;
 

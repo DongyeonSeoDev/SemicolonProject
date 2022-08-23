@@ -34,8 +34,10 @@ public class StatStore : MonoSingleton<StatStore>
 
     #region Panel
 
+    public TextMeshProUGUI stockUpdateTMP;
     public Text[] userPointTexts;
     public RectTransform buyPanel, sellPanel;
+    public Scrollbar sellScrollBar;
     private Vector2 panelOriginPos;
     private Vector2 rightPos, leftPos;
     private bool isBuyPanel;  //현재 구매 패널이 띄워져 있는지
@@ -64,6 +66,7 @@ public class StatStore : MonoSingleton<StatStore>
         curRechargeCount = 0;
         purchasedPropIDList.Clear();
         prevStockIDList.Clear();
+        stockUpdateTMP.SetText(string.Concat("갱신(", maxRechargeCount, ')'));
 
         List<ushort> list = allPropIDList.FindAllRandom(id =>
         {
@@ -111,6 +114,7 @@ public class StatStore : MonoSingleton<StatStore>
                 NGlobal.playerStatUI.UpdateScrStatUI();
                 curRechargeCount++;
                 purchasedPropIDList.Clear();
+                stockUpdateTMP.SetText(string.Concat("갱신(", maxRechargeCount-curRechargeCount, ')'));
 
                 List<ushort> list = allPropIDList.FindAllRandom(id =>
                 {
@@ -251,6 +255,8 @@ public class StatStore : MonoSingleton<StatStore>
                     sp.Renewal(allPropIDList[i], false);
                 }
             }
+
+            Util.DelayFunc(() => sellScrollBar.value = 0, 0.1f, this, true);
         }
 
         RectTransform hiddenRt = isBuyPanel ? sellPanel : buyPanel;
