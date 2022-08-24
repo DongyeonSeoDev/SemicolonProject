@@ -55,12 +55,15 @@ public class StageManager : MonoSingleton<StageManager>
     #endregion
 
     #region Map Incounter
-    private Dictionary<int, Dictionary<AreaType, int>> areaWeightDic = new Dictionary<int, Dictionary<AreaType, int>>();
-    private Dictionary<int, Dictionary<EnemyType, int>> mobAreaWeightDic = new Dictionary<int, Dictionary<EnemyType, int>>();
+    [Space(15)]
+    private Dictionary<int, Dictionary<AreaType, float>> areaWeightDic = new Dictionary<int, Dictionary<AreaType, float>>();
+    private Dictionary<int, Dictionary<EnemyType, float>> mobAreaWeightDic = new Dictionary<int, Dictionary<EnemyType, float>>();
+    [Header("[Incounter Variables]")]
     [SerializeField] private List<Pair<int, List<EnemyType>>> floorSpecies;  //층마다 어떤 몹들 나오는지
-    [SerializeField] private List<Pair<AreaType, int>> areaWeight;  //맵마다 기본 가중치
-    [SerializeField] private int mobWeight = 15; //몬스터당 기본 가중치 
-    [SerializeField] private int plusWeight = 10, minusWeight = 5;
+    [SerializeField] private List<Pair<AreaType, float>> areaWeight;  //구역마다 기본 가중치
+    [SerializeField] private float mobWeight = 15; //몬스터당 기본 가중치 
+
+    private bool isSelectRandomArea = false;
     #endregion
 
     public Func<bool> canNextStage = null;  //다음 스테이지를 갈 때 이게 null이면 가지고 무언가 값이 있으면 그것을 실행해서 true면 지나가짐
@@ -107,7 +110,7 @@ public class StageManager : MonoSingleton<StageManager>
         }
 
         //맵 인카운터 준비 + 스테이지 로직 (신)
-        int[] mobStageWeight = new int[maxStage];
+        float[] mobStageWeight = new float[maxStage];
         for(int i=0; i<maxStage; i++)
         {
             mobStageWeight[i] = 0;
@@ -119,8 +122,8 @@ public class StageManager : MonoSingleton<StageManager>
 
         for(int i=0; i<maxStage; i++)
         {
-            areaWeightDic.Add(i + 1 , new Dictionary<AreaType, int>());
-            mobAreaWeightDic.Add(i + 1, new Dictionary<EnemyType, int>());
+            areaWeightDic.Add(i + 1 , new Dictionary<AreaType, float>());
+            mobAreaWeightDic.Add(i + 1, new Dictionary<EnemyType, float>());
 
             for(int j=0; j<areaWeight.Count; j++)
             {
@@ -163,8 +166,8 @@ public class StageManager : MonoSingleton<StageManager>
 
         EventManager.StartListening(Global.EnterNextMap, () =>  //해당 방을 입장했을 때, 마지막에 호출
         {
-            UpdateAreaWeights();
             currentStageNumber++;
+            isSelectRandomArea = false;
         });
 
         floorInitSet = new bool[maxStage + 1];  //튜토리얼 (0스테이지) 포함하므로 +1
@@ -251,7 +254,7 @@ public class StageManager : MonoSingleton<StageManager>
 
             SoundManager.Instance.SetBGMPitch(1);
             DOUtil.StopCo("Next Enemys Spawn", this);
-            Enemy.EnemyManager.Instance.PlayerDeadEvent();
+            EnemyManager.Instance.PlayerDeadEvent();
 
             if (canNextStage != null) canNextStage = null;
         });
@@ -265,7 +268,7 @@ public class StageManager : MonoSingleton<StageManager>
         EventManager.TriggerEvent("StartBGM", startStageID);
     }
 
-    private void SetRandomAreaRandomIncounter()  //일단 리펙토링 나중에 해야할 듯
+    private void SetRandomAreaRandomIncounter()  //랜덤구역 랜덤 인카운터
     {
         if (currentFloor == 0) return;
 
@@ -395,7 +398,7 @@ public class StageManager : MonoSingleton<StageManager>
         return string.Empty;
     }
 
-    private void InsertRandomMaps(int floor)
+    private void InsertRandomMaps(int floor)  //맵 리스트를 섞어줌
     {
         if (currentFloor == 0) return;
 
@@ -488,6 +491,8 @@ public class StageManager : MonoSingleton<StageManager>
         GameManager.Instance.ResetDroppedItems(); //Inactive Items
 
         //다음 스테이지 경우의 수만큼 문을 켜주고 문에 다음 스테이지 타입에 맞게 랜덤으로 다음 스테이지 설정
+
+        UpdateAreaWeights();  //다음 문의 구역을 지정하기 전에 확률을 갱신시켜준다.
 
         if (currentStageNumber + 1 < currentStageData.stageFloor.LastStageNumber - 2)
         {
@@ -587,9 +592,10 @@ public class StageManager : MonoSingleton<StageManager>
         }
     }
 
-    private void ResetMapWeight(int floor)
+    private void ResetMapWeight(int floor)  //구역마다 가중치를 초깃값으로 리셋
     {
-        int mobStageWeight = 0, i;
+        float mobStageWeight = 0f;
+        int i;
         for (i = 0; i < floorSpecies[floor].second.Count; i++)
         {
             mobStageWeight += mobWeight;
@@ -606,12 +612,13 @@ public class StageManager : MonoSingleton<StageManager>
         }
     }
 
-    private AreaType GetRandomArea(List<AreaType> list)
+    private AreaType GetRandomArea(List<AreaType> list)  //다음 구역을 가중치에 맞게 리스트에 없는 구역응로 랜덤 반환
     {
         List<AreaType> li = areaWeightDic[currentFloor].Keys.ToList();
         if (currentStageData.stageFloor.randomStageList[currentStageNumber].nextStageTypes.Length == 1)
             return currentStageData.stageFloor.randomStageList[currentStageNumber].nextStageTypes[0];
-        int total = 0, weight = 0, i;
+        float total = 0, weight = 0;
+        int i;
         for (i = 0; i < li.Count; i++)
             total += areaWeightDic[currentFloor][li[i]];
 
@@ -621,7 +628,7 @@ public class StageManager : MonoSingleton<StageManager>
             total -= areaWeightDic[currentFloor][list[i]];
         }
 
-        int sel = Mathf.RoundToInt(total * UnityEngine.Random.Range(0f, 1f));
+        float sel = total * UnityEngine.Random.Range(0f, 1f);
 
         for (i = 0; i < li.Count; i++)
         {
@@ -635,27 +642,128 @@ public class StageManager : MonoSingleton<StageManager>
         return GetRandomArea(list); 
     }
 
-    private void UpdateAreaWeights()
+    #region Weight Update
+
+    private void UpdateAreaWeights()  //들어간 현재 구역에 맞게 구역들마다 가중치를 새로 갱신시켜줌
     {
+        if (isSelectRandomArea) return; //랜덤 구역이 선택되고 몬스터 구역으로 정해지면 NextStage 함수가 두 번 호출되면서 이 함수도 두 번 호출되는 것을 막아줌
         if (currentFloor > 0)
         {
             AreaType type = currentStageData.areaType;
             if (areaWeightDic[currentFloor].ContainsKey(type))
             {
-                areaWeightDic[currentFloor][type] -= minusWeight;
+                float w = areaWeightDic[currentFloor][type]; //가중치를 저장해두는 변수
+                float rate, rate2;
+                switch (type)  //로직이 구역마다 어느 비율로 어떤 구역들이 얼마나 내려가는지 다 달라서 switch문으로 다 따로 처리해야할 것 같음
+                {
+                    case AreaType.MONSTER:
+                        EnemyType eType = currentStageData.enemySpeciesArea;
+                        rate = mobAreaWeightDic[currentFloor][eType] * 0.6666f;
+                        rate2 = mobAreaWeightDic[currentFloor][eType] * 0.3333f;
+                        mobAreaWeightDic[currentFloor][eType] -= rate;
+                        for (int i = 0; i < floorSpecies[currentFloor - 1].second.Count; i++)
+                        {
+                            if(floorSpecies[currentFloor - 1].second[i] != eType)
+                            {
+                                mobAreaWeightDic[currentFloor][floorSpecies[currentFloor - 1].second[i]] -= rate2;
+                            }
+                        }
+                        rate2 = (rate + rate2 + rate2) * 0.25f;
+                        PlusWeight(AreaType.RANDOM, rate2);
+                        PlusWeight(AreaType.STAT, rate2);
+                        PlusWeight(AreaType.CHEF, rate2);
+                        PlusWeight(AreaType.PLANTS, rate2);
+                        break;
 
-                if (areaWeightDic[currentFloor][type] <= 0) areaWeightDic[currentFloor][type] = 0;
+                    case AreaType.RANDOM:
+                        rate = w * 0.36f;
+                        SetWeight(type, w - rate);
+                        rate2 = rate * 0.3333f;
+                        CalcMobWeights(rate2);
+                        break;
+
+                    case AreaType.CHEF:
+                        SetWeight(type, 0f);
+                        rate = w * 0.5f;
+                        MinusWeight(AreaType.PLANTS, rate);
+                        MinusWeight(AreaType.STAT, rate);
+                        rate2 = w * 0.25f;
+                        PlusWeight(AreaType.RANDOM, rate2);
+                        CalcMobWeights(rate2);
+                        break;
+
+                    case AreaType.STAT:
+                        SetWeight(type, 0f);
+                        rate = w * 0.2f;
+                        PlusWeight(AreaType.PLANTS, rate);
+                        PlusWeight(AreaType.CHEF, rate);
+                        PlusWeight(AreaType.RANDOM, rate);
+                        CalcMobWeights(rate);
+                        break;
+
+                    case AreaType.PLANTS:
+                        SetWeight(type, 0f);
+                        rate = w * 0.2f;
+                        PlusWeight(AreaType.STAT, rate);
+                        PlusWeight(AreaType.CHEF, rate);
+                        PlusWeight(AreaType.RANDOM, rate);
+                        CalcMobWeights(rate);
+                        break;
+
+                    default:
+                        Debug.Log("이상한 구역이 인카운터에 영향을 받고 있음. 확인 필요 : " + type.ToString());
+                        break;
+                }
+
+                UpdateMobAreaWeight();
 
                 foreach (AreaType key in Global.GetEnumArr<AreaType>())  //주의 : Dictionary를 foreach로 순회중에 내부의 값을 바꾸면 순회가 중단되고 다음에 실행될 코드도 실행이 안됨.
                 {
-                    if (areaWeightDic[currentFloor].ContainsKey(key) && key != type)
+                    if (areaWeightDic[currentFloor].ContainsKey(key))
                     {
-                        areaWeightDic[currentFloor][key] += plusWeight;
+                        if (areaWeightDic[currentFloor][key] < 0f) areaWeightDic[currentFloor][key] = 0f;
                     }
                 }
             }
         }
     }
+
+    private void UpdateMobAreaWeight()  //몬스터 구역 가중치 갱신시켜줌
+    {
+        float w = 0f;
+        foreach(float f in mobAreaWeightDic[currentFloor].Values) w += f;
+        areaWeightDic[currentFloor][AreaType.MONSTER] = w;
+    }
+
+#endregion
+
+    #region Weight Calcurate
+    private void SetWeight(AreaType type, float weight)
+    {
+        areaWeightDic[currentFloor][type] = weight;
+    }
+    private void PlusWeight(AreaType type, float value)
+    {
+        areaWeightDic[currentFloor][type] += value;
+    }
+    private void MinusWeight(AreaType type, float value)
+    {
+        areaWeightDic[currentFloor][type] -= value;
+    }
+    private void CalcMobWeights(float value)
+    {
+        if (currentFloor <= 0 || currentFloor > maxStage)
+        {
+            Debug.Log("뭔가 좀 이상한 층 : " + currentFloor.ToString());
+            return;
+        }
+
+        for (int i = 0; i < floorSpecies[currentFloor - 1].second.Count; i++)
+        {
+            mobAreaWeightDic[currentFloor][floorSpecies[currentFloor - 1].second[i]] += value;
+        }
+    }
+    #endregion
 
     private void SetNextDoors(Func<StageDoor, bool> canSetDoorPos) //canSetDoorPos -> 이 자리에 문을 생성할 수 있는지
     {
@@ -664,7 +772,7 @@ public class StageManager : MonoSingleton<StageManager>
 
         if (currentFloor > 0)
         {
-            List<AreaType> list = new List<AreaType>();
+            List<AreaType> list = new List<AreaType>();  //이미 다음 스테이지의 문으로 정해진 구역들 리스트
 
             currentStage.stageDoors.ToRandomList(5).ForEach(door =>
             {
@@ -754,7 +862,7 @@ public class StageManager : MonoSingleton<StageManager>
         currentStage.OpenDoors();
     }
 
-    public void StartNextStage()
+    public void StartNextStage()  //다음 스테이지에 완전히 들어왔고 그 스테이지를 시작해줌
     {
         Debug.Log("Start Next Stage");
         NextStagePreEvent();
@@ -835,7 +943,7 @@ public class StageManager : MonoSingleton<StageManager>
         return null;
     }
 
-    private void EnterRandomArea()
+    private void EnterRandomArea()  //랜덤구역에 입장함
     {
         //RandomRoomType room = (RandomRoomType)UnityEngine.Random.Range(0, Global.EnumCount<RandomRoomType>());
         //room = RandomRoomType.IMPRECATION;
@@ -861,6 +969,7 @@ public class StageManager : MonoSingleton<StageManager>
                 break;
 
             case RandomRoomType.MONSTER:  //몬스터 구역
+                isSelectRandomArea = true;
                 //int targetStage = Mathf.Clamp(currentStageData.stageFloor.floor + UnityEngine.Random.Range(-1, 2), 1, MaxStage); //현재 층에서 몇 층을 더할지 정함
                 //StageBundleDataSO sbData = idToStageFloorDict.Values.Find(x=>x.floor == targetStage); //현재 층에서 -1 or 0 or 1층을 더한 층을 가져온다
                 NextStage(GetStageBundleData(currentFloor).monsterStages.ToRandomElement().stageID, false); //뽑은 층에서 몬스터 지역들중에 랜덤으로 가져온다
@@ -928,11 +1037,11 @@ public class StageManager : MonoSingleton<StageManager>
     {
         if (stageDataDictionary.ContainsKey(stageId))
         {
-            Enemy.EnemyManager.SetCurrentStageData(stageDataDictionary[stageId]);
+            EnemyManager.SetCurrentStageData(stageDataDictionary[stageId]);
         }
         else
         {
-            Enemy.EnemyManager.SetCurrentStageData(null);
+            EnemyManager.SetCurrentStageData(null);
         }
     }
 }

@@ -81955,16 +81955,14 @@ MonoBehaviour:
     second: 030000000500000006000000
   areaWeight:
   - first: 2
-    second: 15
+    second: 10
   - first: 3
-    second: 15
+    second: 10
   - first: 4
-    second: 15
+    second: 25
   - first: 10
-    second: 15
+    second: 10
   mobWeight: 15
-  plusWeight: 5
-  minusWeight: 10
 --- !u!1 &7093203198041410049
 GameObject:
   m_ObjectHideFlags: 0
