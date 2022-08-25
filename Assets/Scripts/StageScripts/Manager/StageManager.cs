@@ -192,7 +192,7 @@ public class StageManager : MonoSingleton<StageManager>
 
             SetClearStage();
             UIManager.Instance.RequestSystemMsg("강제로 문을 열음");
-            Enemy.EnemyManager.Instance.PlayerDeadEvent();
+            EnemyManager.Instance.PlayerDeadEvent();
         });
 
         GameManager.Instance.testKeyInputActionDict.Add(KeyCode.F11, () =>
@@ -203,6 +203,13 @@ public class StageManager : MonoSingleton<StageManager>
             }
         });
 
+        GameManager.Instance.testKeyInputActionDict.Add(KeyCode.F12, () =>
+        {
+            foreach(EnemyType key in mobAreaWeightDic[currentFloor].Keys)
+            {
+                Debug.Log($"{key} : {mobAreaWeightDic[currentFloor][key]}");
+            }
+        });
 #endif
     }
 
@@ -782,8 +789,37 @@ public class StageManager : MonoSingleton<StageManager>
                     {
                         AreaType type = GetRandomArea(list);
                         list.Add(type);
-                        door.nextStageData = randomRoomDict[currentFloor][type][0];
-                        randomRoomDict[currentFloor][type].RemoveAt(0);
+                        if (type != AreaType.MONSTER)
+                        {
+                            door.nextStageData = randomRoomDict[currentFloor][type][0];
+                            randomRoomDict[currentFloor][type].RemoveAt(0);
+                        }
+                        else
+                        {
+                            //가중치를 통해서 어떤 몬스터 구역 소환할지 정함
+                            float w = 0f, total = areaWeightDic[currentFloor][AreaType.MONSTER];
+                            float sel = UnityEngine.Random.Range(0, total);
+                            EnemyType target = floorSpecies[currentFloor - 1].second[0];
+                            foreach(EnemyType key in mobAreaWeightDic[currentFloor].Keys)
+                            {
+                                w += mobAreaWeightDic[currentFloor][key];
+                                if(w < sel)
+                                {
+                                    target = key;
+                                    break;
+                                }
+                            }
+
+                            //해당 몬스터 구역 뽑아옴
+                            foreach(StageDataSO data in randomRoomDict[currentFloor][AreaType.MONSTER])
+                            {
+                                if(data.enemySpeciesArea == target)
+                                {
+                                    door.nextStageData = data;
+                                }
+                            }
+                            randomRoomDict[currentFloor][type].Remove(door.nextStageData);
+                        }
                         randomRoomDict[currentFloor][type].Add(door.nextStageData);
 
                         //door.nextStageData = randomRoomDict[currentFloor][currentStageData.stageFloor.randomStageList[currentStageNumber].nextStageTypes[idx]][0];
