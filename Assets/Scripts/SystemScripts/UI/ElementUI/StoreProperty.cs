@@ -10,9 +10,10 @@ public class StoreProperty : MonoBehaviour
     public UIScale UIScaleCtrl;
 
     public CanvasGroup cvsg;
-    public CanvasGroup childCvsg;
+    public CanvasGroup childCvsg;  //리롤할 때 내부의 요소들 트윈 연출을 위한 
 
-    public Text maxLv, abil, growth, point;
+    public Text maxLv, abil, growth, point;  //최대렙, 상세 설명, 성장 방법, 가격
+    public Text curLv; //판매탭에서만 보이는 
 
     public ushort ID { get; private set; }
     public bool IsSellItem { get; private set; }   
@@ -38,6 +39,12 @@ public class StoreProperty : MonoBehaviour
         maxLv.text = "최대레벨 : <color=#4444EC>" + NGlobal.playerStatUI.GetStatSOData(ID).maxStatLv.ToString() + "</color>";
         abil.text = string.Format(stat.detailAbilExplanation, Global.CurrentPlayer.GetComponent<PlayerChoiceStatControl>().ChoiceDataDict[ID].upTargetStatPerChoiceStat);
         growth.text = stat.growthWay;
+
+        curLv.gameObject.SetActive(!purchase);
+        if (!purchase)
+        {
+            curLv.text = "현재레벨 : <color=#7C7CFB>" + NGlobal.playerStatUI.choiceStatDic[ID].statLv.ToString() + "</color>";
+        }
 
         if (!IsSellItem) Point = StatStore.Instance.PropCost;
         else Point = StatStore.Instance.SellCost * NGlobal.playerStatUI.choiceStatDic[ID].statLv;
