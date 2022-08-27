@@ -100,6 +100,12 @@ public class StatStore : MonoSingleton<StatStore>
         {
             if (NGlobal.playerStatUI.PlayerStat.currentStatPoint >= rechargeNeedPoint)
             {
+                if(availableCount <= maxStockAmount)
+                {
+                    UIManager.Instance.RequestSystemMsg("구매할 수 있는 다른 특성이 없습니다");
+                    return; 
+                }
+
                 tweeningQueue.Enqueue(false);
                 int i, cnt = maxStockAmount;
 
@@ -143,6 +149,8 @@ public class StatStore : MonoSingleton<StatStore>
                         int si = i;
                         storeProperties[si].childCvsg.DOFade(1, 0.35f).SetUpdate(true);
                     }
+
+                    availableCount = allPropIDList.FindAll(id => NGlobal.playerStatUI.choiceStatDic[id].statLv < NGlobal.playerStatUI.GetStatSOData(id).maxStatLv).Count;
 
                     Util.DelayFunc(() => tweeningQueue.Dequeue(), 0.42f, this, true);
 
@@ -269,8 +277,6 @@ public class StatStore : MonoSingleton<StatStore>
         appearRt.gameObject.SetActive(true);
 
         hiddenRt.gameObject.SetActive(false);
-        //hiddenRt.DOAnchorPos(leftPos, 0.3f).SetUpdate(true);
-        //hiddenRt.GetComponent<CanvasGroup>().DOFade(0, 0.3f).SetUpdate(true).OnComplete(()=>hiddenRt.gameObject.SetActive(false));
         appearRt.DOAnchorPos(panelOriginPos, 0.4f).SetUpdate(true);
         appearRt.GetComponent<CanvasGroup>().DOFade(1, 0.4f).SetUpdate(true).OnComplete(()=>tweeningQueue.Dequeue());
     }
