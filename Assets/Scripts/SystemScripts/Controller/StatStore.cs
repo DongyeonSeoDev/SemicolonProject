@@ -231,11 +231,12 @@ public class StatStore : MonoSingleton<StatStore>
         else
         {
             StringBuilder sb = new StringBuilder();
+            sb.Append("<color=blue>");
             sb.Append(NGlobal.playerStatUI.GetStatSOData(prop.ID).statName);
-            sb.Append(" 특성을 ");
+            sb.Append("</color> 특성을 ");
             sb.Append(prop.Point);
             sb.Append("포인트에 ");
-            sb.Append(prop.IsSellItem ? "판매하시겠습니까?" : "구매하시겠습니까?");
+            sb.Append(prop.IsSellItem ? "<color=blue>판매</color>하시겠습니까?" : "<color=blue>구매</color>하시겠습니까?");
 
             System.Action conf = null;
 
