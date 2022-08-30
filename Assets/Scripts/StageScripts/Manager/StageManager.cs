@@ -642,7 +642,7 @@ public class StageManager : MonoSingleton<StageManager>
             weight += areaWeightDic[currentFloor][li[i]];
             if (sel < weight)
             {
-                if (!list.Contains(li[i])) return li[i];
+                return li[i];
             }
         }
 

@@ -44,9 +44,6 @@ namespace Water
                     }
                 }
             }
-
-           // tilemap.SetTile(tilemap.WorldToCell(new Vector3(tileData.x, tileData.y, 0)), 
-             //   Resources.Load<TileBase>(tileBasePath));
         }
 
         /*private void Update()
