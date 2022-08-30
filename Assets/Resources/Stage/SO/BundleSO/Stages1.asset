@@ -70,6 +70,16 @@ MonoBehaviour:
   - stageNumber: 10
     nextStageTypes: 0200000003000000
   - stageNumber: 11
-    nextStageTypes: 05000000
+    nextStageTypes: 0900000009000000
   - stageNumber: 12
+    nextStageTypes: 090000000900000009000000
+  - stageNumber: 13
+    nextStageTypes: 0900000009000000
+  - stageNumber: 14
+    nextStageTypes: 090000000900000009000000
+  - stageNumber: 15
+    nextStageTypes: 0900000009000000
+  - stageNumber: 16
+    nextStageTypes: 05000000
+  - stageNumber: 17
     nextStageTypes: 09000000

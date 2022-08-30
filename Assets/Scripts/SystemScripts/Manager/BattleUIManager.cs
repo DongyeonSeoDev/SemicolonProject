@@ -259,6 +259,10 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
             }
         }
 
+        Debug.Log("문제 발생 : 확인 필요");
+        Debug.Log($"total : {total}, selNum : {selNum}, weight : {weight}");
+        for (i = 0; i < list.Count; i++) Debug.Log(list[i].ToString());
+
         return GetRandomMission();
     }
 

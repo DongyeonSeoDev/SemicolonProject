@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine.Tilemaps;
 using UnityEngine;
 
@@ -9,16 +10,33 @@ namespace Water
     {
         public int x;
         public int y;
-        public string tilemap;
-        public string tileBase;
 
         public TileData() { }
-        public TileData(Vector3Int pos, Tilemap tilemap, TileBase tile)
+        public TileData(Vector3Int pos)
         {
             x = pos.x;  
             y = pos.y;  
-            this.tilemap = tilemap.name;
-            this.tileBase = tile.name;
         }
+    }
+
+    [Serializable]
+    public class TileBaseGroup
+    {
+        public string tileBase;
+        public List<TileData> tileDataList;
+    }
+
+    [Serializable]
+    public class TilemapData
+    {
+        public string tilemap;
+        public List<TileBaseGroup> tileGroups;
+    }
+
+    [Serializable]
+    public class StageBaseData
+    {
+        public List<TilemapData> tilemaps;
+        
     }
 }

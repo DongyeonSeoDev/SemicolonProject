@@ -646,6 +646,10 @@ public class StageManager : MonoSingleton<StageManager>
             }
         }
 
+        Debug.Log("문제 발생 : 확인 필요");
+        Debug.Log($"total : {total}, sel : {sel}, weight : {weight}");
+        for (i = 0; i < li.Count; i++) Debug.Log(li[i].ToString());
+        for (i = 0; i < list.Count; i++) Debug.Log(list[i].ToString());
         return GetRandomArea(list); 
     }
 

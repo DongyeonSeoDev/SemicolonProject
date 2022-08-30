@@ -43,7 +43,7 @@ public class PlayerStatUI : MonoBehaviour
     private List<Transform> invisibleChoiceStatUIList = new List<Transform>(); //위 주석에서 말하는 안보이는 선택 스탯 요소 버튼. 안에 들갈 프리팹 위에 있다
 
     private Transform choiceDetailPar;
-    [SerializeField] private Vector2 choiceDetailStartPos;
+    [SerializeField] private Vector2 choiceDetailStartPos;  //x축은 적당히 조절. y축은 특성 UI의 Height만큼
 
     public GameObject choiceStatDetailPanel; // 선택 스탯 자세히 보기창
     public Text choiceDetailAbil, choiceDetailGrowth, choiceDetailAcq;  //선택 스탯 자세히 보기창에 있는 능력, 성장방법, 획득방법 설명 텍스트 
@@ -609,16 +609,13 @@ public class PlayerStatUI : MonoBehaviour
 
         selectedChoiceBtnId = id;
 
-        choiceStatDetailPanel.transform.parent = choiceDetailPar;
-        choiceStatDetailPanel.GetComponent<RectTransform>().anchoredPosition = choiceDetailStartPos;
-
+        //이걸 안하면 아래의 특성  UI를 누를 경우 자식 인덱스가 원래보다 높게 나와 이상하게 UI가 배치된다
         for (int i = 0; i < invisibleChoiceStatUICount; i++)
         {
             invisibleChoiceStatUIList[i].transform.SetAsLastSibling();
         }
 
         RectTransform rt = choiceStatInfoUIDic[id].GetComponent<RectTransform>();
-        Vector2 v = choiceStatDetailPanel.GetComponent<RectTransform>().anchoredPosition;
 
         int curIdx = rt.transform.GetSiblingIndex();
         for (int i = 0; i < invisibleChoiceStatUICount; i++)
@@ -630,8 +627,12 @@ public class PlayerStatUI : MonoBehaviour
         choiceStatDetailPanel.transform.DOKill();
         choiceStatDetailPanel.transform.localScale = SVector3.Y0;
         choiceStatDetailPanel.SetActive(true);
-        choiceStatDetailPanel.GetComponent<RectTransform>().anchoredPosition = new Vector2(v.x,
-            rt.anchoredPosition.y - rt.rect.height * 0.5f - 2f);
+
+        choiceStatDetailPanel.transform.SetParent(choiceStatInfoUIDic[id].transform);
+        choiceStatDetailPanel.GetComponent<RectTransform>().anchoredPosition = choiceDetailStartPos;
+
+        /*choiceStatDetailPanel.GetComponent<RectTransform>().anchoredPosition = new Vector2(v.x,
+            rt.anchoredPosition.y - rt.rect.height * 0.5f - 2f);*/
         choiceStatDetailPanel.transform.DOScale(Vector3.one, 0.3f).SetUpdate(true);
 
         ChoiceStatSO data = GetStatSOData<ChoiceStatSO>(id);
@@ -639,8 +640,6 @@ public class PlayerStatUI : MonoBehaviour
             Global.CurrentPlayer.GetComponent<PlayerChoiceStatControl>().ChoiceDataDict[selectedChoiceBtnId].upTargetStatPerChoiceStat);
         choiceDetailGrowth.text = "<b>성장방법 : </b>" + data.growthWay;
         choiceDetailAcq.text = "<b>획득방법 : </b>" + data.acquisitionWay;
-
-        choiceStatDetailPanel.transform.SetParent(choiceStatInfoUIDic[id].transform);
     }
 
     public void CloseChoiceDetail()  //선택 스탯 클릭해서 자세히보기 창 열린거 닫아준다. (트위닝 없이 그냥)

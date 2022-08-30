@@ -9,27 +9,44 @@ namespace Water
     {
         public StageGround stageGround;
 
-        private readonly string tileBasePath;
+        private readonly string tileBasePath = "TileBase/";
 
         public void SaveStage()
         {
-            Tilemap bgTilemap = stageGround.transform.Find("BackgroundTilemap").GetComponent<Tilemap>();    
-            for(int y = stageGround.limitMinPosition.y; y <= stageGround.limitMaxPosition.y; y++)
+            Tilemap[] tilemaps = stageGround.transform.GetComponentsInChildren<Tilemap>(); 
+            for(int i=0; i < tilemaps.Length; i++)
             {
-                for(int x = stageGround.limitMinPosition.x; x <= stageGround.limitMaxPosition.x; x++)
+                for (int y = stageGround.limitMinPosition.y; y <= stageGround.limitMaxPosition.y; y++)
                 {
-                    Vector3Int pos = bgTilemap.WorldToCell(new Vector3(x, y, 0));
-                    TileBase tile = bgTilemap.GetTile(pos);
-                    Debug.Log(tile.name);
+                    for (int x = stageGround.limitMinPosition.x; x <= stageGround.limitMaxPosition.x; x++)
+                    {
+                        Vector3Int pos = tilemaps[i].WorldToCell(new Vector3(x, y, 0));
+                        TileBase tile = tilemaps[i].GetTile(pos);
+                        Debug.Log(tile.name);
+                    }
                 }
             }
         }
 
-        public void MakeBlock(TileData tileData)
+        public void MakeBlock(StageBaseData data)
         {
-            Tilemap tilemap = stageGround.transform.Find(tileData.tilemap).GetComponent<Tilemap>();
-            tilemap.SetTile(tilemap.WorldToCell(new Vector3(tileData.x, tileData.y, 0)), 
-                Resources.Load<TileBase>(tileBasePath));
+            for(int i=0; i<data.tilemaps.Count; i++)
+            {
+                Tilemap tilemap = stageGround.transform.Find(data.tilemaps[i].tilemap).GetComponent<Tilemap>();
+                for(int j=0; j<data.tilemaps[i].tileGroups.Count; j++)
+                {
+                    TileBaseGroup tbg = data.tilemaps[i].tileGroups[j];
+                    TileBase tileBase = Resources.Load<TileBase>(tileBasePath + tbg.tileBase);
+                    for(int k = 0; k<tbg.tileDataList.Count; k++)
+                    {
+                        TileData tileData = tbg.tileDataList[k];
+                        tilemap.SetTile(tilemap.WorldToCell(new Vector3(tileData.x, tileData.y, 0)), tileBase);
+                    }
+                }
+            }
+
+           // tilemap.SetTile(tilemap.WorldToCell(new Vector3(tileData.x, tileData.y, 0)), 
+             //   Resources.Load<TileBase>(tileBasePath));
         }
 
         /*private void Update()
