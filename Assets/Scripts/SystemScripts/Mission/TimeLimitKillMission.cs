@@ -23,13 +23,13 @@ public class TimeLimitKillMission : Mission
         switch (lv)
         {
             case DifficultyLevel.EASY:
-                limit = 60f;
+                limit = 100f;
                 break;
             case DifficultyLevel.NORMAL:
-                limit = 45f;
+                limit = 70f;
                 break;
             case DifficultyLevel.HARD:
-                limit = 30f;
+                limit = 45f;
                 break;
         }
         limitTimer = limit;

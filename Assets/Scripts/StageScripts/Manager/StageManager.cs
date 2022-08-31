@@ -26,6 +26,7 @@ public class StageManager : MonoSingleton<StageManager>
     private int currentStageMonsterBundleOrder = 1;
 
     private int currentFloor = 1;
+    public int CurrentFloor => currentFloor;
     private int currentStageNumber = 0;
     private AreaType currentArea = AreaType.NONE;
     public AreaType CurrentAreaType => currentArea;

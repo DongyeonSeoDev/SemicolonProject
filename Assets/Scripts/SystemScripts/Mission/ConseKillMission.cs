@@ -9,7 +9,7 @@ public class ConseKillMission : Mission
 
     //몇 초 이내의 간격으로 몇 마리 처치가 아니라 몇 초 안에 몇 마리 처치라고 하더라?
     private float timer;  //몇 초 지났는지. 한 마리 죽이면 타이머 스타트 => onTimer true, 5초 지나면 초기화. 5초안에 목표 마리 연속킬 하면 성공
-    private readonly float time = 8f;  //몇 초 안에 연속킬
+    private readonly float time = 10f;  //몇 초 안에 연속킬
 
     private PlayerState playerState;
 
@@ -38,7 +38,7 @@ public class ConseKillMission : Mission
                 break;
         }
 
-        missionName = needConseKill.ToString() + "마리를 연속으로 처치하세요 (0/" + needConseKill.ToString() + ")";
+        missionName = time.ToString() + "초 이내에 적을 연속처치하세요 (0/" + needConseKill.ToString() + ")";
     }
 
     public override void Start()
@@ -63,7 +63,7 @@ public class ConseKillMission : Mission
                     onTimer = false;
                     curConseKill = 0;
                     BattleUIManager.Instance.ShakeMissionPanel(0.4f, 10);
-                    SetMissionNameText($"{needConseKill}마리를 연속으로 처치하세요 (0/{needConseKill})");
+                    SetMissionNameText($"{time}초 이내에 적을 연속처치하세요 (0/{needConseKill})");
                 }
             }
         }
@@ -71,7 +71,7 @@ public class ConseKillMission : Mission
 
     private void EnemyDead(GameObject o, string s, bool b)  //매개변수는 그냥 타입에 맞추기 위한것.
     {
-        SetMissionNameText($"{needConseKill}마리를 연속으로 처치하세요 ({++curConseKill}/{needConseKill})");
+        SetMissionNameText($"{time}초 이내에 적을 연속처치하세요 ({++curConseKill}/{needConseKill})");
 
         if (!onTimer)
         {

@@ -51,7 +51,7 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
     private List<Mission> currentMissions = new List<Mission>();
     private Pair<MissionType, short> prevMission = new Pair<MissionType, short>(MissionType.NONE, 0);
 
-    private int[] msLvRate = new int[3] { 60, 90, 100 };
+    private readonly int[,] msLvRate = new int[2,3] { {70, 95, 100} , { 60, 90, 100 } };
 
     public VertexGradient missionFailVG;
 
@@ -318,7 +318,7 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
         int ran = Random.Range(0, 100);
         for(int i=0; i<3; i++)
         {
-            if(ran < msLvRate[i])
+            if(ran < msLvRate[StageManager.Instance.CurrentFloor-1,i])
             {
                 return (DifficultyLevel)i;
             }
