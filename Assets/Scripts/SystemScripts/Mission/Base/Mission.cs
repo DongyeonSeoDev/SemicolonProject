@@ -13,7 +13,7 @@ public abstract class Mission
     public Mission() { }
     public Mission(string title)
     {
-        missionName = title;    
+        missionName = title;
     }
 
     public virtual void Start()
