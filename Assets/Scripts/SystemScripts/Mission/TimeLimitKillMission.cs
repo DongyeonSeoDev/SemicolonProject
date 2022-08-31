@@ -6,6 +6,8 @@ public class TimeLimitKillMission : Mission
     private float limitTimer;
     private int rest;
 
+    private PlayerState playerState;    
+
     public TimeLimitKillMission() 
     {
         missionType = MissionType.TIMELIMITKILL;
@@ -39,11 +41,13 @@ public class TimeLimitKillMission : Mission
     public override void Start()
     {
         base.Start();
+
+        if (!playerState) playerState = Global.CurrentPlayer.GetComponent<PlayerState>();   
     }
 
     public override void Update()
     {
-        if(!isEnd && !isClear)
+        if(!isEnd && !isClear && !playerState.IsDrain)
         {
             limitTimer -= Time.deltaTime;
 

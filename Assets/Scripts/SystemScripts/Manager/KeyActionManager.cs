@@ -124,7 +124,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
             keyInfoDic.Add(keyUI.ID, keyUI);
         }
 
-        {  // ÀúÀåµÈ Äü ½½·Ô ºÒ·¯¿È
+        /*{  // ÀúÀåµÈ Äü ½½·Ô ºÒ·¯¿È
             string qid = GameManager.Instance.savedData.userInfo.quikSlotItemID;
             if (string.IsNullOrEmpty(qid))
             {
@@ -134,7 +134,7 @@ public class KeyActionManager : MonoSingleton<KeyActionManager>
             {
                 RegisterQuikSlot(qid);
             }
-        }
+        }*/
 
         EventManager.TriggerEvent("UpdateKeyCodeUI");
     }

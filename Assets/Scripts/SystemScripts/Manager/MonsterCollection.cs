@@ -812,10 +812,10 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     public void Save()
     {
         UserInfo uInfo = GameManager.Instance.savedData.userInfo;
-        foreach(string key in urmg.PlayerEnemyUnderStandingRateDic.Keys)
+        /*foreach(string key in urmg.PlayerEnemyUnderStandingRateDic.Keys)
         {
             uInfo.monsterInfoDic[key] = new MonsterInfo(key, urmg.PlayerEnemyUnderStandingRateDic[key], urmg.GetDrainProbabilityDict(key));
-        }
+        }*/
         foreach(string key in mobLearningInfoDic.Keys)
         {
             uInfo.monsterLearningDic[key] = mobLearningInfoDic[key];
@@ -825,11 +825,11 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     public void Load()
     {
         UserInfo uInfo = GameManager.Instance.savedData.userInfo;
-        foreach (string key in uInfo.monsterInfoDic.keyValueDic.Keys)
+        /*foreach (string key in uInfo.monsterInfoDic.keyValueDic.Keys)
         {
             urmg.PlayerEnemyUnderStandingRateDic[key] = uInfo.monsterInfoDic[key].understandingRate;
             urmg.DrainProbabilityDict[key] = uInfo.monsterInfoDic[key].absorptionRate;
-        }
+        }*/
         foreach(string key in uInfo.monsterLearningDic.keyValueDic.Keys)
         {
             mobLearningInfoDic[key] = uInfo.monsterLearningDic[key];

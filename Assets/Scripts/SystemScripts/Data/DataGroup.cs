@@ -118,7 +118,7 @@ public class IngredientCount
     public int needCount; //음식을 만들기 위해서 필요한 재료 개수
 }
 
-[Serializable]
+/*[Serializable]
 public class MonsterInfo
 {
     public string id;
@@ -133,7 +133,7 @@ public class MonsterInfo
         this.understandingRate = understandingRate;
         this.absorptionRate = absorptionRate;
     }
-}
+}*/
 
 [Serializable]
 public class SkillInfo

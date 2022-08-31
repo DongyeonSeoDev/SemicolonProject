@@ -9,7 +9,9 @@ public class ConseKillMission : Mission
 
     //몇 초 이내의 간격으로 몇 마리 처치가 아니라 몇 초 안에 몇 마리 처치라고 하더라?
     private float timer;  //몇 초 지났는지. 한 마리 죽이면 타이머 스타트 => onTimer true, 5초 지나면 초기화. 5초안에 목표 마리 연속킬 하면 성공
-    private readonly float time = 5f;  //몇 초 안에 연속킬
+    private readonly float time = 8f;  //몇 초 안에 연속킬
+
+    private PlayerState playerState;
 
     public ConseKillMission()
     {
@@ -44,6 +46,7 @@ public class ConseKillMission : Mission
         base.Start();
         onTimer = false;
         curConseKill = 0;
+        if (!playerState) playerState = Global.CurrentPlayer.GetComponent<PlayerState>();
         EventManager.StartListening("EnemyDead", EnemyDead);
     }
 
@@ -51,7 +54,7 @@ public class ConseKillMission : Mission
     {
         if (!isEnd)
         {
-            if (onTimer)
+            if (onTimer && !playerState.IsDrain)
             {
                 timer += Time.deltaTime;
 
