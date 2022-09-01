@@ -238,3 +238,27 @@ public class QuikSlotTutorialPhase : TutorialPhase
         base.End();
     }
 }
+
+public class BodyChangeTutorialPhase : TutorialPhase
+{
+    RectTransform emphasisEffect;
+
+    public BodyChangeTutorialPhase(RectTransform emphaRt)
+    {
+        emphasisEffect = emphaRt;
+    }
+
+    public override void DoPhaseUpdate()
+    {
+        if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.CHANGE_MONSTER1]) && !TimeManager.IsTimePaused && InteractionHandler.canTransformEnemy)
+        {
+            End();
+        }
+    }
+
+    public override void End()
+    {
+        emphasisEffect.gameObject.SetActive(false);
+        base.End();
+    }
+}

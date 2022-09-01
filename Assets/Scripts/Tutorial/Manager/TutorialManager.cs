@@ -20,6 +20,8 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     public Transform[] skillUIArr;
     public Transform[] changeableBodysUIArr;
 
+    private static bool isGainMobSlot = false; //게임을 키고 한 번이라도 몹 슬롯 얻었는지 (몹 몸 장착했는지)
+
     //튜토리얼 진행중인가
     public bool IsTutorialStage => (!(GameManager.Instance.savedData.tutorialInfo.isEnded || isTestMode));
     //튜토리얼 진행시키는데 업데이트에서 처리해야할 데이터들
@@ -403,6 +405,15 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         UIManager.Instance.RequestLogMsg("변신 슬롯을 얻었습니다.");
     }
     #endregion
+
+    public void CheckGainMonsterBody()  //몬스터 몸을 한 번이라도 장착했는지 체크
+    {
+        if (!isGainMobSlot)
+        {
+            tutorialPhases.Add(new BodyChangeTutorialPhase(SetUIEmphasisEffect(changeableBodysUIArr[1])));
+            isGainMobSlot = true;
+        }
+    }
 }
 
 

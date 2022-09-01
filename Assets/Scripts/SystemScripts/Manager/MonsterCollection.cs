@@ -791,6 +791,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             //changeBodySlots.Find(x => x.SlotNumber == slotNumber).Register(id, "몬스터 이름");
             changeBodySlots[slotNumber - 1].Register(id);
         }
+        TutorialManager.Instance.CheckGainMonsterBody();
     }
 
     public void RemoveBody(int slotNumber)
