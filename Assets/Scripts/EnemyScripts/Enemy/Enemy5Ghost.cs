@@ -1,9 +1,17 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Enemy
 {
     public class Enemy5Ghost : Enemy
     {
+        [SerializeField]
+        private Collider2D damageCollider;
+
+        private WaitForSeconds ws = new WaitForSeconds(0.2f);
+        private WaitWhile ww = new WaitWhile(() => SlimeGameManager.Instance.Player.PlayerState.IsDrain);
+
         private float currentTime = 0f;
         private float moveTime = 2f;
         private float minMoveTime = 2f;
@@ -38,29 +46,34 @@ namespace Enemy
 
         private void MoveEvent()
         {
+            if (isTeleport)
+                return;
+
             currentTime += Time.deltaTime;
 
             if (currentTime > moveTime)
             {
-                StartTeleport();
+                StartCoroutine(Teleport());
             }
         }
 
-        private void StartTeleport()
+        private IEnumerator Teleport()
         {
-            if (!isTeleport)
+            isTeleport = true;
+
+            EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Move, enemyData.enemyAnimator, TriggerType.SetTrigger);
+            enemyData.enemyAnimator.SetTrigger(hashTeleport);
+
+            damageCollider.enabled = false;
+
+            int count = Random.Range(10, 15);
+
+            for (int i = 0; i < count; i++)
             {
-                isTeleport = true;
-
-                EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Move, enemyData.enemyAnimator, TriggerType.SetTrigger);
-                enemyData.enemyAnimator.SetTrigger(hashTeleport);
-
-                Invoke("EndTeleport", 3f);
+                yield return ws;
+                yield return ww;
             }
-        }
 
-        private void EndTeleport()
-        {
             Vector2 teleportPosition = SlimeGameManager.Instance.CurrentPlayerBody.transform.position;
 
             teleportPosition.x += Random.Range(-randomTeleportPosition, randomTeleportPosition);
@@ -69,6 +82,8 @@ namespace Enemy
             transform.position = teleportPosition;
 
             enemyData.enemyAnimator.SetTrigger(hashTeleportEnd);
+
+            damageCollider.enabled = true;
 
             currentTime = 0f;
             moveTime = Random.Range(minMoveTime, maxMoveTime);
