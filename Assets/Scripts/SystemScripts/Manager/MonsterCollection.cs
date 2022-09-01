@@ -443,7 +443,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
                 sb.Append("%)");
 
                 UIManager.Instance.RequestLogMsg(sb.ToString());
-                UIManager.Instance.InsertNoticeQueue($"<color=blue>{GetMonsterInfo(list[0]).bodyName}</color> 동화율 <color=blue>{up}</color>% 상승");
+                UIManager.Instance.InsertNoticeQueue($"<color=#254ABC>{GetMonsterInfo(list[0]).bodyName}</color> 동화율 <color=#254ABC><size=125%>{up}</size></color>% 상승");
             }
             else
             {

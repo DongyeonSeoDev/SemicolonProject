@@ -33,7 +33,7 @@ public abstract class InteractionObj : MonoBehaviour
     {
         if(autoAwakeAdd)
         {
-            ObjectManager.Instance.itrObjDic.Add(ObjId,this);
+            ObjectManager.Instance.ItrObjDic.Add(ObjId,this);
         }
     }
 

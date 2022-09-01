@@ -61,7 +61,7 @@ public class SaveData
 public class TutorialInfo
 {
     public bool isEnded = false;
-
+    
     //public string tutorialId;
 }
 

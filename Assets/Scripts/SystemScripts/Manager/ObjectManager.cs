@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class ObjectManager : SingletonClass<ObjectManager> 
 {
-    public Dictionary<string, InteractionObj> itrObjDic = new Dictionary<string, InteractionObj>();
+    private Dictionary<string, InteractionObj> itrObjDic = new Dictionary<string, InteractionObj>();
+    public Dictionary<string, InteractionObj> ItrObjDic => itrObjDic;
 
     public void Reset()
     {

@@ -356,7 +356,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             RectTransform emphRectTr = SetUIEmphasisEffect(skillUIArr[1].transform);
             tutorialPhases.Add(new RushTutorialPhase(emphRectTr.gameObject));
 
-            (ObjectManager.Instance.itrObjDic["Rush Master"] as NormalNPC)._NPCInfo.talkId = 2;
+            (ObjectManager.Instance.ItrObjDic["Rush Master"] as NormalNPC)._NPCInfo.talkId = 2;
             
             TalkManager.Instance.SetSubtitle(SubtitleDataManager.Instance.GetSubtitle("AfterTalkWithOrd"));
         }

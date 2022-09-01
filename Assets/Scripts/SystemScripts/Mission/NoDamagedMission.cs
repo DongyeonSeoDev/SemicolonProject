@@ -35,7 +35,7 @@ public class NoDamagedMission : Mission
         }
         heart = damagedLimCnt + 1;
         string s = heart.ToString();
-        missionName = $"{s}회 이상 피격당하지 않고 클리어하세요 ({s}/{s})";
+        missionName = damagedLimCnt > 0 ? $"{s}회 이상 피격당하지 않고 클리어하세요 ({s}/{s})" : $"{s}회 이상 피격당하지 않고 클리어하세요 (<color=red>{s}</color>/{s})";
         EventManager.StartListening("PlayerGetDamaged", CheckDamageCount);
         EventManager.StartListening("StageClear", MissionSuccess);
     }
@@ -54,12 +54,19 @@ public class NoDamagedMission : Mission
     private void CheckDamageCount()
     {
         curDamagedCnt++;
+        int rest = heart - curDamagedCnt;
+        if(rest > 1)
+            SetMissionNameText($"{heart}회 이상 피격당하지 않고 클리어하세요 ({rest}/{heart})");
+        else
+            SetMissionNameText($"{heart}회 이상 피격당하지 않고 클리어하세요 (<color=red>{rest}</color>/{heart})");
 
-        SetMissionNameText($"{heart}회 이상 피격당하지 않고 클리어하세요 ({heart-curDamagedCnt}/{heart})");
-
-        if(curDamagedCnt > damagedLimCnt)  //미션 실패
+        if (curDamagedCnt > damagedLimCnt)  //미션 실패
         {
             MissionFailure();
+        }
+        else
+        {
+            BattleUIManager.Instance.ShakeMissionPanel(0.4f, 10);
         }
     }
 }

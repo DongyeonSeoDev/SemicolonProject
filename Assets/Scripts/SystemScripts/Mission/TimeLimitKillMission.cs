@@ -6,6 +6,9 @@ public class TimeLimitKillMission : Mission
     private float limitTimer;
     private int rest;
 
+    private bool danger;
+    private readonly float dangerTime = 10f;
+
     private PlayerState playerState;    
 
     public TimeLimitKillMission() 
@@ -42,7 +45,8 @@ public class TimeLimitKillMission : Mission
     {
         base.Start();
 
-        if (!playerState) playerState = Global.CurrentPlayer.GetComponent<PlayerState>();   
+        if (!playerState) playerState = Global.CurrentPlayer.GetComponent<PlayerState>();
+        danger = false;
     }
 
     public override void Update()
@@ -51,9 +55,16 @@ public class TimeLimitKillMission : Mission
         {
             limitTimer -= Time.deltaTime;
 
+            if(!danger && limitTimer < dangerTime)
+            {
+                danger = true;
+                BattleUIManager.Instance.ShakeMissionPanel(0.4f, 10);
+            }
+
             if(Mathf.CeilToInt(limitTimer) != rest)
             {
-                SetMissionNameText($"{(int)limit}초 이내로 클리어하세요 ({--rest})");
+                string s = !danger ? $"{(int)limit}초 이내로 클리어하세요 ({--rest})" : $"{(int)limit}초 이내로 클리어하세요 (<color=red>{--rest}</color>)";
+                SetMissionNameText(s);
             }
 
             if (limitTimer <= 0f)
