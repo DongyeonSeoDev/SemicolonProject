@@ -18,7 +18,8 @@ namespace Enemy
         SkeletonArcher_04,
         Boss_SkeletonKing_01,
         SkeletonGhost_05,
-        SkeletonMage_06
+        SkeletonMage_06,
+        Boss_Centipede_02
     }
 
     public enum TriggerType
