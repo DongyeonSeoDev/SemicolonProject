@@ -68,7 +68,8 @@ public enum UIType
     UIOFFCONFIRM,
     MENU,
     MONSTERINFO_DETAIL_FEATURE,
-    STORE
+    STORE,
+    TITLE
 }
 
 public enum InitGainType
