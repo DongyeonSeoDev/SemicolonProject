@@ -16,7 +16,7 @@ namespace Enemy
         private float moveTime = 2f;
         private float minMoveTime = 2f;
         private float maxMoveTime = 5f;
-        private float randomTeleportPosition = 2f;
+        private float randomTeleportPosition = 5f;
         private bool isTeleport = false;
 
         private readonly int hashTeleport = Animator.StringToHash("Teleport");
