@@ -48,7 +48,7 @@ public abstract class Mission
         { 
             float er = expReward[(int)missionLevel];
             NGlobal.playerStatUI.AddPlayerStatPointExp(er);
-            UIManager.Instance.InsertNoticeQueue("½ºÅÈ Æ÷ÀÎÆ® °æÇèÄ¡ <color=#254ABC><size=125%>" + er + "</size></color> È¹µæ");
+            UIManager.Instance.InsertNoticeQueue("½ºÅÈ Æ÷ÀÎÆ® °æÇèÄ¡ <size=150%>" + er + "</size> È¹µæ");
         }
         else
         {

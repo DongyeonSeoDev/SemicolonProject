@@ -443,7 +443,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
                 sb.Append("%)");
 
                 UIManager.Instance.RequestLogMsg(sb.ToString());
-                UIManager.Instance.InsertNoticeQueue($"<color=#254ABC>{GetMonsterInfo(list[0]).bodyName}</color> 동화율 <color=#254ABC><size=125%>{up}</size></color>% 상승");
+                UIManager.Instance.InsertNoticeQueue($"<size=150%>{GetMonsterInfo(list[0]).bodyName}</size> 동화율 <size=150%>{up}</size>% 상승");
             }
             else
             {
@@ -471,7 +471,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             sb.Append("%)");
 
             UIManager.Instance.RequestLogMsg(sb.ToString());
-            UIManager.Instance.InsertNoticeQueue($"<color=blue>{GetMonsterInfo(id).bodyName}</color> 동화율 <color=blue>{up}</color>% 상승");
+            UIManager.Instance.InsertNoticeQueue($"<size=150%>{GetMonsterInfo(id).bodyName}</size> 동화율 <size=150%>{up}</size>% 상승");
         }, 0.4f, this, true);
     }
 
@@ -791,7 +791,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             //changeBodySlots.Find(x => x.SlotNumber == slotNumber).Register(id, "몬스터 이름");
             changeBodySlots[slotNumber - 1].Register(id);
         }
-        TutorialManager.Instance.CheckGainMonsterBody();
+        TutorialManager.Instance.CheckGainMonsterBody(id);
     }
 
     public void RemoveBody(int slotNumber)

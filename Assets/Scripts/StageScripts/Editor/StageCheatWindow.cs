@@ -14,6 +14,7 @@ public class StageCheatWindow : EditorWindow
 
     //Player 관련
     private Stat playerStat = new Stat();
+    private int addStatPoint = 10;
     private float useEnergyAmount = 1f;
     private float upMountingPercentageValueWhenEnemyDead = 2f;
     private int upUnderstandingRateValueWhenEnemyDead = 1;
@@ -132,8 +133,6 @@ public class StageCheatWindow : EditorWindow
                 playerStat.eternalStat.defense.statValue = EditorGUILayout.FloatField("Defense", playerStat.eternalStat.defense.statValue);
                 playerStat.eternalStat.speed.statValue = EditorGUILayout.FloatField("Speed", playerStat.eternalStat.speed.statValue);
 
-                GUILayout.Space(10);
-
                 if (GUILayout.Button("Apply Player Eternal Stat")) //플레이어 스탯 적용
                 {
                     SlimePlayer.PlayerStat = playerStat;
@@ -141,9 +140,15 @@ public class StageCheatWindow : EditorWindow
 
                 GUILayout.Space(10);
 
-                useEnergyAmount = EditorGUILayout.FloatField("Slime Attack Need Energe", useEnergyAmount); //공격 에너지 소모량 정함
+                addStatPoint = EditorGUILayout.IntField("Stat Point", addStatPoint);
+                if(GUILayout.Button("Add Point"))
+                {
+                    GameManager.Instance.savedData.userInfo.playerStat.currentStatPoint += addStatPoint;
+                }
 
-                GUILayout.Space(5);
+                GUILayout.Space(10);
+
+                useEnergyAmount = EditorGUILayout.FloatField("Slime Attack Need Energe", useEnergyAmount); //공격 에너지 소모량 정함
 
                 GUILayout.Label("(슬라임 전용. 몸 바뀌면 다시 Apply 필요할 수도)", EditorStyles.label);
 

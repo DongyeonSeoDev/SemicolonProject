@@ -297,3 +297,27 @@ MonoBehaviour:
         duration: 1
         nextLogInterval: 0
         endActionId: 
+  - key: Tuto_BodyChange
+    subtitleData:
+      subData:
+      - dialog: "\uC774\uC81C \uBCC0\uC2E0\uD560 \uC218 \uC788\uB294 \uC0C1\uD0DC\uAC00
+          \uB410\uC5B4"
+        secondPerLit: 0.06
+        duration: 1
+        nextLogInterval: 0
+        endActionId: 
+      - dialog: "\uC9C0\uAE08 \uAC15\uC870\uD574\uC8FC\uACE0 \uC788\uB294 \uC2AC\uB86F\uC758
+          \uD0A4\uB97C \uB20C\uB7EC\uBD10"
+        secondPerLit: 0.05
+        duration: 1.8
+        nextLogInterval: 0
+        endActionId: 
+  - key: Tuto_BodyChange2
+    subtitleData:
+      subData:
+      - dialog: "\uBB3C\uB860 \uB2E4\uC2DC \uC6D0\uB798\uC758 \uBAB8\uC73C\uB85C
+          \uB3CC\uC544\uAC08 \uC218\uB3C4 \uC788\uC5B4"
+        secondPerLit: 0.06
+        duration: 1.4
+        nextLogInterval: 0
+        endActionId: 

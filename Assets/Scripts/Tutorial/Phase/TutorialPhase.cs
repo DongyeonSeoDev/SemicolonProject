@@ -243,22 +243,49 @@ public class BodyChangeTutorialPhase : TutorialPhase
 {
     RectTransform emphasisEffect;
 
-    public BodyChangeTutorialPhase(RectTransform emphaRt)
+    PlayerState pState;
+
+    bool isReady;
+    string bodyId;
+
+    public BodyChangeTutorialPhase(RectTransform emphaRt, string id)
     {
         emphasisEffect = emphaRt;
+        pState = Global.CurrentPlayer.GetComponent<PlayerState>();
+        isReady = false;
+        bodyId = id;
     }
 
     public override void DoPhaseUpdate()
     {
-        if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.CHANGE_MONSTER1]) && !TimeManager.IsTimePaused && InteractionHandler.canTransformEnemy)
+        if(!isReady)
         {
-            End();
+            if(!pState.IsDrain)
+            {
+                isReady = true;
+                TalkUtil.ShowSubtitle("Tuto_BodyChange");
+                InteractionHandler.canTransformEnemy = false;
+                EventManager.TriggerEvent("EnemyStop");
+                EventManager.TriggerEvent("PlayerStop");
+            }
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.CHANGE_MONSTER1]))
+            {
+                End();
+            }
         }
     }
 
     public override void End()
     {
         emphasisEffect.gameObject.SetActive(false);
+        SlimeGameManager.Instance.PlayerBodyChange(bodyId);
+        InteractionHandler.canTransformEnemy = true;
         base.End();
+
+        EventManager.TriggerEvent("EnemyStart");
+        EventManager.TriggerEvent("PlayerStart");
     }
 }

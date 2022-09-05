@@ -406,11 +406,11 @@ public class TutorialManager : MonoSingleton<TutorialManager>
     }
     #endregion
 
-    public void CheckGainMonsterBody()  //몬스터 몸을 한 번이라도 장착했는지 체크
+    public void CheckGainMonsterBody(string id)  //몬스터 몸을 한 번이라도 장착했는지 체크
     {
         if (!isGainMobSlot)
         {
-            tutorialPhases.Add(new BodyChangeTutorialPhase(SetUIEmphasisEffect(changeableBodysUIArr[1])));
+            tutorialPhases.Add(new BodyChangeTutorialPhase(SetUIEmphasisEffect(changeableBodysUIArr[1]), id));
             isGainMobSlot = true;
         }
     }
