@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: AttackSpeedData
   m_EditorClassIdentifier: 
   statId: 35
+  statValueDecimal: 1
   maxStatLv: 15
   upStatValue: 0.2
   statName: "\uACF5\uACA9\uC18D\uB3C4"

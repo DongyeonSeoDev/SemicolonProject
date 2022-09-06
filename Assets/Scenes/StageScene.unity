@@ -3776,6 +3776,10 @@ PrefabInstance:
       value: 0.42
       objectReference: {fileID: 0}
     - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
+      propertyPath: changableBodyList.Array.data[1].additionalBodyStat.speed.statValue
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5692856494302310610, guid: 753933377d0100245b27316586c7ec1e, type: 3}
       propertyPath: changableBodyList.Array.data[3].monsterStat.criticalRate.statValue
       value: 40
       objectReference: {fileID: 0}
