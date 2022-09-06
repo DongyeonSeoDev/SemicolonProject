@@ -28,6 +28,7 @@ public class StageManager : MonoSingleton<StageManager>
     private int currentFloor = 1;
     public int CurrentFloor => currentFloor;
     private int currentStageNumber = 0;
+    public int CurrentStageNumber => currentStageNumber;
     private AreaType currentArea = AreaType.NONE;
     public AreaType CurrentAreaType => currentArea;
 

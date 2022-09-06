@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: MaxHpData
   m_EditorClassIdentifier: 
   statId: 5
+  maxStatLv: 100
+  upStatValue: 5
   statName: "\uCD5C\uB300\uCCB4\uB825"
-  emotionRangeList: []
+  statSpr: {fileID: 0}

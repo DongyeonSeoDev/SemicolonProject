@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: MoveSpeedData
   m_EditorClassIdentifier: 
   statId: 30
+  maxStatLv: 10
+  upStatValue: 0.2
   statName: "\uC774\uB3D9\uC18D\uB3C4"
-  emotionRangeList: []
+  statSpr: {fileID: 0}

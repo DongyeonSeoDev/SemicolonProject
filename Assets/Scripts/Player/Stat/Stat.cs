@@ -14,21 +14,21 @@ public class Stat
     public EternalStat additionalEternalStat = new EternalStat();  //영구 스탯(추가 능력치)
     public ChoiceStat choiceStat = new ChoiceStat();  //기본 선택 스탯
     
-    public void UseStatPoint(int point)
+    public void UseStatPoint(int point)  //포인트 사용하고 누적에 저장
     {
         currentStatPoint -= point;
         if(currentStatPoint<0) currentStatPoint = 0;
         accumulateStatPoint += point;
     }
 
-    public void GetStatPoint(int point)
+    public void GetStatPoint(int point)  //포인트 받고 누적에서 빼줌
     {
         currentStatPoint += point;
         accumulateStatPoint -= point;
         if(accumulateStatPoint < 0) accumulateStatPoint = 0;
     }
 
-    public void ResetAfterRegame()
+    public void ResetAfterRegame()  //튜토리얼 종료라면 이렇게 데이터 초기화
     {
         currentStatPoint += accumulateStatPoint;
         accumulateStatPoint = 0;
@@ -38,7 +38,7 @@ public class Stat
         choiceStat.Reset();
     }
 
-    public void SaveStat()
+    public void SaveStat()  //안씀
     {
         additionalEternalStat.maxHp.statValue -= eternalStat.maxHp.SaveEternal();
         additionalEternalStat.minDamage.statValue -= eternalStat.minDamage.SaveEternal();
@@ -99,22 +99,23 @@ public class StatElement  //스탯은 0렙부터 시작. 0렙일 때는 스탯을 개방하지 못한
 {
     public ushort id;
     public float statValue;  //일단 정수만 쓰이더라도 타입은 다 float으로 해준다
-    public float upStatValue; // 특정 스탯 포인트를 투자했을 때 오를 스탯의 값
     public bool isUnlock;  //획득한 스탯인가
     public int statLv;  //스탯 레벨 (이 스탯을 몇 번 올렸는지) (Stat클래스의 eternalStat에서만 쓰일듯함)
     public int savedStatLv;  //저장된 스탯 레벨. 만약에 스테이지 클리어하고 그 때의 스탯레벨 저장한다면 여기에 저장하고 리겜하면 이 값으로 되돌림
-    public int maxStatLv; // 스탯 최대 레벨
 
     public int upStatCount => statLv - 1;  //스탯 올리는 짓을 몇 번 했는지
     public bool isOpenStat => statLv > 0;  //스탯 개방이 되었는지
     public bool isUnlockClose => statLv == 0 && isUnlock;  //스탯을 획득했지만 개방은 안했는지
 
-    public StatElement() { }
+    public int maxStatLv => NGlobal.playerStatUI.GetStatSOData(id).maxStatLv; // 스탯 최대 레벨
+    public float UpStatValue => NGlobal.playerStatUI.GetStatSOData(id).upStatValue; // 특정 스탯 포인트를 투자했을 때 오를 스탯의 값
 
     public string StatName => NGlobal.playerStatUI.GetStatSOData(id).statName;
     public UnityEngine.Sprite StatSprite => NGlobal.playerStatUI.GetStatSOData(id).statSpr;
 
-    public void Reset()
+    public StatElement() { }
+
+    public void Reset()  //스탯 (구: 고정스탯) 초기화
     {
         if (statLv > 1)
         {
@@ -122,14 +123,14 @@ public class StatElement  //스탯은 0렙부터 시작. 0렙일 때는 스탯을 개방하지 못한
         }
     }
 
-    public void ResetComplete()
+    public void ResetComplete()  //특성 (구: 선택스탯) 초기화
     {
         statValue = 1;
         statLv = 0;
         isUnlock = false;
     }
 
-    public float SaveEternal()
+    public float SaveEternal()  //안씀
     {
         int tmp = savedStatLv;
         savedStatLv = statLv;
@@ -138,7 +139,7 @@ public class StatElement  //스탯은 0렙부터 시작. 0렙일 때는 스탯을 개방하지 못한
         float res = 0f;
         if (sub > 0)
         {
-            res = sub * upStatValue;
+            res = sub * UpStatValue;
             statValue += res;
         }
         return res;
@@ -172,7 +173,7 @@ public class EternalStat
 
     private List<StatElement> elements;
 
-    public List<StatElement> AllStats
+    public List<StatElement> AllStats  //모든 스탯들의 데이터 리스트
     {
         get
         {
@@ -194,7 +195,7 @@ public class EternalStat
     }
 
     //스탯의 수치가 0보다 큰 스탯들의 개수
-    public int NoZeroStatCount => AllStats.Count(stat => stat.statValue > 0);  
+    public int NoZeroStatCount => AllStats.Count(stat => stat.statValue > 0);  //스탯의 값이 0보다 큰 것들의 개수
 
     public EternalStat()
     {
@@ -214,7 +215,7 @@ public class EternalStat
         criticalDamage.statValue = cd;
     }
 
-    public void Reset()
+    public void Reset()  
     {
         maxHp.Reset();
         minDamage.Reset();
@@ -363,7 +364,7 @@ public class ChoiceStat
 
     private List<StatElement> elements;
 
-    public List<StatElement> AllStats
+    public List<StatElement> AllStats  //모든 특성(선택스탯)들의 데이터 리스트
     {
         get
         {

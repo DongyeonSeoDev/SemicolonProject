@@ -292,12 +292,14 @@ public class PlayerStatUI : MonoBehaviour
         //playerStat불러오기 및 세팅
         playerStat = SlimeGameManager.Instance.Player.PlayerStat;
 
+        //새로 추가한 스탯이나 특성이 있을 수도 있으니 저장되기 전 상태의 아이디 값을 가져온다
         List<ushort> statIDList = new List<ushort>();
         List<ushort> propIDList = new List<ushort>();
 
         for (int i = 0; i < playerStat.eternalStat.AllStats.Count; i++) statIDList.Add(playerStat.eternalStat.AllStats[i].id);
         for (int i = 0; i < playerStat.choiceStat.AllStats.Count; i++) propIDList.Add(playerStat.choiceStat.AllStats[i].id);
 
+        //저장된 값을 넣어주거나 없으면 걍 받아오고
         if (GameManager.Instance.savedData.tutorialInfo.isEnded)
         {
             playerStat = GameManager.Instance.savedData.userInfo.playerStat;
@@ -310,6 +312,7 @@ public class PlayerStatUI : MonoBehaviour
             GameManager.Instance.savedData.userInfo.playerStat = playerStat;
         }
 
+        //저장된 아이디 값이 0이면 갱신시켜줌
         for (int i = 0; i < playerStat.eternalStat.AllStats.Count; i++)
         {
             if(playerStat.eternalStat.AllStats[i].id == 0) playerStat.eternalStat.AllStats[i].id = statIDList[i];
@@ -339,7 +342,7 @@ public class PlayerStatUI : MonoBehaviour
             statInfoUIDic.Add(key, el);
         }
 
-        //선택 스탯 저장
+        //선택 스탯 저장 - 특성
         choiceStatDic.Add(NGlobal.ProficiencyID, playerStat.choiceStat.proficiency);
         choiceStatDic.Add(NGlobal.MomentomID, playerStat.choiceStat.momentom);
         choiceStatDic.Add(NGlobal.EnduranceID, playerStat.choiceStat.endurance);
@@ -349,7 +352,7 @@ public class PlayerStatUI : MonoBehaviour
         choiceStatDic.Add(NGlobal.FakeID, playerStat.choiceStat.fake);
         choiceStatDic.Add(NGlobal.MultiShotID, playerStat.choiceStat.multipleShots);
 
-        //선택 스탯 UI 생성
+        //선택 스탯 UI 생성  -- 특성
         foreach(ushort key in choiceStatDic.Keys)
         {
             ChoiceStatInfoElement cel = Instantiate(choiceStatInfoUIPair.first, choiceStatInfoUIPair.second).GetComponent<ChoiceStatInfoElement>();
@@ -480,7 +483,7 @@ public class PlayerStatUI : MonoBehaviour
     {
         if(id==NGlobal.MinDamageID)
         {
-            if(GetCurrentPlayerStat(id) + eternalStatDic[id].first.upStatValue >= GetCurrentPlayerStat(NGlobal.MaxDamageID))
+            if(GetCurrentPlayerStat(id) + eternalStatDic[id].first.UpStatValue >= GetCurrentPlayerStat(NGlobal.MaxDamageID))
             {
                 UIManager.Instance.RequestSystemMsg("최소데미지가 최대데미지보다 높을 수 없습니다.");
                 return false;
@@ -488,7 +491,18 @@ public class PlayerStatUI : MonoBehaviour
         }
 
         //if (Mathf.Pow(2, eternalStatDic[id].first.upStatCount) <= playerStat.currentStatPoint) return true;
-        if (UpStatInfoTextAsset.Instance.GetValue(eternalStatDic[id].first.statLv) <= playerStat.currentStatPoint) return true;
+        if (UpStatInfoTextAsset.Instance.GetValue(eternalStatDic[id].first.statLv) <= playerStat.currentStatPoint)
+        {
+            if(GetStatSOData(id).maxStatLv > eternalStatDic[id].first.statLv)
+            {
+                return true;
+            }
+            else
+            {
+                UIManager.Instance.RequestSystemMsg("이미 최대레벨에 도달했습니다");
+                return false;
+            }
+        }
         UIManager.Instance.RequestSystemMsg("스탯 포인트가 부족합니다.");
         return false;
     }
@@ -504,7 +518,7 @@ public class PlayerStatUI : MonoBehaviour
         playerStat.accumulateStatPoint += value;
 
         eterStat.statLv++;
-        addiStat.statValue += eterStat.upStatValue;
+        addiStat.statValue += eterStat.UpStatValue;
 
         UpdateCurStatPoint(false);
         UIManager.Instance.UpdatePlayerHPUI();

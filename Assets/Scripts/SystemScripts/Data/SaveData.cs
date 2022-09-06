@@ -19,7 +19,7 @@ public class SaveData
     public TutorialInfo tutorialInfo = new TutorialInfo();
     public StageInfo stageInfo = new StageInfo();
 
-    public void ResetComplete()
+    public void ResetComplete()  //튜토리얼 못 끝냈을 때의 초기화
     {
         option.keyInputDict.ClearDic();
         userInfo = new UserInfo();
@@ -27,7 +27,7 @@ public class SaveData
         stageInfo = new StageInfo();
     }
 
-    public void ResetAfterTuto()
+    public void ResetAfterTuto()  //튜토리얼 끝냈을 때의 데이터 초기화
     {
         UserInfo uInfo = new UserInfo();
         uInfo.monsterLearningDic = userInfo.monsterLearningDic;

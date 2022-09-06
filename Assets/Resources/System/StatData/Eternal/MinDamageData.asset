@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: MinDamageData
   m_EditorClassIdentifier: 
   statId: 10
+  maxStatLv: 100
+  upStatValue: 1
   statName: "\uCD5C\uC18C\uB370\uBBF8\uC9C0"
-  emotionRangeList: []
+  statSpr: {fileID: 0}

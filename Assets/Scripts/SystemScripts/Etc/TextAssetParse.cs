@@ -94,14 +94,54 @@ public class UpStatInfoTextAsset : AssetParse<int, int, UpStatInfoTextAsset>
         if (dictionary.ContainsKey(key))
             return dictionary[key];
 
-        if (key > lastKey)
+        if (key > lastKey)  //스탯업 최대비용 반환
             return lastCost;
 
-        if (key == 0)
+        if (key == 0)  // 개방
             return 10;
 
         Debug.Log("Not Exist Key : " + key);
         return 999;
+    }
+}
+
+//미션타입을 넣으면 해당 미션이 난이도별로 존재하는 난이도인지 체크하는 불 배열 반환
+//TextAsset에서 한 줄마다 미션 난이도 존재 여부 체크인데 왼쪽부터 쉬움 보통 어려움이고 0은 해당 난이도가 그 미션에서는 존재 X, 1은 존재함을 나타냄
+//TextAsset의 라인 순서는 MissionType 순서에 맞춤
+public class MissionLVInfoTextAsset : AssetParse<MissionType, bool[], MissionLVInfoTextAsset>
+{
+    protected override string Path => "System/TextAssets/MissionLVValue";
+
+    public override void CreateData()
+    {
+        dictionary = new Dictionary<MissionType, bool[]>();
+        int cnt = Global.EnumCount<DifficultyLevel>();
+        string[] strs = Resources.Load<TextAsset>(Path).text.Split('\n');
+        for(int i=0; i<strs.Length; i++)
+        {
+            MissionType type = (MissionType)i;
+            dictionary.Add(type, new bool[cnt]);
+            string[] strs2 = strs[i].Split('.');
+
+            for(int j=0; j<strs2.Length; j++)
+            {
+                dictionary[type][j] = strs2[j].Equals("1");
+            }
+        }
+    }
+
+    public override bool[] GetValue(MissionType key)
+    {
+        if (dictionary == null) CreateData();
+
+        return dictionary[key];
+    }
+
+    public bool IsExistLV(MissionType type, DifficultyLevel lv)
+    {
+        if (dictionary == null) CreateData();
+
+        return dictionary[type][(int)lv];
     }
 }
 

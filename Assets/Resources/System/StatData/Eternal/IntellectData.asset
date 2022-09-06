@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: IntellectData
   m_EditorClassIdentifier: 
   statId: 25
+  maxStatLv: 50
+  upStatValue: 1
   statName: "\uC9C0\uB2A5"
-  emotionRangeList: []
+  statSpr: {fileID: 0}

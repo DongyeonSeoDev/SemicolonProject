@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: CriticalRateData
   m_EditorClassIdentifier: 
   statId: 40
+  maxStatLv: 35
+  upStatValue: 2
   statName: "\uCE58\uBA85\uD0C0\uD655\uB960"
-  emotionRangeList: []
+  statSpr: {fileID: 0}
