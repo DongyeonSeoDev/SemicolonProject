@@ -13,8 +13,6 @@ public class CinemachineCameraScript : MonoSingleton<CinemachineCameraScript>
 
     private readonly float defaultOrthographicSize = 8.5f;
 
-    private float curShakeOrtho;
-
     private void Start()
     { 
         cinemachine = GetComponent<CinemachineVirtualCamera>();
@@ -58,9 +56,9 @@ public class CinemachineCameraScript : MonoSingleton<CinemachineCameraScript>
         DOUtil.ExecuteTweening("CVCam_Shake_" + name, ShakeCo(shakeData.duration), this);
     }
 
-    public void ShakeOrthoSize(float strength, float speed, float duration)
+    public void ShakeOrthoSize(float strength = 0.06f, float duration = 0.2f)
     {
-        DoOrthographicSize(strength * defaultOrthographicSize, duration * 0.5f * speed, ()=>DoOrthographicSize(defaultOrthographicSize, duration * 0.5f * speed));
+        DoOrthographicSize(defaultOrthographicSize - strength, duration * 0.5f, ()=>DoOrthographicSize(defaultOrthographicSize, duration * 0.5f));
     }
 
     public void DoOrthographicSize(float target, float duration, Action OnComplete = null)
