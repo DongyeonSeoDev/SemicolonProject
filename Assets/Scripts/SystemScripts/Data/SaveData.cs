@@ -61,7 +61,7 @@ public class SaveData
 public class TutorialInfo
 {
     public bool isEnded = false;
-    
+    public bool isEndBodyChangeTuto = false;
     //public string tutorialId;
 }
 
@@ -95,6 +95,11 @@ public class UserInfo
 public class Option
 {
     public SaveDic<KeyAction, KeyCode> keyInputDict = new SaveDic<KeyAction, KeyCode>();  //키세팅
+
+    //효과
+    public bool IsAtkShakeCamera = true;  //슬라임 기본 공격했을 때 화면 흔들림 여부
+    public bool IsHitShakeCam = true; //플레이어나 적이 쳐맞았을 때 카메라 흔들림 여부
+    public bool IsHitTimeFreeze = true; //플레이어나 적이 쳐맞았을 때 타임 프리즈 여부
 
     //자동퀵슬롯
     //public bool isAutoQuikSlot = true;

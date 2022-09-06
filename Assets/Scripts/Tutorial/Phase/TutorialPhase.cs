@@ -254,6 +254,8 @@ public class BodyChangeTutorialPhase : TutorialPhase
         pState = Global.CurrentPlayer.GetComponent<PlayerState>();
         isReady = false;
         bodyId = id;
+
+        Debug.LogWarning("아직 버그가 있는 튜토리얼");
     }
 
     public override void DoPhaseUpdate()

@@ -44,6 +44,8 @@ public class CinemachineCameraScript : MonoSingleton<CinemachineCameraScript>
 
     public void Shake(float strength, float frequency, float duration)
     {
+        if (!GameManager.Instance.savedData.option.IsHitShakeCam) return;
+
         cinemachineNoise.m_AmplitudeGain = strength;
         cinemachineNoise.m_FrequencyGain = frequency;
         DOUtil.ExecuteTweening("CVCam_Shake_" + name, ShakeCo(duration), this);
@@ -51,6 +53,8 @@ public class CinemachineCameraScript : MonoSingleton<CinemachineCameraScript>
 
     public void Shake(CamShakeData shakeData)
     {
+        if (!GameManager.Instance.savedData.option.IsHitShakeCam) return;
+
         cinemachineNoise.m_AmplitudeGain = shakeData.strength;
         cinemachineNoise.m_FrequencyGain = shakeData.frequency;
         DOUtil.ExecuteTweening("CVCam_Shake_" + name, ShakeCo(shakeData.duration), this);
@@ -58,7 +62,10 @@ public class CinemachineCameraScript : MonoSingleton<CinemachineCameraScript>
 
     public void ShakeOrthoSize(float strength = 0.06f, float duration = 0.2f)
     {
-        DoOrthographicSize(defaultOrthographicSize - strength, duration * 0.5f, ()=>DoOrthographicSize(defaultOrthographicSize, duration * 0.5f));
+        if (GameManager.Instance.savedData.option.IsAtkShakeCamera)
+        {
+            DoOrthographicSize(defaultOrthographicSize - strength, duration * 0.5f, () => DoOrthographicSize(defaultOrthographicSize, duration * 0.5f));
+        }
     }
 
     public void DoOrthographicSize(float target, float duration, Action OnComplete = null)

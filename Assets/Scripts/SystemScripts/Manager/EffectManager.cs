@@ -3,7 +3,6 @@ using UnityEngine;
 using Water;
 using TMPro;
 using DG.Tweening;
-using UnityEngine.EventSystems;
 using Enemy;
 
 [System.Serializable]
@@ -229,7 +228,11 @@ public class EffectManager : MonoSingleton<EffectManager>
         tmp.DOColor(Color.clear, 0.7f).SetEase(damageTxtScaleCurve).OnComplete(() => tmp.gameObject.SetActive(false));
 
         CinemachineCameraScript.Instance.Shake(isEnemy ? enemyHitShake : playerHitShake);
-        TimeManager.SetTimeScale(atkTimeFreezeScale,atkTimeFreezeDuration, null, false, false);
+
+        if (GameManager.Instance.savedData.option.IsHitTimeFreeze)
+        {
+            TimeManager.SetTimeScale(atkTimeFreezeScale, atkTimeFreezeDuration, null, false, false);
+        }
 
         if (effectSize != Vector3.zero)
         {
@@ -247,21 +250,6 @@ public class EffectManager : MonoSingleton<EffectManager>
             Environment.Instance.OnDamaged();
         }
     }
-    /*public void OnDamaged(float damage, Vector2 pos, Vector3 scale, VertexGradient textColor)
-    {
-        TextMeshProUGUI tmp = PoolManager.GetItem<TextMeshProUGUI>("DamageTextEff");
-        tmp.color = Color.white;
-        tmp.transform.localScale = scale;
-        tmp.SetText(damage.ToString());
-        tmp.colorGradient = textColor;
-        tmp.transform.position = pos + Vector2.up;
-        tmp.transform.SetAsLastSibling();
-
-        //tmp.transform.DOMoveY(2.5f, 0.8f).SetRelative();
-        tmp.transform.DOMove(tmp.transform.position + Global.damageTextMove, 0.6f);
-        //tmp.transform.DOScale(scale - SVector3.zeroPointThree, 0.8f).SetEase(damageTxtScaleCurve);
-        tmp.DOColor(Color.clear, 0.7f).SetEase(damageTxtScaleCurve).OnComplete(() => tmp.gameObject.SetActive(false));
-    }*/
 
     public void OnWorldTextEffect(string msg, Vector2 pos, Vector3 scale, VertexGradient textColor)  //게임 속에서 어떤 이벤트에 대해 텍스트 효과를 잠깐 띄움
     {
