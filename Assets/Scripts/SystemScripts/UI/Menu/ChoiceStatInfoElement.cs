@@ -11,6 +11,8 @@ public class ChoiceStatInfoElement : MonoBehaviour
     public Text BGStatExplanationTxt;
     public Text BGStatLvTxt;
 
+    public Image statImg;
+
     [SerializeField] private Button btn;
 
     public void InitSet(StatElement stat)
@@ -18,6 +20,8 @@ public class ChoiceStatInfoElement : MonoBehaviour
         id = stat.id;
         choice = stat;
         statData = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id);
+
+        statImg.sprite = stat.StatSprite;
 
         BGStatNameTxt.text = statData.statName;
         BGStatExplanationTxt.text = statData.simpleAbilExplanation;

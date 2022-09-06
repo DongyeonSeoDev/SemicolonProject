@@ -784,6 +784,7 @@ public class StageManager : MonoSingleton<StageManager>
         if (currentFloor > 0)
         {
             List<AreaType> list = new List<AreaType>();  //이미 다음 스테이지의 문으로 정해진 구역들 리스트
+            List<EnemyType> eList = new List<EnemyType>(); // 이미 뽑힌 몬스터 구역
 
             currentStage.stageDoors.ToRandomList(5).ForEach(door =>
             {
@@ -802,7 +803,7 @@ public class StageManager : MonoSingleton<StageManager>
                         {
                             //가중치를 통해서 어떤 몬스터 구역 소환할지 정함
                             float w = 0f, total = areaWeightDic[currentFloor][AreaType.MONSTER];
-                            float sel = UnityEngine.Random.Range(0, total);
+                            float sel = UnityEngine.Random.Range(0f, total);
                             EnemyType target = floorSpecies[currentFloor - 1].second[0];
                             foreach(EnemyType key in mobAreaWeightDic[currentFloor].Keys)
                             {
