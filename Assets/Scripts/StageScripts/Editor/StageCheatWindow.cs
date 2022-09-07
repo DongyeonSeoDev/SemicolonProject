@@ -331,6 +331,16 @@ public class StageCheatWindow : EditorWindow
                     File.WriteAllText(SaveFileStream.EternalOptionSaveFileName.PersistentDataPath(), sf);
                 }
 
+                GUILayout.Space(10);
+                if(GUILayout.Button("바탕화면 경로 확인"))
+                {
+                    Debug.Log(System.Environment.GetFolderPath(System.Environment.SpecialFolder.DesktopDirectory));
+                }
+                if (GUILayout.Button("게임 세이브 파일 경로 확인"))
+                {
+                    Debug.Log(Application.persistentDataPath);
+                }
+
                 break;
 
             case 2:
