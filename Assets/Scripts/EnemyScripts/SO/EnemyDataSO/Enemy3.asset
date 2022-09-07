@@ -36,5 +36,5 @@ MonoBehaviour:
   critical: 0
   criticalDamage: 0
   defense: 2
-  hp: 20
+  hp: 15
   addExperience: 60
