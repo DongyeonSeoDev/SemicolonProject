@@ -631,11 +631,13 @@ public class StageManager : MonoSingleton<StageManager>
 
         for(i=0; i<list.Count; i++)
         {
+            if (list[i] == AreaType.MONSTER) continue;
+
             li.Remove(list[i]);
             total -= areaWeightDic[currentFloor][list[i]];
         }
 
-        float sel = total * UnityEngine.Random.Range(0f, 1f);
+        float sel = total * UnityEngine.Random.value;
 
         for (i = 0; i < li.Count; i++)
         {
@@ -803,17 +805,29 @@ public class StageManager : MonoSingleton<StageManager>
                         {
                             //가중치를 통해서 어떤 몬스터 구역 소환할지 정함
                             float w = 0f, total = areaWeightDic[currentFloor][AreaType.MONSTER];
+                            List<EnemyType> li = mobAreaWeightDic[currentFloor].Keys.ToList();
+                            foreach (EnemyType key in mobAreaWeightDic[currentFloor].Keys)
+                            {
+                                if (eList.Contains(key))
+                                {
+                                    total -= mobAreaWeightDic[currentFloor][key];
+                                    li.Remove(key);
+                                }
+                            }
+
                             float sel = UnityEngine.Random.Range(0f, total);
                             EnemyType target = floorSpecies[currentFloor - 1].second[0];
-                            foreach(EnemyType key in mobAreaWeightDic[currentFloor].Keys)
+                            for(int i= 0; i < li.Count; i++)
                             {
-                                w += mobAreaWeightDic[currentFloor][key];
+                                w += mobAreaWeightDic[currentFloor][li[i]];
                                 if(w < sel)
                                 {
-                                    target = key;
+                                    target = li[i];
                                     break;
                                 }
                             }
+
+                            eList.Add(target);
 
                             //해당 몬스터 구역 뽑아옴
                             foreach(StageDataSO data in randomRoomDict[currentFloor][AreaType.MONSTER])
