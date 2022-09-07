@@ -212,6 +212,18 @@ public class StageManager : MonoSingleton<StageManager>
                 Debug.Log($"{key} : {mobAreaWeightDic[currentFloor][key]}");
             }
         });
+
+        GameManager.Instance.testKeyInputActionDict.Add(KeyCode.Equals, () =>
+        {
+            foreach(AreaType key in randomRoomDict[currentFloor].Keys)
+            {
+                Debug.Log(key.ToString());
+                foreach(StageDataSO data in randomRoomDict[currentFloor][key])
+                {
+                    Debug.Log(data.stageID);
+                }
+            }
+        });
 #endif
     }
 
@@ -815,12 +827,13 @@ public class StageManager : MonoSingleton<StageManager>
                                 }
                             }
 
-                            float sel = UnityEngine.Random.Range(0f, total);
+                            //float sel = UnityEngine.Random.Range(0f, total);
+                            float sel = UnityEngine.Random.value * total; 
                             EnemyType target = floorSpecies[currentFloor - 1].second[0];
                             for(int i= 0; i < li.Count; i++)
                             {
                                 w += mobAreaWeightDic[currentFloor][li[i]];
-                                if(w < sel)
+                                if(sel < w)
                                 {
                                     target = li[i];
                                     break;
@@ -835,6 +848,7 @@ public class StageManager : MonoSingleton<StageManager>
                                 if(data.enemySpeciesArea == target)
                                 {
                                     door.nextStageData = data;
+                                    break;
                                 }
                             }
                             randomRoomDict[currentFloor][type].Remove(door.nextStageData);
