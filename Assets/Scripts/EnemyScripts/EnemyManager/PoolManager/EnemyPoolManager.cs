@@ -14,6 +14,7 @@ namespace Enemy
         SkeletonGhost_05,
         SkeletonMage_06,
         Boss_SkeletonKing_50 = 50,
+        Boss_Centipede,
         Bullet = 100,
         EnemyLoot,
         DeadEffect,

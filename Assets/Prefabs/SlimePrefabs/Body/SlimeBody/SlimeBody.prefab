@@ -391,7 +391,7 @@ MonoBehaviour:
   drainCollider: {fileID: 6491635181836223920}
   drainSpeedWhenNone: 2
   upMountingPercentageValue: 8
-  upUnderstandingRateValue: 1
+  upUnderstandingRateValue: 2
   cantDrainObject: 0
 --- !u!114 &5835559770882864823
 MonoBehaviour:
