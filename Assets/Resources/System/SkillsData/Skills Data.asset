@@ -50,7 +50,7 @@ MonoBehaviour:
       skillName: "\uB3CC\uC9C4"
       skillExplanation: "\uC55E\uC73C\uB85C \uBE60\uB974\uAC8C \uB3CC\uC9C4\uD574\uC11C
         \uACF5\uACA9\uD55C\uB2E4"
-      skillSpr: {fileID: -242015015181806508, guid: a9de3b96fa106fa43a0fe55cd1aabb17, type: 3}
+      skillSpr: {fileID: 4534810592809177352, guid: 5c320c3a5af356648a35ce50d8277e78, type: 3}
   - first: 3
     second:
     - skillType: 0

@@ -238,3 +238,56 @@ public class QuikSlotTutorialPhase : TutorialPhase
         base.End();
     }
 }
+
+public class BodyChangeTutorialPhase : TutorialPhase
+{
+    RectTransform emphasisEffect;
+
+    PlayerState pState;
+
+    bool isReady;
+    string bodyId;
+
+    public BodyChangeTutorialPhase(RectTransform emphaRt, string id)
+    {
+        emphasisEffect = emphaRt;
+        pState = Global.CurrentPlayer.GetComponent<PlayerState>();
+        isReady = false;
+        bodyId = id;
+
+        Debug.LogWarning("아직 버그가 있는 튜토리얼");
+    }
+
+    public override void DoPhaseUpdate()
+    {
+        if(!isReady)
+        {
+            if(!pState.IsDrain)
+            {
+                isReady = true;
+                TalkUtil.ShowSubtitle("Tuto_BodyChange");
+                InteractionHandler.canTransformEnemy = false;
+                EventManager.TriggerEvent("EnemyStop");
+                EventManager.TriggerEvent("PlayerStop");
+            }
+        }
+        else
+        {
+            if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.CHANGE_MONSTER1]))
+            {
+                End();
+            }
+        }
+    }
+
+    public override void End()
+    {
+        emphasisEffect.gameObject.SetActive(false);
+        SlimeGameManager.Instance.PlayerBodyChange(bodyId);
+        InteractionHandler.canTransformEnemy = true;
+        base.End();
+
+        EventManager.TriggerEvent("EnemyStart");
+        EventManager.TriggerEvent("PlayerStart");
+    }
+}

@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: DefenseData
   m_EditorClassIdentifier: 
   statId: 20
+  maxStatLv: 100
+  upStatValue: 1
   statName: "\uBC29\uC5B4\uB825"
-  emotionRangeList: []
+  statSpr: {fileID: 0}

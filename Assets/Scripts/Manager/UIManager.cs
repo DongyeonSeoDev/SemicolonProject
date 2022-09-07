@@ -291,6 +291,7 @@ public partial class UIManager : MonoSingleton<UIManager>
             SetUIAlpha(0f);
             InteractionHandler.canTransformEnemy = false;
             InteractionHandler.canUseQuikSlot = false;
+            InteractionHandler.canInteractObj = false;
             CanInteractUI = false;
             Cursor.visible = false;
             Time.timeScale = 1f;
@@ -301,6 +302,7 @@ public partial class UIManager : MonoSingleton<UIManager>
             SetUIAlpha(1f);
             InteractionHandler.canTransformEnemy = true;
             InteractionHandler.canUseQuikSlot = true;
+            InteractionHandler.canInteractObj = true;
             CanInteractUI = true;
             Cursor.visible = true;
             Time.timeScale = TimeManager.IsTimePaused ? 0f : TimeManager.CurrentTimeScale;

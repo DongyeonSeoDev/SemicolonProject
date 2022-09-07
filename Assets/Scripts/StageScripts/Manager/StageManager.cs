@@ -26,7 +26,9 @@ public class StageManager : MonoSingleton<StageManager>
     private int currentStageMonsterBundleOrder = 1;
 
     private int currentFloor = 1;
+    public int CurrentFloor => currentFloor;
     private int currentStageNumber = 0;
+    public int CurrentStageNumber => currentStageNumber;
     private AreaType currentArea = AreaType.NONE;
     public AreaType CurrentAreaType => currentArea;
 
@@ -300,18 +302,13 @@ public class StageManager : MonoSingleton<StageManager>
 
         //랜덤맵 / 랜덤타입이 나누어떨어지지 않으면 임의의 랜덤맵을 나머지만큼 집어넣는데 겹치지 않게 함
         List<RandomRoomType> rList = new List<RandomRoomType>();
+        
         if (r > 0)
         {
-            RandomRoomType rr;
-            for (i = 0; i < r; i++)
-            {
-                rr = (RandomRoomType)UnityEngine.Random.Range(0, rrCnt);
+            rList = ranMapCnt.Keys.ToList().ToRandomList();
 
-                if (rList.Contains(rr))
-                    i--;
-                else
-                    rList.Add(rr);
-            }
+            int rr = rrCnt - r;
+            for (i = 0; i < rr; i++) rList.RemoveAt(0);
         }
 
         //남은 랜덤 방 수 간격이 rrCnt - 1미만으로 됐는지 체크
@@ -358,8 +355,11 @@ public class StageManager : MonoSingleton<StageManager>
         }
 
         //나머지 남은 방들을 랜덤한 위치에 집어넣음
+        int chk = 0;  //너무 많이 for문 도는지 체크하기 위한 변수
         for(i=0; i<r; i++)
         {
+            if (++chk > 40) Debug.LogWarning("Too many iterations");
+
             pre = UnityEngine.Random.Range(0, randomZoneTypeListDic[currentFloor].Count);
 
             if(pre > 1 && randomZoneTypeListDic[currentFloor][pre-1] == rList[i])
@@ -784,6 +784,7 @@ public class StageManager : MonoSingleton<StageManager>
         if (currentFloor > 0)
         {
             List<AreaType> list = new List<AreaType>();  //이미 다음 스테이지의 문으로 정해진 구역들 리스트
+            List<EnemyType> eList = new List<EnemyType>(); // 이미 뽑힌 몬스터 구역
 
             currentStage.stageDoors.ToRandomList(5).ForEach(door =>
             {
@@ -802,7 +803,7 @@ public class StageManager : MonoSingleton<StageManager>
                         {
                             //가중치를 통해서 어떤 몬스터 구역 소환할지 정함
                             float w = 0f, total = areaWeightDic[currentFloor][AreaType.MONSTER];
-                            float sel = UnityEngine.Random.Range(0, total);
+                            float sel = UnityEngine.Random.Range(0f, total);
                             EnemyType target = floorSpecies[currentFloor - 1].second[0];
                             foreach(EnemyType key in mobAreaWeightDic[currentFloor].Keys)
                             {
@@ -1036,6 +1037,11 @@ public class StageManager : MonoSingleton<StageManager>
                     }
                 }, Global.ImprAndRecoEffDelay, this, false);
 
+                break;
+
+            case RandomRoomType.CHARACTERISTIC:
+                isSelectRandomArea = true;
+                NextStage(GetStageBundleData(currentFloor).stages.FindAll(x=>x.areaType == AreaType.STAT).ToRandomElement().stageID, false);
                 break;
         }
     }

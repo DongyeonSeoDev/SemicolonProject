@@ -7,9 +7,13 @@ public class ConseKillMission : Mission
 
     private bool onTimer;  //타이머 체크중인지
 
-    //몇 초 이내의 간격으로 몇 마리 처치가 아니라 몇 초 안에 몇 마리 처치라고 하더라?
-    private float timer;  //몇 초 지났는지. 한 마리 죽이면 타이머 스타트 => onTimer true, 5초 지나면 초기화. 5초안에 목표 마리 연속킬 하면 성공
+    private int iTimer;  //몇 초 지났는지 (화면에 표시용으로)
+
+    //몇 초 이내의 간격으로 몇 마리 처치
+    private float timer;  //몇 초 지났는지. 한 마리 죽이면 타이머 스타트 => onTimer true, 또 하나 t초 이내에 죽이면 다시 t초로 갱신
     private readonly float time = 5f;  //몇 초 안에 연속킬
+
+    private PlayerState playerState;
 
     public ConseKillMission()
     {
@@ -36,7 +40,7 @@ public class ConseKillMission : Mission
                 break;
         }
 
-        missionName = needConseKill.ToString() + "마리를 연속으로 처치하세요 (0/" + needConseKill.ToString() + ")";
+        missionName = time.ToString() + "초 이내에 적을 연속처치하세요 (0/" + needConseKill.ToString() + ")";
     }
 
     public override void Start()
@@ -44,6 +48,7 @@ public class ConseKillMission : Mission
         base.Start();
         onTimer = false;
         curConseKill = 0;
+        if (!playerState) playerState = Global.CurrentPlayer.GetComponent<PlayerState>();
         EventManager.StartListening("EnemyDead", EnemyDead);
     }
 
@@ -51,16 +56,21 @@ public class ConseKillMission : Mission
     {
         if (!isEnd)
         {
-            if (onTimer)
+            if (onTimer && !playerState.IsDrain)
             {
                 timer += Time.deltaTime;
+
+                if(Mathf.CeilToInt(time - timer)  < iTimer)  //매번 미션 제목을 갱신하면 연산이 많이 발생해서 .int타입으로도 시간을 재고 1초 깎일 때마다 제목 갱신
+                {
+                    SetMissionNameText($"{time}초 이내에 적을 연속처치하세요 ({curConseKill}/{needConseKill}) ({--iTimer})");
+                }
 
                 if(timer > time && curConseKill < needConseKill)
                 {
                     onTimer = false;
                     curConseKill = 0;
                     BattleUIManager.Instance.ShakeMissionPanel(0.4f, 10);
-                    SetMissionNameText($"{needConseKill}마리를 연속으로 처치하세요 (0/{needConseKill})");
+                    SetMissionNameText($"{time}초 이내에 적을 연속처치하세요 (0/{needConseKill})");
                 }
             }
         }
@@ -68,12 +78,13 @@ public class ConseKillMission : Mission
 
     private void EnemyDead(GameObject o, string s, bool b)  //매개변수는 그냥 타입에 맞추기 위한것.
     {
-        SetMissionNameText($"{needConseKill}마리를 연속으로 처치하세요 ({++curConseKill}/{needConseKill})");
+        iTimer = (int)time;
+        timer = 0f;
+        SetMissionNameText($"{time}초 이내에 적을 연속처치하세요 ({++curConseKill}/{needConseKill}) ({iTimer})");
 
         if (!onTimer)
         {
             onTimer = true;
-            timer = 0f;
         }
         else
         {

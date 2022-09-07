@@ -4,7 +4,7 @@ using TMPro;
 
 public class StoreProperty : MonoBehaviour
 {
-    //public Image statImg;
+    public Image statImg;
     public TextMeshProUGUI nameTMP;
     public Button btn;
     public UIScale UIScaleCtrl;
@@ -30,7 +30,7 @@ public class StoreProperty : MonoBehaviour
         IsSellItem = !purchase;
         ChoiceStatSO stat = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id);
         nameTMP.text = stat.statName;
-        //statImg.sprite = stat.statSpr;
+        statImg.sprite = stat.statSpr;
 
         btn.interactable = true;
         UIScaleCtrl.transitionEnable = true;

@@ -36,7 +36,8 @@ public class SurvivalMission : Mission
 
         if (Mathf.FloorToInt(survivalTimer) != cur)
         {
-            SetMissionNameText($"{survivalTime}초 동안 살아남으세요 ({++cur})");
+            ++cur;
+            SetMissionNameText($"{survivalTime}초 동안 살아남으세요 ({survivalTime - cur})");
         }
 
         if (survivalTimer > survivalTime)

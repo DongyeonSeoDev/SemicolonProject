@@ -36,6 +36,8 @@ public class ChoiceStatData
     public int changeUpAmount; // upAmount 변동과 관련된 값, 사용하는 놈만 사용한다
     public float upTargetStatPerChoiceStat; // 이 ChoiceStat의 값 1 당 오르는 대상 스탯의 값
 
+    public int lastMaxStatLv; // 가장 높았던 해당 스탯의 레벨의 값
+
     public void DataCpy(ChoiceStatData stat)
     {
         id = stat.id;
@@ -47,7 +49,10 @@ public class ChoiceStatData
         checkStartValue = stat.checkStartValue;
 
         upAmount = stat.upAmount;
+        changeUpAmount = stat.changeUpAmount;
         upTargetStatPerChoiceStat = stat.upTargetStatPerChoiceStat;
+
+        lastMaxStatLv = stat.lastMaxStatLv;
     }
 }
 public class PlayerChoiceStatControl : MonoBehaviour
@@ -149,7 +154,6 @@ public class PlayerChoiceStatControl : MonoBehaviour
     ///// <summary>
     ///// 돌진한 횟수
     ///// </summary>
-
     private void Start()
     {
         if (TutorialManager.Instance.IsTutorialStage)
@@ -308,7 +312,12 @@ public class PlayerChoiceStatControl : MonoBehaviour
     {
         StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.endurance;
 
-        if(stat.isUnlock)
+        if (!CheckCanUpChoiceStat(stat))
+        {
+            return;
+        }
+
+        if (stat.isUnlock)
         {
             if ((int)totalDamage - choiceDataDict[NGlobal.EnduranceID].checkStartValue >= choiceDataDict[NGlobal.EnduranceID].upAmount)
             {
@@ -339,6 +348,8 @@ public class PlayerChoiceStatControl : MonoBehaviour
                 stat.statValue = choiceDataDict[NGlobal.EnduranceID].firstValue;
                 stat.statLv = choiceDataDict[NGlobal.EnduranceID].firstValue;
 
+                ChoiceStatUnlockSetting(stat);
+
                 EnduranceCheckValueReset(true);
             }
         }
@@ -357,6 +368,11 @@ public class PlayerChoiceStatControl : MonoBehaviour
     public void CheckProficiency()
     {
         StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.proficiency;
+
+        if (!CheckCanUpChoiceStat(stat))
+        {
+            return;
+        }
 
         if (SlimeGameManager.Instance.Player.PlayerStat.choiceStat.proficiency.isUnlock)
         {
@@ -386,6 +402,8 @@ public class PlayerChoiceStatControl : MonoBehaviour
                 stat.statValue = choiceDataDict[NGlobal.ProficiencyID].firstValue;
                 stat.statLv = choiceDataDict[NGlobal.ProficiencyID].firstValue;
 
+                ChoiceStatUnlockSetting(stat);
+
                 UIManager.Instance.playerStatUI.StatUnlock(stat);
 
                 ProficiencyCheckValueReset(true);
@@ -407,6 +425,11 @@ public class PlayerChoiceStatControl : MonoBehaviour
     public void CheckMomentom()
     {
         StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom;
+
+        if (!CheckCanUpChoiceStat(stat))
+        {
+            return;
+        }
 
         if (SlimeGameManager.Instance.Player.PlayerStat.choiceStat.momentom.isUnlock)
         {
@@ -434,6 +457,8 @@ public class PlayerChoiceStatControl : MonoBehaviour
                 stat.statValue = choiceDataDict[NGlobal.MomentomID].firstValue;
                 stat.statLv = choiceDataDict[NGlobal.MomentomID].firstValue;
 
+                ChoiceStatUnlockSetting(stat);
+
                 MomentomCheckValueReset();
 
                 UIManager.Instance.playerStatUI.StatUnlock(stat);
@@ -448,14 +473,21 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
     public void CheckFrenzy()
     {
-        if(!SlimeGameManager.Instance.Player.PlayerStat.choiceStat.frenzy.isUnlock && 
+        StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.frenzy;
+
+        if (!CheckCanUpChoiceStat(stat))
+        {
+            return;
+        }
+
+        if (!stat.isUnlock && 
             PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(Enemy.EnemyType.Slime_03.ToString())
                 >= choiceDataDict[NGlobal.FrenzyID].unlockStatValue)
         {
-            StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.frenzy;
-
             stat.statValue = choiceDataDict[NGlobal.FrenzyID].firstValue;
             stat.statLv = choiceDataDict[NGlobal.FrenzyID].firstValue;
+
+            ChoiceStatUnlockSetting(stat);
 
             UIManager.Instance.playerStatUI.StatUnlock(stat);
         }
@@ -463,14 +495,21 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
     public void CheckReflection()
     {
-        if (!SlimeGameManager.Instance.Player.PlayerStat.choiceStat.reflection.isUnlock &&
+        StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.reflection;
+
+        if (!CheckCanUpChoiceStat(stat))
+        {
+            return;
+        }
+
+        if (!stat.isUnlock &&
             PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(Enemy.EnemyType.Slime_01.ToString())
                 >= choiceDataDict[NGlobal.ReflectionID].unlockStatValue)
         {
-            StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.reflection;
-
             stat.statValue = choiceDataDict[NGlobal.ReflectionID].firstValue;
             stat.statLv = choiceDataDict[NGlobal.ReflectionID].firstValue;
+
+            ChoiceStatUnlockSetting(stat);
 
             UIManager.Instance.playerStatUI.StatUnlock(stat);
         }
@@ -479,7 +518,12 @@ public class PlayerChoiceStatControl : MonoBehaviour
     {
         StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.mucusRecharge;
 
-        if(stat.isUnlock)
+        if (!CheckCanUpChoiceStat(stat))
+        {
+            return;
+        }
+
+        if (stat.isUnlock)
         {
             if (mucusChargeEnergyMaxTime - choiceDataDict[NGlobal.MucusRechargeID].checkStartValue
                 >= choiceDataDict[NGlobal.MucusRechargeID].upAmount)
@@ -504,6 +548,8 @@ public class PlayerChoiceStatControl : MonoBehaviour
                 stat.statValue = choiceDataDict[NGlobal.MucusRechargeID].firstValue;
                 stat.statLv = choiceDataDict[NGlobal.MucusRechargeID].firstValue;
 
+                ChoiceStatUnlockSetting(stat);
+
                 UIManager.Instance.playerStatUI.StatUnlock(stat);
             }
         }
@@ -516,6 +562,11 @@ public class PlayerChoiceStatControl : MonoBehaviour
     public void CheckFake()
     {
         StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat.fake;
+
+        if (!CheckCanUpChoiceStat(stat))
+        {
+            return;
+        }
 
         if (SlimeGameManager.Instance.Player.PlayerStat.choiceStat.fake.isUnlock)
         {
@@ -539,7 +590,9 @@ public class PlayerChoiceStatControl : MonoBehaviour
             {
                 stat.statValue = choiceDataDict[NGlobal.FakeID].firstValue;
                 stat.statLv = choiceDataDict[NGlobal.FakeID].firstValue;
-                
+
+                ChoiceStatUnlockSetting(stat);
+
                 UIManager.Instance.playerStatUI.StatUnlock(stat);
             }
         }
@@ -618,6 +671,8 @@ public class PlayerChoiceStatControl : MonoBehaviour
         {
             item.Value.checkStartValue = originChoiceDataDict[item.Key].checkStartValue;
         }
+
+        ChoiceStatDataListMaxStatLvReset();
     }
     public void WhenTradeStat(ushort statID)
     {
@@ -658,9 +713,33 @@ public class PlayerChoiceStatControl : MonoBehaviour
     }
     private void UpChoiceStatLv(StatElement choiceStat)
     {
+        ushort statId = choiceStat.id;
+
         choiceStat.statLv++;
         choiceStat.statValue++;
 
+        ChoiceStatUnlockSetting(choiceStat);
+
         NGlobal.playerStatUI.InsertPropertyInfo(choiceStat.id);
+    }
+    private bool CheckCanUpChoiceStat(StatElement choiceStat)
+    {
+        ChoiceStatData choiceStatData = choiceDataDict[choiceStat.id];
+
+        return choiceStat.statLv >= choiceStatData.lastMaxStatLv;
+    }
+    private void ChoiceStatUnlockSetting(StatElement stat)
+    {
+        if (choiceDataDict[stat.id].lastMaxStatLv < stat.statLv)
+        {
+            choiceDataDict[stat.id].lastMaxStatLv = stat.statLv;
+        }
+    }
+    private void ChoiceStatDataListMaxStatLvReset()
+    {
+        foreach(var item in choiceDataDict)
+        {
+            item.Value.lastMaxStatLv = 0;
+        }
     }
 }

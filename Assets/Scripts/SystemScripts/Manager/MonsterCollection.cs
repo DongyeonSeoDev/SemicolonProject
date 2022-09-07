@@ -443,7 +443,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
                 sb.Append("%)");
 
                 UIManager.Instance.RequestLogMsg(sb.ToString());
-                UIManager.Instance.InsertNoticeQueue($"<color=blue>{GetMonsterInfo(list[0]).bodyName}</color> 동화율 <color=blue>{up}</color>% 상승");
+                UIManager.Instance.InsertNoticeQueue($"<size=150%>{GetMonsterInfo(list[0]).bodyName}</size> 동화율 <size=150%>{up}</size>% 상승");
             }
             else
             {
@@ -471,7 +471,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             sb.Append("%)");
 
             UIManager.Instance.RequestLogMsg(sb.ToString());
-            UIManager.Instance.InsertNoticeQueue($"<color=blue>{GetMonsterInfo(id).bodyName}</color> 동화율 <color=blue>{up}</color>% 상승");
+            UIManager.Instance.InsertNoticeQueue($"<size=150%>{GetMonsterInfo(id).bodyName}</size> 동화율 <size=150%>{up}</size>% 상승");
         }, 0.4f, this, true);
     }
 
@@ -791,6 +791,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             //changeBodySlots.Find(x => x.SlotNumber == slotNumber).Register(id, "몬스터 이름");
             changeBodySlots[slotNumber - 1].Register(id);
         }
+        TutorialManager.Instance.CheckGainMonsterBody(id);
     }
 
     public void RemoveBody(int slotNumber)
@@ -812,10 +813,10 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     public void Save()
     {
         UserInfo uInfo = GameManager.Instance.savedData.userInfo;
-        foreach(string key in urmg.PlayerEnemyUnderStandingRateDic.Keys)
+        /*foreach(string key in urmg.PlayerEnemyUnderStandingRateDic.Keys)
         {
             uInfo.monsterInfoDic[key] = new MonsterInfo(key, urmg.PlayerEnemyUnderStandingRateDic[key], urmg.GetDrainProbabilityDict(key));
-        }
+        }*/
         foreach(string key in mobLearningInfoDic.Keys)
         {
             uInfo.monsterLearningDic[key] = mobLearningInfoDic[key];
@@ -825,11 +826,11 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
     public void Load()
     {
         UserInfo uInfo = GameManager.Instance.savedData.userInfo;
-        foreach (string key in uInfo.monsterInfoDic.keyValueDic.Keys)
+        /*foreach (string key in uInfo.monsterInfoDic.keyValueDic.Keys)
         {
             urmg.PlayerEnemyUnderStandingRateDic[key] = uInfo.monsterInfoDic[key].understandingRate;
             urmg.DrainProbabilityDict[key] = uInfo.monsterInfoDic[key].absorptionRate;
-        }
+        }*/
         foreach(string key in uInfo.monsterLearningDic.keyValueDic.Keys)
         {
             mobLearningInfoDic[key] = uInfo.monsterLearningDic[key];

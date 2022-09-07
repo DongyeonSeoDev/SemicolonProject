@@ -19,7 +19,7 @@ public class SaveData
     public TutorialInfo tutorialInfo = new TutorialInfo();
     public StageInfo stageInfo = new StageInfo();
 
-    public void ResetComplete()
+    public void ResetComplete()  //튜토리얼 못 끝냈을 때의 초기화
     {
         option.keyInputDict.ClearDic();
         userInfo = new UserInfo();
@@ -27,7 +27,7 @@ public class SaveData
         stageInfo = new StageInfo();
     }
 
-    public void ResetAfterTuto()
+    public void ResetAfterTuto()  //튜토리얼 끝냈을 때의 데이터 초기화
     {
         UserInfo uInfo = new UserInfo();
         uInfo.monsterLearningDic = userInfo.monsterLearningDic;
@@ -42,7 +42,7 @@ public class SaveData
     public void Save()
     {
         userInfo.userItems.Save();
-        userInfo.monsterInfoDic.Save();
+        //userInfo.monsterInfoDic.Save();
         userInfo.uiActiveDic.Save();
         userInfo.monsterLearningDic.Save();
         option.keyInputDict.Save();
@@ -50,7 +50,7 @@ public class SaveData
     public void Load()
     {
         userInfo.userItems.Load();
-        userInfo.monsterInfoDic.Load();
+        //userInfo.monsterInfoDic.Load();
         userInfo.uiActiveDic.Load();
         userInfo.monsterLearningDic.Load();
         option.keyInputDict.Load();
@@ -61,8 +61,8 @@ public class SaveData
 public class TutorialInfo
 {
     public bool isEnded = false;
-
-    public string tutorialId;
+    public bool isEndBodyChangeTuto = false;
+    //public string tutorialId;
 }
 
 [Serializable]
@@ -80,11 +80,11 @@ public class UserInfo
 
     public string currentBodyID = Global.OriginBodyID; //현재 장착중인 몸 아이디
 
-    public string quikSlotItemID; //퀵슬롯에 등록된 아이템 아이디
+    //public string quikSlotItemID; //퀵슬롯에 등록된 아이템 아이디
 
     //public List<Triple<int, int, int>> limitedBattleCntItems = new List<Triple<int, int, int>>(); //n교전 후에 사라지는 아이템들 리스트 (아이디, 현재 교전 수, 최대 교전 수(가 되면 사라짐))
     public SaveDic<string, ItemInfo> userItems = new SaveDic<string, ItemInfo>(); //인벤토리 목록 
-    public SaveDic<string, MonsterInfo> monsterInfoDic = new SaveDic<string, MonsterInfo>(); //몬스터 이해도(동화율), 흡수 확률 등의 정보
+    //public SaveDic<string, MonsterInfo> monsterInfoDic = new SaveDic<string, MonsterInfo>(); //몬스터 이해도(동화율), 흡수 확률 등의 정보
     public SaveDic<string, MonsterLearningInfo> monsterLearningDic = new SaveDic<string, MonsterLearningInfo>();
 
     public SaveDic<KeyAction, bool> uiActiveDic = new SaveDic<KeyAction, bool>();
@@ -96,8 +96,13 @@ public class Option
 {
     public SaveDic<KeyAction, KeyCode> keyInputDict = new SaveDic<KeyAction, KeyCode>();  //키세팅
 
+    //효과
+    public bool IsAtkShakeCamera = true;  //슬라임 기본 공격했을 때 화면 흔들림 여부
+    public bool IsHitShakeCam = true; //플레이어나 적이 쳐맞았을 때 카메라 흔들림 여부
+    public bool IsHitTimeFreeze = true; //플레이어나 적이 쳐맞았을 때 타임 프리즈 여부
+
     //자동퀵슬롯
-    public bool isAutoQuikSlot = true;
+    //public bool isAutoQuikSlot = true;
 }
 
 

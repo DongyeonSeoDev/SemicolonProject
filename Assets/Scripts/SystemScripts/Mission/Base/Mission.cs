@@ -13,7 +13,7 @@ public abstract class Mission
     public Mission() { }
     public Mission(string title)
     {
-        missionName = title;    
+        missionName = title;
     }
 
     public virtual void Start()
@@ -48,7 +48,7 @@ public abstract class Mission
         { 
             float er = expReward[(int)missionLevel];
             NGlobal.playerStatUI.AddPlayerStatPointExp(er);
-            UIManager.Instance.InsertNoticeQueue("½ºÅÈ Æ÷ÀÎÆ® °æÇèÄ¡ <color=blue>" + er + "</color> È¹µæ");
+            UIManager.Instance.InsertNoticeQueue("½ºÅÈ Æ÷ÀÎÆ® °æÇèÄ¡ <size=150%>" + er + "</size> È¹µæ");
         }
         else
         {

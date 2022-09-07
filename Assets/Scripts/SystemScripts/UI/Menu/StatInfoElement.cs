@@ -106,8 +106,11 @@ public class StatInfoElement : UITransition
     public void UpdateUI() //현재 스탯과 사용된 횟수 업뎃
     {
         //curStatTxt.text = NGlobal.playerStatUI.GetCurrentPlayerStat(id).ToString();
-        int curStatValue = Mathf.RoundToInt(NGlobal.playerStatUI.GetCurrentPlayerStat(id));
-        curStatTxt.text = eternal.isUnlock ? curStatValue.ToString().ToColorStr("#980D0D", () => eternal.isUnlockClose) : "?" ;
+        string s = "";
+        if (NGlobal.playerStatUI.GetStatSOData(id).statValueDecimal) s = NGlobal.playerStatUI.GetCurrentPlayerStat(id).ToString("0.0");
+        else s = Mathf.RoundToInt(NGlobal.playerStatUI.GetCurrentPlayerStat(id)).ToString();
+
+        curStatTxt.text = eternal.isUnlock ? s.ToString().ToColorStr("#980D0D", () => eternal.isUnlockClose) : "?" ;
         statLvTxt.text = eternal.statLv.ToString();
     }
 
@@ -129,13 +132,17 @@ public class StatInfoElement : UITransition
     {
         if (enter && !eternal.isOpenStat) return;
 
+        string s = "";
+        if (NGlobal.playerStatUI.GetStatSOData(id).statValueDecimal) s = NGlobal.playerStatUI.GetCurrentPlayerStat(id).ToString("0.0");
+        else s = Mathf.RoundToInt(NGlobal.playerStatUI.GetCurrentPlayerStat(id)).ToString();
+
         if (eternal.isUnlockClose)
         {
-            curStatTxt.text = "<color=#980D0D>" + Mathf.RoundToInt(NGlobal.playerStatUI.GetCurrentPlayerStat(id)).ToString() + "</color>";
+            curStatTxt.text = "<color=#980D0D>" + s + "</color>";
             return;
         }
 
-        curStatTxt.text = enter ? string.Concat(Mathf.RoundToInt(NGlobal.playerStatUI.GetCurrentPlayerStat(id)), "<color=green>(+", NGlobal.playerStatUI.eternalStatDic[id].first.upStatValue, ")</color>") : Mathf.RoundToInt(NGlobal.playerStatUI.GetCurrentPlayerStat(id)).ToString();
+        curStatTxt.text = enter ? string.Concat(s, "<color=green>(+", NGlobal.playerStatUI.GetStatSOData(id).upStatValue, ")</color>") : s;
     }
 
     public void UnlockStat() //해당 스탯을 얻음. 하지만 아직 개방상태는 아님

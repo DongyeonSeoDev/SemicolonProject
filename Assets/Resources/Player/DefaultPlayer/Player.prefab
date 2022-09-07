@@ -293,7 +293,7 @@ MonoBehaviour:
   energyRegenSpeedWhenNotAttack: 3
   upMountingPercentageValueWhenEnemyDead: 5
   upUnderstandingRateValueWhenEnemyDead: 1
-  upUnderstandingRateValueWhenEnemyDeadAfterBodyChanged: 3
+  upUnderstandingRateValueWhenEnemyDeadAfterBodyChanged: 4
 --- !u!114 &5427881869486345104
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -383,6 +383,7 @@ MonoBehaviour:
     upAmount: 100
     changeUpAmount: 0
     upTargetStatPerChoiceStat: 1
+    lastMaxStatLv: 0
   - id: 105
     name: "\uCD94\uC9C4\uB825"
     targetStat: "\uCD94\uC9C4\uB825, \uC774\uB3D9\uC18D\uB3C4"
@@ -392,6 +393,7 @@ MonoBehaviour:
     upAmount: 2
     changeUpAmount: 0
     upTargetStatPerChoiceStat: 0.2
+    lastMaxStatLv: 0
   - id: 110
     name: "\uB9F7\uC9D1"
     targetStat: "\uCCB4\uB825"
@@ -401,6 +403,7 @@ MonoBehaviour:
     upAmount: 100
     changeUpAmount: 0
     upTargetStatPerChoiceStat: 5
+    lastMaxStatLv: 0
   - id: 115
     name: "\uBA48\uCD94\uC9C0 \uC54A\uB294 \uB3CC\uC9C4"
     targetStat: 
@@ -410,6 +413,7 @@ MonoBehaviour:
     upAmount: 0
     changeUpAmount: 0
     upTargetStatPerChoiceStat: 0
+    lastMaxStatLv: 0
   - id: 120
     name: "\uBC18\uC0AC"
     targetStat: 
@@ -419,6 +423,7 @@ MonoBehaviour:
     upAmount: 0
     changeUpAmount: 0
     upTargetStatPerChoiceStat: 0
+    lastMaxStatLv: 0
   - id: 125
     name: "\uC810\uC561 \uC7AC\uCDA9\uC804"
     targetStat: 
@@ -428,6 +433,7 @@ MonoBehaviour:
     upAmount: 60
     changeUpAmount: 120
     upTargetStatPerChoiceStat: 0.2
+    lastMaxStatLv: 0
   - id: 130
     name: "\uB9DE\uC740\uCC99"
     targetStat: 
@@ -437,6 +443,7 @@ MonoBehaviour:
     upAmount: 5
     changeUpAmount: 0
     upTargetStatPerChoiceStat: 1
+    lastMaxStatLv: 0
   - id: 135
     name: "\uB2E4\uC911 \uBC1C\uC0AC"
     targetStat: 
@@ -446,6 +453,7 @@ MonoBehaviour:
     upAmount: 1
     changeUpAmount: 0
     upTargetStatPerChoiceStat: 1
+    lastMaxStatLv: 0
   eternalDataList:
   - id: 20
     name: "\uBC29\uC5B4\uB825"

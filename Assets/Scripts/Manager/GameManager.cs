@@ -231,9 +231,9 @@ public partial class GameManager : MonoSingleton<GameManager>
         testKeyInputActionDict.Add(KeyCode.F7, () =>
         {
             checkItrObjDic.Clear();
-            foreach(string key in ObjectManager.Instance.itrObjDic.Keys)
+            foreach(string key in ObjectManager.Instance.ItrObjDic.Keys)
             {
-                checkItrObjDic.Add(new Pair<string, InteractionObj>(key, ObjectManager.Instance.itrObjDic[key]));
+                checkItrObjDic.Add(new Pair<string, InteractionObj>(key, ObjectManager.Instance.ItrObjDic[key]));
             }
         });
 #endif

@@ -112,6 +112,8 @@ public class PlayerShoot : PlayerSkill
                 }
             }
 
+            CinemachineCameraScript.Instance.ShakeOrthoSize();
+
             SlimeGameManager.Instance.Player.UseEnergy(useEnergyAmount);
             SlimeGameManager.Instance.CurrentSkillDelayTimer[skillIdx] = SlimeGameManager.Instance.SkillDelays[skillIdx];
 

@@ -354,7 +354,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             RectTransform emphRectTr = SetUIEmphasisEffect(skillUIArr[1].transform);
             tutorialPhases.Add(new RushTutorialPhase(emphRectTr.gameObject));
 
-            (ObjectManager.Instance.itrObjDic["Rush Master"] as NormalNPC)._NPCInfo.talkId = 2;
+            (ObjectManager.Instance.ItrObjDic["Rush Master"] as NormalNPC)._NPCInfo.talkId = 2;
             
             TalkManager.Instance.SetSubtitle(SubtitleDataManager.Instance.GetSubtitle("AfterTalkWithOrd"));
         }
@@ -403,6 +403,15 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         UIManager.Instance.RequestLogMsg("변신 슬롯을 얻었습니다.");
     }
     #endregion
+
+    public void CheckGainMonsterBody(string id)  //몬스터 몸을 한 번이라도 장착했는지 체크
+    {
+        if (!GameManager.Instance.savedData.tutorialInfo.isEndBodyChangeTuto)
+        {
+            tutorialPhases.Add(new BodyChangeTutorialPhase(SetUIEmphasisEffect(changeableBodysUIArr[1]), id));
+            GameManager.Instance.savedData.tutorialInfo.isEndBodyChangeTuto = true;
+        }
+    }
 }
 
 

@@ -329,6 +329,32 @@ namespace Enemy
             enemyTransform.position += targetDirection * speed * Time.deltaTime;
         }
     }
+    public class CentipedeBossMoveCommand : EnemyCommand
+    {
+        private EnemyData enemyData;
+        private Transform enemyObject;
+        private Rigidbody2D rigid;
+        private Boss2Centipede boss;
+
+        private Vector3 targetPosition;
+
+        public CentipedeBossMoveCommand(EnemyData data, Transform enemyObject, Rigidbody2D rigid, Boss2Centipede boss2Cantipede)
+        {
+            enemyData = data;
+
+            this.enemyObject = enemyObject;
+            this.rigid = rigid;
+            boss = boss2Cantipede;
+        }
+
+        public override void Execute()
+        {
+            targetPosition = (EnemyManager.Player.transform.position - enemyObject.position).normalized;
+            targetPosition *= boss.currentSpeed;
+            enemyData.moveVector = targetPosition;
+            rigid.velocity = targetPosition;
+        }
+    }
 
     public class BossMoveCommand : EnemyCommand // 보스 움직임
     {

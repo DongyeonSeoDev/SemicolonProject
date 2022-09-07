@@ -106,6 +106,31 @@ public static partial class Util
     public static T EnumParse<T>(string str) => (T)Enum.Parse(typeof(T), str);
 
     //public static GameObject LoadAssetPrefab(string path) => AssetDatabase.LoadAssetAtPath<GameObject>("Assets/Prefabs/" + path + ".prefab");
+
+    public static int GetRandomIndex(List<float> weightList)  //가중치 방식 기반으로 랜덤한 인덱스 반환
+    {
+        float total = 0, weight = 0;
+        int i;
+        for (i = 0; i < weightList.Count; i++)
+            total += weightList[i];
+
+        float sel = total * UnityEngine.Random.Range(0f, 1f);
+
+        for (i = 0; i < weightList.Count; i++)
+        {
+            weight += weightList[i];
+            if (sel < weight)
+            {
+                return i;
+            }
+        }
+
+        Debug.Log("예외상황 : 확인 필요");
+        Debug.Log($"total : {total}, sel : {sel}, weight : {weight}");
+        for (i = 0; i < weightList.Count; i++) Debug.Log(weightList[i].ToString());
+
+        return GetRandomIndex(weightList);
+    }
 }
 
 public static partial class Util
