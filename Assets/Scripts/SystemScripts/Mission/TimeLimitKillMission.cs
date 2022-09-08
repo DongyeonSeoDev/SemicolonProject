@@ -18,6 +18,7 @@ public class TimeLimitKillMission : Mission
     public override void End(bool breakDoor = false)
     {
         EventManager.StopListening("StageClear", MissionSuccess);
+        BattleUIManager.Instance.missionTimeFillObj.SetActive(false);
     }
 
     public override void SetLv(DifficultyLevel lv)
@@ -39,6 +40,7 @@ public class TimeLimitKillMission : Mission
         rest = (int)limit;
         missionName = rest.ToString() + "초 이내로 클리어하세요 (" + rest.ToString() + ")";
         EventManager.StartListening("StageClear", MissionSuccess);
+        BattleUIManager.Instance.missionTimeFillObj.SetActive(true);
     }
 
     public override void Start()
@@ -54,6 +56,7 @@ public class TimeLimitKillMission : Mission
         if(!isEnd && !isClear && !playerState.IsDrain)
         {
             limitTimer -= Time.deltaTime;
+            BattleUIManager.Instance.SetMissionTimeFill(limitTimer / limit);
 
             if(!danger && limitTimer < dangerTime)
             {

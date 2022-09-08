@@ -46,8 +46,8 @@ public class StoreProperty : MonoBehaviour
             curLv.text = "현재레벨 : <color=#7C7CFB>" + NGlobal.playerStatUI.choiceStatDic[ID].statLv.ToString() + "</color>";
         }
 
-        if (!IsSellItem) Point = StatStore.Instance.PropCost;
-        else Point = StatStore.Instance.SellCost * NGlobal.playerStatUI.choiceStatDic[ID].statLv;
+        if (!IsSellItem) Point = stat.purchase;
+        else Point = stat.sell * NGlobal.playerStatUI.choiceStatDic[ID].statLv;
 
         point.text = $"<color=yellow>{Point}</color> POINT";
     }

@@ -485,7 +485,7 @@ public class PlayerStatUI : MonoBehaviour
         {
             if(GetCurrentPlayerStat(id) + eternalStatDic[id].first.UpStatValue >= GetCurrentPlayerStat(NGlobal.MaxDamageID))
             {
-                UIManager.Instance.RequestSystemMsg("최소데미지가 최대데미지보다 높을 수 없습니다.");
+                UIManager.Instance.RequestSystemMsg("최대데미지가 낮아서 더 이상 올릴 수 없습니다");
                 return false;
             }
         }

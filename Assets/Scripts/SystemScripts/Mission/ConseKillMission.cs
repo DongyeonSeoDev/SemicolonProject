@@ -22,6 +22,7 @@ public class ConseKillMission : Mission
     public override void End(bool breakDoor = false)
     {
         EventManager.StopListening("EnemyDead", EnemyDead);
+        BattleUIManager.Instance.missionTimeFillObj.SetActive(false);
     }
 
     public override void SetLv(DifficultyLevel lv)
@@ -59,6 +60,7 @@ public class ConseKillMission : Mission
             if (onTimer && !playerState.IsDrain)
             {
                 timer += Time.deltaTime;
+                BattleUIManager.Instance.SetMissionTimeFill(1f - timer / time);
 
                 if(Mathf.CeilToInt(time - timer)  < iTimer)  //매번 미션 제목을 갱신하면 연산이 많이 발생해서 .int타입으로도 시간을 재고 1초 깎일 때마다 제목 갱신
                 {
@@ -71,6 +73,7 @@ public class ConseKillMission : Mission
                     curConseKill = 0;
                     BattleUIManager.Instance.ShakeMissionPanel(0.4f, 10);
                     SetMissionNameText($"{time}초 이내에 적을 연속처치하세요 (0/{needConseKill})");
+                    BattleUIManager.Instance.missionTimeFillObj.SetActive(false);
                 }
             }
         }
@@ -85,6 +88,7 @@ public class ConseKillMission : Mission
         if (!onTimer)
         {
             onTimer = true;
+            BattleUIManager.Instance.missionTimeFillObj.SetActive(true);
         }
         else
         {

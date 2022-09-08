@@ -38,7 +38,9 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
     #region Mission
 
     public CanvasGroup missionCvsg;
-    public TextMeshProUGUI missionContent;  
+    public TextMeshProUGUI missionContent;
+    public GameObject missionTimeFillObj;
+    public Image missionTimeFill;
     [SerializeField] private MulSpriteColorCtrl mscCtrl;  //미션 패널 테두리 관련 쉐이더 컨트롤러 스크립트
     [SerializeField][ColorUsage(true, true)] private Color[] missionLvColors;  //미션 난이도에 따른 미션 패널의 테두리 색상
     private RectTransform missionPanelRt;
@@ -419,12 +421,17 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
         missionPanelRt.DOShakeAnchorPos(duration, strength);
     }
 
-    public void SetMissionStarAmount(DifficultyLevel lv)
+    public void SetMissionStarAmount(DifficultyLevel lv)  //미션 난이도 별 UI 세팅
     {
         int cnt = (int)lv + 1;
         for(int i=0; i<missionLVStars.Length; i++)
         {
             missionLVStars[i].SetActive(i < cnt);
         }
+    }
+
+    public void SetMissionTimeFill(float rate)
+    {
+        missionTimeFill.fillAmount = rate;
     }
 }

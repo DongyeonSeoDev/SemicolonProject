@@ -13,9 +13,14 @@ MonoBehaviour:
   m_Name: FrenzyData
   m_EditorClassIdentifier: 
   statId: 115
+  statValueDecimal: 0
   maxStatLv: 1
+  upStatValue: 0
   statName: "\uBA48\uCD94\uC9C0 \uC54A\uB294 \uB3CC\uC9C4"
   statSpr: {fileID: 21300000, guid: ee1c35077f2ee1d4da28858a68c5fc7e, type: 3}
+  charType: 0
+  purchase: 8
+  sell: 3
   simpleAbilExplanation: "\uB3CC\uC9C4 \uC2DC \uC801\uACFC\uC758 \uCDA9\uB3CC \uBB34\uC2DC"
   detailAbilExplanation: "\uB3CC\uC9C4 \uC2DC \uC801\uC744 \uAD00\uD1B5\uD558\uBA70
     \uACF5\uACA9\uD558\uACE0 \uB109\uBC31 \uAC70\uB9AC \uAC10\uC18C"

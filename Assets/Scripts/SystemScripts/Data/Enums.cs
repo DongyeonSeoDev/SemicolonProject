@@ -185,6 +185,13 @@ public enum DoorDirType
     BACK
 }
 
+public enum CharType
+{
+    MONSTER,
+    STORE,
+    SECRET
+}
+
 /*public enum EnemySpecies
 {
     NONE,

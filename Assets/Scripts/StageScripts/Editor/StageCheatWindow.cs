@@ -289,7 +289,7 @@ public class StageCheatWindow : EditorWindow
 
                 
                 GUILayout.Label("[Page]", EditorStyles.boldLabel);
-                if (GUILayout.Button("Open Out GitHub Page"))
+                if (GUILayout.Button("Open GitHub Page"))
                 {
                     Application.OpenURL("https://github.com/DongyeonSeoDev/SemicolonProject");
                 }
