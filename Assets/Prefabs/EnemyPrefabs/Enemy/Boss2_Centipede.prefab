@@ -807,13 +807,19 @@ MonoBehaviour:
   hpEffectAnimation: {fileID: 0}
   stunEffectPosition: {x: 0, y: 0}
   movePivot: {fileID: 4073570852634963415}
+  meleeAttack1CircleRadius: 2
+  meleeAttack1CircleDamageValue: 3
+  meleeAttack1BulletDamageValue: -10
+  dashAttackDis: 10
+  meleeAttack2DamageValue: -5
+  sneerDamageValue: -10
   whatIsWall:
     serializedVersion: 2
     m_Bits: 0
   currentSpeed: 0
   sneerBullet: {fileID: 0}
   shootTrm: {fileID: 8978629603519336582}
-  enemyMeleeAttack1Collider: {fileID: 2599717758455685429}
+  enemyMeleeAttack1Collider: {fileID: 1564419724183329414}
   enemyMeleeAttack2Collider: {fileID: 8289572719645505160}
 --- !u!114 &-2415847091630452189
 MonoBehaviour:
@@ -866,7 +872,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3849573374549265740}
-  - component: {fileID: 2599717758455685429}
+  - component: {fileID: 1564419724183329414}
   - component: {fileID: 516798350910489312}
   m_Layer: 11
   m_Name: MeleeAttackCollider
@@ -889,8 +895,8 @@ Transform:
   m_Father: {fileID: 5874040416477344780}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!60 &2599717758455685429
-PolygonCollider2D:
+--- !u!58 &1564419724183329414
+CircleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -899,29 +905,12 @@ PolygonCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 2}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 12.5, y: 6.25}
-    newSize: {x: 12.5, y: 6.25}
-    adaptiveTilingThreshold: 0.5
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Points:
-    m_Paths:
-    - - {x: -1.6413883, y: -2.044024}
-      - {x: 0.8591157, y: -2.1130016}
-      - {x: 0.9427384, y: -0.78881145}
-      - {x: 0.8998172, y: -0.0075280666}
-      - {x: 0.42230827, y: 0.37207535}
-      - {x: 0.015036911, y: 0.37566316}
-      - {x: -0.5814607, y: 0.2918787}
-      - {x: -1.6198543, y: -0.8208962}
+  m_Offset: {x: 1, y: 1}
+  serializedVersion: 2
+  m_Radius: 2
 --- !u!114 &516798350910489312
 MonoBehaviour:
   m_ObjectHideFlags: 0

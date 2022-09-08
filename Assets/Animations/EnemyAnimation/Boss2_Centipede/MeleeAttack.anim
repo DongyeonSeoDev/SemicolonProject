@@ -30,7 +30,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 1.5714285
+        time: 0.42857143
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -39,7 +39,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 1.7142857
+        time: 0.5714286
         value: 1
         inSlope: Infinity
         outSlope: Infinity
@@ -48,7 +48,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 1.8571428
+        time: 0.71428573
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -57,7 +57,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 2
+        time: 0.85714287
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -78,11 +78,11 @@ AnimationClip:
       value: {fileID: 3293998193983378443, guid: 80588295cc3e47646bc33fdd59baa817, type: 3}
     - time: 0.2857143
       value: {fileID: -6906149407646337713, guid: 80588295cc3e47646bc33fdd59baa817, type: 3}
-    - time: 1.5714285
+    - time: 0.42857143
       value: {fileID: 3888737341916441377, guid: 80588295cc3e47646bc33fdd59baa817, type: 3}
-    - time: 1.7142857
+    - time: 0.5714286
       value: {fileID: 8999652936504535952, guid: 80588295cc3e47646bc33fdd59baa817, type: 3}
-    - time: 1.8571428
+    - time: 0.71428573
       value: {fileID: 2699110496295538302, guid: 80588295cc3e47646bc33fdd59baa817, type: 3}
     attribute: m_Sprite
     path: 
@@ -120,7 +120,7 @@ AnimationClip:
     m_AdditiveReferencePoseClip: {fileID: 0}
     m_AdditiveReferencePoseTime: 0
     m_StartTime: 0
-    m_StopTime: 2
+    m_StopTime: 0.85714287
     m_OrientationOffsetY: 0
     m_Level: 0
     m_CycleOffset: 0
@@ -149,7 +149,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 1.5714285
+        time: 0.42857143
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -158,7 +158,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 1.7142857
+        time: 0.5714286
         value: 1
         inSlope: Infinity
         outSlope: Infinity
@@ -167,7 +167,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 1.8571428
+        time: 0.71428573
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -176,7 +176,7 @@ AnimationClip:
         inWeight: 0
         outWeight: 0
       - serializedVersion: 3
-        time: 2
+        time: 0.85714287
         value: 0
         inSlope: Infinity
         outSlope: Infinity
@@ -203,27 +203,34 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0
-    functionName: CentipedeAttackStart
+    functionName: CentipedeMeleeAttack1Start
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
-  - time: 1.4285715
+  - time: 0.2857143
+    functionName: StopAnim
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0.8
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.42857143
     functionName: SetAnimSpeed
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 1.5
     intParameter: 0
     messageOptions: 0
-  - time: 1.7142857
+  - time: 0.5714286
     functionName: ShootBulletAround
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 12
     messageOptions: 0
-  - time: 2
+  - time: 0.85714287
     functionName: CentipedeAttackEnd
     data: 
     objectReferenceParameter: {fileID: 0}

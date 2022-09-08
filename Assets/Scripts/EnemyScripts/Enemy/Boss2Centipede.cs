@@ -8,11 +8,47 @@ namespace Enemy
     {
         public Transform movePivot;
 
+        private Vector2 dashTargetPosition = Vector2.zero;
+
+        private float originMinAttackPower = 0f;
+        private float originMaxAttackPower = 0f;
+
+        private float bulletMinAttackPower = 0f;
+        private float bulletMaxAttackPower = 0f;
+
         private float originCurrentSpeed = 0f;
 
+        private float stopAnimTimer = 0f;
         private float moveTimer = 0f;
         private float dashTimer = 0f;
         private float meleeAttackDis = 12f;
+
+        #region meleeAttack1(지면파괴)관련 변수
+        [Header("meleeAttack1(지면파괴)의 원통형 공격 범위")]
+        [SerializeField]
+        private float meleeAttack1CircleRadius = 2;
+        [Header("meleeAttack1(지면파괴)의 원통형 데미지 변동값")]
+        [SerializeField]
+        private float meleeAttack1CircleDamageValue = 3;
+        [Header("meleeAttack1(지면파괴)의 구체 데미지 변동 값")]
+        [SerializeField]
+        private float meleeAttack1BulletDamageValue = -10;
+        #endregion
+
+        #region meleeAttack2(물어뜯기)관련 변수
+        [Header("meleeAttack2(물어뜯기)의 돌진 거리")]
+        [SerializeField]
+        private float dashAttackDis = 5f;
+        [Header("meleeAttack2(물어뜯기)의 돌진 데미지 변동 값")]
+        [SerializeField]
+        private float meleeAttack2DamageValue = -5f;
+        #endregion
+
+        #region sneer(침뱉기)관련 변수
+        [Header("Sneer(침뱉기)의 구체 데미지 변동 값")]
+        [SerializeField]
+        private float sneerDamageValue = -10f;
+        #endregion
 
         private bool isMove = false;
         private bool isDashToPlayer = false;
@@ -28,6 +64,7 @@ namespace Enemy
         private int sneerCount = 0;
 
         private EnemyCommand enemyMoveCommand;
+        private EnemyCommand dashCommand;
         private EnemyCommand enemySneerCommand;
 
         [HideInInspector] public LayerMask whatIsWall;
@@ -49,7 +86,9 @@ namespace Enemy
         {
             base.Awake();
 
-            currentSpeed = 10f;
+            enemyMeleeAttack1Collider.GetComponent<CircleCollider2D>().radius = meleeAttack1CircleRadius;
+            currentSpeed = enemyDataSO.speed;
+            
         }
 
         protected override void OnEnable()
@@ -64,6 +103,8 @@ namespace Enemy
             enemyData.isNoStun = true;
 
             originCurrentSpeed = currentSpeed;
+            originMinAttackPower = enemyData.minAttackPower;
+            originMaxAttackPower = enemyData.maxAttackPower;
 
             SetCommands();
             MoveEnemy();
@@ -78,22 +119,15 @@ namespace Enemy
                 return;
             }
 
+            StopAnimTimerCheck();
+            DashCheck();
+            MoveCheck();
+        }
+
+        private void MoveCheck()
+        {
             Vector3 playerPosition = EnemyManager.Player.transform.position;
             float dis = Vector3.Distance(playerPosition, transform.position);
-
-            if(isDashToPlayer)
-            {
-                dashTimer -= Time.deltaTime;
-
-                enemyMoveCommand.Execute();
-
-                if (dashTimer <= 0)
-                {
-                    currentSpeed = originCurrentSpeed; 
-                    dashTimer = 0f;
-                    isDashToPlayer = false;
-                }
-            }
 
             if (isMove && !isDashToPlayer)
             {
@@ -109,7 +143,6 @@ namespace Enemy
                 }
             }
         }
-
         public override void MoveEnemy()
         {
             base.MoveEnemy();
@@ -128,6 +161,48 @@ namespace Enemy
                 bossHPBar.SetFill();
             }
         }
+
+        private void DashCheck()
+        {
+            if (isDashToPlayer)
+            {
+                dashTimer -= Time.deltaTime;
+
+                if (dashCommand == null)
+                {
+                    DashToPlayerEnd();
+                }
+
+                dashCommand.Execute();
+
+                if (dashTimer <= 0)
+                {
+                    DashToPlayerEnd();
+                }
+            }
+        }
+        public void DashToPlayer(float speed) // 대쉬 시작
+        {
+            Vector3 playerPosition = EnemyManager.Player.transform.position;
+
+            dashTargetPosition = playerPosition;
+
+            isDashToPlayer = true;
+            dashTimer = dashAttackDis / speed;
+            currentSpeed = speed;
+
+            dashCommand = new CentipedeBossDashCommand(enemyData, playerPosition, rb, this);
+
+            isMove = false;
+            moveTimer = 0f;
+        }
+        private void DashToPlayerEnd()// 대쉬 끝났을 때
+        {
+            currentSpeed = originCurrentSpeed;
+            dashCommand = null;
+            isDashToPlayer = false;
+        }
+
         private void SetCommands()
         {
             enemyMoveCommand = new CentipedeBossMoveCommand(enemyData, movePivot, rb, this);
@@ -151,22 +226,7 @@ namespace Enemy
                 EventManager.TriggerEvent("BossDead");
             }
         }
-        public void DashToPlayer(float speed) // 대쉬 시작
-        {
-            Vector3 playerPosition = EnemyManager.Player.transform.position;
-            float dis = Vector3.Distance(playerPosition, transform.position);
-
-            isDashToPlayer = true;
-            dashTimer = dis / speed;
-            currentSpeed = speed;
-
-            isMove = false;
-            moveTimer = 0f;
-        }
-        private void DashToPlayerEnd()// 대쉬 끝났을 때
-        {
-            isDashToPlayer = false;
-        }
+        
         public void AttackCheck() // 이벤트 구독에 사용됨 - 특수공격 사용 확인
         {
             int value = Random.Range(0, 2);
@@ -185,7 +245,7 @@ namespace Enemy
 
                 if (playerPosition.y >= transform.position.y)
                 {
-                    if (Mathf.Abs(EnemyManager.Player.transform.position.y - transform.position.y) > 1f)
+                    if (value == 0)
                     {
                         enemyData.animationDictionary[EnemyAnimationType.Attack] = hashMeleeAttack1;
                     }
@@ -213,15 +273,40 @@ namespace Enemy
             }
            
         }
+        public void StopAnim(float stopTime)
+        {
+            if(stopTime <= 0)
+            {
+                return;
+            }
+
+            stopAnimTimer = stopTime;
+
+            SetAnimSpeed(0f);
+        }
+        private void StopAnimTimerCheck()
+        {
+            if(stopAnimTimer > 0f)
+            {
+                stopAnimTimer -= Time.deltaTime;
+
+                if(stopAnimTimer <= 0f)
+                {
+                    SetAnimSpeed(1f);
+                }
+            }
+        }
         public void SetAnimSpeed(float speed)
         {
             anim.speed = speed;
         }
+        // sneer(침뱉기)에 쓰이는 총알 발사 함수
         public void ShootBulletToPlayer()
         {
-            enemySneerCommand = new CentipedeLongRangeAttackCommand(this, shootTrm, EnemyManager.Player.transform.position, Type.CentipedeBullet, shootTrm, enemyData.minAttackPower, enemyData.maxAttackPower, enemyData.randomCritical, enemyData.randomCritical);
+            enemySneerCommand = new CentipedeLongRangeAttackCommand(this, shootTrm, EnemyManager.Player.transform.position, Type.CentipedeBullet, shootTrm, bulletMinAttackPower, bulletMaxAttackPower, enemyData.randomCritical, enemyData.randomCritical);
             enemySneerCommand.Execute();
         }
+        // meleeAttack1(지면 파괴)에 쓰이는 총알 발사 함수
         public void ShootBulletAround(int num)
         {
             Vector3 rotation = Vector3.zero;
@@ -233,12 +318,13 @@ namespace Enemy
                 rotation = Quaternion.Euler(1f, 1f, up * i) * Vector2.one;
                 rotation = rotation.normalized;
 
-                enemySneerCommand = new CentipedeLongRangeAttackCommand(this, shootTrm, EnemyManager.Player.transform.position, rotation, Type.CentipedeBullet, shootTrm, enemyData.minAttackPower, enemyData.maxAttackPower, enemyData.randomCritical, enemyData.randomCritical);
+                enemySneerCommand = new CentipedeLongRangeAttackCommand(this, shootTrm, EnemyManager.Player.transform.position, rotation, Type.CentipedeBullet, shootTrm, bulletMinAttackPower, bulletMaxAttackPower, enemyData.randomCritical, enemyData.randomCritical);
                 enemySneerCommand.Execute();
             }
         }
         public EnemyState AttackStateChangeCondition() // 이벤트 구독에 사용됨 - 공격2 사용 가능 확인
         {
+            int value = Random.Range(0, 2);
             Vector3 playerPosition = EnemyManager.Player.transform.position;
             float dis = Vector3.Distance(playerPosition, transform.position);
 
@@ -251,7 +337,7 @@ namespace Enemy
                         enemyData.attackDelay = 1f;
                         sneerCount = 0;
 
-                        if (Mathf.Abs(EnemyManager.Player.transform.position.y - transform.position.y) > 1f)
+                        if (value == 0)
                         {
                             enemyData.animationDictionary[EnemyAnimationType.Attack] = hashMeleeAttack1;
                         }
@@ -282,7 +368,31 @@ namespace Enemy
             
             return null;
         }
-        public void CentipedeAttackStart()
+        public void CentipedeMeleeAttack1Start()
+        {
+            CentipedeAttackStart();
+
+            enemyData.minAttackPower += meleeAttack1CircleDamageValue;
+            enemyData.maxAttackPower += meleeAttack1CircleDamageValue;
+
+            bulletMinAttackPower = originMinAttackPower + meleeAttack1BulletDamageValue;
+            bulletMaxAttackPower = originMaxAttackPower + meleeAttack1BulletDamageValue;
+        }
+        public void CentipedeMeleeAttack2Start()
+        {
+            CentipedeAttackStart();
+
+            enemyData.minAttackPower += meleeAttack2DamageValue;
+            enemyData.maxAttackPower += meleeAttack2DamageValue;
+        }
+        public void CentipedeSneerStart()
+        {
+            CentipedeAttackStart();
+
+            bulletMinAttackPower = originMinAttackPower + sneerDamageValue;
+            bulletMaxAttackPower = originMaxAttackPower + sneerDamageValue;
+        }
+        private void CentipedeAttackStart()
         {
             isAttack = true;
         }
@@ -290,6 +400,12 @@ namespace Enemy
         {
             isAttack = false;
             anim.speed = 1f;
+
+            enemyData.minAttackPower = originMinAttackPower;
+            enemyData.maxAttackPower = originMaxAttackPower;
+
+            bulletMinAttackPower = originMinAttackPower;
+            bulletMaxAttackPower= originMaxAttackPower;
 
             enemyMeleeAttack1Collider.GetComponent<EnemyAttackCheck>().AttackObjectReset();
             enemyMeleeAttack2Collider.GetComponent<EnemyAttackCheck>().AttackObjectReset();

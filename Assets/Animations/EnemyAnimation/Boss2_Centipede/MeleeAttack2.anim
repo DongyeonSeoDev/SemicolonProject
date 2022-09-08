@@ -188,17 +188,31 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0
-    functionName: CentipedeAttackStart
+    functionName: CentipedeMeleeAttack2Start
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.33333334
+    functionName: StopAnim
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0.4
     intParameter: 0
     messageOptions: 0
   - time: 0.5
     functionName: DashToPlayer
     data: 
     objectReferenceParameter: {fileID: 0}
-    floatParameter: 20
+    floatParameter: 10
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.6666667
+    functionName: StopAnim
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0.4
     intParameter: 0
     messageOptions: 0
   - time: 1

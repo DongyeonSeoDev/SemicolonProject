@@ -329,6 +329,31 @@ namespace Enemy
             enemyTransform.position += targetDirection * speed * Time.deltaTime;
         }
     }
+    public class CentipedeBossDashCommand : EnemyCommand
+    {
+        private EnemyData enemyData;
+        private Rigidbody2D rigid;
+        private Boss2Centipede boss;
+
+        private Vector3 dashDir;
+
+        public CentipedeBossDashCommand(EnemyData data, Vector3 targetPosition, Rigidbody2D rigid, Boss2Centipede boss2Cantipede)
+        {
+            enemyData = data;
+
+            this.rigid = rigid;
+            boss = boss2Cantipede;
+
+            dashDir = targetPosition - enemyData.enemyObject.transform.position;
+            dashDir = dashDir.normalized;
+        }
+
+        public override void Execute()
+        {
+            enemyData.moveVector = dashDir * boss.currentSpeed;
+            rigid.velocity = dashDir * boss.currentSpeed;
+        }
+    }
     public class CentipedeBossMoveCommand : EnemyCommand
     {
         private EnemyData enemyData;
