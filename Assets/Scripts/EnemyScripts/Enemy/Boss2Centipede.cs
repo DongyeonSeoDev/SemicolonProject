@@ -99,6 +99,7 @@ namespace Enemy
             enemyData.attackDelay = 2f;
             enemyData.noAttackTime = 5f;
             enemyData.isAttackPlayerDistance = 20f;
+            enemyData.enemySpriteRenderer = GetComponent<SpriteRenderer>();
             enemyData.isNoKnockback = true;
             enemyData.isNoStun = true;
 
@@ -183,6 +184,7 @@ namespace Enemy
         }
         public void DashToPlayer(float speed) // 대쉬 시작
         {
+            
             Vector3 playerPosition = EnemyManager.Player.transform.position;
 
             dashTargetPosition = playerPosition;
