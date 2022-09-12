@@ -63,8 +63,6 @@ namespace Enemy
 
             if (enemyData.moveEvent != null)
             {
-                Debug.Log("Action");
-
                 enemyData.moveEvent.Invoke();
             }
 

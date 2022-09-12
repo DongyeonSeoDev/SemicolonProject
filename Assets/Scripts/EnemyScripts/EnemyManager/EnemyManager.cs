@@ -219,7 +219,12 @@ namespace Enemy
         {
             if (currentStageData != null)
             {
-                isPlayer[FindPath.GetBoolPosition(currentStageData, position.x, position.y)] = data;
+                int pos = FindPath.GetBoolPosition(currentStageData, position.x, position.y);
+
+                if (pos >= 0 && pos < isPlayer.Length)
+                {
+                    isPlayer[pos] = data;
+                }
             }
         }
 
