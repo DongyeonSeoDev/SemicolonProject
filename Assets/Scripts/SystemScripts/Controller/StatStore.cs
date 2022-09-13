@@ -59,6 +59,45 @@ public class StatStore : MonoSingleton<StatStore>
 
     public CharType GetCharType(ushort id) => NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id).charType;
 
+    private void SetIncounter(ref List<ushort> list, int cnt)
+    {
+        CharType type;
+        ushort tmp;
+        if (cnt > 0)
+        {
+            //1번칸은 비밀이나 몬스터
+            type = GetCharType(list[0]);
+            if (!(type == CharType.SECRET || type == CharType.MONSTER))
+            {
+                int idx = list.FindIndex(x => (GetCharType(x) == CharType.MONSTER || GetCharType(x) == CharType.SECRET) && !prevStockIDList.Contains(x));  //아무런 값도 못가져왔을 때의 예외처리 필요
+                tmp = list[0];
+                list[0] = list[idx];
+                list[idx] = tmp;
+            }
+
+            //2,3번칸은 상점
+            /*if (cnt > 1)
+            {
+                ushort tmp2 = 0;
+                for (i = 1; i < cnt; i++)
+                {
+                    type = GetCharType(list[i]);
+                    if (type != CharType.STORE)
+                    {
+                        int idx = list.FindIndex(x => GetCharType(x) == CharType.STORE && x != tmp2);  //아무런 값도 못가져왔을 때의 예외처리 필요
+                        tmp = list[i];
+                        list[i] = list[idx];
+                        list[idx] = tmp;
+                        tmp2 = list[i];
+
+                        Debug.Log(list[i]);
+                        Debug.Log(list[idx]);
+                    }
+                }
+            }*/
+        }
+    }
+
     public void EnteredStatArea()  //상점 구역 입장했을 때 호출됨
     {
         curRechargeCount = 0;
@@ -78,37 +117,9 @@ public class StatStore : MonoSingleton<StatStore>
         if (list.Count < maxStockAmount) cnt = list.Count;
 
         //특성 카드 인카운터
-        CharType type;
-        ushort tmp;
-        if(cnt > 0)
-        {
-            for(i=0; i<cnt; i++)
-            {
-                type = GetCharType(list[i]);
-                if(type != CharType.STORE)
-                {
-                    int idx = list.FindIndex(x => GetCharType(x) == CharType.STORE);
-                    tmp = list[i];
-                    list[i] = list[idx];
-                    list[idx] = tmp;
-                }
-            }
-        }
-        if (cnt >= maxStockAmount)
-        {
-            for (i = 0; i < cnt; i++)
-            {
-                type = GetCharType(list[i]);
-                if (type == CharType.SECRET || type == CharType.MONSTER)
-                {
-                    tmp = list[maxStockAmount - 1];
-                    list[maxStockAmount - 1] = list[i];
-                    list[i] = tmp;
-                    break;
-                }
-            }
-        }
+        SetIncounter(ref list, cnt);
 
+        //카드 세팅
         for (i = 0; i < cnt; i++)
         {
             storeProperties[i].Renewal(list[i], true);
@@ -156,9 +167,12 @@ public class StatStore : MonoSingleton<StatStore>
                     StatElement stat = NGlobal.playerStatUI.choiceStatDic[id];
                     return stat.statLv < NGlobal.playerStatUI.GetStatSOData(id).maxStatLv && !prevStockIDList.Contains(id);
                 }, 15);
-                prevStockIDList.Clear();
 
                 if (list.Count < maxStockAmount) cnt = list.Count;
+
+                SetIncounter(ref list, cnt);
+
+                prevStockIDList.Clear();
 
                 Util.DelayFunc(() =>
                 {
