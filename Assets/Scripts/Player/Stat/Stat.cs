@@ -403,13 +403,9 @@ public class ChoiceStat
 
     public void Reset()
     {
-        proficiency.ResetComplete();
-        momentom.ResetComplete();
-        endurance.ResetComplete();
-        frenzy.ResetComplete();
-        reflection.ResetComplete();
-        mucusRecharge.ResetComplete();
-        fake.ResetComplete();
-        multipleShots.ResetComplete();
+        for(int i=0; i<AllStats.Count; i++)
+        {
+            AllStats[i].ResetComplete();
+        }
     }
 }
