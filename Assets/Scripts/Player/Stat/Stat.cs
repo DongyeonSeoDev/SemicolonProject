@@ -360,7 +360,16 @@ public class ChoiceStat
 
     public StatElement fake = new StatElement(); // 맞은척
 
-    public StatElement multipleShots = new StatElement() ; // 여러갈래 발사 
+    public StatElement multipleShots = new StatElement() ; // 다중 발사
+
+    public StatElement health = new StatElement();  //건강함
+    public StatElement strong = new StatElement();  //강함
+    public StatElement powerful = new StatElement();  //강력함
+    public StatElement nimble = new StatElement();  //날렵함
+    public StatElement active = new StatElement();  //활발함
+    public StatElement incisive = new StatElement();  //예리함
+    public StatElement persistent = new StatElement();  //집요함
+    public StatElement hard = new StatElement();  //단단함
 
     private List<StatElement> elements;
 
@@ -379,6 +388,14 @@ public class ChoiceStat
                 elements.Add(mucusRecharge);
                 elements.Add(fake);
                 elements.Add(multipleShots);
+                elements.Add(health);
+                elements.Add(strong);
+                elements.Add(powerful);
+                elements.Add(nimble);
+                elements.Add(active);
+                elements.Add(incisive);
+                elements.Add(persistent);
+                elements.Add(hard);
             }
             return elements;
         }

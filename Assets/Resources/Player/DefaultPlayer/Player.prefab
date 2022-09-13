@@ -76,213 +76,209 @@ MonoBehaviour:
       maxHp:
         id: 5
         statValue: 100
-        upStatValue: 5
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
-        maxStatLv: 0
       minDamage:
         id: 10
         statValue: 8
-        upStatValue: 1
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
-        maxStatLv: 0
       maxDamage:
         id: 15
         statValue: 12
-        upStatValue: 1
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
-        maxStatLv: 0
       defense:
         id: 20
         statValue: 0
-        upStatValue: 1
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
-        maxStatLv: 0
       intellect:
         id: 25
         statValue: 0
-        upStatValue: 1
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
-        maxStatLv: 0
       speed:
         id: 30
         statValue: 8
-        upStatValue: 1
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
-        maxStatLv: 0
       attackSpeed:
         id: 35
         statValue: 1
-        upStatValue: 1
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
-        maxStatLv: 0
       criticalRate:
         id: 40
         statValue: 0
-        upStatValue: 2
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
-        maxStatLv: 0
       criticalDamage:
         id: 45
         statValue: 0
-        upStatValue: 1
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
-        maxStatLv: 0
     additionalEternalStat:
       maxHp:
         id: 0
         statValue: 0
-        upStatValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
-        maxStatLv: 0
       minDamage:
         id: 0
         statValue: 0
-        upStatValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
-        maxStatLv: 0
       maxDamage:
         id: 0
         statValue: 0
-        upStatValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
-        maxStatLv: 0
       defense:
         id: 0
         statValue: 0
-        upStatValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
-        maxStatLv: 0
       intellect:
         id: 0
         statValue: 0
-        upStatValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
-        maxStatLv: 0
       speed:
         id: 0
         statValue: 0
-        upStatValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
-        maxStatLv: 0
       attackSpeed:
         id: 0
         statValue: 0
-        upStatValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
-        maxStatLv: 0
       criticalRate:
         id: 0
         statValue: 0
-        upStatValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
-        maxStatLv: 0
       criticalDamage:
         id: 0
         statValue: 0
-        upStatValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
-        maxStatLv: 0
     choiceStat:
       proficiency:
         id: 100
         statValue: 0
-        upStatValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
-        maxStatLv: 20
       momentom:
         id: 105
         statValue: 0
-        upStatValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
-        maxStatLv: 10
       endurance:
         id: 110
         statValue: 0
-        upStatValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
-        maxStatLv: 10
       frenzy:
         id: 115
         statValue: 0
-        upStatValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
-        maxStatLv: 1
       reflection:
         id: 120
         statValue: 0
-        upStatValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
-        maxStatLv: 1
       mucusRecharge:
         id: 125
         statValue: 0
-        upStatValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
-        maxStatLv: 5
       fake:
         id: 130
         statValue: 0
-        upStatValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
-        maxStatLv: 5
       multipleShots:
         id: 135
         statValue: 0
-        upStatValue: 1
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
-        maxStatLv: 5
+      health:
+        id: 140
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      strong:
+        id: 145
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      powerful:
+        id: 150
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      nimble:
+        id: 155
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      active:
+        id: 160
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      incisive:
+        id: 165
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      persistent:
+        id: 170
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      hard:
+        id: 175
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
   playerInput: {fileID: 0}
   playerChoiceStatControl: {fileID: 0}
   playerReflectionScript: {fileID: 0}
@@ -453,6 +449,86 @@ MonoBehaviour:
     upAmount: 1
     changeUpAmount: 0
     upTargetStatPerChoiceStat: 1
+    lastMaxStatLv: 0
+  - id: 140
+    name: "\uAC74\uAC15\uD568"
+    targetStat: 
+    unlockStatValue: 0
+    firstValue: 2
+    checkStartValue: 0
+    upAmount: 1
+    changeUpAmount: 0
+    upTargetStatPerChoiceStat: 8
+    lastMaxStatLv: 0
+  - id: 145
+    name: "\uAC15\uD568"
+    targetStat: 
+    unlockStatValue: 0
+    firstValue: 0
+    checkStartValue: 0
+    upAmount: 0
+    changeUpAmount: 0
+    upTargetStatPerChoiceStat: 1
+    lastMaxStatLv: 0
+  - id: 150
+    name: "\uAC15\uB825\uD568"
+    targetStat: 
+    unlockStatValue: 0
+    firstValue: 2
+    checkStartValue: 0
+    upAmount: 1
+    changeUpAmount: 0
+    upTargetStatPerChoiceStat: 1
+    lastMaxStatLv: 0
+  - id: 155
+    name: "\uB0A0\uB835\uD568"
+    targetStat: 
+    unlockStatValue: 0
+    firstValue: 2
+    checkStartValue: 0
+    upAmount: 1
+    changeUpAmount: 0
+    upTargetStatPerChoiceStat: 0.2
+    lastMaxStatLv: 0
+  - id: 160
+    name: "\uD65C\uBC1C\uD568"
+    targetStat: 
+    unlockStatValue: 0
+    firstValue: 2
+    checkStartValue: 0
+    upAmount: 1
+    changeUpAmount: 0
+    upTargetStatPerChoiceStat: 0.2
+    lastMaxStatLv: 0
+  - id: 165
+    name: "\uC608\uB9AC\uD568"
+    targetStat: 
+    unlockStatValue: 0
+    firstValue: 2
+    checkStartValue: 0
+    upAmount: 1
+    changeUpAmount: 0
+    upTargetStatPerChoiceStat: 5
+    lastMaxStatLv: 0
+  - id: 170
+    name: "\uC9D1\uC694\uD568"
+    targetStat: 
+    unlockStatValue: 0
+    firstValue: 2
+    checkStartValue: 0
+    upAmount: 1
+    changeUpAmount: 0
+    upTargetStatPerChoiceStat: 25
+    lastMaxStatLv: 0
+  - id: 175
+    name: "\uB2E8\uB2E8\uD568"
+    targetStat: 
+    unlockStatValue: 0
+    firstValue: 2
+    checkStartValue: 0
+    upAmount: 1
+    changeUpAmount: 0
+    upTargetStatPerChoiceStat: 2
     lastMaxStatLv: 0
   eternalDataList:
   - id: 20

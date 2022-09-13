@@ -530,18 +530,23 @@ public class StageManager : MonoSingleton<StageManager>
             //Last Stage
             Debug.Log("Last Stage : " + currentStageData.stageID);
             
-            //지금은 1스테이지까지만 있으므로 임시로 이렇게 함
             if (currentFloor > 0)
             {
                 currentStage.stageDoors.ForEach(door =>
                 {
                     if (!door.IsExitDoor)
                     {
-                        door.gameObject.SetActive(false);
+                        if (door.dirType != DoorDirType.FRONT)
+                            door.gameObject.SetActive(false);
+                        else
+                        {
+                            door.nextStageData = currentStageData.stageFloor.nextStageSO;
+                            door.gameObject.SetActive(true);
+                        }
                     }
                 });
             }
-            else
+            else  //튜토리얼 스테이지면
             {
                 currentStage.stageDoors.ForEach(door =>
                 {

@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8065046aea5a0f3408bb64d2c52d9860, type: 3}
-  m_Name: MultiShootData
+  m_Name: NimbleData
   m_EditorClassIdentifier: 
-  statId: 135
-  statValueDecimal: 0
-  maxStatLv: 4
+  statId: 155
+  statValueDecimal: 1
+  maxStatLv: 1
   upStatValue: 0
-  statName: "\uB2E4\uC911 \uBC1C\uC0AC"
+  statName: "\uB0A0\uB835\uD568"
   statSpr: {fileID: 21300000, guid: a70cbb808787c6441b2f32e501410d91, type: 3}
   charType: 1
-  needStatID: 0
-  purchase: 10
-  sell: 6
-  upCost: 6
-  simpleAbilExplanation: "\uCD1D\uC54C\uC744 \uC5EC\uB7EC \uBC1C \uBC1C\uC0AC\uD55C\uB2E4"
-  detailAbilExplanation: "\uCD1D\uC54C\uC744 \uC5EC\uB7EC \uBC1C \uBC1C\uC0AC\uD55C\uB2E4"
-  growthWay: "\uD2B9\uC131 \uC0C1\uC810\uC5D0\uC11C \uAD6C\uC785"
+  needStatID: 35
+  purchase: 5
+  sell: 4
+  upCost: 0
+  simpleAbilExplanation: "\uACF5\uACA9\uC18D\uB3C4 0.2 \uC0C1\uC2B9"
+  detailAbilExplanation: "\uACF5\uACA9\uC18D\uB3C4 0.2 \uC0C1\uC2B9"
+  growthWay: "\uC131\uC7A5\uBD88\uAC00"
   acquisitionWay: "\uD2B9\uC131 \uC0C1\uC810\uC5D0\uC11C \uAD6C\uC785"

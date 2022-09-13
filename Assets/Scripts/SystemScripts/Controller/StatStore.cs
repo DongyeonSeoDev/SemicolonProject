@@ -65,14 +65,17 @@ public class StatStore : MonoSingleton<StatStore>
         ushort tmp;
         if (cnt > 0)
         {
-            //1번칸은 비밀이나 몬스터
+            //1번 칸은 비밀이나 몬스터 특성
             type = GetCharType(list[0]);
             if (!(type == CharType.SECRET || type == CharType.MONSTER))
             {
-                int idx = list.FindIndex(x => (GetCharType(x) == CharType.MONSTER || GetCharType(x) == CharType.SECRET) && !prevStockIDList.Contains(x));  //아무런 값도 못가져왔을 때의 예외처리 필요
-                tmp = list[0];
-                list[0] = list[idx];
-                list[idx] = tmp;
+                int idx = list.FindIndex(x => (GetCharType(x) == CharType.MONSTER || GetCharType(x) == CharType.SECRET) && !prevStockIDList.Contains(x)); 
+                if (idx != -1)  //해당 조건에 만족하는 인덱스가 있으면
+                {
+                    tmp = list[0];
+                    list[0] = list[idx];
+                    list[idx] = tmp;
+                }
             }
 
             //2,3번칸은 상점
@@ -216,22 +219,27 @@ public class StatStore : MonoSingleton<StatStore>
 
         if (!purchasedPropIDList.Contains(id))
         {
+            StatElement stat = NGlobal.playerStatUI.choiceStatDic[id];
+
+            if (stat.statLv >= stat.maxStatLv)  //==비교로 해도 됨
+            {
+                UIManager.Instance.RequestSystemMsg("해당 특성은 더 이상 구매할 수 없습니다");
+                return;
+            }
+
             selectedProp.Buy();
             NGlobal.playerStatUI.PlayerStat.currentStatPoint -= selectedProp.Point;
             NGlobal.playerStatUI.UpdateScrStatUI();
             purchasedPropIDList.Add(id);
-            StatElement stat = NGlobal.playerStatUI.choiceStatDic[id];
+            
             if (!stat.isUnlock)
             {
                 NGlobal.playerStatUI.StatUnlock(stat);
             }
             else
             {
-                if (stat.statLv < stat.maxStatLv)
-                {
-                    stat.statLv++;
-                    NGlobal.playerStatUI.StatUp(id);
-                }
+                stat.statLv++;
+                NGlobal.playerStatUI.StatUp(id);
             }
             Global.CurrentPlayer.GetComponent<PlayerChoiceStatControl>().WhenTradeStat(id);
         }
@@ -273,9 +281,17 @@ public class StatStore : MonoSingleton<StatStore>
         }
         else
         {
+            ChoiceStatSO so = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(prop.ID);
+
+            if(!prop.IsSellItem && so.needStatID > 0 && !NGlobal.playerStatUI.IsUnlockStat(so.needStatID))
+            {
+                UIManager.Instance.RequestSystemMsg("해당 특성을 보유하기위한 스탯을 해금하지 못했습니다");
+                return;
+            }
+
             StringBuilder sb = new StringBuilder();
             sb.Append("<color=#495FD9><size=120%>");
-            sb.Append(NGlobal.playerStatUI.GetStatSOData(prop.ID).statName);
+            sb.Append(so.statName);
             sb.Append("</size></color> 특성을 ");
             sb.Append(prop.Point);
             sb.Append("포인트에 ");

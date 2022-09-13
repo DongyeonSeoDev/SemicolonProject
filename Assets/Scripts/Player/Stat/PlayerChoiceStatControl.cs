@@ -708,6 +708,47 @@ public class PlayerChoiceStatControl : MonoBehaviour
                     choiceDataDict[NGlobal.MucusRechargeID].checkStartValue = (int)mucusChargeEnergyMaxTime;
                 }
                 break;
+            case NGlobal.HealthID:
+                {
+                    Global.CurrentPlayer.PlayerStat.additionalEternalStat.maxHp.statValue += choiceDataDict[NGlobal.HealthID].upTargetStatPerChoiceStat;
+                    UIManager.Instance.UpdatePlayerHPUI();
+                }
+                break;
+            case NGlobal.StrongID:
+                {
+                    Global.CurrentPlayer.PlayerStat.additionalEternalStat.minDamage.statValue += choiceDataDict[NGlobal.StrongID].upTargetStatPerChoiceStat;
+                }
+                break;
+            case NGlobal.PowerfulID:
+                {
+                    Global.CurrentPlayer.PlayerStat.additionalEternalStat.maxDamage.statValue += choiceDataDict[NGlobal.PowerfulID].upTargetStatPerChoiceStat;
+                }
+                break;
+            case NGlobal.NimbleID:
+                {
+                    Global.CurrentPlayer.PlayerStat.additionalEternalStat.attackSpeed.statValue += choiceDataDict[NGlobal.NimbleID].upTargetStatPerChoiceStat;
+                }
+                break;
+            case NGlobal.ActiveID:
+                {
+                    Global.CurrentPlayer.PlayerStat.additionalEternalStat.speed.statValue += choiceDataDict[NGlobal.ActiveID].upTargetStatPerChoiceStat;
+                }
+                break;
+            case NGlobal.IncisiveID:
+                {
+                    Global.CurrentPlayer.PlayerStat.additionalEternalStat.criticalRate.statValue += choiceDataDict[NGlobal.IncisiveID].upTargetStatPerChoiceStat;
+                }
+                break;
+            case NGlobal.PersistentID:
+                {
+                    Global.CurrentPlayer.PlayerStat.additionalEternalStat.criticalDamage.statValue += choiceDataDict[NGlobal.PersistentID].upTargetStatPerChoiceStat;
+                }
+                break;
+            case NGlobal.HardID:
+                {
+                    Global.CurrentPlayer.PlayerStat.additionalEternalStat.criticalDamage.statValue += choiceDataDict[NGlobal.HardID].upTargetStatPerChoiceStat;
+                }
+                break;
         }
         #endregion
     }

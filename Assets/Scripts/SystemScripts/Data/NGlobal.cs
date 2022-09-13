@@ -24,9 +24,17 @@ public static class NGlobal
     public const ushort MucusRechargeID = 125;
     public const ushort FakeID = 130;
     public const ushort MultiShotID = 135;
+    public const ushort HealthID = 140;
+    public const ushort StrongID = 145;
+    public const ushort PowerfulID = 150;
+    public const ushort NimbleID = 155;
+    public const ushort ActiveID = 160;
+    public const ushort IncisiveID = 165;
+    public const ushort PersistentID = 170;
+    public const ushort HardID = 175;
 
     public const ushort CStatStartID = 100;
-    public const ushort CStatEndID = 135; 
+    public const ushort CStatEndID = 175; 
 
     public static PlayerStatUI playerStatUI => UIManager.Instance.playerStatUI;
 }

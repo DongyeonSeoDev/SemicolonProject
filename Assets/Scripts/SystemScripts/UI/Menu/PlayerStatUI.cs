@@ -342,7 +342,7 @@ public class PlayerStatUI : MonoBehaviour
             statInfoUIDic.Add(key, el);
         }
 
-        //선택 스탯 저장 - 특성
+        //선택 스탯 저장 - 특성  --> 굳이 이렇게 안하고 playerStat.choiceStat의 AllStat을 이용해 for문 돌려도 됨
         choiceStatDic.Add(NGlobal.ProficiencyID, playerStat.choiceStat.proficiency);
         choiceStatDic.Add(NGlobal.MomentomID, playerStat.choiceStat.momentom);
         choiceStatDic.Add(NGlobal.EnduranceID, playerStat.choiceStat.endurance);
@@ -351,6 +351,15 @@ public class PlayerStatUI : MonoBehaviour
         choiceStatDic.Add(NGlobal.MucusRechargeID, playerStat.choiceStat.mucusRecharge);
         choiceStatDic.Add(NGlobal.FakeID, playerStat.choiceStat.fake);
         choiceStatDic.Add(NGlobal.MultiShotID, playerStat.choiceStat.multipleShots);
+
+        choiceStatDic.Add(NGlobal.HealthID, playerStat.choiceStat.health);
+        choiceStatDic.Add(NGlobal.StrongID, playerStat.choiceStat.strong);
+        choiceStatDic.Add(NGlobal.PowerfulID, playerStat.choiceStat.powerful);
+        choiceStatDic.Add(NGlobal.NimbleID, playerStat.choiceStat.nimble);
+        choiceStatDic.Add(NGlobal.ActiveID, playerStat.choiceStat.active);
+        choiceStatDic.Add(NGlobal.IncisiveID, playerStat.choiceStat.incisive);
+        choiceStatDic.Add(NGlobal.PersistentID, playerStat.choiceStat.persistent);
+        choiceStatDic.Add(NGlobal.HardID, playerStat.choiceStat.hard);
 
         //선택 스탯 UI 생성  -- 특성
         foreach(ushort key in choiceStatDic.Keys)
