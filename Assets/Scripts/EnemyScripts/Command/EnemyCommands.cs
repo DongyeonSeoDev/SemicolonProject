@@ -148,7 +148,7 @@ namespace Enemy
             this.followDistance = followDistance;
 
             this.moveDelay = moveDelay;
-            
+
             currentTime = moveDelay;
         }
 
@@ -329,6 +329,31 @@ namespace Enemy
             enemyTransform.position += targetDirection * speed * Time.deltaTime;
         }
     }
+    public class CentipedeBossDashCommand : EnemyCommand
+    {
+        private EnemyData enemyData;
+        private Rigidbody2D rigid;
+        private Boss2Centipede boss;
+
+        private Vector3 dashDir;
+
+        public CentipedeBossDashCommand(EnemyData data, Vector3 targetPosition, Rigidbody2D rigid, Boss2Centipede boss2Cantipede)
+        {
+            enemyData = data;
+
+            this.rigid = rigid;
+            boss = boss2Cantipede;
+
+            dashDir = targetPosition - enemyData.enemyObject.transform.position;
+            dashDir = dashDir.normalized;
+        }
+
+        public override void Execute()
+        {
+            enemyData.moveVector = dashDir * boss.currentSpeed;
+            rigid.velocity = dashDir * boss.currentSpeed;
+        }
+    }
     public class CentipedeBossMoveCommand : EnemyCommand
     {
         private EnemyData enemyData;
@@ -349,10 +374,23 @@ namespace Enemy
 
         public override void Execute()
         {
-            targetPosition = (EnemyManager.Player.transform.position - enemyObject.position).normalized;
+            targetPosition = (SlimeGameManager.Instance.CurrentPlayerBody.transform.position - enemyObject.position).normalized;
             targetPosition *= boss.currentSpeed;
             enemyData.moveVector = targetPosition;
             rigid.velocity = targetPosition;
+        }
+    }
+    public class CentipedeSneerCommand : EnemyCommand
+    {
+        private EnemyData enemyData;
+
+        public CentipedeSneerCommand(EnemyData data)
+        {
+            enemyData = data;
+        }
+        public override void Execute()
+        {
+
         }
     }
 
@@ -472,7 +510,76 @@ namespace Enemy
             spawnObject.GetComponent<EnemyBullet>().Init(enemy.GetEnemyController(), (EnemyManager.Player.transform.position - enemyTransform.position).normalized, minAttack, maxAttack, critical, criticalPower, Color.white, null);
         }
     }
+    public class CentipedeLongRangeAttackCommand : EnemyCommand
+    {
+        private Transform enemyTransform;
+        private Transform shotTransform;
 
+        private Quaternion rot;
+
+        private Vector3 targetPosition;
+        private Vector3 rotation;
+
+        private Enemy enemy;
+
+        private Type objectType;
+
+        private float minAttack;
+        private float maxAttack;
+        private float critical;
+        private float criticalPower;
+
+        private bool useRot = false;
+
+        public CentipedeLongRangeAttackCommand(Enemy enemy, Transform enemyPosition, Vector3 targetPosition, Vector3 rotation, Type objectType, Transform shotTransform, float minAttack, float maxAttack, float critical, float criticalPower)
+        {
+            this.minAttack = minAttack;
+            this.maxAttack = maxAttack;
+            this.critical = critical;
+            this.criticalPower = criticalPower;
+
+            this.enemy = enemy;
+            enemyTransform = enemyPosition;
+            this.rotation = rotation;
+            rot = Quaternion.Euler(new Vector3(0f, 0f, Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg));
+            this.objectType = objectType;
+            this.shotTransform = shotTransform;
+            this.targetPosition = targetPosition;
+
+            useRot = true;
+        }
+        public CentipedeLongRangeAttackCommand(Enemy enemy, Transform enemyPosition, Vector3 targetPosition, Type objectType, Transform shotTransform, float minAttack, float maxAttack, float critical, float criticalPower)
+        {
+            this.minAttack = minAttack;
+            this.maxAttack = maxAttack;
+            this.critical = critical;
+            this.criticalPower = criticalPower;
+
+            this.enemy = enemy;
+            enemyTransform = enemyPosition;
+            this.objectType = objectType;
+            this.shotTransform = shotTransform;
+            this.targetPosition = targetPosition;
+
+            useRot = false;
+        }
+
+        public override void Execute()
+        {
+            if (useRot)
+            {
+                EnemyPoolData spawnObject = EnemyPoolManager.Instance.GetPoolObject(objectType, shotTransform.position);
+
+                spawnObject.GetComponent<EnemyBullet>().Init(enemy.GetEnemyController(), rot * (targetPosition - enemyTransform.position).normalized, minAttack, maxAttack, critical, criticalPower, Color.white, null);
+            }
+            else
+            {
+                EnemyPoolData spawnObject = EnemyPoolManager.Instance.GetPoolObject(objectType, shotTransform.position);
+
+                spawnObject.GetComponent<EnemyBullet>().Init(enemy.GetEnemyController(), (targetPosition - enemyTransform.position).normalized, minAttack, maxAttack, critical, criticalPower, Color.white, null);
+            }
+        }
+    }
     public class PlayerlongRangeAttackCommand : EnemyCommand
     {
         private PlayerInput playerInput;

@@ -73,7 +73,7 @@ public class Environment : MonoSingleton<Environment>
         {
             if (string.IsNullOrEmpty(str) == b) { } //매개변수 확인용
             vignette.color.Override(changeBodyColor);
-            vignette.DOVignetteIntensity(0.4f, 0.3f, false, () => vignette.DOVignetteIntensity(0f, 0.3f, false));
+            vignette.DOVignetteIntensity(0.4f, 0.3f, true, () => vignette.DOVignetteIntensity(0f, 0.3f, true));
         });
         
     }

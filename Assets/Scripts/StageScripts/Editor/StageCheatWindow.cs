@@ -2,6 +2,8 @@ using UnityEditor;
 using System.Collections.Generic;
 using UnityEngine;
 using Water;
+using System;
+using System.IO;
 
 public class StageCheatWindow : EditorWindow
 {
@@ -11,6 +13,7 @@ public class StageCheatWindow : EditorWindow
 
     //stage 관련
     private int floor = 1;
+    private UnityEngine.Object stageSO;
 
     //Player 관련
     private Stat playerStat = new Stat();
@@ -44,6 +47,9 @@ public class StageCheatWindow : EditorWindow
     //스샷 단축키
     private KeyCode keyCode = KeyCode.G;
 
+    //불러올 세이브 파일 위치
+    private string saveFilePath;
+
     private Vector2 scrollPos = Vector2.zero;
 
     [MenuItem("Cheat/Normal Cheat")]
@@ -69,6 +75,14 @@ public class StageCheatWindow : EditorWindow
     {
         StageDataSO data = StageManager.Instance.GetStageBundleData(floor).stages.Find(x => x.areaType == AreaType.BOSS);
         StageManager.Instance.CurrentStageGround.stageDoors.ForEach(x => x.nextStageData = data);
+    }
+
+    private void ChangeNextStage()
+    {
+        if(stageSO != null)
+        {
+            StageManager.Instance.CurrentStageGround.stageDoors.ForEach(x => x.nextStageData = (StageDataSO)stageSO);
+        }
     }
 
     private void OnEnable()
@@ -116,12 +130,21 @@ public class StageCheatWindow : EditorWindow
                     ChangeNextStageToBoss();
                 }
 
+                GUILayout.Space(10);
+
+                stageSO = EditorGUILayout.ObjectField(stageSO, typeof(StageDataSO), true);
+
+                if(GUILayout.Button("Set Next Stage"))
+                {
+                    ChangeNextStage();
+                }
+
                 /*if(useClearStageKey && Event.current.isKey && Event.current.keyCode == KeyCode.F6)
                 {
                     CurrentStageClear();
                     
                 }*/
-                
+
 
                 GUILayout.Space(20);
                 GUILayout.Label("[Player Cheat]", EditorStyles.boldLabel);
@@ -266,7 +289,7 @@ public class StageCheatWindow : EditorWindow
 
                 
                 GUILayout.Label("[Page]", EditorStyles.boldLabel);
-                if (GUILayout.Button("Open Out GitHub Page"))
+                if (GUILayout.Button("Open GitHub Page"))
                 {
                     Application.OpenURL("https://github.com/DongyeonSeoDev/SemicolonProject");
                 }
@@ -284,6 +307,39 @@ public class StageCheatWindow : EditorWindow
                     ScreenShot.captureKeyCode = keyCode;
                 }
                 EditorGUI.EndDisabledGroup();
+
+                GUILayout.Space(25);
+
+                GUILayout.Label("[Rollback Data]", EditorStyles.boldLabel);
+                GUILayout.Label("(세이브 데이터 망가지거나 없어지거나 바꿔야할 때,\n 불러올 파일 있으면 현재 세이브 파일 전부 날리고\n로비 정상 저장 파일을 가져올 수 있음. 유니티 실행 끄고 ㄱㄱ)\n(첫번째 세이브 파일과 옵션 파일 가져옴)\n(기본 저장 위치 : 바탕화면)", EditorStyles.label);
+
+                GUILayout.Space(8);
+                saveFilePath = EditorGUILayout.TextField("Save File Path", saveFilePath);
+                if(GUILayout.Button("불러오기 (Load Save File)"))
+                {
+                    if (string.IsNullOrEmpty(saveFilePath)) saveFilePath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.DesktopDirectory);
+
+                    File.Delete(Global.GAME_SAVE_FILE.PersistentDataPath());
+                    File.Delete(Global.SAVE_FILE_1.PersistentDataPath());
+                    File.Delete(Global.SAVE_FILE_2.PersistentDataPath());
+                    File.Delete(Global.SAVE_FILE_3.PersistentDataPath());
+                    File.Delete(SaveFileStream.EternalOptionSaveFileName.PersistentDataPath());
+
+                    string sf = File.ReadAllText(string.Concat(saveFilePath,'/',Global.SAVE_FILE_1));
+                    File.WriteAllText(Global.SAVE_FILE_1.PersistentDataPath(), sf);
+                    sf = File.ReadAllText(string.Concat(saveFilePath, '/', SaveFileStream.EternalOptionSaveFileName));
+                    File.WriteAllText(SaveFileStream.EternalOptionSaveFileName.PersistentDataPath(), sf);
+                }
+
+                GUILayout.Space(10);
+                if(GUILayout.Button("바탕화면 경로 확인"))
+                {
+                    Debug.Log(System.Environment.GetFolderPath(System.Environment.SpecialFolder.DesktopDirectory));
+                }
+                if (GUILayout.Button("게임 세이브 파일 경로 확인"))
+                {
+                    Debug.Log(Application.persistentDataPath);
+                }
 
                 break;
 

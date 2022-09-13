@@ -161,13 +161,13 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             {
                 if(savedBodys[i].BodyID == str)
                 {
-                    savedBodys[i].RectTrm.DOAnchorPos(savedBodyPosList[0], 0.3f);
-                    savedBodys[i].transform.DOScale(currentBodySlotScale, 0.3f);
+                    savedBodys[i].RectTrm.DOAnchorPos(savedBodyPosList[0], 0.3f).SetUpdate(true);
+                    savedBodys[i].transform.DOScale(currentBodySlotScale, 0.3f).SetUpdate(true);
                 }
                 else
                 {
-                    savedBodys[i].RectTrm.DOAnchorPos(savedBodyPosList[index++], 0.3f);
-                    savedBodys[i].transform.DOScale(Vector3.one, 0.3f);
+                    savedBodys[i].RectTrm.DOAnchorPos(savedBodyPosList[index++], 0.3f).SetUpdate(true);
+                    savedBodys[i].transform.DOScale(Vector3.one, 0.3f).SetUpdate(true);
                 }
             }
         });
@@ -766,6 +766,11 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             }
         }
         return cnt;
+    }
+
+    public void ResetCoolTimeUI()
+    {
+        for (int i = 0; i < savedBodys.Count; i++) savedBodys[i].ResetCool();
     }
 
     #endregion
