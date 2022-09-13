@@ -22,6 +22,7 @@ public class SurvivalMission : Mission
         if(!breakDoor)
             StageManager.Instance.StageClear();
         endAction?.Invoke(breakDoor);
+        BattleUIManager.Instance.missionTimeFillObj.SetActive(false);
     }
 
     public override void Start()
@@ -33,6 +34,7 @@ public class SurvivalMission : Mission
     public override void Update()
     {
         survivalTimer += Time.deltaTime;
+        BattleUIManager.Instance.SetMissionTimeFill(1f - survivalTimer / survivalTime);
 
         if (Mathf.FloorToInt(survivalTimer) != cur)
         {
@@ -50,5 +52,6 @@ public class SurvivalMission : Mission
     {
         missionLevel = lv;
         cur = 0;
+        BattleUIManager.Instance.missionTimeFillObj.SetActive(true);
     }
 }

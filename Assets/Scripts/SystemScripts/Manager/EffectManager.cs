@@ -117,7 +117,7 @@ public class EffectManager : MonoSingleton<EffectManager>
         EventManager.StartListening("ChangeBody", (id, dead) =>
         {
             string.IsNullOrEmpty(id);  //타입을 알리기 위한 쓰이지않는 매개변수와 코드
-            CallFollowTargetGameEffect("BodyChangeEff", GameManager.Instance.slimeFollowObj, Vector3.zero, 1);
+            CallFollowTargetGameEffect("BodyChangeEff", GameManager.Instance.slimeFollowObj, Vector3.zero, 1, true);
             if(!dead)
                SoundManager.Instance.PlaySoundBox("ChangeBodySFX");
         });
@@ -283,10 +283,10 @@ public class EffectManager : MonoSingleton<EffectManager>
         return eff;
     }
 
-    public void CallFollowTargetGameEffect(string key, Transform target, Vector3 offset, float duration)  //이펙트 호출 후 일정 시간 지나면 소멸
+    public void CallFollowTargetGameEffect(string key, Transform target, Vector3 offset, float duration, bool unscaled = false)  //이펙트 호출 후 일정 시간 지나면 소멸
     {
         GameObject eff = PoolManager.GetItem(key);
-        Util.ExecuteFunc(() => eff.transform.position = target.position + offset, 0, duration, this, null, ()=>eff.gameObject.SetActive(false));
+        Util.ExecuteFunc(() => eff.transform.position = target.position + offset, 0, duration, this, null, ()=>eff.gameObject.SetActive(false), unscaled);
     }
 
     public void SpawnEffect(GameObject eff, Vector3 pos, float limit = -1, bool unscaled = false)  //터치 이펙트 호출 후 일정 시간 지나면 소멸

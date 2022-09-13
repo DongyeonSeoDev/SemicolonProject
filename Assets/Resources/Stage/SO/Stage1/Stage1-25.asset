@@ -18,7 +18,7 @@ MonoBehaviour:
   useOpenDoorSound: 0
   stageMonsterBundleCount: 0
   stageMonsterBundleID: []
-  stage: {fileID: 1378282381469885354, guid: c1fc86966cb69294d8f669a773feebf0, type: 3}
+  stage: {fileID: 1378282381469885354, guid: 1282724b6fcc7f04ea5091fcc4a066d5, type: 3}
   areaType: 10
   enemySpeciesArea: 0
   missionTypes: 

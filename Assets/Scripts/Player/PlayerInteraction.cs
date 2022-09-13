@@ -48,6 +48,9 @@ public class PlayerInteraction : MonoBehaviour
     {
         playerInput.IsInterraction = false;
 
-        nearNPCList[0].Interaction();
+        if (InteractionHandler.canInteractObj)
+        {
+            nearNPCList[0].Interaction();
+        }
     }
 }

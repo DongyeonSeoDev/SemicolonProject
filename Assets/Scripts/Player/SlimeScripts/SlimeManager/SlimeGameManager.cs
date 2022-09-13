@@ -375,4 +375,12 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             return targetPos;
         }
     }
+
+    public void ResetBodyChangeCoolTime()
+    {
+        bodyChangeTimer = 0f;
+        canBodyChange = true;
+
+        MonsterCollection.Instance.ResetCoolTimeUI();
+    }
 }

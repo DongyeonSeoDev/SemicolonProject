@@ -138,6 +138,8 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
     }
     public void SetUnderstandingRate(string key, int value)
     {
+        value = Mathf.Clamp(value, 0, maxUnderstandingRate);
+
         if (playerEnemyUnderStandingRateDict.ContainsKey(key))
         {
             playerEnemyUnderStandingRateDict [key] = value;

@@ -31,6 +31,7 @@ MonoBehaviour:
         duration: 1.5
         nextLogInterval: 0
         endActionId: 
+      unscaledTime: 0
   - key: Tuto_EnterRoom3
     subtitleData:
       subData:
@@ -45,6 +46,7 @@ MonoBehaviour:
         duration: 1.5
         nextLogInterval: 0
         endActionId: 
+      unscaledTime: 0
   - key: Tuto_EnterRoom3Damaged
     subtitleData:
       subData:
@@ -58,6 +60,7 @@ MonoBehaviour:
         duration: 2
         nextLogInterval: 0
         endActionId: 
+      unscaledTime: 0
   - key: Tuto3Clear
     subtitleData:
       subData:
@@ -66,6 +69,7 @@ MonoBehaviour:
         duration: 2
         nextLogInterval: 0
         endActionId: 
+      unscaledTime: 0
   - key: Tuto_EnterRoom4
     subtitleData:
       subData:
@@ -74,6 +78,7 @@ MonoBehaviour:
         duration: 2
         nextLogInterval: 0
         endActionId: 
+      unscaledTime: 0
   - key: GetDrain
     subtitleData:
       subData:
@@ -83,6 +88,7 @@ MonoBehaviour:
         duration: 1.5
         nextLogInterval: 0
         endActionId: 
+      unscaledTime: 0
   - key: Tuto_QuikSlotE
     subtitleData:
       subData:
@@ -92,6 +98,7 @@ MonoBehaviour:
         duration: 1.5
         nextLogInterval: 0
         endActionId: 
+      unscaledTime: 0
   - key: Tuto_GetHPStat
     subtitleData:
       subData:
@@ -101,6 +108,7 @@ MonoBehaviour:
         duration: 1.5
         nextLogInterval: 0
         endActionId: 
+      unscaledTime: 0
   - key: AfterTalkWithOrd
     subtitleData:
       subData:
@@ -111,6 +119,7 @@ MonoBehaviour:
         duration: 2
         nextLogInterval: 0
         endActionId: 
+      unscaledTime: 0
   - key: Tuto_EnterRoom5
     subtitleData:
       subData:
@@ -120,6 +129,7 @@ MonoBehaviour:
         duration: 2
         nextLogInterval: 0
         endActionId: 
+      unscaledTime: 0
   - key: Tuto_FailAbsorb
     subtitleData:
       subData:
@@ -129,6 +139,7 @@ MonoBehaviour:
         duration: 2
         nextLogInterval: 0
         endActionId: 
+      unscaledTime: 0
   - key: Tuto_BreakDoorOneHit
     subtitleData:
       subData:
@@ -137,6 +148,7 @@ MonoBehaviour:
         duration: 2
         nextLogInterval: 0
         endActionId: 
+      unscaledTime: 0
   - key: Tuto_BreakDoor
     subtitleData:
       subData:
@@ -145,6 +157,7 @@ MonoBehaviour:
         duration: 1.5
         nextLogInterval: 0
         endActionId: 
+      unscaledTime: 0
   - key: Tuto_EnterRoom7
     subtitleData:
       subData:
@@ -159,6 +172,7 @@ MonoBehaviour:
         duration: 2
         nextLogInterval: 0
         endActionId: 
+      unscaledTime: 0
   - key: Tuto_FailAbsorb2
     subtitleData:
       subData:
@@ -168,6 +182,7 @@ MonoBehaviour:
         duration: 2
         nextLogInterval: 0
         endActionId: 
+      unscaledTime: 0
   - key: Tuto_StageClear7
     subtitleData:
       subData:
@@ -176,6 +191,7 @@ MonoBehaviour:
         duration: 1.5
         nextLogInterval: 0
         endActionId: 
+      unscaledTime: 0
   - key: Tuto_EnterRoom8
     subtitleData:
       subData:
@@ -185,6 +201,7 @@ MonoBehaviour:
         duration: 1.5
         nextLogInterval: 0
         endActionId: 
+      unscaledTime: 0
   - key: Tuto_PickSuccess
     subtitleData:
       subData:
@@ -199,6 +216,7 @@ MonoBehaviour:
         duration: 1.5
         nextLogInterval: 0
         endActionId: GainQuikSlotUI
+      unscaledTime: 0
   - key: Tuto_PickFail
     subtitleData:
       subData:
@@ -219,6 +237,7 @@ MonoBehaviour:
         duration: 1.5
         nextLogInterval: 0
         endActionId: GainQuikSlotUI
+      unscaledTime: 0
   - key: Tuto_Start
     subtitleData:
       subData:
@@ -242,6 +261,7 @@ MonoBehaviour:
         duration: 3
         nextLogInterval: 0
         endActionId: 
+      unscaledTime: 0
   - key: Tuto_Question
     subtitleData:
       subData:
@@ -257,6 +277,7 @@ MonoBehaviour:
         duration: 1.5
         nextLogInterval: 0
         endActionId: 
+      unscaledTime: 0
   - key: Tuto_UpKey
     subtitleData:
       subData:
@@ -265,6 +286,7 @@ MonoBehaviour:
         duration: 2.5
         nextLogInterval: 0
         endActionId: 
+      unscaledTime: 0
   - key: Tuto_RightKey
     subtitleData:
       subData:
@@ -273,6 +295,7 @@ MonoBehaviour:
         duration: 2
         nextLogInterval: 0
         endActionId: 
+      unscaledTime: 0
   - key: Tuto_LeftKey
     subtitleData:
       subData:
@@ -281,6 +304,7 @@ MonoBehaviour:
         duration: 2
         nextLogInterval: 0
         endActionId: 
+      unscaledTime: 0
   - key: Tuto_DownKey
     subtitleData:
       subData:
@@ -289,6 +313,7 @@ MonoBehaviour:
         duration: 2.5
         nextLogInterval: 0
         endActionId: 
+      unscaledTime: 0
   - key: NotReadyInLobby
     subtitleData:
       subData:
@@ -297,6 +322,7 @@ MonoBehaviour:
         duration: 1
         nextLogInterval: 0
         endActionId: 
+      unscaledTime: 0
   - key: Tuto_BodyChange
     subtitleData:
       subData:
@@ -312,6 +338,7 @@ MonoBehaviour:
         duration: 1.8
         nextLogInterval: 0
         endActionId: 
+      unscaledTime: 1
   - key: Tuto_BodyChange2
     subtitleData:
       subData:
@@ -321,3 +348,4 @@ MonoBehaviour:
         duration: 1.4
         nextLogInterval: 0
         endActionId: 
+      unscaledTime: 1
