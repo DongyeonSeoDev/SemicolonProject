@@ -23,6 +23,12 @@ namespace Enemy
         private float dashTimer = 0f;
         private float meleeAttackDis = 12f;
 
+        private float meleeAttack1Percentage = 30f; // 지면파괴 확률
+        private float meleeAttack2Percentage = 20f; // 물어뜯기 확률
+        private float sneerPercentage = 50; // 침뱉기 확률
+        private float multipleMeleeAttack1Percentage = 0f; // 연속 지면파괴 확률
+        private float bitingAndTearingPercentage = 0f; // 물고 뜯기 확률
+
         #region meleeAttack1(지면파괴)관련 변수
         [Header("meleeAttack1(지면파괴)의 원통형 공격 범위")]
         [SerializeField]
@@ -61,6 +67,7 @@ namespace Enemy
         public readonly int hashAttackEnd = Animator.StringToHash("attackEnd");
         private readonly int hashMove = Animator.StringToHash("move");
 
+        private int meleeAttack1Count = 0;
         private int sneerCount = 0;
 
         private EnemyCommand enemyMoveCommand;
@@ -88,7 +95,6 @@ namespace Enemy
 
             enemyMeleeAttack1Collider.GetComponent<CircleCollider2D>().radius = meleeAttack1CircleRadius;
             currentSpeed = enemyDataSO.speed;
-            
         }
 
         protected override void OnEnable()
@@ -120,9 +126,67 @@ namespace Enemy
                 return;
             }
 
+            PercentageCheck();
             StopAnimTimerCheck();
             DashCheck();
             MoveCheck();
+        }
+        private void PercentageCheck()
+        {
+            // 체력에따른 퍼센테이지 변경
+
+            float hpPer = (enemyData.hp / enemyData.maxHP) * 100f ;
+
+            #region 확률 조정 코드
+            if (hpPer <= 10f)
+            {
+                meleeAttack1Percentage = 5f;
+                meleeAttack2Percentage = 5f;
+                sneerPercentage = 0f;
+                multipleMeleeAttack1Percentage = 45f;
+                bitingAndTearingPercentage = 45f;
+            }
+            else if(hpPer <= 20f)
+            {
+                meleeAttack1Percentage = 10f;
+                meleeAttack2Percentage = 15f;
+                sneerPercentage = 5f;
+                multipleMeleeAttack1Percentage = 40f;
+                bitingAndTearingPercentage = 30f;
+            }
+            else if(hpPer <= 40f)
+            {
+                meleeAttack1Percentage = 20f;
+                meleeAttack2Percentage = 30f;
+                sneerPercentage = 30f;
+                multipleMeleeAttack1Percentage = 15f;
+                bitingAndTearingPercentage = 25f;
+            }
+            else if(hpPer <= 60f)
+            {
+                meleeAttack1Percentage = 25f;
+                meleeAttack2Percentage = 45f;
+                sneerPercentage = 20f;
+                multipleMeleeAttack1Percentage = 5f;
+                bitingAndTearingPercentage = 5f;
+            }
+            else if(hpPer <= 80f)
+            {
+                meleeAttack1Percentage = 40f;
+                meleeAttack2Percentage = 25f;
+                sneerPercentage = 30f;
+                multipleMeleeAttack1Percentage = 5f;
+                bitingAndTearingPercentage = 0f;
+            }
+            else
+            {
+                meleeAttack1Percentage = 30f;
+                meleeAttack2Percentage = 20f;
+                sneerPercentage = 50f;
+                multipleMeleeAttack1Percentage = 0f;
+                bitingAndTearingPercentage = 0f;
+            }
+            #endregion
         }
 
         private void MoveCheck()
@@ -231,49 +295,50 @@ namespace Enemy
         
         public void AttackCheck() // 이벤트 구독에 사용됨 - 특수공격 사용 확인
         {
-            int value = Random.Range(0, 2);
-            Vector3 playerPosition = EnemyManager.Player.transform.position;
-            float dis = Vector3.Distance(playerPosition, transform.position);
+            float value = Random.Range(0f, 100f);
+            float checkValue = 0f;
 
             if(isMove)
             {
                 return;
             }
 
-            if (dis < meleeAttackDis)
+            if((checkValue += meleeAttack1Percentage) >= value)
             {
-                // MeleeAttack
-                 enemyData.attackDelay = 1f;
+                enemyData.attackDelay = 1f;
 
-                if (playerPosition.y >= transform.position.y)
-                {
-                    if (value == 0)
-                    {
-                        enemyData.animationDictionary[EnemyAnimationType.Attack] = hashMeleeAttack1;
-                    }
-                    else
-                    {
-                        enemyData.animationDictionary[EnemyAnimationType.Attack] = hashMeleeAttack2;
-                    }
+                Debug.Log(1);
 
-                    return;
-                }
+                meleeAttack1Count = 1;
             }
-
-            if (value == 0)
+            else if((checkValue += meleeAttack2Percentage) >= value)
             {
-                // SneerAttack
+                enemyData.attackDelay = 1f;
 
+                Debug.Log(2);
+
+                enemyData.animationDictionary[EnemyAnimationType.Attack] = hashMeleeAttack2;
+            }
+            else if((checkValue += sneerPercentage) >= value)
+            {
                 enemyData.attackDelay = 2f;
+
+                Debug.Log(3);
 
                 sneerCount = 3;
             }
-            else
+            else if((checkValue += multipleMeleeAttack1Percentage) >= value)
             {
-                isMove = true;
-                moveTimer = 3f;
+                enemyData.attackDelay = 1f;
+
+                Debug.Log(4);
+
+                meleeAttack1Count = 3;
             }
-           
+            else if((checkValue += bitingAndTearingPercentage) >= value)
+            {
+                Debug.Log("DoBitingAndTearing");
+            }
         }
         public void StopAnim(float stopTime)
         {
@@ -326,37 +391,24 @@ namespace Enemy
         }
         public EnemyState AttackStateChangeCondition() // 이벤트 구독에 사용됨 - 공격2 사용 가능 확인
         {
-            int value = Random.Range(0, 2);
-            Vector3 playerPosition = EnemyManager.Player.transform.position;
-            float dis = Vector3.Distance(playerPosition, transform.position);
-
-            if (!isMove && sneerCount > 0)
+            if (!isMove)
             {
-                if (playerPosition.y >= transform.position.y)
+                if (sneerCount > 0)
                 {
-                    if (dis < meleeAttackDis)
-                    {
-                        enemyData.attackDelay = 1f;
-                        sneerCount = 0;
+                    sneerCount--;
 
-                        if (value == 0)
-                        {
-                            enemyData.animationDictionary[EnemyAnimationType.Attack] = hashMeleeAttack1;
-                        }
-                        else
-                        {
-                            enemyData.animationDictionary[EnemyAnimationType.Attack] = hashMeleeAttack2;
-                        }
+                    enemyData.animationDictionary[EnemyAnimationType.Attack] = hashSneer;
 
-                        return new EnemyChaseState(enemyData);
-                    }
+                    return new EnemyAIAttackState(enemyData);
                 }
+                else if(meleeAttack1Count > 0)
+                {
+                    meleeAttack1Count--;
 
-                sneerCount--;
+                    enemyData.animationDictionary[EnemyAnimationType.Attack] = hashMeleeAttack1;
 
-                enemyData.animationDictionary[EnemyAnimationType.Attack] = hashSneer;
-
-                return new EnemyAIAttackState(enemyData);
+                    return new EnemyAIAttackState(enemyData);
+                }
             }
 
             return new EnemyChaseState(enemyData);
