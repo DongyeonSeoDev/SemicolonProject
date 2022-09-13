@@ -217,7 +217,7 @@ public class StatStore : MonoSingleton<StatStore>
         if (!purchasedPropIDList.Contains(id))
         {
             selectedProp.Buy();
-            NGlobal.playerStatUI.PlayerStat.UseStatPoint(GetDataSO(id).purchase);
+            NGlobal.playerStatUI.PlayerStat.currentStatPoint -= selectedProp.Point;
             NGlobal.playerStatUI.UpdateScrStatUI();
             purchasedPropIDList.Add(id);
             StatElement stat = NGlobal.playerStatUI.choiceStatDic[id];
@@ -230,7 +230,7 @@ public class StatStore : MonoSingleton<StatStore>
                 if (stat.statLv < stat.maxStatLv)
                 {
                     stat.statLv++;
-                    NGlobal.playerStatUI.InsertPropertyInfo(id);
+                    NGlobal.playerStatUI.StatUp(id);
                 }
             }
             Global.CurrentPlayer.GetComponent<PlayerChoiceStatControl>().WhenTradeStat(id);

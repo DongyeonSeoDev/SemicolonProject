@@ -510,19 +510,30 @@ public class PlayerStatUI : MonoBehaviour
 
     public void StatUp(ushort id)  //특정 스탯을 레벨업 함
     {
-        StatElement eterStat = eternalStatDic[id].first;
-        StatElement addiStat = eternalStatDic[id].second;
-        int value = UpStatInfoTextAsset.Instance.GetValue(eternalStatDic[id].first.statLv);
+        if (eternalStatDic.ContainsKey(id))
+        {
+            StatElement eterStat = eternalStatDic[id].first;
+            StatElement addiStat = eternalStatDic[id].second;
+            int value = UpStatInfoTextAsset.Instance.GetValue(eternalStatDic[id].first.statLv);
 
-        playerStat.currentStatPoint -= value;
-        playerStat.accumulateStatPoint += value;
+            playerStat.currentStatPoint -= value;
+            playerStat.accumulateStatPoint += value;
 
-        eterStat.statLv++;
-        addiStat.statValue += eterStat.UpStatValue;
+            eterStat.statLv++;
+            addiStat.statValue += eterStat.UpStatValue;
 
-        UpdateCurStatPoint(false);
-        UIManager.Instance.UpdatePlayerHPUI();
-        //eternalStatDic[id].second.statValue += stat.upStatValue;
+            UpdateCurStatPoint(false);
+            UIManager.Instance.UpdatePlayerHPUI();
+        }
+        else if (choiceStatDic.ContainsKey(id))
+        {
+            playerStat.accumulateStatPoint += GetStatSOData<ChoiceStatSO>(id).upCost;
+            InsertPropertyInfo(id);
+        }
+        else
+        {
+            Debug.LogWarning("이상한 값이 들어옴 " + id);
+        }
     }
     public void StatOpen(ushort id, bool free = false)  //특정 스탯을 '개방'함 (스탯 레벨 1로 함)  -> 고정스탯 전용
     {
@@ -573,13 +584,13 @@ public class PlayerStatUI : MonoBehaviour
             se.statLv = 1;
             choiceStatInfoUIDic[se.id].gameObject.SetActive(true);
             InsertPropertyInfo(se.id);
+            playerStat.accumulateStatPoint += GetStatSOData<ChoiceStatSO>(se.id).sell;
         }
 
         if (log)
         {
             UIManager.Instance.RequestLogMsg("[" + GetStatSOData(se.id).statName + "] 획득");
-        }
-        
+        }   
     }
 
     public void SellStat(StatElement se, bool log = true)  //어떤 특성을 판매함
