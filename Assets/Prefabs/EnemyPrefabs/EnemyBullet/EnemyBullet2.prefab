@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 6441970447574153695}
   - component: {fileID: 7505758543740133374}
   - component: {fileID: 3759113399098846496}
+  - component: {fileID: 392863460938848097}
+  - component: {fileID: 7695091223055601149}
   m_Layer: 0
   m_Name: EnemyBullet2
   m_TagString: Untagged
@@ -119,3 +121,44 @@ MonoBehaviour:
   distance: 2
   startAngle: 0
   angleSpeed: 100
+  minAttack: 0
+  maxAttack: 0
+  critical: 0
+  criticalPower: 0
+--- !u!58 &392863460938848097
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650415362819214235}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.32
+--- !u!50 &7695091223055601149
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650415362819214235}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
