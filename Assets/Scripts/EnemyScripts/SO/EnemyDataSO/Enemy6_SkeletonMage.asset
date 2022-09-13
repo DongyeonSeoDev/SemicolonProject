@@ -13,7 +13,21 @@ MonoBehaviour:
   m_Name: Enemy6_SkeletonMage
   m_EditorClassIdentifier: 
   enemyType: 6
-  animationList: []
+  animationList:
+  - type: 0
+    animationName: Reset
+  - type: 1
+    animationName: Die
+  - type: 2
+    animationName: IsDead
+  - type: 3
+    animationName: Hit
+  - type: 4
+    animationName: Move
+  - type: 5
+    animationName: Attack
+  - type: 6
+    animationName: EndAttack
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   damagedColor: {r: 1, g: 0, b: 0, a: 1}
   enemyDeadEffectColor: {r: 0.427451, g: 0.9686275, b: 0.69411767, a: 1}
