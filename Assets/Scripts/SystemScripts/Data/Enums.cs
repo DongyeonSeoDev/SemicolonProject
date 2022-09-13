@@ -69,7 +69,8 @@ public enum UIType
     MENU,
     MONSTERINFO_DETAIL_FEATURE,
     STORE,
-    TITLE
+    TITLE,
+    EFFECT
 }
 
 public enum InitGainType
@@ -182,6 +183,13 @@ public enum DoorDirType
     RIGHT,
     LEFT,
     BACK
+}
+
+public enum CharType
+{
+    MONSTER,
+    STORE,
+    SECRET
 }
 
 /*public enum EnemySpecies

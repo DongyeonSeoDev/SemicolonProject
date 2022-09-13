@@ -152,4 +152,11 @@ public class ChangeableBody : MonoBehaviour  //bottom left UI
             SlimeGameManager.Instance.PlayerBodyChange(bodyID);
         }
     }
+
+    public void ResetCool()
+    {
+        isCoolTime = false;
+        coolTimeUIPair.second.gameObject.SetActive(false);
+        coolTimeUIPair.first.fillAmount = 0;
+    }
 }

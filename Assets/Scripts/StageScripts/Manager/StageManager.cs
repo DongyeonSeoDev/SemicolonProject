@@ -212,6 +212,18 @@ public class StageManager : MonoSingleton<StageManager>
                 Debug.Log($"{key} : {mobAreaWeightDic[currentFloor][key]}");
             }
         });
+
+        GameManager.Instance.testKeyInputActionDict.Add(KeyCode.Equals, () =>
+        {
+            foreach(AreaType key in randomRoomDict[currentFloor].Keys)
+            {
+                Debug.Log(key.ToString());
+                foreach(StageDataSO data in randomRoomDict[currentFloor][key])
+                {
+                    Debug.Log(data.stageID);
+                }
+            }
+        });
 #endif
     }
 
@@ -631,11 +643,13 @@ public class StageManager : MonoSingleton<StageManager>
 
         for(i=0; i<list.Count; i++)
         {
+            if (list[i] == AreaType.MONSTER) continue;
+
             li.Remove(list[i]);
             total -= areaWeightDic[currentFloor][list[i]];
         }
 
-        float sel = total * UnityEngine.Random.Range(0f, 1f);
+        float sel = total * UnityEngine.Random.value;
 
         for (i = 0; i < li.Count; i++)
         {
@@ -803,17 +817,30 @@ public class StageManager : MonoSingleton<StageManager>
                         {
                             //가중치를 통해서 어떤 몬스터 구역 소환할지 정함
                             float w = 0f, total = areaWeightDic[currentFloor][AreaType.MONSTER];
-                            float sel = UnityEngine.Random.Range(0f, total);
-                            EnemyType target = floorSpecies[currentFloor - 1].second[0];
-                            foreach(EnemyType key in mobAreaWeightDic[currentFloor].Keys)
+                            List<EnemyType> li = mobAreaWeightDic[currentFloor].Keys.ToList();
+                            foreach (EnemyType key in mobAreaWeightDic[currentFloor].Keys)
                             {
-                                w += mobAreaWeightDic[currentFloor][key];
-                                if(w < sel)
+                                if (eList.Contains(key))
                                 {
-                                    target = key;
+                                    total -= mobAreaWeightDic[currentFloor][key];
+                                    li.Remove(key);
+                                }
+                            }
+
+                            //float sel = UnityEngine.Random.Range(0f, total);
+                            float sel = UnityEngine.Random.value * total; 
+                            EnemyType target = floorSpecies[currentFloor - 1].second[0];
+                            for(int i= 0; i < li.Count; i++)
+                            {
+                                w += mobAreaWeightDic[currentFloor][li[i]];
+                                if(sel < w)
+                                {
+                                    target = li[i];
                                     break;
                                 }
                             }
+
+                            eList.Add(target);
 
                             //해당 몬스터 구역 뽑아옴
                             foreach(StageDataSO data in randomRoomDict[currentFloor][AreaType.MONSTER])
@@ -821,6 +848,7 @@ public class StageManager : MonoSingleton<StageManager>
                                 if(data.enemySpeciesArea == target)
                                 {
                                     door.nextStageData = data;
+                                    break;
                                 }
                             }
                             randomRoomDict[currentFloor][type].Remove(door.nextStageData);

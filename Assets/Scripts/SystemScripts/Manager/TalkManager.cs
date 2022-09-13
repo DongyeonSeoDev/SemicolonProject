@@ -199,10 +199,11 @@ public class TalkManager : MonoSingleton<TalkManager>
     }
 
     #region Subtitle
-    public void SetSubtitle(string str, float secondPerLit = 0.05f, float duration = 3f, string endActionId = "")
+    public void SetSubtitle(string str, float secondPerLit = 0.05f, float duration = 3f, string endActionId = "", bool unscaled = false)
     {
         ResetDialog();
-        DOTween.To(() => 0, a => subCvsg.alpha = a, 1, 0.3f);
+        DOTween.To(() => 0, a => subCvsg.alpha = a, 1, 0.3f).SetUpdate(unscaled);
+        seq.SetUpdate(unscaled);
         seq.Append(subtitleText.DOText(str, secondPerLit * str.Length).SetEase(Ease.Linear));
         seq.AppendInterval(duration);
         seq.Append(subCvsg.DOFade(0f, 0.3f));
@@ -211,10 +212,10 @@ public class TalkManager : MonoSingleton<TalkManager>
         seq.Play();
     }
 
-    public void SetSubtitle(string[] strs, float[] secondPerLits = null, float[] durations = null, float[] intervals = null, string[] endActionIdArr = null)
+    public void SetSubtitle(string[] strs, float[] secondPerLits = null, float[] durations = null, float[] intervals = null, string[] endActionIdArr = null, bool unscaled = false)
     {
         ResetDialog();
-        DOTween.To(() => 0, a => subCvsg.alpha = a, 1, 0.3f);
+        DOTween.To(() => 0, a => subCvsg.alpha = a, 1, 0.3f).SetUpdate(unscaled);
 
         void SubTxtEmpty() => subtitleText.text = string.Empty;
 
@@ -251,7 +252,9 @@ public class TalkManager : MonoSingleton<TalkManager>
             }
         }
 
-        for(int i=0; i<strs.Length; i++)
+        seq.SetUpdate(unscaled);
+
+        for (int i=0; i<strs.Length; i++)
         {
             int si = i;
             seq.Append(subtitleText.DOText(strs[si], secondPerLits[si] * strs[si].Length).SetEase(Ease.Linear));
@@ -272,7 +275,7 @@ public class TalkManager : MonoSingleton<TalkManager>
             return;
         }
 
-        SetSubtitle(data.Dialogs, data.SecondPerLits, data.Durations, data.NextLogIntervals, data.EndActionIDArr);
+        SetSubtitle(data.Dialogs, data.SecondPerLits, data.Durations, data.NextLogIntervals, data.EndActionIDArr, data.unscaledTime);
     }
 
     public void SetSubtitle(SingleSubtitleData data)

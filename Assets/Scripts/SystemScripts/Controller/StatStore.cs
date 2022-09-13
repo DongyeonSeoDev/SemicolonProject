@@ -11,10 +11,6 @@ public class StatStore : MonoSingleton<StatStore>
     [SerializeField] private int maxStockAmount = 3;  //상점에서 판매중인 특성을 몇 개까지 보여주는지
     [SerializeField] private int maxRechargeCount = 2; //판매중인 특성 목록 새로 갱신 몇 번까지 가능한지
     [SerializeField] private int rechargeNeedPoint = 2; //리롤에 필요한 스탯포인트
-    [SerializeField] private int propCost = 10;  //가격
-    public int PropCost => propCost;
-    [SerializeField] private int sellCost = 3;  //레벨 1당 판매가격
-    public int SellCost => sellCost;
 
     public Pair<GameObject, Transform> storePropertyPrefInfo;
     public Transform userPropPrefParent;
@@ -61,6 +57,47 @@ public class StatStore : MonoSingleton<StatStore>
         updateNifc.explanation = rechargeNeedPoint.ToString() + "포인트 소모";
     }
 
+    public CharType GetCharType(ushort id) => NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id).charType;
+
+    private void SetIncounter(ref List<ushort> list, int cnt)
+    {
+        CharType type;
+        ushort tmp;
+        if (cnt > 0)
+        {
+            //1번칸은 비밀이나 몬스터
+            type = GetCharType(list[0]);
+            if (!(type == CharType.SECRET || type == CharType.MONSTER))
+            {
+                int idx = list.FindIndex(x => (GetCharType(x) == CharType.MONSTER || GetCharType(x) == CharType.SECRET) && !prevStockIDList.Contains(x));  //아무런 값도 못가져왔을 때의 예외처리 필요
+                tmp = list[0];
+                list[0] = list[idx];
+                list[idx] = tmp;
+            }
+
+            //2,3번칸은 상점
+            /*if (cnt > 1)
+            {
+                ushort tmp2 = 0;
+                for (i = 1; i < cnt; i++)
+                {
+                    type = GetCharType(list[i]);
+                    if (type != CharType.STORE)
+                    {
+                        int idx = list.FindIndex(x => GetCharType(x) == CharType.STORE && x != tmp2);  //아무런 값도 못가져왔을 때의 예외처리 필요
+                        tmp = list[i];
+                        list[i] = list[idx];
+                        list[idx] = tmp;
+                        tmp2 = list[i];
+
+                        Debug.Log(list[i]);
+                        Debug.Log(list[idx]);
+                    }
+                }
+            }*/
+        }
+    }
+
     public void EnteredStatArea()  //상점 구역 입장했을 때 호출됨
     {
         curRechargeCount = 0;
@@ -71,15 +108,18 @@ public class StatStore : MonoSingleton<StatStore>
         List<ushort> list = allPropIDList.FindAllRandom(id =>
         {
             StatElement stat = NGlobal.playerStatUI.choiceStatDic[id];
-            return stat.statLv < NGlobal.playerStatUI.GetStatSOData(id).maxStatLv;
-        }, 15);
+            return stat.statLv < stat.maxStatLv;
+        }, 20);
 
         availableCount = list.Count;
-
         int i, cnt = maxStockAmount;
 
         if (list.Count < maxStockAmount) cnt = list.Count;
 
+        //특성 카드 인카운터
+        SetIncounter(ref list, cnt);
+
+        //카드 세팅
         for (i = 0; i < cnt; i++)
         {
             storeProperties[i].Renewal(list[i], true);
@@ -127,9 +167,12 @@ public class StatStore : MonoSingleton<StatStore>
                     StatElement stat = NGlobal.playerStatUI.choiceStatDic[id];
                     return stat.statLv < NGlobal.playerStatUI.GetStatSOData(id).maxStatLv && !prevStockIDList.Contains(id);
                 }, 15);
-                prevStockIDList.Clear();
 
                 if (list.Count < maxStockAmount) cnt = list.Count;
+
+                SetIncounter(ref list, cnt);
+
+                prevStockIDList.Clear();
 
                 Util.DelayFunc(() =>
                 {
@@ -174,7 +217,7 @@ public class StatStore : MonoSingleton<StatStore>
         if (!purchasedPropIDList.Contains(id))
         {
             selectedProp.Buy();
-            NGlobal.playerStatUI.PlayerStat.UseStatPoint(propCost);
+            NGlobal.playerStatUI.PlayerStat.currentStatPoint -= selectedProp.Point;
             NGlobal.playerStatUI.UpdateScrStatUI();
             purchasedPropIDList.Add(id);
             StatElement stat = NGlobal.playerStatUI.choiceStatDic[id];
@@ -187,7 +230,7 @@ public class StatStore : MonoSingleton<StatStore>
                 if (stat.statLv < stat.maxStatLv)
                 {
                     stat.statLv++;
-                    NGlobal.playerStatUI.InsertPropertyInfo(id);
+                    NGlobal.playerStatUI.StatUp(id);
                 }
             }
             Global.CurrentPlayer.GetComponent<PlayerChoiceStatControl>().WhenTradeStat(id);
@@ -288,4 +331,6 @@ public class StatStore : MonoSingleton<StatStore>
         for(int i=0; i<userPointTexts.Length; i++)
             userPointTexts[i].text = pointTxt;
     }
+
+    public ChoiceStatSO GetDataSO(ushort id) => NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id);   
 }

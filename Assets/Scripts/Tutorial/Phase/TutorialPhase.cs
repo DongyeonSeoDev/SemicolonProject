@@ -254,8 +254,7 @@ public class BodyChangeTutorialPhase : TutorialPhase
         pState = Global.CurrentPlayer.GetComponent<PlayerState>();
         isReady = false;
         bodyId = id;
-
-        Debug.LogWarning("아직 버그가 있는 튜토리얼");
+        endAction += TutorialManager.Instance.ReturnOriginBodyTuto;
     }
 
     public override void DoPhaseUpdate()
@@ -264,16 +263,18 @@ public class BodyChangeTutorialPhase : TutorialPhase
         {
             if(!pState.IsDrain)
             {
-                isReady = true;
-                TalkUtil.ShowSubtitle("Tuto_BodyChange");
                 InteractionHandler.canTransformEnemy = false;
                 EventManager.TriggerEvent("EnemyStop");
-                EventManager.TriggerEvent("PlayerStop");
+                TimeManager.LerpTime(2.7f, 0f, () =>
+                {
+                    TalkUtil.ShowSubtitle("Tuto_BodyChange");
+                });
+                isReady = true;
             }
         }
         else
         {
-            if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.CHANGE_MONSTER1]))
+            if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.CHANGE_MONSTER1]) && TimeManager.IsTimePaused)
             {
                 End();
             }
@@ -284,10 +285,40 @@ public class BodyChangeTutorialPhase : TutorialPhase
     {
         emphasisEffect.gameObject.SetActive(false);
         SlimeGameManager.Instance.PlayerBodyChange(bodyId);
-        InteractionHandler.canTransformEnemy = true;
         base.End();
+    }
+}
 
-        EventManager.TriggerEvent("EnemyStart");
-        EventManager.TriggerEvent("PlayerStart");
+public class ReturnOriginTutorialPhase : TutorialPhase
+{
+    RectTransform emphasisEffect;
+
+    public ReturnOriginTutorialPhase(RectTransform emphaRt)
+    {
+        emphasisEffect = emphaRt;
+        TalkUtil.ShowSubtitle("Tuto_BodyChange2");
+        SlimeGameManager.Instance.ResetBodyChangeCoolTime();
+    }
+
+    public override void DoPhaseUpdate()
+    {
+        if (Input.GetKeyDown(KeySetting.keyDict[KeyAction.CHANGE_SLIME]))
+        {
+            End();
+        }
+    }
+
+    public override void End()
+    {
+        emphasisEffect.gameObject.SetActive(false);
+        SlimeGameManager.Instance.PlayerBodyChange(Global.OriginBodyID);
+        InteractionHandler.canTransformEnemy = true;
+
+        Util.DelayFunc(() =>
+        {
+            TimeManager.LerpTime(1.8f, 1f, ()=> EventManager.TriggerEvent("EnemyStart"));
+        }, 1f, TutorialManager.Instance, true);
+
+        base.End();
     }
 }

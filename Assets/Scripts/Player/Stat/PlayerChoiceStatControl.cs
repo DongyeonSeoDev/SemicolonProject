@@ -720,7 +720,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
         ChoiceStatUnlockSetting(choiceStat);
 
-        NGlobal.playerStatUI.InsertPropertyInfo(choiceStat.id);
+        NGlobal.playerStatUI.StatUp(choiceStat.id);
     }
     private bool CheckCanUpChoiceStat(StatElement choiceStat)
     {

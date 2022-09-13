@@ -402,6 +402,11 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
         UIManager.Instance.RequestLogMsg("변신 슬롯을 얻었습니다.");
     }
+
+    public void ReturnOriginBodyTuto()
+    {
+        Util.DelayFunc(() => tutorialPhases.Add(new ReturnOriginTutorialPhase(SetUIEmphasisEffect(changeableBodysUIArr[0]))), 1f, this, true, false);
+    }
     #endregion
 
     public void CheckGainMonsterBody(string id)  //몬스터 몸을 한 번이라도 장착했는지 체크
