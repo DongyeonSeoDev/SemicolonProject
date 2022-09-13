@@ -18,6 +18,9 @@ namespace Enemy
 
         private float originCurrentSpeed = 0f;
 
+        private float shootBulletRotationOffset = 0f;
+        private float shootBulletRotationValue = 15f; // 각도 변동값
+
         private float stopAnimTimer = 0f;
         private float moveTimer = 0f;
         private float dashTimer = 0f;
@@ -309,6 +312,7 @@ namespace Enemy
 
                 Debug.Log(1);
 
+                shootBulletRotationOffset = 0f;
                 meleeAttack1Count = 1;
             }
             else if((checkValue += meleeAttack2Percentage) >= value)
@@ -333,6 +337,7 @@ namespace Enemy
 
                 Debug.Log(4);
 
+                shootBulletRotationOffset = 0f;
                 meleeAttack1Count = 3;
             }
             else if((checkValue += bitingAndTearingPercentage) >= value)
@@ -382,7 +387,7 @@ namespace Enemy
 
             for (int i = 0; i < num; i++)
             {
-                rotation = Quaternion.Euler(1f, 1f, up * i) * Vector2.one;
+                rotation = Quaternion.Euler(1f, 1f, up * i + shootBulletRotationOffset) * Vector2.one;
                 rotation = rotation.normalized;
 
                 enemySneerCommand = new CentipedeLongRangeAttackCommand(this, shootTrm, EnemyManager.Player.transform.position, rotation, Type.CentipedeBullet, shootTrm, bulletMinAttackPower, bulletMaxAttackPower, enemyData.randomCritical, enemyData.randomCritical);
@@ -404,6 +409,8 @@ namespace Enemy
                 else if(meleeAttack1Count > 0)
                 {
                     meleeAttack1Count--;
+
+                    shootBulletRotationOffset += shootBulletRotationValue;
 
                     enemyData.animationDictionary[EnemyAnimationType.Attack] = hashMeleeAttack1;
 
