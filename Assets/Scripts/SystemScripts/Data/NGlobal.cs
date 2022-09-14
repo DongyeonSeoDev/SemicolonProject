@@ -32,6 +32,7 @@ public static class NGlobal
     public const ushort IncisiveID = 165;
     public const ushort PersistentID = 170;
     public const ushort HardID = 175;
+
     public const ushort WeakID = 180;
     public const ushort SoftID = 185;
     public const ushort FeebleID = 190;

@@ -40,6 +40,8 @@ public class StatStore : MonoSingleton<StatStore>
 
     #endregion
 
+    public PlayerChoiceStatControl pcsCtrl { get; private set; }
+
     private void Awake()
     {
         for(ushort i = NGlobal.CStatStartID; i<= NGlobal.CStatEndID; i+= NGlobal.StatIDOffset)
@@ -55,6 +57,11 @@ public class StatStore : MonoSingleton<StatStore>
         leftPos = panelOriginPos - new Vector2(150, 0);
 
         updateNifc.explanation = rechargeNeedPoint.ToString() + "포인트 소모";
+    }
+
+    private void Start()
+    {
+        pcsCtrl = Global.CurrentPlayer.GetComponent<PlayerChoiceStatControl>();
     }
 
     public CharType GetCharType(ushort id) => NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id).charType;
@@ -226,10 +233,19 @@ public class StatStore : MonoSingleton<StatStore>
             {
                 case NGlobal.StrongID:
                     if(NGlobal.playerStatUI.GetCurrentPlayerStat(NGlobal.MinDamageID)
-                        + Global.CurrentPlayer.GetComponent<PlayerChoiceStatControl>().ChoiceDataDict[id].upTargetStatPerChoiceStat
+                        + pcsCtrl.ChoiceDataDict[id].upTargetStatPerChoiceStat
                         >= NGlobal.playerStatUI.GetCurrentPlayerStat(NGlobal.MaxDamageID))
                     {
                         UIManager.Instance.RequestSystemMsg("최대데미지가 낮아서 해당 특성을 구매할 수 없습니다");
+                        return;
+                    }
+                    break;
+                case NGlobal.FeebleID:
+                    if(NGlobal.playerStatUI.GetCurrentPlayerStat(NGlobal.MaxDamageID)
+                        - pcsCtrl.ChoiceDataDict[id].upTargetStatPerChoiceStat
+                        <= NGlobal.playerStatUI.GetCurrentPlayerStat(NGlobal.MinDamageID))
+                    {
+                        UIManager.Instance.RequestSystemMsg("최소데미지가 높아서 해당 특성을 구매할 수 없습니다");
                         return;
                     }
                     break;

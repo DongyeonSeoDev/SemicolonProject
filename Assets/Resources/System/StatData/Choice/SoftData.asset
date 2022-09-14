@@ -20,7 +20,7 @@ MonoBehaviour:
   statSpr: {fileID: 21300000, guid: a70cbb808787c6441b2f32e501410d91, type: 3}
   charType: 1
   plusStat: 0
-  needStatID: 15
+  needStatID: 10
   purchase: 0
   sell: 0
   upCost: 2

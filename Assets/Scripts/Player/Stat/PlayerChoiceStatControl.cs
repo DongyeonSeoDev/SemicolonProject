@@ -749,6 +749,46 @@ public class PlayerChoiceStatControl : MonoBehaviour
                     Global.CurrentPlayer.PlayerStat.additionalEternalStat.criticalDamage.statValue += choiceDataDict[NGlobal.HardID].upTargetStatPerChoiceStat;
                 }
                 break;
+            case NGlobal.WeakID:
+                {
+
+                }
+                break;
+            case NGlobal.SoftID:
+                {
+
+                }
+                break;
+            case NGlobal.FeebleID:
+                {
+
+                }
+                break;
+            case NGlobal.TirednessID:
+                {
+
+                }
+                break;
+            case NGlobal.FearID:
+                {
+
+                }
+                break;
+            case NGlobal.SluggishID:
+                {
+
+                }
+                break;
+            case NGlobal.DullID:
+                {
+
+                }
+                break;
+            case NGlobal.TerrorID:
+                {
+
+                }
+                break;
         }
         #endregion
     }
