@@ -32,9 +32,17 @@ public static class NGlobal
     public const ushort IncisiveID = 165;
     public const ushort PersistentID = 170;
     public const ushort HardID = 175;
+    public const ushort WeakID = 180;
+    public const ushort SoftID = 185;
+    public const ushort FeebleID = 190;
+    public const ushort TirednessID = 195;
+    public const ushort FearID = 200;
+    public const ushort SluggishID = 205;
+    public const ushort DullID = 210;
+    public const ushort TerrorID = 215;
 
     public const ushort CStatStartID = 100;
-    public const ushort CStatEndID = 175; 
+    public const ushort CStatEndID = 215; 
 
     public static PlayerStatUI playerStatUI => UIManager.Instance.playerStatUI;
 }

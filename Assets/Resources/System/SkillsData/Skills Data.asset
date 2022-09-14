@@ -42,7 +42,8 @@ MonoBehaviour:
     second:
     - skillType: 0
       skillName: "\uCE68 \uBC49\uAE30"
-      skillExplanation: "\uCE68\uC744 \uBC1C\uC0AC\uD55C\uB2E4"
+      skillExplanation: "\uC6D0\uAC70\uB9AC\uB85C \uCE68\uC744 \uB290\uB9AC\uAC8C
+        \uBC1C\uC0AC\uD574\uC11C \uD53C\uD574\uB97C \uC900\uB2E4"
       skillSpr: {fileID: 21300000, guid: b0a769d6d4f10494ea66e966edd14dbb, type: 3}
   - first: 2
     second:
@@ -55,5 +56,6 @@ MonoBehaviour:
     second:
     - skillType: 0
       skillName: "\uD654\uC0B4 \uBC1C\uC0AC"
-      skillExplanation: "\uD654\uC0B4\uC744 \uB0A0\uB9B0\uB2E4"
+      skillExplanation: "\uC6D0\uAC70\uB9AC\uB85C \uD654\uC0B4\uC744 \uBC1C\uC0AC\uD574
+        \uD53C\uD574\uB97C \uC900\uB2E4"
       skillSpr: {fileID: 21300000, guid: e9ab7c407a961ca41b0f3a19eb395d27, type: 3}

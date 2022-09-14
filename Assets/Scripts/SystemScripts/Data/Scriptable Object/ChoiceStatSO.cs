@@ -6,7 +6,7 @@ public class ChoiceStatSO : StatSO
 {
     public CharType charType;  //특성 타입
 
-    public bool plusStat;
+    public bool plusStat;  //특성타입이 상점일 경우 스탯을 증가시켜주는 특성인지
 
     public ushort needStatID;  //헤당 스탯을 얻기 위해서 필요한 (고정)스탯의 아이디  -> 0이면 걍 얻을 수 있음
 

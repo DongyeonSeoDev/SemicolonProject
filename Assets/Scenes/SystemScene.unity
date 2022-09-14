@@ -103259,6 +103259,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44ec3ba82e9aeb64f8ae477f991b8fe8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyKill: 0
   maxStage: 2
   startStageID: 
   doorSpriteList:
@@ -121096,6 +121097,54 @@ MonoBehaviour:
             statLv: 0
             savedStatLv: 0
           hard:
+            id: 0
+            statValue: 0
+            isUnlock: 0
+            statLv: 0
+            savedStatLv: 0
+          weak:
+            id: 0
+            statValue: 0
+            isUnlock: 0
+            statLv: 0
+            savedStatLv: 0
+          soft:
+            id: 0
+            statValue: 0
+            isUnlock: 0
+            statLv: 0
+            savedStatLv: 0
+          feeble:
+            id: 0
+            statValue: 0
+            isUnlock: 0
+            statLv: 0
+            savedStatLv: 0
+          tiredness:
+            id: 0
+            statValue: 0
+            isUnlock: 0
+            statLv: 0
+            savedStatLv: 0
+          fear:
+            id: 0
+            statValue: 0
+            isUnlock: 0
+            statLv: 0
+            savedStatLv: 0
+          sluggish:
+            id: 0
+            statValue: 0
+            isUnlock: 0
+            statLv: 0
+            savedStatLv: 0
+          dull:
+            id: 0
+            statValue: 0
+            isUnlock: 0
+            statLv: 0
+            savedStatLv: 0
+          terror:
             id: 0
             statValue: 0
             isUnlock: 0

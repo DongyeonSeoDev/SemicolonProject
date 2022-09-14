@@ -278,7 +278,7 @@ public class TalkManager : MonoSingleton<TalkManager>
         SetSubtitle(data.Dialogs, data.SecondPerLits, data.Durations, data.NextLogIntervals, data.EndActionIDArr, data.unscaledTime);
     }
 
-    public void SetSubtitle(SingleSubtitleData data)
+    public void SetSubtitle(SingleSubtitleData data, bool unscaled = false)
     {
         if (data == null)
         {
@@ -286,7 +286,7 @@ public class TalkManager : MonoSingleton<TalkManager>
             return;
         }
 
-        SetSubtitle(data.dialog, data.secondPerLit, data.duration, data.endActionId);
+        SetSubtitle(data.dialog, data.secondPerLit, data.duration, data.endActionId, unscaled);
     }
 
     private void ResetDialog()

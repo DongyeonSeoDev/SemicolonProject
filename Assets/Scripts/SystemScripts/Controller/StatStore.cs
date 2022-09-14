@@ -59,45 +59,40 @@ public class StatStore : MonoSingleton<StatStore>
 
     public CharType GetCharType(ushort id) => NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id).charType;
 
-    private void SetIncounter(ref List<ushort> list, int cnt)
+    private void ChangeIndex(ref List<ushort> list, int targetIdx, System.Func<ushort, bool> change, System.Predicate<ushort> find)
+    { 
+        if(change(list[targetIdx]))
+        {
+            int idx = list.FindIndex(find);
+            if(idx != -1)  //해당 조건에 만족하는 인덱스가 있으면
+            {
+                ushort tmp = list[targetIdx];
+                list[targetIdx] = list[idx];
+                list[idx] = tmp;
+            }
+        }
+    }
+
+    private void SetIncounter(ref List<ushort> list, in int cnt)
     {
-        CharType type;
-        ushort tmp;
         if (cnt > 0)
         {
-            //1번 칸은 비밀이나 몬스터 특성
-            type = GetCharType(list[0]);
-            if (!(type == CharType.SECRET || type == CharType.MONSTER))
+            //1번 칸은 몬스터나 비밀 특성
+            ChangeIndex(ref list, 0, id=>GetCharType(id)==CharType.STORE, id=>GetCharType(id)!=CharType.STORE && !prevStockIDList.Contains(id));
+            if(cnt > 1)
             {
-                int idx = list.FindIndex(x => (GetCharType(x) == CharType.MONSTER || GetCharType(x) == CharType.SECRET) && !prevStockIDList.Contains(x)); 
-                if (idx != -1)  //해당 조건에 만족하는 인덱스가 있으면
+                //2번 칸은 상점 + 스탯 특성
+                ChangeIndex(ref list, 1,
+                    id => !(GetCharType(id) == CharType.STORE && NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id).plusStat),
+                    id => GetCharType(id) == CharType.STORE && NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id).plusStat && !prevStockIDList.Contains(id));
+                if (cnt > 2)
                 {
-                    tmp = list[0];
-                    list[0] = list[idx];
-                    list[idx] = tmp;
+                    //3번 칸은 상점 - 스탯 특성
+                    ChangeIndex(ref list, 2,
+                    id => !(GetCharType(id) == CharType.STORE && !NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id).plusStat),
+                    id => GetCharType(id) == CharType.STORE && !NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id).plusStat && !prevStockIDList.Contains(id));
                 }
             }
-
-            //2,3번칸은 상점
-            /*if (cnt > 1)
-            {
-                ushort tmp2 = 0;
-                for (i = 1; i < cnt; i++)
-                {
-                    type = GetCharType(list[i]);
-                    if (type != CharType.STORE)
-                    {
-                        int idx = list.FindIndex(x => GetCharType(x) == CharType.STORE && x != tmp2);  //아무런 값도 못가져왔을 때의 예외처리 필요
-                        tmp = list[i];
-                        list[i] = list[idx];
-                        list[idx] = tmp;
-                        tmp2 = list[i];
-
-                        Debug.Log(list[i]);
-                        Debug.Log(list[idx]);
-                    }
-                }
-            }*/
         }
     }
 
