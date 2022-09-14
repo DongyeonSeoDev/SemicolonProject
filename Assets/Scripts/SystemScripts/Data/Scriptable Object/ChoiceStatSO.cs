@@ -22,4 +22,8 @@ public class ChoiceStatSO : StatSO
     [TextArea]
     public string acquisitionWay;
     //public List<Pair<float, string>> emotionRangeList = new List<Pair<float, string>>();  //스탯 수치에 따른 감정
+
+    public bool IsPlusStatProp => charType == CharType.STORE && plusStat;
+    public bool IsMinusStatProp => charType == CharType.STORE && !plusStat;
+
 }

@@ -222,11 +222,23 @@ public class StatStore : MonoSingleton<StatStore>
         if (!purchasedPropIDList.Contains(id))
         {
             StatElement stat = NGlobal.playerStatUI.choiceStatDic[id];
+            ChoiceStatSO so = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id);
 
             if (stat.statLv >= stat.maxStatLv)  //==비교로 해도 됨
             {
                 UIManager.Instance.RequestSystemMsg("해당 특성은 더 이상 구매할 수 없습니다");
                 return;
+            }
+
+            //0 이하로 떨어지면 구매 못하게 함
+            if (!so.plusStat)
+            {
+                float value = stat.isUnlock ? stat.UpStatValue : pcsCtrl.ChoiceDataDict[id].firstValue;
+                if(NGlobal.playerStatUI.GetCurrentPlayerStat(so.needStatID) - value <= 0)
+                {
+                    UIManager.Instance.RequestSystemMsg("해당 특성을 구매하기에는 " + so.statName + " 스탯이 너무 낮습니다");
+                    return;
+                }
             }
 
             switch(id)  //예외처리

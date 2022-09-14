@@ -151,9 +151,11 @@ public class PlayerChoiceStatControl : MonoBehaviour
         }
     }
 
-    ///// <summary>
-    ///// 돌진한 횟수
-    ///// </summary>
+    /// <summary>
+    /// -스탯 특성들 레벨업을 위한 특정 행동 카운트 체크
+    /// </summary>
+    private Dictionary<ushort, int> minusStatCountDict = new Dictionary<ushort, int>();
+
     private void Start()
     {
         if (TutorialManager.Instance.IsTutorialStage)
@@ -181,6 +183,14 @@ public class PlayerChoiceStatControl : MonoBehaviour
         {
             eternalStatDataDict.Add(item.id, item);
         }
+
+        foreach(ushort id in ChoiceDataDict.Keys)
+        {
+            if (NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id).IsMinusStatProp)
+            {
+                minusStatCountDict.Add(id, 0);
+            }
+        }
     }
     private void OnEnable()
     {
@@ -190,6 +200,9 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
         EventManager.StartListening("Avoid", UpAvoidNum);
         EventManager.StartListening("OnAvoidInMomentom", UpAvoidInMomentomNum);
+
+        EventManager.StartListening("ExitCurrentMap", UpExitRoomCount);
+        EventManager.StartListening("EnemyDead", UpEnemyDeadCount);
     }
     private void OnDisable()
     {
@@ -204,6 +217,9 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
         EventManager.StopListening("Avoid", UpAvoidNum);
         EventManager.StopListening("OnAvoidInMomentom", UpAvoidInMomentomNum);
+
+        EventManager.StopListening("ExitCurrentMap", UpExitRoomCount);
+        EventManager.StopListening("EnemyDead", UpEnemyDeadCount);
     }
 
     private void Update()
@@ -659,6 +675,62 @@ public class PlayerChoiceStatControl : MonoBehaviour
 
         totalDamage += value;
     }
+
+    private void UpExitRoomCount()
+    {
+        ChoiceStat stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat;
+        if (stat.weak.isUnlock)
+        {
+            minusStatCountDict[NGlobal.WeakID]++;
+        }
+        if (stat.tiredness.isUnlock)
+        {
+            minusStatCountDict[NGlobal.TirednessID]++;
+        }
+        if(stat.fear.isUnlock)
+        {
+            minusStatCountDict[NGlobal.FearID]++;
+        }
+
+        if (StageManager.Instance.IsBattleArea)
+        {
+            if (stat.soft.isUnlock)
+            {
+                minusStatCountDict[NGlobal.SoftID]++;
+            }
+            if (stat.feeble.isUnlock)
+            {
+                minusStatCountDict[NGlobal.FeebleID]++;
+            }
+        }
+
+        CheckMinusStatCount();
+    }
+
+    private void UpEnemyDeadCount(GameObject obj, string str, bool b)
+    {
+        ChoiceStat stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat;
+        if (stat.sluggish.isUnlock)
+        {
+            minusStatCountDict[NGlobal.SluggishID]++;
+        }
+        if (stat.dull.isUnlock)
+        {
+            minusStatCountDict[NGlobal.DullID]++;
+        }
+        if (stat.terror.isUnlock)
+        {
+            minusStatCountDict[NGlobal.TerrorID]++;
+        }
+
+        CheckMinusStatCount();
+    }
+
+    private void CheckMinusStatCount()
+    {
+        //여기서 스탯 감소 특성들이 렙업 가능한지 체크하고 렙업 시켜줌
+    }
+
     public void ChoiceStatControlReset()
     {
         avoidInMomentomNum = 0;
@@ -670,6 +742,11 @@ public class PlayerChoiceStatControl : MonoBehaviour
         foreach (var item in choiceDataDict)
         {
             item.Value.checkStartValue = originChoiceDataDict[item.Key].checkStartValue;
+
+            if (minusStatCountDict.ContainsKey(item.Key))
+            {
+                minusStatCountDict[item.Key] = 0;
+            }
         }
 
         ChoiceStatDataListMaxStatLvReset();
@@ -708,6 +785,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
                     choiceDataDict[NGlobal.MucusRechargeID].checkStartValue = (int)mucusChargeEnergyMaxTime;
                 }
                 break;
+
             case NGlobal.HealthID:
                 {
                     Global.CurrentPlayer.PlayerStat.additionalEternalStat.maxHp.statValue += choiceDataDict[NGlobal.HealthID].upTargetStatPerChoiceStat;
@@ -715,83 +793,44 @@ public class PlayerChoiceStatControl : MonoBehaviour
                 }
                 break;
             case NGlobal.StrongID:
-                {
-                    Global.CurrentPlayer.PlayerStat.additionalEternalStat.minDamage.statValue += choiceDataDict[NGlobal.StrongID].upTargetStatPerChoiceStat;
-                }
-                break;
             case NGlobal.PowerfulID:
-                {
-                    Global.CurrentPlayer.PlayerStat.additionalEternalStat.maxDamage.statValue += choiceDataDict[NGlobal.PowerfulID].upTargetStatPerChoiceStat;
-                }
-                break;
             case NGlobal.NimbleID:
-                {
-                    Global.CurrentPlayer.PlayerStat.additionalEternalStat.attackSpeed.statValue += choiceDataDict[NGlobal.NimbleID].upTargetStatPerChoiceStat;
-                }
-                break;
             case NGlobal.ActiveID:
-                {
-                    Global.CurrentPlayer.PlayerStat.additionalEternalStat.speed.statValue += choiceDataDict[NGlobal.ActiveID].upTargetStatPerChoiceStat;
-                }
-                break;
             case NGlobal.IncisiveID:
-                {
-                    Global.CurrentPlayer.PlayerStat.additionalEternalStat.criticalRate.statValue += choiceDataDict[NGlobal.IncisiveID].upTargetStatPerChoiceStat;
-                }
-                break;
             case NGlobal.PersistentID:
-                {
-                    Global.CurrentPlayer.PlayerStat.additionalEternalStat.criticalDamage.statValue += choiceDataDict[NGlobal.PersistentID].upTargetStatPerChoiceStat;
-                }
-                break;
             case NGlobal.HardID:
-                {
-                    Global.CurrentPlayer.PlayerStat.additionalEternalStat.criticalDamage.statValue += choiceDataDict[NGlobal.HardID].upTargetStatPerChoiceStat;
-                }
+                NGlobal.playerStatUI.eternalStatDic[NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(statID).needStatID].second.statValue
+                    += choiceDataDict[statID].upTargetStatPerChoiceStat;
                 break;
+
             case NGlobal.WeakID:
                 {
+                    Global.CurrentPlayer.PlayerStat.additionalEternalStat.maxHp.statValue -= NGlobal.playerStatUI.eternalStatDic[NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(statID).needStatID].first.statLv == 1 ?
+                        choiceDataDict[statID].firstValue : choiceDataDict[statID].upTargetStatPerChoiceStat;
 
+                    if(NGlobal.playerStatUI.GetCurrentPlayerStat(NGlobal.MaxHpID) < NGlobal.playerStatUI.PlayerStat.currentHp)
+                    {
+                        NGlobal.playerStatUI.PlayerStat.currentHp = NGlobal.playerStatUI.GetCurrentPlayerStat(NGlobal.MaxHpID);
+                    }
+
+                    UIManager.Instance.UpdatePlayerHPUI();
                 }
                 break;
             case NGlobal.SoftID:
-                {
-
-                }
-                break;
             case NGlobal.FeebleID:
-                {
-
-                }
-                break;
             case NGlobal.TirednessID:
-                {
-
-                }
-                break;
             case NGlobal.FearID:
-                {
-
-                }
-                break;
             case NGlobal.SluggishID:
-                {
-
-                }
-                break;
             case NGlobal.DullID:
-                {
-
-                }
-                break;
             case NGlobal.TerrorID:
-                {
-
-                }
+                ChoiceStatSO so = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(statID);
+                NGlobal.playerStatUI.eternalStatDic[so.needStatID].second.statValue
+                    -= NGlobal.playerStatUI.eternalStatDic[so.needStatID].first.statLv == 1 ? choiceDataDict[statID].firstValue : choiceDataDict[statID].upTargetStatPerChoiceStat;
                 break;
         }
         #endregion
     }
+
     private void UpChoiceStatLv(StatElement choiceStat)
     {
         ushort statId = choiceStat.id;

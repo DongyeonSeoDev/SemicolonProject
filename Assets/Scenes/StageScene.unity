@@ -368,7 +368,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3966382012738421239, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
       propertyPath: choiceDataList.Array.data[16].firstValue
-      value: 1
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3966382012738421239, guid: a26f6bf254b6c1d4b89439f6bcd3611f, type: 3}
       propertyPath: choiceDataList.Array.data[17].firstValue
