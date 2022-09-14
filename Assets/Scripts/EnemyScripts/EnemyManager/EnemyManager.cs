@@ -200,10 +200,11 @@ namespace Enemy
         public void EnemyDestroy()
         {
             enemyCount--;
+            StageManager.Instance.enemyKill++;
 
             if (enemyCount == 0)
             {
-                StageManager.Instance.NextEnemy();
+                StageManager.Instance.NextEnemy(false);
             }
         }
 

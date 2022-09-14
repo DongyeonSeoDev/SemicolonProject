@@ -19,6 +19,7 @@ MonoBehaviour:
   statName: "\uB9DE\uC740\uCC99"
   statSpr: {fileID: 21300000, guid: 421b2895d7b280f45aa6ec2d2441de1b, type: 3}
   charType: 2
+  needStatID: 0
   purchase: 10
   sell: 6
   upCost: 6

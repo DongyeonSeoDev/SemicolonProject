@@ -23,6 +23,8 @@ public class StageManager : MonoSingleton<StageManager>
     public StageDataSO CurrentStageData => currentStageData;
     public StageGround CurrentStageGround => currentStage;
 
+    [HideInInspector] public int enemyKill = 0;  //현재 스테이지에서 죽인 적의 수
+    private int enemyCount = -1;  //현재 스테이지에서 나오는 모든 적의 수 (1세트 2세트로 나오는거 다 포함)
     private int currentStageMonsterBundleOrder = 1;
 
     private int currentFloor = 1;
@@ -460,6 +462,9 @@ public class StageManager : MonoSingleton<StageManager>
         currentStage = null;
         currentStageMonsterBundleOrder = 1;
 
+        enemyKill = 0;
+        enemyCount = -1;
+
         if(currentStageData.stageFloor.floor != currentFloor) //다음 스테이지가 층이 다르면 새로 세팅 해야함
         {
             currentStageNumber = 0;
@@ -893,19 +898,26 @@ public class StageManager : MonoSingleton<StageManager>
         currentStage.CloseDoor();
     }
 
-    public void NextEnemy()
+    public void NextEnemy(bool autoSpawn)
     {
         string id = CurrentMonstersOrderID;
 
         if (string.IsNullOrEmpty(id))
         {
-            StageClear();
+            if(!autoSpawn && enemyKill == GetCurStageEnemyCount())
+                StageClear();
             return;
         }
 
         if (currentArea != AreaType.BOSS)
         {
-            DOUtil.ExecuteTweening("Next Enemys Spawn", Util.DelayFuncCo(() => EventManager.TriggerEvent("SpawnEnemy", id), 1f, false, false), this);
+            Util.PriDelayFunc("Next Enemys Spawn", () => EventManager.TriggerEvent("SpawnEnemy", id), 1f, this, false);
+
+            if(currentStageData.stageMonsterBundleCount > currentStageMonsterBundleOrder)
+            {
+                Util.PriDelayFunc("AutoSpawnNextEnemy", () => NextEnemy(true), 
+                    currentStageData.nextEnemysSpawnInterval[currentStageMonsterBundleOrder - 1] + 1f, this, false);
+            }
         }
         else
         {
@@ -917,6 +929,8 @@ public class StageManager : MonoSingleton<StageManager>
 
     public int GetCurStageEnemyCount()  //현재 스테이지의 몹 수 전체 수. => 몇 세트씩 나뉘어서 나오는 것들 전부 합쳐서
     {
+        if(enemyCount > 0) return enemyCount;
+
         string[] strs = currentStageData.stageMonsterBundleID;
         int count = 0;
 
@@ -927,6 +941,8 @@ public class StageManager : MonoSingleton<StageManager>
         {
             count += spawnData[strs[i]].Count;
         }
+
+        enemyCount = count;
         return count;
     }
 
@@ -943,7 +959,8 @@ public class StageManager : MonoSingleton<StageManager>
 
         if (currentArea == AreaType.MONSTER || currentArea == AreaType.BOSS) //전투구역이면 적 소환
         {
-            NextEnemy();
+            EnemyManager.Instance.enemyCount = 0;
+            NextEnemy(false);
         }
         
         EventManager.TriggerEvent("StartBGM", currentStageData.stageID); //BGM

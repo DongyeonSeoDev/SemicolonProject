@@ -121053,6 +121053,54 @@ MonoBehaviour:
             isUnlock: 0
             statLv: 0
             savedStatLv: 0
+          health:
+            id: 0
+            statValue: 0
+            isUnlock: 0
+            statLv: 0
+            savedStatLv: 0
+          strong:
+            id: 0
+            statValue: 0
+            isUnlock: 0
+            statLv: 0
+            savedStatLv: 0
+          powerful:
+            id: 0
+            statValue: 0
+            isUnlock: 0
+            statLv: 0
+            savedStatLv: 0
+          nimble:
+            id: 0
+            statValue: 0
+            isUnlock: 0
+            statLv: 0
+            savedStatLv: 0
+          active:
+            id: 0
+            statValue: 0
+            isUnlock: 0
+            statLv: 0
+            savedStatLv: 0
+          incisive:
+            id: 0
+            statValue: 0
+            isUnlock: 0
+            statLv: 0
+            savedStatLv: 0
+          persistent:
+            id: 0
+            statValue: 0
+            isUnlock: 0
+            statLv: 0
+            savedStatLv: 0
+          hard:
+            id: 0
+            statValue: 0
+            isUnlock: 0
+            statLv: 0
+            savedStatLv: 0
       currentBodyID: 
       userItems:
         keyList: []

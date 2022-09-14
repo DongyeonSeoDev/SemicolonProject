@@ -227,6 +227,19 @@ public class StatStore : MonoSingleton<StatStore>
                 return;
             }
 
+            switch(id)  //예외처리
+            {
+                case NGlobal.StrongID:
+                    if(NGlobal.playerStatUI.GetCurrentPlayerStat(NGlobal.MinDamageID)
+                        + Global.CurrentPlayer.GetComponent<PlayerChoiceStatControl>().ChoiceDataDict[id].upTargetStatPerChoiceStat
+                        >= NGlobal.playerStatUI.GetCurrentPlayerStat(NGlobal.MaxDamageID))
+                    {
+                        UIManager.Instance.RequestSystemMsg("최대데미지가 낮아서 해당 특성을 구매할 수 없습니다");
+                        return;
+                    }
+                    break;
+            }
+
             selectedProp.Buy();
             NGlobal.playerStatUI.PlayerStat.currentStatPoint -= selectedProp.Point;
             NGlobal.playerStatUI.UpdateScrStatUI();

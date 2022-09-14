@@ -16,6 +16,7 @@ public partial class StageDataSO : ScriptableObject
     public bool useOpenDoorSound;  //문 사운드 사용할까
 
     public int stageMonsterBundleCount;  //총 몇 세트의 몹들이 나오는지
+    public float[] nextEnemysSpawnInterval;
     [HideInInspector] public string[] stageMonsterBundleID;
 
     public GameObject stage;  //스테이지 프리팹
