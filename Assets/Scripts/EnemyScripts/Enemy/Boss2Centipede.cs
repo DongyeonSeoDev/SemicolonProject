@@ -105,6 +105,11 @@ namespace Enemy
             base.OnEnable();
             SetBossHPBar();
 
+            bossHPBar = GetComponentInChildren<BossCanvas>();
+            bossHPBar.Init(enemyData);
+
+            enemyData.enemyCanvas = bossHPBar.gameObject;
+
             enemyData.attackDelay = 2f;
             enemyData.noAttackTime = 5f;
             enemyData.isAttackPlayerDistance = 20f;
