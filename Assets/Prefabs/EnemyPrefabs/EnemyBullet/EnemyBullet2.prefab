@@ -117,6 +117,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a08137d9eaa257647acb521fe4517fe1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 7505758543740133374}
+  sr: {fileID: 6441970447574153695}
   targetTransform: {fileID: 0}
   distance: 2
   startAngle: 0

@@ -4,13 +4,13 @@ namespace Enemy
 {
     public class EnemyBullet2 : MonoBehaviour
     {
+        public Animator anim;
+        public SpriteRenderer sr;
         public Transform targetTransform;
         public float distance;
         public float startAngle;
         public float angleSpeed;
 
-        private Animator anim;
-        private SpriteRenderer sr;
         private Enemy enemy;
 
         private EnemyController eEnemyController;
