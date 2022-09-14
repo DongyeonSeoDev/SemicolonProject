@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 #region Global
 public static partial class Global
@@ -190,6 +191,19 @@ public static partial class ScriptHelper
         }
 
         return results;
+    }
+    public static Sprite GetTileSprite(this Tilemap tilemap, Vector2 position, float tilemapY)
+    {
+        Vector3Int localPlace = (new Vector3Int((int)position.x, (int)position.y, (int)tilemapY));
+
+        if (tilemap.HasTile(localPlace))
+        {
+            return tilemap.GetSprite(localPlace);
+        }
+        else
+        {
+            return null;
+        }
     }
     public static int Abs(this int a)
     {

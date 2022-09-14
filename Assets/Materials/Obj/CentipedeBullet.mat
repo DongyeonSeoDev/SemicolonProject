@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 6
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CentipedeBullet
+  m_Shader: {fileID: -6465566751694194690, guid: b9093453210791546a9f8f600a701a56, type: 3}
+  m_ShaderKeywords: PIXELSNAP_ON
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - _AlphaTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MainTex:
+        m_Texture: {fileID: 2800000, guid: 855d4ca5ace07c8418e1ba2cd72f6f38, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _MaskTex:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _NormalMap:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Floats:
+    - PixelSnap: 1
+    - _EnableExternalAlpha: 0
+    - _Outline: 0
+    - _OutlineSize: 1
+    m_Colors:
+    - Color_3593a22c9c9743749a599d618c35ce5d: {r: 1, g: 0, b: 0, a: 0}
+    - Vector2_49fb83295183497b970734bb8e0cef13: {r: 1, g: 1, b: 1, a: 1}
+    - Vector2_de1242e5761a4d319ff4909973dfcb57: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.3018868, g: 0.3018868, b: 0.3018868, a: 1}
+    - _Flip: {r: 1, g: 1, b: 1, a: 1}
+    - _Offset: {r: 1, g: 1, b: 0, a: 0}
+    - _OutlineColor: {r: 1, g: 1, b: 1, a: 1}
+    - _RendererColor: {r: 1, g: 1, b: 1, a: 1}
+    - _Tiling: {r: 1, g: 1, b: 1, a: 0}
+  m_BuildTextureStacks: []

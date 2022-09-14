@@ -12,7 +12,7 @@ public class FakeSpriteOutline : MonoBehaviour
     private SpriteRenderer fakeOutlineSpr;
 
     //[SerializeField] private SpriteMaskInteraction smi = SpriteMaskInteraction.VisibleInsideMask;
-
+    
     private void Start()
     {
         sprMsk = GetComponent<SpriteMask>();
