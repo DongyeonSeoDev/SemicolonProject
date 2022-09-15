@@ -563,6 +563,8 @@ public class StageManager : MonoSingleton<StageManager>
             }
         }
 
+        CheckStageBug();
+
         if (currentStageData.isSaveStage)
         {
             SaveStage();
@@ -625,7 +627,7 @@ public class StageManager : MonoSingleton<StageManager>
     {
         float mobStageWeight = 0f;
         int i;
-        for (i = 0; i < floorSpecies[floor].second.Count; i++)
+        for (i = 0; i < floorSpecies[floor-1].second.Count; i++)
         {
             mobStageWeight += mobWeight;
         }
@@ -635,9 +637,9 @@ public class StageManager : MonoSingleton<StageManager>
             areaWeightDic[floor][areaWeight[i].first] = areaWeight[i].second;
         }
         areaWeightDic[floor][AreaType.MONSTER] = mobStageWeight;
-        for (i = 0; i < floorSpecies[floor].second.Count; i++)
+        for (i = 0; i < floorSpecies[floor-1].second.Count; i++)
         {
-            mobAreaWeightDic[floor][floorSpecies[floor].second[i]] = mobWeight;
+            mobAreaWeightDic[floor][floorSpecies[floor-1].second[i]] = mobWeight;
         }
     }
 
@@ -889,6 +891,44 @@ public class StageManager : MonoSingleton<StageManager>
                     door.gameObject.SetActive(true);
                 }
             });
+        }
+    }
+
+    private void CheckStageBug()
+    {
+        List<AreaType> aList = new List<AreaType>();
+        List<EnemyType> eList = new List<EnemyType>();
+        AreaType aType;
+        EnemyType eType;
+
+        for(int i=0; i<currentStage.stageDoors.Length; i++)
+        {
+            if (!currentStage.stageDoors[i].gameObject.activeSelf || currentStage.stageDoors[i].IsExitDoor || !currentStage.stageDoors[i].nextStageData) continue;
+
+            aType = currentStage.stageDoors[i].nextStageData.areaType;
+            if (aList.Contains(aType))
+            {
+                if(aType != AreaType.MONSTER)
+                {
+                    Debug.LogWarning("문제 발생: 같은 타입의 방이 동시에 존재 " + aType.ToString());
+                }
+                else
+                {
+                    eType = currentStage.stageDoors[i].nextStageData.enemySpeciesArea;
+                    if (eList.Contains(eType))
+                    {
+                        Debug.Log("문제 발생: 같은 몬스터 타입의 방이 동시에 존재 " + eType.ToString());
+                    }
+                    else
+                    {
+                        eList.Add(eType);
+                    }
+                }
+            }
+            else
+            {
+                aList.Add(aType);
+            }
         }
     }
 
