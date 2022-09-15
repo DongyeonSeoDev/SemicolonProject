@@ -24,6 +24,9 @@ MonoBehaviour:
   purchase: 1
   sell: 0
   upCost: 2
+  purchase2: 1
+  sell2: 0
+  upCost2: 2
   simpleAbilExplanation: "\uBC29\uC5B4\uB825 \uAC10\uC18C"
   detailAbilExplanation: "\uBC29\uC5B4\uB825 1 \uAC10\uC18C, \uB808\uBCA8\uC5C5 \uC2DC
     \uBC29\uC5B4\uB825 {0} \uAC10\uC18C"

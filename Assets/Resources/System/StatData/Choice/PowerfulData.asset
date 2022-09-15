@@ -15,7 +15,7 @@ MonoBehaviour:
   statId: 150
   statValueDecimal: 0
   maxStatLv: 1
-  upStatValue: 0
+  upStatValue: 1
   statName: "\uAC15\uB825\uD568"
   statSpr: {fileID: 21300000, guid: 4c562301afa53e141894fd11fdb5823e, type: 3}
   charType: 1
@@ -24,6 +24,9 @@ MonoBehaviour:
   purchase: 5
   sell: 3
   upCost: 0
+  purchase2: 2
+  sell2: 1
+  upCost2: 0
   simpleAbilExplanation: "\uCD5C\uB300 \uB370\uBBF8\uC9C0 \uC0C1\uC2B9"
   detailAbilExplanation: "\uCD5C\uB300 \uB370\uBBF8\uC9C0 +{0} \uC0C1\uC2B9"
   growthWay: "\uC131\uC7A5\uBD88\uAC00"

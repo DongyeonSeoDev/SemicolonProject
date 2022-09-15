@@ -14,6 +14,12 @@ public class ChoiceStatSO : StatSO
     public int sell;  //1렙일 떄의 판매비용
     public int upCost; //레벨 오를 때마다 판매비용 얼마나 상승하는지
 
+    #region 제출용으로 임시적으로만 쓸 변수들 -> 나중에 지울 것
+    public int purchase2;  //구매 비용
+    public int sell2;  //1렙일 떄의 판매비용
+    public int upCost2; //레벨 오를 때마다 판매비용 얼마나 상승하는지
+    #endregion
+
     public string simpleAbilExplanation;
     [TextArea]
     public string detailAbilExplanation;
