@@ -93,6 +93,7 @@ namespace Enemy
 
         public bool isDamaged = false;
         public bool isAttack = false;
+        public bool isPlayerAttack = false;
         public bool isLongDistanceAttack = false;
         public bool isRunAway = false;
         public bool isEnemyMove = false;

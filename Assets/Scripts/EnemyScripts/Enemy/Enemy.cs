@@ -141,7 +141,7 @@ namespace Enemy
         {
             if (enemyData.eEnemyController == EnemyController.PLAYER)
             {
-                enemyData.isAttack = true;
+                enemyData.isPlayerAttack = true;
                 playerInput.AttackMousePosition = playerInput.MousePosition;
             }
         }

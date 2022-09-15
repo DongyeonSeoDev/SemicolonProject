@@ -162,9 +162,9 @@ namespace Enemy
         public bool AnyStateChangeState()
         {
             if (AlwaysCheckStateChangeCondition()) { }
-            else if (enemyData.eEnemyController == EnemyController.PLAYER && enemyData.isAttack)
+            else if (enemyData.eEnemyController == EnemyController.PLAYER && enemyData.isPlayerAttack)
             {
-                enemyData.isAttack = false;
+                enemyData.isPlayerAttack = false;
                 ChangeState(new EnemyPlayerControllerAttackState(enemyData));
             }
             else
@@ -184,6 +184,12 @@ namespace Enemy
             else if (!enemyData.isNoStun && enemyData.stunTime > 0 && stateName != eState.STUN)
             {
                 ChangeState(new EnemyStunStatus(enemyData));
+            }
+            else if (enemyData.isAttack)
+            {
+                enemyData.isAttack = false;
+
+                ChangeState(new EnemyAIAttackState(enemyData));
             }
             else
             {

@@ -9,6 +9,7 @@ namespace Enemy
         [SerializeField]
         private Collider2D damageCollider;
 
+        private EnemyCommand moveCommand = null;
         private WaitForSeconds ws = new WaitForSeconds(0.2f);
         private WaitWhile ww = new WaitWhile(() => SlimeGameManager.Instance.Player.PlayerState.IsDrain);
 
@@ -18,6 +19,7 @@ namespace Enemy
         private float maxMoveTime = 5f;
         private float randomTeleportPosition = 5f;
         private bool isTeleport = false;
+        private bool isAttackMove = false;
 
         private readonly int hashTeleport = Animator.StringToHash("Teleport");
         private readonly int hashTeleportEnd = Animator.StringToHash("TeleportEnd");
@@ -26,14 +28,30 @@ namespace Enemy
         {
             base.OnEnable();
 
-            enemyData.attackDelay = 0.5f;
+            enemyData.attackDelay = 1f;
             enemyData.isAttackPlayerDistance = 1.5f;
 
             enemyData.enemySpriteRotateCommand = new EnemySpriteRotateCommand(enemyData);
             enemyData.enemyMoveCommand = new EnemyMoveCommand(enemyData, transform, enemyData.chaseSpeed);
+            moveCommand = new EnemyMoveCommand(enemyData, transform, 1f);
             enemyData.moveEvent = MoveEvent;
 
             moveTime = Random.Range(minMoveTime, maxMoveTime);
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+
+            if (isStop)
+            {
+                return;
+            }
+
+            if (isAttackMove)
+            {
+                moveCommand.Execute();
+            }
         }
 
         public void ReadyAttack() // 애니메이션에서 실행
@@ -42,6 +60,18 @@ namespace Enemy
             {
                 enemyAttackCheck[i].AttackObjectReset();
             }
+
+            isAttackMove = true;
+        }
+
+        public void AttackEnd() // 애니메이션에서 실행
+        {
+            isAttackMove = false;
+        }
+
+        public void TeleportEnd() // 애니메이션에서 실행
+        {
+            enemyData.isAttack = true;
         }
 
         private void MoveEvent()
