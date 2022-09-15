@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace Enemy
 {
@@ -512,6 +513,8 @@ namespace Enemy
     }
     public class CentipedeLongRangeAttackCommand : EnemyCommand
     {
+        private readonly string maskSpritesPath = "Sprites/CentipedeBullet/MaskSprites/";
+
         private Transform enemyTransform;
         private Transform shotTransform;
 
@@ -530,8 +533,11 @@ namespace Enemy
         private float criticalPower;
 
         private bool useRot = false;
+        private bool useTileImg = false;
+        private Tilemap curStageTilemap;
+        private List<Sprite> maskSprites;
 
-        public CentipedeLongRangeAttackCommand(Enemy enemy, Transform enemyPosition, Vector3 targetPosition, Vector3 rotation, Type objectType, Transform shotTransform, float minAttack, float maxAttack, float critical, float criticalPower)
+        public CentipedeLongRangeAttackCommand(Enemy enemy, Transform enemyPosition, Vector3 targetPosition, Vector3 rotation, Type objectType, Transform shotTransform, float minAttack, float maxAttack, float critical, float criticalPower, bool useTileImg, Tilemap stageTilemap = null)
         {
             this.minAttack = minAttack;
             this.maxAttack = maxAttack;
@@ -547,8 +553,12 @@ namespace Enemy
             this.targetPosition = targetPosition;
 
             useRot = true;
+            this.useTileImg = useTileImg;
+            curStageTilemap = stageTilemap;
+
+            maskSprites = Resources.LoadAll<Sprite>(maskSpritesPath + "maskSprite").ToList();
         }
-        public CentipedeLongRangeAttackCommand(Enemy enemy, Transform enemyPosition, Vector3 targetPosition, Type objectType, Transform shotTransform, float minAttack, float maxAttack, float critical, float criticalPower)
+        public CentipedeLongRangeAttackCommand(Enemy enemy, Transform enemyPosition, Vector3 targetPosition, Type objectType, Transform shotTransform, float minAttack, float maxAttack, float critical, float criticalPower, bool useTileImg, Tilemap stageTilemap = null)
         {
             this.minAttack = minAttack;
             this.maxAttack = maxAttack;
@@ -562,6 +572,10 @@ namespace Enemy
             this.targetPosition = targetPosition;
 
             useRot = false;
+            this.useTileImg = useTileImg;
+            curStageTilemap = stageTilemap;
+
+            maskSprites = Resources.LoadAll<Sprite>(maskSpritesPath + "maskSprite").ToList();
         }
 
         public override void Execute()
@@ -570,14 +584,35 @@ namespace Enemy
             {
                 EnemyPoolData spawnObject = EnemyPoolManager.Instance.GetPoolObject(objectType, shotTransform.position);
 
+                if(useTileImg)
+                {
+                    SetTileSprite(spawnObject);
+                }
+
                 spawnObject.GetComponent<EnemyBullet>().Init(enemy.GetEnemyController(), rot * (targetPosition - enemyTransform.position).normalized, minAttack, maxAttack, critical, criticalPower, Color.white, null);
             }
             else
             {
                 EnemyPoolData spawnObject = EnemyPoolManager.Instance.GetPoolObject(objectType, shotTransform.position);
 
+                if (useTileImg)
+                {
+                    SetTileSprite(spawnObject);
+                }
+
                 spawnObject.GetComponent<EnemyBullet>().Init(enemy.GetEnemyController(), (targetPosition - enemyTransform.position).normalized, minAttack, maxAttack, critical, criticalPower, Color.white, null);
             }
+        }
+
+        private void SetTileSprite(EnemyPoolData spawnObject)
+        {
+            SpriteRenderer renderer = spawnObject.gameObject.GetComponent<SpriteRenderer>();
+            SpriteMask spriteMask = spawnObject.gameObject.GetComponent<SpriteMask>();
+
+            int idx = Random.Range(0, maskSprites.Count);
+
+            renderer.sprite = curStageTilemap.GetTileSprite(shotTransform.position, curStageTilemap.transform.position.y);
+            spriteMask.sprite = maskSprites[idx];
         }
     }
     public class PlayerlongRangeAttackCommand : EnemyCommand

@@ -43,8 +43,8 @@ namespace Enemy
         private Animator hpEffectAnimation = null;
 
         private float isDamageCurrentTime = 0f;
+        protected float prevAnimationSpeed = 1f;
         protected bool isStop = false;
-
         private bool isUsePlayerSpeedEvent = false;
 
         private WaitForSeconds moveDelay;
@@ -106,7 +106,7 @@ namespace Enemy
             if (enemyData.eEnemyController == EnemyController.AI)
             {
                 isStop = false;
-                anim.speed = 1f;
+                anim.speed = prevAnimationSpeed;
 
                 if (hpEffectAnimation != null)
                 {
@@ -119,6 +119,8 @@ namespace Enemy
         {
             if (enemyData.eEnemyController == EnemyController.AI)
             {
+                prevAnimationSpeed = anim.speed;
+
                 isStop = true;
                 anim.speed = 0f;
 

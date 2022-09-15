@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace Enemy
 {
     public class Boss2Centipede : Enemy
     {
         public Transform movePivot;
+        public Tilemap stageTilemap = null;
 
         private Vector2 dashTargetPosition = Vector2.zero;
 
@@ -105,6 +107,21 @@ namespace Enemy
             base.OnEnable();
             SetBossHPBar();
 
+            stageTilemap = null;
+            foreach (var item in StageManager.Instance.stageParent.GetComponentsInChildren<Tilemap>())
+            {
+                if(item.gameObject.name == "BackgroundTilemap")
+                {
+                    stageTilemap = item;
+                    break;
+                }
+            }
+
+            bossHPBar = GetComponentInChildren<BossCanvas>();
+            bossHPBar.Init(enemyData);
+
+            enemyData.enemyCanvas = bossHPBar.gameObject;
+
             enemyData.attackDelay = 2f;
             enemyData.noAttackTime = 5f;
             enemyData.isAttackPlayerDistance = 20f;
@@ -134,6 +151,7 @@ namespace Enemy
             DashCheck();
             MoveCheck();
         }
+        
         private void PercentageCheck()
         {
             // 체력에따른 퍼센테이지 변경
@@ -310,8 +328,6 @@ namespace Enemy
             {
                 enemyData.attackDelay = 1f;
 
-                Debug.Log(1);
-
                 shootBulletRotationOffset = 0f;
                 meleeAttack1Count = 1;
             }
@@ -319,23 +335,17 @@ namespace Enemy
             {
                 enemyData.attackDelay = 1f;
 
-                Debug.Log(2);
-
                 enemyData.animationDictionary[EnemyAnimationType.Attack] = hashMeleeAttack2;
             }
             else if((checkValue += sneerPercentage) >= value)
             {
                 enemyData.attackDelay = 2f;
 
-                Debug.Log(3);
-
                 sneerCount = 3;
             }
             else if((checkValue += multipleMeleeAttack1Percentage) >= value)
             {
                 enemyData.attackDelay = 1f;
-
-                Debug.Log(4);
 
                 shootBulletRotationOffset = 0f;
                 meleeAttack1Count = 3;
@@ -375,7 +385,7 @@ namespace Enemy
         // sneer(침뱉기)에 쓰이는 총알 발사 함수
         public void ShootBulletToPlayer()
         {
-            enemySneerCommand = new CentipedeLongRangeAttackCommand(this, shootTrm, EnemyManager.Player.transform.position, Type.CentipedeBullet, shootTrm, bulletMinAttackPower, bulletMaxAttackPower, enemyData.randomCritical, enemyData.randomCritical);
+            enemySneerCommand = new CentipedeLongRangeAttackCommand(this, shootTrm, EnemyManager.Player.transform.position, Type.CentipedeBullet, shootTrm, bulletMinAttackPower, bulletMaxAttackPower, enemyData.randomCritical, enemyData.randomCritical, true, stageTilemap);
             enemySneerCommand.Execute();
         }
         // meleeAttack1(지면 파괴)에 쓰이는 총알 발사 함수
@@ -390,7 +400,7 @@ namespace Enemy
                 rotation = Quaternion.Euler(1f, 1f, up * i + shootBulletRotationOffset) * Vector2.one;
                 rotation = rotation.normalized;
 
-                enemySneerCommand = new CentipedeLongRangeAttackCommand(this, shootTrm, EnemyManager.Player.transform.position, rotation, Type.CentipedeBullet, shootTrm, bulletMinAttackPower, bulletMaxAttackPower, enemyData.randomCritical, enemyData.randomCritical);
+                enemySneerCommand = new CentipedeLongRangeAttackCommand(this, shootTrm, EnemyManager.Player.transform.position, rotation, Type.CentipedeBullet, shootTrm, bulletMinAttackPower, bulletMaxAttackPower, enemyData.randomCritical, enemyData.randomCritical, true, stageTilemap);
                 enemySneerCommand.Execute();
             }
         }
