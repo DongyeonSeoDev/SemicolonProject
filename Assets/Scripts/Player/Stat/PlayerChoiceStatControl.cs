@@ -681,30 +681,28 @@ public class PlayerChoiceStatControl : MonoBehaviour
         ChoiceStat stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat;
         if (stat.weak.isUnlock)
         {
-            minusStatCountDict[NGlobal.WeakID]++;
+            CheckMinusStatCount(NGlobal.WeakID);
         }
         if (stat.tiredness.isUnlock)
         {
-            minusStatCountDict[NGlobal.TirednessID]++;
+            CheckMinusStatCount(NGlobal.TirednessID);
         }
         if(stat.fear.isUnlock)
         {
-            minusStatCountDict[NGlobal.FearID]++;
+            CheckMinusStatCount(NGlobal.FearID);
         }
 
         if (StageManager.Instance.IsBattleArea)
         {
             if (stat.soft.isUnlock)
             {
-                minusStatCountDict[NGlobal.SoftID]++;
+                CheckMinusStatCount(NGlobal.SoftID);
             }
             if (stat.feeble.isUnlock)
             {
-                minusStatCountDict[NGlobal.FeebleID]++;
+                CheckMinusStatCount(NGlobal.FeebleID);
             }
         }
-
-        CheckMinusStatCount();
     }
 
     private void UpEnemyDeadCount(GameObject obj, string str, bool b)
@@ -712,23 +710,32 @@ public class PlayerChoiceStatControl : MonoBehaviour
         ChoiceStat stat = SlimeGameManager.Instance.Player.PlayerStat.choiceStat;
         if (stat.sluggish.isUnlock)
         {
-            minusStatCountDict[NGlobal.SluggishID]++;
+            CheckMinusStatCount(NGlobal.SluggishID);
         }
         if (stat.dull.isUnlock)
         {
-            minusStatCountDict[NGlobal.DullID]++;
+            CheckMinusStatCount(NGlobal.DullID);
         }
         if (stat.terror.isUnlock)
         {
-            minusStatCountDict[NGlobal.TerrorID]++;
+            CheckMinusStatCount(NGlobal.TerrorID);
         }
-
-        CheckMinusStatCount();
     }
 
-    private void CheckMinusStatCount()
+    private void CheckMinusStatCount(ushort id)
     {
-        //여기서 스탯 감소 특성들이 렙업 가능한지 체크하고 렙업 시켜줌
+        minusStatCountDict[id]++;
+        if (minusStatCountDict[id] >= choiceDataDict[id].upAmount)
+        {
+            StatElement stat = NGlobal.playerStatUI.choiceStatDic[id];
+            if (stat.statLv < stat.maxStatLv)
+            {
+                minusStatCountDict[id] = 0;
+                stat.statLv++;
+                NGlobal.playerStatUI.StatUp(id);
+                ChoiceStatCheckStatValueSet(id);
+            }
+        }
     }
 
     public void ChoiceStatControlReset()
@@ -808,7 +815,12 @@ public class PlayerChoiceStatControl : MonoBehaviour
                     Global.CurrentPlayer.PlayerStat.additionalEternalStat.maxHp.statValue -= NGlobal.playerStatUI.eternalStatDic[NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(statID).needStatID].first.statLv == 1 ?
                         choiceDataDict[statID].firstValue : choiceDataDict[statID].upTargetStatPerChoiceStat;
 
-                    if(NGlobal.playerStatUI.GetCurrentPlayerStat(NGlobal.MaxHpID) < NGlobal.playerStatUI.PlayerStat.currentHp)
+                    if(NGlobal.playerStatUI.GetCurrentPlayerStat(NGlobal.MaxHpID) < 1)  //플레이어 최대 HP의 최소치는 1로 둠
+                    {
+                        Global.CurrentPlayer.PlayerStat.additionalEternalStat.maxHp.statValue = -Global.CurrentPlayer.PlayerStat.eternalStat.maxHp.statValue + 1;
+                    }
+
+                    if(NGlobal.playerStatUI.GetCurrentPlayerStat(NGlobal.MaxHpID) < NGlobal.playerStatUI.PlayerStat.currentHp)  //최대체력이 현재 체력보다 낮으면 현재체력을 최대체력으로 해줌
                     {
                         NGlobal.playerStatUI.PlayerStat.currentHp = NGlobal.playerStatUI.GetCurrentPlayerStat(NGlobal.MaxHpID);
                     }
@@ -823,9 +835,18 @@ public class PlayerChoiceStatControl : MonoBehaviour
             case NGlobal.SluggishID:
             case NGlobal.DullID:
             case NGlobal.TerrorID:
+
                 ChoiceStatSO so = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(statID);
                 NGlobal.playerStatUI.eternalStatDic[so.needStatID].second.statValue
                     -= NGlobal.playerStatUI.eternalStatDic[so.needStatID].first.statLv == 1 ? choiceDataDict[statID].firstValue : choiceDataDict[statID].upTargetStatPerChoiceStat;
+
+                if(NGlobal.playerStatUI.GetCurrentPlayerStat(so.needStatID) < 0)  //최대체력 외의 스탯들의 최소치는 0으로 둠
+                {
+                    NGlobal.playerStatUI.eternalStatDic[so.needStatID].second.statValue = -NGlobal.playerStatUI.eternalStatDic[so.needStatID].first.statValue;
+                }
+
+                //최소체력이 최대체력보다 같거나 클 때의 예외처리가 아직 이곳엔 없음
+
                 break;
         }
         #endregion

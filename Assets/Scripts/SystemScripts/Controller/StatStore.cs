@@ -234,7 +234,7 @@ public class StatStore : MonoSingleton<StatStore>
             if (!so.plusStat)
             {
                 float value = stat.isUnlock ? stat.UpStatValue : pcsCtrl.ChoiceDataDict[id].firstValue;
-                if(NGlobal.playerStatUI.GetCurrentPlayerStat(so.needStatID) - value <= 0)
+                if(NGlobal.playerStatUI.GetCurrentPlayerStat(so.needStatID) - value < 0)
                 {
                     UIManager.Instance.RequestSystemMsg("해당 특성을 구매하기에는 " + so.statName + " 스탯이 너무 낮습니다");
                     return;
