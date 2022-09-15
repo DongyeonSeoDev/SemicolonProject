@@ -194,7 +194,7 @@ public class StageManager : MonoSingleton<StageManager>
                 return;
             }
 
-            SetClearStage();
+           SetClearStage();
             UIManager.Instance.RequestSystemMsg("강제로 문을 열음");
             EnemyManager.Instance.PlayerDeadEvent();
         });
@@ -1021,8 +1021,6 @@ public class StageManager : MonoSingleton<StageManager>
         {
             currentStageData.mapEvent.OnEnterEvent();
         }
-
-
     }
 
     public void StageClear()

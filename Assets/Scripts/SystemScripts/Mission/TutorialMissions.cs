@@ -18,7 +18,6 @@ public class AbsorptionTutoMission : Mission
         TutorialManager.Instance.GetSkill2();
         EnemyManager.Instance.isOnlyAbsorption = false;
         EventManager.StopListening("TryAbsorbMob", (System.Action<bool>)TryDrain);
-        //StageManager.Instance.StageClear();
     }
 
     public override void Start()

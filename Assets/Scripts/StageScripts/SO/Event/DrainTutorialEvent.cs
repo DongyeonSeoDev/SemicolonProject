@@ -3,9 +3,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Drain Tutorial Event", menuName = "Scriptable Object/Map Events/Drain Tutorial Event", order = int.MaxValue)]
 public class DrainTutorialEvent : MapEventSO
 {
-    //private int tutoEnemyDeathCnt = 0;
+    private int tutoEnemyDeathCnt = 0;
 
-    
     public string enterSubtitleId;
 
     public override void OnEnterEvent()
@@ -13,17 +12,17 @@ public class DrainTutorialEvent : MapEventSO
         TalkUtil.ShowSubtitle(enterSubtitleId);
         EventManager.TriggerEvent("SpawnEnemy", "Stage0-05");
         BattleUIManager.Instance.StartMission(MissionType.ABSORPTIONTUTORIAL, DifficultyLevel.EASY);
-        //tutoEnemyDeathCnt = 0;
-        //EventManager.StartListening("Tuto_EnemyDeathCheck", CheckTutoEnemyDead);
+        tutoEnemyDeathCnt = 0;
+        EventManager.StartListening("EnemyDead", CheckTutoEnemyDead);
     }
 
-    /*private void CheckTutoEnemyDead()
+    private void CheckTutoEnemyDead(GameObject o, string str, bool b)
     {
         Debug.Log("tutoEnemyDeathCnt : " + tutoEnemyDeathCnt);
-        if(++tutoEnemyDeathCnt == 2)
+        if(++tutoEnemyDeathCnt == 1)
         {
-            StageManager.Instance.SetClearStage();
-            EventManager.StopListening("Tuto_EnemyDeathCheck", CheckTutoEnemyDead);
+            StageManager.Instance.StageClear();
+            EventManager.StopListening("EnemyDead", CheckTutoEnemyDead);
         }
-    }*/
+    }
 }
