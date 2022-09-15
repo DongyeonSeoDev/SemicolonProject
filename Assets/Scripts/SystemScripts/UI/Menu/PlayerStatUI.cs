@@ -361,6 +361,15 @@ public class PlayerStatUI : MonoBehaviour
         choiceStatDic.Add(NGlobal.PersistentID, playerStat.choiceStat.persistent);
         choiceStatDic.Add(NGlobal.HardID, playerStat.choiceStat.hard);
 
+        choiceStatDic.Add(NGlobal.WeakID, playerStat.choiceStat.weak);
+        choiceStatDic.Add(NGlobal.SoftID, playerStat.choiceStat.soft);
+        choiceStatDic.Add(NGlobal.FeebleID, playerStat.choiceStat.feeble);
+        choiceStatDic.Add(NGlobal.TirednessID, playerStat.choiceStat.tiredness);
+        choiceStatDic.Add(NGlobal.FearID, playerStat.choiceStat.fear);
+        choiceStatDic.Add(NGlobal.SluggishID, playerStat.choiceStat.sluggish);
+        choiceStatDic.Add(NGlobal.DullID, playerStat.choiceStat.dull);
+        choiceStatDic.Add(NGlobal.TerrorID, playerStat.choiceStat.terror);
+
         //선택 스탯 UI 생성  -- 특성
         foreach(ushort key in choiceStatDic.Keys)
         {

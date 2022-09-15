@@ -267,7 +267,14 @@ public class BodyChangeTutorialPhase : TutorialPhase
                 EventManager.TriggerEvent("EnemyStop");
                 TimeManager.LerpTime(2.7f, 0f, () =>
                 {
-                    TalkUtil.ShowSubtitle("Tuto_BodyChange");
+                    TalkManager.Instance.SetSubtitle(new SingleSubtitleData()
+                    {
+                        dialog = KeyCodeToString.GetString(KeySetting.GetKeyCode(KeyAction.CHANGE_MONSTER1)) + "를 말하면 방금 흡수한 두 번째 몸으로 변신할 수 있어",
+                        secondPerLit = 0.1f,
+                        duration = 1.5f,
+                        nextLogInterval = 0f,
+                        endActionId = ""
+                    }, true);
                 });
                 isReady = true;
             }

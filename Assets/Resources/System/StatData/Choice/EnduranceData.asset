@@ -19,10 +19,14 @@ MonoBehaviour:
   statName: "\uB9F7\uC9D1"
   statSpr: {fileID: 21300000, guid: b843aac0c62993847b679abd831ab122, type: 3}
   charType: 2
+  plusStat: 0
   needStatID: 5
   purchase: 10
   sell: 6
   upCost: 3
+  purchase2: 3
+  sell2: 2
+  upCost2: 1
   simpleAbilExplanation: "\uCCB4\uB825 \uAC10\uC18C \uC2DC \uCD5C\uB300 \uCCB4\uB825
     \uC0C1\uC2B9"
   detailAbilExplanation: "Hp100 \uAC10\uC18C \uC2DC \uCD5C\uB300 \uCCB4\uB825 <color=#4444EC>+{0}</color>Hp

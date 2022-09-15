@@ -18,7 +18,7 @@ MonoBehaviour:
   isHealItem: 1
   maxCount: 5
   itemName: "\uD68C\uBCF5 \uBB3C\uC57D"
-  explanation: "\uCCB4\uB825\uC774 80 \uD68C\uBCF5\uB41C\uB2E4."
+  explanation: "\uCCB4\uB825\uC774 80% \uD68C\uBCF5\uB41C\uB2E4."
   abilExplanation: "\uCCB4\uB825 +80%"
   needIngredients:
   - ingredient: {fileID: 11400000, guid: 9fc9500b9b1a4b34aabf03d842ac24af, type: 2}

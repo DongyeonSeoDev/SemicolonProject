@@ -371,6 +371,15 @@ public class ChoiceStat
     public StatElement persistent = new StatElement();  //집요함
     public StatElement hard = new StatElement();  //단단함
 
+    public StatElement weak = new StatElement(); //허약함
+    public StatElement soft = new StatElement(); //나약함
+    public StatElement feeble = new StatElement(); //쇠약함
+    public StatElement tiredness = new StatElement(); //피로함
+    public StatElement fear = new StatElement(); //두려움
+    public StatElement sluggish = new StatElement(); //둔함
+    public StatElement dull = new StatElement(); //둔탁함
+    public StatElement terror = new StatElement(); //공포감
+
     private List<StatElement> elements;
 
     public List<StatElement> AllStats  //모든 특성(선택스탯)들의 데이터 리스트
@@ -396,6 +405,14 @@ public class ChoiceStat
                 elements.Add(incisive);
                 elements.Add(persistent);
                 elements.Add(hard);
+                elements.Add(weak);
+                elements.Add(soft);
+                elements.Add(feeble);
+                elements.Add(tiredness);
+                elements.Add(fear);
+                elements.Add(sluggish);
+                elements.Add(dull);
+                elements.Add(terror);
             }
             return elements;
         }

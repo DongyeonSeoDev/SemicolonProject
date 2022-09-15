@@ -279,6 +279,54 @@ MonoBehaviour:
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
+      weak:
+        id: 180
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      soft:
+        id: 185
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      feeble:
+        id: 190
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      tiredness:
+        id: 195
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      fear:
+        id: 200
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      sluggish:
+        id: 205
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      dull:
+        id: 210
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      terror:
+        id: 215
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
   playerInput: {fileID: 0}
   playerChoiceStatControl: {fileID: 0}
   playerReflectionScript: {fileID: 0}
@@ -454,7 +502,7 @@ MonoBehaviour:
     name: "\uAC74\uAC15\uD568"
     targetStat: 
     unlockStatValue: 0
-    firstValue: 2
+    firstValue: 8
     checkStartValue: 0
     upAmount: 1
     changeUpAmount: 0
@@ -464,7 +512,7 @@ MonoBehaviour:
     name: "\uAC15\uD568"
     targetStat: 
     unlockStatValue: 0
-    firstValue: 0
+    firstValue: 1
     checkStartValue: 0
     upAmount: 0
     changeUpAmount: 0
@@ -474,7 +522,7 @@ MonoBehaviour:
     name: "\uAC15\uB825\uD568"
     targetStat: 
     unlockStatValue: 0
-    firstValue: 2
+    firstValue: 1
     checkStartValue: 0
     upAmount: 1
     changeUpAmount: 0
@@ -484,7 +532,7 @@ MonoBehaviour:
     name: "\uB0A0\uB835\uD568"
     targetStat: 
     unlockStatValue: 0
-    firstValue: 2
+    firstValue: 1
     checkStartValue: 0
     upAmount: 1
     changeUpAmount: 0
@@ -494,7 +542,7 @@ MonoBehaviour:
     name: "\uD65C\uBC1C\uD568"
     targetStat: 
     unlockStatValue: 0
-    firstValue: 2
+    firstValue: 1
     checkStartValue: 0
     upAmount: 1
     changeUpAmount: 0
@@ -504,7 +552,7 @@ MonoBehaviour:
     name: "\uC608\uB9AC\uD568"
     targetStat: 
     unlockStatValue: 0
-    firstValue: 2
+    firstValue: 5
     checkStartValue: 0
     upAmount: 1
     changeUpAmount: 0
@@ -514,7 +562,7 @@ MonoBehaviour:
     name: "\uC9D1\uC694\uD568"
     targetStat: 
     unlockStatValue: 0
-    firstValue: 2
+    firstValue: 25
     checkStartValue: 0
     upAmount: 1
     changeUpAmount: 0
@@ -529,6 +577,86 @@ MonoBehaviour:
     upAmount: 1
     changeUpAmount: 0
     upTargetStatPerChoiceStat: 2
+    lastMaxStatLv: 0
+  - id: 180
+    name: "\uD5C8\uC57D\uD568"
+    targetStat: 
+    unlockStatValue: 0
+    firstValue: 5
+    checkStartValue: 0
+    upAmount: 2
+    changeUpAmount: 0
+    upTargetStatPerChoiceStat: 5
+    lastMaxStatLv: 0
+  - id: 185
+    name: "\uB098\uC57D\uD568"
+    targetStat: 
+    unlockStatValue: 0
+    firstValue: 1
+    checkStartValue: 0
+    upAmount: 2
+    changeUpAmount: 0
+    upTargetStatPerChoiceStat: 1
+    lastMaxStatLv: 0
+  - id: 190
+    name: "\uC1E0\uC57D\uD568"
+    targetStat: 
+    unlockStatValue: 0
+    firstValue: 1
+    checkStartValue: 0
+    upAmount: 2
+    changeUpAmount: 0
+    upTargetStatPerChoiceStat: 1
+    lastMaxStatLv: 0
+  - id: 195
+    name: "\uD53C\uB85C\uD568"
+    targetStat: 
+    unlockStatValue: 0
+    firstValue: 1
+    checkStartValue: 0
+    upAmount: 3
+    changeUpAmount: 0
+    upTargetStatPerChoiceStat: 0.1
+    lastMaxStatLv: 0
+  - id: 200
+    name: "\uB450\uB824\uC6C0"
+    targetStat: 
+    unlockStatValue: 0
+    firstValue: 1
+    checkStartValue: 0
+    upAmount: 3
+    changeUpAmount: 0
+    upTargetStatPerChoiceStat: 0.1
+    lastMaxStatLv: 0
+  - id: 205
+    name: "\uB454\uD568"
+    targetStat: 
+    unlockStatValue: 0
+    firstValue: 5
+    checkStartValue: 0
+    upAmount: 8
+    changeUpAmount: 0
+    upTargetStatPerChoiceStat: 5
+    lastMaxStatLv: 0
+  - id: 210
+    name: "\uB454\uD0C1\uD568"
+    targetStat: 
+    unlockStatValue: 0
+    firstValue: 25
+    checkStartValue: 0
+    upAmount: 10
+    changeUpAmount: 0
+    upTargetStatPerChoiceStat: 10
+    lastMaxStatLv: 0
+  - id: 215
+    name: "\uACF5\uD3EC\uAC10"
+    targetStat: 
+    unlockStatValue: 0
+    firstValue: 1
+    checkStartValue: 0
+    upAmount: 5
+    changeUpAmount: 0
+    upTargetStatPerChoiceStat: 1
     lastMaxStatLv: 0
   eternalDataList:
   - id: 20

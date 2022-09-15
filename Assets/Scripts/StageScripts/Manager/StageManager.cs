@@ -23,6 +23,8 @@ public class StageManager : MonoSingleton<StageManager>
     public StageDataSO CurrentStageData => currentStageData;
     public StageGround CurrentStageGround => currentStage;
 
+    [HideInInspector] public int enemyKill = 0;  //현재 스테이지에서 죽인 적의 수
+    private int enemyCount = -1;  //현재 스테이지에서 나오는 모든 적의 수 (1세트 2세트로 나오는거 다 포함)
     private int currentStageMonsterBundleOrder = 1;
 
     private int currentFloor = 1;
@@ -460,6 +462,9 @@ public class StageManager : MonoSingleton<StageManager>
         currentStage = null;
         currentStageMonsterBundleOrder = 1;
 
+        enemyKill = 0;
+        enemyCount = -1;
+
         if(currentStageData.stageFloor.floor != currentFloor) //다음 스테이지가 층이 다르면 새로 세팅 해야함
         {
             currentStageNumber = 0;
@@ -558,6 +563,8 @@ public class StageManager : MonoSingleton<StageManager>
             }
         }
 
+        CheckStageBug();
+
         if (currentStageData.isSaveStage)
         {
             SaveStage();
@@ -620,7 +627,7 @@ public class StageManager : MonoSingleton<StageManager>
     {
         float mobStageWeight = 0f;
         int i;
-        for (i = 0; i < floorSpecies[floor].second.Count; i++)
+        for (i = 0; i < floorSpecies[floor-1].second.Count; i++)
         {
             mobStageWeight += mobWeight;
         }
@@ -630,9 +637,9 @@ public class StageManager : MonoSingleton<StageManager>
             areaWeightDic[floor][areaWeight[i].first] = areaWeight[i].second;
         }
         areaWeightDic[floor][AreaType.MONSTER] = mobStageWeight;
-        for (i = 0; i < floorSpecies[floor].second.Count; i++)
+        for (i = 0; i < floorSpecies[floor-1].second.Count; i++)
         {
-            mobAreaWeightDic[floor][floorSpecies[floor].second[i]] = mobWeight;
+            mobAreaWeightDic[floor][floorSpecies[floor-1].second[i]] = mobWeight;
         }
     }
 
@@ -887,25 +894,70 @@ public class StageManager : MonoSingleton<StageManager>
         }
     }
 
+    private void CheckStageBug()
+    {
+        List<AreaType> aList = new List<AreaType>();
+        List<EnemyType> eList = new List<EnemyType>();
+        AreaType aType;
+        EnemyType eType;
+
+        for(int i=0; i<currentStage.stageDoors.Length; i++)
+        {
+            if (!currentStage.stageDoors[i].gameObject.activeSelf || currentStage.stageDoors[i].IsExitDoor || !currentStage.stageDoors[i].nextStageData) continue;
+
+            aType = currentStage.stageDoors[i].nextStageData.areaType;
+            if (aList.Contains(aType))
+            {
+                if(aType != AreaType.MONSTER)
+                {
+                    Debug.LogWarning("문제 발생: 같은 타입의 방이 동시에 존재 " + aType.ToString());
+                }
+                else
+                {
+                    eType = currentStage.stageDoors[i].nextStageData.enemySpeciesArea;
+                    if (eList.Contains(eType))
+                    {
+                        Debug.Log("문제 발생: 같은 몬스터 타입의 방이 동시에 존재 " + eType.ToString());
+                    }
+                    else
+                    {
+                        eList.Add(eType);
+                    }
+                }
+            }
+            else
+            {
+                aList.Add(aType);
+            }
+        }
+    }
+
     public void SetMonsterStage()
     {
         IsStageClear = false;
         currentStage.CloseDoor();
     }
 
-    public void NextEnemy()
+    public void NextEnemy(bool autoSpawn)
     {
         string id = CurrentMonstersOrderID;
 
         if (string.IsNullOrEmpty(id))
         {
-            StageClear();
+            if(!autoSpawn && enemyKill == GetCurStageEnemyCount())
+                StageClear();
             return;
         }
 
         if (currentArea != AreaType.BOSS)
         {
-            DOUtil.ExecuteTweening("Next Enemys Spawn", Util.DelayFuncCo(() => EventManager.TriggerEvent("SpawnEnemy", id), 1f, false, false), this);
+            Util.PriDelayFunc("Next Enemys Spawn", () => EventManager.TriggerEvent("SpawnEnemy", id), 1f, this, false);
+
+            if(currentStageData.stageMonsterBundleCount > currentStageMonsterBundleOrder)
+            {
+                Util.PriDelayFunc("AutoSpawnNextEnemy", () => NextEnemy(true), 
+                    currentStageData.nextEnemysSpawnInterval[currentStageMonsterBundleOrder - 1] + 1f, this, false);
+            }
         }
         else
         {
@@ -917,6 +969,8 @@ public class StageManager : MonoSingleton<StageManager>
 
     public int GetCurStageEnemyCount()  //현재 스테이지의 몹 수 전체 수. => 몇 세트씩 나뉘어서 나오는 것들 전부 합쳐서
     {
+        if(enemyCount > 0) return enemyCount;
+
         string[] strs = currentStageData.stageMonsterBundleID;
         int count = 0;
 
@@ -927,6 +981,8 @@ public class StageManager : MonoSingleton<StageManager>
         {
             count += spawnData[strs[i]].Count;
         }
+
+        enemyCount = count;
         return count;
     }
 
@@ -943,7 +999,8 @@ public class StageManager : MonoSingleton<StageManager>
 
         if (currentArea == AreaType.MONSTER || currentArea == AreaType.BOSS) //전투구역이면 적 소환
         {
-            NextEnemy();
+            EnemyManager.Instance.enemyCount = 0;
+            NextEnemy(false);
         }
         
         EventManager.TriggerEvent("StartBGM", currentStageData.stageID); //BGM

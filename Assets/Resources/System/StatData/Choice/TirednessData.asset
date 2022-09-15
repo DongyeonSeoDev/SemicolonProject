@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8065046aea5a0f3408bb64d2c52d9860, type: 3}
+  m_Name: TirednessData
+  m_EditorClassIdentifier: 
+  statId: 195
+  statValueDecimal: 1
+  maxStatLv: 10
+  upStatValue: 0.1
+  statName: "\uD53C\uB85C\uD568"
+  statSpr: {fileID: 21300000, guid: 54954864e20794944abf312fbb994f72, type: 3}
+  charType: 1
+  plusStat: 0
+  needStatID: 35
+  purchase: 1
+  sell: 0
+  upCost: 1
+  purchase2: 1
+  sell2: 0
+  upCost2: 1
+  simpleAbilExplanation: "\uACF5\uACA9\uC18D\uB3C4 \uAC10\uC18C"
+  detailAbilExplanation: "\uACF5\uACA9\uC18D\uB3C4 1 \uAC10\uC18C, \uB808\uBCA8\uC5C5
+    \uC2DC \uACF5\uACA9\uC18D\uB3C4 {0} \uAC10\uC18C"
+  growthWay: "\uC77C\uC815 \uBC29 \uD1B5\uACFC"
+  acquisitionWay: "\uD2B9\uC131 \uC0C1\uC810\uC5D0\uC11C \uAD6C\uC785"

@@ -40,6 +40,8 @@ public class StatStore : MonoSingleton<StatStore>
 
     #endregion
 
+    public PlayerChoiceStatControl pcsCtrl { get; private set; }
+
     private void Awake()
     {
         for(ushort i = NGlobal.CStatStartID; i<= NGlobal.CStatEndID; i+= NGlobal.StatIDOffset)
@@ -57,47 +59,47 @@ public class StatStore : MonoSingleton<StatStore>
         updateNifc.explanation = rechargeNeedPoint.ToString() + "포인트 소모";
     }
 
+    private void Start()
+    {
+        pcsCtrl = Global.CurrentPlayer.GetComponent<PlayerChoiceStatControl>();
+    }
+
     public CharType GetCharType(ushort id) => NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id).charType;
 
-    private void SetIncounter(ref List<ushort> list, int cnt)
+    private void ChangeIndex(ref List<ushort> list, int targetIdx, System.Func<ushort, bool> change, System.Predicate<ushort> find)
+    { 
+        if(change(list[targetIdx]))
+        {
+            int idx = list.FindIndex(find);
+            if(idx != -1)  //해당 조건에 만족하는 인덱스가 있으면
+            {
+                ushort tmp = list[targetIdx];
+                list[targetIdx] = list[idx];
+                list[idx] = tmp;
+            }
+        }
+    }
+
+    private void SetIncounter(ref List<ushort> list, in int cnt)
     {
-        CharType type;
-        ushort tmp;
         if (cnt > 0)
         {
-            //1번 칸은 비밀이나 몬스터 특성
-            type = GetCharType(list[0]);
-            if (!(type == CharType.SECRET || type == CharType.MONSTER))
+            //1번 칸은 몬스터나 비밀 특성
+            ChangeIndex(ref list, 0, id=>GetCharType(id)==CharType.STORE, id=>GetCharType(id)!=CharType.STORE && !prevStockIDList.Contains(id));
+            if(cnt > 1)
             {
-                int idx = list.FindIndex(x => (GetCharType(x) == CharType.MONSTER || GetCharType(x) == CharType.SECRET) && !prevStockIDList.Contains(x)); 
-                if (idx != -1)  //해당 조건에 만족하는 인덱스가 있으면
+                //2번 칸은 상점 + 스탯 특성
+                ChangeIndex(ref list, 1,
+                    id => !(GetCharType(id) == CharType.STORE && NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id).plusStat),
+                    id => GetCharType(id) == CharType.STORE && NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id).plusStat && !prevStockIDList.Contains(id));
+                if (cnt > 2)
                 {
-                    tmp = list[0];
-                    list[0] = list[idx];
-                    list[idx] = tmp;
+                    //3번 칸은 상점 - 스탯 특성
+                    ChangeIndex(ref list, 2,
+                    id => !(GetCharType(id) == CharType.STORE && !NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id).plusStat),
+                    id => GetCharType(id) == CharType.STORE && !NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id).plusStat && !prevStockIDList.Contains(id));
                 }
             }
-
-            //2,3번칸은 상점
-            /*if (cnt > 1)
-            {
-                ushort tmp2 = 0;
-                for (i = 1; i < cnt; i++)
-                {
-                    type = GetCharType(list[i]);
-                    if (type != CharType.STORE)
-                    {
-                        int idx = list.FindIndex(x => GetCharType(x) == CharType.STORE && x != tmp2);  //아무런 값도 못가져왔을 때의 예외처리 필요
-                        tmp = list[i];
-                        list[i] = list[idx];
-                        list[idx] = tmp;
-                        tmp2 = list[i];
-
-                        Debug.Log(list[i]);
-                        Debug.Log(list[idx]);
-                    }
-                }
-            }*/
         }
     }
 
@@ -220,11 +222,45 @@ public class StatStore : MonoSingleton<StatStore>
         if (!purchasedPropIDList.Contains(id))
         {
             StatElement stat = NGlobal.playerStatUI.choiceStatDic[id];
+            ChoiceStatSO so = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id);
 
             if (stat.statLv >= stat.maxStatLv)  //==비교로 해도 됨
             {
                 UIManager.Instance.RequestSystemMsg("해당 특성은 더 이상 구매할 수 없습니다");
                 return;
+            }
+
+            //0 이하로 떨어지면 구매 못하게 함
+            if (!so.plusStat)
+            {
+                float value = stat.isUnlock ? stat.UpStatValue : pcsCtrl.ChoiceDataDict[id].firstValue;
+                if(NGlobal.playerStatUI.GetCurrentPlayerStat(so.needStatID) - value < 0)
+                {
+                    UIManager.Instance.RequestSystemMsg("해당 특성을 구매하기에는 " + so.statName + " 스탯이 너무 낮습니다");
+                    return;
+                }
+            }
+
+            switch(id)  //예외처리
+            {
+                case NGlobal.StrongID:
+                    if(NGlobal.playerStatUI.GetCurrentPlayerStat(NGlobal.MinDamageID)
+                        + pcsCtrl.ChoiceDataDict[id].upTargetStatPerChoiceStat
+                        >= NGlobal.playerStatUI.GetCurrentPlayerStat(NGlobal.MaxDamageID))
+                    {
+                        UIManager.Instance.RequestSystemMsg("최대데미지가 낮아서 해당 특성을 구매할 수 없습니다");
+                        return;
+                    }
+                    break;
+                case NGlobal.FeebleID:
+                    if(NGlobal.playerStatUI.GetCurrentPlayerStat(NGlobal.MaxDamageID)
+                        - pcsCtrl.ChoiceDataDict[id].upTargetStatPerChoiceStat
+                        <= NGlobal.playerStatUI.GetCurrentPlayerStat(NGlobal.MinDamageID))
+                    {
+                        UIManager.Instance.RequestSystemMsg("최소데미지가 높아서 해당 특성을 구매할 수 없습니다");
+                        return;
+                    }
+                    break;
             }
 
             selectedProp.Buy();

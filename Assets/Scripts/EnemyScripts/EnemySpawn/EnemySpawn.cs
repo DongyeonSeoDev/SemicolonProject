@@ -121,7 +121,7 @@ namespace Enemy
                 enemy.GetComponent<Enemy>().SetColor(1f);
             }
 
-            EnemyManager.Instance.enemyCount = spawnData.Count;
+            EnemyManager.Instance.enemyCount += spawnData.Count;
             EventManager.TriggerEvent("EnemySpawnAfter");
         }
 
