@@ -142,7 +142,7 @@ public class BattleUIManager : MonoSingleton<BattleUIManager>
         }
 
         //튜토리얼 3번방 전용
-        allMissionsDic.Add(MissionType.SURVIVAL1, new SurvivalMission("20초 동안 살아남으세요 (20)", 20f, doorBreak =>
+        allMissionsDic.Add(MissionType.SURVIVAL1, new SurvivalMission("20초 동안 살아남으세요 (5)", 5f, doorBreak =>
         {
             TalkManager.Instance.SetSubtitle(SubtitleDataManager.Instance.GetSubtitle("Tuto3Clear"));
             Enemy.EnemyManager.Instance.PlayerDeadEvent();

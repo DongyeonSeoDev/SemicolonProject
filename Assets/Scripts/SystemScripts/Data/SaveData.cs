@@ -103,6 +103,8 @@ public class Option
 
     //ÀÚµ¿Äü½½·Ô
     //public bool isAutoQuikSlot = true;
+
+    public string lastPlayDate;
 }
 
 

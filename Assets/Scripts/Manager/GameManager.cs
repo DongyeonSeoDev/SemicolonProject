@@ -74,6 +74,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         MonsterCollection.Instance.Save();
         KeyActionManager.Instance.SaveKey();
         saveData.userInfo.currentBodyID = SlimeGameManager.Instance.CurrentBodyId;
+        saveData.option.lastPlayDate = DateTime.Now.ToString("yyyy:MM:dd:hh:mm:ss");
         saveData.Save();
     }
 

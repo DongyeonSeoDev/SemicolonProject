@@ -1,5 +1,6 @@
 using UnityEngine.UI;
 using UnityEngine;
+using System.Text;
 
 public class ChoiceStatInfoElement : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class ChoiceStatInfoElement : MonoBehaviour
 
     public Image statImg;
 
+    public Image expFillImg;
+
     [SerializeField] private Button btn;
 
     public void InitSet(StatElement stat)
@@ -22,9 +25,10 @@ public class ChoiceStatInfoElement : MonoBehaviour
         statData = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id);
 
         statImg.sprite = stat.StatSprite;
+        statImg.color = UtilValues.Gray100;
 
-        BGStatNameTxt.text = statData.statName;
-        BGStatExplanationTxt.text = statData.simpleAbilExplanation;
+        //BGStatNameTxt.text = statData.statName;
+        //BGStatExplanationTxt.text = statData.simpleAbilExplanation;
 
         btn.onClick.AddListener(() => NGlobal.playerStatUI.DetailViewChoiceStatInfo(id));
 
@@ -33,6 +37,18 @@ public class ChoiceStatInfoElement : MonoBehaviour
 
     public void UpdateUI()
     {
-        BGStatLvTxt.text = choice.statLv.ToString();
+        if (choice.isUnlock)
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("<color=#");
+            sb.Append(choice.statLv < choice.maxStatLv ? "E9FF34>" : "747474>");
+            sb.Append(choice.statLv.ToString());
+            sb.Append("</color>  ");
+            sb.Append(statData.statName);
+
+            BGStatLvTxt.text = sb.ToString();
+
+            //expFillImg.fillAmount =   진욱이 코드쪽에서 경험치 어떻게든 받아와야함
+        }
     }
 }

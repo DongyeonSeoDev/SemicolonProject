@@ -45,10 +45,14 @@ public class PlayerStatUI : MonoBehaviour
     private Transform choiceDetailPar;
     [SerializeField] private Vector2 choiceDetailStartPos;  //x축은 적당히 조절. y축은 특성 UI의 Height만큼
 
-    public GameObject choiceStatDetailPanel; // 선택 스탯 자세히 보기창
+    public CanvasGroup choiceStatDetailPanel; // 선택 스탯 자세히 보기창
     public Text choiceDetailAbil, choiceDetailGrowth, choiceDetailAcq;  //선택 스탯 자세히 보기창에 있는 능력, 성장방법, 획득방법 설명 텍스트 
+    public Text choiceLV;  //자세히보기창에서 레벨 텍스트
+    public TextMeshProUGUI choiceNameTxt; //자세히보기 창에서 특성 이름
+    public Image expFill;  //특성의 경험치
 
     private ushort selectedChoiceBtnId = 9999;
+    private Vector2 choiceDetailFirstPos;
 
     private int needStatPoint; //(고정)스탯 올리기 버튼에 마우스 댈 때 올리기 위해서 필요한 스탯 포인트 저장
 
@@ -103,6 +107,8 @@ public class PlayerStatUI : MonoBehaviour
 
         EventManager.StartListening("StartCutScene", () => statPointEff.SetActive(false));
         EventManager.StartListening("EndCutScene", () => statPointEff.SetActive(true));
+
+        choiceDetailFirstPos = choiceStatDetailPanel.GetComponent<RectTransform>().anchoredPosition;
     }
 
     private void Start()
@@ -638,22 +644,50 @@ public class PlayerStatUI : MonoBehaviour
         {
             selectedChoiceBtnId = 9999;
             choiceStatDetailPanel.transform.DOKill();
-            choiceStatDetailPanel.transform.DOScale(SVector3.Y0, 0.3f).OnComplete(() =>
+            choiceStatDetailPanel.DOKill();
+
+            choiceStatInfoUIDic[id].statImg.color = UtilValues.Gray100;
+
+            choiceStatDetailPanel.GetComponent<RectTransform>().DOAnchorPos(choiceDetailFirstPos + new Vector2(150, 0), 0.4f).SetUpdate(true);
+            choiceStatDetailPanel.DOFade(0, 0.4f).OnComplete(()=>choiceStatDetailPanel.gameObject.SetActive(false)).SetUpdate(true);
+
+            #region 이전 트위닝 연출 코드 주석
+            /*choiceStatDetailPanel.transform.DOScale(SVector3.Y0, 0.3f).OnComplete(() =>
             {
                 for (int i = 0; i < invisibleChoiceStatUICount; i++)
                 {
                     invisibleChoiceStatUIList[i].gameObject.SetActive(false);
                 }
-                choiceStatDetailPanel.SetActive(false);
-            }).SetUpdate(true);
+                choiceStatDetailPanel.gameObject.SetActive(false);
+            }).SetUpdate(true);*/
+            #endregion
 
             return;
         }
 
-        selectedChoiceBtnId = id;
+        if(selectedChoiceBtnId == 9999)
+        {
+            choiceStatDetailPanel.transform.DOKill();
+            choiceStatDetailPanel.DOKill();
 
+            RectTransform rt = choiceStatDetailPanel.GetComponent<RectTransform>();
+            rt.anchoredPosition = choiceDetailFirstPos + new Vector2(150, 0);
+            choiceStatDetailPanel.alpha = 0;
+
+            rt.DOAnchorPos(choiceDetailFirstPos, 0.4f).SetUpdate(true);
+            choiceStatDetailPanel.DOFade(1, 0.4f).SetUpdate(true);
+        }
+        else
+        {
+            choiceStatInfoUIDic[selectedChoiceBtnId].statImg.color = UtilValues.Gray100;
+        }
+
+        selectedChoiceBtnId = id;
+        choiceStatInfoUIDic[selectedChoiceBtnId].statImg.color = Color.white;
+
+        #region 이전 트위닝 연출 코드 주석
         //이걸 안하면 아래의 특성  UI를 누를 경우 자식 인덱스가 원래보다 높게 나와 이상하게 UI가 배치된다
-        for (int i = 0; i < invisibleChoiceStatUICount; i++)
+        /*for (int i = 0; i < invisibleChoiceStatUICount; i++)
         {
             invisibleChoiceStatUIList[i].transform.SetAsLastSibling();
         }
@@ -665,20 +699,34 @@ public class PlayerStatUI : MonoBehaviour
         {
             invisibleChoiceStatUIList[i].gameObject.SetActive(true);
             invisibleChoiceStatUIList[i].transform.SetSiblingIndex(curIdx + i + 1);
-        }
+        }*/
+        #endregion
 
-        choiceStatDetailPanel.transform.DOKill();
-        choiceStatDetailPanel.transform.localScale = SVector3.Y0;
-        choiceStatDetailPanel.SetActive(true);
+        #region 이전 트위닝 연출 코드 주석
+        //choiceStatDetailPanel.transform.localScale = SVector3.Y0;
 
-        choiceStatDetailPanel.transform.SetParent(choiceStatInfoUIDic[id].transform);
-        choiceStatDetailPanel.GetComponent<RectTransform>().anchoredPosition = choiceDetailStartPos;
+        //choiceStatDetailPanel.transform.SetParent(choiceStatInfoUIDic[id].transform);
+        //choiceStatDetailPanel.GetComponent<RectTransform>().anchoredPosition = choiceDetailStartPos;
 
         /*choiceStatDetailPanel.GetComponent<RectTransform>().anchoredPosition = new Vector2(v.x,
             rt.anchoredPosition.y - rt.rect.height * 0.5f - 2f);*/
-        choiceStatDetailPanel.transform.DOScale(Vector3.one, 0.3f).SetUpdate(true);
+        //choiceStatDetailPanel.transform.DOScale(Vector3.one, 0.3f).SetUpdate(true);
+        #endregion
 
+        choiceStatDetailPanel.gameObject.SetActive(true);
         ChoiceStatSO data = GetStatSOData<ChoiceStatSO>(id);
+
+        choiceNameTxt.text = data.statName;
+        choiceLV.text = $"LV. {choiceStatDic[id].statLv}/{data.maxStatLv}";
+        if(choiceStatDic[id].statLv >= data.maxStatLv)
+        {
+            expFill.fillAmount = 1f;
+        }
+        else
+        {
+            //expFill.fillAmount =  진욱이 코드쪽에서 경험치 받아와야함
+        }
+
         choiceDetailAbil.text = "<b>능력 : </b>" + string.Format(data.detailAbilExplanation, 
             Global.CurrentPlayer.GetComponent<PlayerChoiceStatControl>().ChoiceDataDict[selectedChoiceBtnId].upTargetStatPerChoiceStat);
         choiceDetailGrowth.text = "<b>성장방법 : </b>" + data.growthWay;
@@ -687,13 +735,19 @@ public class PlayerStatUI : MonoBehaviour
 
     public void CloseChoiceDetail()  //선택 스탯 클릭해서 자세히보기 창 열린거 닫아준다. (트위닝 없이 그냥)
     {
-        selectedChoiceBtnId = 9999;
+        if(selectedChoiceBtnId != 9999)
+        {
+            choiceStatInfoUIDic[selectedChoiceBtnId].statImg.color = UtilValues.Gray100;
+            selectedChoiceBtnId = 9999;
+        }
+
         choiceStatDetailPanel.transform.DOKill();
-        choiceStatDetailPanel.SetActive(false);
-        for (int i = 0; i < invisibleChoiceStatUICount; i++)
+        choiceStatDetailPanel.DOKill();
+        choiceStatDetailPanel.gameObject.SetActive(false);
+        /*for (int i = 0; i < invisibleChoiceStatUICount; i++)
         {
             invisibleChoiceStatUIList[i].gameObject.SetActive(false);
-        }
+        }*/
     }
     
     public void UpdateScrStatUI()  //플레이 화면에 보이는 스탯 UI 업뎃

@@ -480,7 +480,7 @@ GameObject:
   - component: {fileID: 5205830853913796796}
   - component: {fileID: -6614784563920096636}
   m_Layer: 5
-  m_Name: ChoiceStatUIElementBg
+  m_Name: OldChoiceStatUIElementBg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
