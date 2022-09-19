@@ -29,7 +29,8 @@ namespace Enemy
         ReflectionBullet,
         ReflectionBulletEffect,
         StunEffect,
-        CentipedeBullet
+        CentipedeBullet,
+        CentipedeAroundBullet
     }
 
     public class EnemyPoolManager : MonoBehaviour
@@ -76,6 +77,7 @@ namespace Enemy
                     for (int j = 0; j < poolDictionary[type].count; j++)
                     {
                         poolQueueDictionary[type].Enqueue(MakePoolObject(type));
+                        Debug.Log(type);
                     }
                 }
             }

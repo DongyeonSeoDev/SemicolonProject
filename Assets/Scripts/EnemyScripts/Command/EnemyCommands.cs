@@ -381,19 +381,6 @@ namespace Enemy
             rigid.velocity = targetPosition;
         }
     }
-    public class CentipedeSneerCommand : EnemyCommand
-    {
-        private EnemyData enemyData;
-
-        public CentipedeSneerCommand(EnemyData data)
-        {
-            enemyData = data;
-        }
-        public override void Execute()
-        {
-
-        }
-    }
 
     public class BossMoveCommand : EnemyCommand // 보스 움직임
     {
@@ -513,8 +500,6 @@ namespace Enemy
     }
     public class CentipedeLongRangeAttackCommand : EnemyCommand
     {
-        private readonly string maskSpritesPath = "Sprites/CentipedeBullet/MaskSprites/";
-
         private Transform enemyTransform;
         private Transform shotTransform;
 
@@ -533,11 +518,8 @@ namespace Enemy
         private float criticalPower;
 
         private bool useRot = false;
-        private bool useTileImg = false;
-        private Tilemap curStageTilemap;
-        private List<Sprite> maskSprites;
 
-        public CentipedeLongRangeAttackCommand(Enemy enemy, Transform enemyPosition, Vector3 targetPosition, Vector3 rotation, Type objectType, Transform shotTransform, float minAttack, float maxAttack, float critical, float criticalPower, bool useTileImg, Tilemap stageTilemap = null)
+        public CentipedeLongRangeAttackCommand(Enemy enemy, Transform enemyPosition, Vector3 targetPosition, Vector3 rotation, Type objectType, Transform shotTransform, float minAttack, float maxAttack, float critical, float criticalPower)
         {
             this.minAttack = minAttack;
             this.maxAttack = maxAttack;
@@ -553,12 +535,8 @@ namespace Enemy
             this.targetPosition = targetPosition;
 
             useRot = true;
-            this.useTileImg = useTileImg;
-            curStageTilemap = stageTilemap;
-
-            maskSprites = Resources.LoadAll<Sprite>(maskSpritesPath + "maskSprite").ToList();
         }
-        public CentipedeLongRangeAttackCommand(Enemy enemy, Transform enemyPosition, Vector3 targetPosition, Type objectType, Transform shotTransform, float minAttack, float maxAttack, float critical, float criticalPower, bool useTileImg, Tilemap stageTilemap = null)
+        public CentipedeLongRangeAttackCommand(Enemy enemy, Transform enemyPosition, Vector3 targetPosition, Type objectType, Transform shotTransform, float minAttack, float maxAttack, float critical, float criticalPower)
         {
             this.minAttack = minAttack;
             this.maxAttack = maxAttack;
@@ -572,10 +550,6 @@ namespace Enemy
             this.targetPosition = targetPosition;
 
             useRot = false;
-            this.useTileImg = useTileImg;
-            curStageTilemap = stageTilemap;
-
-            maskSprites = Resources.LoadAll<Sprite>(maskSpritesPath + "maskSprite").ToList();
         }
 
         public override void Execute()
@@ -584,24 +558,69 @@ namespace Enemy
             {
                 EnemyPoolData spawnObject = EnemyPoolManager.Instance.GetPoolObject(objectType, shotTransform.position);
 
-                if(useTileImg)
-                {
-                    SetTileSprite(spawnObject);
-                }
-
                 spawnObject.GetComponent<EnemyBullet>().Init(enemy.GetEnemyController(), rot * (targetPosition - enemyTransform.position).normalized, minAttack, maxAttack, critical, criticalPower, Color.white, null);
             }
             else
             {
                 EnemyPoolData spawnObject = EnemyPoolManager.Instance.GetPoolObject(objectType, shotTransform.position);
 
-                if (useTileImg)
-                {
-                    SetTileSprite(spawnObject);
-                }
-
                 spawnObject.GetComponent<EnemyBullet>().Init(enemy.GetEnemyController(), (targetPosition - enemyTransform.position).normalized, minAttack, maxAttack, critical, criticalPower, Color.white, null);
             }
+        }
+    }
+    public class CentipedeShootAroundCommand : EnemyCommand
+    {
+        private readonly string maskSpritesPath = "Sprites/CentipedeBullet/MaskSprites/";
+
+        private Transform shotTransform;
+
+        private Enemy enemy;
+
+        private Type objectType;
+
+        private float minAttack;
+        private float maxAttack;
+        private float critical;
+        private float criticalPower;
+
+        private bool useTileImg = false;
+        private Tilemap curStageTilemap;
+        private List<Sprite> maskSprites;
+
+        public CentipedeShootAroundCommand(Enemy enemy, Transform shotTransform, Type objectType, float minAttack, float maxAttack, float critical, float criticalPower, bool useTileImg, Tilemap stageTilemap = null)
+        {
+            this.enemy = enemy;
+
+            this.objectType = objectType;
+
+            this.minAttack = minAttack;
+            this.maxAttack = maxAttack;
+            this.critical = critical;
+            this.criticalPower = criticalPower;
+
+            this.shotTransform = shotTransform;
+            this.useTileImg = useTileImg;
+            curStageTilemap = stageTilemap;
+
+            maskSprites = Resources.LoadAll<Sprite>(maskSpritesPath + "maskSprite").ToList();
+        }
+
+        public override void Execute()
+        {
+            CentipedeShootAroundBullet shootAroundBullet = null;
+            EnemyPoolData spawnObject = EnemyPoolManager.Instance.GetPoolObject(objectType, shotTransform.position);
+
+            Vector2 dir = ScriptHelper.RandomVector(-Vector2.one, Vector2.one);
+
+            if(useTileImg)
+            {
+                SetTileSprite(spawnObject);
+            }
+
+            shootAroundBullet = spawnObject.GetComponent<CentipedeShootAroundBullet>();
+
+            shootAroundBullet.Init(enemy.GetEnemyController(), dir, minAttack, maxAttack, critical, criticalPower, Color.white);
+            shootAroundBullet.SetData(Random.Range(6f, 10f), Random.Range(-1f, 1f), 0f);
         }
 
         private void SetTileSprite(EnemyPoolData spawnObject)

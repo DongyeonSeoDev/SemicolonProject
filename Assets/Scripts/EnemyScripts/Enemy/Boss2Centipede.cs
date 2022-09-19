@@ -78,6 +78,7 @@ namespace Enemy
         private EnemyCommand enemyMoveCommand;
         private EnemyCommand dashCommand;
         private EnemyCommand enemySneerCommand;
+        private EnemyCommand shootAroundCommand;
 
         [HideInInspector] public LayerMask whatIsWall;
         [HideInInspector] public float currentSpeed = 0f;
@@ -385,7 +386,7 @@ namespace Enemy
         // sneer(침뱉기)에 쓰이는 총알 발사 함수
         public void ShootBulletToPlayer()
         {
-            enemySneerCommand = new CentipedeLongRangeAttackCommand(this, shootTrm, EnemyManager.Player.transform.position, Type.CentipedeBullet, shootTrm, bulletMinAttackPower, bulletMaxAttackPower, enemyData.randomCritical, enemyData.randomCritical, true, stageTilemap);
+            enemySneerCommand = new CentipedeLongRangeAttackCommand(this, shootTrm, EnemyManager.Player.transform.position, Type.CentipedeBullet, shootTrm, bulletMinAttackPower, bulletMaxAttackPower, enemyData.randomCritical, enemyData.randomCritical);
             enemySneerCommand.Execute();
         }
         // meleeAttack1(지면 파괴)에 쓰이는 총알 발사 함수
@@ -395,13 +396,14 @@ namespace Enemy
             
             float up = 360f / num;
 
+            shootAroundCommand = new CentipedeShootAroundCommand(this, shootTrm, Type.CentipedeAroundBullet, bulletMinAttackPower, bulletMaxAttackPower, enemyData.randomCritical, enemyData.randomCritical, true, stageTilemap);
+
             for (int i = 0; i < num; i++)
             {
                 rotation = Quaternion.Euler(1f, 1f, up * i + shootBulletRotationOffset) * Vector2.one;
                 rotation = rotation.normalized;
 
-                enemySneerCommand = new CentipedeLongRangeAttackCommand(this, shootTrm, EnemyManager.Player.transform.position, rotation, Type.CentipedeBullet, shootTrm, bulletMinAttackPower, bulletMaxAttackPower, enemyData.randomCritical, enemyData.randomCritical, true, stageTilemap);
-                enemySneerCommand.Execute();
+                shootAroundCommand.Execute();
             }
         }
         public EnemyState AttackStateChangeCondition() // 이벤트 구독에 사용됨 - 공격2 사용 가능 확인
