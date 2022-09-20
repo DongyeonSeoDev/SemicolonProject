@@ -647,7 +647,10 @@ public class StageManager : MonoSingleton<StageManager>
     {
         List<AreaType> li = areaWeightDic[currentFloor].Keys.ToList();
         if (currentStageData.stageFloor.randomStageList[currentStageNumber].nextStageTypes.Length == 1)
+        {
+            Debug.Log("Next Door Count : 1");
             return currentStageData.stageFloor.randomStageList[currentStageNumber].nextStageTypes[0];
+        }
         float total = 0, weight = 0;
         int i;
         for (i = 0; i < li.Count; i++)
