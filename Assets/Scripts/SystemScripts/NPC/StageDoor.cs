@@ -67,7 +67,7 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
 
         if(StageManager.Instance.IsStageClear || isBreak)  //문을 부쉈거나 스테이지 클리어라면
         {
-            if (!isEnter && !isExitDoor) //문을 열었거나 입구로 쓴 문이면 상호작용 아예 안되게
+            if (!isEnter && !isExitDoor && nextStageData != null) //문을 열었거나 입구로 쓴 문이면 상호작용 아예 안되게
             {
                 isEnter = true;
                 StageManager.Instance.PassDir = dirType;
@@ -79,7 +79,7 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
 
     public void Open() //열기
     {
-        if (isExitDoor || !gameObject.activeSelf || isOpen) return;
+        if (isExitDoor || !gameObject.activeSelf || isOpen || nextStageData == null) return;
 
         AreaType t = StageManager.Instance.CurrentAreaType;
         if (StageManager.Instance.CurrentStageData.useOpenDoorSound || t == AreaType.MONSTER || t == AreaType.RANDOM || t == AreaType.BOSS)
@@ -131,7 +131,7 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
         {
             base.SetInteractionUI(on);
 
-            if (nextStageData.areaType == AreaType.MONSTER && !IsBlindState)  //담 스테이지가 몬스터 맵이면서 실명 저주 안걸린 상태면 종족 아이콘 띄움
+            if (nextStageData != null && nextStageData.areaType == AreaType.MONSTER && !IsBlindState)  //담 스테이지가 몬스터 맵이면서 실명 저주 안걸린 상태면 종족 아이콘 띄움
             {
                 if (on)
                 {

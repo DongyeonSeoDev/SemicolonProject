@@ -14,6 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   floor: 2
   stageBundleName: "\uD574\uACE8 \uB358\uC804"
-  stages: []
+  stages:
+  - {fileID: 11400000, guid: 640ba3ab5af0f4341b88949e425f126a, type: 2}
   monsterStages: []
-  randomStageList: []
+  randomStageList:
+  - stageNumber: 1
+    nextStageTypes: 01000000
+  nextStageSOInBoss: {fileID: 0}

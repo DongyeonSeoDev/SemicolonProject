@@ -20345,6 +20345,10 @@ PrefabInstance:
       propertyPath: m_SpriteTilingProperty.oldSize.y
       value: 0.26666668
       objectReference: {fileID: 0}
+    - target: {fileID: 8604531944747639586, guid: 3f971e421df139044b7caf816eddf9e5, type: 3}
+      propertyPath: dirType
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 8604531944747639587, guid: 3f971e421df139044b7caf816eddf9e5, type: 3}
       propertyPath: m_Name
       value: StageDoor2 (1)

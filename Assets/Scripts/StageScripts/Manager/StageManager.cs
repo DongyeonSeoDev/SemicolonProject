@@ -545,7 +545,7 @@ public class StageManager : MonoSingleton<StageManager>
                             door.gameObject.SetActive(false);
                         else
                         {
-                            door.nextStageData = currentStageData.stageFloor.nextStageSO;
+                            door.nextStageData = currentStageData.stageFloor.nextStageSOInBoss;
                             door.gameObject.SetActive(true);
                         }
                     }

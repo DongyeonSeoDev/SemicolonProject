@@ -85,3 +85,4 @@ MonoBehaviour:
     nextStageTypes: 05000000
   - stageNumber: 17
     nextStageTypes: 09000000
+  nextStageSOInBoss: {fileID: 11400000, guid: 640ba3ab5af0f4341b88949e425f126a, type: 2}
