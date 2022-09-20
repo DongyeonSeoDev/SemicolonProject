@@ -801,11 +801,6 @@ public class PlayerChoiceStatControl : MonoBehaviour
                 break;
 
             case NGlobal.HealthID:
-                {
-                    Global.CurrentPlayer.PlayerStat.additionalEternalStat.maxHp.statValue += choiceDataDict[NGlobal.HealthID].upTargetStatPerChoiceStat;
-                    UIManager.Instance.UpdatePlayerHPUI();
-                }
-                break;
             case NGlobal.StrongID:
             case NGlobal.PowerfulID:
             case NGlobal.NimbleID:
@@ -813,8 +808,29 @@ public class PlayerChoiceStatControl : MonoBehaviour
             case NGlobal.IncisiveID:
             case NGlobal.PersistentID:
             case NGlobal.HardID:
-                NGlobal.playerStatUI.eternalStatDic[NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(statID).needStatID].second.statValue
-                    += choiceDataDict[statID].upTargetStatPerChoiceStat;
+                {
+                    if (NGlobal.playerStatUI.choiceStatDic[statID].isUnlock)  //구매
+                    {
+                        NGlobal.playerStatUI.eternalStatDic[NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(statID).needStatID].second.statValue
+                            += choiceDataDict[statID].upTargetStatPerChoiceStat;
+                    }
+                    else  //판매
+                    {
+                        ChoiceStatSO so = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(statID);
+                        float min = NGlobal.playerStatUI.GetStatSOData<EternalStatSO>(so.needStatID).minStatValue;
+                        NGlobal.playerStatUI.eternalStatDic[so.needStatID].second.statValue -= choiceDataDict[statID].upTargetStatPerChoiceStat;
+                        if(NGlobal.playerStatUI.GetCurrentPlayerStat(so.needStatID) < min)
+                        {
+                            NGlobal.playerStatUI.eternalStatDic[so.needStatID].second.statValue = -NGlobal.playerStatUI.eternalStatDic[so.needStatID].first.statValue + min;
+                        }
+                        if (NGlobal.playerStatUI.GetCurrentPlayerStat(NGlobal.MaxHpID) < NGlobal.playerStatUI.PlayerStat.currentHp)  //최대체력이 현재 체력보다 낮으면 현재체력을 최대체력으로 해줌
+                        {
+                            NGlobal.playerStatUI.PlayerStat.currentHp = NGlobal.playerStatUI.GetCurrentPlayerStat(NGlobal.MaxHpID);
+                        }
+                    }
+
+                    UIManager.Instance.UpdatePlayerHPUI();
+                }
                 break;
 
             case NGlobal.WeakID:
@@ -855,33 +871,33 @@ public class PlayerChoiceStatControl : MonoBehaviour
             case NGlobal.SluggishID:
             case NGlobal.DullID:
             case NGlobal.TerrorID:
-
-                ChoiceStatSO so = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(statID);
-
-                if (NGlobal.playerStatUI.choiceStatDic[statID].isUnlock)  //특성 구입
                 {
-                    float min2 = NGlobal.playerStatUI.GetStatSOData<EternalStatSO>(so.needStatID).minStatValue;
+                    ChoiceStatSO so = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(statID);
 
-                    //나중에 판매하면 스탯 되돌려 받아야하므로 몇 되돌려 받을지 저장함
-                    float value2 = NGlobal.playerStatUI.eternalStatDic[so.needStatID].first.statLv == 1 ? choiceDataDict[statID].firstValue : choiceDataDict[statID].upTargetStatPerChoiceStat;
-                    NGlobal.playerStatUI.eternalStatDic[so.needStatID].second.statValue -= value2;
-
-                    if (NGlobal.playerStatUI.GetCurrentPlayerStat(so.needStatID) < min2)  //최대체력 외의 스탯들의 최소치는 0으로 둠
+                    if (NGlobal.playerStatUI.choiceStatDic[statID].isUnlock)  //특성 구입
                     {
-                        value2 -= (min2 - NGlobal.playerStatUI.GetCurrentPlayerStat(so.needStatID)); //최솟값 보정을 하면 원래 더 빼줘야하는 만큼 value에서 빼서 나중에 돌려받음
-                        NGlobal.playerStatUI.eternalStatDic[so.needStatID].second.statValue = -NGlobal.playerStatUI.eternalStatDic[so.needStatID].first.statValue + min2;
+                        float min2 = NGlobal.playerStatUI.GetStatSOData<EternalStatSO>(so.needStatID).minStatValue;
+
+                        //나중에 판매하면 스탯 되돌려 받아야하므로 몇 되돌려 받을지 저장함
+                        float value2 = NGlobal.playerStatUI.eternalStatDic[so.needStatID].first.statLv == 1 ? choiceDataDict[statID].firstValue : choiceDataDict[statID].upTargetStatPerChoiceStat;
+                        NGlobal.playerStatUI.eternalStatDic[so.needStatID].second.statValue -= value2;
+
+                        if (NGlobal.playerStatUI.GetCurrentPlayerStat(so.needStatID) < min2)  //최대체력 외의 스탯들의 최소치는 0으로 둠
+                        {
+                            value2 -= (min2 - NGlobal.playerStatUI.GetCurrentPlayerStat(so.needStatID)); //최솟값 보정을 하면 원래 더 빼줘야하는 만큼 value에서 빼서 나중에 돌려받음
+                            NGlobal.playerStatUI.eternalStatDic[so.needStatID].second.statValue = -NGlobal.playerStatUI.eternalStatDic[so.needStatID].first.statValue + min2;
+                        }
+
+                        //최소체력이 최대체력보다 같거나 클 때의 예외처리가 아직 이곳엔 없음
+
+                        accumStatDic[statID] += value2;
                     }
-
-                    //최소체력이 최대체력보다 같거나 클 때의 예외처리가 아직 이곳엔 없음
-
-                    accumStatDic[statID] += value2;
+                    else  //특성 판매
+                    {
+                        NGlobal.playerStatUI.eternalStatDic[so.needStatID].second.statValue += accumStatDic[statID];
+                        accumStatDic[statID] = 0f;
+                    }
                 }
-                else  //특성 판매
-                {
-                    NGlobal.playerStatUI.eternalStatDic[so.needStatID].second.statValue += accumStatDic[statID];
-                    accumStatDic[statID] = 0f;
-                }
-
                 break;
         }
         #endregion
