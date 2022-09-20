@@ -16,8 +16,68 @@ MonoBehaviour:
   stageBundleName: "\uD574\uACE8 \uB358\uC804"
   stages:
   - {fileID: 11400000, guid: 640ba3ab5af0f4341b88949e425f126a, type: 2}
-  monsterStages: []
+  - {fileID: 11400000, guid: 20035833b233c68468f14f5b8bf18860, type: 2}
+  - {fileID: 11400000, guid: de50944f4267f3740ab8baaea80946f7, type: 2}
+  - {fileID: 11400000, guid: 86df8f7ca7f080640b77fe033702b2ff, type: 2}
+  - {fileID: 11400000, guid: 176495c71fab68840869d5eca641da57, type: 2}
+  - {fileID: 11400000, guid: fb290969bb3a6714595bb06f20d073fd, type: 2}
+  - {fileID: 11400000, guid: 7f633bfabdc41ee478bb732f814627a3, type: 2}
+  - {fileID: 11400000, guid: ee1fe18c1953b214e9c53e473cf16984, type: 2}
+  - {fileID: 11400000, guid: 5b91dadc4047aa245b84214d262e2d5c, type: 2}
+  - {fileID: 11400000, guid: 70b5fb9c4b1073243b06e8c6c812c14d, type: 2}
+  - {fileID: 11400000, guid: 35d1a8d93c872064793f67a42740bc8d, type: 2}
+  - {fileID: 11400000, guid: c9ddea80be659cd46a3bbc7a5e45efee, type: 2}
+  - {fileID: 11400000, guid: 982dc65e3bcadee45b7c3b64d96bf561, type: 2}
+  - {fileID: 11400000, guid: 01c88db102d447a40a48b730f70a76a8, type: 2}
+  - {fileID: 11400000, guid: a9e45991cf1527e4b90459dd57077877, type: 2}
+  - {fileID: 11400000, guid: 314f5d7fdffd85149a212e37f7e5adb6, type: 2}
+  - {fileID: 11400000, guid: e460b0e88779f19419dd67c62f9256c2, type: 2}
+  - {fileID: 11400000, guid: 68b68a830f73fee409379a1416b1d602, type: 2}
+  - {fileID: 11400000, guid: 6ec8bc86de42fc140866d7ff9287eec2, type: 2}
+  - {fileID: 11400000, guid: e8781dd08c73325449a2feaa1cb53cd4, type: 2}
+  monsterStages:
+  - {fileID: 11400000, guid: 70b5fb9c4b1073243b06e8c6c812c14d, type: 2}
+  - {fileID: 11400000, guid: 35d1a8d93c872064793f67a42740bc8d, type: 2}
+  - {fileID: 11400000, guid: c9ddea80be659cd46a3bbc7a5e45efee, type: 2}
+  - {fileID: 11400000, guid: 982dc65e3bcadee45b7c3b64d96bf561, type: 2}
+  - {fileID: 11400000, guid: 01c88db102d447a40a48b730f70a76a8, type: 2}
+  - {fileID: 11400000, guid: a9e45991cf1527e4b90459dd57077877, type: 2}
+  - {fileID: 11400000, guid: 314f5d7fdffd85149a212e37f7e5adb6, type: 2}
+  - {fileID: 11400000, guid: e460b0e88779f19419dd67c62f9256c2, type: 2}
+  - {fileID: 11400000, guid: 68b68a830f73fee409379a1416b1d602, type: 2}
+  - {fileID: 11400000, guid: 6ec8bc86de42fc140866d7ff9287eec2, type: 2}
+  - {fileID: 11400000, guid: e8781dd08c73325449a2feaa1cb53cd4, type: 2}
   randomStageList:
   - stageNumber: 1
     nextStageTypes: 01000000
+  - stageNumber: 2
+    nextStageTypes: 0100000001000000
+  - stageNumber: 3
+    nextStageTypes: 010000000100000001000000
+  - stageNumber: 4
+    nextStageTypes: 010000000100000001000000
+  - stageNumber: 5
+    nextStageTypes: 0100000001000000
+  - stageNumber: 6
+    nextStageTypes: 010000000100000001000000
+  - stageNumber: 7
+    nextStageTypes: 010000000100000001000000
+  - stageNumber: 8
+    nextStageTypes: 0100000001000000
+  - stageNumber: 9
+    nextStageTypes: 0100000001000000
+  - stageNumber: 10
+    nextStageTypes: 010000000100000001000000
+  - stageNumber: 11
+    nextStageTypes: 0100000001000000
+  - stageNumber: 12
+    nextStageTypes: 010000000100000001000000
+  - stageNumber: 13
+    nextStageTypes: 010000000100000001000000
+  - stageNumber: 14
+    nextStageTypes: 0100000001000000
+  - stageNumber: 15
+    nextStageTypes: 0100000001000000
+  - stageNumber: 16
+    nextStageTypes: 09000000
   nextStageSOInBoss: {fileID: 0}

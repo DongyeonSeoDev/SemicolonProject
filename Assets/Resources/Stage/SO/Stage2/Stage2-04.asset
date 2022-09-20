@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64e33b43e1e30554a86e99b006a1e50a, type: 3}
+  m_Name: Stage2-04
+  m_EditorClassIdentifier: 
+  stageFloor: {fileID: 11400000, guid: c2c2d18db933a394d9187817020634a6, type: 2}
+  stageName: 
+  isSaveStage: 0
+  useOpenDoorSound: 0
+  stageMonsterBundleCount: 0
+  nextEnemysSpawnInterval: []
+  stageMonsterBundleID: []
+  stage: {fileID: 1378282381469885354, guid: 66dd14d4352c378468d57b29a27f2aa2, type: 3}
+  areaType: 4
+  enemySpeciesArea: 0
+  missionTypes: 
+  mapNPC: {fileID: 0}
+  mapEvent: {fileID: 0}

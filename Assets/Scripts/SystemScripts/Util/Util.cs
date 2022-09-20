@@ -135,6 +135,33 @@ public static partial class Util
 
 public static partial class Util
 {
+    public static void MoveBezier(GameObject obj, Vector2 p1, Vector2 p2, Vector2 p3, float duration, bool unscaled, bool rectTransform, Action onComplete)
+    {
+        float timer = 0f;
+        Action action = null;
+        action = () =>
+        {
+            timer += unscaled ? Time.unscaledDeltaTime : Time.deltaTime;
+            float rate = timer / duration;
+            Vector2 v1 = Vector2.Lerp(p1, p2, rate);
+            Vector2 v2 = Vector2.Lerp(p2, p3, rate);
+            Vector2 v3 = Vector2.Lerp(v1, v2, rate);
+
+            if (rectTransform) obj.GetComponent<RectTransform>().anchoredPosition = v3;
+            else obj.transform.position = v3;
+
+            if(timer >= duration)
+            {
+                onComplete?.Invoke();
+                FuncUpdater.Remove(action);
+            }
+        };
+        FuncUpdater.Add(action);
+    }
+}
+
+public static partial class Util
+{
     public static T Find<T>(this IEnumerable<T> list, Func<T, bool> action)
     {
         foreach (T item in list)

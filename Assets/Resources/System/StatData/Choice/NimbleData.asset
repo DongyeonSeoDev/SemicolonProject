@@ -17,7 +17,7 @@ MonoBehaviour:
   maxStatLv: 1
   upStatValue: 0.2
   statName: "\uB0A0\uB835\uD568"
-  statSpr: {fileID: 21300000, guid: c97b9728a15ccca4bbda099859d97136, type: 3}
+  statSpr: {fileID: 21300000, guid: d0b6cc61d25464c48806479f9ce72fe0, type: 3}
   charType: 1
   plusStat: 1
   needStatID: 35

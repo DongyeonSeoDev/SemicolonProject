@@ -1031,7 +1031,13 @@ public class StageManager : MonoSingleton<StageManager>
 
         if(currentArea==AreaType.BOSS)
         {
-            EventManager.TriggerEvent("GameClear");
+            //EventManager.TriggerEvent("GameClear");
+            Debug.Log("Boss Stage Clear!!");
+
+            if (currentFloor == maxStage)
+            {
+                EventManager.TriggerEvent("GameClear");
+            }
         }
     }
 
@@ -1039,6 +1045,7 @@ public class StageManager : MonoSingleton<StageManager>
     {
         Debug.Log("Respawn : " + startStageID);
 
+        currentFloor = 1;
         currentStageNumber = 0;
         PassDir = GameManager.Instance.savedData.stageInfo.passDoorDir;
         InsertRandomMaps(currentFloor);
