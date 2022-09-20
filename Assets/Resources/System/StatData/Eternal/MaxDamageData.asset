@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: MaxDamageData
   m_EditorClassIdentifier: 
   statId: 15
+  statValueDecimal: 0
   maxStatLv: 100
   upStatValue: 1
   statName: "\uCD5C\uB300\uB370\uBBF8\uC9C0"
   statSpr: {fileID: 0}
+  minStatValue: 1

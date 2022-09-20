@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: MaxHpData
   m_EditorClassIdentifier: 
   statId: 5
+  statValueDecimal: 0
   maxStatLv: 100
   upStatValue: 5
   statName: "\uCD5C\uB300\uCCB4\uB825"
   statSpr: {fileID: 0}
+  minStatValue: 1

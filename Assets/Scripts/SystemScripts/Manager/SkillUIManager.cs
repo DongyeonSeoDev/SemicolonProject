@@ -8,6 +8,7 @@ using System;
 public class SkillUIManager : MonoSingleton<SkillUIManager>
 {
     private SkillInfoImage[] skillInfoUIArr;
+    [SerializeField] private GridLayoutGroup bottomRightBarGrid;
 
     [SerializeField] private Transform skillImgUIParent;
 
@@ -120,6 +121,12 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
         EventManager.StartListening("EndCutScene", () => SetActiveSlimeEnergeEffect(true));
         EventManager.StartListening("EnemyDead", (Action<GameObject, string, bool>)((obj, id, dead) => UpdateUnderstandingBar()));
         EventManager.StartListening("UpdateKeyCodeUI", UpdateSkillKeyCode);
+    }
+
+    private void Start()
+    {
+        bottomRightBarGrid.enabled = true;
+        Util.DelayFunc(() => bottomRightBarGrid.enabled = false, 1, this, true);
     }
 
     void SetActiveSlimeEnergeEffect(bool active) => energeBarAndEff.second.gameObject.SetActive(active);

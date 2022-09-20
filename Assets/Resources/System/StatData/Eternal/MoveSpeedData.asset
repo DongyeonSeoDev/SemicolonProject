@@ -18,3 +18,4 @@ MonoBehaviour:
   upStatValue: 0.2
   statName: "\uC774\uB3D9\uC18D\uB3C4"
   statSpr: {fileID: 0}
+  minStatValue: 0.1

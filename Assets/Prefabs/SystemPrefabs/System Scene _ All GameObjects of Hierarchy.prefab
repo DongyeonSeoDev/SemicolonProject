@@ -4849,6 +4849,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b539aca4d329205419e413e2d79ad79f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bottomRightBarGrid: {fileID: 1824279897061134949}
   skillImgUIParent: {fileID: 1824279897061134938}
   defaultSkill: {fileID: 3567859863335654295}
   specialSkill: {fileID: 7120576296814877419}
@@ -25400,6 +25401,7 @@ MonoBehaviour:
       IsAtkShakeCamera: 1
       IsHitShakeCam: 1
       IsHitTimeFreeze: 1
+      lastPlayDate: 
     userInfo:
       playerStat:
         currentStatPoint: 0

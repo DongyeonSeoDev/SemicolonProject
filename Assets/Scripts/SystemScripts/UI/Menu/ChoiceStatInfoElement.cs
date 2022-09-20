@@ -48,7 +48,7 @@ public class ChoiceStatInfoElement : MonoBehaviour
 
             BGStatLvTxt.text = sb.ToString();
 
-            //expFillImg.fillAmount =   진욱이 코드쪽에서 경험치 어떻게든 받아와야함
+            expFillImg.fillAmount = Global.CurrentPlayer.GetComponent<PlayerChoiceStatControl>().GetGrowthRate(id);
         }
     }
 }

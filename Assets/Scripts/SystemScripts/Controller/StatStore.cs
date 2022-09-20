@@ -231,7 +231,7 @@ public class StatStore : MonoSingleton<StatStore>
             }
 
             //0 이하로 떨어지면 구매 못하게 함
-            if (!so.plusStat)
+            if (!so.plusStat && so.charType==CharType.STORE && so.needStatID > 0)
             {
                 float value = stat.isUnlock ? stat.UpStatValue : pcsCtrl.ChoiceDataDict[id].firstValue;
                 if(NGlobal.playerStatUI.GetCurrentPlayerStat(so.needStatID) - value < 0)

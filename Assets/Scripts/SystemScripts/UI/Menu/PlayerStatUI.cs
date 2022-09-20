@@ -724,7 +724,7 @@ public class PlayerStatUI : MonoBehaviour
         }
         else
         {
-            //expFill.fillAmount =  진욱이 코드쪽에서 경험치 받아와야함
+            expFill.fillAmount = Global.CurrentPlayer.GetComponent<PlayerChoiceStatControl>().GetGrowthRate(id);
         }
 
         choiceDetailAbil.text = "<b>능력 : </b>" + string.Format(data.detailAbilExplanation, 
