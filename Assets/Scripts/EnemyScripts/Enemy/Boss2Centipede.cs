@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.Playables;
 
 namespace Enemy
 {
@@ -9,6 +10,7 @@ namespace Enemy
     {
         public Transform movePivot;
         public Tilemap stageTilemap = null;
+        public PlayableDirector playableDirector;
 
         private Vector2 dashTargetPosition = Vector2.zero;
 
@@ -135,7 +137,6 @@ namespace Enemy
             originMaxAttackPower = enemyData.maxAttackPower;
 
             SetCommands();
-            MoveEnemy();
         }
 
         protected override void Update()
@@ -232,9 +233,15 @@ namespace Enemy
         }
         public override void MoveEnemy()
         {
-            base.MoveEnemy();
+            EventManager.TriggerEvent("StartCutScene");
 
-            enemyData.animationDictionary[EnemyAnimationType.Move] = hashMove;
+            playableDirector.Play();
+        }
+        public void EndCutScene()
+        {
+            EventManager.TriggerEvent("EndCutScene");
+
+            base.MoveEnemy();
         }
         private void SetBossHPBar()
         {

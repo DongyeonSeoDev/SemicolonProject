@@ -163,7 +163,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC2A4\uCF08\uB808\uD1A4 \uD0B9"
+  m_Text: " \uAC70\uB300 \uB2EC\uD33D\uC774"
 --- !u!1 &1636384015113354443
 GameObject:
   m_ObjectHideFlags: 0
@@ -317,7 +317,7 @@ RectTransform:
   m_GameObject: {fileID: 2971972545651604131}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -0.7, y: 0.7, z: 1}
   m_Children:
   - {fileID: 5799060436952467159}
   m_Father: {fileID: 2199148320645218111}
@@ -325,7 +325,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 120, y: 50}
+  m_AnchoredPosition: {x: -800, y: 350}
   m_SizeDelta: {x: 350, y: 70}
   m_Pivot: {x: 1, y: 0}
 --- !u!222 &116057998786405200
@@ -369,7 +369,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC2A4\uCF08\uB808\uD1A4\uC758 \uC655"
+  m_Text: "\uAC70\uB300\uD55C \uB2EC\uD33D\uC774"
 --- !u!225 &3428779638485964139
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -490,7 +490,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uC2A4\uCF08\uB808\uD1A4 \uD0B9"
+  m_Text: "\uAC70\uB300 \uB2EC\uD33D\uC774"
 --- !u!1 &5095687388560051315
 GameObject:
   m_ObjectHideFlags: 0
@@ -638,6 +638,8 @@ GameObject:
   - component: {fileID: -4423252187987720597}
   - component: {fileID: 3648348252492428551}
   - component: {fileID: -2415847091630452189}
+  - component: {fileID: -8307998283944319826}
+  - component: {fileID: -5656201104553620331}
   m_Layer: 7
   m_Name: Boss2_Centipede
   m_TagString: Untagged
@@ -797,9 +799,9 @@ MonoBehaviour:
   poolType: 51
   count: 0
   enemyDataSO: {fileID: 11400000, guid: c8d6d0385b018a5469cfcba1897e210f, type: 2}
-  hpBarFillImage: {fileID: 0}
-  hpBarDamageFillImage: {fileID: 0}
-  hpBar: {fileID: 0}
+  hpBarFillImage: {fileID: 1389062366038605770}
+  hpBarDamageFillImage: {fileID: 6243245821425959667}
+  hpBar: {fileID: 1636384015113354443}
   enemyAttackCheck: []
   hpTweenTime: 0.1
   hpTweenDelayTime: 0.3
@@ -808,6 +810,7 @@ MonoBehaviour:
   stunEffectPosition: {x: 0, y: 0}
   movePivot: {fileID: 4073570852634963415}
   stageTilemap: {fileID: 0}
+  playableDirector: {fileID: -8307998283944319826}
   meleeAttack1CircleRadius: 2
   meleeAttack1CircleDamageValue: 3
   meleeAttack1BulletDamageValue: -10
@@ -834,6 +837,106 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6342c7c7fa59ec4487950d6002c0ad7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!320 &-8307998283944319826
+PlayableDirector:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5874040416477344769}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_PlayableAsset: {fileID: 11400000, guid: c0016044cc6b4ab46bf8c85b5393762b, type: 2}
+  m_InitialState: 1
+  m_WrapMode: 2
+  m_DirectorUpdateMode: 1
+  m_InitialTime: 0
+  m_SceneBindings:
+  - key: {fileID: -3751581870491630753, guid: c0016044cc6b4ab46bf8c85b5393762b, type: 2}
+    value: {fileID: 5874040416477344770}
+  - key: {fileID: -2839237665436686182, guid: c0016044cc6b4ab46bf8c85b5393762b, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -8008934570344344091, guid: c0016044cc6b4ab46bf8c85b5393762b, type: 2}
+    value: {fileID: 0}
+  - key: {fileID: -2844726025367901640, guid: c0016044cc6b4ab46bf8c85b5393762b, type: 2}
+    value: {fileID: -5656201104553620331}
+  m_ExposedReferences:
+    m_References: []
+--- !u!114 &-5656201104553620331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5874040416477344769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: b97ddd8f99797dd4b8936e83fe061018, type: 2}
+    - {fileID: 11400000, guid: 1a22aca33a3f1794c8f925928a07daab, type: 2}
+    - {fileID: 11400000, guid: c625c524a64028e469bc292044b75c65, type: 2}
+    - {fileID: 11400000, guid: 8c0f18ece5bddd8408e6e42fbf7d9d9a, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 998747583356771943}
+          m_TargetAssemblyTypeName: Enemy.BossCanvas, Assembly-CSharp
+          m_MethodName: SetActiveBossName
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 998747583356771943}
+          m_TargetAssemblyTypeName: Enemy.BossCanvas, Assembly-CSharp
+          m_MethodName: SetActiveBossName
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 998747583356771943}
+          m_TargetAssemblyTypeName: Enemy.BossCanvas, Assembly-CSharp
+          m_MethodName: SetActiveHPBar
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 3648348252492428551}
+          m_TargetAssemblyTypeName: Enemy.Boss2Centipede, Assembly-CSharp
+          m_MethodName: EndCutScene
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &6361718868018894936
 GameObject:
   m_ObjectHideFlags: 0
@@ -1028,7 +1131,7 @@ RectTransform:
   m_GameObject: {fileID: 8576412546331455606}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: -0.7, y: 0.7, z: 1}
   m_Children:
   - {fileID: 42941130831827482}
   - {fileID: 9069521492045083180}
@@ -1038,7 +1141,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: -50}
+  m_AnchoredPosition: {x: 0, y: 300}
   m_SizeDelta: {x: 1000, y: 50}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!222 &7601870057123086419
