@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 4935773908416374940}
   - component: {fileID: 6204418954052947280}
   - component: {fileID: 83479750605151861}
-  - component: {fileID: 4246000133220773548}
   m_Layer: 11
   m_Name: EnemyCentipedeBullet
   m_TagString: Untagged
@@ -76,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: -1646225281
   m_SortingLayer: 6
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 25cffac599f544e409ad291610570f11, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b0a769d6d4f10494ea66e966edd14dbb, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -125,7 +124,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.28, y: 1.28}
+    oldSize: {x: 1.25, y: 1.875}
     newSize: {x: 1.28, y: 1.28}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -217,18 +216,3 @@ SpriteMask:
   m_BackSortingOrder: 0
   m_IsCustomRangeActive: 0
   m_SpriteSortPoint: 0
---- !u!114 &4246000133220773548
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6204418954052947285}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e19747de3f5aca642ab2be37e372fb86, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 1, g: 0, b: 0, a: 1}
-  m_EffectDistance: {x: 10.87, y: 36.78}
-  m_UseGraphicAlpha: 1

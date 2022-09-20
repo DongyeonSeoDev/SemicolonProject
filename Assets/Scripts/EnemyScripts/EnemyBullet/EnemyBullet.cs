@@ -78,7 +78,7 @@ namespace Enemy
             EventManager.StopListening("EnemyStop", IsStopTrue);
         }
 
-        private void Update()
+        protected virtual void Update()
         {
             if (isStop || isDelete)
             {
