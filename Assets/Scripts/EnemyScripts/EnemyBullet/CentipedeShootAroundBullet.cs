@@ -6,6 +6,8 @@ namespace Enemy
 {
     public class CentipedeShootAroundBullet : EnemyBullet
     {
+        private Vector2 originPos = Vector2.zero;
+
         [SerializeField]
         private float timerSpeed = 1f;
         [SerializeField]
@@ -19,25 +21,46 @@ namespace Enemy
         private float maxTime = 5f; // max는 사실상 Gizmos로만 쓰인다
 
         [SerializeField]
+        private float despawnDelay = 0f;
+        [SerializeField]
         private float startTime = 0f;
         [SerializeField]
         private float endTime = 0f;
 
         [SerializeField]
         private float timer = 0f;
+        [SerializeField]
+        private float despawnTimer = 0f;
+
+        private bool startDespawn = false;
 
         protected override void Update()
         {
-            if (timer >= endTime)
+            if(startDespawn)
             {
-                // 끝
+                despawnTimer -= Time.deltaTime;
 
-                return;
+                if(despawnTimer <= 0f)
+                {
+                    startDespawn = false;
+                    timer = 0f;
+                    gameObject.SetActive(false);
+                }
             }
+            else
+            {
+                if (timer >= endTime)
+                {
+                    // 끝
 
-            timer += Time.deltaTime * timerSpeed;
+                    despawnTimer = despawnDelay;
+                    startDespawn = true;
+                }
 
-            transform.localPosition = GetPositionPerTime(timer);
+                timer += Time.deltaTime * timerSpeed;
+
+                transform.position = originPos + GetPositionPerTime(timer);
+            }
         }
         private void OnDrawGizmos()
         {
@@ -66,7 +89,8 @@ namespace Enemy
             this.timerSpeed = timerSpeed;
             this.gradient = gradient;
             this.startTime = startTime;
-            this.endTime = maxTime + Random.Range(-maxTime / 2f, maxTime / 2f);
+            endTime = maxTime + Random.Range(-maxTime / 4f, maxTime / 6f);
+            originPos = transform.position;
         }
 
         public void ResetTimer(float startTime, float maxTime)

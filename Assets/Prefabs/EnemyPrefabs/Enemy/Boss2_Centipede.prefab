@@ -654,7 +654,7 @@ Transform:
   m_GameObject: {fileID: 5874040416477344769}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: -1.8, y: 1.8, z: 0.8}
+  m_LocalScale: {x: -1.7279999, y: 1.8, z: 0.8}
   m_Children:
   - {fileID: 2199148320645218111}
   - {fileID: 4073570852634963415}
@@ -710,9 +710,9 @@ SpriteRenderer:
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 12.5, y: 6.25}
-  m_AdaptiveModeThreshold: 0.5
-  m_SpriteTileMode: 0
+  m_Size: {x: 12, y: 6.25}
+  m_AdaptiveModeThreshold: 0.578
+  m_SpriteTileMode: 1
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
@@ -774,10 +774,10 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0}
     oldSize: {x: 4.5, y: 4.5}
-    newSize: {x: 12.5, y: 6.25}
-    adaptiveTilingThreshold: 0.5
+    newSize: {x: 12, y: 6.25}
+    adaptiveTilingThreshold: 0.578
     drawMode: 0
-    adaptiveTiling: 0
+    adaptiveTiling: 1
   m_AutoTiling: 0
   serializedVersion: 2
   m_Size: {x: 2.7953393, y: 2.1315022}
@@ -807,6 +807,7 @@ MonoBehaviour:
   hpEffectAnimation: {fileID: 0}
   stunEffectPosition: {x: 0, y: 0}
   movePivot: {fileID: 4073570852634963415}
+  stageTilemap: {fileID: 0}
   meleeAttack1CircleRadius: 2
   meleeAttack1CircleDamageValue: 3
   meleeAttack1BulletDamageValue: -10

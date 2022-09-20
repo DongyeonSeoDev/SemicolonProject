@@ -610,7 +610,7 @@ namespace Enemy
             CentipedeShootAroundBullet shootAroundBullet = null;
             EnemyPoolData spawnObject = EnemyPoolManager.Instance.GetPoolObject(objectType, shotTransform.position);
 
-            Vector2 dir = ScriptHelper.RandomVector(-Vector2.one, Vector2.one);
+            Vector2 dir = ScriptHelper.RandomVector(-Vector2.one, new Vector2(1f, 0f));
 
             if(useTileImg)
             {
@@ -620,7 +620,7 @@ namespace Enemy
             shootAroundBullet = spawnObject.GetComponent<CentipedeShootAroundBullet>();
 
             shootAroundBullet.Init(enemy.GetEnemyController(), dir, minAttack, maxAttack, critical, criticalPower, Color.white);
-            shootAroundBullet.SetData(Random.Range(6f, 10f), Random.Range(-1f, 1f), 0f);
+            shootAroundBullet.SetData(Random.Range(6f, 10f), Random.Range(0f, 1f), 0f);
         }
 
         private void SetTileSprite(EnemyPoolData spawnObject)

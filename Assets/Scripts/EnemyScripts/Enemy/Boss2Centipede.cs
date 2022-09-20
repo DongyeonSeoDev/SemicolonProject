@@ -392,17 +392,10 @@ namespace Enemy
         // meleeAttack1(지면 파괴)에 쓰이는 총알 발사 함수
         public void ShootBulletAround(int num)
         {
-            Vector3 rotation = Vector3.zero;
-            
-            float up = 360f / num;
-
             shootAroundCommand = new CentipedeShootAroundCommand(this, shootTrm, Type.CentipedeAroundBullet, bulletMinAttackPower, bulletMaxAttackPower, enemyData.randomCritical, enemyData.randomCritical, true, stageTilemap);
 
             for (int i = 0; i < num; i++)
             {
-                rotation = Quaternion.Euler(1f, 1f, up * i + shootBulletRotationOffset) * Vector2.one;
-                rotation = rotation.normalized;
-
                 shootAroundCommand.Execute();
             }
         }

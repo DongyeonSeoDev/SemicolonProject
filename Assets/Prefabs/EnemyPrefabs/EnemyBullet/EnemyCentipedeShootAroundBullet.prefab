@@ -10,9 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 2310350659136977375}
   - component: {fileID: 6874712736770784752}
+  - component: {fileID: 6416082424168933449}
   - component: {fileID: 2310350659136977372}
   - component: {fileID: 2310350659136977374}
-  - component: {fileID: 6416082424168933449}
+  - component: {fileID: 4157533795901020705}
+  - component: {fileID: 3276415204336426339}
   m_Layer: 0
   m_Name: EnemyCentipedeShootAroundBullet
   m_TagString: Untagged
@@ -71,75 +73,20 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -1646225281
-  m_SortingLayer: 6
+  m_SortingLayerID: -1158705011
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 994b66e090d349a48986a735267999f0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
-  m_DrawMode: 0
+  m_DrawMode: 2
   m_Size: {x: 1.28, y: 1.28}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
-  m_MaskInteraction: 0
+  m_MaskInteraction: 1
   m_SpriteSortPoint: 0
---- !u!114 &2310350659136977372
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2310350659136977373}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84fc59baf8313af48bb77609c1bbe7d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  poolType: 115
-  count: 30
-  speed: 0
-  multipleSpeed: 0
-  addAngle: 0
-  removeBulletTime: 0
-  fadeTime: 0
-  isBulletEffect: 0
-  isRemainBullet: 0
-  isDelete: 0
-  isDamage: 0
-  isComplete: 0
-  isReflection: 0
-  limitMaxPosition: {x: 0, y: 0}
-  limitMinPosition: {x: 0, y: 0}
-  targetDirection: {x: 0, y: 0, z: 0}
-  minAttack: 0
-  maxAttack: 0
-  critical: 0
-  criticalPower: 0
-  bulletEffectType: 0
-  timerSpeed: 10
-  maxTimerSpeed: 5
-  gradient: 1
-  minTime: 0
-  maxTime: 5
-  startTime: 0
-  endTime: 4.5
-  timer: 0
---- !u!114 &2310350659136977374
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2310350659136977373}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2c888f53cb858d14390e95b4e98d7541, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  color: {r: 1, g: 0, b: 0, a: 1}
-  radious: 5
 --- !u!331 &6416082424168933449
 SpriteMask:
   m_ObjectHideFlags: 0
@@ -190,3 +137,88 @@ SpriteMask:
   m_BackSortingOrder: 0
   m_IsCustomRangeActive: 0
   m_SpriteSortPoint: 0
+--- !u!114 &2310350659136977372
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2310350659136977373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84fc59baf8313af48bb77609c1bbe7d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  poolType: 115
+  count: 30
+  speed: 0
+  multipleSpeed: 0
+  addAngle: 0
+  removeBulletTime: 0
+  fadeTime: 0
+  isBulletEffect: 0
+  isRemainBullet: 0
+  isDelete: 0
+  isDamage: 0
+  isComplete: 0
+  isReflection: 0
+  limitMaxPosition: {x: 0, y: 0}
+  limitMinPosition: {x: 0, y: 0}
+  targetDirection: {x: 0, y: 0, z: 0}
+  minAttack: 0
+  maxAttack: 0
+  critical: 0
+  criticalPower: 0
+  bulletEffectType: 0
+  timerSpeed: 10
+  maxTimerSpeed: 5
+  gradient: 1
+  minTime: 0
+  maxTime: 5
+  despawnDelay: 0.5
+  startTime: 0
+  endTime: 4.5
+  timer: 0
+  despawnTimer: 0
+--- !u!114 &2310350659136977374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2310350659136977373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c888f53cb858d14390e95b4e98d7541, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 1, g: 0, b: 0, a: 1}
+  radious: 5
+--- !u!114 &4157533795901020705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2310350659136977373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c6342c7c7fa59ec4487950d6002c0ad7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!58 &3276415204336426339
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2310350659136977373}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 0.4
