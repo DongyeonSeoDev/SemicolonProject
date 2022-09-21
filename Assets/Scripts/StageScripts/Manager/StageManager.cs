@@ -1099,7 +1099,7 @@ public class StageManager : MonoSingleton<StageManager>
                 EventManager.TriggerEvent(Global.EnterNextMap);
 
                 ImprecationObj io = PoolManager.GetItem<ImprecationObj>("ImprecationObjPref1");
-                io.transform.position = currentStage.objSpawnPos.position;
+                //io.transform.position = currentStage.objSpawnPos.position;
                 Util.PriDelayFunc("SetImprecationEnv", () =>
                 {
                     Environment.Instance.OnEnteredOrExitImprecationArea(true);
@@ -1119,7 +1119,7 @@ public class StageManager : MonoSingleton<StageManager>
                 EventManager.TriggerEvent(Global.EnterNextMap);
 
                 RecoveryObj ro = PoolManager.GetItem<RecoveryObj>("RecoveryObjPrefObjPref1");
-                ro.transform.position = currentStage.objSpawnPos.position;
+                //ro.transform.position = currentStage.objSpawnPos.position;
 
                 Util.PriDelayFunc("SetRecoveryEnv", () =>
                 {
@@ -1136,11 +1136,10 @@ public class StageManager : MonoSingleton<StageManager>
                 }, Global.ImprAndRecoEffDelay, this, false);
 
                 break;
-
-            case RandomRoomType.CHARACTERISTIC:
+            /*case RandomRoomType.CHARACTERISTIC:
                 isSelectRandomArea = true;
                 NextStage(GetStageBundleData(currentFloor).stages.FindAll(x=>x.areaType == AreaType.STAT).ToRandomElement().stageID, false);
-                break;
+                break;*/
         }
     }
 

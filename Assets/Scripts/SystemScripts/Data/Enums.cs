@@ -144,8 +144,8 @@ public enum RandomRoomType
 {
     MONSTER,
     RECOVERY,
-    IMPRECATION,
-    CHARACTERISTIC
+    IMPRECATION
+    //CHARACTERISTIC
 }
 
 public enum AreaType

@@ -9,7 +9,7 @@ public class StageBundleDataSO : ScriptableObject
     public int floor; 
     public string stageBundleName;
     public List<StageDataSO> stages;  //여기에는 랜덤맵 전용 몬스터맵을 집어넣으면 안됨.
-    public List<StageDataSO> monsterStages;  //여기에는 랜덤맵 전용 몬스터맵들까지 다 넣어줌
+    public List<StageDataSO> monsterStages;  //여기에는 랜덤맵 전용 몬스터맵들까지 다 넣어줌 => 랜덤구역에서 나오는 몬스터구역만 넣는걸로 바꿈(이것들은 stages엔 포함 X)
     public List<StageFork> randomStageList;
     public StageDataSO nextStageSOInBoss;  //해당 스테이지의 마지막 방(보스구역)에서 다음 방의 스테이지 데이터
 
