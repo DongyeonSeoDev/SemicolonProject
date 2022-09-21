@@ -47,11 +47,42 @@ public class ImprecationObj : InteractionObj
             return;
         }
 
-        ResetActionList();
+        GetRandomAntiBuff();
+
+        /*ResetActionList();
 
         UIManager.Instance.RequestSelectionWindow("이곳은 저주구역입니다.\n어떤 효과를 적용하시겠습니까?", imprecationActions, new List<string>() { "DescHp", "RandAntiBuff", "RandItemRm" }, true,
-            new List<Func<bool>>() {()=>Global.CurrentPlayer.PlayerStat.currentHp>=1.5f, null, () => Inventory.Instance.ActiveSlotCount > 0}, true);
+            new List<Func<bool>>() {()=>Global.CurrentPlayer.PlayerStat.currentHp>=1.5f, null, () => Inventory.Instance.ActiveSlotCount > 0}, true);*/
         canInteract = false;
+    }
+
+    void GetRandomAntiBuff()
+    {
+        if(UnityEngine.Random.Range(0,2) == 0)
+        {
+            DecreasePlayerHp(20);
+        }
+        else
+        {
+            List<StatElement> list = Global.CurrentPlayer.PlayerStat.choiceStat.AllStats.FindAll(x =>
+            {
+                ChoiceStatSO data = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(x.id);
+                return data.needStatID > 0 && data.charType == CharType.STORE
+                && !data.plusStat && x.statLv < x.maxStatLv;
+            });
+            if(list.Count > 0)
+            {
+                ushort id = list.ToRandomElement().id;
+                NGlobal.playerStatUI.StatUnlock(NGlobal.playerStatUI.choiceStatDic[id]);
+                Global.CurrentPlayer.GetComponent<PlayerChoiceStatControl>().WhenTradeStat(id);
+            }
+            else
+            {
+                DecreasePlayerHp(20);
+            }
+        }
+
+        DefaultFunc();
     }
 
     void DecreasePlayerHp(float value)

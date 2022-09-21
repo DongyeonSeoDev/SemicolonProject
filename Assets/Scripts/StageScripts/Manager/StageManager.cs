@@ -1125,14 +1125,7 @@ public class StageManager : MonoSingleton<StageManager>
                 {
                     Environment.Instance.OnEnteredOrExitRecoveryArea(true);
                     ro.ActiveRecovLight();
-                    if (StateManager.Instance.IsPlayerFullHP && StateManager.Instance.IsPlayerNoImpr)
-                    {
-                        SetClearStage();
-                    }
-                    else
-                    {
-                        Util.PriDelayFunc("RecoveryInteract", ro.Interaction, Global.ImprAndRecoInteractDelay, this, false);
-                    }
+                    Util.PriDelayFunc("RecoveryInteract", ro.Interaction, Global.ImprAndRecoInteractDelay, this, false);
                 }, Global.ImprAndRecoEffDelay, this, false);
 
                 break;

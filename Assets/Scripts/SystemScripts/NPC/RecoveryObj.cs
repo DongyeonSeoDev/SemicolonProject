@@ -63,7 +63,7 @@ public class RecoveryObj : InteractionObj
             //recoveryLight = PoolManager.GetItem<Light2D>("NormalPointLight2D");
             recoveryLight.transform.position = StageManager.Instance.CurrentStageGround.objSpawnPos.position;
             //recoveryLight.gameObject.SetActive(true);
-            recoveryLight.intensity = 0.4f;
+            recoveryLight.intensity = 0.5f;
             /*recoveryLight.GetFieldInfo<Light2D>("m_ApplyToSortingLayers").SetValue(recoveryLight, new int[3]
             {
                 0, -1221289887, -992757899
@@ -96,7 +96,15 @@ public class RecoveryObj : InteractionObj
 
         ResetActionList();  
 
-        UIManager.Instance.RequestSelectionWindow("이곳은 회복구역입니다.\n어떤 효과를 받으시겠습니까?", recoveryActions, new List<string>() { "AscHp", "GetPStat" }, true, iconActiveConditions, true);
+        if(StateManager.Instance.IsPlayerFullHP && availableStats.Count == 0)
+        {
+            StageManager.Instance.SetClearStage();
+        }
+        else
+        {
+            UIManager.Instance.RequestSelectionWindow("이곳은 회복구역입니다.\n어떤 효과를 받으시겠습니까?", recoveryActions, new List<string>() { "AscHp", "GetPStat" }, true, iconActiveConditions, true);
+        }
+
         canInteract = false;
     }
 
