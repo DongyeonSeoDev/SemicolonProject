@@ -137,8 +137,17 @@ namespace Enemy
             originMaxAttackPower = enemyData.maxAttackPower;
 
             SetCommands();
-        }
 
+            EventManager.StartListening("PlayerDead", StopAttack);
+            EventManager.StartListening("BossDead", StopAttack);
+        }
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+
+            EventManager.StopListening("PlayerDead", StopAttack);
+            EventManager.StopListening("BossDead", StopAttack);
+        }
         protected override void Update()
         {
             base.Update();
@@ -321,7 +330,12 @@ namespace Enemy
                 EventManager.TriggerEvent("BossDead");
             }
         }
-        
+        public void StopAttack() // EventManager에서 실행 - 적 공격 정지
+        {
+            StopAllCoroutines();
+
+            bossHPBar.SetActiveHPBar(false);
+        }
         public void AttackCheck() // 이벤트 구독에 사용됨 - 특수공격 사용 확인
         {
             float value = Random.Range(0f, 100f);

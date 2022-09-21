@@ -104,6 +104,7 @@ namespace Enemy
 
         private void Spawn(List<EnemySpawnData> spawnData, string stageId)
         {
+            Debug.Log(spawnData[0].enemyId);
             for (int i = 0; i < spawnData.Count; i++)
             {
                 EnemyPoolData enemy = EnemyPoolManager.Instance.GetPoolObject(spawnData[i].enemyId, spawnData[i].position);

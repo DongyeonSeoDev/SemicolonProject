@@ -427,7 +427,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -800, y: 350}
+  m_AnchoredPosition: {x: -1500, y: 350}
   m_SizeDelta: {x: 350, y: 70}
   m_Pivot: {x: 1, y: 0}
 --- !u!222 &116057998786405200
@@ -983,7 +983,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   poolType: 51
-  count: 0
+  count: 1
   enemyDataSO: {fileID: 11400000, guid: c8d6d0385b018a5469cfcba1897e210f, type: 2}
   hpBarFillImage: {fileID: 1389062366038605770}
   hpBarDamageFillImage: {fileID: 6243245821425959667}
