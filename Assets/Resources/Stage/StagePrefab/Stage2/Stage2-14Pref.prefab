@@ -133,12 +133,12 @@ MonoBehaviour:
   plants:
   - {fileID: 7262405607327970308}
   - {fileID: 5188225899335769479}
-  isEnemyStage: 0
+  isEnemyStage: 1
   noPassTilemap:
   - {fileID: 7962605175659546557}
   - {fileID: 2813824099966149253}
-  limitMinPosition: {x: -13, y: -6}
-  limitMaxPosition: {x: 14, y: 17}
+  limitMinPosition: {x: -13, y: -11}
+  limitMaxPosition: {x: 20, y: 21}
 --- !u!1 &3553275141150440558
 GameObject:
   m_ObjectHideFlags: 0

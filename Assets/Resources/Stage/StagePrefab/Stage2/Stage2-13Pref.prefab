@@ -109,6 +109,7 @@ Transform:
   - {fileID: 6792075201188143648}
   - {fileID: 1048790110243081514}
   - {fileID: 1849271865062017686}
+  - {fileID: 2676875378787480218}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -142,12 +143,12 @@ MonoBehaviour:
   objSpawnPos: {fileID: 0}
   stageDoors: []
   plants: []
-  isEnemyStage: 0
+  isEnemyStage: 1
   noPassTilemap:
   - {fileID: 7962605175659546557}
   - {fileID: 2813824099966149253}
-  limitMinPosition: {x: -13, y: -6}
-  limitMaxPosition: {x: 14, y: 17}
+  limitMinPosition: {x: -19, y: -11}
+  limitMaxPosition: {x: 19, y: 20}
 --- !u!1 &3553275141150440558
 GameObject:
   m_ObjectHideFlags: 0
@@ -49800,6 +49801,36 @@ CompositeCollider2D:
       - {x: -21.999971, y: -3}
   m_VertexDistance: 0.0005
   m_OffsetDistance: 0.00005
+--- !u!1 &6337468552177766839
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2676875378787480218}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2676875378787480218
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6337468552177766839}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -19, y: -11, z: -19.186258}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1378282381469885332}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8060812458690517819
 GameObject:
   m_ObjectHideFlags: 0

@@ -73,6 +73,36 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
+--- !u!1 &957034092659830507
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2937257218174107128}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2937257218174107128
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 957034092659830507}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 19, y: -10, z: -20.078594}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1378282381469885332}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1378282381469885354
 GameObject:
   m_ObjectHideFlags: 0
@@ -110,6 +140,7 @@ Transform:
   - {fileID: 6792075201188143648}
   - {fileID: 1048790110243081514}
   - {fileID: 1849271865062017686}
+  - {fileID: 2937257218174107128}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -147,12 +178,12 @@ MonoBehaviour:
   - {fileID: 8289533546330187504}
   - {fileID: 3649662553178091997}
   plants: []
-  isEnemyStage: 0
+  isEnemyStage: 1
   noPassTilemap:
   - {fileID: 7962605175659546557}
   - {fileID: 2813824099966149253}
-  limitMinPosition: {x: -13, y: -6}
-  limitMaxPosition: {x: 14, y: 17}
+  limitMinPosition: {x: -19, y: -10}
+  limitMaxPosition: {x: 19, y: 20}
 --- !u!1 &3553275141150440558
 GameObject:
   m_ObjectHideFlags: 0

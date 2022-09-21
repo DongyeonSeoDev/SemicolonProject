@@ -142,12 +142,12 @@ MonoBehaviour:
   objSpawnPos: {fileID: 0}
   stageDoors: []
   plants: []
-  isEnemyStage: 0
+  isEnemyStage: 1
   noPassTilemap:
   - {fileID: 7962605175659546557}
   - {fileID: 2813824099966149253}
-  limitMinPosition: {x: -13, y: -6}
-  limitMaxPosition: {x: 14, y: 17}
+  limitMinPosition: {x: -21, y: -12}
+  limitMaxPosition: {x: 21, y: 22}
 --- !u!1 &3553275141150440558
 GameObject:
   m_ObjectHideFlags: 0
