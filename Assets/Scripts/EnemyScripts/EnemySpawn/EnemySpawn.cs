@@ -78,7 +78,7 @@ namespace Enemy
 
             for (int i = 0; i < spawnData[stageId].Count; i++) // 보스 라면 대기 없이 바로 소환후 움직임
             {
-                if (spawnData[stageId][i].enemyId == Type.Boss_SkeletonKing_50)
+                if (spawnData[stageId][i].enemyId == Type.Boss_SkeletonKing_50 || spawnData[stageId][i].enemyId == Type.Boss_Centipede)
                 {
                     Spawn(spawnData[stageId], stageId);
                     Move(stageId);
@@ -104,6 +104,7 @@ namespace Enemy
 
         private void Spawn(List<EnemySpawnData> spawnData, string stageId)
         {
+            Debug.Log(spawnData[0].enemyId);
             for (int i = 0; i < spawnData.Count; i++)
             {
                 EnemyPoolData enemy = EnemyPoolManager.Instance.GetPoolObject(spawnData[i].enemyId, spawnData[i].position);

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
+using UnityEngine.Playables;
 
 namespace Enemy
 {
@@ -9,6 +10,7 @@ namespace Enemy
     {
         public Transform movePivot;
         public Tilemap stageTilemap = null;
+        public PlayableDirector playableDirector;
 
         private Vector2 dashTargetPosition = Vector2.zero;
 
@@ -135,9 +137,17 @@ namespace Enemy
             originMaxAttackPower = enemyData.maxAttackPower;
 
             SetCommands();
-            MoveEnemy();
-        }
 
+            EventManager.StartListening("PlayerDead", StopAttack);
+            EventManager.StartListening("BossDead", StopAttack);
+        }
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+
+            EventManager.StopListening("PlayerDead", StopAttack);
+            EventManager.StopListening("BossDead", StopAttack);
+        }
         protected override void Update()
         {
             base.Update();
@@ -232,9 +242,15 @@ namespace Enemy
         }
         public override void MoveEnemy()
         {
-            base.MoveEnemy();
+            EventManager.TriggerEvent("StartCutScene");
 
-            enemyData.animationDictionary[EnemyAnimationType.Move] = hashMove;
+            playableDirector.Play();
+        }
+        public void EndCutScene()
+        {
+            EventManager.TriggerEvent("EndCutScene");
+
+            base.MoveEnemy();
         }
         private void SetBossHPBar()
         {
@@ -314,7 +330,12 @@ namespace Enemy
                 EventManager.TriggerEvent("BossDead");
             }
         }
-        
+        public void StopAttack() // EventManager에서 실행 - 적 공격 정지
+        {
+            StopAllCoroutines();
+
+            bossHPBar.SetActiveHPBar(false);
+        }
         public void AttackCheck() // 이벤트 구독에 사용됨 - 특수공격 사용 확인
         {
             float value = Random.Range(0f, 100f);
