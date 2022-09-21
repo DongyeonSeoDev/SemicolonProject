@@ -73,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -992757899
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 5
   m_Sprite: {fileID: -1359371171418374438, guid: 0be0f60159d86244b84ab7a907fe4280, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -140,12 +140,11 @@ MonoBehaviour:
     talkId: 0
     npcName: 
     talkContents: []
+    dialogsEndEvKeyInfo: []
   fsOut: {fileID: 0}
   canFoodList:
   - {fileID: 11400000, guid: bf8f07be0c84cb9408b0c2716ce9438e, type: 2}
   - {fileID: 11400000, guid: b2bcf1ea41585824da420596e547b510, type: 2}
-  - {fileID: 11400000, guid: eb21ae1c9f71a82478ec6267c6f9bee1, type: 2}
-  - {fileID: 11400000, guid: f685145ec282bc94c9fac008120834d2, type: 2}
   - {fileID: 11400000, guid: cdd7f062e2da9044286b326c79425b68, type: 2}
 --- !u!1 &5087356040490237634
 GameObject:
@@ -375,7 +374,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -992757899
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 2
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
   m_Color: {r: 0.24777165, g: 0.1372549, b: 1, a: 1}

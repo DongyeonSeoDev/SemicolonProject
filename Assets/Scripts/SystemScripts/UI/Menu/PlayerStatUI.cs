@@ -405,8 +405,31 @@ public class PlayerStatUI : MonoBehaviour
         return 0f;
     }
 
-    public bool IsUnlockStat(ushort id) => eternalStatDic[id].first.isUnlock;
-    public bool IsOpenStat(ushort id) => eternalStatDic[id].first.isOpenStat;
+    public bool IsUnlockStat(ushort id)
+    {
+        if (eternalStatDic.ContainsKey(id))
+        {
+            return eternalStatDic[id].first.isUnlock;
+        }
+        else if (choiceStatDic.ContainsKey(id))
+        {
+            return choiceStatDic[id].isUnlock;
+        }
+        return false;
+    }
+
+    public bool IsOpenStat(ushort id)
+    {
+        if (eternalStatDic.ContainsKey(id))
+        {
+            return eternalStatDic[id].first.isOpenStat;
+        }
+        else if (choiceStatDic.ContainsKey(id))
+        {
+            return choiceStatDic[id].isOpenStat;
+        }
+        return false;
+    }
 
     public void UpdateAllStatUI()  //¸ðµç ½ºÅÈÀÇ ÇöÀç ½ºÅÈ°ú ½ºÅÈÆ÷ÀÎÆ® »ç¿ë È½¼ö¸¦ ¾÷µ«ÇÔ
     {

@@ -90,14 +90,30 @@ public class StatStore : MonoSingleton<StatStore>
             {
                 //2번 칸은 상점 + 스탯 특성
                 ChangeIndex(ref list, 1,
-                    id => !(GetCharType(id) == CharType.STORE && NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id).plusStat),
-                    id => GetCharType(id) == CharType.STORE && NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id).plusStat && !prevStockIDList.Contains(id));
+                    id =>
+                    {
+                        ChoiceStatSO data = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id);
+                        return !(GetCharType(id) == CharType.STORE && data.plusStat && NGlobal.playerStatUI.IsUnlockStat(data.needStatID));
+                    },
+                    id =>
+                    {
+                        ChoiceStatSO data = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id);
+                        return GetCharType(id) == CharType.STORE && data.plusStat && !prevStockIDList.Contains(id) && NGlobal.playerStatUI.IsUnlockStat(data.needStatID);
+                    });
                 if (cnt > 2)
                 {
                     //3번 칸은 상점 - 스탯 특성
                     ChangeIndex(ref list, 2,
-                    id => !(GetCharType(id) == CharType.STORE && !NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id).plusStat),
-                    id => GetCharType(id) == CharType.STORE && !NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id).plusStat && !prevStockIDList.Contains(id));
+                    id =>
+                    {
+                        ChoiceStatSO data = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id);
+                        return !(GetCharType(id) == CharType.STORE && !data.plusStat && NGlobal.playerStatUI.IsUnlockStat(data.needStatID));
+                    },
+                    id =>
+                    {
+                        ChoiceStatSO data = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id);
+                        return GetCharType(id) == CharType.STORE && !data.plusStat && !prevStockIDList.Contains(id) && NGlobal.playerStatUI.IsUnlockStat(data.needStatID);
+                    });
                 }
             }
         }
@@ -234,7 +250,7 @@ public class StatStore : MonoSingleton<StatStore>
             if (!so.plusStat && so.charType==CharType.STORE && so.needStatID > 0)
             {
                 float value = stat.isUnlock ? stat.UpStatValue : pcsCtrl.ChoiceDataDict[id].firstValue;
-                if(NGlobal.playerStatUI.GetCurrentPlayerStat(so.needStatID) - value < 0)
+                if(NGlobal.playerStatUI.GetCurrentPlayerStat(so.needStatID) - value < NGlobal.playerStatUI.GetStatSOData<EternalStatSO>(so.needStatID).minStatValue)
                 {
                     UIManager.Instance.RequestSystemMsg("해당 특성을 구매하기에는 " + so.statName + " 스탯이 너무 낮습니다");
                     return;

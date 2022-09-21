@@ -38,7 +38,7 @@ public class ButtonHoldEvent : MonoBehaviour
         {
             if(checkTimePair.first < Time.unscaledTime)
             {
-                if(checkTimePair.second < Time.unscaledTime)
+                if(checkTimePair.second < Time.unscaledTime) 
                 {
                     if(CanContinue !=null && !CanContinue())
                     {
@@ -46,7 +46,8 @@ public class ButtonHoldEvent : MonoBehaviour
                     }
                     else
                     {
-                        OnPressing?.Invoke();
+                        //홀드 클릭
+                        OnPressing?.Invoke();  
                         checkTimePair.second = Time.unscaledTime + delayTimePair.second;
                     }
                 }
@@ -65,7 +66,7 @@ public class ButtonHoldEvent : MonoBehaviour
         {
             isPress = false;
 
-            if (checkTimePair.first >= Time.unscaledTime)
+            if (checkTimePair.first >= Time.unscaledTime)  //홀드가 아니라 그냥 클릭함
             {
                 if (CanContinue == null || CanContinue())
                 {

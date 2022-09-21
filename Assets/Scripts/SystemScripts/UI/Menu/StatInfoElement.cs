@@ -12,6 +12,7 @@ public class StatInfoElement : UITransition
     [SerializeField] private Text curStatTxt;
     [SerializeField] private Text statNameTxt;
     [SerializeField] private Button statUpBtn;
+    [SerializeField] private ButtonHoldEvent btnHoldEvent;
     private NameInfoFollowingCursor nifc;
 
     protected override void Awake()
@@ -42,15 +43,7 @@ public class StatInfoElement : UITransition
 
         statUpBtn.onClick.AddListener(() =>
         {
-            if (eternal.isOpenStat)
-            {
-                if (NGlobal.playerStatUI.CanStatUp(id))
-                {
-                    NGlobal.playerStatUI.StatUp(id);
-                    UpdateUI();
-                }
-            }
-            else
+            if (!eternal.isOpenStat)
             {
                 if (NGlobal.playerStatUI.CanStatOpen())
                 {
@@ -69,6 +62,28 @@ public class StatInfoElement : UITransition
                 Transition(true);
             }
         });
+
+        btnHoldEvent.OnPressing += () =>
+        {
+            NGlobal.playerStatUI.StatUp(id);
+            UpdateUI();
+
+            if (isEnter)
+            {
+                Transition(true);
+            }
+        };
+        btnHoldEvent.CanContinue += () =>
+        {
+            if (eternal.isOpenStat)
+            {
+                if (NGlobal.playerStatUI.CanStatUp(id))
+                {
+                    return true;
+                }
+            }
+            return false;
+        };
 
         if (!info.isUnlock)
         {

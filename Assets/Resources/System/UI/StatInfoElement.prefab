@@ -120,6 +120,8 @@ GameObject:
   - component: {fileID: 8268666277674441148}
   - component: {fileID: 8268666277674441136}
   - component: {fileID: 8268666277674441151}
+  - component: {fileID: 5517450792685811916}
+  - component: {fileID: 8814480849415312661}
   m_Layer: 5
   m_Name: StatValue
   m_TagString: Untagged
@@ -168,7 +170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.8301887, g: 0.8301887, b: 0.8301887, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -188,6 +190,34 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 100
+--- !u!114 &5517450792685811916
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8268666277674441147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates: []
+--- !u!114 &8814480849415312661
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8268666277674441147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e667567d014ea8844a7a61bc1ea7229c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionEnable: 1
+  explanation: "\uC2A4\uD0EF \uC218\uCE58"
+  fontSize: 25
 --- !u!1 &8268666277978502184
 GameObject:
   m_ObjectHideFlags: 0
@@ -282,6 +312,7 @@ GameObject:
   - component: {fileID: 8607258303998384096}
   - component: {fileID: 6644559797539365195}
   - component: {fileID: 2337628235435377037}
+  - component: {fileID: 5717352784489755452}
   m_Layer: 5
   m_Name: StatUpButton
   m_TagString: Untagged
@@ -434,7 +465,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   transitionEnable: 1
   explanation: 
-  fontSize: 30
+  fontSize: 31
+--- !u!114 &5717352784489755452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8268666278075833768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2b91f522b031184f960a5e238e17356, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  transitionEnable: 1
+  delayTimePair:
+    first: 0.5
+    second: 0.15
 --- !u!1 &8268666278276601052
 GameObject:
   m_ObjectHideFlags: 0
@@ -532,3 +579,4 @@ MonoBehaviour:
   curStatTxt: {fileID: 8268666277674441151}
   statNameTxt: {fileID: 8268666277978502186}
   statUpBtn: {fileID: 8268666278075833770}
+  btnHoldEvent: {fileID: 5717352784489755452}
