@@ -26,6 +26,11 @@ namespace Enemy
         private float shootBulletRotationValue = 15f; // 각도 변동값
 
         private float stopAnimTimer = 0f;
+        [SerializeField]
+        private float minMoveTimer = 1f;
+        [SerializeField]
+        private float maxMoveTimer = 3f;
+
         private float moveTimer = 0f;
         private float dashTimer = 0f;
         private float meleeAttackDis = 12f;
@@ -66,6 +71,7 @@ namespace Enemy
         private bool isMove = false;
         private bool isDashToPlayer = false;
         private bool isAttack = false;
+        private bool prevIsAttack = false;
 
         public readonly int hashMeleeAttack1 = Animator.StringToHash("meleeAttack1");
         public readonly int hashMeleeAttack2 = Animator.StringToHash("meleeAttack2");
@@ -220,7 +226,6 @@ namespace Enemy
             }
             #endregion
         }
-
         private void MoveCheck()
         {
             Vector3 playerPosition = EnemyManager.Player.transform.position;
@@ -232,10 +237,11 @@ namespace Enemy
 
                 enemyMoveCommand.Execute();
 
-                if (moveTimer <= 0 || (dis < meleeAttackDis && playerPosition.y >= transform.position.y) || isAttack)
+                if (moveTimer <= 0)
                 {
                     moveTimer = 0f;
                     isMove = false;
+                    prevIsAttack = false;
                     AttackCheck();
                 }
             }
@@ -284,21 +290,18 @@ namespace Enemy
                 }
             }
         }
+        public void SetDashTargetPositionToPlayer()
+        {
+            dashTargetPosition = EnemyManager.Player.transform.position;
+        }
         public void DashToPlayer(float speed) // 대쉬 시작
         {
-            
-            Vector3 playerPosition = EnemyManager.Player.transform.position;
-
-            dashTargetPosition = playerPosition;
-
+            // SetDashTargetPosition먼저 실행해줘야함
             isDashToPlayer = true;
             dashTimer = dashAttackDis / speed;
             currentSpeed = speed;
 
-            dashCommand = new CentipedeBossDashCommand(enemyData, playerPosition, rb, this);
-
-            isMove = false;
-            moveTimer = 0f;
+            dashCommand = new CentipedeBossDashCommand(enemyData, dashTargetPosition, rb, this);
         }
         private void DashToPlayerEnd()// 대쉬 끝났을 때
         {
@@ -338,43 +341,63 @@ namespace Enemy
         }
         public void AttackCheck() // 이벤트 구독에 사용됨 - 특수공격 사용 확인
         {
-            float value = Random.Range(0f, 100f);
-            float checkValue = 0f;
+            if (isAttack)
+            {
+                prevIsAttack = true;
+                return;
+            }
 
-            if(isMove)
+            if (isMove)
             {
                 return;
             }
 
-            if((checkValue += meleeAttack1Percentage) >= value)
-            {
-                enemyData.attackDelay = 1f;
+            float value = Random.Range(0f, 100f);
+            float checkValue = 0f;
 
-                shootBulletRotationOffset = 0f;
-                meleeAttack1Count = 1;
-            }
-            else if((checkValue += meleeAttack2Percentage) >= value)
+            if (prevIsAttack)
             {
-                enemyData.attackDelay = 1f;
+                isAttack = false;
+                isMove = true;
+                moveTimer = Random.Range(minMoveTimer, maxMoveTimer);
 
-                enemyData.animationDictionary[EnemyAnimationType.Attack] = hashMeleeAttack2;
+                enemyData.animationDictionary[EnemyAnimationType.Move] = hashMove;
+                enemyMoveCommand.Execute();
             }
-            else if((checkValue += sneerPercentage) >= value)
+            else
             {
-                enemyData.attackDelay = 2f;
+                if ((checkValue += meleeAttack1Percentage) >= value)
+                {
+                    enemyData.attackDelay = 1f;
 
-                sneerCount = 3;
-            }
-            else if((checkValue += multipleMeleeAttack1Percentage) >= value)
-            {
-                enemyData.attackDelay = 1f;
+                    shootBulletRotationOffset = 0f;
+                    meleeAttack1Count = 1;
+                }
+                else if ((checkValue += meleeAttack2Percentage) >= value)
+                {
+                    enemyData.attackDelay = 1f;
 
-                shootBulletRotationOffset = 0f;
-                meleeAttack1Count = 3;
-            }
-            else if((checkValue += bitingAndTearingPercentage) >= value)
-            {
-                Debug.Log("DoBitingAndTearing");
+                    enemyData.animationDictionary[EnemyAnimationType.Attack] = hashMeleeAttack2;
+                }
+                else if ((checkValue += sneerPercentage) >= value)
+                {
+                    enemyData.attackDelay = 2f;
+
+                    sneerCount = 3;
+                }
+                else if ((checkValue += multipleMeleeAttack1Percentage) >= value)
+                {
+                    enemyData.attackDelay = 1f;
+
+                    shootBulletRotationOffset = 0f;
+                    meleeAttack1Count = 3;
+                }
+                else if ((checkValue += bitingAndTearingPercentage) >= value)
+                {
+                    Debug.Log("DoBitingAndTearing");
+                }
+
+                prevIsAttack = true;
             }
         }
         public void StopAnim(float stopTime)
@@ -422,37 +445,34 @@ namespace Enemy
         }
         public EnemyState AttackStateChangeCondition() // 이벤트 구독에 사용됨 - 공격2 사용 가능 확인
         {
-            if (!isMove)
+            if (isMove)
             {
-                if (sneerCount > 0)
-                {
-                    sneerCount--;
+                return new EnemyChaseState(enemyData);
+            }
 
-                    enemyData.animationDictionary[EnemyAnimationType.Attack] = hashSneer;
+            if (sneerCount > 0)
+            {
+                sneerCount--;
 
-                    return new EnemyAIAttackState(enemyData);
-                }
-                else if(meleeAttack1Count > 0)
-                {
-                    meleeAttack1Count--;
+                enemyData.animationDictionary[EnemyAnimationType.Attack] = hashSneer;
 
-                    shootBulletRotationOffset += shootBulletRotationValue;
+                return new EnemyAIAttackState(enemyData);
+            }
+            else if (meleeAttack1Count > 0)
+            {
+                meleeAttack1Count--;
 
-                    enemyData.animationDictionary[EnemyAnimationType.Attack] = hashMeleeAttack1;
+                shootBulletRotationOffset += shootBulletRotationValue;
 
-                    return new EnemyAIAttackState(enemyData);
-                }
+                enemyData.animationDictionary[EnemyAnimationType.Attack] = hashMeleeAttack1;
+
+                return new EnemyAIAttackState(enemyData);
             }
 
             return new EnemyChaseState(enemyData);
         }
         public EnemyState ChangeAttackCondition() // 이벤트 구독에 사용됨 - 공격을 해야하는지 확인
         {
-            if (isMove)
-            {
-                return new EnemyChaseState(enemyData);
-            }
-            
             return null;
         }
         public void CentipedeMeleeAttack1Start()

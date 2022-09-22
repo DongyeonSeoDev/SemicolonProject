@@ -77,7 +77,6 @@ namespace Enemy
                     for (int j = 0; j < poolDictionary[type].count; j++)
                     {
                         poolQueueDictionary[type].Enqueue(MakePoolObject(type));
-                        Debug.Log(type);
                     }
                 }
             }

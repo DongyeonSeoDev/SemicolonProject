@@ -999,7 +999,7 @@ MonoBehaviour:
   playableDirector: {fileID: -8307998283944319826}
   meleeAttack1CircleRadius: 2
   meleeAttack1CircleDamageValue: 3
-  meleeAttack1BulletDamageValue: -10
+  meleeAttack1BulletDamageValue: -18
   dashAttackDis: 10
   meleeAttack2DamageValue: -5
   sneerDamageValue: -10
