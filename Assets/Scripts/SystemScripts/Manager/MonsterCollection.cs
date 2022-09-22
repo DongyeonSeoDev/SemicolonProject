@@ -173,7 +173,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         });
         EventManager.StartListening("EnemyDead", (obj, id, dead) =>
         {
-            if (!mobLearningInfoDic[id].kill)
+            if (!mobLearningInfoDic[id].kill) 
             {
                 ChangeLearningStateKill(id, true);
             }

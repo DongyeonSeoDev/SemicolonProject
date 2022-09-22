@@ -73,7 +73,9 @@ public class StageCheatWindow : EditorWindow
 
     private void ChangeNextStageToBoss()
     {
-        StageDataSO data = StageManager.Instance.GetStageBundleData(floor).stages.Find(x => x.areaType == AreaType.BOSS);
+        StageBundleDataSO so = StageManager.Instance.GetStageBundleData(floor);
+        StageDataSO data = so.stages.Find(x => x.areaType == AreaType.BOSS);
+        StageManager.Instance.GetFieldInfo("currentStageNumber").SetValue(StageManager.Instance, so.LastStageNumber - 1);
         StageManager.Instance.CurrentStageGround.stageDoors.ForEach(x => x.nextStageData = data);
     }
 

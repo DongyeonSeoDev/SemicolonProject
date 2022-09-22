@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: CriticalDamageData
   m_EditorClassIdentifier: 
   statId: 45
+  statValueDecimal: 0
   maxStatLv: 30
-  upStatValue: 1
+  upStatValue: 20
   statName: "\uCE58\uBA85\uD0C0\uB370\uBBF8\uC9C0"
   statSpr: {fileID: 0}
+  minStatValue: 0

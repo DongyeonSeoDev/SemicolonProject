@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: CriticalRateData
   m_EditorClassIdentifier: 
   statId: 40
+  statValueDecimal: 0
   maxStatLv: 35
-  upStatValue: 2
+  upStatValue: 5
   statName: "\uCE58\uBA85\uD0C0\uD655\uB960"
   statSpr: {fileID: 0}
+  minStatValue: 0

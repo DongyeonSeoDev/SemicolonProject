@@ -126,7 +126,7 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
     private void Start()
     {
         bottomRightBarGrid.enabled = true;
-        Util.DelayFunc(() => bottomRightBarGrid.enabled = false, 1, this, true);
+        Util.DelayFunc(() => bottomRightBarGrid.enabled = false, 0.5f, this, true);
     }
 
     void SetActiveSlimeEnergeEffect(bool active) => energeBarAndEff.second.gameObject.SetActive(active);

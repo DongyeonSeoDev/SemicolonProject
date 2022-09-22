@@ -18,19 +18,17 @@ public class RecoveryObj : InteractionObj
 
     private void ResetActionList()
     {
-        if(iconActiveConditions.Count == 0)
+        availableStats = Global.CurrentPlayer.PlayerStat.choiceStat.AllStats.FindAll(x =>
+        {
+            ChoiceStatSO data = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(x.id);
+            return data.needStatID > 0 && data.charType == CharType.STORE
+            && data.plusStat && !NGlobal.playerStatUI.IsUnlockStat(x.id);
+        });
+
+        if (iconActiveConditions.Count == 0)
         {
             iconActiveConditions.Add(() => !StateManager.Instance.IsPlayerFullHP);
-            iconActiveConditions.Add(() =>
-            {
-                availableStats = Global.CurrentPlayer.PlayerStat.choiceStat.AllStats.FindAll(x =>
-                {
-                    ChoiceStatSO data = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(x.id);
-                    return data.needStatID > 0 && data.charType == CharType.STORE
-                    && data.plusStat && !NGlobal.playerStatUI.IsUnlockStat(x.id);
-                });
-                return availableStats.Count > 0;
-            });
+            iconActiveConditions.Add(() => availableStats.Count > 0);
             //iconActiveConditions.Add(() => !StateManager.Instance.IsPlayerNoImpr);
         }
 

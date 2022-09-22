@@ -5,11 +5,11 @@ using System.IO;
 
 public static partial class Global
 {
-    public const string GAME_SAVE_FILE = "SaveFile5";  //Test File Name
+    public const string GAME_SAVE_FILE = "SaveFile6";  //Test File Name
 
-    public const string SAVE_FILE_1 = "SaveFile_19";
-    public const string SAVE_FILE_2 = "SaveFile_20";
-    public const string SAVE_FILE_3 = "SaveFile_21";
+    public const string SAVE_FILE_1 = "SaveFile_22";
+    public const string SAVE_FILE_2 = "SaveFile_23";
+    public const string SAVE_FILE_3 = "SaveFile_24";
 
     public static string GetSaveFileName(int index)
     {
