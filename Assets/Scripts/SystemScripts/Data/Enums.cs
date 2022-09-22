@@ -172,6 +172,17 @@ public enum StateAbnormality
     None  // 얘는 무조건 마지막에 배치
 }
 
+public enum FillType
+{
+    X,
+    Y,
+    Z,
+    XY,
+    XZ,
+    YZ,
+    XYZ
+}
+
 public enum BuffType
 {
     None  // 얘는 무조건 마지막에 배치

@@ -50,6 +50,10 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
     public Color lowEnergeColor;
     public Gradient lowEnergeGrad;
 
+    //동화율 바 (캐릭터 머리 위)
+    public GameObject assimBarObj;
+    public FillBasedScale assimFillImg;
+
     public bool IsAutoFitEnergeBar { get; set; }
     public bool IsOriginSlime { get; private set; }
 
@@ -104,16 +108,16 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
             }
 
             //체력바 밑의 에너지바에서 슬라임이면 필색상과 이펙트 색상을 초록으로, 흡수한 몹이면 파란색으로
-            bool org = id == Global.OriginBodyID;
-            IsOriginSlime = org;
-            energeFill.color = org ? slimeAtkEnergeColor : assimilationBarColor;
-            curAssimText.gameObject.SetActive(!org);
+            IsOriginSlime = id == Global.OriginBodyID;
+            energeBarAndEff.first.SetActive(IsOriginSlime);
+            //energeFill.color = IsOriginSlime ? slimeAtkEnergeColor : assimilationBarColor;
+            //curAssimText.gameObject.SetActive(!IsOriginSlime);
 
-            energeBarEffMainModule.startColor = org ? slimeEnergePsColor : assimPsColor;
-            energePsCOLT.color = org ? slimeEnergeGd : assimGd;
+            //energeBarEffMainModule.startColor = IsOriginSlime ? slimeEnergePsColor : assimPsColor;
+            //energePsCOLT.color = IsOriginSlime ? slimeEnergeGd : assimGd;
 
-            energeEffMask.DOKill();
-            energeFill.DOKill();
+            //energeEffMask.DOKill();
+            //energeFill.DOKill();
             UpdateUnderstandingBar();
         });
 
@@ -187,9 +191,17 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
     {
         if (IsOriginSlime) return;
 
+        assimBarObj.SetActive(true);
         float rate = PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(SlimeGameManager.Instance.CurrentBodyId) % 51 * 0.02f;
-        energeFill.DOFillAmount(rate, 0.3f);
-        energeEffMask.DOScaleX(orgEnergeEffMaskScl.x * rate, 0.3f);
+        assimFillImg.SetFillAmount(rate, 0.6f, false, () =>
+        {
+            Util.PriDelayFunc("InactiveAssimBar", () =>
+            {
+                assimBarObj.SetActive(false);
+            }, 1f, this, false);
+        });
+        //energeFill.DOFillAmount(rate, 0.3f);
+        //energeEffMask.DOScaleX(orgEnergeEffMaskScl.x * rate, 0.3f);
     }
 
     public void SetEnableSlot(SkillType type, bool on)
