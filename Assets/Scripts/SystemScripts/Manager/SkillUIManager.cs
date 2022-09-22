@@ -125,7 +125,6 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
 
     private void Start()
     {
-        bottomRightBarGrid.enabled = true;
         Util.DelayFunc(() => bottomRightBarGrid.enabled = false, 0.5f, this, true);
     }
 
