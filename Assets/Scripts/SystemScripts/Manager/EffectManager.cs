@@ -43,9 +43,9 @@ public class EffectManager : MonoSingleton<EffectManager>
     public GameObject statBtnEffect;
     public GameObject monColBtnEffect;
 
-    //public MulSpriteColorCtrl invenMSC;
-    //public MulSpriteColorCtrl statMSC;
-    //public MulSpriteColorCtrl mobMSC;
+    public UnscaledGlowCtrl invenGlow;
+    public UnscaledGlowCtrl statGlow;
+    public UnscaledGlowCtrl mobGlow;
 
     #region touch effect
     public string TouchEffKey { private get; set; }
@@ -199,15 +199,15 @@ public class EffectManager : MonoSingleton<EffectManager>
         {
             case UIType.INVENTORY:
                 inventoryBtnEffect.SetActive(on);
-                //invenMSC.SetIntensity(on ? 0.4f : 0);
+                invenGlow.SetIntensity(on ? 1.1f : 0);
                 break;
             case UIType.STAT:
                 statBtnEffect.SetActive(on);
-                //statMSC.SetIntensity(on ? 0.7f : 0);
+                statGlow.SetIntensity(on ? 1.1f : 0);
                 break;
             case UIType.MONSTER_COLLECTION:
                 monColBtnEffect.SetActive(on);
-                //mobMSC.SetIntensity(on ? 1f : 0);
+                mobGlow.SetIntensity(on ? 1.1f : 0);
                 break;
         }
     }
