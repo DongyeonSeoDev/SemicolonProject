@@ -22,7 +22,7 @@ MonoBehaviour:
   plusStat: 1
   needStatID: 30
   purchase: 5
-  sell: 4
+  sell: 3
   upCost: 0
   purchase2: 2
   sell2: 1
