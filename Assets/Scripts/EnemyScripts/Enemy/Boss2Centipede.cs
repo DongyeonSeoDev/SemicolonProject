@@ -317,7 +317,7 @@ namespace Enemy
             enemyData.enemyMoveCommand = enemyMoveCommand;
             
             enemyData.enemySpriteRotateCommand = new EnemySpriteRotateCommand(enemyData);
-            enemyData.attackTypeCheckCondition = AttackCheck;
+            enemyData.enemyChaseStateChangeCondition = AttackCheck;
             enemyData.addAIAttackStateChangeCondition = AttackStateChangeCondition;
             enemyData.addChangeAttackCondition = ChangeAttackCondition;
         }
@@ -339,17 +339,17 @@ namespace Enemy
 
             bossHPBar.SetActiveHPBar(false);
         }
-        public void AttackCheck() // 이벤트 구독에 사용됨 - 특수공격 사용 확인
+        public EnemyState AttackCheck() // 이벤트 구독에 사용됨 - 특수공격 사용 확인
         {
             if (isAttack)
             {
                 prevIsAttack = true;
-                return;
+                return new EnemyAIAttackState(enemyData);
             }
 
             if (isMove)
             {
-                return;
+                return null;
             }
 
             float value = Random.Range(0f, 100f);
@@ -363,6 +363,8 @@ namespace Enemy
 
                 enemyData.animationDictionary[EnemyAnimationType.Move] = hashMove;
                 enemyMoveCommand.Execute();
+
+                return null;
             }
             else
             {
@@ -398,6 +400,8 @@ namespace Enemy
                 }
 
                 prevIsAttack = true;
+                isAttack = true;
+                return new EnemyAIAttackState(enemyData);
             }
         }
         public void StopAnim(float stopTime)
@@ -501,7 +505,8 @@ namespace Enemy
         }
         private void CentipedeAttackStart()
         {
-            isAttack = true;
+            //prevIsAttack = true;
+            //isAttack = true;
         }
         public void CentipedeAttackEnd()
         {
