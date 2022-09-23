@@ -60,7 +60,7 @@ public class RecoveryObj : InteractionObj
 
             //recoveryLight = PoolManager.GetItem<Light2D>("NormalPointLight2D");
             recoveryLight.transform.position = StageManager.Instance.CurrentStageGround.objSpawnPos.position;
-            //recoveryLight.gameObject.SetActive(true);
+            recoveryLight.gameObject.SetActive(false);
             recoveryLight.intensity = 0.5f;
             /*recoveryLight.GetFieldInfo<Light2D>("m_ApplyToSortingLayers").SetValue(recoveryLight, new int[3]
             {
@@ -80,7 +80,7 @@ public class RecoveryObj : InteractionObj
         {
             canInteract = false;
 
-            recoveryLight.gameObject.SetActive(false);
+            //recoveryLight.gameObject.SetActive(false);
         }
     }
 

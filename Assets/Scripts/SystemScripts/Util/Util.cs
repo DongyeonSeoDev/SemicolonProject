@@ -242,6 +242,18 @@ public static partial class Util
     }
 }
 
+public static partial class Util
+{
+    public static void SetPosX(this RectTransform rect, float x)
+    {
+        rect.anchoredPosition = new Vector2(x, rect.anchoredPosition.y);
+    }
+    public static void SetPosY(this RectTransform rect, float y)
+    {
+        rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, y);
+    }
+}
+
 public static class TalkUtil
 {
     public static void ShowSubtitle(string dialogDataKey)

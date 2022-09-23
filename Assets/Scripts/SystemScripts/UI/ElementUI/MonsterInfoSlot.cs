@@ -14,6 +14,9 @@ public class MonsterInfoSlot : MonoBehaviour
 
     public TextMeshProUGUI nameTMP;
 
+    public float barEffWidth;
+    public Pair<RectTransform, RectTransform> barEndEff;  //흡수율, 동화율
+
     public Transform MobImgBg { get; private set; }
 
     //public Transform acqMarkPar; //변신 가능 텍스트 UI의 부모
@@ -65,6 +68,16 @@ public class MonsterInfoSlot : MonoBehaviour
     public void UpdateDrainProbability(float prob)
     {
         drainProbabilityFill.fillAmount = Mathf.Clamp(prob/100f, 0, 1f);
+
+        if (prob >= 100f || prob <= 0f)
+        {
+            barEndEff.first.gameObject.SetActive(false);
+        }
+        else
+        {
+            barEndEff.first.gameObject.SetActive(true);
+            barEndEff.first.SetPosX(barEffWidth * drainProbabilityFill.fillAmount);
+        }
     }
 
     public void MarkAcqBody(bool on) //변신 가능 텍스트 UI 띄우거나 없앰
