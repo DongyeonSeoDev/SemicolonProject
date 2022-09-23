@@ -103,6 +103,9 @@ namespace Enemy
 
         private BossCanvas bossHPBar;
 
+        [SerializeField]
+        private CamShakeData shootAroundShakeData;
+
         protected override void Awake()
         {
             base.Awake();
@@ -441,6 +444,7 @@ namespace Enemy
         public void ShootBulletAround(int num)
         {
             shootAroundCommand = new CentipedeShootAroundCommand(this, shootTrm, Type.CentipedeAroundBullet, bulletMinAttackPower, bulletMaxAttackPower, enemyData.randomCritical, enemyData.randomCritical, true, stageTilemap);
+            CinemachineCameraScript.Instance.Shake(shootAroundShakeData);
 
             for (int i = 0; i < num; i++)
             {

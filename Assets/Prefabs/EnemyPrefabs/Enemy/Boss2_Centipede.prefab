@@ -997,6 +997,8 @@ MonoBehaviour:
   movePivot: {fileID: 4073570852634963415}
   stageTilemap: {fileID: 0}
   playableDirector: {fileID: -8307998283944319826}
+  minMoveTimer: 1
+  maxMoveTimer: 3
   meleeAttack1CircleRadius: 2
   meleeAttack1CircleDamageValue: 3
   meleeAttack1BulletDamageValue: -18
@@ -1011,6 +1013,10 @@ MonoBehaviour:
   shootTrm: {fileID: 8978629603519336582}
   enemyMeleeAttack1Collider: {fileID: 1564419724183329414}
   enemyMeleeAttack2Collider: {fileID: 8289572719645505160}
+  shootAroundShakeData:
+    strength: 10
+    frequency: 1
+    duration: 0.7
 --- !u!114 &-2415847091630452189
 MonoBehaviour:
   m_ObjectHideFlags: 0
