@@ -30,7 +30,8 @@ namespace Enemy
         ReflectionBulletEffect,
         StunEffect,
         CentipedeBullet,
-        CentipedeAroundBullet
+        CentipedeAroundBullet,
+        CentipedeBrakeEffect
     }
 
     public class EnemyPoolManager : MonoBehaviour

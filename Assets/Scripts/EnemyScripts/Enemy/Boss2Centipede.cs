@@ -451,6 +451,10 @@ namespace Enemy
                 shootAroundCommand.Execute();
             }
         }
+        public void BrakeGroundParticle()
+        {
+            EnemyPoolManager.Instance.GetPoolObject(Type.CentipedeBrakeEffect, shootTrm.position + new Vector3(0f, 0.7f, 0f));
+        }
         public EnemyState AttackStateChangeCondition() // 이벤트 구독에 사용됨 - 공격2 사용 가능 확인
         {
             if (isMove)
