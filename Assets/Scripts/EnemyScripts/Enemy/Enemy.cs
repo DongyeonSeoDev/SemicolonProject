@@ -59,6 +59,7 @@ namespace Enemy
         private Vector2Int currentPosition;
 
         [SerializeField] private Vector2 stunEffectPosition;
+        [SerializeField] private float startAnimSpeed = 1f;
 
         public float AddExperience
         { 
@@ -103,7 +104,7 @@ namespace Enemy
 
         private void EnemyStart()
         {
-            if (enemyData.eEnemyController == EnemyController.AI)
+            if (isStop && enemyData.eEnemyController == EnemyController.AI)
             {
                 isStop = false;
                 anim.speed = prevAnimationSpeed;
@@ -117,7 +118,7 @@ namespace Enemy
 
         private void EnemyStop()
         {
-            if (enemyData.eEnemyController == EnemyController.AI)
+            if (!isStop && enemyData.eEnemyController == EnemyController.AI)
             {
                 prevAnimationSpeed = anim.speed;
 
@@ -200,6 +201,8 @@ namespace Enemy
             }
 
             ChangeHpEffectAnimationPlay(false);
+
+            anim.speed = startAnimSpeed;
         }
 
         protected virtual void Update()
