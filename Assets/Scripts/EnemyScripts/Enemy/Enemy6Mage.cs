@@ -13,6 +13,8 @@ namespace Enemy
 
         private List<EnemyBullet2> bullets = new List<EnemyBullet2>();
 
+        private float currentTime = 0f;
+
         protected override void OnEnable()
         {
             base.OnEnable();
@@ -21,6 +23,18 @@ namespace Enemy
             enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed);
 
             StartCoroutine(SpawnBullet());
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+
+            if (isStop)
+            {
+                return;
+            }
+
+            currentTime += Time.deltaTime;
         }
 
         private IEnumerator SpawnBullet()
@@ -32,7 +46,9 @@ namespace Enemy
                     break;
                 }
 
-                yield return new WaitForSeconds(1f);
+                yield return new WaitUntil(() => currentTime >= 1f);
+
+                currentTime = 0f;
 
                 EnemyBullet2 b = Instantiate(bullet, transform);
                 int i = 0;
@@ -50,6 +66,14 @@ namespace Enemy
                 b.Init(enemyData.eEnemyController, enemyData.minAttackPower, enemyData.maxAttackPower, enemyData.randomCritical, enemyData.criticalDamagePercent, UnityEngine.Color.white, transform, bullets.Count == 0 ? startAngles[i] : bullets[0].currentAngle + startAngles[i], this);
 
                 bullets.Add(b);
+            }
+        }
+
+        private void RemoveBullet() // 애니메이션에서 실행
+        {
+            foreach (EnemyBullet2 g in bullets)
+            {
+                g.gameObject.SetActive(false);
             }
         }
     }

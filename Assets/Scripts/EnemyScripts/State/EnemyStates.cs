@@ -459,6 +459,8 @@ namespace Enemy
 
         protected override void Update()
         {
+            Debug.Log("공격 실행!");
+
             if (isNoAttack)
             {
                 base.Update();
