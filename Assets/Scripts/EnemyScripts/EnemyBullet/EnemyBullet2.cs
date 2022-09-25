@@ -6,12 +6,12 @@ namespace Enemy
     {
         public Animator anim;
         public SpriteRenderer sr;
-        public Transform targetTransform;
+        
         public float distance;
-        public float startAngle;
         public float angleSpeed;
 
         private Enemy enemy;
+        private Transform centerTransform;
 
         private EnemyController eEnemyController;
 
@@ -22,15 +22,15 @@ namespace Enemy
         public float critical;
         public float criticalPower;
 
+        public float currentAngle
+        {
+            get => angle;
+        }
+
         private void Awake()
         {
             anim = GetComponent<Animator>();
             sr = GetComponent<SpriteRenderer>();
-        }
-
-        private void Start()
-        {
-            angle = startAngle;
         }
 
         private void Update()
@@ -40,7 +40,7 @@ namespace Enemy
                 return;
             }
 
-            transform.position = targetTransform.position + Quaternion.Euler(0f, 0f, angle) * Vector2.right * distance;
+            transform.position = centerTransform.position + Quaternion.Euler(0f, 0f, angle) * Vector2.right * distance;
 
             angle += Time.deltaTime * angleSpeed;
         }
@@ -105,14 +105,16 @@ namespace Enemy
             }
         }
 
-        public void Init(EnemyController controller, float minAttack, float maxAttack, float critical, float criticalPower, Color color, Enemy enemy = null)
+        public void Init(EnemyController controller, float minAttack, float maxAttack, float critical, float criticalPower, Color color, Transform centerTransform, float startAngle, Enemy enemy = null)
         {
             this.minAttack = minAttack;
             this.maxAttack = maxAttack;
             this.critical = critical;
             this.criticalPower = criticalPower;
+            this.centerTransform = centerTransform;
 
             eEnemyController = controller;
+            angle = startAngle;
             this.enemy = enemy;
 
             // 반사 구현 안됨
