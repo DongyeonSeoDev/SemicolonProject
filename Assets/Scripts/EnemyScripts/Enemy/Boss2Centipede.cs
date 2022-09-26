@@ -431,7 +431,9 @@ namespace Enemy
                 return;
             }
 
-            upColorValueByCharging = originSpriteColor - meleeAttack1ChargingColor;
+            upColorValueByCharging = meleeAttack1ChargingColor - originSpriteColor;
+
+            Debug.Log(upColorValueByCharging);
 
             meleeAttack1ChargingColorLerpEndTime = time;
             meleeAttack1ChargingColorTimer = 0f;
