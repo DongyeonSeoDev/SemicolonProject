@@ -894,7 +894,7 @@ SpriteRenderer:
   m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 8474625173248859686, guid: 80588295cc3e47646bc33fdd59baa817, type: 3}
-  m_Color: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -1002,6 +1002,7 @@ MonoBehaviour:
   meleeAttack1CircleRadius: 2
   meleeAttack1CircleDamageValue: 3
   meleeAttack1BulletDamageValue: -18
+  meleeAttack1ChargingColor: {r: 1, g: 1, b: 1, a: 1}
   dashAttackDis: 10
   meleeAttack2DamageValue: -5
   sneerDamageValue: -10

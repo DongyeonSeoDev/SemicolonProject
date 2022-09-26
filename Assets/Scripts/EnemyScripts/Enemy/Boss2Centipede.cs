@@ -14,6 +14,8 @@ namespace Enemy
 
         private Vector2 dashTargetPosition = Vector2.zero;
 
+        private Color originSpriteColor = Color.white;
+
         private float originMinAttackPower = 0f;
         private float originMaxAttackPower = 0f;
 
@@ -50,7 +52,15 @@ namespace Enemy
         private float meleeAttack1CircleDamageValue = 3;
         [Header("meleeAttack1(지면파괴)의 구체 데미지 변동 값")]
         [SerializeField]
-        private float meleeAttack1BulletDamageValue = -10;
+        private float meleeAttack1BulletDamageValue = -10; 
+
+        [Header("meleeAttack1(지면파괴)의 차징시 색깔")]
+        [SerializeField]
+        private Color meleeAttack1ChargingColor = Color.white;
+        private Color upColorValueByCharging = Color.white;
+        private float meleeAttack1ChargingColorLerpEndTime = 0f;
+        private float meleeAttack1ChargingColorTimer = 0f;
+        private bool meleeAttack1ChargingColorTimerStart = false;
         #endregion
 
         #region meleeAttack2(물어뜯기)관련 변수
@@ -141,6 +151,7 @@ namespace Enemy
             enemyData.isNoKnockback = true;
             enemyData.isNoStun = true;
 
+            originSpriteColor = sr.color;
             originCurrentSpeed = currentSpeed;
             originMinAttackPower = enemyData.minAttackPower;
             originMaxAttackPower = enemyData.maxAttackPower;
@@ -167,7 +178,10 @@ namespace Enemy
             }
 
             PercentageCheck();
+
             StopAnimTimerCheck();
+            MeleeAttack1ColorTimer();
+
             DashCheck();
             MoveCheck();
         }
@@ -293,13 +307,10 @@ namespace Enemy
                 }
             }
         }
-        public void SetDashTargetPositionToPlayer()
-        {
-            dashTargetPosition = EnemyManager.Player.transform.position;
-        }
         public void DashToPlayer(float speed) // 대쉬 시작
         {
-            // SetDashTargetPosition먼저 실행해줘야함
+            dashTargetPosition = EnemyManager.Player.transform.position - ((Vector3)EnemyManager.Player.GetComponent<PlayerMove>().LastMoveVec * Time.deltaTime / speed);
+
             isDashToPlayer = true;
             dashTimer = dashAttackDis / speed;
             currentSpeed = speed;
@@ -405,6 +416,44 @@ namespace Enemy
                 prevIsAttack = true;
                 isAttack = true;
                 return new EnemyAIAttackState(enemyData);
+            }
+        }
+        public void SetOriginSpriteColor()
+        {
+            sr.color = originSpriteColor;
+        }
+        public void SetMeleeAttack1Color(float time)
+        {
+            if(time <= 0f)
+            {
+                sr.color = meleeAttack1ChargingColor;
+
+                return;
+            }
+
+            upColorValueByCharging = originSpriteColor - meleeAttack1ChargingColor;
+
+            meleeAttack1ChargingColorLerpEndTime = time;
+            meleeAttack1ChargingColorTimer = 0f;
+
+            meleeAttack1ChargingColorTimerStart = true;
+        }
+        private void MeleeAttack1ColorTimer()
+        {
+            if(meleeAttack1ChargingColorTimerStart)
+            {
+                if(meleeAttack1ChargingColorTimer < meleeAttack1ChargingColorLerpEndTime)
+                {
+                    Color color = upColorValueByCharging * (meleeAttack1ChargingColorTimer / meleeAttack1ChargingColorLerpEndTime);
+                    meleeAttack1ChargingColorTimer += Time.deltaTime;
+
+                    sr.color = originSpriteColor + new Color(color.r, color.g, color.b, sr.color.a);
+                }
+
+                if (meleeAttack1ChargingColorTimer >= meleeAttack1ChargingColorLerpEndTime)
+                {
+                    meleeAttack1ChargingColorTimerStart = false;
+                }
             }
         }
         public void StopAnim(float stopTime)
