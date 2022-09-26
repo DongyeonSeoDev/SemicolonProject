@@ -61,6 +61,7 @@ public class ImprecationObj : InteractionObj
         if(UnityEngine.Random.Range(0,2) == 0)
         {
             DecreasePlayerHp(20);
+            //UIManager.Instance.RequestLogMsg("저주에 의해서 체력이 20% 감소하였습니다");
         }
         else
         {
@@ -75,10 +76,12 @@ public class ImprecationObj : InteractionObj
                 ushort id = list.ToRandomElement().id;
                 NGlobal.playerStatUI.StatUnlock(NGlobal.playerStatUI.choiceStatDic[id]);
                 Global.CurrentPlayer.GetComponent<PlayerChoiceStatControl>().WhenTradeStat(id);
+                UIManager.Instance.RequestLogMsg("저주에 의해서 스탯 감소 특성을 하나 획득합니다");
             }
             else
             {
                 DecreasePlayerHp(20);
+                //UIManager.Instance.RequestLogMsg("저주에 의해서 체력이 20% 감소하였습니다");
             }
         }
 

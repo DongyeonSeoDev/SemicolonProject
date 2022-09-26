@@ -49,20 +49,24 @@ public class MonsterInfoSlot : MonoBehaviour
 
     public void UpdateAssimilationRate(float rate)
     {
+        if (rate <= 0f || Util.IsEqualFloat(rate, 100f) || rate >= 200f)
+            barEndEff.second.gameObject.SetActive(false);
+        else
+            barEndEff.second.gameObject.SetActive(true);
+
         if(rate > 1f)
         {
             understandingRateFill.fillAmount = 1;
             understandingOverRateFill.fillAmount = rate - 1f;
-
+            barEndEff.second.SetPosX(barEffWidth * understandingOverRateFill.fillAmount - 0.5f);
             //fullAssimEff.SetActive(rate >= PlayerEnemyUnderstandingRateManager.Instance.MaxUnderstandingRate); //나중에 풀링으로 ㄱ
         }
         else
         {
             understandingOverRateFill.fillAmount = 0;
             understandingRateFill.fillAmount = rate;
+            barEndEff.second.SetPosX(barEffWidth * rate - 0.5f);
         }
-
-        
     }
 
     public void UpdateDrainProbability(float prob)
@@ -76,7 +80,7 @@ public class MonsterInfoSlot : MonoBehaviour
         else
         {
             barEndEff.first.gameObject.SetActive(true);
-            barEndEff.first.SetPosX(barEffWidth * drainProbabilityFill.fillAmount);
+            barEndEff.first.SetPosX(barEffWidth * drainProbabilityFill.fillAmount - 0.5f);
         }
     }
 

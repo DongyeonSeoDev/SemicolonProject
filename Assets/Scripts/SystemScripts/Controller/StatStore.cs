@@ -85,7 +85,11 @@ public class StatStore : MonoSingleton<StatStore>
         if (cnt > 0)
         {
             //1번 칸은 몬스터나 비밀 특성
-            ChangeIndex(ref list, 0, id=>GetCharType(id)==CharType.STORE, id=>GetCharType(id)!=CharType.STORE && !prevStockIDList.Contains(id));
+            ChangeIndex(ref list, 0, id=>GetCharType(id)==CharType.STORE, id =>
+            {
+                ChoiceStatSO data = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id);
+                return GetCharType(id) != CharType.STORE && !prevStockIDList.Contains(id) && (data.needStatID == 0 || NGlobal.playerStatUI.IsUnlockStat(data.needStatID));
+            });
             if(cnt > 1)
             {
                 //2번 칸은 상점 + 스탯 특성
@@ -252,7 +256,7 @@ public class StatStore : MonoSingleton<StatStore>
                 float value = stat.isUnlock ? stat.UpStatValue : pcsCtrl.ChoiceDataDict[id].firstValue;
                 if(NGlobal.playerStatUI.GetCurrentPlayerStat(so.needStatID) - value < NGlobal.playerStatUI.GetStatSOData<EternalStatSO>(so.needStatID).minStatValue)
                 {
-                    UIManager.Instance.RequestSystemMsg("해당 특성을 구매하기에는 " + so.statName + " 스탯이 너무 낮습니다");
+                    UIManager.Instance.RequestSystemMsg("해당 특성을 구매하기에는 " + NGlobal.playerStatUI.GetStatSOData(so.needStatID).statName + " 스탯이 너무 낮습니다");
                     return;
                 }
             }

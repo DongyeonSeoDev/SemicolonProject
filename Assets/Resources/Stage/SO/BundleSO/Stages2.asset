@@ -35,18 +35,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 68b68a830f73fee409379a1416b1d602, type: 2}
   - {fileID: 11400000, guid: 6ec8bc86de42fc140866d7ff9287eec2, type: 2}
   - {fileID: 11400000, guid: e8781dd08c73325449a2feaa1cb53cd4, type: 2}
+  - {fileID: 11400000, guid: 634ef850ccef992459648a71d02ac3f4, type: 2}
   monsterStages:
-  - {fileID: 11400000, guid: 70b5fb9c4b1073243b06e8c6c812c14d, type: 2}
-  - {fileID: 11400000, guid: 35d1a8d93c872064793f67a42740bc8d, type: 2}
-  - {fileID: 11400000, guid: c9ddea80be659cd46a3bbc7a5e45efee, type: 2}
-  - {fileID: 11400000, guid: 982dc65e3bcadee45b7c3b64d96bf561, type: 2}
-  - {fileID: 11400000, guid: 01c88db102d447a40a48b730f70a76a8, type: 2}
-  - {fileID: 11400000, guid: a9e45991cf1527e4b90459dd57077877, type: 2}
-  - {fileID: 11400000, guid: 314f5d7fdffd85149a212e37f7e5adb6, type: 2}
-  - {fileID: 11400000, guid: e460b0e88779f19419dd67c62f9256c2, type: 2}
-  - {fileID: 11400000, guid: 68b68a830f73fee409379a1416b1d602, type: 2}
-  - {fileID: 11400000, guid: 6ec8bc86de42fc140866d7ff9287eec2, type: 2}
-  - {fileID: 11400000, guid: e8781dd08c73325449a2feaa1cb53cd4, type: 2}
+  - {fileID: 11400000, guid: fada7e9d0589e284f8ec42baf4327160, type: 2}
+  - {fileID: 11400000, guid: d9797fb793ed79b47bd63fd25d6205a8, type: 2}
+  - {fileID: 11400000, guid: 4fe75b77a2fd5db4c93a94d334e5e5a0, type: 2}
   randomStageList:
   - stageNumber: 1
     nextStageTypes: 01000000

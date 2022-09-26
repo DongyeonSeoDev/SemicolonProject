@@ -6,6 +6,7 @@ public class SkillInfoImage : MonoBehaviour
     public Triple<Image, Text, Image> skillImgCoolTxtImgTriple;
     public Text keyCodeTxt;
     public NameInfoFollowingCursor nifc;
+    public UIScale us;
     [SerializeField] CanvasGroup cvsg;
 
     [SerializeField] private string skillEx;
@@ -56,6 +57,8 @@ public class SkillInfoImage : MonoBehaviour
         nifc.explanation = skillName;
         Registered = true;
         UIInfoDelayScr.transitionEnable = true;
+        us.transitionEnable = true;
+        nifc.transitionEnable = true;
     }
 
     public void Unregister()
@@ -66,6 +69,8 @@ public class SkillInfoImage : MonoBehaviour
         skillImgCoolTxtImgTriple.first.sprite = SkillUIManager.Instance.emptySkillSpr;
         cvsg.alpha = !DisableSlot ? 0.4f : 0.3f;
         UIInfoDelayScr.transitionEnable = false;
+        us.transitionEnable = false;
+        nifc.transitionEnable = false;
     }
 
     public void SetEnableSlot(bool on) //해당 슬롯에 스킬이 활성화 되어있든 아니든 발동 못하게 반투명 처리

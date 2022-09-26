@@ -280,6 +280,7 @@ MonoBehaviour:
     third: {fileID: 6728583794877495172}
   keyCodeTxt: {fileID: 9222979729389143912}
   nifc: {fileID: 250806574885566930}
+  us: {fileID: 250806574885566955}
   cvsg: {fileID: 4870787070711797190}
   skillEx: 
   skillType: 0

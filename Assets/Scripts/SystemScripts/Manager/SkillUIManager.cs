@@ -54,6 +54,8 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
     public GameObject assimBarObj;
     public FillBasedScale assimFillImg;
 
+    private bool isFillAssim = false; //머리 위 동화율바가 나와있는 상태인가
+
     public bool IsAutoFitEnergeBar { get; set; }
     public bool IsOriginSlime { get; private set; }
 
@@ -191,12 +193,14 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
     {
         if (IsOriginSlime) return;
 
+        Util.StopCo("InactiveAssimBar", this);
         assimBarObj.SetActive(true);
         float rate = PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(SlimeGameManager.Instance.CurrentBodyId) % 51 * 0.02f;
         assimFillImg.SetFillAmount(rate, 0.6f, false, () =>
         {
             Util.PriDelayFunc("InactiveAssimBar", () =>
             {
+                isFillAssim = false;
                 assimBarObj.SetActive(false);
             }, 1f, this, false);
         });

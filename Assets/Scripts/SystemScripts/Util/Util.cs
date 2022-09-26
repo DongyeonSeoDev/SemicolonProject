@@ -252,6 +252,8 @@ public static partial class Util
     {
         rect.anchoredPosition = new Vector2(rect.anchoredPosition.x, y);
     }
+
+    public static bool IsEqualFloat(float a, float b) => Mathf.Abs(a - b) < Mathf.Epsilon;
 }
 
 public static class TalkUtil
