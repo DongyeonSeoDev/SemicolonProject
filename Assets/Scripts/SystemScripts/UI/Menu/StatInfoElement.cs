@@ -65,6 +65,7 @@ public class StatInfoElement : UITransition
 
         btnHoldEvent.OnPressing += () =>
         {
+            SoundManager.Instance.PlaySoundBox("UIClickSFX2");
             NGlobal.playerStatUI.StatUp(id);
             UpdateUI();
 
