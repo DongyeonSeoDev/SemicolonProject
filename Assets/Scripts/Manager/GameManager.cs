@@ -6,6 +6,7 @@ using System.IO;
 using Water;
 using FkTweening;
 using UnityEngine.SceneManagement;
+using UnityEngine.Networking;
 
 public partial class GameManager : MonoSingleton<GameManager>
 {
@@ -42,6 +43,8 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     #region Util
     public Transform slimeFollowObj { get; private set; }
+
+    [SerializeField] private string timeURL = "https://www.naver.com";
     #endregion
 
     #region event and Action
@@ -74,7 +77,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         MonsterCollection.Instance.Save();
         KeyActionManager.Instance.SaveKey();
         saveData.userInfo.currentBodyID = SlimeGameManager.Instance.CurrentBodyId;
-        saveData.option.lastPlayDate = DateTime.Now.ToString("yyyy:MM:dd:hh:mm:ss");
+        StartCoroutine(SaveServerTime());
         saveData.Save();
     }
 
@@ -513,4 +516,22 @@ public partial class GameManager : MonoSingleton<GameManager>
         }
     }
     #endregion
+
+    private IEnumerator SaveServerTime()
+    {
+        saveData.option.lastPlayDate = DateTime.Now.ToString("yyyy:MM:dd:hh:mm:ss");
+
+        UnityWebRequest webReq = new UnityWebRequest(timeURL);
+        yield return webReq.SendWebRequest();
+      
+        if(webReq.result == UnityWebRequest.Result.Success)
+        {
+            DateTime serverTime = Convert.ToDateTime(webReq.GetResponseHeader("Date"));
+            saveData.option.lastPlayDate = serverTime.ToString("yyyy:MM:dd:hh:mm:ss");
+        }
+        else
+        {
+            Debug.Log("서버에서 시간을 못가져옴");
+        }
+    }
 }

@@ -44,7 +44,7 @@ public class StageInfoTextAsset : AssetParse<string, string, StageInfoTextAsset>
         string[] strs = Resources.Load<TextAsset>(Path).text.Split('\n');
         for(int i= 0; i < strs.Length; i++)
         {
-            string[] strs2 = strs[i].Split(' ');
+            string[] strs2 = strs[i].Split(':');
             dictionary.Add(strs2[0], strs2[1]);
         }
     }

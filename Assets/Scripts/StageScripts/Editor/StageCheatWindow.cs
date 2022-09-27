@@ -342,6 +342,10 @@ public class StageCheatWindow : EditorWindow
                 {
                     Debug.Log(Application.persistentDataPath);
                 }
+                if (GUILayout.Button("게임 세이브 파일 폴더 열기"))
+                {
+                    System.Diagnostics.Process.Start(Application.persistentDataPath);
+                }
 
                 break;
 

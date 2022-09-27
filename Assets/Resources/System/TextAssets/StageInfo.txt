@@ -1,4 +1,5 @@
-Stage1-00 로비
-Stage1-01 하수구
-Stage0-01 튜토리얼
-Stage2-01 해골 던전
+Stage1-00:로비
+Stage1-01:하수구
+Stage0-01:튜토리얼
+Stage2-00:해골던전 로비
+Stage2-01:해골 던전

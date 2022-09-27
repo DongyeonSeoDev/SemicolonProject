@@ -104,7 +104,7 @@ public class Option
     //자동퀵슬롯
     //public bool isAutoQuikSlot = true;
 
-    public string lastPlayDate;
+    public string lastPlayDate;  //최종 접속일
 }
 
 
