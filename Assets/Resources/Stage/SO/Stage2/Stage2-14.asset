@@ -22,7 +22,7 @@ MonoBehaviour:
   - Stage2-14-1
   stage: {fileID: 1378282381469885354, guid: 1d9951d2b2f470f4e88a98193a905c49, type: 3}
   areaType: 1
-  enemySpeciesArea: 5
+  enemySpeciesArea: 6
   missionTypes: 010000000400000008000000090000000a0000000b000000
   mapNPC: {fileID: 0}
   mapEvent: {fileID: 0}

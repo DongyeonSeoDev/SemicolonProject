@@ -16,12 +16,13 @@ MonoBehaviour:
   stageName: 
   isSaveStage: 0
   useOpenDoorSound: 0
-  stageMonsterBundleCount: 1
-  nextEnemysSpawnInterval: []
+  stageMonsterBundleCount: 2
+  nextEnemysSpawnInterval:
+  - 10
   stageMonsterBundleID: []
   stage: {fileID: 1378282381469885354, guid: 60f077b98c7bdb8418e8f55dd8008d0c, type: 3}
   areaType: 1
-  enemySpeciesArea: 3
+  enemySpeciesArea: 6
   missionTypes: 010000000400000008000000090000000a0000000b000000
   mapNPC: {fileID: 0}
   mapEvent: {fileID: 0}
