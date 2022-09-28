@@ -72,5 +72,7 @@ MonoBehaviour:
   - stageNumber: 15
     nextStageTypes: 0100000001000000
   - stageNumber: 16
+    nextStageTypes: 05000000
+  - stageNumber: 16
     nextStageTypes: 09000000
   nextStageSOInBoss: {fileID: 0}
