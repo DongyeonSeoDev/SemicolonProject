@@ -86,12 +86,14 @@ SkeletonMage_06,0;4;0,Stage2-16-1
 SkeletonArcher_04,-10;5;0,Stage2-17-1
 SkeletonGhost_05,0;12;0,Stage2-17-1
 SkeletonMage_06,10;5;0,Stage2-17-1
-SkeletonArcher_04,0;0;0,Stage2-18-1
-SkeletonGhost_05,0;2;0,Stage2-18-1
-SkeletonMage_06,0;4;0,Stage2-18-1
+Boss_SkeletonKing_50,0.45;13;0,Stage2-18-1
 SkeletonArcher_04,0;0;0,Stage2-19-1
 SkeletonGhost_05,0;2;0,Stage2-19-1
 SkeletonMage_06,0;4;0,Stage2-19-1
 SkeletonArcher_04,0;-1;0,Stage2-20-1
 SkeletonGhost_05,0;1;0,Stage2-20-1
 SkeletonMage_06,0;3;0,Stage2-20-1
+SkeletonArcher_04,0;-1;0,Stage2-22-1
+SkeletonArcher_04,0;-1;0,Stage2-23-1
+SkeletonArcher_04,0;-1;0,Stage2-24-1
+SkeletonArcher_04,0;-1;0,Stage2-24-2
