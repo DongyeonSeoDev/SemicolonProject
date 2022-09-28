@@ -69,7 +69,7 @@ public class ImprecationObj : InteractionObj
             {
                 ChoiceStatSO data = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(x.id);
                 return data.needStatID > 0 && data.charType == CharType.STORE
-                && !data.plusStat && x.statLv < x.maxStatLv;
+                && !data.plusStat && x.statLv < x.maxStatLv && NGlobal.playerStatUI.IsUnlockStat(data.needStatID);
             });
             if(list.Count > 0)
             {

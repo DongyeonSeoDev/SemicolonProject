@@ -157,7 +157,7 @@ public partial class UIManager : MonoSingleton<UIManager>
     {
         int i;
 
-        CanInteractUI = true;
+        CanInteractUI = false;
 
         cursorImgRectTrm = cursorInfoImg.GetComponent<RectTransform>();
         sw = cursorImgRectTrm.rect.width;

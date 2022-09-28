@@ -22,7 +22,7 @@ public class RecoveryObj : InteractionObj
         {
             ChoiceStatSO data = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(x.id);
             return data.needStatID > 0 && data.charType == CharType.STORE
-            && data.plusStat && !NGlobal.playerStatUI.IsUnlockStat(x.id);
+            && data.plusStat && !NGlobal.playerStatUI.IsUnlockStat(x.id) && NGlobal.playerStatUI.IsUnlockStat(data.needStatID);
         });
 
         if (iconActiveConditions.Count == 0)

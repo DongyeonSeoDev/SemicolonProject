@@ -88,7 +88,7 @@ public class StatStore : MonoSingleton<StatStore>
             ChangeIndex(ref list, 0, id=>GetCharType(id)==CharType.STORE, id =>
             {
                 ChoiceStatSO data = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id);
-                return GetCharType(id) != CharType.STORE && !prevStockIDList.Contains(id) && (data.needStatID == 0 || NGlobal.playerStatUI.IsUnlockStat(data.needStatID));
+                return GetCharType(id) != CharType.STORE && (data.needStatID == 0 || NGlobal.playerStatUI.IsUnlockStat(data.needStatID));
             });
             if(cnt > 1)
             {
@@ -102,7 +102,7 @@ public class StatStore : MonoSingleton<StatStore>
                     id =>
                     {
                         ChoiceStatSO data = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id);
-                        return GetCharType(id) == CharType.STORE && data.plusStat && !prevStockIDList.Contains(id) && NGlobal.playerStatUI.IsUnlockStat(data.needStatID);
+                        return GetCharType(id) == CharType.STORE && data.plusStat && NGlobal.playerStatUI.IsUnlockStat(data.needStatID);
                     });
                 if (cnt > 2)
                 {
@@ -116,7 +116,7 @@ public class StatStore : MonoSingleton<StatStore>
                     id =>
                     {
                         ChoiceStatSO data = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id);
-                        return GetCharType(id) == CharType.STORE && !data.plusStat && !prevStockIDList.Contains(id) && NGlobal.playerStatUI.IsUnlockStat(data.needStatID);
+                        return GetCharType(id) == CharType.STORE && !data.plusStat && NGlobal.playerStatUI.IsUnlockStat(data.needStatID);
                     });
                 }
             }
