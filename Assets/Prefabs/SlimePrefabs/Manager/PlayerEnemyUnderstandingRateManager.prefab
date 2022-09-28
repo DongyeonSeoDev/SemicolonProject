@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5692856494302310611}
   - component: {fileID: 5692856494302310610}
   m_Layer: 0
-  m_Name: PlayerEnemeyUnderstandingRateManager
+  m_Name: PlayerEnemyUnderstandingRateManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -50,7 +50,7 @@ MonoBehaviour:
     additionalBodyStat:
       maxHp:
         id: 5
-        statValue: 120
+        statValue: 60
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
@@ -290,7 +290,7 @@ MonoBehaviour:
     additionalBodyStat:
       maxHp:
         id: 5
-        statValue: 50
+        statValue: 40
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
@@ -643,115 +643,115 @@ MonoBehaviour:
     featureExplanation: 
     hint: 
     propertyID: 0
-  - bodyName: "SkeletonGhost(\uC784\uC2DC)"
+  - bodyName: "\uC2A4\uCF08\uB808\uD1A4 \uC720\uB839"
     bodyId: 5
     body: {fileID: 971769018354608688, guid: 554fa33103fb8824384fafc099492bb2, type: 3}
     additionalBodyStat:
       maxHp:
-        id: 0
-        statValue: 0
+        id: 5
+        statValue: -20
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       minDamage:
-        id: 0
-        statValue: 0
+        id: 10
+        statValue: 10
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       maxDamage:
-        id: 0
-        statValue: 0
+        id: 15
+        statValue: 10
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       defense:
-        id: 0
-        statValue: 0
+        id: 20
+        statValue: -1
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       intellect:
-        id: 0
+        id: 25
         statValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       speed:
-        id: 0
-        statValue: 0
+        id: 30
+        statValue: 1
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       attackSpeed:
-        id: 0
+        id: 35
         statValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       criticalRate:
-        id: 0
+        id: 40
         statValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       criticalDamage:
-        id: 0
+        id: 45
         statValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
     monsterStat:
       maxHp:
-        id: 0
-        statValue: 0
+        id: 5
+        statValue: 25
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       minDamage:
-        id: 0
-        statValue: 0
+        id: 10
+        statValue: 15
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       maxDamage:
-        id: 0
-        statValue: 0
+        id: 15
+        statValue: 19
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       defense:
-        id: 0
+        id: 20
         statValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       intellect:
-        id: 0
+        id: 25
         statValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       speed:
-        id: 0
-        statValue: 0
+        id: 30
+        statValue: 10
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       attackSpeed:
-        id: 0
-        statValue: 0
+        id: 35
+        statValue: 1.5
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       criticalRate:
-        id: 0
+        id: 40
         statValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       criticalDamage:
-        id: 0
+        id: 45
         statValue: 0
         isUnlock: 0
         statLv: 0
@@ -762,115 +762,115 @@ MonoBehaviour:
     featureExplanation: 
     hint: 
     propertyID: 0
-  - bodyName: "SkeletonMage(\uC784\uC2DC)"
+  - bodyName: "\uC2A4\uCF08\uB808\uD1A4 \uB9C8\uBC95\uC0AC"
     bodyId: 6
     body: {fileID: 1844745320149715030, guid: 4df75bcc13ecdd6478ee7d5d80ffbc19, type: 3}
     additionalBodyStat:
       maxHp:
-        id: 0
-        statValue: 0
+        id: 5
+        statValue: 20
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       minDamage:
-        id: 0
-        statValue: 0
+        id: 10
+        statValue: 12
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       maxDamage:
-        id: 0
-        statValue: 0
+        id: 15
+        statValue: 14
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       defense:
-        id: 0
+        id: 20
         statValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       intellect:
-        id: 0
+        id: 25
         statValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       speed:
-        id: 0
-        statValue: 0
+        id: 30
+        statValue: 10
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       attackSpeed:
-        id: 0
-        statValue: 0
+        id: 35
+        statValue: 1.5
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       criticalRate:
-        id: 0
+        id: 40
         statValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       criticalDamage:
-        id: 0
+        id: 45
         statValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
     monsterStat:
       maxHp:
-        id: 0
-        statValue: 0
+        id: 5
+        statValue: 20
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       minDamage:
-        id: 0
-        statValue: 0
+        id: 10
+        statValue: 12
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       maxDamage:
-        id: 0
-        statValue: 0
+        id: 15
+        statValue: 14
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       defense:
-        id: 0
+        id: 20
         statValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       intellect:
-        id: 0
+        id: 25
         statValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       speed:
-        id: 0
-        statValue: 0
+        id: 30
+        statValue: 5
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       attackSpeed:
-        id: 0
-        statValue: 0
+        id: 35
+        statValue: 1.5
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       criticalRate:
-        id: 0
+        id: 40
         statValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       criticalDamage:
-        id: 0
+        id: 45
         statValue: 0
         isUnlock: 0
         statLv: 0

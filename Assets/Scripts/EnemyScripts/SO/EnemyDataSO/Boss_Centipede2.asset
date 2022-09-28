@@ -29,6 +29,6 @@ MonoBehaviour:
   maxAttack: 20
   critical: 20
   criticalDamage: 100
-  defense: 0
+  defense: 2
   hp: 400
   addExperience: 4000
