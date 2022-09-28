@@ -519,7 +519,7 @@ public partial class GameManager : MonoSingleton<GameManager>
 
     private IEnumerator SaveServerTime()
     {
-        saveData.option.lastPlayDate = DateTime.Now.ToString("yyyy:MM:dd:hh:mm:ss");
+        saveData.option.lastPlayDate = DateTime.Now.ToString("yyyy:MM:dd:HH:mm:ss");
 
         UnityWebRequest webReq = new UnityWebRequest(timeURL);
         yield return webReq.SendWebRequest();
@@ -527,7 +527,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         if(webReq.result == UnityWebRequest.Result.Success)
         {
             DateTime serverTime = Convert.ToDateTime(webReq.GetResponseHeader("Date"));
-            saveData.option.lastPlayDate = serverTime.ToString("yyyy:MM:dd:hh:mm:ss");
+            saveData.option.lastPlayDate = serverTime.ToString("yyyy:MM:dd:HH:mm:ss");
         }
         else
         {
