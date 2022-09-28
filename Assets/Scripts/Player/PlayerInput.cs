@@ -45,6 +45,8 @@ public class PlayerInput : MonoBehaviour
         set { isInteraction = value; }
     }
 
+    public readonly int skillCount = 3;
+
     private bool cantPlaySkill0 = false;
     public bool CantPlaySkill0
     {

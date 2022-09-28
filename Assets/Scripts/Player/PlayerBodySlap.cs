@@ -108,6 +108,8 @@ public class PlayerBodySlap : PlayerSkill
 
         EventManager.StopListening("BodyPointCrash", BodyPointCrash);
         EventManager.StopListening("PlayerDead", StopBodySlap);
+
+        SkillCancel();
     }
     public override void Update()
     {
@@ -263,6 +265,7 @@ public class PlayerBodySlap : PlayerSkill
     public override void SkillCancel()
     {
         base.SkillCancel();
+        Debug.Log("asdasda");
 
         startCharging = false;
         canBodySlap = true;

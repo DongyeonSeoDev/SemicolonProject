@@ -309,6 +309,10 @@ namespace Enemy
         }
         public void DashToPlayer(float speed) // 대쉬 시작
         {
+            Debug.Log("a" + speed);
+            Debug.Log("b" + EnemyManager.Player);
+            Debug.Log("c" + EnemyManager.Player.GetComponent<PlayerMove>().LastMoveVec);
+
             dashTargetPosition = EnemyManager.Player.transform.position - ((Vector3)EnemyManager.Player.GetComponent<PlayerMove>().LastMoveVec * Time.deltaTime / speed);
 
             isDashToPlayer = true;
