@@ -35,7 +35,7 @@ namespace Enemy
 
         private void Update()
         {
-            if (isStop /*|| isDelete*/)
+            if (isStop || centerTransform == null) // || isDelete
             {
                 return;
             }

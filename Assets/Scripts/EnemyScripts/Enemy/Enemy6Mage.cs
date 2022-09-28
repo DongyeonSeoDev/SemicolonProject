@@ -20,9 +20,11 @@ namespace Enemy
             base.OnEnable();
 
             enemyData.enemySpriteRotateCommand = new EnemySpriteRotateCommand(enemyData);
-            enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed);
+            enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed, 3f);
 
             coroutine = StartCoroutine(SpawnBullet());
+
+            enemyData.isNoAttack = true;
         }
 
         protected override void OnDisable()
@@ -80,6 +82,10 @@ namespace Enemy
             {
                 g.gameObject.SetActive(false);
             }
+
+            bullets.Clear();
+
+            StopCoroutine(coroutine);
         }
     }
 }
