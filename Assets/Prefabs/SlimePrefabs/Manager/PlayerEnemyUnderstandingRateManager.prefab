@@ -804,7 +804,7 @@ MonoBehaviour:
         savedStatLv: 0
       attackSpeed:
         id: 35
-        statValue: 1.5
+        statValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
@@ -823,19 +823,19 @@ MonoBehaviour:
     monsterStat:
       maxHp:
         id: 5
-        statValue: 20
+        statValue: 25
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       minDamage:
         id: 10
-        statValue: 12
+        statValue: 15
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       maxDamage:
         id: 15
-        statValue: 14
+        statValue: 19
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
@@ -859,7 +859,7 @@ MonoBehaviour:
         savedStatLv: 0
       attackSpeed:
         id: 35
-        statValue: 1.5
+        statValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
