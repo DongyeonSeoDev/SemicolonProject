@@ -11,12 +11,19 @@ namespace Enemy
         public float angleSpeed;
 
         private Enemy enemy;
+        private Enemy6Mage mage;
         private Transform centerTransform;
 
         private EnemyController eEnemyController;
 
+        private Vector2 moveDirection;
+
         private float angle;
         private bool isStop;
+        private int bulletId;
+        private bool isAttack;
+
+        public bool isConnectMage;
         public float minAttack;
         public float maxAttack;
         public float critical;
@@ -40,15 +47,27 @@ namespace Enemy
                 return;
             }
 
-            transform.position = centerTransform.position + Quaternion.Euler(0f, 0f, angle) * Vector2.right * distance;
+            if (isConnectMage)
+            {
+                transform.position = centerTransform.position + Quaternion.Euler(0f, 0f, angle) * Vector2.right * distance;
 
-            angle += Time.deltaTime * angleSpeed;
+                angle += Time.deltaTime * angleSpeed;
+            }
+            else
+            {
+                transform.position = (Vector2)transform.position + moveDirection * 10f * Time.deltaTime;
+
+                if (transform.position.x < -50f || transform.position.x > 50f || transform.position.y < -50f || transform.position.y > 50f)
+                {
+                    RemoveBullet();
+                }
+            }
         }
 
         private void OnEnable()
         {
-            //EventManager.StartListening("AfterPlayerRespawn", RemoveBullet);
-            //EventManager.StartListening("ExitCurrentMap", RemoveBullet);
+            EventManager.StartListening("AfterPlayerRespawn", RemoveBullet);
+            EventManager.StartListening("ExitCurrentMap", RemoveBullet);
             EventManager.StartListening("EnemyStart", IsStopFalse);
             EventManager.StartListening("EnemyStop", IsStopTrue);
 
@@ -57,14 +76,19 @@ namespace Enemy
 
         private void OnDisable()
         {
-            //EventManager.StopListening("AfterPlayerRespawn", RemoveBullet);
-            //EventManager.StopListening("ExitCurrentMap", RemoveBullet);
+            EventManager.StopListening("AfterPlayerRespawn", RemoveBullet);
+            EventManager.StopListening("ExitCurrentMap", RemoveBullet);
             EventManager.StopListening("EnemyStart", IsStopFalse);
             EventManager.StopListening("EnemyStop", IsStopTrue);
         }
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
+            if (isAttack)
+            {
+                return;
+            }
+
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
 
             if (eEnemyController == EnemyController.AI && collision.CompareTag("Player"))
@@ -87,6 +111,9 @@ namespace Enemy
                 }
 
                 // StartBulletEffect();
+
+                RemoveBullet();
+                isAttack = true;
             }
             else if (eEnemyController == EnemyController.PLAYER)
             {
@@ -99,13 +126,15 @@ namespace Enemy
                     enemy.GetDamage(damage.Item1, damage.Item2, true, false, transform.position, (enemy.transform.position - transform.position).normalized, 5f);
 
                     // StartBulletEffect();
+                    RemoveBullet();
+                    isAttack = true;
 
                     EventManager.TriggerEvent("OnEnemyAttack");
                 }
             }
         }
 
-        public void Init(EnemyController controller, float minAttack, float maxAttack, float critical, float criticalPower, Color color, Transform centerTransform, float startAngle, Enemy enemy = null)
+        public void Init(EnemyController controller, float minAttack, float maxAttack, float critical, float criticalPower, Color color, Transform centerTransform, float startAngle, Enemy6Mage mage, int bulletId, Enemy enemy = null)
         {
             this.minAttack = minAttack;
             this.maxAttack = maxAttack;
@@ -116,6 +145,13 @@ namespace Enemy
             eEnemyController = controller;
             angle = startAngle;
             this.enemy = enemy;
+            this.mage = mage;
+            this.bulletId = bulletId;
+
+            isAttack = false;
+            isConnectMage = true;
+
+            moveDirection = Vector2.zero;
 
             // 반사 구현 안됨
             // isDamage = false;
@@ -154,13 +190,33 @@ namespace Enemy
             }
         }
 
-        //public void RemoveBullet()
-        //{
-        //    gameObject.SetActive(false);
+        public void RemoveBullet()
+        {
+            if (isConnectMage)
+            {
+                DisconnectMage();
+            }
+            
+            gameObject.SetActive(false);
+            
+            //StopAllCoroutines();
+            //ResetBullet();
+        }
 
-        //    StopAllCoroutines();
-        //    ResetBullet();
-        //}
+        private void DisconnectMage()
+        {
+            isConnectMage = false;
+
+            mage.isUseAngles[bulletId] = false;
+            mage.bullets.Remove(this);
+        }
+
+        public void Fire()
+        {
+            DisconnectMage();
+
+            moveDirection = (EnemyManager.Player.transform.position - transform.position).normalized;
+        }
 
         //private void ResetBullet()
         //{
