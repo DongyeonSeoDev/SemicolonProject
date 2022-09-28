@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b6ae80f34d028b34ea450ad167b600e5, type: 3}
+  m_Name: BoneMilk
+  m_EditorClassIdentifier: 
+  itemSprite: {fileID: 21300000, guid: d183eaafd169eda4f82ba1cc90b4fee2, type: 3}
+  secondItemSprite: {fileID: 0}
+  itemType: 1
+  isHealItem: 0
+  maxCount: 5
+  itemName: "\uD2BC\uD2BC \uC6B0\uC720"
+  explanation: "\uBF08\uAC00 \uD2BC\uD2BC\uD574\uC9C0\uB294\uB370 \uD070 \uD6A8\uACFC\uB97C
+    \uBCFC \uC218 \uC788\uB2E4.\n\uB2E8, \uBF08\uAC00 \uC790\uB77C\uB098\uC9C0\uB294
+    \uC54A\uB294\uB2E4."
+  abilExplanation: "\uBC29\uC5B4\uB825 +1"
+  needIngredients:
+  - ingredient: {fileID: 11400000, guid: c2607854e0183b7409b93f098da0e3fb, type: 2}
+    needCount: 6

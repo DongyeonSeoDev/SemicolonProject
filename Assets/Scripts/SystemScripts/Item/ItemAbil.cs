@@ -41,6 +41,21 @@ public class ItemUseMng
         UIManager.Instance.RequestLogMsg("°ø°Ý·Â " + value + " »ó½Â");
         EffectManager.Instance.OnTopRightBtnEffect(UIType.STAT, true);
     }
+
+    public static void IncreaseDefense(float value)
+    {
+        PlayerObj.PlayerStat.additionalEternalStat.defense.statValue += value;
+
+        UIManager.Instance.RequestLogMsg("¹æ¾î·Â " + value + " »ó½Â");
+        EffectManager.Instance.OnTopRightBtnEffect(UIType.STAT, true);
+    }
+    public static void IncreaseCriRate(float value)
+    {
+        PlayerObj.PlayerStat.additionalEternalStat.criticalRate.statValue += value;
+
+        UIManager.Instance.RequestLogMsg("Å©¸®Æ¼ÄÃ È®·ü " + value + "% »ó½Â");
+        EffectManager.Instance.OnTopRightBtnEffect(UIType.STAT, true);
+    }
 }
 
 public abstract class ItemAbil
@@ -101,5 +116,21 @@ public class RecoveryPotion : ItemAbil
     public override void Use()
     {
         ItemUseMng.IncreaseCurrentHP( 80);
+    }
+}
+
+public class BoneMilk : ItemAbil
+{
+    public override void Use()
+    {
+        ItemUseMng.IncreaseDefense(1);
+    }
+}
+
+public class MouseTailMeat : ItemAbil
+{
+    public override void Use()
+    {
+        ItemUseMng.IncreaseCriRate(1);
     }
 }
