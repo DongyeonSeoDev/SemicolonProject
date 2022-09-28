@@ -14,6 +14,8 @@ namespace Enemy
 
         private Vector2 dashTargetPosition = Vector2.zero;
 
+        private Color originSpriteColor = Color.white;
+
         private float originMinAttackPower = 0f;
         private float originMaxAttackPower = 0f;
 
@@ -26,6 +28,11 @@ namespace Enemy
         private float shootBulletRotationValue = 15f; // 각도 변동값
 
         private float stopAnimTimer = 0f;
+        [SerializeField]
+        private float minMoveTimer = 1f;
+        [SerializeField]
+        private float maxMoveTimer = 3f;
+
         private float moveTimer = 0f;
         private float dashTimer = 0f;
         private float meleeAttackDis = 12f;
@@ -45,7 +52,15 @@ namespace Enemy
         private float meleeAttack1CircleDamageValue = 3;
         [Header("meleeAttack1(지면파괴)의 구체 데미지 변동 값")]
         [SerializeField]
-        private float meleeAttack1BulletDamageValue = -10;
+        private float meleeAttack1BulletDamageValue = -10; 
+
+        [Header("meleeAttack1(지면파괴)의 차징시 색깔")]
+        [SerializeField]
+        private Color meleeAttack1ChargingColor = Color.white;
+        private Color upColorValueByCharging = Color.white;
+        private float meleeAttack1ChargingColorLerpEndTime = 0f;
+        private float meleeAttack1ChargingColorTimer = 0f;
+        private bool meleeAttack1ChargingColorTimerStart = false;
         #endregion
 
         #region meleeAttack2(물어뜯기)관련 변수
@@ -66,6 +81,7 @@ namespace Enemy
         private bool isMove = false;
         private bool isDashToPlayer = false;
         private bool isAttack = false;
+        private bool prevIsAttack = false;
 
         public readonly int hashMeleeAttack1 = Animator.StringToHash("meleeAttack1");
         public readonly int hashMeleeAttack2 = Animator.StringToHash("meleeAttack2");
@@ -96,6 +112,9 @@ namespace Enemy
         private Collider2D enemyMeleeAttack2Collider = null;
 
         private BossCanvas bossHPBar;
+
+        [SerializeField]
+        private CamShakeData shootAroundShakeData;
 
         protected override void Awake()
         {
@@ -132,6 +151,7 @@ namespace Enemy
             enemyData.isNoKnockback = true;
             enemyData.isNoStun = true;
 
+            originSpriteColor = sr.color;
             originCurrentSpeed = currentSpeed;
             originMinAttackPower = enemyData.minAttackPower;
             originMaxAttackPower = enemyData.maxAttackPower;
@@ -158,7 +178,10 @@ namespace Enemy
             }
 
             PercentageCheck();
+
             StopAnimTimerCheck();
+            MeleeAttack1ColorTimer();
+
             DashCheck();
             MoveCheck();
         }
@@ -220,7 +243,6 @@ namespace Enemy
             }
             #endregion
         }
-
         private void MoveCheck()
         {
             Vector3 playerPosition = EnemyManager.Player.transform.position;
@@ -232,10 +254,11 @@ namespace Enemy
 
                 enemyMoveCommand.Execute();
 
-                if (moveTimer <= 0 || (dis < meleeAttackDis && playerPosition.y >= transform.position.y) || isAttack)
+                if (moveTimer <= 0)
                 {
                     moveTimer = 0f;
                     isMove = false;
+                    prevIsAttack = false;
                     AttackCheck();
                 }
             }
@@ -286,19 +309,13 @@ namespace Enemy
         }
         public void DashToPlayer(float speed) // 대쉬 시작
         {
-            
-            Vector3 playerPosition = EnemyManager.Player.transform.position;
-
-            dashTargetPosition = playerPosition;
+            dashTargetPosition = EnemyManager.Player.transform.position - ((Vector3)EnemyManager.Player.GetComponent<PlayerMove>().LastMoveVec * Time.deltaTime / speed);
 
             isDashToPlayer = true;
             dashTimer = dashAttackDis / speed;
             currentSpeed = speed;
 
-            dashCommand = new CentipedeBossDashCommand(enemyData, playerPosition, rb, this);
-
-            isMove = false;
-            moveTimer = 0f;
+            dashCommand = new CentipedeBossDashCommand(enemyData, dashTargetPosition, rb, this);
         }
         private void DashToPlayerEnd()// 대쉬 끝났을 때
         {
@@ -314,7 +331,7 @@ namespace Enemy
             enemyData.enemyMoveCommand = enemyMoveCommand;
             
             enemyData.enemySpriteRotateCommand = new EnemySpriteRotateCommand(enemyData);
-            enemyData.attackTypeCheckCondition = AttackCheck;
+            enemyData.enemyChaseStateChangeCondition = AttackCheck;
             enemyData.addAIAttackStateChangeCondition = AttackStateChangeCondition;
             enemyData.addChangeAttackCondition = ChangeAttackCondition;
         }
@@ -336,45 +353,109 @@ namespace Enemy
 
             bossHPBar.SetActiveHPBar(false);
         }
-        public void AttackCheck() // 이벤트 구독에 사용됨 - 특수공격 사용 확인
+        public EnemyState AttackCheck() // 이벤트 구독에 사용됨 - 특수공격 사용 확인
         {
+            if (isAttack)
+            {
+                prevIsAttack = true;
+                return new EnemyAIAttackState(enemyData);
+            }
+
+            if (isMove)
+            {
+                return null;
+            }
+
             float value = Random.Range(0f, 100f);
             float checkValue = 0f;
 
-            if(isMove)
+            if (prevIsAttack)
             {
+                isAttack = false;
+                isMove = true;
+                moveTimer = Random.Range(minMoveTimer, maxMoveTimer);
+
+                enemyData.animationDictionary[EnemyAnimationType.Move] = hashMove;
+                enemyMoveCommand.Execute();
+
+                return null;
+            }
+            else
+            {
+                if ((checkValue += meleeAttack1Percentage) >= value)
+                {
+                    enemyData.attackDelay = 1f;
+
+                    shootBulletRotationOffset = 0f;
+                    meleeAttack1Count = 1;
+                }
+                else if ((checkValue += meleeAttack2Percentage) >= value)
+                {
+                    enemyData.attackDelay = 1f;
+
+                    enemyData.animationDictionary[EnemyAnimationType.Attack] = hashMeleeAttack2;
+                }
+                else if ((checkValue += sneerPercentage) >= value)
+                {
+                    enemyData.attackDelay = 2f;
+
+                    sneerCount = 3;
+                }
+                else if ((checkValue += multipleMeleeAttack1Percentage) >= value)
+                {
+                    enemyData.attackDelay = 1f;
+
+                    shootBulletRotationOffset = 0f;
+                    meleeAttack1Count = 3;
+                }
+                else if ((checkValue += bitingAndTearingPercentage) >= value)
+                {
+                    Debug.Log("DoBitingAndTearing");
+                }
+
+                prevIsAttack = true;
+                isAttack = true;
+                return new EnemyAIAttackState(enemyData);
+            }
+        }
+        public void SetOriginSpriteColor()
+        {
+            sr.color = originSpriteColor;
+        }
+        public void SetMeleeAttack1Color(float time)
+        {
+            if(time <= 0f)
+            {
+                sr.color = meleeAttack1ChargingColor;
+
                 return;
             }
 
-            if((checkValue += meleeAttack1Percentage) >= value)
-            {
-                enemyData.attackDelay = 1f;
+            upColorValueByCharging = meleeAttack1ChargingColor - originSpriteColor;
 
-                shootBulletRotationOffset = 0f;
-                meleeAttack1Count = 1;
-            }
-            else if((checkValue += meleeAttack2Percentage) >= value)
-            {
-                enemyData.attackDelay = 1f;
+            Debug.Log(upColorValueByCharging);
 
-                enemyData.animationDictionary[EnemyAnimationType.Attack] = hashMeleeAttack2;
-            }
-            else if((checkValue += sneerPercentage) >= value)
-            {
-                enemyData.attackDelay = 2f;
+            meleeAttack1ChargingColorLerpEndTime = time;
+            meleeAttack1ChargingColorTimer = 0f;
 
-                sneerCount = 3;
-            }
-            else if((checkValue += multipleMeleeAttack1Percentage) >= value)
+            meleeAttack1ChargingColorTimerStart = true;
+        }
+        private void MeleeAttack1ColorTimer()
+        {
+            if(meleeAttack1ChargingColorTimerStart)
             {
-                enemyData.attackDelay = 1f;
+                if(meleeAttack1ChargingColorTimer < meleeAttack1ChargingColorLerpEndTime)
+                {
+                    Color color = upColorValueByCharging * (meleeAttack1ChargingColorTimer / meleeAttack1ChargingColorLerpEndTime);
+                    meleeAttack1ChargingColorTimer += Time.deltaTime;
 
-                shootBulletRotationOffset = 0f;
-                meleeAttack1Count = 3;
-            }
-            else if((checkValue += bitingAndTearingPercentage) >= value)
-            {
-                Debug.Log("DoBitingAndTearing");
+                    sr.color = originSpriteColor + new Color(color.r, color.g, color.b, sr.color.a);
+                }
+
+                if (meleeAttack1ChargingColorTimer >= meleeAttack1ChargingColorLerpEndTime)
+                {
+                    meleeAttack1ChargingColorTimerStart = false;
+                }
             }
         }
         public void StopAnim(float stopTime)
@@ -414,45 +495,47 @@ namespace Enemy
         public void ShootBulletAround(int num)
         {
             shootAroundCommand = new CentipedeShootAroundCommand(this, shootTrm, Type.CentipedeAroundBullet, bulletMinAttackPower, bulletMaxAttackPower, enemyData.randomCritical, enemyData.randomCritical, true, stageTilemap);
+            CinemachineCameraScript.Instance.Shake(shootAroundShakeData);
 
             for (int i = 0; i < num; i++)
             {
                 shootAroundCommand.Execute();
             }
         }
+        public void BrakeGroundParticle()
+        {
+            EnemyPoolManager.Instance.GetPoolObject(Type.CentipedeBrakeEffect, shootTrm.position + new Vector3(0f, 0.7f, 0f));
+        }
         public EnemyState AttackStateChangeCondition() // 이벤트 구독에 사용됨 - 공격2 사용 가능 확인
         {
-            if (!isMove)
+            if (isMove)
             {
-                if (sneerCount > 0)
-                {
-                    sneerCount--;
+                return new EnemyChaseState(enemyData);
+            }
 
-                    enemyData.animationDictionary[EnemyAnimationType.Attack] = hashSneer;
+            if (sneerCount > 0)
+            {
+                sneerCount--;
 
-                    return new EnemyAIAttackState(enemyData);
-                }
-                else if(meleeAttack1Count > 0)
-                {
-                    meleeAttack1Count--;
+                enemyData.animationDictionary[EnemyAnimationType.Attack] = hashSneer;
 
-                    shootBulletRotationOffset += shootBulletRotationValue;
+                return new EnemyAIAttackState(enemyData);
+            }
+            else if (meleeAttack1Count > 0)
+            {
+                meleeAttack1Count--;
 
-                    enemyData.animationDictionary[EnemyAnimationType.Attack] = hashMeleeAttack1;
+                shootBulletRotationOffset += shootBulletRotationValue;
 
-                    return new EnemyAIAttackState(enemyData);
-                }
+                enemyData.animationDictionary[EnemyAnimationType.Attack] = hashMeleeAttack1;
+
+                return new EnemyAIAttackState(enemyData);
             }
 
             return new EnemyChaseState(enemyData);
         }
         public EnemyState ChangeAttackCondition() // 이벤트 구독에 사용됨 - 공격을 해야하는지 확인
         {
-            if (isMove)
-            {
-                return new EnemyChaseState(enemyData);
-            }
-            
             return null;
         }
         public void CentipedeMeleeAttack1Start()
@@ -481,7 +564,8 @@ namespace Enemy
         }
         private void CentipedeAttackStart()
         {
-            isAttack = true;
+            //prevIsAttack = true;
+            //isAttack = true;
         }
         public void CentipedeAttackEnd()
         {

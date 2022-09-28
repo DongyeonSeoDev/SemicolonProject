@@ -872,7 +872,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a97c105638bdf8b4a8650670310a4cd3, type: 2}
+  - {fileID: 2100000, guid: 9d0bc3cf3dcce1b49a68c442632d54ff, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -894,7 +894,7 @@ SpriteRenderer:
   m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 8474625173248859686, guid: 80588295cc3e47646bc33fdd59baa817, type: 3}
-  m_Color: {r: 0.5882353, g: 0.5882353, b: 0.5882353, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -997,9 +997,12 @@ MonoBehaviour:
   movePivot: {fileID: 4073570852634963415}
   stageTilemap: {fileID: 0}
   playableDirector: {fileID: -8307998283944319826}
+  minMoveTimer: 1
+  maxMoveTimer: 3
   meleeAttack1CircleRadius: 2
   meleeAttack1CircleDamageValue: 3
-  meleeAttack1BulletDamageValue: -10
+  meleeAttack1BulletDamageValue: -18
+  meleeAttack1ChargingColor: {r: 0.4292453, g: 0.99457866, b: 1, a: 1}
   dashAttackDis: 10
   meleeAttack2DamageValue: -5
   sneerDamageValue: -10
@@ -1011,6 +1014,10 @@ MonoBehaviour:
   shootTrm: {fileID: 8978629603519336582}
   enemyMeleeAttack1Collider: {fileID: 1564419724183329414}
   enemyMeleeAttack2Collider: {fileID: 8289572719645505160}
+  shootAroundShakeData:
+    strength: 10
+    frequency: 1
+    duration: 0.7
 --- !u!114 &-2415847091630452189
 MonoBehaviour:
   m_ObjectHideFlags: 0

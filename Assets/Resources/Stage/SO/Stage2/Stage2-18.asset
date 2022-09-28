@@ -21,8 +21,8 @@ MonoBehaviour:
   stageMonsterBundleID:
   - Stage2-18-1
   stage: {fileID: 1378282381469885354, guid: b9c2da6c4b477964893830fd59086c04, type: 3}
-  areaType: 1
-  enemySpeciesArea: 5
-  missionTypes: 010000000400000008000000090000000a0000000b000000
+  areaType: 5
+  enemySpeciesArea: 4
+  missionTypes: 
   mapNPC: {fileID: 0}
   mapEvent: {fileID: 0}

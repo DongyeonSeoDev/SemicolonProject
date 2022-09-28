@@ -382,7 +382,7 @@ namespace Enemy
 
             EnemyManager.Instance.EnemyDestroy();
 
-            EventManager.TriggerEvent("EnemyDead", gameObject, enemyData.enemyType.ToString(), false); // 3번째 매개변수는 흡수로인해 죽은것인가를 보내줌
+            EventManager.TriggerEvent("EnemyDead", gameObject, enemyData.enemyType.ToString(), false); // 3번째 매개변수는 흡수로인해 죽은것인가를 보내줌                                    
         }
 
         // 적이 Drain되었을 때 발동하는 코드
