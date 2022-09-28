@@ -12,7 +12,7 @@ namespace Enemy
         [SerializeField] private bool[] isUseAngles;
 
         private List<EnemyBullet2> bullets = new List<EnemyBullet2>();
-
+        private Coroutine coroutine;
         private float currentTime = 0f;
 
         protected override void OnEnable()
@@ -22,7 +22,14 @@ namespace Enemy
             enemyData.enemySpriteRotateCommand = new EnemySpriteRotateCommand(enemyData);
             enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed);
 
-            StartCoroutine(SpawnBullet());
+            coroutine = StartCoroutine(SpawnBullet());
+        }
+
+        protected override void OnDisable()
+        {
+            base.OnDisable();
+
+            StopCoroutine(coroutine);
         }
 
         protected override void Update()
@@ -41,31 +48,29 @@ namespace Enemy
         {
             while (true)
             {
-                if (bullets.Count >= 6)
-                {
-                    break;
-                }
-
                 yield return new WaitUntil(() => currentTime >= 1f);
 
-                currentTime = 0f;
-
-                EnemyBullet2 b = Instantiate(bullet, transform);
-                int i = 0;
-
-                for (; i < isUseAngles.Length; i++)
+                if (bullets.Count < 6)
                 {
-                    if (!isUseAngles[i])
+                    currentTime = 0f;
+
+                    EnemyBullet2 b = Instantiate(bullet, transform);
+                    int i = 0;
+
+                    for (; i < isUseAngles.Length; i++)
                     {
-                        isUseAngles[i] = true;
+                        if (!isUseAngles[i])
+                        {
+                            isUseAngles[i] = true;
 
-                        break;
+                            break;
+                        }
                     }
+
+                    b.Init(enemyData.eEnemyController, enemyData.minAttackPower, enemyData.maxAttackPower, enemyData.randomCritical, enemyData.criticalDamagePercent, UnityEngine.Color.white, transform, bullets.Count == 0 ? startAngles[i] : bullets[0].currentAngle + startAngles[i], this);
+
+                    bullets.Add(b);
                 }
-
-                b.Init(enemyData.eEnemyController, enemyData.minAttackPower, enemyData.maxAttackPower, enemyData.randomCritical, enemyData.criticalDamagePercent, UnityEngine.Color.white, transform, bullets.Count == 0 ? startAngles[i] : bullets[0].currentAngle + startAngles[i], this);
-
-                bullets.Add(b);
             }
         }
 
