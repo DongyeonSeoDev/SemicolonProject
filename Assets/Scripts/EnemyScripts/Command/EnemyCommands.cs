@@ -256,15 +256,17 @@ namespace Enemy
         private Stack<Vector2Int> nextPosition = new Stack<Vector2Int>();
 
         private float followSpeed;
+        private float limit;
         private int moveCount = 0;
 
-        public EnemyFollowPlayerCommand(EnemyData data, Transform enemyTransform, Rigidbody2D rigid, float followSpeed)
+        public EnemyFollowPlayerCommand(EnemyData data, Transform enemyTransform, Rigidbody2D rigid, float followSpeed, float limit = 0f)
         {
             enemyData = data;
             this.enemyTransform = enemyTransform;
             this.rigid = rigid;
 
             this.followSpeed = followSpeed;
+            this.limit = limit;
 
             nextPosition = null;
             position = null;
@@ -272,7 +274,7 @@ namespace Enemy
 
         public override void Execute()
         {
-            if (enemyData.isMoveStop)
+            if (enemyData.isMoveStop || (limit > 0 && Vector2.Distance(enemyTransform.position, EnemyManager.Player.transform.position) < limit))
             {
                 return;
             }

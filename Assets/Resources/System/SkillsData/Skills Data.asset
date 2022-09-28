@@ -62,12 +62,9 @@ MonoBehaviour:
   - first: 5
     second:
     - skillType: 0
-      skillName: ???
-      skillExplanation: ???
-      skillSpr: {fileID: 21300000, guid: e9ab7c407a961ca41b0f3a19eb395d27, type: 3}
+      skillName: "\uBCA0\uC5B4\uAC00\uB974\uAE30"
+      skillExplanation: "\uB0AB\uC73C\uB85C \uBE60\uB974\uAC8C \uBCA0\uC5B4 \uD53C\uD574\uB97C
+        \uC900\uB2E4"
+      skillSpr: {fileID: 21300000, guid: 097bb13a96103de459278b3fb7ac71c5, type: 3}
   - first: 6
-    second:
-    - skillType: 0
-      skillName: ???
-      skillExplanation: ???
-      skillSpr: {fileID: 21300000, guid: e9ab7c407a961ca41b0f3a19eb395d27, type: 3}
+    second: []

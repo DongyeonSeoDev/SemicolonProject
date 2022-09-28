@@ -113,11 +113,6 @@ public class TutorialManager : MonoSingleton<TutorialManager>
         hpUI.gameObject.SetActive(active);
         energeBarUI.gameObject.SetActive(active);
         quikSlotUI.gameObject.SetActive(active); 
-        
-        for (int i = 0; i < skillUIArr.Length; i++)
-        {
-            skillUIArr[i].gameObject.SetActive(active);
-        }
 
         for(int i = 0; i < changeableBodysUIArr.Length; i++)
         {
@@ -135,6 +130,8 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
         if (!active)
         {
+            SkillUIManager.Instance.SetSkillUICvsg(false);
+
             Environment.Instance.mainLight.intensity = 0;
             playerFollowLight.intensity = 1;
             playerFollowLight.pointLightInnerRadius = 0;
@@ -142,6 +139,16 @@ public class TutorialManager : MonoSingleton<TutorialManager>
 
             tutorialPhases.Add(new StartPhase(playerFollowLight,1));
             //EffectManager.Instance.OnTouchEffect("TouchEffect1");
+
+            Util.DelayFunc(() =>
+            {
+                for (int i = 0; i < skillUIArr.Length; i++)  //Grid Layout Group은 스타트 시점 쯤에서 위치를 한 번 0,0으로 바꾸고 정렬하나보다
+                {
+                    skillUIArr[i].gameObject.SetActive(false);
+                }
+                SkillUIManager.Instance.bottomRightBarGrid.enabled = false;
+                SkillUIManager.Instance.SetSkillUICvsg(true);
+            }, 0.5f, this, true);
         }
 
         if (!gm.savedData.userInfo.uiActiveDic[KeyAction.SETTING])

@@ -93,6 +93,7 @@ Transform:
   - {fileID: 6792075201188143648}
   - {fileID: 1048790110243081514}
   - {fileID: 1849271865062017686}
+  - {fileID: 8339599634069349196}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -123,7 +124,7 @@ MonoBehaviour:
   camStageCollider: {fileID: 8648534772182156580}
   playerSpawnPoint: {fileID: 0}
   lobbySpawnPoint: {fileID: 0}
-  objSpawnPos: {fileID: 0}
+  objSpawnPos: {fileID: 8339599634069349196}
   stageDoors:
   - {fileID: 3780513483577511960}
   - {fileID: 6002068290502659803}
@@ -688,6 +689,36 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
+--- !u!1 &5064622302134068569
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8339599634069349196}
+  m_Layer: 0
+  m_Name: ObjSpawnPos
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8339599634069349196
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5064622302134068569}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.04, y: 5.35, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1378282381469885332}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5786521904908761095
 GameObject:
   m_ObjectHideFlags: 0

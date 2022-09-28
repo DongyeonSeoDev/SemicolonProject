@@ -10,6 +10,9 @@ public class OptionController : MonoBehaviour
 
     private GameManager gm;
 
+    [SerializeField] private TextAsset assetSourceTA;
+    [SerializeField] private Text assetSourceTxt;
+
     private void Start()
     {
         gm = GameManager.Instance;
@@ -18,6 +21,8 @@ public class OptionController : MonoBehaviour
         atkCamShakeToggle.isOn = op.IsAtkShakeCamera;
         hitCamShakeToggle.isOn = op.IsHitShakeCam;
         timeFreezeToggle.isOn = op.IsHitTimeFreeze;
+
+        SpecifyAssetSource();
     }
 
     public void SetAtkCamShake()
@@ -31,5 +36,10 @@ public class OptionController : MonoBehaviour
     public void SetTimeFreeze()
     {
         gm.savedData.option.IsHitTimeFreeze = timeFreezeToggle.isOn;
+    }
+
+    private void SpecifyAssetSource()
+    {
+        assetSourceTxt.text = assetSourceTA.text;
     }
 }

@@ -43,6 +43,7 @@ MonoBehaviour:
   monsterStages:
   - {fileID: 11400000, guid: 0a175aefabb155844997f965125854da, type: 2}
   - {fileID: 11400000, guid: f6af987ae81407a45a06adba0935800a, type: 2}
+  - {fileID: 11400000, guid: 729679877ab6b214c8e2a3acd30ae5ec, type: 2}
   randomStageList:
   - stageNumber: 1
     nextStageTypes: 00000000
