@@ -8,7 +8,7 @@ using System;
 public class SkillUIManager : MonoSingleton<SkillUIManager>
 {
     private SkillInfoImage[] skillInfoUIArr;
-    [SerializeField] private GridLayoutGroup bottomRightBarGrid;
+    public GridLayoutGroup bottomRightBarGrid;
 
     [SerializeField] private Transform skillImgUIParent;
 
@@ -129,13 +129,15 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
         EventManager.StartListening("UpdateKeyCodeUI", UpdateSkillKeyCode);
     }
 
-    private void Start()
-    {
-        Util.DelayFunc(() => bottomRightBarGrid.enabled = false, 0.5f, this, true);
-    }
-
     void SetActiveSlimeEnergeEffect(bool active) => energeBarAndEff.second.gameObject.SetActive(active);
 
+    public void SetSkillUICvsg(bool on)
+    {
+        CanvasGroup cvsg = bottomRightBarGrid.GetComponent<CanvasGroup>();
+        cvsg.alpha = on ? 1 : 0;
+        cvsg.interactable = on;
+        cvsg.blocksRaycasts = on;
+    }
 
     public void UpdateSkillKeyCode()  //스킬 슬롯들에 존재하는 상호작용 키를 현재 키세팅 상태에 맞게 갱신
     {
