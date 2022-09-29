@@ -193,7 +193,7 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
 
     public void UpdateUnderstandingBar() //현재 변신 상태의 몬스터 동화율 UI 갱신
     {
-        if (IsOriginSlime) return;
+        if (IsOriginSlime || !InteractionHandler.showHeadAssimBar) return;
 
         Util.StopCo("InactiveAssimBar", this);
         assimBarObj.SetActive(true);
