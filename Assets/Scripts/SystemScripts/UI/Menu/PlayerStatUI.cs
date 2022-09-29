@@ -452,7 +452,7 @@ public class PlayerStatUI : MonoBehaviour
             if (targetExpFillRate == prevConfirmExpRate && expFullCount == 0)
             {
                 SetAllEternalStatUIUpBtn(true);
-                statExpPair.second.text = playerStat.currentStatPoint.ToString();
+                statExpPair.second.text = "POINT: <color=#E5E112>" + playerStat.currentStatPoint.ToString() + "</color>"; 
                 return;
             }
 
@@ -479,7 +479,7 @@ public class PlayerStatUI : MonoBehaviour
                 {
                     expFullCount--;
                     statExpPair.first.fillAmount = 0;
-                    statExpPair.second.text = (++prevStatPoint).ToString();
+                    statExpPair.second.text = $"POINT: <color=#E5E112>{++prevStatPoint}</color>";
                 }
             }
             else
@@ -515,7 +515,7 @@ public class PlayerStatUI : MonoBehaviour
     {
         if (!isFastChangingExpTxt)
         {
-            statExpPair.second.text = statUpMark ? string.Concat(playerStat.currentStatPoint, "<color=red>-", needStatPoint, "</color>") : playerStat.currentStatPoint.ToString();
+            statExpPair.second.text = statUpMark ? string.Concat("POINT: <color=#E5E112>", playerStat.currentStatPoint, "</color><color=red>-", needStatPoint, "</color>") : string.Format("POINT: <color=#E5E112>{0}</color>", playerStat.currentStatPoint);
         }
     }
 
@@ -807,6 +807,6 @@ public class PlayerStatUI : MonoBehaviour
 
         statExpText.text = $"{prevConfirmExpRate * playerStat.maxExp} / {playerStat.maxExp}";
         statExpPair.first.fillAmount = prevConfirmExpRate;
-        statExpPair.second.text = prevStatPoint.ToString();
+        statExpPair.second.text = "POINT: <color=#E5E112>" + prevStatPoint.ToString() + "</color>";
     }
 }

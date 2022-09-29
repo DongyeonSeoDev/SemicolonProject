@@ -11,14 +11,14 @@ public class AssimRewardPanel : MonoBehaviour
 
     public List<AssimRewardSlot> slots;
 
-    public void Open(List<string> monsterIDList, int up)
+    public void Open(in List<(string, int)> monsterIDList, int up)
     {
         TimeManager.TimePause();
         cvsg.alpha = 0;
         transform.localScale = SVector3.zeroPointSeven;
         topText.text = string.Format("어떤 몬스터의 동화율(<color=blue>{0}%</color>)을 올리겠습니까?", up);
 
-        for (int i = 0; i < slots.Count; i++) slots[i].Set(MonsterCollection.Instance.GetMonsterInfo(monsterIDList[i]), up);
+        for (int i = 0; i < slots.Count; i++) slots[i].Set(MonsterCollection.Instance.GetMonsterInfo(monsterIDList[i].Item1), up);
 
         gameObject.SetActive(true);
 

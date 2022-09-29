@@ -399,7 +399,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         return KeyAction.NONE;
     }
 
-    public bool HasBodySlot(KeyAction key)  //해당 키의 변신 슬롯에 변신 가능한 몸이 있는지
+    public bool HasBodySlot(in KeyAction key)  //해당 키의 변신 슬롯에 변신 가능한 몸이 있는지
     {
         for(int i=0; i<savedBodys.Count; i++)
         {
@@ -412,7 +412,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         return false;
     }
 
-    public void MarkAcqBodyFalse(string id)  //도감에서 변신가능 표시 끔
+    public void MarkAcqBodyFalse(in string id)  //도감에서 변신가능 표시 끔
     {
         if(mobIdToSlot.ContainsKey(id))
         {
@@ -420,36 +420,39 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         }
     }
 
-    public void SetMonsterAssim(int up)  //미션 보상 전용 함수. => 어떤 몹의 동화율을 올려줌
+    public void SetMonsterAssim(in int up, in List<(string, int)> rateInfo)  //미션 보상 전용 함수. => 어떤 몹의 동화율을 올려줌
     {
-        List<string> list = new List<string>(); 
-        for(int i=0; i<savedBodys.Count; i++)
+        if(rateInfo.Count > 0)
         {
-            if (savedBodys[i].Registered && savedBodys[i].BodyID != Global.OriginBodyID)
-                list.Add(savedBodys[i].BodyID);
-        }
+            int notMaxRateCount = 0;
 
-        if(list.Count > 0)
-        {
-            if(list.Count == 1)
+            for(int i=0; i<rateInfo.Count; i++)
             {
-                urmg.SetUnderstandingRate(list[0], urmg.GetUnderstandingRate(list[0]) + up);
+                if(rateInfo[i].Item2 < PlayerEnemyUnderstandingRateManager.Instance.MaxUnderstandingRate)
+                {
+                    notMaxRateCount++;
+                }
+            }
+
+            if(rateInfo.Count == 1 || notMaxRateCount < 2)
+            {
+                urmg.SetUnderstandingRate(rateInfo[0].Item1, rateInfo[0].Item2 + up);
 
                 StringBuilder sb = new StringBuilder();
                 sb.Append('[');
-                sb.Append(GetMonsterInfo(list[0]).bodyName);
+                sb.Append(GetMonsterInfo(rateInfo[0].Item1).bodyName);
                 sb.Append("] 동화율이 증가했습니다 (+");
                 sb.Append(up);
                 sb.Append("%)");
 
                 UIManager.Instance.RequestLogMsg(sb.ToString());
-                UIManager.Instance.InsertNoticeQueue($"<size=150%>{GetMonsterInfo(list[0]).bodyName}</size> 동화율 <size=150%>{up}</size>% 상승");
+                UIManager.Instance.InsertNoticeQueue($"<size=150%>{GetMonsterInfo(rateInfo[0].Item1).bodyName}</size> 동화율 <size=150%>{up}</size>% 상승");
 
-                SkillUIManager.Instance.UpdateUnderstandingBar();
+                SkillUIManager.Instance.UpdateUnderstandingBar(rateInfo[0].Item1);
             }
             else
             {
-                assimRewardPanel.Open(list, up);
+                assimRewardPanel.Open(rateInfo, up);
             }
         }
         else
@@ -474,7 +477,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
             UIManager.Instance.RequestLogMsg(sb.ToString());
             UIManager.Instance.InsertNoticeQueue($"<size=150%>{GetMonsterInfo(id).bodyName}</size> 동화율 <size=150%>{up}</size>% 상승");
-            SkillUIManager.Instance.UpdateUnderstandingBar();
+            SkillUIManager.Instance.UpdateUnderstandingBar(id);
         }, 0.4f, this, true);
     }
 
@@ -769,6 +772,21 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             }
         }
         return cnt;
+    }
+
+    public List<(string, int)> GetSavedMonstersRate()  //기본 슬라임 몸을 제외하고 흡수해서 가지고 있는 몬스터들의 아이디와 동화율을 리스트로 보내줌
+    {
+        List<(string, int)> list = new List<(string, int)>();
+
+        for(int i=0; i<maxSavedBodyCount; i++)
+        {
+            if(savedBodys[i].Registered && savedBodys[i].BodyID != Global.OriginBodyID)
+            {
+                list.Add((savedBodys[i].BodyID, PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(savedBodys[i].BodyID)));
+            }
+        }
+
+        return list;
     }
 
     public void ResetCoolTimeUI()
