@@ -444,6 +444,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
                 UIManager.Instance.RequestLogMsg(sb.ToString());
                 UIManager.Instance.InsertNoticeQueue($"<size=150%>{GetMonsterInfo(list[0]).bodyName}</size> 동화율 <size=150%>{up}</size>% 상승");
+
+                SkillUIManager.Instance.UpdateUnderstandingBar();
             }
             else
             {
@@ -472,6 +474,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
             UIManager.Instance.RequestLogMsg(sb.ToString());
             UIManager.Instance.InsertNoticeQueue($"<size=150%>{GetMonsterInfo(id).bodyName}</size> 동화율 <size=150%>{up}</size>% 상승");
+            SkillUIManager.Instance.UpdateUnderstandingBar();
         }, 0.4f, this, true);
     }
 

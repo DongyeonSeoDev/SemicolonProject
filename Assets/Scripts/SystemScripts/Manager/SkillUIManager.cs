@@ -191,23 +191,26 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
         }
     }
 
-    public void UpdateUnderstandingBar() //현재 변신 상태의 몬스터 동화율 UI 갱신
+    public void UpdateUnderstandingBar(string id = "") //현재 변신 상태의 몬스터 동화율 UI 갱신
     {
         if (IsOriginSlime || !InteractionHandler.showHeadAssimBar) return;
 
-        Util.StopCo("InactiveAssimBar", this);
-        assimBarObj.SetActive(true);
-        float rate = PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(SlimeGameManager.Instance.CurrentBodyId) % 51 * 0.02f;
-        assimFillImg.SetFillAmount(rate, 0.6f, false, () =>
+        if(string.IsNullOrEmpty(id) || id == SlimeGameManager.Instance.CurrentBodyId)
         {
-            Util.PriDelayFunc("InactiveAssimBar", () =>
+            Util.StopCo("InactiveAssimBar", this);
+            assimBarObj.SetActive(true);
+            float rate = PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(SlimeGameManager.Instance.CurrentBodyId) % 51 * 0.02f;
+            assimFillImg.SetFillAmount(rate, 0.6f, false, () =>
             {
-                isFillAssim = false;
-                assimBarObj.SetActive(false);
-            }, 1f, this, false);
-        });
-        //energeFill.DOFillAmount(rate, 0.3f);
-        //energeEffMask.DOScaleX(orgEnergeEffMaskScl.x * rate, 0.3f);
+                Util.PriDelayFunc("InactiveAssimBar", () =>
+                {
+                    isFillAssim = false;
+                    assimBarObj.SetActive(false);
+                }, 1f, this, false);
+            });
+            //energeFill.DOFillAmount(rate, 0.3f);
+            //energeEffMask.DOScaleX(orgEnergeEffMaskScl.x * rate, 0.3f);
+        }
     }
 
     public void SetEnableSlot(SkillType type, bool on)
