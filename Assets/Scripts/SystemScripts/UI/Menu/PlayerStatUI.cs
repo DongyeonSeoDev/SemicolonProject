@@ -633,6 +633,7 @@ public class PlayerStatUI : MonoBehaviour
             choiceStatInfoUIDic[se.id].gameObject.SetActive(true);
             InsertPropertyInfo(se.id);
             playerStat.accumulateStatPoint += GetStatSOData<ChoiceStatSO>(se.id).sell;
+            GameManager.Instance.gameRecord.CheckGetChar(se.id);
         }
 
         if (log)

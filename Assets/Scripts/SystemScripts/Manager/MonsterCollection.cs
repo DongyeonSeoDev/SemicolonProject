@@ -681,6 +681,16 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         }
     }
 
+    public void CheckRecordedMonsters(string id) //보스는 이걸로 
+    {
+        if (TutorialManager.Instance.IsTutorialStage) return;
+
+        if (!mobLearningInfoDic[id].meet)
+        {
+            ChangeLearningStateMeet(id, true);
+        }
+    }
+
     /*public void ResetLearning()
     {
         foreach (string key in mobLearningInfoDic.Keys)
@@ -862,6 +872,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         foreach(string key in uInfo.monsterLearningDic.keyValueDic.Keys)
         {
             mobLearningInfoDic[key] = uInfo.monsterLearningDic[key];
+
+            Debug.Log(key + mobLearningInfoDic[key].kill.ToString());
         }
     }
     #endregion

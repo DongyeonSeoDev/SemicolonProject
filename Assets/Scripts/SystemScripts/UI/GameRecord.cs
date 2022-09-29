@@ -17,10 +17,14 @@ public class GameRecord : MonoBehaviour
     public Text charCountTxt;  //얻은 특성 수 (판매한 것도 포함)
     public Text expTxt;  //획득한 총 스탯포인트 경험치 (몹 처치와 미션 완료 보상)
 
+    public Text restStatPointTxt;
+
     private float playTime;
     private int killCount;
     private int charCount;
     private float exp;
+
+    private Dictionary<ushort, bool> checkCharDic = new Dictionary<ushort, bool>();
 
     private void Awake()
     {
@@ -33,8 +37,16 @@ public class GameRecord : MonoBehaviour
     }
 
     public void KillEnemy() => killCount++;
-    public void GetCharacteristic() => charCount++;
     public void GetStatPointExp(float value) => exp += value;
+
+    public void CheckGetChar(ushort id)
+    {
+        if (!checkCharDic[id])
+        {
+            checkCharDic[id] = true;
+            charCount++;
+        }
+    }
 
     public void Restart()
     {
@@ -42,6 +54,11 @@ public class GameRecord : MonoBehaviour
         killCount = 0;
         charCount = 0;
         exp = 0f;
+
+        for (ushort i = NGlobal.CStatStartID; i <= NGlobal.CStatEndID; i += NGlobal.StatIDOffset)
+        {
+            checkCharDic[i] = false;
+        }
     }
 
     private void Record()
@@ -68,6 +85,8 @@ public class GameRecord : MonoBehaviour
         KillTxt.text = killCount.ToString();
         charCountTxt.text = charCount.ToString();
         expTxt.text = ((int)exp).ToString();
+
+        restStatPointTxt.text = GameManager.Instance.savedData.userInfo.playerStat.currentStatPoint.ToString();
     }
 
     public void EndGame(bool clear)
