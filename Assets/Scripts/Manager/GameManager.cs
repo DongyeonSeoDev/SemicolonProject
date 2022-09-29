@@ -45,6 +45,8 @@ public partial class GameManager : MonoSingleton<GameManager>
     public Transform slimeFollowObj { get; private set; }
 
     [SerializeField] private string timeURL = "https://www.naver.com";
+
+    public GameRecord gameRecord;
     #endregion
 
     #region event and Action
@@ -216,6 +218,7 @@ public partial class GameManager : MonoSingleton<GameManager>
         //이벤트 정의
         EventManager.StartListening("PlayerDead", PlayerDead);
         EventManager.StartListening("PlayerRespawn", PlayerRespawnEvent);
+        EventManager.StartListening("GameClear", GameClear);
         //EventManager.StartListening("StageClear", UpdateItemBattleRestCount);
 
         EventManager.StartListening("StageClear", AbsorbCurMapAllItems);
@@ -468,12 +471,23 @@ public partial class GameManager : MonoSingleton<GameManager>
     {
         PoolManager.PoolObjSetActiveFalse("ItemFollowEffect");
         StateManager.Instance.RemoveAllStateAbnormality(false);
+        gameRecord.EndGame(false);
     }
 
     public void RespawnPlayer()
     {
-        UIManager.Instance.OnUIInteract(UIType.DEATH, true);
-        UIManager.Instance.StartLoading(() => EventManager.TriggerEvent("PlayerRespawn"), () => EventManager.TriggerEvent("StartNextStage"));
+        //UIManager.Instance.OnUIInteract(UIType.DEATH, true);
+        UIManager.Instance.OnUIInteract(UIType.ENDGAME, true);
+        UIManager.Instance.StartLoading(() => EventManager.TriggerEvent("PlayerRespawn"), () =>
+        {
+            gameRecord.Restart();
+            EventManager.TriggerEvent("StartNextStage");
+        });
+    }
+
+    private void GameClear()
+    {
+        gameRecord.EndGame(true);
     }
     #endregion
 

@@ -177,6 +177,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             {
                 ChangeLearningStateKill(id, true);
             }
+
+            GameManager.Instance.gameRecord.KillEnemy();
         });  
     }
 

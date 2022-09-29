@@ -603,6 +603,7 @@ public class PlayerStatUI : MonoBehaviour
     public void AddPlayerStatPointExp(float value)  //ÇÃ·¹ÀÌ¾î ½ºÅÈÆ÷ÀÎÆ® °æÇèÄ¡¸¦ È¹µæÇÔ
     {
         playerStat.currentExp += value;
+        GameManager.Instance.gameRecord.GetStatPointExp(value);
         UIManager.Instance.RequestLogMsg($"°æÇèÄ¡¸¦ È¹µæÇß½À´Ï´Ù. (+{value})");
         if(playerStat.currentExp >= playerStat.maxExp)
         {

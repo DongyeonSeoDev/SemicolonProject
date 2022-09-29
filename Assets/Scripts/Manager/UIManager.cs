@@ -271,14 +271,18 @@ public partial class UIManager : MonoSingleton<UIManager>
         //EventManager.StartListening("ChangeResolution", OnChangedResolution);
 
         EventManager.StartListening("PlayerDead", () => {
-            OnUIInteractSetActive(UIType.DEATH, true, true);
+            //OnUIInteractSetActive(UIType.DEATH, true, true);
             CanInteractUI = false;
         });
         EventManager.StartListening("PlayerRespawn", () => {
             CanInteractUI = true;
             KeyActionManager.Instance.UnregisterQuikSlot();
         });
-        EventManager.StartListening("GameClear", () => OnUIInteract(UIType.CLEAR, true));
+        EventManager.StartListening("GameClear", () =>
+        {
+            CanInteractUI = false;
+            //OnUIInteract(UIType.CLEAR, true);
+        });
         EventManager.StartListening("StageClear", () =>InsertNoticeQueue("Clear", clearNoticeMsgVGrd, 90));
         EventManager.StartListening("ChangeBody", (str, dead) => { if(!dead) InsertNoticeQueue(MonsterCollection.Instance.GetMonsterInfo(str).bodyName + "(으)로 변신하였습니다"); });
         EventManager.StartListening("PickupMiniGame", (Action<bool>)(start =>
@@ -678,6 +682,8 @@ public partial class UIManager : MonoSingleton<UIManager>
             case UIType.CLEAR:
                 return;
             case UIType.DEATH:
+                return;
+            case UIType.ENDGAME:
                 return;
             case UIType.CHANGEABLEMOBLIST:
                 return;
