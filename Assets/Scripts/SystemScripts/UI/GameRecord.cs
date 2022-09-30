@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Text;
-using System;
+using Water;
 
 public class GameRecord : MonoBehaviour
 {
@@ -26,9 +26,20 @@ public class GameRecord : MonoBehaviour
 
     private Dictionary<ushort, bool> checkCharDic = new Dictionary<ushort, bool>();
 
+    private List<GameObject> invisibleStatRecords = new List<GameObject>();
+    public GameObject statResultLastElement;
+
     private void Awake()
     {
         Restart();
+
+        for(int i=0; i<4; i++)
+        {
+            GameObject obj = Instantiate(statResultLastElement, statResultLastElement.transform.parent);
+            invisibleStatRecords.Add(obj);
+            obj.GetComponent<StatRecord>().DeleteChild();
+            Destroy(obj.GetComponent<StatRecord>());
+        }
     }
 
     private void Update()
@@ -63,6 +74,8 @@ public class GameRecord : MonoBehaviour
 
     private void Record()
     {
+        //왼쪽 창
+        //왼쪽창 결과들은 0부터 올라가는 연출 있으면 좋을 것 같음
         int s = (int)playTime % 60;
         int m = ((int)playTime / 60) % 60;
         int h = (int)playTime / 3600;
@@ -86,7 +99,40 @@ public class GameRecord : MonoBehaviour
         charCountTxt.text = charCount.ToString();
         expTxt.text = ((int)exp).ToString();
 
-        restStatPointTxt.text = GameManager.Instance.savedData.userInfo.playerStat.currentStatPoint.ToString();
+        //오른쪽 창
+        Stat stat = GameManager.Instance.savedData.userInfo.playerStat;
+        EternalStat eternal = stat.eternalStat;
+        ChoiceStat choice = stat.choiceStat;
+
+        PoolManager.PoolObjSetActiveFalse("StatRecord");
+        restStatPointTxt.text = stat.currentStatPoint.ToString();
+        int point = stat.currentStatPoint;
+
+        for(int i=0; i<eternal.AllStats.Count; i++)
+        {
+            if(eternal.AllStats[i].statLv > 1)
+            {
+                point += PoolManager.GetItem<StatRecord>("StatRecord").Record(eternal.AllStats[i].id, true);
+            }
+        }
+
+        for(int i=0; i<choice.AllStats.Count; i++)
+        {
+            if(choice.AllStats[i].isUnlock)
+            {
+                point += PoolManager.GetItem<StatRecord>("StatRecord").Record(choice.AllStats[i].id, false);
+            }
+        }
+
+        //밑에 안보이는 칸 하나 두고 그 밑에 포인트 총량 기록 필요
+
+        for(int i=0; i<invisibleStatRecords.Count; i++)
+        {
+            invisibleStatRecords[i].transform.SetAsLastSibling();
+        }
+
+        statResultLastElement.transform.GetChild(0).GetComponent<Text>().text = "POINT : <color=#B0A94D>" + point.ToString() + "</color>";
+        statResultLastElement.transform.SetAsLastSibling();
     }
 
     public void EndGame(bool clear)

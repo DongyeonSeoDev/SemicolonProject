@@ -29,6 +29,8 @@ public class PlayerStatUI : MonoBehaviour
     public Dictionary<ushort, Pair<StatElement,StatElement>> eternalStatDic = new Dictionary<ushort, Pair<StatElement, StatElement>>(); // 1: 디폴트, 2: 추가
     public Dictionary<ushort, StatElement> choiceStatDic = new Dictionary<ushort, StatElement>();  //additional있으면 위처럼 Pair로 묶긴 해야함.
 
+    public Dictionary<ushort, int> usedStatUpPointDic = new Dictionary<ushort, int>(); //(고정)스탯 업에 사용된 포인트
+
     private readonly int propertyNoticeMaxCount = 4;
     private Vector2[] propertyNoticePos;
     private bool isInsertingProperty = false;
@@ -283,6 +285,10 @@ public class PlayerStatUI : MonoBehaviour
         {
             ui.gameObject.SetActive(false);
         }
+        foreach(ushort key in statInfoUIDic.Keys)
+        {
+            usedStatUpPointDic[key] = 0;
+        }
         prevConfirmExpRate = 0f;
         expFullCount = 0;
         prevStatPoint = playerStat.currentStatPoint;
@@ -346,6 +352,8 @@ public class PlayerStatUI : MonoBehaviour
             StatInfoElement el = Instantiate(statInfoUIPair.first, statInfoUIPair.second).GetComponent<StatInfoElement>();
             el.InitSet(eternalStatDic[key].first);
             statInfoUIDic.Add(key, el);
+
+            usedStatUpPointDic.Add(key, 0);  //고정스탯 렙업에 사용된 포인트 딕셔너리 초기화
         }
 
         //선택 스탯 저장 - 특성  --> 굳이 이렇게 안하고 playerStat.choiceStat의 AllStat을 이용해 for문 돌려도 됨
@@ -566,6 +574,8 @@ public class PlayerStatUI : MonoBehaviour
             playerStat.currentStatPoint -= value;
             playerStat.accumulateStatPoint += value;
 
+            usedStatUpPointDic[id] += value;
+
             eterStat.statLv++;
             addiStat.statValue += eterStat.UpStatValue;
 
@@ -656,6 +666,23 @@ public class PlayerStatUI : MonoBehaviour
                 UIManager.Instance.RequestLogMsg($"[{se.StatName}] 특성을 판매하였습니다");
             }
         }
+    }
+
+    /// <summary>
+    /// 스탯을 판매하면 어느정도의 포인트를 받는지
+    /// </summary>
+    /// <param name="id">특성(선택스탯) 아이디</param>
+    /// <returns></returns>
+    public int GetSellPoint(ushort id) 
+    {
+        if (choiceStatDic.ContainsKey(id))
+        {
+            ChoiceStatSO stat = GetStatSOData<ChoiceStatSO>(id);
+
+            return stat.sell + Mathf.Clamp(choiceStatDic[id].statLv - 1, 0, 30) * stat.upCost;
+        }
+
+        return 0;
     }
 
     public void InsertPropertyInfo(ushort id)  //특성(선택스탯)을 얻거나 렙업하면 호출
