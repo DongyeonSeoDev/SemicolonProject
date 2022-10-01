@@ -780,7 +780,7 @@ public class PlayerStatUI : MonoBehaviour
         ChoiceStatSO data = GetStatSOData<ChoiceStatSO>(id);
 
         choiceNameTxt.text = data.statName;
-        choiceLV.text = $"LV. {choiceStatDic[id].statLv}/{data.maxStatLv}";
+        choiceLV.text = choiceStatDic[id].statLv < data.maxStatLv ? $"LV. {choiceStatDic[id].statLv}/{data.maxStatLv}" : "LV. MAX";
         if(choiceStatDic[id].statLv >= data.maxStatLv)
         {
             expFill.fillAmount = 1f;

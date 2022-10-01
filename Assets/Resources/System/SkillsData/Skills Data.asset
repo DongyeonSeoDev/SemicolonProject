@@ -67,4 +67,9 @@ MonoBehaviour:
         \uC900\uB2E4"
       skillSpr: {fileID: 21300000, guid: 097bb13a96103de459278b3fb7ac71c5, type: 3}
   - first: 6
-    second: []
+    second:
+    - skillType: 0
+      skillName: "\uAD6C\uCCB4 \uB0A0\uB9AC\uAE30"
+      skillExplanation: "\uC6D0\uAC70\uB9AC\uB85C \uAD6C\uCCB4\uB97C \uBC1C\uC0AC\uD574
+        \uD53C\uD574\uB97C \uC900\uB2E4"
+      skillSpr: {fileID: 21300000, guid: ecf22c4c678e6454bbf83235264e3d4c, type: 3}
