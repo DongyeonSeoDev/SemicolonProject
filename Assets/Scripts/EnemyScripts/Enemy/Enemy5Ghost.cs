@@ -30,6 +30,8 @@ namespace Enemy
 
             enemyData.attackDelay = 1f;
             enemyData.isAttackPlayerDistance = 1.5f;
+            enemyData.playerAnimationSpeed = 1f;
+            enemyData.playerAnimationTime = 1f;
 
             enemyData.enemySpriteRotateCommand = new EnemySpriteRotateCommand(enemyData);
             enemyData.enemyMoveCommand = new EnemyMoveCommand(enemyData, transform, enemyData.chaseSpeed);

@@ -219,10 +219,19 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
                 newBody.tag = "Player";
             }
 
+            Enemy.Enemy5Ghost last = Enemy.EnemyManager.Player.GetComponent<Enemy.Enemy5Ghost>();
+
             Enemy.EnemyManager.Player = newBody;
             currentBodyId = bodyId;
 
-            newBody.transform.position = spawnPos;
+            if (last != null)
+            {
+                
+            }
+            else
+            {
+                newBody.transform.position = spawnPos;
+            }
 
             UIManager.Instance.UpdatePlayerHPUI();
             cinemachineCameraScript.SetCinemachineFollow(newBody.transform);
