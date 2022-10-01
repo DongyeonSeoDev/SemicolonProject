@@ -172,5 +172,7 @@ public class StatInfoElement : UITransition
     {
         statNameTxt.text = NGlobal.playerStatUI.GetStatSOData(id).statName;
         nifc.explanation = "스탯 레벨업";
+
+        UpdateUI();
     }
 }
