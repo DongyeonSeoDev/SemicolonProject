@@ -70,7 +70,8 @@ public enum UIType
     MONSTERINFO_DETAIL_FEATURE,
     STORE,
     TITLE,
-    EFFECT
+    EFFECT,
+    ENDGAME
 }
 
 public enum InitGainType

@@ -255,6 +255,7 @@ public class BodyChangeTutorialPhase : TutorialPhase
         isReady = false;
         bodyId = id;
         endAction += TutorialManager.Instance.ReturnOriginBodyTuto;
+        InteractionHandler.showHeadAssimBar = false;
     }
 
     public override void DoPhaseUpdate()
@@ -324,6 +325,7 @@ public class ReturnOriginTutorialPhase : TutorialPhase
         Util.DelayFunc(() =>
         {
             TimeManager.LerpTime(1.8f, 1f, ()=> EventManager.TriggerEvent("EnemyStart"));
+            InteractionHandler.showHeadAssimBar = true;
         }, 1f, TutorialManager.Instance, true);
 
         base.End();

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 
 public abstract class Mission 
 {
@@ -43,8 +44,23 @@ public abstract class Mission
 
         UIManager.Instance.InsertTopCenterNoticeQueue("미션 성공", 70, null, 1.5f);
 
-        int count = MonsterCollection.Instance.GetSavedMonsterBodyCount();
-        if (UnityEngine.Random.Range(0, 2) == 0 || count == 0)
+        List<(string, int)> info = MonsterCollection.Instance.GetSavedMonstersRate();
+        bool allMaxRate = false;
+
+        for(int i = 0; i < info.Count; i++)
+        {
+            if(info[i].Item2 < PlayerEnemyUnderstandingRateManager.Instance.MaxUnderstandingRate)
+            {
+                break;
+            }
+
+            if(i == info.Count - 1)
+            {
+                allMaxRate = true;
+            }
+        }
+
+        if (UnityEngine.Random.Range(0, 2) == 0 || info.Count == 0 || allMaxRate)
         { 
             float er = expReward[(int)missionLevel];
             NGlobal.playerStatUI.AddPlayerStatPointExp(er);
@@ -52,7 +68,7 @@ public abstract class Mission
         }
         else
         {
-            MonsterCollection.Instance.SetMonsterAssim((int)assimReward[(int)missionLevel]);
+            MonsterCollection.Instance.SetMonsterAssim((int)assimReward[(int)missionLevel], info);
         }
 
         isClear = true;
