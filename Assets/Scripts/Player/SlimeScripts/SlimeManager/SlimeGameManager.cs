@@ -37,6 +37,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             return player;
         }
     }
+
     private GameObject originPlayerBody = null;
     private GameObject currentPlayerBody = null;
     public GameObject CurrentPlayerBody
@@ -173,6 +174,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
         Enemy.Enemy enemy = null;
 
         GameObject newBody = null;
+        GameObject prevBody = currentPlayerBody;
 
         Vector2 spawnPos = currentPlayerBody.transform.position;
 
@@ -219,10 +221,19 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
                 newBody.tag = "Player";
             }
 
+            Enemy.Enemy5Ghost ghost = prevBody.GetComponent<Enemy.Enemy5Ghost>();
+
+            if (ghost != null)
+            {
+                newBody.transform.position = StageManager.Instance.MapCenterPoint;
+            }
+            else
+            {
+                newBody.transform.position = spawnPos;
+            }
+
             Enemy.EnemyManager.Player = newBody;
             currentBodyId = bodyId;
-
-            newBody.transform.position = spawnPos;
 
             UIManager.Instance.UpdatePlayerHPUI();
             cinemachineCameraScript.SetCinemachineFollow(newBody.transform);
@@ -263,6 +274,17 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
                 newBody.SetActive(true);
             }
 
+            Enemy.Enemy5Ghost ghost = prevBody.GetComponent<Enemy.Enemy5Ghost>();
+
+            if (ghost != null)
+            {
+                newBody.transform.position = StageManager.Instance.MapCenterPoint;
+            }
+            else
+            {
+                newBody.transform.position = spawnPos;
+            }
+
             Enemy.EnemyManager.Player = newBody;
 
             newBody.AddComponent<PlayerBodyScript>();
@@ -273,8 +295,6 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
             {
                 enemy.ChangeToPlayerController();
             }
-
-            newBody.transform.position = spawnPos;
 
             UIManager.Instance.UpdatePlayerHPUI();
             cinemachineCameraScript.SetCinemachineFollow(newBody.transform);
