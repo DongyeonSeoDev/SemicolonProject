@@ -117,13 +117,13 @@ MonoBehaviour:
         savedStatLv: 0
       criticalRate:
         id: 40
-        statValue: 10
+        statValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       criticalDamage:
         id: 45
-        statValue: 30
+        statValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0

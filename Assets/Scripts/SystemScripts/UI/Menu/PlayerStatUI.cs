@@ -604,6 +604,17 @@ public class PlayerStatUI : MonoBehaviour
             StatElement stat = eternalStatDic[id].first;
             stat.statLv = 1;
             stat.savedStatLv = 1;
+
+            //여기 if문은 나중에 리펙토링 할 것. => 지금은 급하므로 이렇게 처리하도록 한다
+            if(stat.id == NGlobal.CriticalRate)
+            {
+                stat.statValue += 10;
+            }
+            else if(stat.id == NGlobal.CriticalDamage)
+            {
+                stat.statValue += 30;
+            }
+
             statInfoUIDic[id].OpenStat();
 
             UpdateCurStatPoint(false);
