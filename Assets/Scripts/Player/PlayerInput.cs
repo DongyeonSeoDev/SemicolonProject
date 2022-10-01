@@ -113,8 +113,6 @@ public class PlayerInput : MonoBehaviour
         set { isPauseByCutScene = value; }
     }
 
-    private bool gameClear = true;
-
     [SerializeField]
     private float playerStopStayTime = 2f;
     private float playerStopStayTimer = 0f;
@@ -189,7 +187,6 @@ public class PlayerInput : MonoBehaviour
             skill2TutoClear = true;
         }
 
-        gameClear = false;
         playerState.CantMove = false;
     }
 
@@ -206,7 +203,7 @@ public class PlayerInput : MonoBehaviour
             }
         }
 
-        if (!(isPauseByTuto || isPause || isPauseByCutScene || gameClear) &&
+        if (!(isPauseByTuto || isPause || isPauseByCutScene || SlimeGameManager.Instance.GameClear) &&
             !(playerState.IsDead || playerState.IsStun || playerState.IsKnockBack || playerState.IsDrain))
         {
             if (!playerState.Chargning && !playerState.BodySlapping)
@@ -454,7 +451,6 @@ public class PlayerInput : MonoBehaviour
     }
     private void GameClear()
     {
-        gameClear = true;
         playerState.CantMove = true;
     }
 }

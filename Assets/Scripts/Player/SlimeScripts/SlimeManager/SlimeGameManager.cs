@@ -126,6 +126,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
     {
         bodyChangeTimer = 0f;
         canBodyChange = true;
+        gameClear = false;
 
         for(int i = 0; i < 3; i++)
         {
