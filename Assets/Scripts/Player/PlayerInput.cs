@@ -455,6 +455,6 @@ public class PlayerInput : MonoBehaviour
     private void GameClear()
     {
         gameClear = true;
-        playerState.CantMove = true; ;
+        playerState.CantMove = true;
     }
 }

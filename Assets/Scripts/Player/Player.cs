@@ -568,6 +568,7 @@ public class Player : MonoBehaviour
         playerStat.additionalEternalStat.ResetAdditional();
 
         playerState.IsDead = false;
+        playerState.CantMove = false;
         playerStat.currentHp = playerStat.MaxHp;
 
         UIManager.Instance.UpdatePlayerHPUI();
