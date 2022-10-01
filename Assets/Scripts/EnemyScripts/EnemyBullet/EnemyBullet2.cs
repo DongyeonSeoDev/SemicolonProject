@@ -211,11 +211,11 @@ namespace Enemy
             mage.bullets.Remove(this);
         }
 
-        public void Fire()
+        public void Fire(Vector2 direction)
         {
             DisconnectMage();
 
-            moveDirection = (EnemyManager.Player.transform.position - transform.position).normalized;
+            moveDirection = direction;
         }
 
         //private void ResetBullet()

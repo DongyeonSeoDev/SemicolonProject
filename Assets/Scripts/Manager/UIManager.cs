@@ -40,7 +40,8 @@ public partial class UIManager : MonoSingleton<UIManager>
     #endregion
 
     #region Inventory Item Detail View
-    private string selectedItemId = String.Empty; //클릭한 아이템 슬롯의 아이템 아이디
+    private float itemUseTime = 0.0f;
+    private string selectedItemId = string.Empty; //클릭한 아이템 슬롯의 아이템 아이디
     private ItemSlot selectedItemSlot; //클릭한 아이템 슬롯
 
     public Image itemImg, itemTypeImg;
@@ -270,14 +271,18 @@ public partial class UIManager : MonoSingleton<UIManager>
         //EventManager.StartListening("ChangeResolution", OnChangedResolution);
 
         EventManager.StartListening("PlayerDead", () => {
-            OnUIInteractSetActive(UIType.DEATH, true, true);
+            //OnUIInteractSetActive(UIType.DEATH, true, true);
             CanInteractUI = false;
         });
         EventManager.StartListening("PlayerRespawn", () => {
             CanInteractUI = true;
             KeyActionManager.Instance.UnregisterQuikSlot();
         });
-        EventManager.StartListening("GameClear", () => OnUIInteract(UIType.CLEAR, true));
+        EventManager.StartListening("GameClear", () =>
+        {
+            CanInteractUI = false;
+            //OnUIInteract(UIType.CLEAR, true);
+        });
         EventManager.StartListening("StageClear", () =>InsertNoticeQueue("Clear", clearNoticeMsgVGrd, 90));
         EventManager.StartListening("ChangeBody", (str, dead) => { if(!dead) InsertNoticeQueue(MonsterCollection.Instance.GetMonsterInfo(str).bodyName + "(으)로 변신하였습니다"); });
         EventManager.StartListening("PickupMiniGame", (Action<bool>)(start =>
@@ -410,19 +415,33 @@ public partial class UIManager : MonoSingleton<UIManager>
             }
 
             //메뉴에서 쓰는 고정키들
-            else if (Input.GetKeyDown(KeyCode.E) && Util.IsActiveGameUI(UIType.ITEM_DETAIL) && activeUIQueue.Count == 0)  //인벤에서 템 사용
+            /*else if (Input.GetKeyDown(KeyCode.E) && Util.IsActiveGameUI(UIType.ITEM_DETAIL) && activeUIQueue.Count == 0)  //인벤에서 템 사용
             {
                 if (selectedItemSlot)
                 {
                     OnClickItemUseBtn();
                 }
-            }
+            }*/
             else if(Input.GetKeyDown(KeyCode.F) && Util.IsActiveGameUI(UIType.ITEM_DETAIL) && activeUIQueue.Count == 0)  //인벤에서 퀵슬롯 등록
             {
                 if (selectedItemSlot)
                 {
                     KeyActionManager.Instance.RegisterQuikSlot(selectedItemId);
                 }
+            }
+
+            else if(Input.GetKey(KeyCode.E) && Util.IsActiveGameUI(UIType.ITEM_DETAIL) && activeUIQueue.Count == 0)
+            {
+                if (itemUseTime < Time.unscaledTime && selectedItemSlot)
+                {
+                    OnClickItemUseBtn();
+                    itemUseTime = Time.unscaledTime + 0.3f;
+                }
+            }
+
+            else if(Input.GetKeyUp(KeyCode.E) && Util.IsActiveGameUI(UIType.ITEM_DETAIL) && activeUIQueue.Count == 0)
+            {
+                itemUseTime = 0f;
             }
         }
 
@@ -663,6 +682,8 @@ public partial class UIManager : MonoSingleton<UIManager>
             case UIType.CLEAR:
                 return;
             case UIType.DEATH:
+                return;
+            case UIType.ENDGAME:
                 return;
             case UIType.CHANGEABLEMOBLIST:
                 return;

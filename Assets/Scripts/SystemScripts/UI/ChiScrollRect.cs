@@ -53,7 +53,7 @@ public class ChiScrollRect : ScrollRect, IPointerEnterHandler, IPointerExitHandl
             float delta = Input.GetAxis("Mouse ScrollWheel");
 
             PointerEventData pointerData = new PointerEventData(EventSystem.current);
-            pointerData.scrollDelta = new Vector2(0f, delta);
+            pointerData.scrollDelta = new Vector2(0f, vertical ? delta : -delta);
 
             swallowMouseWheelScrolls = false;
             OnScroll(pointerData);

@@ -23,6 +23,8 @@ namespace Enemy
             base.OnEnable();
 
             enemyData.attackDelay = 0.4f;
+            enemyData.playerAnimationSpeed = 1f;
+            enemyData.playerAnimationTime = 0.4f;
 
             enemyData.enemySpriteRotateCommand = new EnemySpriteRotateCommand(enemyData);
             enemyData.enemyMoveCommand = new EnemyFollowPlayerCommand(enemyData, transform, rb, enemyData.chaseSpeed, 3f);
@@ -128,7 +130,14 @@ namespace Enemy
         {
             if (bullets.Count > 0)
             {
-                bullets[0].Fire();
+                if (GetEnemyController() == EnemyController.AI)
+                {
+                    bullets[0].Fire((EnemyManager.Player.transform.position - transform.position).normalized);
+                }
+                else if (GetEnemyController() == EnemyController.PLAYER)
+                {
+                    bullets[0].Fire((playerInput.AttackMousePosition - (Vector2)transform.position).normalized);
+                }
             }
         }
     }

@@ -95,6 +95,10 @@ public class GameUI : MonoBehaviour
                 TweeningData.DOFade(gameUIFields, true);
                 break;
 
+            case UIType.ENDGAME:
+                TweeningData.DOFade(gameUIFields, true);
+                break;
+
            /* case UIType.KEYSETTING:
                 //DOMoveSequence(true);
                 TweeningData.DOMoveSequence(gameUIFields, true);
@@ -210,6 +214,10 @@ public class GameUI : MonoBehaviour
                 break;
 
             case UIType.CLEAR:
+                TweeningData.DOFade(gameUIFields, false);
+                break;
+
+            case UIType.ENDGAME:
                 TweeningData.DOFade(gameUIFields, false);
                 break;
 

@@ -127,7 +127,7 @@ public class StatInfoElement : UITransition
         else s = Mathf.RoundToInt(NGlobal.playerStatUI.GetCurrentPlayerStat(id)).ToString();
 
         curStatTxt.text = eternal.isUnlock ? s.ToString().ToColorStr("#980D0D", () => eternal.isUnlockClose) : "?" ;
-        statLvTxt.text = eternal.statLv.ToString();
+        statLvTxt.text = "LV. " + eternal.statLv.ToString();
     }
 
     public void SetEnableUpBtn(bool on)  //켜져있는 업 버튼을 못누르게 하거나 누를 수 있게 함
