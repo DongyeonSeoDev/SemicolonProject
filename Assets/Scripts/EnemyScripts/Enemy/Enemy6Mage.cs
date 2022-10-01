@@ -51,9 +51,7 @@ namespace Enemy
                 return;
             }
 
-            currentTime += Time.deltaTime;
-
-            if (!isAttack && bullets.Count == 6)
+            if (enemyData.eEnemyController == EnemyController.AI && !isAttack && bullets.Count == 6)
             {
                 isAttack = true;
             }
@@ -61,6 +59,11 @@ namespace Enemy
             if (isAttack && bullets.Count == 0)
             {
                 isAttack = false;
+            }
+
+            if (!isAttack && bullets.Count < 6)
+            {
+                currentTime += Time.deltaTime;
             }
 
             defaultAngle += Time.deltaTime * 100f;
@@ -84,10 +87,10 @@ namespace Enemy
             {
                 yield return new WaitUntil(() => currentTime >= 2f);
 
+                currentTime = 0f;
+
                 if (!isAttack && bullets.Count < 6)
                 {
-                    currentTime = 0f;
-
                     EnemyBullet2 b = Instantiate(bullet, transform.position, Quaternion.identity);
                     int i = 0;
 
