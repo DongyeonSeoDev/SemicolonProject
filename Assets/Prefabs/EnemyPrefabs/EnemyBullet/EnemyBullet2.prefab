@@ -119,10 +119,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   anim: {fileID: 7505758543740133374}
   sr: {fileID: 6441970447574153695}
-  targetTransform: {fileID: 0}
   distance: 2
-  startAngle: 0
   angleSpeed: 100
+  isConnectMage: 0
   minAttack: 0
   maxAttack: 0
   critical: 0
@@ -137,7 +136,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
