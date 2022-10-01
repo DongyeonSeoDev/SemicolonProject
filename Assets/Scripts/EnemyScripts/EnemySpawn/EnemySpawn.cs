@@ -83,6 +83,16 @@ namespace Enemy
                     Spawn(spawnData[stageId], stageId);
                     Move(stageId);
 
+                    switch (spawnData[stageId][i].enemyId) //Type과 EnemyType에서 보스는 다르게 적혀있어서 이렇게 함
+                    {
+                        case Type.Boss_SkeletonKing_50:
+                            MonsterCollection.Instance.CheckRecordedMonsters(EnemyType.Boss_SkeletonKing_01.ToString());
+                            break;
+                        case Type.Boss_Centipede:
+                            MonsterCollection.Instance.CheckRecordedMonsters(EnemyType.Boss_Centipede_02.ToString());
+                            break;
+                    }
+
                     return;
                 }
             }

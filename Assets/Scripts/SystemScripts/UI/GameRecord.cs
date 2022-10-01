@@ -26,20 +26,20 @@ public class GameRecord : MonoBehaviour
 
     private Dictionary<ushort, bool> checkCharDic = new Dictionary<ushort, bool>();
 
-    private List<GameObject> invisibleStatRecords = new List<GameObject>();
+    //private List<GameObject> invisibleStatRecords = new List<GameObject>();
     public GameObject statResultLastElement;
 
     private void Awake()
     {
         Restart();
 
-        for(int i=0; i<4; i++)
+        /*for(int i=0; i<4; i++)
         {
             GameObject obj = Instantiate(statResultLastElement, statResultLastElement.transform.parent);
             invisibleStatRecords.Add(obj);
             obj.GetComponent<StatRecord>().DeleteChild();
             Destroy(obj.GetComponent<StatRecord>());
-        }
+        }*/
     }
 
     private void Update()
@@ -72,10 +72,13 @@ public class GameRecord : MonoBehaviour
         }
     }
 
+    //왼쪽창 결과들은 0부터 올라가는 연출 있으면 좋을 것 같음
+    //오른쪽 창은 올린 올린 순서대로 텍스트 변하는 연출 필요
+    //탐험 성공 실패는 크기 빠르게 축소하며 나오는 연출 필요
+    //보유 포인트, 총 포인트도 차오르는 연출 필요
     private void Record()
     {
         //왼쪽 창
-        //왼쪽창 결과들은 0부터 올라가는 연출 있으면 좋을 것 같음
         int s = (int)playTime % 60;
         int m = ((int)playTime / 60) % 60;
         int h = (int)playTime / 3600;
@@ -105,7 +108,7 @@ public class GameRecord : MonoBehaviour
         ChoiceStat choice = stat.choiceStat;
 
         PoolManager.PoolObjSetActiveFalse("StatRecord");
-        restStatPointTxt.text = stat.currentStatPoint.ToString();
+        Util.DelayFunc(()=>restStatPointTxt.text = stat.currentStatPoint.ToString(), 0.5f, this, true);  //일단 임시로 이렇게 함. 연출 넣을 때 수정할 예정
         int point = stat.currentStatPoint;
 
         for(int i=0; i<eternal.AllStats.Count; i++)
@@ -124,15 +127,16 @@ public class GameRecord : MonoBehaviour
             }
         }
 
+        statResultLastElement.transform.GetChild(0).GetComponent<Text>().text = "POINT : <color=#B0A94D>" + point.ToString() + "</color>";
+
         //밑에 안보이는 칸 하나 두고 그 밑에 포인트 총량 기록 필요
 
-        for(int i=0; i<invisibleStatRecords.Count; i++)
+        /*for(int i=0; i<invisibleStatRecords.Count; i++)
         {
             invisibleStatRecords[i].transform.SetAsLastSibling();
-        }
+        }*/
 
-        statResultLastElement.transform.GetChild(0).GetComponent<Text>().text = "POINT : <color=#B0A94D>" + point.ToString() + "</color>";
-        statResultLastElement.transform.SetAsLastSibling();
+        //statResultLastElement.transform.SetAsLastSibling();
     }
 
     public void EndGame(bool clear)
