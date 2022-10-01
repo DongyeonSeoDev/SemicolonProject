@@ -27,8 +27,8 @@ public class StatRecord : MonoBehaviour
         return point;
     }
 
-    public void DeleteChild()
+    /*public void DeleteChild()
     {
         Destroy(transform.GetChild(0).gameObject);
-    }
+    }*/
 }
