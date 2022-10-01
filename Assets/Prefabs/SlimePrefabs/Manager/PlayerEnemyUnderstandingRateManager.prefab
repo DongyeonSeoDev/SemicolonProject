@@ -650,25 +650,25 @@ MonoBehaviour:
     additionalBodyStat:
       maxHp:
         id: 5
-        statValue: -20
+        statValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       minDamage:
         id: 10
-        statValue: 10
+        statValue: 2
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       maxDamage:
         id: 15
-        statValue: 10
+        statValue: 2
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       defense:
         id: 20
-        statValue: -1
+        statValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
@@ -680,13 +680,13 @@ MonoBehaviour:
         savedStatLv: 0
       speed:
         id: 30
-        statValue: 1
+        statValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       attackSpeed:
         id: 35
-        statValue: 0
+        statValue: 0.2
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
@@ -770,25 +770,25 @@ MonoBehaviour:
     additionalBodyStat:
       maxHp:
         id: 5
-        statValue: 20
+        statValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       minDamage:
         id: 10
-        statValue: 12
+        statValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       maxDamage:
         id: 15
-        statValue: 14
+        statValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       defense:
         id: 20
-        statValue: 0
+        statValue: 4
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
@@ -800,7 +800,7 @@ MonoBehaviour:
         savedStatLv: 0
       speed:
         id: 30
-        statValue: 10
+        statValue: 0
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
@@ -932,13 +932,13 @@ MonoBehaviour:
         savedStatLv: 0
       criticalRate:
         id: 0
-        statValue: 0
+        statValue: 6
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       criticalDamage:
         id: 0
-        statValue: 0
+        statValue: 40
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
