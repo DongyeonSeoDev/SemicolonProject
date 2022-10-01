@@ -195,11 +195,11 @@ namespace Enemy
             #region 확률 조정 코드
             if (hpPer <= 10f)
             {
-                meleeAttack1Percentage = 5f;
-                meleeAttack2Percentage = 5f;
-                sneerPercentage = 0f;
-                multipleMeleeAttack1Percentage = 45f;
-                bitingAndTearingPercentage = 45f;
+                meleeAttack1Percentage = 0f;
+                meleeAttack2Percentage = 45f;
+                sneerPercentage = 20f;
+                multipleMeleeAttack1Percentage = 35f;
+                bitingAndTearingPercentage = 0f;
             }
             else if(hpPer <= 20f)
             {
@@ -309,10 +309,6 @@ namespace Enemy
         }
         public void DashToPlayer(float speed) // 대쉬 시작
         {
-            Debug.Log("a" + speed);
-            Debug.Log("b" + EnemyManager.Player);
-            Debug.Log("c" + EnemyManager.Player.GetComponent<PlayerMove>().LastMoveVec);
-
             dashTargetPosition = EnemyManager.Player.transform.position - ((Vector3)EnemyManager.Player.GetComponent<PlayerMove>().LastMoveVec * Time.deltaTime / speed);
 
             isDashToPlayer = true;
