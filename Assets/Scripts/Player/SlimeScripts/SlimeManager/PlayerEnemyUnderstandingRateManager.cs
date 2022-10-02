@@ -100,12 +100,12 @@ public class PlayerEnemyUnderstandingRateManager : MonoSingleton<PlayerEnemyUnde
     }
     void Start()
     {
-        EventManager.StartListening("PlayerDead", ResetDicts);
+        EventManager.StartListening("PlayerRespawn", ResetDicts);
         EventManager.StartListening("PlayerBodySet", MountBody);
     }
     private void OnDisable()
     {
-        EventManager.StopListening("PlayerDead", ResetDicts);
+        EventManager.StopListening("PlayerRespawn", ResetDicts);
         EventManager.StopListening("PlayerBodySet", MountBody);
     }
     public void SetDrainProbabilityDict(string key, float value) 
