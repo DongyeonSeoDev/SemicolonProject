@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections.Generic;
 using System.Collections;
 using System;
@@ -50,6 +51,12 @@ namespace FkTweening
             //act();
             //return new CTween(key, act);
         }
+
+        public static void DOFillText(this Text text, int init, int target, int offset, float secondPerOffset, bool unscaled = false, Action onComplete = null)
+        {
+            ExecuteTweening("DOT_Text_Fill" + text.GetInstanceID().ToString(), DOFillTextCo(text, init, target, offset, secondPerOffset, unscaled, onComplete), text);
+        }
+
 
         #endregion
 
@@ -216,6 +223,53 @@ namespace FkTweening
                 }
             }
             light.pointLightOuterRadius = endValue;
+            onComplete?.Invoke();
+        }
+
+        static IEnumerator DOFillTextCo(Text tx, int init, int target, int offset, float secondPerOffset, bool unscaled, Action onComplete)
+        {
+            tx.text = init.ToString();
+            if(init == target)
+            {
+                onComplete?.Invoke();   
+                yield break;
+            }
+
+            bool plus = init < target;
+            int cur = init;
+
+            /*if(autoOffsetSpeed > 0)
+            {
+                offset = Mathf.Clamp(Mathf.Abs(target - init)/ autoOffsetSpeed, 1, 10000);
+            }*/
+
+            while(cur != target)
+            {
+                if (unscaled) yield return new WaitForSecondsRealtime(secondPerOffset);
+                else yield return new WaitForSeconds(secondPerOffset);
+
+                if (plus)
+                {
+                    cur += offset;
+                    if (cur > target)
+                    {
+                        break;
+                    }
+                }
+                else
+                {
+                    cur -= offset;
+                    if (cur < target)
+                    {
+                        break;
+                    }
+                }
+
+                tx.text = cur.ToString();
+            }
+
+            cur = target;
+            tx.text = cur.ToString();
             onComplete?.Invoke();
         }
 

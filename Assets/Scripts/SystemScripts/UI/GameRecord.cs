@@ -5,9 +5,24 @@ using UnityEngine.UI;
 using TMPro;
 using System.Text;
 using Water;
+using FkTweening;
 
 public class GameRecord : MonoBehaviour
 {
+    struct StatUpdateRecord
+    {
+        public ushort id;
+        public int level;
+        public int sell;
+
+        public StatUpdateRecord(ushort id, int level, int sell)
+        {
+            this.id = id;
+            this.level = level;
+            this.sell = sell;
+        }
+    }
+
     public TextMeshProUGUI gameResultTMP;  //모험 성공/실패
 
     public VertexGradient clearVG, failVG;
@@ -17,20 +32,25 @@ public class GameRecord : MonoBehaviour
     public Text charCountTxt;  //얻은 특성 수 (판매한 것도 포함)
     public Text expTxt;  //획득한 총 스탯포인트 경험치 (몹 처치와 미션 완료 보상)
 
-    public Text restStatPointTxt;
+    public Text restStatPointTxt;  //보유 포인트
 
     private float playTime;
     private int killCount;
     private int charCount;
     private float exp;
 
-    private Dictionary<ushort, bool> checkCharDic = new Dictionary<ushort, bool>();
+    private Dictionary<ushort, bool> checkCharDic = new Dictionary<ushort, bool>();  //어떤 특성을 한 번이라도 얻었는지 체크함
+
+    private Queue<StatUpdateRecord> statRecordQueue = new Queue<StatUpdateRecord>(); //스탯들의 상태를 갱신한 정보를 담아두는 큐
 
     //private List<GameObject> invisibleStatRecords = new List<GameObject>();
-    public GameObject statResultLastElement;
+    public GameObject statResultLastElement;  //statResultTxt의 부모 옵젝
+    private Text statResultTxt;  //보유 포인트 + 스탯 렙업에 쓴 포인트 + 특성 판매하면 나오는 포인트
 
     private void Awake()
     {
+        statResultTxt = statResultLastElement.transform.GetChild(0).GetComponent<Text>();
+
         Restart();
 
         /*for(int i=0; i<4; i++)
@@ -59,6 +79,11 @@ public class GameRecord : MonoBehaviour
         }
     }
 
+    public void AddStatInfo(ushort id, int lv, int cost)
+    {
+        statRecordQueue.Enqueue(new StatUpdateRecord(id, lv, cost));
+    }
+
     public void Restart()
     {
         playTime = 0f;
@@ -70,6 +95,8 @@ public class GameRecord : MonoBehaviour
         {
             checkCharDic[i] = false;
         }
+
+        statRecordQueue.Clear();
     }
 
     //왼쪽창 결과들은 0부터 올라가는 연출 있으면 좋을 것 같음
@@ -98,37 +125,18 @@ public class GameRecord : MonoBehaviour
             playTimeTxt.text = sb.ToString();
         }
 
-        KillTxt.text = killCount.ToString();
-        charCountTxt.text = charCount.ToString();
-        expTxt.text = ((int)exp).ToString();
-
-        //오른쪽 창
-        Stat stat = GameManager.Instance.savedData.userInfo.playerStat;
-        EternalStat eternal = stat.eternalStat;
-        ChoiceStat choice = stat.choiceStat;
-
-        PoolManager.PoolObjSetActiveFalse("StatRecord");
-        Util.DelayFunc(()=>restStatPointTxt.text = stat.currentStatPoint.ToString(), 0.5f, this, true);  //일단 임시로 이렇게 함. 연출 넣을 때 수정할 예정
-        int point = stat.currentStatPoint;
-
-        for(int i=0; i<eternal.AllStats.Count; i++)
+        KillTxt.DOFillText(0, killCount, 2, 0.02f, true, () =>
         {
-            if(eternal.AllStats[i].statLv > 1)
+            charCountTxt.DOFillText(0, charCount, 1, 0.07f, true, () =>
             {
-                point += PoolManager.GetItem<StatRecord>("StatRecord").Record(eternal.AllStats[i].id, true);
-            }
-        }
+                expTxt.DOFillText(0, (int)exp, 200, 0.05f, true, () =>
+                {
+                    RecordStats();
+                });
+            });
+        });
 
-        for(int i=0; i<choice.AllStats.Count; i++)
-        {
-            if(choice.AllStats[i].isUnlock)
-            {
-                point += PoolManager.GetItem<StatRecord>("StatRecord").Record(choice.AllStats[i].id, false);
-            }
-        }
-
-        statResultLastElement.transform.GetChild(0).GetComponent<Text>().text = "POINT : <color=#B0A94D>" + point.ToString() + "</color>";
-
+        #region 주석
         //밑에 안보이는 칸 하나 두고 그 밑에 포인트 총량 기록 필요
 
         /*for(int i=0; i<invisibleStatRecords.Count; i++)
@@ -137,6 +145,48 @@ public class GameRecord : MonoBehaviour
         }*/
 
         //statResultLastElement.transform.SetAsLastSibling();
+        #endregion
+    }
+
+    private void RecordStats()
+    {
+        //오른쪽 창
+        Stat stat = GameManager.Instance.savedData.userInfo.playerStat;
+        EternalStat eternal = stat.eternalStat;
+        ChoiceStat choice = stat.choiceStat;
+
+        PoolManager.PoolObjSetActiveFalse("StatRecord");
+        restStatPointTxt.text = stat.currentStatPoint.ToString();
+        int point = stat.currentStatPoint;
+
+        for (int i = 0; i < eternal.AllStats.Count; i++)
+        {
+            if (eternal.AllStats[i].statLv > 1)
+            {
+                point += PoolManager.GetItem<StatRecord>("StatRecord").Record(eternal.AllStats[i].id, true);
+            }
+        }
+
+        for (int i = 0; i < choice.AllStats.Count; i++)
+        {
+            if (choice.AllStats[i].isUnlock)
+            {
+                point += PoolManager.GetItem<StatRecord>("StatRecord").Record(choice.AllStats[i].id, false);
+            }
+        }
+
+        statResultLastElement.transform.GetChild(0).GetComponent<Text>().text = "POINT : <color=#B0A94D>" + point.ToString() + "</color>";
+    }
+
+    private void ResetUI()
+    {
+        playTimeTxt.text = "00:00:00";
+        KillTxt.text = "0";
+        charCountTxt.text = "0";
+        expTxt.text = "0";
+
+        restStatPointTxt.text = "0";
+        statResultTxt.text = "0";
     }
 
     public void EndGame(bool clear)
@@ -144,7 +194,8 @@ public class GameRecord : MonoBehaviour
         gameResultTMP.text = clear ? "모험 성공" : "모험 실패";
         gameResultTMP.colorGradient = clear ? clearVG : failVG;
 
-        Record();
+        ResetUI();
+        Util.DelayFunc(Record, 0.5f, this, true);
 
         UIManager.Instance.OnUIInteractSetActive(UIType.ENDGAME, true, true);
     }

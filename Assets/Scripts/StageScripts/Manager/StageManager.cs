@@ -103,7 +103,7 @@ public class StageManager : MonoSingleton<StageManager>
             idToStageFloorDict.Add(data.id, data);
             data.SetStageDic();
         }
-
+        
         //스테이지 데이터
         string jsonData = Resources.Load(stageDataPath).ToString();
         var stageData = JsonUtility.FromJson<JsonParse<StageData>>(jsonData);

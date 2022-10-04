@@ -581,6 +581,7 @@ public class PlayerStatUI : MonoBehaviour
 
             UpdateCurStatPoint(false);
             UIManager.Instance.UpdatePlayerHPUI();
+            GameManager.Instance.gameRecord.AddStatInfo(id, eterStat.statLv, value);
         }
         else if (choiceStatDic.ContainsKey(id))
         {
