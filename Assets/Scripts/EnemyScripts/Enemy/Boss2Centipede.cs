@@ -13,6 +13,9 @@ namespace Enemy
         public PlayableDirector playableDirector;
 
         private Vector2 dashTargetPosition = Vector2.zero;
+        private Vector2 backwardTargetPos = Vector2.zero;
+
+        private Vector2 backwardStartPos = Vector2.zero;
 
         private Color originSpriteColor = Color.white;
 
@@ -23,6 +26,8 @@ namespace Enemy
         private float bulletMaxAttackPower = 0f;
 
         private float originCurrentSpeed = 0f;
+        [SerializeField]
+        private float backwardSpeed = 2f;
 
         private float shootBulletRotationOffset = 0f;
         private float shootBulletRotationValue = 15f; // °¢µµ º¯µ¿°ª
@@ -36,6 +41,8 @@ namespace Enemy
         private float moveTimer = 0f;
         private float dashTimer = 0f;
         private float meleeAttackDis = 12f;
+        private float backwardTimer = 0f;
+        private float backwardTime = 0f;
 
         private float meleeAttack1Percentage = 30f; // Áö¸éÆÄ±« È®·ü
         private float meleeAttack2Percentage = 20f; // ¹°¾î¶â±â È®·ü
@@ -184,6 +191,7 @@ namespace Enemy
 
             DashCheck();
             MoveCheck();
+            BackwardCheck();
         }
         
         private void PercentageCheck()
@@ -582,6 +590,27 @@ namespace Enemy
             enemyMeleeAttack2Collider.GetComponent<EnemyAttackCheck>().AttackObjectReset();
 
             enemyData.enemyAnimator.SetTrigger(hashAttackEnd);
+        }
+        public void Backward(float moveTime)
+        {
+            backwardStartPos = transform.position;
+            backwardTargetPos = backwardStartPos + new Vector2((transform.position - EnemyManager.Player.transform.position).x, 0f).normalized * moveTime * backwardSpeed;
+            backwardTimer = 0f;
+            backwardTime = moveTime;
+        }
+        private void BackwardCheck()
+        {
+            if(backwardTimer < backwardTime)
+            {
+                backwardTimer += Time.deltaTime;
+
+                if(backwardTimer > backwardTime)
+                {
+                    backwardTimer = backwardTime;
+                }
+
+                transform.position = Vector2.Lerp(backwardStartPos, backwardTargetPos, backwardTimer / backwardTime);
+            }
         }
     }
 }

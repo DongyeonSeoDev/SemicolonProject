@@ -672,14 +672,14 @@ AnimationClip:
   m_HasMotionFloatCurves: 0
   m_Events:
   - time: 0
-    functionName: StartAttack
+    functionName: CentipedeSneerStart
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
   - time: 0
-    functionName: CentipedeSneerStart
+    functionName: StartAttack
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -692,11 +692,53 @@ AnimationClip:
     floatParameter: 0.2
     intParameter: 0
     messageOptions: 0
+  - time: 0.5
+    functionName: SetAnimSpeed
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0.5
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.625
+    functionName: Backward
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0.2
+    intParameter: 0
+    messageOptions: 0
   - time: 0.625
     functionName: ShootBulletToPlayer
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.625
+    functionName: SetAnimSpeed
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 1.5
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.75
+    functionName: SetAnimSpeed
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0.5
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.875
+    functionName: SetAnimSpeed
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 1.5
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.875
+    functionName: Backward
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0.2
     intParameter: 0
     messageOptions: 0
   - time: 0.875
@@ -706,11 +748,53 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 1
+    functionName: SetAnimSpeed
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0.5
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.125
+    functionName: SetAnimSpeed
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 1.5
+    intParameter: 0
+    messageOptions: 0
   - time: 1.125
     functionName: ShootBulletToPlayer
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.125
+    functionName: Backward
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0.2
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.25
+    functionName: SetAnimSpeed
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0.5
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.375
+    functionName: Backward
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0.2
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.375
+    functionName: SetAnimSpeed
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 1.5
     intParameter: 0
     messageOptions: 0
   - time: 1.375
@@ -720,11 +804,32 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 1.5
+    functionName: SetAnimSpeed
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0.5
+    intParameter: 0
+    messageOptions: 0
   - time: 1.625
     functionName: ShootBulletToPlayer
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.625
+    functionName: SetAnimSpeed
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 1.5
+    intParameter: 0
+    messageOptions: 0
+  - time: 1.625
+    functionName: Backward
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0.2
     intParameter: 0
     messageOptions: 0
   - time: 1.75
