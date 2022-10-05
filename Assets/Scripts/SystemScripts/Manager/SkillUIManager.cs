@@ -53,6 +53,7 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
     //동화율 바 (캐릭터 머리 위)
     public GameObject assimBarObj;
     public FillBasedScale assimFillImg;
+    public Text assimNextEndTxt;
 
     private bool isFillAssim = false; //머리 위 동화율바가 나와있는 상태인가
 
@@ -199,7 +200,9 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
         {
             Util.StopCo("InactiveAssimBar", this);
             assimBarObj.SetActive(true);
-            float rate = PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(SlimeGameManager.Instance.CurrentBodyId) % 51 * 0.02f;
+            float assimilation = PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(SlimeGameManager.Instance.CurrentBodyId);
+            assimNextEndTxt.text = Mathf.Clamp(50 + 50 * (int)assimilation / 50, 50, 200).ToString();
+            float rate = assimilation % 51 * 0.02f;
             assimFillImg.SetFillAmount(rate, 0.6f, false, () =>
             {
                 Util.PriDelayFunc("InactiveAssimBar", () =>
