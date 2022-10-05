@@ -510,6 +510,10 @@ namespace Enemy
                 shootAroundCommand.Execute();
             }
         }
+        public void PlayCentipedeMeleeAttack1EffectSound()
+        {
+            SoundManager.Instance.PlaySoundBox("CentipedeMelee1");
+        }
         public void BrakeGroundParticle()
         {
             EnemyPoolManager.Instance.GetPoolObject(Type.CentipedeBrakeEffect, shootTrm.position + new Vector3(0f, 0.7f, 0f));
