@@ -136212,6 +136212,46 @@ MonoBehaviour:
   charCountTxt: {fileID: 1107026137}
   expTxt: {fileID: 936964750}
   restStatPointTxt: {fileID: 1205670767}
+  textFillSecPerOffset:
+  - rangeInfo:
+    - range: 33
+      value: 0.04
+    - range: 75
+      value: 0.02
+    - range: 150
+      value: 0.016
+  - rangeInfo:
+    - range: 10
+      value: 0.1
+    - range: 25
+      value: 0.05
+  - rangeInfo:
+    - range: 2200
+      value: 0.05
+    - range: 5000
+      value: 0.03
+    - range: 7600
+      value: 0.02
+    - range: 11000
+      value: 0.015
+  - rangeInfo:
+    - range: 15
+      value: 0.1
+    - range: 35
+      value: 0.06
+    - range: 60
+      value: 0.03
+  - rangeInfo:
+    - range: 20
+      value: 0.1
+    - range: 45
+      value: 0.07
+    - range: 80
+      value: 0.04
+    - range: 135
+      value: 0.025
+    - range: 170
+      value: 0.015
   statResultLastElement: {fileID: 4604341654925958110}
 --- !u!4 &9059231207754277675
 Transform:

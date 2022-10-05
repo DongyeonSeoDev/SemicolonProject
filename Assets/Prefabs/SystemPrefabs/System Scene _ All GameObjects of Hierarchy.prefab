@@ -46678,6 +46678,46 @@ MonoBehaviour:
   charCountTxt: {fileID: 6858885004122028641}
   expTxt: {fileID: 6858885003952089142}
   restStatPointTxt: {fileID: 6858885004220729815}
+  textFillSecPerOffset:
+  - rangeInfo:
+    - range: 33
+      value: 0.04
+    - range: 75
+      value: 0.02
+    - range: 150
+      value: 0.016
+  - rangeInfo:
+    - range: 10
+      value: 0.1
+    - range: 25
+      value: 0.05
+  - rangeInfo:
+    - range: 2200
+      value: 0.05
+    - range: 5000
+      value: 0.03
+    - range: 7600
+      value: 0.02
+    - range: 11000
+      value: 0.015
+  - rangeInfo:
+    - range: 15
+      value: 0.1
+    - range: 35
+      value: 0.06
+    - range: 60
+      value: 0.03
+  - rangeInfo:
+    - range: 20
+      value: 0.1
+    - range: 45
+      value: 0.07
+    - range: 80
+      value: 0.04
+    - range: 135
+      value: 0.025
+    - range: 170
+      value: 0.015
   statResultLastElement: {fileID: 6974474680974229862}
 --- !u!1 &2492598749101314321
 GameObject:

@@ -19,3 +19,4 @@ MonoBehaviour:
   statName: "\uCE58\uBA85\uD0C0\uD655\uB960"
   statSpr: {fileID: 0}
   minStatValue: 0
+  initStatAfterOpen: 10

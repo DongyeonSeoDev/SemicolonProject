@@ -87,8 +87,6 @@ public class StageManager : MonoSingleton<StageManager>
     private Dictionary<string, StageData> stageDataDictionary = new Dictionary<string, StageData>();
     private string stageDataPath = Path.Combine("Enemy", "StageData", "StageData");
 
-    public LinkedListNode<string> s;
-    public LinkedList<string> ss;
 
     private void Awake()
     {
@@ -563,7 +561,7 @@ public class StageManager : MonoSingleton<StageManager>
             }
         }
 
-        CheckStageBug();
+        //CheckStageBug();
 
         if (currentStageData.isSaveStage)
         {

@@ -6,29 +6,19 @@ public class StatRecord : MonoBehaviour
     public Text statName;
     public Text statRecord;
 
-    public int Record(ushort id, bool eternal)
-    {
-        int point = 0;
-        if(eternal)
-        {
-            StatElement eStat = NGlobal.playerStatUI.eternalStatDic[id].first;
-            statName.text = string.Format("LV.{0} {1}", eStat.statLv, eStat.StatName);
-            point = NGlobal.playerStatUI.usedStatUpPointDic[id];
-            statRecord.text = string.Concat('+', point);
-        }
-        else
-        {
-            StatElement cStat = NGlobal.playerStatUI.choiceStatDic[id];
-            statName.text = string.Format("LV.{0} {1}", cStat.statLv, cStat.StatName);
-            point = NGlobal.playerStatUI.GetSellPoint(cStat.id);
-            statRecord.text = string.Concat('+', point);
-        }
+    private int point;
 
-        return point;
+    public void Record(GameRecord.StatUpdateRecord info)
+    {
+        StatElement stat = NGlobal.playerStatUI.eternalStatDic.ContainsKey(info.id) ? NGlobal.playerStatUI.eternalStatDic[info.id].first : NGlobal.playerStatUI.choiceStatDic[info.id];
+
+        statName.text = string.Format("LV.{0} {1}", info.level, stat.StatName);
+        point += info.sell;
+        statRecord.text = string.Concat('+', point);
     }
 
-    /*public void DeleteChild()
+    public void ResetUI()
     {
-        Destroy(transform.GetChild(0).gameObject);
-    }*/
+        point = 0;
+    }
 }
