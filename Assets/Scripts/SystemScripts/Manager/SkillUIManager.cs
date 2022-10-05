@@ -200,8 +200,8 @@ public class SkillUIManager : MonoSingleton<SkillUIManager>
         {
             Util.StopCo("InactiveAssimBar", this);
             assimBarObj.SetActive(true);
-            float assimilation = PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(SlimeGameManager.Instance.CurrentBodyId);
-            assimNextEndTxt.text = Mathf.Clamp(50 + 50 * (int)assimilation / 50, 50, 200).ToString();
+            int assimilation = PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(SlimeGameManager.Instance.CurrentBodyId);
+            assimNextEndTxt.text = Mathf.Clamp(assimilation % 50 == 0 ? 50 * assimilation / 50 : 50 * (assimilation / 50 + 1), 50, 200).ToString() + "%";
             float rate = assimilation % 51 * 0.02f;
             assimFillImg.SetFillAmount(rate, 0.6f, false, () =>
             {
