@@ -317,13 +317,24 @@ namespace Enemy
         }
         public void DashToPlayer(float speed) // 대쉬 시작
         {
-            dashTargetPosition = EnemyManager.Player.transform.position - ((Vector3)EnemyManager.Player.GetComponent<PlayerMove>().LastMoveVec * Time.deltaTime / speed);
+            try
+            {
+                dashTargetPosition = EnemyManager.Player.transform.position - ((Vector3)EnemyManager.Player.GetComponent<PlayerMove>().LastMoveVec * Time.deltaTime / speed);
+            }
+            catch(System.Exception e)
+            {
+                Debug.Log(e);
 
-            isDashToPlayer = true;
-            dashTimer = dashAttackDis / speed;
-            currentSpeed = speed;
+                speed = 30f;
+                dashTargetPosition = EnemyManager.Player.transform.position - ((Vector3)EnemyManager.Player.GetComponent<PlayerMove>().LastMoveVec * Time.deltaTime / speed);
+            }
 
-            dashCommand = new CentipedeBossDashCommand(enemyData, dashTargetPosition, rb, this);
+                isDashToPlayer = true;
+                dashTimer = dashAttackDis / speed;
+                currentSpeed = speed;
+
+                dashCommand = new CentipedeBossDashCommand(enemyData, dashTargetPosition, rb, this);
+            
         }
         private void DashToPlayerEnd()// 대쉬 끝났을 때
         {
@@ -496,6 +507,7 @@ namespace Enemy
         // sneer(침뱉기)에 쓰이는 총알 발사 함수
         public void ShootBulletToPlayer()
         {
+            PlayCentipedeSneerEffectSound();
             enemySneerCommand = new CentipedeLongRangeAttackCommand(this, shootTrm, EnemyManager.Player.transform.position, Type.CentipedeBullet, shootTrm, bulletMinAttackPower, bulletMaxAttackPower, enemyData.randomCritical, enemyData.randomCritical);
             enemySneerCommand.Execute();
         }
@@ -512,7 +524,11 @@ namespace Enemy
         }
         public void PlayCentipedeMeleeAttack1EffectSound()
         {
-            SoundManager.Instance.PlaySoundBox("CentipedeMelee1");
+            //SoundManager.Instance.PlaySoundBox("CentipedeMelee1");
+        }
+        public void PlayCentipedeSneerEffectSound()
+        {
+            //SoundManager.Instance.PlaySoundBox("CentipedeSneer");
         }
         public void BrakeGroundParticle()
         {
