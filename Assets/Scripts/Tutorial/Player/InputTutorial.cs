@@ -242,7 +242,7 @@ public class InputTutorial : MonoBehaviour
     }
     private void QuestionMarkShowNumCheck()
     {
-        if(questionMarkStrArrShow)
+        if(questionMarkStrArrShow || StageManager.Instance.CurrentStageData.stageID != "Stage0-01")
         {
             return;
         }
