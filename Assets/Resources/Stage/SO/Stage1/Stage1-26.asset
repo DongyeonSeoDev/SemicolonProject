@@ -18,7 +18,7 @@ MonoBehaviour:
   useOpenDoorSound: 0
   stageMonsterBundleCount: 2
   nextEnemysSpawnInterval:
-  - 10
+  - 20
   stageMonsterBundleID:
   - Stage1-26-1
   - Stage1-26-2
