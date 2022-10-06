@@ -14,6 +14,13 @@ public class MiniMap : MonoBehaviour
         }
 
         StageManager.Instance.StageClearEvent += StageClear;
+        EventManager.StartListening("ExitCurrentMap", () =>
+        {
+            for (int i = 0; i < icons.Count; i++)
+            {
+                icons[i].gameObject.SetActive(false);
+            }
+        });
     }
 
     private void StageClear()

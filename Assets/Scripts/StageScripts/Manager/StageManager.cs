@@ -967,7 +967,8 @@ public class StageManager : MonoSingleton<StageManager>
             if(currentStageData.stageMonsterBundleCount > currentStageMonsterBundleOrder)
             {
                 Util.PriDelayFunc("AutoSpawnNextEnemy", () => NextEnemy(true), 
-                    currentStageData.nextEnemysSpawnInterval[currentStageMonsterBundleOrder - 1] + 1f, this, false);
+                    currentStageData.nextEnemysSpawnInterval[currentStageMonsterBundleOrder - 1] + 1f, this, false, 
+                    true, () => !SlimeGameManager.Instance.Player.PlayerState.IsDrain);
             }
         }
         else

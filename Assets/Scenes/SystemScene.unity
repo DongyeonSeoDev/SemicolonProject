@@ -803,6 +803,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NextStageImage (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 8768659645388172353, guid: 8be840a1ab3476d4f82744ac94bc2c6d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8be840a1ab3476d4f82744ac94bc2c6d, type: 3}
 --- !u!224 &35729515 stripped
@@ -3293,6 +3297,10 @@ PrefabInstance:
     - target: {fileID: 8768659645388172353, guid: 8be840a1ab3476d4f82744ac94bc2c6d, type: 3}
       propertyPath: m_Name
       value: NextStageImage (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8768659645388172353, guid: 8be840a1ab3476d4f82744ac94bc2c6d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8be840a1ab3476d4f82744ac94bc2c6d, type: 3}
@@ -12014,6 +12022,10 @@ PrefabInstance:
     - target: {fileID: 8768659645388172353, guid: 8be840a1ab3476d4f82744ac94bc2c6d, type: 3}
       propertyPath: m_Name
       value: NextStageImage (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8768659645388172353, guid: 8be840a1ab3476d4f82744ac94bc2c6d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8be840a1ab3476d4f82744ac94bc2c6d, type: 3}
@@ -32442,6 +32454,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: NextStageImage
       objectReference: {fileID: 0}
+    - target: {fileID: 8768659645388172353, guid: 8be840a1ab3476d4f82744ac94bc2c6d, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8be840a1ab3476d4f82744ac94bc2c6d, type: 3}
 --- !u!224 &1493707867 stripped
@@ -52179,21 +52195,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates: []
---- !u!114 &783634229328777581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5333264054231235937}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e667567d014ea8844a7a61bc1ea7229c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  transitionEnable: 1
-  explanation: "\uC2A4\uD0AC\uC774\uB984(\uAE30\uBCF8\uACF5\uACA9)"
-  fontSize: 30
 --- !u!114 &783634229328777583
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52211,7 +52212,6 @@ MonoBehaviour:
     second: {fileID: 2170732632304154888}
     third: {fileID: 2170732631970173606}
   keyCodeTxt: {fileID: 2170732632078093062}
-  nifc: {fileID: 783634229328777581}
   us: {fileID: 783634229328777556}
   cvsg: {fileID: 5333264054231235961}
   skillEx: 
@@ -74894,6 +74894,7 @@ GameObject:
   - component: {fileID: 1925414456972420008}
   - component: {fileID: 1925414456972420009}
   - component: {fileID: 1925414456972420006}
+  - component: {fileID: 1925414456972420012}
   m_Layer: 5
   m_Name: InfoDelayImage
   m_TagString: Untagged
@@ -74901,6 +74902,26 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 0
+--- !u!114 &1925414456972420012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1925414456972420011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b00d11e6506e6c3489ca0f0cc10e59a3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cmpnt: 1
+  matName: UnscaledGlowMat
+  bStartAutoInitSet: 1
+  bStartAutoSetMatTex: 1
+  hdrColor: {r: 0.08235294, g: 0.6313726, b: 0.039215688, a: 0}
+  speed: 0
+  scale: 0
+  intensity: 1.5
 --- !u!225 &1962937071685682153
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -75247,7 +75268,6 @@ GameObject:
   - component: {fileID: 2045036463545492036}
   - component: {fileID: 2045036463545492035}
   - component: {fileID: 6666142859314122322}
-  - component: {fileID: 6666142859314122317}
   - component: {fileID: 6666142859314122356}
   - component: {fileID: 6666142859314122316}
   - component: {fileID: 2045036463545492057}
@@ -99044,7 +99064,6 @@ MonoBehaviour:
     second: {fileID: 2071194630}
     third: {fileID: 985826902}
   keyCodeTxt: {fileID: 1275984810}
-  nifc: {fileID: 4043397125150946799}
   us: {fileID: 4043397125150946774}
   cvsg: {fileID: 8718546716443302395}
   skillEx: 
@@ -99064,21 +99083,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates: []
---- !u!114 &4043397125150946799
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8718546716443302371}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e667567d014ea8844a7a61bc1ea7229c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  transitionEnable: 1
-  explanation: "\uC2A4\uD0AC\uC774\uB984(\uAE30\uBCF8\uACF5\uACA9)"
-  fontSize: 30
 --- !u!114 &4043397125150946800
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -115144,7 +115148,6 @@ GameObject:
   - component: {fileID: 5333264054231235940}
   - component: {fileID: 5333264054231235939}
   - component: {fileID: 783634229328777586}
-  - component: {fileID: 783634229328777581}
   - component: {fileID: 783634229328777556}
   - component: {fileID: 783634229328777580}
   - component: {fileID: 5333264054231235961}
@@ -121002,21 +121005,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Delegates: []
---- !u!114 &6666142859314122317
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2045036463545492033}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e667567d014ea8844a7a61bc1ea7229c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  transitionEnable: 1
-  explanation: "\uC2A4\uD0AC\uC774\uB984(\uAE30\uBCF8\uACF5\uACA9)"
-  fontSize: 30
 --- !u!114 &6666142859314122319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121034,7 +121022,6 @@ MonoBehaviour:
     second: {fileID: 1906402279}
     third: {fileID: 1623626654}
   keyCodeTxt: {fileID: 510266715}
-  nifc: {fileID: 6666142859314122317}
   us: {fileID: 6666142859314122356}
   cvsg: {fileID: 2045036463545492057}
   skillEx: 
@@ -137142,7 +137129,6 @@ GameObject:
   - component: {fileID: 8718546716443302374}
   - component: {fileID: 8718546716443302369}
   - component: {fileID: 4043397125150946800}
-  - component: {fileID: 4043397125150946799}
   - component: {fileID: 4043397125150946774}
   - component: {fileID: 4043397125150946798}
   - component: {fileID: 8718546716443302395}

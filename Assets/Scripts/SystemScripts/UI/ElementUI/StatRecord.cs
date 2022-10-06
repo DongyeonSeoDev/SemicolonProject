@@ -14,6 +14,7 @@ public class StatRecord : MonoBehaviour
 
         statName.text = string.Format("LV.{0} {1}", info.level, stat.StatName);
         point += info.sell;
+        statRecord.color = NGlobal.playerStatUI.choiceStatDic.ContainsKey(info.id) ? Color.blue : Color.green;
         statRecord.text = string.Concat('+', point);
     }
 
