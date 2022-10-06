@@ -67,7 +67,10 @@ public class CinemachineCameraScript : MonoSingleton<CinemachineCameraScript>
             DoOrthographicSize(defaultOrthographicSize - strength, duration * 0.5f, () => DoOrthographicSize(defaultOrthographicSize, duration * 0.5f));
         }
     }
-
+    public void SetOthographicSize(float size)
+    {
+        cinemachine.m_Lens.OrthographicSize = size;
+    }
     public void DoOrthographicSize(float target, float duration, Action OnComplete = null)
     {
         DOUtil.StartCo("DoOrthographicSize " + name, CamOrthographicSizeCo(target, duration, OnComplete), this);
