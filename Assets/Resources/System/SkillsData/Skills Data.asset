@@ -58,7 +58,7 @@ MonoBehaviour:
       skillName: "\uD654\uC0B4 \uBC1C\uC0AC"
       skillExplanation: "\uC6D0\uAC70\uB9AC\uB85C \uD654\uC0B4\uC744 \uBC1C\uC0AC\uD574
         \uD53C\uD574\uB97C \uC900\uB2E4"
-      skillSpr: {fileID: 21300000, guid: e9ab7c407a961ca41b0f3a19eb395d27, type: 3}
+      skillSpr: {fileID: 21300000, guid: 72f6745cbe64d724f85e43f0cd979c33, type: 3}
   - first: 5
     second:
     - skillType: 0
@@ -72,4 +72,4 @@ MonoBehaviour:
       skillName: "\uAD6C\uCCB4 \uB0A0\uB9AC\uAE30"
       skillExplanation: "\uC6D0\uAC70\uB9AC\uB85C \uAD6C\uCCB4\uB97C \uBC1C\uC0AC\uD574
         \uD53C\uD574\uB97C \uC900\uB2E4"
-      skillSpr: {fileID: 21300000, guid: ecf22c4c678e6454bbf83235264e3d4c, type: 3}
+      skillSpr: {fileID: 21300000, guid: 3ce9c7a500cdab7488edf9c93eea1e51, type: 3}
