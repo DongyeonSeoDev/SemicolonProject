@@ -31,7 +31,7 @@ namespace Enemy
             enemyData.attackDelay = 1f;
             enemyData.isAttackPlayerDistance = 1.5f;
             enemyData.playerAnimationSpeed = 1f;
-            enemyData.playerAnimationTime = 1f;
+            enemyData.playerAnimationTime = 0.95f;
 
             enemyData.enemySpriteRotateCommand = new EnemySpriteRotateCommand(enemyData);
             enemyData.enemyMoveCommand = new EnemyMoveCommand(enemyData, transform, enemyData.chaseSpeed);
@@ -39,6 +39,8 @@ namespace Enemy
             enemyData.moveEvent = MoveEvent;
 
             moveTime = Random.Range(minMoveTime, maxMoveTime);
+
+            MoveEnemy();
         }
 
         protected override void Update()
@@ -52,7 +54,17 @@ namespace Enemy
 
             if (isAttackMove)
             {
-                moveCommand.Execute();
+                if (enemyData.eEnemyController == EnemyController.AI)
+                {
+                    moveCommand.Execute();
+                }
+                else if (enemyData.eEnemyController == EnemyController.PLAYER)
+                {
+                    Vector3 targetDirection = ((Vector3)playerInput.AttackMousePosition - transform.position).normalized;
+
+                    enemyData.moveVector = targetDirection;
+                    transform.position += targetDirection * Time.deltaTime;
+                }
             }
         }
 

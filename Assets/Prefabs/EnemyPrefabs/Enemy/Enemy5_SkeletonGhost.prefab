@@ -181,6 +181,7 @@ MonoBehaviour:
   damageHPTweenTime: 0.2
   hpEffectAnimation: {fileID: 3393951944251396924}
   stunEffectPosition: {x: 0, y: 0.8}
+  startAnimSpeed: 1
   damageCollider: {fileID: 5022227129099399403}
 --- !u!114 &5332868602282750055
 MonoBehaviour:
@@ -212,7 +213,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3677800013637725671
 Transform:
   m_ObjectHideFlags: 0
