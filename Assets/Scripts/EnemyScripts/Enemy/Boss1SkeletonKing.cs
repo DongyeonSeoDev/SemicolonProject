@@ -10,6 +10,7 @@ namespace Enemy
         public List<float> specialAttack3HPPercent = new List<float>();
         public Transform movePivot;
         public PlayableDirector playableDirector;
+        public GameObject bossAttackCamera;
 
         public int fireCount = 0;
         public int maxAttackCount = 0;
@@ -131,6 +132,11 @@ namespace Enemy
 
             EventManager.StartListening("PlayerDead", StopAttack);
             EventManager.StartListening("BossDead", StopAttack);
+
+            bossAttackCamera.SetActive(false);
+            bossAttackCamera.transform.SetParent(null);
+            bossAttackCamera.transform.position = new Vector3(0f, 7.5f, -10f);
+            bossAttackCamera.transform.localScale = new Vector3(1f, 1f, 1f);
         }
 
         protected override void OnDisable()
@@ -139,6 +145,9 @@ namespace Enemy
 
             EventManager.StopListening("PlayerDead", StopAttack);
             EventManager.StopListening("BossDead", StopAttack);
+
+            bossAttackCamera.SetActive(false);
+            bossAttackCamera.transform.SetParent(transform);
         }
 
         protected override void SetHP(bool useTween)
