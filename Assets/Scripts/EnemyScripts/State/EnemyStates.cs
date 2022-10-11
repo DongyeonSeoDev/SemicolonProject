@@ -207,6 +207,8 @@ namespace Enemy
             afterImageColor = Color.white;
             afterImageColor.a = 0.3f;
 
+            boss.bossAttackCamera.SetActive(true);
+
             base.Start();
         }
 
@@ -288,6 +290,8 @@ namespace Enemy
         {
             EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.Attack, enemyData.enemyAnimator, TriggerType.ResetTrigger);
             EnemyManager.AnimatorSet(enemyData.animationDictionary, EnemyAnimationType.AttackEnd, enemyData.enemyAnimator, TriggerType.SetTrigger);
+
+            boss.bossAttackCamera.SetActive(false);
 
             base.End();
         }
