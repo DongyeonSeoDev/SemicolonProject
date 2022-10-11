@@ -62,11 +62,11 @@ public static partial class Util
         mark.localScale = Vector3.one;
     }
 
-    public static void PriDelayFunc(string key, Action a, float delay, MonoBehaviour mono, bool realTime, bool applyCurTimeScale = true)
+    public static void PriDelayFunc(string key, Action a, float delay, MonoBehaviour mono, bool realTime, bool applyCurTimeScale = true, Func<bool> condition = null)
     {
         if (!mono) mono = GameManager.Instance;
 
-        DOUtil.ExecuteTweening(key, DelayFuncCo(a, delay, realTime, applyCurTimeScale), mono);
+        DOUtil.ExecuteTweening(key, DelayFuncCo(a, delay, realTime, applyCurTimeScale, condition), mono);
     }
 
     public static void StopCo(string key, MonoBehaviour mono)

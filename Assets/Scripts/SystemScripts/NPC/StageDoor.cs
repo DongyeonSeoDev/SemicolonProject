@@ -131,7 +131,7 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
         {
             base.SetInteractionUI(on);
 
-            if (nextStageData != null && nextStageData.areaType == AreaType.MONSTER && !IsBlindState)  //담 스테이지가 몬스터 맵이면서 실명 저주 안걸린 상태면 종족 아이콘 띄움
+            /*if (nextStageData != null && nextStageData.areaType == AreaType.MONSTER && !IsBlindState)  //담 스테이지가 몬스터 맵이면서 실명 저주 안걸린 상태면 종족 아이콘 띄움
             {
                 if (on)
                 {
@@ -149,7 +149,7 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
                         icon = null;
                     }
                 }
-            }
+            }*/
         }
     }
 
