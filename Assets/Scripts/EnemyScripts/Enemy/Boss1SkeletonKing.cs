@@ -147,7 +147,6 @@ namespace Enemy
             EventManager.StopListening("BossDead", StopAttack);
 
             bossAttackCamera.SetActive(false);
-            bossAttackCamera.transform.SetParent(transform);
         }
 
         protected override void SetHP(bool useTween)
