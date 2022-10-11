@@ -281,6 +281,20 @@ public class PlayerChoiceStatControl : MonoBehaviour
             UIManager.Instance.playerStatUI.StatUnlock(stat);
         }
     }
+    public void CheckIntellect()
+    {
+        StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.eternalStat.intellect;
+
+        if (stat.isUnlock)
+        {
+            return;
+        }
+
+        if (eternalStatDataDict[NGlobal.IntellectID].unlockStatValue <= PlayerEnemyUnderstandingRateManager.Instance.GetUnderstandingRate(Enemy.EnemyType.SkeletonMage_06.ToString()))
+        {
+            UIManager.Instance.playerStatUI.StatUnlock(stat);
+        }
+    }
     public void CheckSpeed()
     {
         StatElement stat = SlimeGameManager.Instance.Player.PlayerStat.eternalStat.speed;

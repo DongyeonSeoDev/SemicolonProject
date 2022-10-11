@@ -44,11 +44,18 @@ namespace Enemy
         private float backwardTimer = 0f;
         private float backwardTime = 0f;
 
+        #region 확률관련 변수
+        [SerializeField]
         private float meleeAttack1Percentage = 30f; // 지면파괴 확률
+        [SerializeField]
         private float meleeAttack2Percentage = 20f; // 물어뜯기 확률
+        [SerializeField]
         private float sneerPercentage = 50; // 침뱉기 확률
+        [SerializeField]
         private float multipleMeleeAttack1Percentage = 0f; // 연속 지면파괴 확률
+        [SerializeField]
         private float bitingAndTearingPercentage = 0f; // 물고 뜯기 확률
+        #endregion
 
         #region meleeAttack1(지면파괴)관련 변수
         [Header("meleeAttack1(지면파괴)의 원통형 공격 범위")]
@@ -269,6 +276,13 @@ namespace Enemy
                     prevIsAttack = false;
                     AttackCheck();
                 }
+            }
+            else if(isDashToPlayer)
+            {
+                moveTimer = 0f;
+                isMove = false;
+                prevIsAttack = false;
+                AttackCheck();
             }
         }
         public override void MoveEnemy()
@@ -524,7 +538,7 @@ namespace Enemy
         }
         public void PlayCentipedeMeleeAttack1EffectSound()
         {
-            //SoundManager.Instance.PlaySoundBox("CentipedeMelee1");
+            SoundManager.Instance.PlaySoundBox("CentipedeMelee1");
         }
         public void PlayCentipedeSneerEffectSound()
         {
@@ -560,7 +574,7 @@ namespace Enemy
                 return new EnemyAIAttackState(enemyData);
             }
 
-            return new EnemyChaseState(enemyData);
+            return new EnemyIdleState(enemyData);
         }
         public EnemyState ChangeAttackCondition() // 이벤트 구독에 사용됨 - 공격을 해야하는지 확인
         {

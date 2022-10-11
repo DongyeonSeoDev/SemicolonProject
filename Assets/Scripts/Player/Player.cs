@@ -535,6 +535,11 @@ public class Player : MonoBehaviour
         }
 
         UIManager.Instance.playerStatUI.AddPlayerStatPointExp(enemy.AddExperience);
+
+        if (playerStat.Intellect > 0)
+        {
+            UIManager.Instance.playerStatUI.AddPlayerStatPointExp(playerStat.Intellect * 2);
+        }
     }
     private void StartPlayerSlow()
     {
