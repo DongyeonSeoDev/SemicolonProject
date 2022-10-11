@@ -161,12 +161,18 @@ public static partial class Util
 
     public static Vector3 WorldToScreenPoint(Vector3 worldPos) => MainCam.WorldToScreenPoint(worldPos);
 
-    public static IEnumerator DelayFuncCo(Action func, float delay, bool realTime, bool applyCurTimeScale)
+    public static IEnumerator DelayFuncCo(Action func, float delay, bool realTime, bool applyCurTimeScale, Func<bool> condition = null)
     {
         if (!realTime)
             yield return new WaitForSeconds(applyCurTimeScale ? delay : delay * TimeManager.CurrentTimeScale);
         else
             yield return new WaitForSecondsRealtime(delay);
+
+        if(condition != null)
+        {
+            while (!condition()) yield return null;
+        }
+
         func();
     } //waitforseconds는 timeScale 영향 받음
 }

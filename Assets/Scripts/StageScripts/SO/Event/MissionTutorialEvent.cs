@@ -9,19 +9,33 @@ public class MissionTutorialEvent : MapEventSO
     public string startMapSubDataId;
     public string damagedSubDataId;
 
+    private bool isHit;
+
     public override void OnEnterEvent()
     {
+        isHit = false;
         BattleUIManager.Instance.StartMission(MissionType.SURVIVAL1, DifficultyLevel.EASY);
         TalkUtil.ShowSubtitle(startMapSubDataId);
 
         EventManager.StartListening("PlayerGetDamaged", PlayerDamaged);
+        EventManager.StartListening("ExitCurrentMap", StartNextStage);
         EventManager.TriggerEvent("SpawnEnemy","Stage0-03");
     }
 
     public void PlayerDamaged()
     {
+        isHit = true;
         TalkUtil.ShowSubtitle(damagedSubDataId);
         EventManager.StopListening("PlayerGetDamaged", PlayerDamaged);
     }
 
+    void StartNextStage()
+    {
+        if (!isHit)
+        {
+            EventManager.StopListening("PlayerGetDamaged", PlayerDamaged);
+        }
+
+        EventManager.StopListening("ExitCurrentMap", StartNextStage);
+    }
 }

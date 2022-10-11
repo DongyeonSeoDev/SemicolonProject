@@ -15,6 +15,7 @@ public class StageManager : MonoSingleton<StageManager>
     private Dictionary<string, StageBundleDataSO> idToStageFloorDict = new Dictionary<string, StageBundleDataSO>();
     private Dictionary<int, Dictionary<AreaType, List<StageDataSO>>> randomRoomDict = new Dictionary<int, Dictionary<AreaType, List<StageDataSO>>>();
     private Dictionary<string, NPC> npcDict = new Dictionary<string, NPC>();
+    public Dictionary<AreaType, Sprite> areaSprDict= new Dictionary<AreaType, Sprite>();   
     #endregion
 
     #region current
@@ -70,6 +71,8 @@ public class StageManager : MonoSingleton<StageManager>
     private bool isSelectRandomArea = false;
     #endregion
 
+    public MiniMap miniMap;
+
     public Func<bool> canNextStage = null;  //다음 스테이지를 갈 때 이게 null이면 가지고 무언가 값이 있으면 그것을 실행해서 true면 지나가짐
 
     public DoorDirType PassDir { get; set; } //전 스테이지에서 지나간 문 방향
@@ -79,6 +82,7 @@ public class StageManager : MonoSingleton<StageManager>
     public Vector3 MapCenterPoint { get; private set; }
 
     public event Action NextStagePreEvent;
+    public event Action StageClearEvent;
 
     private string CurrentMonstersOrderID => currentStageData.stageMonsterBundleCount < currentStageMonsterBundleOrder ? string.Empty : currentStageData.stageMonsterBundleID[currentStageMonsterBundleOrder - 1];
 
@@ -87,8 +91,6 @@ public class StageManager : MonoSingleton<StageManager>
     private Dictionary<string, StageData> stageDataDictionary = new Dictionary<string, StageData>();
     private string stageDataPath = Path.Combine("Enemy", "StageData", "StageData");
 
-    public LinkedListNode<string> s;
-    public LinkedList<string> ss;
 
     private void Awake()
     {
@@ -103,7 +105,7 @@ public class StageManager : MonoSingleton<StageManager>
             idToStageFloorDict.Add(data.id, data);
             data.SetStageDic();
         }
-
+        
         //스테이지 데이터
         string jsonData = Resources.Load(stageDataPath).ToString();
         var stageData = JsonUtility.FromJson<JsonParse<StageData>>(jsonData);
@@ -166,6 +168,12 @@ public class StageManager : MonoSingleton<StageManager>
                 doorSprDic[i].Add(((DoorDirType)j).ToString() + "Open", doorSpriteList[i].value[j+cnt]);
                 doorSprDic[i].Add(((DoorDirType)j).ToString() + "Exit", doorSpriteList[i].value[j+cnt2]);
             }
+        }
+
+        //구역 대표 스프라이트 세팅
+        foreach (Sprite spr in Resources.LoadAll<Sprite>("Stage/Sprites/AreaSpr/"))
+        {
+            areaSprDict.Add(Util.EnumParse<AreaType>(spr.name), spr);
         }
 
         EventManager.StartListening(Global.EnterNextMap, () =>  //해당 방을 입장했을 때, 마지막에 호출
@@ -563,7 +571,7 @@ public class StageManager : MonoSingleton<StageManager>
             }
         }
 
-        CheckStageBug();
+        //CheckStageBug();
 
         if (currentStageData.isSaveStage)
         {
@@ -959,7 +967,8 @@ public class StageManager : MonoSingleton<StageManager>
             if(currentStageData.stageMonsterBundleCount > currentStageMonsterBundleOrder)
             {
                 Util.PriDelayFunc("AutoSpawnNextEnemy", () => NextEnemy(true), 
-                    currentStageData.nextEnemysSpawnInterval[currentStageMonsterBundleOrder - 1] + 1f, this, false);
+                    currentStageData.nextEnemysSpawnInterval[currentStageMonsterBundleOrder - 1] + 1f, this, false, 
+                    true, () => !SlimeGameManager.Instance.Player.PlayerState.IsDrain);
             }
         }
         else
@@ -993,6 +1002,7 @@ public class StageManager : MonoSingleton<StageManager>
     {
         IsStageClear = true;
         currentStage.OpenDoors();
+        StageClearEvent?.Invoke();
     }
 
     public void StartNextStage()  //다음 스테이지에 완전히 들어왔고 그 스테이지를 시작해줌

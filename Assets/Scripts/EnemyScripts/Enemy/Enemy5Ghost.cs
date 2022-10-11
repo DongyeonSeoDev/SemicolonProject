@@ -39,8 +39,6 @@ namespace Enemy
             enemyData.moveEvent = MoveEvent;
 
             moveTime = Random.Range(minMoveTime, maxMoveTime);
-
-            MoveEnemy();
         }
 
         protected override void Update()
@@ -63,7 +61,7 @@ namespace Enemy
                     Vector3 targetDirection = ((Vector3)playerInput.AttackMousePosition - transform.position).normalized;
 
                     enemyData.moveVector = targetDirection;
-                    transform.position += targetDirection * Time.deltaTime;
+                    transform.position += targetDirection * 2f * Time.deltaTime;
                 }
             }
         }
