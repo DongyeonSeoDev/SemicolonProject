@@ -1108,11 +1108,16 @@ MonoBehaviour:
   backwardSpeed: 2
   minMoveTimer: 1
   maxMoveTimer: 3
+  meleeAttack1Percentage: 30
+  meleeAttack2Percentage: 20
+  sneerPercentage: 50
+  multipleMeleeAttack1Percentage: 0
+  bitingAndTearingPercentage: 0
   meleeAttack1CircleRadius: 2
   meleeAttack1CircleDamageValue: 3
   meleeAttack1BulletDamageValue: -18
   meleeAttack1ChargingColor: {r: 0.4292453, g: 0.99457866, b: 1, a: 1}
-  dashAttackDis: 6
+  dashAttackDis: 10
   meleeAttack2DamageValue: -5
   sneerDamageValue: -10
   whatIsWall:

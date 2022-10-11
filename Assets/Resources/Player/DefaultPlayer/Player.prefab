@@ -663,6 +663,10 @@ MonoBehaviour:
     name: "\uBC29\uC5B4\uB825"
     unlockStatValue: 50
     firstValue: 0
+  - id: 25
+    name: "\uC9C0\uB2A5"
+    unlockStatValue: 50
+    firstValue: 0
   - id: 30
     name: "\uC774\uB3D9\uC18D\uB3C4"
     unlockStatValue: 50
