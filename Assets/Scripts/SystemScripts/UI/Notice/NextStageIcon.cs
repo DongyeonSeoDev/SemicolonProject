@@ -16,7 +16,14 @@ public class NextStageIcon : MonoBehaviour
         {
             if(stageData.areaType == AreaType.MONSTER || stageData.areaType == AreaType.BOSS)
             {
-                iconImg.sprite = MonsterCollection.Instance.GetMonsterInfo(stageData.enemySpeciesArea.ToString()).bodyImg;
+                if (!StageManager.Instance.miniMap.enemyIconDict.ContainsKey(stageData.enemySpeciesArea))
+                {
+                    iconImg.sprite = MonsterCollection.Instance.GetMonsterInfo(stageData.enemySpeciesArea.ToString()).bodyImg;
+                }
+                else
+                {
+                    iconImg.sprite = StageManager.Instance.miniMap.enemyIconDict[stageData.enemySpeciesArea];
+                }
             }
             else
             {

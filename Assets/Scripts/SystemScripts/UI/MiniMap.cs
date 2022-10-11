@@ -3,14 +3,23 @@ using UnityEngine;
 
 public class MiniMap : MonoBehaviour
 {
+    [SerializeField] private List<Pair<Enemy.EnemyType, Sprite>> enemyIconSprList;
     [SerializeField] private List<NextStageIcon> icons = new List<NextStageIcon>();
+
+    public Dictionary<Enemy.EnemyType, Sprite> enemyIconDict = new Dictionary<Enemy.EnemyType, Sprite>();
     private Dictionary<DoorDirType, NextStageIcon> iconDict = new Dictionary<DoorDirType, NextStageIcon>();
+
 
     private void Start()
     {
         for (int i = 0; i < icons.Count; i++)
         {
             iconDict.Add(icons[i].doorDirType, icons[i]);
+        }
+
+        for(int i=0; i < enemyIconSprList.Count; i++)
+        {
+            enemyIconDict.Add(enemyIconSprList[i].first, enemyIconSprList[i].second);
         }
 
         StageManager.Instance.StageClearEvent += StageClear;
