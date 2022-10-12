@@ -10926,6 +10926,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc59ae99a9eded949a1efece1e6dd46e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enemyIconSprList: []
   icons:
   - {fileID: 1493707868}
   - {fileID: 198644877}
