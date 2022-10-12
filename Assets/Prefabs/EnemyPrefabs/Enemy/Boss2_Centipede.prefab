@@ -1106,6 +1106,7 @@ MonoBehaviour:
   stageTilemap: {fileID: 0}
   playableDirector: {fileID: -8307998283944319826}
   backwardSpeed: 2
+  dashToPlayerSpeed: 25
   minMoveTimer: 1
   maxMoveTimer: 3
   meleeAttack1Percentage: 30
