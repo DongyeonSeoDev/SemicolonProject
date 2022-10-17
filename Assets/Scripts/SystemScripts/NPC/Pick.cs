@@ -106,7 +106,7 @@ public class Pick : InteractionObj
 
         if (suc)
         {
-            EffectManager.Instance.OnWorldTextEffect("채집 성공", transform.position, Vector3.one, EffectManager.Instance.pickupPlantSucFaiVG.normal);
+            EffectManager.Instance.OnWorldTextEffect(count == 1 ? "채집 성공" : "채집 대성공", transform.position, Vector3.one, EffectManager.Instance.pickupPlantSucFaiVG.normal);
             Global.MonoActionTrigger(Global.PickupPlant, this);
         }
         else

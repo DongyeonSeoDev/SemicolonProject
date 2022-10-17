@@ -25,6 +25,8 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
     private bool isExitDoor; //이 문이 입구였는가
     private bool isBreak;
 
+    public bool IsBreak { set=> isBreak = value; }
+
     public bool IsOpen => isOpen;
 
     private float damageableTime = 0.0f;
@@ -188,7 +190,6 @@ public class StageDoor : InteractionObj, IDamageableBySlimeBodySlap
 
             if (hp <= 0)
             {
-               
                 isBreak = true;
                 hp = 0;
                 Open();

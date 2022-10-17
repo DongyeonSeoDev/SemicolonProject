@@ -70,6 +70,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camStageCollider: {fileID: 8648534772182156580}
   playerSpawnPoint: {fileID: 0}
+  lobbySpawnPoint: {fileID: 0}
   objSpawnPos: {fileID: 0}
   stageDoors:
   - {fileID: 1701977263888226046}
@@ -25282,6 +25283,10 @@ PrefabInstance:
       value: 1.0045674
       objectReference: {fileID: 0}
     - target: {fileID: 8604531944747639585, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8604531944747639585, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
       propertyPath: m_Offset.x
       value: -0.014496803
       objectReference: {fileID: 0}
@@ -25566,7 +25571,7 @@ PrefabInstance:
       objectReference: {fileID: 7517293596149303416}
     - target: {fileID: 8604531944747639585, guid: c209247278d2e8b43a75191f211d61b5, type: 3}
       propertyPath: m_Size.x
-      value: 0.9559288
+      value: 0.99663043
       objectReference: {fileID: 0}
     - target: {fileID: 8604531944747639585, guid: c209247278d2e8b43a75191f211d61b5, type: 3}
       propertyPath: m_Size.y
@@ -25574,7 +25579,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8604531944747639585, guid: c209247278d2e8b43a75191f211d61b5, type: 3}
       propertyPath: m_Offset.x
-      value: 0.066408634
+      value: -0.0677198
       objectReference: {fileID: 0}
     - target: {fileID: 8604531944747639585, guid: c209247278d2e8b43a75191f211d61b5, type: 3}
       propertyPath: m_Offset.y
@@ -25594,11 +25599,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8604531944747639599, guid: c209247278d2e8b43a75191f211d61b5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 16.792416
+      value: 17.5
       objectReference: {fileID: 0}
     - target: {fileID: 8604531944747639599, guid: c209247278d2e8b43a75191f211d61b5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 5.5611815
+      value: 5.5
       objectReference: {fileID: 0}
     - target: {fileID: 8604531944747639599, guid: c209247278d2e8b43a75191f211d61b5, type: 3}
       propertyPath: m_LocalPosition.z
