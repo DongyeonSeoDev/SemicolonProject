@@ -34,7 +34,8 @@ public class MiniMap : MonoBehaviour
 
     private void StageClear()
     {
-        if (StageManager.Instance.CurrentAreaType == AreaType.START || StageManager.Instance.CurrentAreaType == AreaType.LOBBY) return;
+        if (StageManager.Instance.CurrentAreaType == AreaType.START || StageManager.Instance.CurrentAreaType == AreaType.LOBBY
+            || StageManager.Instance.CurrentAreaType == AreaType.BOSS) return;
 
         foreach(StageDoor door in StageManager.Instance.CurrentStageGround.stageDoors)
         {

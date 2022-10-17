@@ -7,6 +7,7 @@ public class ButtonHoldEvent : MonoBehaviour
     public event System.Action OnPressing = null;
     public event System.Func<bool> CanContinue = null;
 
+    public bool isButtonOutDisable = true;  //버튼 꾹 누르다가 밖으로 마우스 나가면 기능 작동 안되게
     public bool transitionEnable = true;
 
     public Pair<float, float> delayTimePair;
@@ -27,6 +28,16 @@ public class ButtonHoldEvent : MonoBehaviour
         EventTrigger.Entry entry2 = new EventTrigger.Entry();
         entry2.eventID = EventTriggerType.PointerUp;
         entry2.callback.AddListener(eventData => Transition(false));
+
+        EventTrigger.Entry entry3 = new EventTrigger.Entry();
+        entry2.eventID = EventTriggerType.PointerExit;
+        entry2.callback.AddListener(eventData =>
+        {
+            if(isPress && isButtonOutDisable)
+            {
+                isPress = false;
+            }
+        }); 
 
         eventTrigger.triggers.Add(entry1);
         eventTrigger.triggers.Add(entry2);
