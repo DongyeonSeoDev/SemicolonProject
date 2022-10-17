@@ -136,6 +136,7 @@ public class StatInfoElement : UITransition
         {
             statUpBtn.interactable = on;
             transitionEnable = on;
+            btnHoldEvent.transitionEnable = on;
 
             if(on && isEnter)
             {

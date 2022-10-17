@@ -30,8 +30,7 @@ public class TutorialStageDoor : MonoBehaviour, IDamageableBySlimeBodySlap
                 TalkManager.Instance.SetSubtitle(SubtitleDataManager.Instance.GetSubtitle("Tuto_BreakDoorOneHit"));
                 StoredData.SetValueKey("TutoDoorHit1", true);
             }
-
-            if(--hp == 0)  
+            else if(--hp == 0)   //여기 실행 안되네? 위에 텍스트 사라지기 전에는
             {
                 npc._NPCInfo.talkId = 3;
                 TalkManager.Instance.SetSubtitle(SubtitleDataManager.Instance.GetSubtitle("Tuto_BreakDoor"));
