@@ -28,6 +28,8 @@ namespace Enemy
         private float originCurrentSpeed = 0f;
         [SerializeField]
         private float backwardSpeed = 2f;
+        [SerializeField]
+        private float dashToPlayerSpeed = 30f;
 
         private float shootBulletRotationOffset = 0f;
         private float shootBulletRotationValue = 15f; // 각도 변동값
@@ -329,26 +331,15 @@ namespace Enemy
                 }
             }
         }
-        public void DashToPlayer(float speed) // 대쉬 시작
+        public void DashToPlayer() // 대쉬 시작
         {
-            try
-            {
-                dashTargetPosition = EnemyManager.Player.transform.position - ((Vector3)EnemyManager.Player.GetComponent<PlayerMove>().LastMoveVec * Time.deltaTime / speed);
-            }
-            catch(System.Exception e)
-            {
-                Debug.Log(e);
+            dashTargetPosition = EnemyManager.Player.transform.position - ((Vector3)EnemyManager.Player.GetComponent<PlayerMove>().LastMoveVec * Time.deltaTime / dashToPlayerSpeed);
 
-                speed = 30f;
-                dashTargetPosition = EnemyManager.Player.transform.position - ((Vector3)EnemyManager.Player.GetComponent<PlayerMove>().LastMoveVec * Time.deltaTime / speed);
-            }
+            isDashToPlayer = true;
+            dashTimer = dashAttackDis / dashToPlayerSpeed;
+            currentSpeed = dashToPlayerSpeed;
 
-                isDashToPlayer = true;
-                dashTimer = dashAttackDis / speed;
-                currentSpeed = speed;
-
-                dashCommand = new CentipedeBossDashCommand(enemyData, dashTargetPosition, rb, this);
-            
+            dashCommand = new CentipedeBossDashCommand(enemyData, dashTargetPosition, rb, this);
         }
         private void DashToPlayerEnd()// 대쉬 끝났을 때
         {
