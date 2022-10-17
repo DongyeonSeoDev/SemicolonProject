@@ -181,6 +181,8 @@ namespace Enemy
         {
             base.OnDisable();
 
+            StageManager.Instance.SetClearStage();
+
             EventManager.StopListening("PlayerDead", StopAttack);
             EventManager.StopListening("BossDead", StopAttack);
         }
@@ -280,7 +282,7 @@ namespace Enemy
                 }
             }
             else if(isDashToPlayer)
-            {
+            { 
                 moveTimer = 0f;
                 isMove = false;
                 prevIsAttack = false;

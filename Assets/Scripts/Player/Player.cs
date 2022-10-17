@@ -174,7 +174,7 @@ public class Player : MonoBehaviour
         currentEnergy = maxEnergy;
     }
     private void OnEnable()
-    {
+    { 
         EventManager.StartListening("PlayerDead", PlayerDead);
         EventManager.StartListening("EnemyDead", EnemyDead);
         EventManager.StartListening("PlayerSetActiveFalse", SetActiveFalse);
