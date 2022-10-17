@@ -46,6 +46,7 @@ public class TutorialStageDoor : MonoBehaviour, IDamageableBySlimeBodySlap
                 TalkManager.Instance.SetSubtitle(SubtitleDataManager.Instance.GetSubtitle("Tuto_BreakDoor"));
                 door.IsBreak = true;
                 door.Open();
+                door.GetComponent<Collider2D>().enabled = true;
             }
             else
             {
