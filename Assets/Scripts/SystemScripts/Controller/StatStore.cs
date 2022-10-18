@@ -360,6 +360,15 @@ public class StatStore : MonoSingleton<StatStore>
                             && data.maxStatLv > NGlobal.playerStatUI.choiceStatDic[data.statId].statLv;
                 });
 
+                if(type == CharType.STORE)
+                {
+                    list = list.FindAll(id =>
+                    {
+                        ChoiceStatSO data = GetDataSO(id);
+                        return data.plusStat == rateList[i].second;
+                    });
+                }
+
                 selectedProp.Buy();
                 NGlobal.playerStatUI.PlayerStat.currentStatPoint -= selectedProp.Point;
                 NGlobal.playerStatUI.UpdateScrStatUI();
