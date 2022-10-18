@@ -181,6 +181,8 @@ namespace Enemy
         {
             base.OnDisable();
 
+            StageManager.Instance.SetClearStage();
+
             EventManager.StopListening("PlayerDead", StopAttack);
             EventManager.StopListening("BossDead", StopAttack);
         }
@@ -280,7 +282,7 @@ namespace Enemy
                 }
             }
             else if(isDashToPlayer)
-            {
+            { 
                 moveTimer = 0f;
                 isMove = false;
                 prevIsAttack = false;
@@ -333,7 +335,10 @@ namespace Enemy
         }
         public void DashToPlayer() // 대쉬 시작
         {
-            dashTargetPosition = EnemyManager.Player.transform.position - ((Vector3)EnemyManager.Player.GetComponent<PlayerMove>().LastMoveVec * Time.deltaTime / dashToPlayerSpeed);
+            Debug.Log("a" + SlimeGameManager.Instance.CurrentPlayerBody);
+            Debug.Log("b" + SlimeGameManager.Instance.CurrentPlayerBody.GetComponent<PlayerMove>());
+
+            dashTargetPosition = SlimeGameManager.Instance.CurrentPlayerBody.transform.position - ((Vector3)SlimeGameManager.Instance.CurrentPlayerBody.GetComponent<PlayerMove>().LastMoveVec * Time.deltaTime / dashToPlayerSpeed);
 
             isDashToPlayer = true;
             dashTimer = dashAttackDis / dashToPlayerSpeed;
