@@ -181,13 +181,13 @@ namespace Enemy
         {
             if (enemyData.isEnemyMove)
             {
-                base.OnDisable();
-
                 StageManager.Instance.SetClearStage();
+            }
 
-                EventManager.StopListening("PlayerDead", StopAttack);
-                EventManager.StopListening("BossDead", StopAttack);
-            }            
+            base.OnDisable();
+
+            EventManager.StopListening("PlayerDead", StopAttack);
+            EventManager.StopListening("BossDead", StopAttack);
         }
         protected override void Update()
         {
