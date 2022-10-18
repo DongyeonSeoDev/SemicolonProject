@@ -21,26 +21,15 @@ public class ButtonHoldEvent : MonoBehaviour
     {
         EventTrigger eventTrigger = GetComponent<EventTrigger>();
 
-        EventTrigger.Entry entry1 = new EventTrigger.Entry();
-        entry1.eventID = EventTriggerType.PointerDown;
-        entry1.callback.AddListener(eventData => Transition(true));
-
-        EventTrigger.Entry entry2 = new EventTrigger.Entry();
-        entry2.eventID = EventTriggerType.PointerUp;
-        entry2.callback.AddListener(eventData => Transition(false));
-
-        EventTrigger.Entry entry3 = new EventTrigger.Entry();
-        entry2.eventID = EventTriggerType.PointerExit;
-        entry2.callback.AddListener(eventData =>
+        eventTrigger.AddTrigger(EventTriggerType.PointerDown, eventData => Transition(true));
+        eventTrigger.AddTrigger(EventTriggerType.PointerUp, eventData => Transition(false));
+        eventTrigger.AddTrigger(EventTriggerType.PointerExit, eventData =>
         {
-            if(isPress && isButtonOutDisable)
+            if (isPress && isButtonOutDisable)
             {
                 isPress = false;
             }
-        }); 
-
-        eventTrigger.triggers.Add(entry1);
-        eventTrigger.triggers.Add(entry2);
+        });
     }
 
     private void Update()

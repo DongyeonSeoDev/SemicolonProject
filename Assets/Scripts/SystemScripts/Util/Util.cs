@@ -6,6 +6,7 @@ using System;
 using System.Runtime.InteropServices;
 using System.Reflection;
 using FkTweening;
+using UnityEngine.EventSystems;
 
 public static partial class Util
 {
@@ -239,6 +240,14 @@ public static partial class Util
         Color c = img.color;
         c.a = a;
         img.color = c;
+    }
+
+    public static void AddTrigger(this EventTrigger eventTrigger, EventTriggerType eventType, UnityEngine.Events.UnityAction<BaseEventData> call)
+    {
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = eventType;
+        entry.callback.AddListener(call);
+        eventTrigger.triggers.Add(entry);
     }
 }
 
