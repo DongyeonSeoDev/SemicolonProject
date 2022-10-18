@@ -68,7 +68,7 @@ namespace Enemy
         private float meleeAttack1CircleDamageValue = 3;
         [Header("meleeAttack1(지면파괴)의 구체 데미지 변동 값")]
         [SerializeField]
-        private float meleeAttack1BulletDamageValue = -10; 
+        private float meleeAttack1BulletDamageValue = -10;
 
         [Header("meleeAttack1(지면파괴)의 차징시 색깔")]
         [SerializeField]
@@ -148,7 +148,7 @@ namespace Enemy
             stageTilemap = null;
             foreach (var item in StageManager.Instance.stageParent.GetComponentsInChildren<Tilemap>())
             {
-                if(item.gameObject.name == "BackgroundTilemap")
+                if (item.gameObject.name == "BackgroundTilemap")
                 {
                     stageTilemap = item;
                     break;
@@ -207,12 +207,12 @@ namespace Enemy
             MoveCheck();
             BackwardCheck();
         }
-        
+
         private void PercentageCheck()
         {
             // 체력에따른 퍼센테이지 변경
 
-            float hpPer = (enemyData.hp / enemyData.maxHP) * 100f ;
+            float hpPer = (enemyData.hp / enemyData.maxHP) * 100f;
 
             #region 확률 조정 코드
             if (hpPer <= 10f)
@@ -223,7 +223,7 @@ namespace Enemy
                 multipleMeleeAttack1Percentage = 35f;
                 bitingAndTearingPercentage = 0f;
             }
-            else if(hpPer <= 20f)
+            else if (hpPer <= 20f)
             {
                 meleeAttack1Percentage = 10f;
                 meleeAttack2Percentage = 15f;
@@ -231,7 +231,7 @@ namespace Enemy
                 multipleMeleeAttack1Percentage = 40f;
                 bitingAndTearingPercentage = 30f;
             }
-            else if(hpPer <= 40f)
+            else if (hpPer <= 40f)
             {
                 meleeAttack1Percentage = 20f;
                 meleeAttack2Percentage = 30f;
@@ -239,7 +239,7 @@ namespace Enemy
                 multipleMeleeAttack1Percentage = 15f;
                 bitingAndTearingPercentage = 25f;
             }
-            else if(hpPer <= 60f)
+            else if (hpPer <= 60f)
             {
                 meleeAttack1Percentage = 25f;
                 meleeAttack2Percentage = 45f;
@@ -247,7 +247,7 @@ namespace Enemy
                 multipleMeleeAttack1Percentage = 5f;
                 bitingAndTearingPercentage = 5f;
             }
-            else if(hpPer <= 80f)
+            else if (hpPer <= 80f)
             {
                 meleeAttack1Percentage = 40f;
                 meleeAttack2Percentage = 25f;
@@ -284,8 +284,8 @@ namespace Enemy
                     AttackCheck();
                 }
             }
-            else if(isDashToPlayer)
-            { 
+            else if (isDashToPlayer)
+            {
                 moveTimer = 0f;
                 isMove = false;
                 prevIsAttack = false;
@@ -343,7 +343,7 @@ namespace Enemy
             Debug.Log("a" + SlimeGameManager.Instance.CurrentPlayerBody);
             Debug.Log("b" + SlimeGameManager.Instance.CurrentPlayerBody.GetComponent<PlayerMove>());
 
-            dashTargetPosition = SlimeGameManager.Instance.CurrentPlayerBody.transform.position - ((Vector3)SlimeGameManager.Instance.CurrentPlayerBody.GetComponent<PlayerMove>().LastMoveVec * Time.deltaTime / dashToPlayerSpeed);
+            dashTargetPosition = SlimeGameManager.Instance.CurrentPlayerBody.transform.position;
 
             isDashToPlayer = true;
             dashTimer = dashAttackDis / dashToPlayerSpeed;
@@ -363,7 +363,7 @@ namespace Enemy
             enemyMoveCommand = new CentipedeBossMoveCommand(enemyData, movePivot, rb, this);
 
             enemyData.enemyMoveCommand = enemyMoveCommand;
-            
+
             enemyData.enemySpriteRotateCommand = new EnemySpriteRotateCommand(enemyData);
             enemyData.enemyChaseStateChangeCondition = AttackCheck;
             enemyData.addAIAttackStateChangeCondition = AttackStateChangeCondition;
@@ -458,7 +458,7 @@ namespace Enemy
         }
         public void SetMeleeAttack1Color(float time)
         {
-            if(time <= 0f)
+            if (time <= 0f)
             {
                 sr.color = meleeAttack1ChargingColor;
 
@@ -476,9 +476,9 @@ namespace Enemy
         }
         private void MeleeAttack1ColorTimer()
         {
-            if(meleeAttack1ChargingColorTimerStart)
+            if (meleeAttack1ChargingColorTimerStart)
             {
-                if(meleeAttack1ChargingColorTimer < meleeAttack1ChargingColorLerpEndTime)
+                if (meleeAttack1ChargingColorTimer < meleeAttack1ChargingColorLerpEndTime)
                 {
                     Color color = upColorValueByCharging * (meleeAttack1ChargingColorTimer / meleeAttack1ChargingColorLerpEndTime);
                     meleeAttack1ChargingColorTimer += Time.deltaTime;
@@ -494,7 +494,7 @@ namespace Enemy
         }
         public void StopAnim(float stopTime)
         {
-            if(stopTime <= 0)
+            if (stopTime <= 0)
             {
                 return;
             }
@@ -505,11 +505,11 @@ namespace Enemy
         }
         private void StopAnimTimerCheck()
         {
-            if(stopAnimTimer > 0f)
+            if (stopAnimTimer > 0f)
             {
                 stopAnimTimer -= Time.deltaTime;
 
-                if(stopAnimTimer <= 0f)
+                if (stopAnimTimer <= 0f)
                 {
                     SetAnimSpeed(1f);
                 }
@@ -619,7 +619,7 @@ namespace Enemy
             enemyData.maxAttackPower = originMaxAttackPower;
 
             bulletMinAttackPower = originMinAttackPower;
-            bulletMaxAttackPower= originMaxAttackPower;
+            bulletMaxAttackPower = originMaxAttackPower;
 
             enemyMeleeAttack1Collider.GetComponent<EnemyAttackCheck>().AttackObjectReset();
             enemyMeleeAttack2Collider.GetComponent<EnemyAttackCheck>().AttackObjectReset();
@@ -635,11 +635,11 @@ namespace Enemy
         }
         private void BackwardCheck()
         {
-            if(backwardTimer < backwardTime)
+            if (backwardTimer < backwardTime)
             {
                 backwardTimer += Time.deltaTime;
 
-                if(backwardTimer > backwardTime)
+                if (backwardTimer > backwardTime)
                 {
                     backwardTimer = backwardTime;
                 }

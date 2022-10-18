@@ -856,7 +856,7 @@ public class PlayerChoiceStatControl : MonoBehaviour
                         Global.CurrentPlayer.PlayerStat.additionalEternalStat.maxHp.statValue -= value;
 
                         float min = NGlobal.playerStatUI.GetStatSOData<EternalStatSO>(NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(statID).needStatID).minStatValue;
-                        if (NGlobal.playerStatUI.GetCurrentPlayerStat(NGlobal.MaxHpID) < min)  //플레이어 최대 HP의 최소치는 1로 둠
+                        if (NGlobal.playerStatUI.GetCurrentPlayerStat(NGlobal.MaxHpID) < min)  
                         {
                             value -= (min - NGlobal.playerStatUI.GetCurrentPlayerStat(NGlobal.MaxHpID));  //최솟값 보정을 하면 원래 더 빼줘야하는 만큼 value에서 빼서 나중에 돌려받음
                             Global.CurrentPlayer.PlayerStat.additionalEternalStat.maxHp.statValue = -Global.CurrentPlayer.PlayerStat.eternalStat.maxHp.statValue + min;

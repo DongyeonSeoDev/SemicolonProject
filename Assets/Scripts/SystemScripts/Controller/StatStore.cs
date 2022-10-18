@@ -8,6 +8,24 @@ using System.Text;
 
 public class StatStore : MonoSingleton<StatStore>   
 {
+    [System.Serializable]
+    public class StatBox  //각 가격에 따른 특성 뽑기 카드 정보. 
+    {
+        public int needPoint;
+
+        public string boxName; //UI에 표시할 이름
+        [TextArea] public string explanation;
+
+        public Pair<CharType, float> minusInfo;  //스탯감소 특성
+        public Pair<CharType, float> plusInfo; //스탯감소 특성
+        public Pair<CharType, float> mobInfo; //몬스터 특성
+        public Pair<CharType, float> SecretInfo;  //비밀 특성
+    }
+
+    public StatBox normalBox;
+    public StatBox rareBox;
+    public StatBox relicBox;
+
     [SerializeField] private int maxStockAmount = 3;  //상점에서 판매중인 특성을 몇 개까지 보여주는지
     [SerializeField] private int maxRechargeCount = 2; //판매중인 특성 목록 새로 갱신 몇 번까지 가능한지
     [SerializeField] private int rechargeNeedPoint = 2; //리롤에 필요한 스탯포인트
@@ -87,11 +105,11 @@ public class StatStore : MonoSingleton<StatStore>
             //1번 칸은 몬스터나 비밀 특성
             ChangeIndex(ref list, 0, id =>
             {
-                ChoiceStatSO data = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id);
+                ChoiceStatSO data = GetDataSO(id);
                 return !(GetCharType(id) != CharType.STORE && (data.needStatID == 0 || NGlobal.playerStatUI.IsUnlockStat(data.needStatID)));
             }, id =>
             {
-                ChoiceStatSO data = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id);
+                ChoiceStatSO data = GetDataSO(id);
                 return GetCharType(id) != CharType.STORE && (data.needStatID == 0 || NGlobal.playerStatUI.IsUnlockStat(data.needStatID));
             });
             if(cnt > 1)
@@ -129,7 +147,8 @@ public class StatStore : MonoSingleton<StatStore>
 
     public void EnteredStatArea()  //상점 구역 입장했을 때 호출됨
     {
-        curRechargeCount = 0;
+        #region 주석
+        /*curRechargeCount = 0;
         purchasedPropIDList.Clear();
         prevStockIDList.Clear();
         stockUpdateTMP.SetText(string.Concat("갱신(", maxRechargeCount, ')'));
@@ -158,7 +177,14 @@ public class StatStore : MonoSingleton<StatStore>
         for (i = cnt; i < maxStockAmount; i++)
         {
             storeProperties[i].gameObject.SetActive(false);
-        }
+        }*/
+        #endregion
+
+        //New
+
+        storeProperties[0].SetRandomCard(normalBox);
+        storeProperties[1].SetRandomCard(rareBox);
+        storeProperties[2].SetRandomCard(relicBox);
     }
 
     public void Renewal()  //리롤하기 위한 포인트가 있어야 함. 최대 리롤 가능 횟수만큼 리롤하면 더 이상 리롤 불가
@@ -239,6 +265,7 @@ public class StatStore : MonoSingleton<StatStore>
         }
     }
 
+    //old
     public void Purchase(ushort id) //purchasedPropIDList에 없는 id만 구매 가능, 구매하기 위한 포인트가 있어야 함
     {
         if (tweeningQueue.Count > 0) return;
@@ -305,6 +332,65 @@ public class StatStore : MonoSingleton<StatStore>
         }
     }
 
+    //new
+    public void Purchase(StatBox box)
+    {
+        if (tweeningQueue.Count > 0) return;
+
+        float sel = 100f * Random.Range(0f, 1f);
+        List<Triple<CharType, bool, float>> rateList = new List<Triple<CharType, bool, float>>();
+        rateList.Add(new Triple<CharType, bool, float>( box.minusInfo.first, false, box.minusInfo.second));
+        rateList.Add(new Triple<CharType, bool, float>(box.plusInfo.first, true, box.plusInfo.second));  //중간에 true인 이유는 처음 설계 때 감소/증가 특성 타입 나누질 않아서 구분하기 위함
+        rateList.Add(new Triple<CharType, bool, float>(box.mobInfo.first, false, box.mobInfo.second));
+        rateList.Add(new Triple<CharType, bool, float>(box.SecretInfo.first, false, box.SecretInfo.second));
+
+        for(int i=1; i<rateList.Count; i++) rateList[i].third += rateList[i-1].third;
+
+        for(int i=0; i<rateList.Count; i++)
+        {
+            if(sel < rateList[i].third)
+            {
+                CharType type = rateList[i].first;
+                bool plus = rateList[i].second;
+
+                List<ushort> list = allPropIDList.FindAllRandom(id =>
+                {
+                    ChoiceStatSO data = GetDataSO(id);
+                    return data.charType == type && (data.needStatID == 0 || NGlobal.playerStatUI.IsUnlockStat(data.needStatID))
+                            && data.maxStatLv > NGlobal.playerStatUI.choiceStatDic[data.statId].statLv;
+                });
+
+                if(type == CharType.STORE)
+                {
+                    list = list.FindAll(id =>
+                    {
+                        ChoiceStatSO data = GetDataSO(id);
+                        return data.plusStat == rateList[i].second;
+                    });
+                }
+
+                selectedProp.Buy();
+                NGlobal.playerStatUI.PlayerStat.currentStatPoint -= selectedProp.Point;
+                NGlobal.playerStatUI.UpdateScrStatUI();
+
+                StatElement stat = NGlobal.playerStatUI.choiceStatDic[list[0]];
+
+                if (!stat.isUnlock)
+                {
+                    NGlobal.playerStatUI.StatUnlock(stat);
+                }
+                else
+                {
+                    stat.statLv++;
+                    NGlobal.playerStatUI.StatUp(stat.id);
+                }
+                Global.CurrentPlayer.GetComponent<PlayerChoiceStatControl>().WhenTradeStat(stat.id);
+
+                break;
+            }
+        }
+    }
+
     public void Sell(ushort id) //어떤 스탯을 가지고 있어야 팔 수 있음. 레벨에 따라서 팔아서 받는 포인트 증가
     {
         if (tweeningQueue.Count > 0) return;
@@ -343,24 +429,35 @@ public class StatStore : MonoSingleton<StatStore>
         {
             ChoiceStatSO so = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(prop.ID);
 
-            if(!prop.IsSellItem && so.needStatID > 0 && !NGlobal.playerStatUI.IsUnlockStat(so.needStatID))
+            /*if(!prop.IsSellItem && so.needStatID > 0 && !NGlobal.playerStatUI.IsUnlockStat(so.needStatID))
             {
                 UIManager.Instance.RequestSystemMsg("해당 특성을 보유하기위한 스탯을 해금하지 못했습니다");
                 return;
-            }
+            }*/
 
             StringBuilder sb = new StringBuilder();
-            sb.Append("<color=#495FD9><size=120%>");
-            sb.Append(so.statName);
-            sb.Append("</size></color> 특성을 ");
-            sb.Append(prop.Point);
-            sb.Append("포인트에 ");
-            sb.Append(prop.IsSellItem ? "<color=#495FD9>판매</color>하시겠습니까?" : "<color=#495FD9>구매</color>하시겠습니까?");
+            if (prop.IsSellItem)
+            {
+                sb.Append("<color=#495FD9><size=120%>");
+                sb.Append(so.statName);
+                sb.Append("</size></color> 특성을 ");
+                sb.Append(prop.Point);
+                sb.Append("포인트에 ");
+                sb.Append(prop.IsSellItem ? "<color=#495FD9>판매</color>하시겠습니까?" : "<color=#495FD9>구매</color>하시겠습니까?");
+            }
+            else
+            {
+                sb.Append("<color=#495FD9><size=120%>");
+                sb.Append(prop.box.boxName);
+                sb.Append("</size></color>를 ");
+                sb.Append(prop.Point);
+                sb.Append("포인트에 구매하시겠습니까?");
+            }
 
             System.Action conf = null;
 
             if (prop.IsSellItem) conf = () => Sell(selectedProp.ID);
-            else conf = () => Purchase(selectedProp.ID);
+            else conf = () => Purchase(selectedProp.box);
             conf += UpdateUserPoint;
 
             UIManager.Instance.RequestWarningWindow(conf, sb.ToString());
