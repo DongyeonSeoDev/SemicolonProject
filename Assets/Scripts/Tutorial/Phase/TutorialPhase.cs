@@ -254,7 +254,7 @@ public class BodyChangeTutorialPhase : TutorialPhase
         pState = Global.CurrentPlayer.GetComponent<PlayerState>();
         isReady = false;
         bodyId = id;
-        endAction += TutorialManager.Instance.ReturnOriginBodyTuto;
+        //endAction += TutorialManager.Instance.ReturnOriginBodyTuto;
         InteractionHandler.showHeadAssimBar = false;
     }
 
@@ -293,6 +293,14 @@ public class BodyChangeTutorialPhase : TutorialPhase
     {
         emphasisEffect.gameObject.SetActive(false);
         SlimeGameManager.Instance.PlayerBodyChange(bodyId);
+
+        Util.DelayFunc(() =>
+        {
+            InteractionHandler.canTransformEnemy = true;
+            TimeManager.LerpTime(1.8f, 1f, () => EventManager.TriggerEvent("EnemyStart"));
+            InteractionHandler.showHeadAssimBar = true;
+        }, 0.6f, TutorialManager.Instance, true);
+
         base.End();
     }
 }

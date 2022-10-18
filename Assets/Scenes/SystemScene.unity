@@ -55127,7 +55127,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1230201846555769056
 GameObject:
   m_ObjectHideFlags: 0
@@ -86552,6 +86552,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89e22bce05ed83c4a8c9c08f61676aa9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  normalBox:
+    needPoint: 1
+    boxName: "\uCE74\uB4DC1"
+    minusInfo:
+      first: 1
+      second: 70
+    plusInfo:
+      first: 1
+      second: 20
+    mobInfo:
+      first: 0
+      second: 9
+    SecretInfo:
+      first: 2
+      second: 1
+  rareBox:
+    needPoint: 5
+    boxName: "\uCE74\uB4DC2"
+    minusInfo:
+      first: 1
+      second: 30
+    plusInfo:
+      first: 1
+      second: 50
+    mobInfo:
+      first: 0
+      second: 15
+    SecretInfo:
+      first: 2
+      second: 5
+  relicBox:
+    needPoint: 10
+    boxName: "\uCE74\uB4DC3"
+    minusInfo:
+      first: 1
+      second: 10
+    plusInfo:
+      first: 1
+      second: 20
+    mobInfo:
+      first: 0
+      second: 50
+    SecretInfo:
+      first: 2
+      second: 20
   maxStockAmount: 3
   maxRechargeCount: 2
   rechargeNeedPoint: 2

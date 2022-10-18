@@ -19,6 +19,8 @@ public class StoreProperty : MonoBehaviour
     public bool IsSellItem { get; private set; }   
     public int Point { get; private set; }
 
+    public StatStore.StatBox box { get; private set; }
+
     private void Awake()
     {
         btn.onClick.AddListener(()=>StatStore.Instance.OnClickStoreProp(this));
@@ -35,6 +37,10 @@ public class StoreProperty : MonoBehaviour
         btn.interactable = true;
         UIScaleCtrl.transitionEnable = true;
         cvsg.alpha = 1;
+
+        maxLv.gameObject.SetActive(true);
+        abil.gameObject.SetActive(true);
+        growth.gameObject.SetActive(true);
 
         maxLv.text = "최대레벨 : <color=#4444EC>" + stat.maxStatLv.ToString() + "</color>";
         abil.text = string.Format(stat.detailAbilExplanation, Global.CurrentPlayer.GetComponent<PlayerChoiceStatControl>().ChoiceDataDict[ID].upTargetStatPerChoiceStat);
@@ -62,5 +68,29 @@ public class StoreProperty : MonoBehaviour
     public void Sell()
     {
         gameObject.SetActive(false);
+    }
+
+    public void SetRandomCard(StatStore.StatBox info)   //(새로 바뀐 시스템) 특성 구매할 때 카드 세팅
+    {
+        cvsg.alpha = 1f;
+        btn.interactable = true;
+        UIScaleCtrl.transitionEnable = true;
+        transform.rotation = Quaternion.identity;
+
+        maxLv.gameObject.SetActive(false);
+        abil.gameObject.SetActive(false);
+        growth.gameObject.SetActive(false);
+        curLv.gameObject.SetActive(false);
+        gameObject.SetActive(true);
+
+        nameTMP.text = info.boxName;
+        Point = info.needPoint;
+        point.text = $"<color=yellow>{Point}</color> POINT";
+
+        ID = 0;
+        IsSellItem = false;
+        box = info;
+
+        //확률 표시
     }
 }
