@@ -86554,7 +86554,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   normalBox:
     needPoint: 1
-    boxName: "\uCE74\uB4DC1"
+    boxName: "\uC624\uC5FC\uB41C \uBB3C"
+    explanation: "\uB192\uC740 \uD655\uB960\uB85C <color=red>\uC2A4\uD0EF \uAC10\uC18C
+      \uD2B9\uC131</color> \uD68D\uB4DD\n\uB0AE\uC740 \uD655\uB960\uB85C <color=green>\uC2A4\uD0EF
+      \uC0C1\uC2B9 \uD2B9\uC131</color>,\n<color=purple>\uBAAC\uC2A4\uD130 \uD2B9\uC131</color>,
+      <color=yellow>\uBE44\uBC00 \uD2B9\uC131</color> \uD68D\uB4DD"
     minusInfo:
       first: 1
       second: 70
@@ -86569,7 +86573,12 @@ MonoBehaviour:
       second: 1
   rareBox:
     needPoint: 5
-    boxName: "\uCE74\uB4DC2"
+    boxName: "\uD3C9\uBC94\uD55C \uBB3C"
+    explanation: "\uB192\uC740 \uD655\uB960\uB85C <color=green>\uC2A4\uD0EF \uC0C1\uC2B9
+      \uD2B9\uC131</color> \uD68D\uB4DD\n\uC77C\uC815 \uD655\uB960\uB85C <color=red>\uC2A4\uD0EF
+      \uAC10\uC18C \uD2B9\uC131</color>,\n<color=purple>\uBAAC\uC2A4\uD130 \uD2B9\uC131</color>
+      \uD68D\uB4DD\n\uB0AE\uC740 \uD655\uB960\uB85C <color=yellow>\uBE44\uBC00 \uD2B9\uC131</color>
+      \uD68D\uB4DD"
     minusInfo:
       first: 1
       second: 30
@@ -86584,7 +86593,12 @@ MonoBehaviour:
       second: 5
   relicBox:
     needPoint: 10
-    boxName: "\uCE74\uB4DC3"
+    boxName: "\uD2B9\uBCC4\uD55C \uBB3C"
+    explanation: "\uB192\uC740 \uD655\uB960\uB85C <color=purple>\uBAAC\uC2A4\uD130
+      \uD2B9\uC131</color> \uD68D\uB4DD\n\uC77C\uC815 \uD655\uB960\uB85C <color=green>\uC2A4\uD0EF
+      \uC0C1\uC2B9 \uD2B9\uC131</color>,\n<color=yellow>\uBE44\uBC00 \uD2B9\uC131</color>
+      \uD68D\uB4DD\n\uB0AE\uC740 \uD655\uB960\uB85C <color=red>\uC2A4\uD0EF \uAC10\uC18C
+      \uD2B9\uC131</color> \uD68D\uB4DD"
     minusInfo:
       first: 1
       second: 10

@@ -15,6 +15,10 @@ public class StoreProperty : MonoBehaviour
     public Text maxLv, abil, growth, point;  //최대렙, 상세 설명, 성장 방법, 가격
     public Text curLv; //판매탭에서만 보이는 
 
+    public GameObject[] lines;
+
+    public Text boxExText; //(새 시스템) 구매 상점일 때 하나의 요소들마다 들어있는 설명 텍스트
+
     public ushort ID { get; private set; }
     public bool IsSellItem { get; private set; }   
     public int Point { get; private set; }
@@ -42,11 +46,15 @@ public class StoreProperty : MonoBehaviour
         abil.gameObject.SetActive(true);
         growth.gameObject.SetActive(true);
 
+        for (int i = 0; i < lines.Length; i++) lines[i].gameObject.SetActive(true);
+        boxExText.gameObject.SetActive(false);   
+
         maxLv.text = "최대레벨 : <color=#4444EC>" + stat.maxStatLv.ToString() + "</color>";
         abil.text = string.Format(stat.detailAbilExplanation, Global.CurrentPlayer.GetComponent<PlayerChoiceStatControl>().ChoiceDataDict[ID].upTargetStatPerChoiceStat);
         growth.text = stat.growthWay;
 
         curLv.gameObject.SetActive(!purchase);
+        boxExText.gameObject.SetActive(purchase);
         if (!purchase)
         {
             curLv.text = "현재레벨 : <color=#7C7CFB>" + NGlobal.playerStatUI.choiceStatDic[ID].statLv.ToString() + "</color>";
@@ -82,6 +90,9 @@ public class StoreProperty : MonoBehaviour
         growth.gameObject.SetActive(false);
         curLv.gameObject.SetActive(false);
         gameObject.SetActive(true);
+        boxExText.gameObject.SetActive(true);
+
+        for(int i=0; i<lines.Length; i++) lines[i].gameObject.SetActive(false);
 
         nameTMP.text = info.boxName;
         Point = info.needPoint;
@@ -91,6 +102,6 @@ public class StoreProperty : MonoBehaviour
         IsSellItem = false;
         box = info;
 
-        //확률 표시
+        boxExText.text = info.explanation;
     }
 }

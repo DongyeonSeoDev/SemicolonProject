@@ -14,6 +14,7 @@ public class StatStore : MonoSingleton<StatStore>
         public int needPoint;
 
         public string boxName; //UI에 표시할 이름
+        [TextArea] public string explanation;
 
         public Pair<CharType, float> minusInfo;  //스탯감소 특성
         public Pair<CharType, float> plusInfo; //스탯감소 특성
@@ -104,11 +105,11 @@ public class StatStore : MonoSingleton<StatStore>
             //1번 칸은 몬스터나 비밀 특성
             ChangeIndex(ref list, 0, id =>
             {
-                ChoiceStatSO data = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id);
+                ChoiceStatSO data = GetDataSO(id);
                 return !(GetCharType(id) != CharType.STORE && (data.needStatID == 0 || NGlobal.playerStatUI.IsUnlockStat(data.needStatID)));
             }, id =>
             {
-                ChoiceStatSO data = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id);
+                ChoiceStatSO data = GetDataSO(id);
                 return GetCharType(id) != CharType.STORE && (data.needStatID == 0 || NGlobal.playerStatUI.IsUnlockStat(data.needStatID));
             });
             if(cnt > 1)
@@ -146,7 +147,8 @@ public class StatStore : MonoSingleton<StatStore>
 
     public void EnteredStatArea()  //상점 구역 입장했을 때 호출됨
     {
-        curRechargeCount = 0;
+        #region 주석
+        /*curRechargeCount = 0;
         purchasedPropIDList.Clear();
         prevStockIDList.Clear();
         stockUpdateTMP.SetText(string.Concat("갱신(", maxRechargeCount, ')'));
@@ -175,8 +177,8 @@ public class StatStore : MonoSingleton<StatStore>
         for (i = cnt; i < maxStockAmount; i++)
         {
             storeProperties[i].gameObject.SetActive(false);
-        }
-
+        }*/
+        #endregion
 
         //New
 
@@ -263,6 +265,7 @@ public class StatStore : MonoSingleton<StatStore>
         }
     }
 
+    //old
     public void Purchase(ushort id) //purchasedPropIDList에 없는 id만 구매 가능, 구매하기 위한 포인트가 있어야 함
     {
         if (tweeningQueue.Count > 0) return;
@@ -329,6 +332,7 @@ public class StatStore : MonoSingleton<StatStore>
         }
     }
 
+    //new
     public void Purchase(StatBox box)
     {
         if (tweeningQueue.Count > 0) return;
@@ -348,6 +352,12 @@ public class StatStore : MonoSingleton<StatStore>
             {
                 CharType type = rateList[i].first;
                 bool plus = rateList[i].second;
+
+                List<ushort> list = allPropIDList.FindAllRandom(id =>
+                {
+                    ChoiceStatSO data = GetDataSO(id);
+                    return data.charType == type && (data.needStatID == 0 || NGlobal.playerStatUI.IsUnlockStat(data.needStatID));
+                });
 
 
             }
