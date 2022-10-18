@@ -85,7 +85,11 @@ public class StatStore : MonoSingleton<StatStore>
         if (cnt > 0)
         {
             //1번 칸은 몬스터나 비밀 특성
-            ChangeIndex(ref list, 0, id=>GetCharType(id)==CharType.STORE, id =>
+            ChangeIndex(ref list, 0, id =>
+            {
+                ChoiceStatSO data = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id);
+                return !(GetCharType(id) != CharType.STORE && (data.needStatID == 0 || NGlobal.playerStatUI.IsUnlockStat(data.needStatID)));
+            }, id =>
             {
                 ChoiceStatSO data = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id);
                 return GetCharType(id) != CharType.STORE && (data.needStatID == 0 || NGlobal.playerStatUI.IsUnlockStat(data.needStatID));

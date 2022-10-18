@@ -12,6 +12,12 @@ public class ChiScrollRect : ScrollRect, IPointerEnterHandler, IPointerExitHandl
 
     private static bool IsMouseWheelRolling => Input.GetAxis("Mouse ScrollWheel") != 0;
 
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        isMouseDown = false;
+    }
+
     public void OnPointerEnter(PointerEventData eventData)  //마우스 오버
     {
         isMouseOver = true;
