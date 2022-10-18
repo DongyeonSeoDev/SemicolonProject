@@ -179,12 +179,15 @@ namespace Enemy
         }
         protected override void OnDisable()
         {
-            base.OnDisable();
+            if (enemyData.isEnemyMove)
+            {
+                base.OnDisable();
 
-            StageManager.Instance.SetClearStage();
+                StageManager.Instance.SetClearStage();
 
-            EventManager.StopListening("PlayerDead", StopAttack);
-            EventManager.StopListening("BossDead", StopAttack);
+                EventManager.StopListening("PlayerDead", StopAttack);
+                EventManager.StopListening("BossDead", StopAttack);
+            }            
         }
         protected override void Update()
         {
@@ -291,6 +294,8 @@ namespace Enemy
         }
         public override void MoveEnemy()
         {
+            base.MoveEnemy();
+
             EventManager.TriggerEvent("StartCutScene");
 
             playableDirector.Play();
