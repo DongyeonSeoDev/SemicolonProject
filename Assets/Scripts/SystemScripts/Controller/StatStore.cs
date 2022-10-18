@@ -356,10 +356,28 @@ public class StatStore : MonoSingleton<StatStore>
                 List<ushort> list = allPropIDList.FindAllRandom(id =>
                 {
                     ChoiceStatSO data = GetDataSO(id);
-                    return data.charType == type && (data.needStatID == 0 || NGlobal.playerStatUI.IsUnlockStat(data.needStatID));
+                    return data.charType == type && (data.needStatID == 0 || NGlobal.playerStatUI.IsUnlockStat(data.needStatID))
+                            && data.maxStatLv > NGlobal.playerStatUI.choiceStatDic[data.statId].statLv;
                 });
 
+                selectedProp.Buy();
+                NGlobal.playerStatUI.PlayerStat.currentStatPoint -= selectedProp.Point;
+                NGlobal.playerStatUI.UpdateScrStatUI();
 
+                StatElement stat = NGlobal.playerStatUI.choiceStatDic[list[0]];
+
+                if (!stat.isUnlock)
+                {
+                    NGlobal.playerStatUI.StatUnlock(stat);
+                }
+                else
+                {
+                    stat.statLv++;
+                    NGlobal.playerStatUI.StatUp(stat.id);
+                }
+                Global.CurrentPlayer.GetComponent<PlayerChoiceStatControl>().WhenTradeStat(stat.id);
+
+                break;
             }
         }
     }
@@ -402,11 +420,11 @@ public class StatStore : MonoSingleton<StatStore>
         {
             ChoiceStatSO so = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(prop.ID);
 
-            if(!prop.IsSellItem && so.needStatID > 0 && !NGlobal.playerStatUI.IsUnlockStat(so.needStatID))
+            /*if(!prop.IsSellItem && so.needStatID > 0 && !NGlobal.playerStatUI.IsUnlockStat(so.needStatID))
             {
                 UIManager.Instance.RequestSystemMsg("해당 특성을 보유하기위한 스탯을 해금하지 못했습니다");
                 return;
-            }
+            }*/
 
             StringBuilder sb = new StringBuilder();
             if (prop.IsSellItem)
@@ -430,7 +448,7 @@ public class StatStore : MonoSingleton<StatStore>
             System.Action conf = null;
 
             if (prop.IsSellItem) conf = () => Sell(selectedProp.ID);
-            else conf = () => Purchase(selectedProp.ID);
+            else conf = () => Purchase(selectedProp.box);
             conf += UpdateUserPoint;
 
             UIManager.Instance.RequestWarningWindow(conf, sb.ToString());

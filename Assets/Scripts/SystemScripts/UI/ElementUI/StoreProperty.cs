@@ -55,6 +55,7 @@ public class StoreProperty : MonoBehaviour
 
         curLv.gameObject.SetActive(!purchase);
         boxExText.gameObject.SetActive(purchase);
+        statImg.gameObject.SetActive(!purchase);
         if (!purchase)
         {
             curLv.text = "현재레벨 : <color=#7C7CFB>" + NGlobal.playerStatUI.choiceStatDic[ID].statLv.ToString() + "</color>";
@@ -89,6 +90,7 @@ public class StoreProperty : MonoBehaviour
         abil.gameObject.SetActive(false);
         growth.gameObject.SetActive(false);
         curLv.gameObject.SetActive(false);
+        statImg.gameObject.SetActive(false);
         gameObject.SetActive(true);
         boxExText.gameObject.SetActive(true);
 
