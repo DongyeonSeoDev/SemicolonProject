@@ -54,6 +54,7 @@ public class TutorialManager : MonoSingleton<TutorialManager>
             playerFollowLight.DOOuterRadius(20f, 1.5f, false, () =>
             {
                 playerFollowLight.gameObject.SetActive(false);
+                //StoredData.GetGameObjectData("Stage0-01DoorLight", true).SetActive(false);
                 Environment.Instance.mainLight.intensity = 1;
             });
             StageManager.Instance.SetClearStage();

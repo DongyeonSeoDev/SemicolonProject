@@ -19,6 +19,7 @@ public abstract class TutorialPhase
 public class StartPhase : TutorialPhase
 {
     private Light2D light;
+    //private Light2D doorLight;
 
     private int needCount = 2, currentCount = 0;
     private bool complete = false;
@@ -26,6 +27,7 @@ public class StartPhase : TutorialPhase
     public StartPhase(Light2D light, int touchCount)
     {
         this.light = light;
+        //doorLight = StoredData.GetGameObjectData<Light2D>("Stage0-01DoorLight");
         needCount = touchCount;
         IsEnded = false;
     }
@@ -53,14 +55,19 @@ public class StartPhase : TutorialPhase
         {
             TalkManager.Instance.SetSubtitle(SubtitleDataManager.Instance.GetSubtitle("Tuto_FirstKeyInput"));
         }
-        if (needCount == currentCount)
+        if (needCount == currentCount)  // 플레이어 주변에서 빛이 나옴
         {
             complete = true;
 
             //EffectManager.Instance.OnTouchEffect();
             light.DOInnerRadius(2, 1.5f, true);
-            light.DOOuterRadius(4, 1.6f, true, () => End());
+            light.DOOuterRadius(4, 1.6f, true, End);
         }
+        /*else if(needCount + 1 == currentCount)
+        {
+            doorLight.DOInnerRadius(1.6f, 0.7f, true);
+            doorLight.DOOuterRadius(2f, 0.85f, true, End);
+        }*/
     }
 
     public override void End()
