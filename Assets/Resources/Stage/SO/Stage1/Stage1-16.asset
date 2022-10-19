@@ -18,10 +18,10 @@ MonoBehaviour:
   useOpenDoorSound: 0
   stageMonsterBundleCount: 2
   nextEnemysSpawnInterval:
-  - 16
+  - 20
   stageMonsterBundleID:
-  - Stage1-02-1
-  - Stage1-02-2
+  - Stage1-16-1
+  - Stage1-16-2
   stage: {fileID: 1378282381469885354, guid: faaa5bcc3e9138d47b5a637b4c898ed9, type: 3}
   areaType: 1
   enemySpeciesArea: 1

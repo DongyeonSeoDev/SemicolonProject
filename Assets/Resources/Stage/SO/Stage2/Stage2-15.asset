@@ -16,8 +16,10 @@ MonoBehaviour:
   stageName: 
   isSaveStage: 0
   useOpenDoorSound: 0
-  stageMonsterBundleCount: 1
-  nextEnemysSpawnInterval: []
+  stageMonsterBundleCount: 3
+  nextEnemysSpawnInterval:
+  - 4
+  - 12
   stageMonsterBundleID:
   - Stage2-15-1
   stage: {fileID: 1378282381469885354, guid: 3b2f9106aa492724786530928af9d617, type: 3}
