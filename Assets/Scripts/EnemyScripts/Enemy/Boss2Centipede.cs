@@ -294,8 +294,6 @@ namespace Enemy
         }
         public override void MoveEnemy()
         {
-            base.MoveEnemy();
-
             EventManager.TriggerEvent("StartCutScene");
 
             playableDirector.Play();

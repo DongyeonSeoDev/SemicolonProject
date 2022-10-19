@@ -77,7 +77,7 @@ public class PlayerStatUI : MonoBehaviour
         {
             return statDataDic[id] as T;
         }
-        Debug.Log("존재하지 않는 Stat ID : " + id);
+        //Debug.Log("존재하지 않는 Stat ID : " + id);
         return null;
     }
 

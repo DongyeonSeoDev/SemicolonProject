@@ -17,7 +17,7 @@ public class StoreProperty : MonoBehaviour
 
     public GameObject[] lines;
 
-    public Text boxExText; //(새 시스템) 구매 상점일 때 하나의 요소들마다 들어있는 설명 텍스트
+    public TextMeshProUGUI boxExText; //(새 시스템) 구매 상점일 때 하나의 요소들마다 들어있는 설명 텍스트
 
     public ushort ID { get; private set; }
     public bool IsSellItem { get; private set; }   
