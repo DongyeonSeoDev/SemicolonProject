@@ -389,7 +389,7 @@ public class SlimeGameManager : MonoSingleton<SlimeGameManager>
 
         if (hit)
         {
-            return hit.point - hit.point / 20f;
+            return hit.point;
         }
         else
         {

@@ -118,19 +118,13 @@ public class PlayerBodySlap : PlayerSkill
         CheckChargeTime();
         CheckBodySlapTime();
         CheckStopBodySlapTime();
-    }
-    private void FixedUpdate()
-    {
+
         if (playerState.BodySlapping && bodySlapStart && !bodyStopBodySlapTimerStart) // 움직임
         {
-            if(currentBodySlapTime <= 0f)
-            {
-                currentBodySlapTime = bodySlapTime;
-            }
-
             transform.position = Vector2.Lerp(moveOriginPos, moveTargetPos, bodySlapTimer / currentBodySlapTime);
         }
     }
+
     public override void DoSkill()
     {
         base.DoSkill();
@@ -145,8 +139,6 @@ public class PlayerBodySlap : PlayerSkill
             bodySlapLine.gameObject.SetActive(true);
 
             playerState.Chargning = true;
-
-            currentBodySlapTime = bodySlapTime;
 
             startCharging = true;
             maxCharging = false;
@@ -178,9 +170,6 @@ public class PlayerBodySlap : PlayerSkill
         maxCharging = false;
 
         moveOriginPos = transform.position;
-
-        Debug.DrawRay(moveOriginPos, moveTargetPos, Color.red, 10f);
-
         moveTargetPos = SlimeGameManager.Instance.PosCantCrossWall(cantCrossLayer, moveOriginPos, moveTargetPos);
 
         currentBodySlapTime = Vector2.Distance(moveOriginPos, moveTargetPos) / bodySlapMoveSpeed;
