@@ -346,6 +346,8 @@ public class StatStore : MonoSingleton<StatStore>
 
         for(int i=1; i<rateList.Count; i++) rateList[i].third += rateList[i-1].third;
 
+        bool purchased = false;
+
         for(int i=0; i<rateList.Count; i++)
         {
             if(sel < rateList[i].third)
@@ -369,6 +371,11 @@ public class StatStore : MonoSingleton<StatStore>
                     });
                 }
 
+                if(list.Count == 0)
+                {
+                    continue;
+                }
+
                 selectedProp.Buy();
                 NGlobal.playerStatUI.PlayerStat.currentStatPoint -= selectedProp.Point;
                 NGlobal.playerStatUI.UpdateScrStatUI();
@@ -386,8 +393,46 @@ public class StatStore : MonoSingleton<StatStore>
                 }
                 Global.CurrentPlayer.GetComponent<PlayerChoiceStatControl>().WhenTradeStat(stat.id);
 
+                purchased = true;
+
                 break;
             }
+        }
+
+        if(!purchased)
+        {
+            Debug.Log("조건에 맞는 특성을 못가져옴");
+
+            List<ushort> list = allPropIDList.FindAllRandom(id =>
+            {
+                ChoiceStatSO data = GetDataSO(id);
+                return (data.needStatID == 0 || NGlobal.playerStatUI.IsUnlockStat(data.needStatID))
+                        && data.maxStatLv > NGlobal.playerStatUI.choiceStatDic[data.statId].statLv;
+            });
+
+            if(list.Count == 0)
+            {
+                UIManager.Instance.RequestSystemMsg("구매할 수 있는 특성이 없습니다.");
+                return;
+            }
+
+            //임시
+            selectedProp.Buy();
+            NGlobal.playerStatUI.PlayerStat.currentStatPoint -= selectedProp.Point;
+            NGlobal.playerStatUI.UpdateScrStatUI();
+
+            StatElement stat = NGlobal.playerStatUI.choiceStatDic[list[0]];
+
+            if (!stat.isUnlock)
+            {
+                NGlobal.playerStatUI.StatUnlock(stat);
+            }
+            else
+            {
+                stat.statLv++;
+                NGlobal.playerStatUI.StatUp(stat.id);
+            }
+            Global.CurrentPlayer.GetComponent<PlayerChoiceStatControl>().WhenTradeStat(stat.id);
         }
     }
 

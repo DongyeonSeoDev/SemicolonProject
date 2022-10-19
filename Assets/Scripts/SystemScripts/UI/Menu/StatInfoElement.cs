@@ -126,6 +126,8 @@ public class StatInfoElement : UITransition
         if (NGlobal.playerStatUI.GetStatSOData(id).statValueDecimal) s = NGlobal.playerStatUI.GetCurrentPlayerStat(id).ToString("0.0");
         else s = Mathf.RoundToInt(NGlobal.playerStatUI.GetCurrentPlayerStat(id)).ToString();
 
+        if (NGlobal.playerStatUI.GetStatSOData<EternalStatSO>(id).isPercent) s += "%";
+
         curStatTxt.text = eternal.isUnlock ? s.ToString().ToColorStr("#980D0D", () => eternal.isUnlockClose) : "?" ;
         statLvTxt.text = "LV. " + eternal.statLv.ToString();
     }
@@ -150,8 +152,11 @@ public class StatInfoElement : UITransition
         if (enter && !eternal.isOpenStat) return;
 
         string s = "";
-        if (NGlobal.playerStatUI.GetStatSOData(id).statValueDecimal) s = NGlobal.playerStatUI.GetCurrentPlayerStat(id).ToString("0.0");
+        EternalStatSO so = NGlobal.playerStatUI.GetStatSOData<EternalStatSO>(id);
+        if (so.statValueDecimal) s = NGlobal.playerStatUI.GetCurrentPlayerStat(id).ToString("0.0");
         else s = Mathf.RoundToInt(NGlobal.playerStatUI.GetCurrentPlayerStat(id)).ToString();
+
+        if (so.isPercent) s += "%";
 
         if (eternal.isUnlockClose)
         {
@@ -159,7 +164,7 @@ public class StatInfoElement : UITransition
             return;
         }
 
-        curStatTxt.text = enter ? string.Concat(s, "<color=green>(+", NGlobal.playerStatUI.GetStatSOData(id).upStatValue, ")</color>") : s;
+        curStatTxt.text = enter ? string.Concat(s, "<color=green>(+", so.upStatValue, so.isPercent ? "%" : "", ")</color>") : s;
     }
 
     public void UnlockStat() //해당 스탯을 얻음. 하지만 아직 개방상태는 아님

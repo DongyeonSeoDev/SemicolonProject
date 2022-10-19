@@ -266,11 +266,12 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
         EternalStat addiStat = data.additionalBodyStat;
         EternalStat mobStat = data.monsterStat;
-        int count = addiStat.NoZeroStatCount - 1;  //스탯 상승이 가능한 스탯 수 (스탯 수치가 0보다 큰 스탯 수) (최대/최소뎀은 공격력 하나로 표시하기 때문에 1을 빼줌)
+        int count = addiStat.NoZeroStatCount;  //스탯 상승이 가능한 스탯 수 (스탯 수치가 0보다 크거나 작은 스탯) (최대/최소뎀은 공격력 하나로 표시하기 때문에 1을 빼줌)
+        if (Mathf.Abs(addiStat.minDamage.statValue) > 0 && Mathf.Abs(addiStat.maxDamage.statValue) > 0) count--;
         if (mobLearningInfoDic[id].assimilation)
         {
             StringBuilder sb = new StringBuilder();
-            int upValue;
+            float upValue;
             int j = 0, i;
             for(i=0; i<mobStat.AllStats.Count; i++)   //몹 능력치 표시.  스탯 이름은 해당 스탯을 얻어야하고 스탯 수치는 해당 스탯을 개방해야 보임
             {
@@ -281,7 +282,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
                     ushort sId = mobStat.AllStats[i].id;
                     string statNameStr = NGlobal.playerStatUI.IsUnlockStat(sId) ? NGlobal.playerStatUI.GetStatSOData<EternalStatSO>(sId).statName : "??";
-                    string statValueStr = NGlobal.playerStatUI.IsOpenStat(sId) ? mobStat.AllStats[i].statValue.ToString() : "?";
+                    string statValueStr = NGlobal.playerStatUI.IsOpenStat(sId) ? 
+                        mobStat.AllStats[i].statValue.ToString() + (NGlobal.playerStatUI.GetStatSOData<EternalStatSO>(sId).isPercent ? "%" : "") : "?";
 
                     if (sId == NGlobal.MaxDamageID && !statNameStr.Contains("?"))
                     {
@@ -294,10 +296,10 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
             j = 0;
             for(i=0; i< addiStat.AllStats.Count; i++)  //변신시 능력치 상승량 표시
             {
-                if(addiStat.AllStats[i].statValue > 0 && addiStat.AllStats[i].id != NGlobal.MinDamageID)  
+                if(Mathf.Abs(addiStat.AllStats[i].statValue) > 0 && addiStat.AllStats[i].id != NGlobal.MinDamageID)  
                 {
                     j++;
-
+                    
                     ushort sId = addiStat.AllStats[i].id;
                     string statNameStr = NGlobal.playerStatUI.IsUnlockStat(sId) ? NGlobal.playerStatUI.GetStatSOData<EternalStatSO>(sId).statName : "??";
                     
@@ -308,10 +310,19 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
                     //동화율에 따른 상승 능력치 표시
                     sb.Append(statNameStr);
-                    sb.Append(" +");
+                    sb.Append(addiStat.AllStats[i].statValue > 0 ? " +" : " ");
 
-                    upValue = (int)(addiStat.AllStats[i].statValue * urmg.UpStatPercentage);
-                    sb.Append(NGlobal.playerStatUI.IsOpenStat(sId) ? upValue.ToString() : "?");
+                    upValue = addiStat.AllStats[i].statValue * urmg.UpStatPercentage;
+                    if (NGlobal.playerStatUI.IsOpenStat(sId))
+                    {
+                        sb.Append(upValue.ToString(NGlobal.playerStatUI.GetStatSOData(sId).statValueDecimal ? "0.0" : "0"));
+                        if (NGlobal.playerStatUI.GetStatSOData<EternalStatSO>(sId).isPercent)
+                            sb.Append('%');
+                    }
+                    else
+                    {
+                        sb.Append("?");
+                    }
 
                     if(j<count)
                        sb.Append(", ");

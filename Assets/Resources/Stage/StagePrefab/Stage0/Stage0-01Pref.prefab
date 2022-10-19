@@ -70,6 +70,7 @@ Transform:
   - {fileID: 8331562827979367205}
   - {fileID: 6669936914480764908}
   - {fileID: 823467007638293314}
+  - {fileID: 155832567383516675}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -99,10 +100,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   camStageCollider: {fileID: 8648534772182156580}
   playerSpawnPoint: {fileID: 2192185027081183173}
+  lobbySpawnPoint: {fileID: 0}
   objSpawnPos: {fileID: 0}
   stageDoors:
   - {fileID: 5648740567615568395}
   plants: []
+  isEnemyStage: 0
+  noPassTilemap: []
+  limitMinPosition: {x: 0, y: 0}
+  limitMaxPosition: {x: 0, y: 0}
 --- !u!1 &1378282382014638738
 GameObject:
   m_ObjectHideFlags: 0
@@ -16899,38 +16905,22 @@ CompositeCollider2D:
   m_ColliderPaths:
   - m_Collider: {fileID: 6042642567769055823}
     m_ColliderPaths:
-    - - X: 200000100
-        Y: 239999959
-      - X: 200000100
-        Y: 250000041
-      - X: 200000041
-        Y: 250000100
-      - X: 159999959
-        Y: 250000100
-      - X: 159999900
-        Y: 250000041
-      - X: 159999900
-        Y: 239999959
-      - X: 159999959
-        Y: 239999900
-      - X: 200000041
-        Y: 239999900
-    - - X: 90000100
-        Y: 239999959
-      - X: 90000100
-        Y: 250000041
-      - X: 90000041
-        Y: 250000100
-      - X: -20000041
-        Y: 250000100
-      - X: -20000100
-        Y: 250000041
-      - X: -20000100
-        Y: 239999959
-      - X: -20000041
-        Y: 239999900
-      - X: 90000041
-        Y: 239999900
+    - - X: 90000000
+        Y: 250000000
+      - X: -20000000
+        Y: 250000000
+      - X: -20000000
+        Y: 240000000
+      - X: 90000000
+        Y: 240000000
+    - - X: 200000000
+        Y: 250000000
+      - X: 160000000
+        Y: 250000000
+      - X: 160000000
+        Y: 240000000
+      - X: 200000000
+        Y: 240000000
     - - X: 200000000
         Y: 230000000
       - X: -190000000
@@ -16949,14 +16939,14 @@ CompositeCollider2D:
         Y: -90000000
   m_CompositePaths:
     m_Paths:
-    - - {x: 8.999974, y: 23.99999}
-      - {x: 8.999974, y: 25.00001}
-      - {x: -2.00001, y: 24.999975}
-      - {x: -1.9999748, y: 23.99999}
-    - - {x: 19.999975, y: 23.99999}
-      - {x: 19.999975, y: 25.00001}
-      - {x: 15.99999, y: 24.999975}
-      - {x: 16.000027, y: 23.99999}
+    - - {x: 19.999971, y: 24}
+      - {x: 19.999971, y: 25}
+      - {x: 16, y: 24.999971}
+      - {x: 16.000029, y: 24}
+    - - {x: 8.99997, y: 24}
+      - {x: 8.99997, y: 25}
+      - {x: -2, y: 24.999971}
+      - {x: -1.9999708, y: 24}
     - - {x: 19.999971, y: -10}
       - {x: 19.999971, y: 23}
       - {x: -19, y: 22.999971}
@@ -17386,7 +17376,7 @@ TilemapRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -992757899
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 30
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
@@ -28068,6 +28058,92 @@ TilemapRenderer:
   m_Mode: 0
   m_DetectChunkCullingBounds: 0
   m_MaskInteraction: 0
+--- !u!1 &5611302694483837740
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 155832567383516675}
+  - component: {fileID: 4678181395224488355}
+  - component: {fileID: 190679222261149151}
+  m_Layer: 0
+  m_Name: Stage0-01DoorLight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &155832567383516675
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5611302694483837740}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 20.47, y: 6.57, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1378282381469885332}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4678181395224488355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5611302694483837740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_LightType: 3
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0.5
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1
+  m_LightVolumeOpacity: 0
+  m_ApplyToSortingLayers: 00000000
+  m_LightCookieSprite: {fileID: 0}
+  m_UseNormalMap: 0
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_ShadowIntensity: 0
+  m_ShadowVolumeIntensity: 0
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 0
+  m_PointLightDistance: 3
+  m_PointLightQuality: 1
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 0.5
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: -0.5, z: 0}
+  - {x: 0.5, y: 0.5, z: 0}
+  - {x: -0.5, y: 0.5, z: 0}
+--- !u!114 &190679222261149151
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5611302694483837740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f280d56a340e614e89f264103a71aa8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  objKey: Stage0-01DoorLight
 --- !u!1 &5803597349474251697
 GameObject:
   m_ObjectHideFlags: 0
@@ -29886,6 +29962,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
+--- !u!4 &5648740567615568390 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 8604531944747639599, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
+  m_PrefabInstance: {fileID: 4110990040652273961}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &5648740567615568395 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 8604531944747639586, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
@@ -29897,11 +29978,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b9e200c7d6f9e14ab3cc9a33c90f74e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &5648740567615568390 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8604531944747639599, guid: ae7d1b8952c4b5d4fa35f27308925cc5, type: 3}
-  m_PrefabInstance: {fileID: 4110990040652273961}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7880340873346022131
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -290,7 +290,7 @@ MonoBehaviour:
     additionalBodyStat:
       maxHp:
         id: 5
-        statValue: 40
+        statValue: 20
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
@@ -404,486 +404,6 @@ MonoBehaviour:
       \uB192\uB2E4."
     hint: "\uD558\uC218\uAD6C\uC5D0\uC11C \uB4F1\uC7A5\uD55C\uB2E4."
     propertyID: 115
-  - bodyName: "\uC2A4\uCF08\uB808\uD1A4 \uAD81\uC218"
-    bodyId: 3
-    body: {fileID: 7363181102221842606, guid: e62341af4ab0f6c449dc8e41b66968d7, type: 3}
-    additionalBodyStat:
-      maxHp:
-        id: 5
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      minDamage:
-        id: 10
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      maxDamage:
-        id: 15
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      defense:
-        id: 20
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      intellect:
-        id: 25
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      speed:
-        id: 30
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      attackSpeed:
-        id: 35
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      criticalRate:
-        id: 40
-        statValue: 10
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      criticalDamage:
-        id: 45
-        statValue: 30
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-    monsterStat:
-      maxHp:
-        id: 5
-        statValue: 45
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      minDamage:
-        id: 10
-        statValue: 6
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      maxDamage:
-        id: 15
-        statValue: 12
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      defense:
-        id: 20
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      intellect:
-        id: 25
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      speed:
-        id: 30
-        statValue: 4
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      attackSpeed:
-        id: 35
-        statValue: 0.42
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      criticalRate:
-        id: 40
-        statValue: 30
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      criticalDamage:
-        id: 45
-        statValue: 60
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-    bodyImg: {fileID: 21300000, guid: ca86339ba28eefc418b8d4630ee017fe, type: 3}
-    dropItem: {fileID: 11400000, guid: c2607854e0183b7409b93f098da0e3fb, type: 2}
-    bodyExplanation: "\uC5B4\uB5A4 \uAD70\uB300\uC758 \uBCD1\uC0AC\uC600\uB358 \uAC78\uB85C
-      \uBCF4\uC778\uB2E4."
-    featureExplanation: "\uBE60\uB978 \uACF5\uACA9\uC744 \uAC00\uC9C0\uACE0 \uC788\uB2E4."
-    hint: "\uD558\uC218\uAD6C\uC5D0\uC11C \uB4F1\uC7A5\uD55C\uB2E4."
-    propertyID: 125
-  - bodyName: "\uC2A4\uCF08\uB808\uD1A4 \uD0B9"
-    bodyId: 4
-    body: {fileID: 8919641663643523178, guid: ed89bbd8246da2f489396f41f0f95a05, type: 3}
-    additionalBodyStat:
-      maxHp:
-        id: 0
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      minDamage:
-        id: 0
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      maxDamage:
-        id: 0
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      defense:
-        id: 0
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      intellect:
-        id: 0
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      speed:
-        id: 0
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      attackSpeed:
-        id: 0
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      criticalRate:
-        id: 0
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      criticalDamage:
-        id: 0
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-    monsterStat:
-      maxHp:
-        id: 5
-        statValue: 1000
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      minDamage:
-        id: 10
-        statValue: 35
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      maxDamage:
-        id: 15
-        statValue: 40
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      defense:
-        id: 20
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      intellect:
-        id: 25
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      speed:
-        id: 30
-        statValue: 4
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      attackSpeed:
-        id: 35
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      criticalRate:
-        id: 40
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      criticalDamage:
-        id: 45
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-    bodyImg: {fileID: 21300000, guid: 76de48d719d5b2747b51ea1bd62b428e, type: 3}
-    dropItem: {fileID: 0}
-    bodyExplanation: "\uBBF8\uC57D\uD558\uAC8C \uC131\uC2A4\uB85C\uC6B4 \uD798\uC758
-      \uD754\uC801\uC774 \uB0A8\uC544\uC788\uB2E4."
-    featureExplanation: 
-    hint: 
-    propertyID: 0
-  - bodyName: "\uC2A4\uCF08\uB808\uD1A4 \uC720\uB839"
-    bodyId: 5
-    body: {fileID: 971769018354608688, guid: 554fa33103fb8824384fafc099492bb2, type: 3}
-    additionalBodyStat:
-      maxHp:
-        id: 5
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      minDamage:
-        id: 10
-        statValue: 2
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      maxDamage:
-        id: 15
-        statValue: 2
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      defense:
-        id: 20
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      intellect:
-        id: 25
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      speed:
-        id: 30
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      attackSpeed:
-        id: 35
-        statValue: 0.2
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      criticalRate:
-        id: 40
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      criticalDamage:
-        id: 45
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-    monsterStat:
-      maxHp:
-        id: 5
-        statValue: 35
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      minDamage:
-        id: 10
-        statValue: 15
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      maxDamage:
-        id: 15
-        statValue: 19
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      defense:
-        id: 20
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      intellect:
-        id: 25
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      speed:
-        id: 30
-        statValue: 5
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      attackSpeed:
-        id: 35
-        statValue: 2.2
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      criticalRate:
-        id: 40
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      criticalDamage:
-        id: 45
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-    bodyImg: {fileID: 21300000, guid: ec132944ee2d3bd4e9b9aa0b771c60a4, type: 3}
-    dropItem: {fileID: 0}
-    bodyExplanation: "\uC5B8\uC81C\uB098 \uB0B4 \uC8FC\uC704\uC5D0 \uC788\uC5C8\uC73C\uBA70
-      \uB610\uD55C \uC5C6\uC5C8\uB2E4."
-    featureExplanation: 
-    hint: 
-    propertyID: 0
-  - bodyName: "\uC2A4\uCF08\uB808\uD1A4 \uB9C8\uBC95\uC0AC"
-    bodyId: 6
-    body: {fileID: 1844745320149715030, guid: 4df75bcc13ecdd6478ee7d5d80ffbc19, type: 3}
-    additionalBodyStat:
-      maxHp:
-        id: 5
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      minDamage:
-        id: 10
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      maxDamage:
-        id: 15
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      defense:
-        id: 20
-        statValue: 4
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      intellect:
-        id: 25
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      speed:
-        id: 30
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      attackSpeed:
-        id: 35
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      criticalRate:
-        id: 40
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      criticalDamage:
-        id: 45
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-    monsterStat:
-      maxHp:
-        id: 5
-        statValue: 40
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      minDamage:
-        id: 10
-        statValue: 10
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      maxDamage:
-        id: 15
-        statValue: 12
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      defense:
-        id: 20
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      intellect:
-        id: 25
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      speed:
-        id: 30
-        statValue: 4
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      attackSpeed:
-        id: 35
-        statValue: 1
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      criticalRate:
-        id: 40
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-      criticalDamage:
-        id: 45
-        statValue: 0
-        isUnlock: 0
-        statLv: 0
-        savedStatLv: 0
-    bodyImg: {fileID: 21300000, guid: d082cbdb545fef9449a8d522b3e22ca7, type: 3}
-    dropItem: {fileID: 0}
-    bodyExplanation: "\uC544\uC9C1 \uC218\uC2B5 \uB9C8\uBC95\uC0AC\uB77C \uACF5\uACA9\uD558\uB294\uB370
-      \uC624\uB798 \uAC78\uB9B0\uB2E4."
-    featureExplanation: 
-    hint: 
-    propertyID: 0
   - bodyName: "\uAC70\uB300 \uB2EC\uD33D\uC774"
     bodyId: 7
     body: {fileID: 5874040416477344769, guid: b70cc510873f42c40bbaad59c8198e5e, type: 3}
@@ -1001,6 +521,486 @@ MonoBehaviour:
     dropItem: {fileID: 0}
     bodyExplanation: "\uADF8\uB7F4\uB9AC \uC5C6\uACA0\uC9C0\uB9CC \uC774 \uBAAC\uC2A4\uD130\uAC00
       \uB4DC\uB798\uACE4\uC774\uC600\uB2E4\uB294 \uC18C\uB9AC\uAC00 \uC788\uB2E4."
+    featureExplanation: 
+    hint: 
+    propertyID: 0
+  - bodyName: "\uC2A4\uCF08\uB808\uD1A4 \uAD81\uC218"
+    bodyId: 3
+    body: {fileID: 7363181102221842606, guid: e62341af4ab0f6c449dc8e41b66968d7, type: 3}
+    additionalBodyStat:
+      maxHp:
+        id: 5
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      minDamage:
+        id: 10
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      maxDamage:
+        id: 15
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      defense:
+        id: 20
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      intellect:
+        id: 25
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      speed:
+        id: 30
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      attackSpeed:
+        id: 35
+        statValue: 0.2
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      criticalRate:
+        id: 40
+        statValue: 10
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      criticalDamage:
+        id: 45
+        statValue: 30
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+    monsterStat:
+      maxHp:
+        id: 5
+        statValue: 45
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      minDamage:
+        id: 10
+        statValue: 6
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      maxDamage:
+        id: 15
+        statValue: 12
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      defense:
+        id: 20
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      intellect:
+        id: 25
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      speed:
+        id: 30
+        statValue: 4
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      attackSpeed:
+        id: 35
+        statValue: 0.42
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      criticalRate:
+        id: 40
+        statValue: 30
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      criticalDamage:
+        id: 45
+        statValue: 60
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+    bodyImg: {fileID: 21300000, guid: ca86339ba28eefc418b8d4630ee017fe, type: 3}
+    dropItem: {fileID: 11400000, guid: c2607854e0183b7409b93f098da0e3fb, type: 2}
+    bodyExplanation: "\uC5B4\uB5A4 \uAD70\uB300\uC758 \uBCD1\uC0AC\uC600\uB358 \uAC78\uB85C
+      \uBCF4\uC778\uB2E4."
+    featureExplanation: "\uBE60\uB978 \uACF5\uACA9\uC744 \uAC00\uC9C0\uACE0 \uC788\uB2E4."
+    hint: "\uD558\uC218\uAD6C\uC5D0\uC11C \uB4F1\uC7A5\uD55C\uB2E4."
+    propertyID: 125
+  - bodyName: "\uC2A4\uCF08\uB808\uD1A4 \uC720\uB839"
+    bodyId: 5
+    body: {fileID: 971769018354608688, guid: 554fa33103fb8824384fafc099492bb2, type: 3}
+    additionalBodyStat:
+      maxHp:
+        id: 5
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      minDamage:
+        id: 10
+        statValue: 2
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      maxDamage:
+        id: 15
+        statValue: 2
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      defense:
+        id: 20
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      intellect:
+        id: 25
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      speed:
+        id: 30
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      attackSpeed:
+        id: 35
+        statValue: 0.4
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      criticalRate:
+        id: 40
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      criticalDamage:
+        id: 45
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+    monsterStat:
+      maxHp:
+        id: 5
+        statValue: 35
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      minDamage:
+        id: 10
+        statValue: 15
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      maxDamage:
+        id: 15
+        statValue: 19
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      defense:
+        id: 20
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      intellect:
+        id: 25
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      speed:
+        id: 30
+        statValue: 5
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      attackSpeed:
+        id: 35
+        statValue: 2.2
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      criticalRate:
+        id: 40
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      criticalDamage:
+        id: 45
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+    bodyImg: {fileID: 21300000, guid: ec132944ee2d3bd4e9b9aa0b771c60a4, type: 3}
+    dropItem: {fileID: 0}
+    bodyExplanation: "\uC5B8\uC81C\uB098 \uB0B4 \uC8FC\uC704\uC5D0 \uC788\uC5C8\uC73C\uBA70
+      \uB610\uD55C \uC5C6\uC5C8\uB2E4."
+    featureExplanation: 
+    hint: 
+    propertyID: 0
+  - bodyName: "\uC2A4\uCF08\uB808\uD1A4 \uB9C8\uBC95\uC0AC"
+    bodyId: 6
+    body: {fileID: 1844745320149715030, guid: 4df75bcc13ecdd6478ee7d5d80ffbc19, type: 3}
+    additionalBodyStat:
+      maxHp:
+        id: 5
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      minDamage:
+        id: 10
+        statValue: -4
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      maxDamage:
+        id: 15
+        statValue: -4
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      defense:
+        id: 20
+        statValue: 4
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      intellect:
+        id: 25
+        statValue: 2
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      speed:
+        id: 30
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      attackSpeed:
+        id: 35
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      criticalRate:
+        id: 40
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      criticalDamage:
+        id: 45
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+    monsterStat:
+      maxHp:
+        id: 5
+        statValue: 40
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      minDamage:
+        id: 10
+        statValue: 10
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      maxDamage:
+        id: 15
+        statValue: 12
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      defense:
+        id: 20
+        statValue: 2
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      intellect:
+        id: 25
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      speed:
+        id: 30
+        statValue: 4
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      attackSpeed:
+        id: 35
+        statValue: 1
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      criticalRate:
+        id: 40
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      criticalDamage:
+        id: 45
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+    bodyImg: {fileID: 21300000, guid: d082cbdb545fef9449a8d522b3e22ca7, type: 3}
+    dropItem: {fileID: 0}
+    bodyExplanation: "\uC544\uC9C1 \uC218\uC2B5 \uB9C8\uBC95\uC0AC\uB77C \uACF5\uACA9\uD558\uB294\uB370
+      \uC624\uB798 \uAC78\uB9B0\uB2E4."
+    featureExplanation: 
+    hint: 
+    propertyID: 0
+  - bodyName: "\uC2A4\uCF08\uB808\uD1A4 \uD0B9"
+    bodyId: 4
+    body: {fileID: 8919641663643523178, guid: ed89bbd8246da2f489396f41f0f95a05, type: 3}
+    additionalBodyStat:
+      maxHp:
+        id: 0
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      minDamage:
+        id: 0
+        statValue: 6
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      maxDamage:
+        id: 0
+        statValue: 6
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      defense:
+        id: 0
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      intellect:
+        id: 0
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      speed:
+        id: 0
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      attackSpeed:
+        id: 0
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      criticalRate:
+        id: 0
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      criticalDamage:
+        id: 0
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+    monsterStat:
+      maxHp:
+        id: 5
+        statValue: 1000
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      minDamage:
+        id: 10
+        statValue: 35
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      maxDamage:
+        id: 15
+        statValue: 40
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      defense:
+        id: 20
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      intellect:
+        id: 25
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      speed:
+        id: 30
+        statValue: 4
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      attackSpeed:
+        id: 35
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      criticalRate:
+        id: 40
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+      criticalDamage:
+        id: 45
+        statValue: 0
+        isUnlock: 0
+        statLv: 0
+        savedStatLv: 0
+    bodyImg: {fileID: 21300000, guid: 76de48d719d5b2747b51ea1bd62b428e, type: 3}
+    dropItem: {fileID: 0}
+    bodyExplanation: "\uBBF8\uC57D\uD558\uAC8C \uC131\uC2A4\uB85C\uC6B4 \uD798\uC758
+      \uD754\uC801\uC774 \uB0A8\uC544\uC788\uB2E4."
     featureExplanation: 
     hint: 
     propertyID: 0
