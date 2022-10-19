@@ -776,13 +776,13 @@ MonoBehaviour:
         savedStatLv: 0
       minDamage:
         id: 10
-        statValue: 0
+        statValue: -4
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
       maxDamage:
         id: 15
-        statValue: 0
+        statValue: -4
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
@@ -794,7 +794,7 @@ MonoBehaviour:
         savedStatLv: 0
       intellect:
         id: 25
-        statValue: 0
+        statValue: 2
         isUnlock: 0
         statLv: 0
         savedStatLv: 0
@@ -843,7 +843,7 @@ MonoBehaviour:
         savedStatLv: 0
       defense:
         id: 20
-        statValue: 0
+        statValue: 2
         isUnlock: 0
         statLv: 0
         savedStatLv: 0

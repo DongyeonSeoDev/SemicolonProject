@@ -266,7 +266,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
         EternalStat addiStat = data.additionalBodyStat;
         EternalStat mobStat = data.monsterStat;
-        int count = addiStat.NoZeroStatCount - 1;  //스탯 상승이 가능한 스탯 수 (스탯 수치가 0보다 큰 스탯 수) (최대/최소뎀은 공격력 하나로 표시하기 때문에 1을 빼줌)
+        int count = addiStat.NoZeroStatCount;  //스탯 상승이 가능한 스탯 수 (스탯 수치가 0보다 큰 스탯 수) (최대/최소뎀은 공격력 하나로 표시하기 때문에 1을 빼줌)
+        if (addiStat.minDamage.statValue > 0 && addiStat.maxDamage.statValue > 0) count--;
         if (mobLearningInfoDic[id].assimilation)
         {
             StringBuilder sb = new StringBuilder();
@@ -281,7 +282,8 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
 
                     ushort sId = mobStat.AllStats[i].id;
                     string statNameStr = NGlobal.playerStatUI.IsUnlockStat(sId) ? NGlobal.playerStatUI.GetStatSOData<EternalStatSO>(sId).statName : "??";
-                    string statValueStr = NGlobal.playerStatUI.IsOpenStat(sId) ? mobStat.AllStats[i].statValue.ToString() : "?";
+                    string statValueStr = NGlobal.playerStatUI.IsOpenStat(sId) ? 
+                        mobStat.AllStats[i].statValue.ToString() + (NGlobal.playerStatUI.GetStatSOData<EternalStatSO>(sId).isPercent ? "%" : "") : "?";
 
                     if (sId == NGlobal.MaxDamageID && !statNameStr.Contains("?"))
                     {
@@ -311,7 +313,16 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
                     sb.Append(" +");
 
                     upValue = (int)(addiStat.AllStats[i].statValue * urmg.UpStatPercentage);
-                    sb.Append(NGlobal.playerStatUI.IsOpenStat(sId) ? upValue.ToString() : "?");
+                    if (NGlobal.playerStatUI.IsOpenStat(sId))
+                    {
+                        sb.Append(upValue);
+                        if (NGlobal.playerStatUI.GetStatSOData<EternalStatSO>(sId).isPercent)
+                            sb.Append('%');
+                    }
+                    else
+                    {
+                        sb.Append("?");
+                    }
 
                     if(j<count)
                        sb.Append(", ");
