@@ -267,7 +267,7 @@ public class MonsterCollection : MonoSingleton<MonsterCollection>
         EternalStat addiStat = data.additionalBodyStat;
         EternalStat mobStat = data.monsterStat;
         int count = addiStat.NoZeroStatCount;  //스탯 상승이 가능한 스탯 수 (스탯 수치가 0보다 크거나 작은 스탯) (최대/최소뎀은 공격력 하나로 표시하기 때문에 1을 빼줌)
-        if (addiStat.minDamage.statValue > 0 && addiStat.maxDamage.statValue > 0) count--;
+        if (Mathf.Abs(addiStat.minDamage.statValue) > 0 && Mathf.Abs(addiStat.maxDamage.statValue) > 0) count--;
         if (mobLearningInfoDic[id].assimilation)
         {
             StringBuilder sb = new StringBuilder();
