@@ -194,8 +194,7 @@ public class EternalStat
         }
     }
 
-    //스탯의 수치가 0보다 큰 스탯들의 개수
-    public int NoZeroStatCount => AllStats.Count(stat => stat.statValue > 0);  //스탯의 값이 0보다 큰 것들의 개수
+    public int NoZeroStatCount => AllStats.Count(stat => Math.Abs(stat.statValue) > 0);  //스탯의 값이 0보다 크거나 작은 것의 개수
 
     public EternalStat()
     {
