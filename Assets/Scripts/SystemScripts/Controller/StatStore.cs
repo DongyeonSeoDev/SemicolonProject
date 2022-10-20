@@ -314,7 +314,6 @@ public class StatStore : MonoSingleton<StatStore>
                     break;
             }
 
-            selectedProp.Buy();
             NGlobal.playerStatUI.PlayerStat.currentStatPoint -= selectedProp.Point;
             NGlobal.playerStatUI.UpdateScrStatUI();
             purchasedPropIDList.Add(id);
@@ -329,6 +328,7 @@ public class StatStore : MonoSingleton<StatStore>
                 NGlobal.playerStatUI.StatUp(id);
             }
             Global.CurrentPlayer.GetComponent<PlayerChoiceStatControl>().WhenTradeStat(id);
+            selectedProp.Buy();
         }
     }
 
@@ -376,7 +376,7 @@ public class StatStore : MonoSingleton<StatStore>
                     continue;
                 }
 
-                selectedProp.Buy();
+                selectedProp.Buy(list[0]);
                 NGlobal.playerStatUI.PlayerStat.currentStatPoint -= selectedProp.Point;
                 NGlobal.playerStatUI.UpdateScrStatUI();
 
@@ -417,7 +417,7 @@ public class StatStore : MonoSingleton<StatStore>
             }
 
             //юс╫ц
-            selectedProp.Buy();
+            selectedProp.Buy(list[0]);
             NGlobal.playerStatUI.PlayerStat.currentStatPoint -= selectedProp.Point;
             NGlobal.playerStatUI.UpdateScrStatUI();
 

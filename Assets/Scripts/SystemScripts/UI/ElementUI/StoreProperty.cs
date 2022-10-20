@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class StoreProperty : MonoBehaviour
 {
@@ -67,11 +68,35 @@ public class StoreProperty : MonoBehaviour
         point.text = $"<color=yellow>{Point}</color> POINT";
     }
 
-    public void Buy()
+    public void Buy(ushort id = 0)
     {
         cvsg.alpha = 0.5f;
         btn.interactable = false;
         UIScaleCtrl.transitionEnable = false;
+
+        childCvsg.DOFade(0f, 0.3f).SetUpdate(true).OnComplete(() =>
+        {
+            maxLv.gameObject.SetActive(true);
+            abil.gameObject.SetActive(true);
+            growth.gameObject.SetActive(true);
+            curLv.gameObject.SetActive(true);
+            statImg.gameObject.SetActive(true);
+
+            boxExText.gameObject.SetActive(false);
+
+            for (int i = 0; i < lines.Length; i++) lines[i].gameObject.SetActive(true);
+
+            ChoiceStatSO data = NGlobal.playerStatUI.GetStatSOData<ChoiceStatSO>(id);
+
+            maxLv.text = "최대레벨 : <color=#4444EC>" + data.maxStatLv.ToString() + "</color>";
+            abil.text = string.Format(data.detailAbilExplanation, Global.CurrentPlayer.GetComponent<PlayerChoiceStatControl>().ChoiceDataDict[id].upTargetStatPerChoiceStat);
+            growth.text = data.growthWay;
+            curLv.text = "현재레벨 : <color=#7C7CFB>" + NGlobal.playerStatUI.choiceStatDic[id].statLv.ToString() + "</color>";
+            nameTMP.text = data.statName;
+            statImg.sprite = data.statSpr;
+
+            Util.DelayFunc(() => childCvsg.DOFade(1f, 0.35f).SetUpdate(true), 0.2f, this, true);
+        });
     }
 
     public void Sell()
